@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnName))
+            if (ColumnName != null)
             {
                 writer.WritePropertyName("columnName"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> columnName = default;
-            Optional<BinaryData> defaultValue = default;
+            BinaryData columnName = default;
+            BinaryData defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DWCopyCommandDefaultValue(columnName.Value, defaultValue.Value, serializedAdditionalRawData);
+            return new DWCopyCommandDefaultValue(columnName, defaultValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DWCopyCommandDefaultValue>.Write(ModelReaderWriterOptions options)

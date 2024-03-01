@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DBName))
+            if (DBName != null)
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Optional.IsDefined(Collection))
+            if (Collection != null)
             {
                 writer.WritePropertyName("collection"u8);
                 writer.WriteStringValue(Collection);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> db = default;
-            Optional<string> collection = default;
+            string db = default;
+            string collection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBPrivilegeResourceInfo(db.Value, collection.Value, serializedAdditionalRawData);
+            return new MongoDBPrivilegeResourceInfo(db, collection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBPrivilegeResourceInfo>.Write(ModelReaderWriterOptions options)

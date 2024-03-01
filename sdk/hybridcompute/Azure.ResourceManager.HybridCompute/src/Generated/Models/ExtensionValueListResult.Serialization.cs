@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<HybridComputeExtensionValueData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridComputeExtensionValueData>> value = default;
+            IReadOnlyList<HybridComputeExtensionValueData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeExtensionValueData> array = new List<HybridComputeExtensionValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item));
+                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionValueListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExtensionValueListResult(value ?? new ChangeTrackingList<HybridComputeExtensionValueData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionValueListResult>.Write(ModelReaderWriterOptions options)

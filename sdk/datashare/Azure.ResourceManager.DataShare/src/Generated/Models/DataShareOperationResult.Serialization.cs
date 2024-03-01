@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> endTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DateTimeOffset> startTime = default;
+            DateTimeOffset? endTime = default;
+            ResponseError error = default;
+            DateTimeOffset? startTime = default;
             DataShareOperationStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareOperationResult(Optional.ToNullable(endTime), error.Value, Optional.ToNullable(startTime), status, serializedAdditionalRawData);
+            return new DataShareOperationResult(endTime, error, startTime, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareOperationResult>.Write(ModelReaderWriterOptions options)

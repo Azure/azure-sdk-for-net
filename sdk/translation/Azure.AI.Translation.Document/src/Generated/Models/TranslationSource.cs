@@ -7,7 +7,6 @@
 
 using System;
 using Azure.AI.Translation.Document.Models;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUri"/> is null. </exception>
         public TranslationSource(Uri sourceUri)
         {
-            Argument.AssertNotNull(sourceUri, nameof(sourceUri));
+            if (sourceUri == null)
+            {
+                throw new ArgumentNullException(nameof(sourceUri));
+            }
 
             SourceUri = sourceUri;
         }

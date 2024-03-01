@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkDeviceInterfaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkInterfaceName, NetworkDeviceInterfaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkDeviceInterfaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkInterfaceName, NetworkDeviceInterfaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<Response<NetworkDeviceInterfaceResource>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual Response<NetworkDeviceInterfaceResource> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkDeviceInterfaceResource>> GetIfExistsAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual NullableResponse<NetworkDeviceInterfaceResource> GetIfExists(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceCollection.GetIfExists");
             scope.Start();

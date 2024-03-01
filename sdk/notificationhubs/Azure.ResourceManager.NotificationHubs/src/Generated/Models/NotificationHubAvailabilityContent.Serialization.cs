@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(IsAvailiable))
+            if (IsAvailiable.HasValue)
             {
                 writer.WritePropertyName("isAvailiable"u8);
                 writer.WriteBooleanValue(IsAvailiable.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<NotificationHubSku> sku = default;
-            Optional<bool> isAvailiable = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NotificationHubSku sku = default;
+            bool? isAvailiable = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAvailiable"u8))
@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubAvailabilityContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(isAvailiable), serializedAdditionalRawData);
+            return new NotificationHubAvailabilityContent(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                isAvailiable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubAvailabilityContent>.Write(ModelReaderWriterOptions options)

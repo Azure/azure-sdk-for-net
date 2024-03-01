@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(AzureRegion))
+            if (AzureRegion.HasValue)
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> country = default;
-            Optional<string> state = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            string country = default;
+            string state = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringServiceLocation(
+                id,
+                name,
+                type,
+                systemData,
+                country,
+                state,
+                azureRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceLocation>.Write(ModelReaderWriterOptions options)

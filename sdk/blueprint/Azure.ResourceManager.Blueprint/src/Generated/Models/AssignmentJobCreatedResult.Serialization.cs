@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentJobCreatedResult(id, name, type, systemData.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new AssignmentJobCreatedResult(
+                id,
+                name,
+                type,
+                systemData,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentJobCreatedResult>.Write(ModelReaderWriterOptions options)

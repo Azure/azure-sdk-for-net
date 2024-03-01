@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(AvailableSizeMB))
+            if (AvailableSizeMB.HasValue)
             {
                 writer.WritePropertyName("availableSizeMB"u8);
                 writer.WriteNumberValue(AvailableSizeMB.Value);
             }
-            if (Optional.IsDefined(ContainerSizeMB))
+            if (ContainerSizeMB.HasValue)
             {
                 writer.WritePropertyName("containerSizeMB"u8);
                 writer.WriteNumberValue(ContainerSizeMB.Value);
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus != null)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<long> availableSizeMB = default;
-            Optional<long> containerSizeMB = default;
-            Optional<StorageContainerStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            long? availableSizeMB = default;
+            long? containerSizeMB = default;
+            StorageContainerStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value);
+                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(availableSizeMB), Optional.ToNullable(containerSizeMB), provisioningStatus.Value, serializedAdditionalRawData);
+            return new StorageContainerStatus(
+                errorCode,
+                errorMessage,
+                availableSizeMB,
+                containerSizeMB,
+                provisioningStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerStatus>.Write(ModelReaderWriterOptions options)

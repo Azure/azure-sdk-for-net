@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
+            if (IsIncrementNodeConfigurationBuildRequired.HasValue)
             {
                 writer.WritePropertyName("incrementNodeConfigurationBuild"u8);
                 writer.WriteBooleanValue(IsIncrementNodeConfigurationBuildRequired.Value);
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AutomationContentSource> source = default;
-            Optional<DscConfigurationAssociationProperty> configuration = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            string name = default;
+            IDictionary<string, string> tags = default;
+            AutomationContentSource source = default;
+            DscConfigurationAssociationProperty configuration = default;
+            bool? incrementNodeConfigurationBuild = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value);
+                            source = AutomationContentSource.DeserializeAutomationContentSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configuration"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value);
+                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("incrementNodeConfigurationBuild"u8))
@@ -171,7 +171,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeConfigurationCreateOrUpdateContent(name.Value, Optional.ToDictionary(tags), source.Value, configuration.Value, Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            return new DscNodeConfigurationCreateOrUpdateContent(
+                name,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                source,
+                configuration,
+                incrementNodeConfigurationBuild,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeConfigurationCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AccountName))
+            if (options.Format != "W" && AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyLogLink))
+            if (options.Format != "W" && CopyLogLink != null)
             {
                 writer.WritePropertyName("copyLogLink"u8);
                 writer.WriteStringValue(CopyLogLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyVerboseLogLink))
+            if (options.Format != "W" && CopyVerboseLogLink != null)
             {
                 writer.WritePropertyName("copyVerboseLogLink"u8);
                 writer.WriteStringValue(CopyVerboseLogLink);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> copyLogLink = default;
-            Optional<string> copyVerboseLogLink = default;
+            string accountName = default;
+            string copyLogLink = default;
+            string copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, copyLogLink.Value, copyVerboseLogLink.Value);
+            return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName, copyLogLink, copyVerboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxAccountCopyLogDetails>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(HyperVHosts))
+            if (!(HyperVHosts is ChangeTrackingList<HyperVHostDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hyperVHosts"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HyperVHostDetails>> hyperVHosts = default;
+            IReadOnlyList<HyperVHostDetails> hyperVHosts = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVHostDetails> array = new List<HyperVHostDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item));
+                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item, options));
                     }
                     hyperVHosts = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVSiteDetails(instanceType, serializedAdditionalRawData, Optional.ToList(hyperVHosts));
+            return new HyperVSiteDetails(instanceType, serializedAdditionalRawData, hyperVHosts ?? new ChangeTrackingList<HyperVHostDetails>());
         }
 
         BinaryData IPersistableModel<HyperVSiteDetails>.Write(ModelReaderWriterOptions options)

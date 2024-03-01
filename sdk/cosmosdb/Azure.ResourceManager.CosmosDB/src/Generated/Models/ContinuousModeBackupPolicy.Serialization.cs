@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContinuousModeProperties))
+            if (ContinuousModeProperties != null)
             {
                 writer.WritePropertyName("continuousModeProperties"u8);
                 writer.WriteObjectValue(ContinuousModeProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (Optional.IsDefined(MigrationState))
+            if (MigrationState != null)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ContinuousModeProperties> continuousModeProperties = default;
+            ContinuousModeProperties continuousModeProperties = default;
             BackupPolicyType type = default;
-            Optional<BackupPolicyMigrationState> migrationState = default;
+            BackupPolicyMigrationState migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(property.Value);
+                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
+                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinuousModeBackupPolicy(type, migrationState.Value, serializedAdditionalRawData, continuousModeProperties.Value);
+            return new ContinuousModeBackupPolicy(type, migrationState, serializedAdditionalRawData, continuousModeProperties);
         }
 
         BinaryData IPersistableModel<ContinuousModeBackupPolicy>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ManagedRuleSets))
+            if (!(ManagedRuleSets is ChangeTrackingList<WafPolicyManagedRuleSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<WafPolicyManagedRuleSet>> managedRuleSets = default;
+            IList<WafPolicyManagedRuleSet> managedRuleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafPolicyManagedRuleSet> array = new List<WafPolicyManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item));
+                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item, options));
                     }
                     managedRuleSets = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetList(Optional.ToList(managedRuleSets), serializedAdditionalRawData);
+            return new ManagedRuleSetList(managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetList>.Write(ModelReaderWriterOptions options)

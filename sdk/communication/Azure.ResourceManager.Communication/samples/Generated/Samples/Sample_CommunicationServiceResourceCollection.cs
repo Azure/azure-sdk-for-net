@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListByResourceGroup()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/listByResourceGroup.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/listByResourceGroup.json
             // this example is just showing the usage of "CommunicationServices_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/get.json
             // this example is just showing the usage of "CommunicationServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/get.json
             // this example is just showing the usage of "CommunicationServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/get.json
             // this example is just showing the usage of "CommunicationServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/createOrUpdate.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/createOrUpdate.json
             // this example is just showing the usage of "CommunicationServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateResourceWithManagedIdentity()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/createOrUpdateWithSystemAssignedIdentity.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/createOrUpdateWithSystemAssignedIdentity.json
             // this example is just showing the usage of "CommunicationServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

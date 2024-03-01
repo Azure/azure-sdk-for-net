@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Bounds))
+            if (Bounds != null)
             {
                 writer.WritePropertyName("bounds"u8);
                 writer.WriteObjectValue(Bounds);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
+            ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds.DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(property.Value);
+                    bounds = ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds.DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds.Value, serializedAdditionalRawData);
+            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="preset"/> is null. </exception>
         public MediaTransformOutput(MediaTransformPreset preset)
         {
-            Argument.AssertNotNull(preset, nameof(preset));
+            if (preset == null)
+            {
+                throw new ArgumentNullException(nameof(preset));
+            }
 
             Preset = preset;
         }

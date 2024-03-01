@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoClusterPrincipalAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string principalAssignmentName, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoClusterPrincipalAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string principalAssignmentName, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual async Task<Response<KustoClusterPrincipalAssignmentResource>> GetAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual Response<KustoClusterPrincipalAssignmentResource> Get(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<KustoClusterPrincipalAssignmentResource>> GetIfExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual NullableResponse<KustoClusterPrincipalAssignmentResource> GetIfExists(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            if (principalAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(principalAssignmentName));
+            }
+            if (principalAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
+            }
 
             using var scope = _kustoClusterPrincipalAssignmentClusterPrincipalAssignmentsClientDiagnostics.CreateScope("KustoClusterPrincipalAssignmentCollection.GetIfExists");
             scope.Start();

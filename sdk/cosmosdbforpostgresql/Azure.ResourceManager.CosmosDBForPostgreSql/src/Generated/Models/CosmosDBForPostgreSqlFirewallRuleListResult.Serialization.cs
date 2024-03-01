@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CosmosDBForPostgreSqlFirewallRuleData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData>> value = default;
+            IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlFirewallRuleData> array = new List<CosmosDBForPostgreSqlFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(item));
+                        array.Add(CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlFirewallRuleListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlFirewallRuleListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlFirewallRuleData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlFirewallRuleListResult>.Write(ModelReaderWriterOptions options)

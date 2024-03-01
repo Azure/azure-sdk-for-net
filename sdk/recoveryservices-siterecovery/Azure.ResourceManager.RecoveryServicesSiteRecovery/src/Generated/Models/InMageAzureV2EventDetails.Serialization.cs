@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventType))
+            if (EventType != null)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(Component))
+            if (Component != null)
             {
                 writer.WritePropertyName("component"u8);
                 writer.WriteStringValue(Component);
             }
-            if (Optional.IsDefined(CorrectiveAction))
+            if (CorrectiveAction != null)
             {
                 writer.WritePropertyName("correctiveAction"u8);
                 writer.WriteStringValue(CorrectiveAction);
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (Optional.IsDefined(Summary))
+            if (Summary != null)
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(SiteName))
+            if (SiteName != null)
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> eventType = default;
-            Optional<string> category = default;
-            Optional<string> component = default;
-            Optional<string> correctiveAction = default;
-            Optional<string> details = default;
-            Optional<string> summary = default;
-            Optional<string> siteName = default;
+            string eventType = default;
+            string category = default;
+            string component = default;
+            string correctiveAction = default;
+            string details = default;
+            string summary = default;
+            string siteName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2EventDetails(instanceType, serializedAdditionalRawData, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
+            return new InMageAzureV2EventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                eventType,
+                category,
+                component,
+                correctiveAction,
+                details,
+                summary,
+                siteName);
         }
 
         BinaryData IPersistableModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)

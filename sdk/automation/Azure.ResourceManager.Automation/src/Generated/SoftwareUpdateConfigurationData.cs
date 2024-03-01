@@ -57,8 +57,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="updateConfiguration"/> or <paramref name="scheduleInfo"/> is null. </exception>
         public SoftwareUpdateConfigurationData(SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo)
         {
-            Argument.AssertNotNull(updateConfiguration, nameof(updateConfiguration));
-            Argument.AssertNotNull(scheduleInfo, nameof(scheduleInfo));
+            if (updateConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(updateConfiguration));
+            }
+            if (scheduleInfo == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleInfo));
+            }
 
             UpdateConfiguration = updateConfiguration;
             ScheduleInfo = scheduleInfo;

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("radiusServerAddress"u8);
             writer.WriteStringValue(RadiusServerAddress);
-            if (Optional.IsDefined(RadiusServerScore))
+            if (RadiusServerScore.HasValue)
             {
                 writer.WritePropertyName("radiusServerScore"u8);
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
-            if (Optional.IsDefined(RadiusServerSecret))
+            if (RadiusServerSecret != null)
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string radiusServerAddress = default;
-            Optional<long> radiusServerScore = default;
-            Optional<string> radiusServerSecret = default;
+            long? radiusServerScore = default;
+            string radiusServerSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RadiusServer(radiusServerAddress, Optional.ToNullable(radiusServerScore), radiusServerSecret.Value, serializedAdditionalRawData);
+            return new RadiusServer(radiusServerAddress, radiusServerScore, radiusServerSecret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RadiusServer>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicy"u8);
             writer.WriteStringValue(FailoverPolicy.ToString());
-            if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
+            if (FailoverWithDataLossGracePeriodMinutes.HasValue)
             {
                 writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);
                 writer.WriteNumberValue(FailoverWithDataLossGracePeriodMinutes.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ReadWriteEndpointFailoverPolicy failoverPolicy = default;
-            Optional<int> failoverWithDataLossGracePeriodMinutes = default;
+            int? failoverWithDataLossGracePeriodMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes), serializedAdditionalRawData);
+            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, failoverWithDataLossGracePeriodMinutes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.Write(ModelReaderWriterOptions options)

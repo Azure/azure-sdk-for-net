@@ -125,7 +125,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberAreaCode> ListAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+            if (twoLetterIsoCountryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
@@ -145,7 +152,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberAreaCode> ListAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+            if (twoLetterIsoCountryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
@@ -186,7 +200,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberLocality> ListAvailableLocalitiesAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+            if (twoLetterIsoCountryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
@@ -203,7 +224,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberLocality> ListAvailableLocalities(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+            if (twoLetterIsoCountryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
@@ -221,7 +249,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberOffering> ListOfferingsAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+            if (twoLetterIsoCountryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
@@ -239,7 +274,14 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberOffering> ListOfferings(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+            if (twoLetterIsoCountryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);

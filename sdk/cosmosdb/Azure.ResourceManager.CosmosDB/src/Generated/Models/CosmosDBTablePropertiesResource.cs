@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CosmosDBTablePropertiesResource(string tableName) : base(tableName)
         {
-            Argument.AssertNotNull(tableName, nameof(tableName));
+            if (tableName == null)
+            {
+                throw new ArgumentNullException(nameof(tableName));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBTablePropertiesResource"/>. </summary>

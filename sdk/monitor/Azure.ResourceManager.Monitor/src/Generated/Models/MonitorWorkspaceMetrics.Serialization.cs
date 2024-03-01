@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrometheusQueryEndpoint))
+            if (options.Format != "W" && PrometheusQueryEndpoint != null)
             {
                 writer.WritePropertyName("prometheusQueryEndpoint"u8);
                 writer.WriteStringValue(PrometheusQueryEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalId))
+            if (options.Format != "W" && InternalId != null)
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> prometheusQueryEndpoint = default;
-            Optional<string> internalId = default;
+            string prometheusQueryEndpoint = default;
+            string internalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint.Value, internalId.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceMetrics>.Write(ModelReaderWriterOptions options)

@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             V3SelectionMarkState state = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentSelectionMark(state, Optional.ToList(polygon), span, confidence);
+            return new DocumentSelectionMark(state, polygon ?? new ChangeTrackingList<float>(), span, confidence);
         }
     }
 }

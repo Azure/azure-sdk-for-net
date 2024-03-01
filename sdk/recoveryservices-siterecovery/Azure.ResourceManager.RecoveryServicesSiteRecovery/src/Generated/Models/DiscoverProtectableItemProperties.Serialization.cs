@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> osType = default;
+            string friendlyName = default;
+            IPAddress ipAddress = default;
+            string osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoverProtectableItemProperties(friendlyName.Value, ipAddress.Value, osType.Value, serializedAdditionalRawData);
+            return new DiscoverProtectableItemProperties(friendlyName, ipAddress, osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoverProtectableItemProperties>.Write(ModelReaderWriterOptions options)

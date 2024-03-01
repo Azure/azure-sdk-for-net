@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             KustoSkuName name = default;
-            Optional<int> capacity = default;
+            int? capacity = default;
             KustoSkuTier tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoSku(name, Optional.ToNullable(capacity), tier, serializedAdditionalRawData);
+            return new KustoSku(name, capacity, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoSku>.Write(ModelReaderWriterOptions options)

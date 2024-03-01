@@ -138,7 +138,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientIPsecParameters(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup, serializedAdditionalRawData);
+            return new VpnClientIPsecParameters(
+                saLifeTimeSeconds,
+                saDataSizeKilobytes,
+                ipsecEncryption,
+                ipsecIntegrity,
+                ikeEncryption,
+                ikeIntegrity,
+                dhGroup,
+                pfsGroup,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientIPsecParameters>.Write(ModelReaderWriterOptions options)

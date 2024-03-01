@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             RedisEnterpriseSkuName name = default;
-            Optional<int> capacity = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseSku(name, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new RedisEnterpriseSku(name, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseSku>.Write(ModelReaderWriterOptions options)

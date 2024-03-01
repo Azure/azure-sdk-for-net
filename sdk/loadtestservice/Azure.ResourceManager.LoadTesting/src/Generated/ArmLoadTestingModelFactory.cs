@@ -28,7 +28,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="LoadTesting.LoadTestingQuotaData"/> instance for mocking. </returns>
         public static LoadTestingQuotaData LoadTestingQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? limit = null, int? usage = null, LoadTestingProvisioningState? provisioningState = null)
         {
-            return new LoadTestingQuotaData(id, name, resourceType, systemData, limit, usage, provisioningState, serializedAdditionalRawData: null);
+            return new LoadTestingQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                limit,
+                usage,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingQuotaBucketContent"/>. </summary>
@@ -43,7 +51,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="Models.LoadTestingQuotaBucketContent"/> instance for mocking. </returns>
         public static LoadTestingQuotaBucketContent LoadTestingQuotaBucketContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? currentUsage = null, int? currentQuota = null, int? newQuota = null, LoadTestingQuotaBucketDimensions dimensions = null)
         {
-            return new LoadTestingQuotaBucketContent(id, name, resourceType, systemData, currentUsage, currentQuota, newQuota, dimensions, serializedAdditionalRawData: null);
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                currentUsage,
+                currentQuota,
+                newQuota,
+                dimensions,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingQuotaAvailabilityResult"/>. </summary>
@@ -56,7 +73,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="Models.LoadTestingQuotaAvailabilityResult"/> instance for mocking. </returns>
         public static LoadTestingQuotaAvailabilityResult LoadTestingQuotaAvailabilityResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAvailable = null, string availabilityStatus = null)
         {
-            return new LoadTestingQuotaAvailabilityResult(id, name, resourceType, systemData, isAvailable, availabilityStatus, serializedAdditionalRawData: null);
+            return new LoadTestingQuotaAvailabilityResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isAvailable,
+                availabilityStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingResourceData"/>. </summary>
@@ -76,7 +100,19 @@ namespace Azure.ResourceManager.LoadTesting.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LoadTestingResourceData(id, name, resourceType, systemData, tags, location, identity, description, provisioningState, dataPlaneUri, encryption, serializedAdditionalRawData: null);
+            return new LoadTestingResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                description,
+                provisioningState,
+                dataPlaneUri,
+                encryption,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingOutboundEnvironmentEndpoint"/>. </summary>

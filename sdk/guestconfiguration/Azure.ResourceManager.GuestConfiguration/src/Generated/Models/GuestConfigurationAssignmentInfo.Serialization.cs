@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Configuration != null)
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GuestConfigurationInfo> configuration = default;
+            string name = default;
+            GuestConfigurationInfo configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value);
+                    configuration = GuestConfigurationInfo.DeserializeGuestConfigurationInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentInfo(name.Value, configuration.Value, serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentInfo(name, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentInfo>.Write(ModelReaderWriterOptions options)

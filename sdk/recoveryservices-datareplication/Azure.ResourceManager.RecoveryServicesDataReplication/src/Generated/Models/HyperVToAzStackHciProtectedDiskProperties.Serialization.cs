@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StorageContainerId))
+            if (options.Format != "W" && StorageContainerId != null)
             {
                 writer.WritePropertyName("storageContainerId"u8);
                 writer.WriteStringValue(StorageContainerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageContainerLocalPath))
+            if (options.Format != "W" && StorageContainerLocalPath != null)
             {
                 writer.WritePropertyName("storageContainerLocalPath"u8);
                 writer.WriteStringValue(StorageContainerLocalPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDiskId))
+            if (options.Format != "W" && SourceDiskId != null)
             {
                 writer.WritePropertyName("sourceDiskId"u8);
                 writer.WriteStringValue(SourceDiskId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceDiskName))
+            if (options.Format != "W" && SourceDiskName != null)
             {
                 writer.WritePropertyName("sourceDiskName"u8);
                 writer.WriteStringValue(SourceDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SeedDiskName))
+            if (options.Format != "W" && SeedDiskName != null)
             {
                 writer.WritePropertyName("seedDiskName"u8);
                 writer.WriteStringValue(SeedDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestMigrateDiskName))
+            if (options.Format != "W" && TestMigrateDiskName != null)
             {
                 writer.WritePropertyName("testMigrateDiskName"u8);
                 writer.WriteStringValue(TestMigrateDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrateDiskName))
+            if (options.Format != "W" && MigrateDiskName != null)
             {
                 writer.WritePropertyName("migrateDiskName"u8);
                 writer.WriteStringValue(MigrateDiskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
+            if (options.Format != "W" && IsOSDisk.HasValue)
             {
                 writer.WritePropertyName("isOsDisk"u8);
                 writer.WriteBooleanValue(IsOSDisk.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
+            if (options.Format != "W" && CapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDynamic))
+            if (options.Format != "W" && IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskType))
+            if (options.Format != "W" && DiskType != null)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> storageContainerId = default;
-            Optional<string> storageContainerLocalPath = default;
-            Optional<string> sourceDiskId = default;
-            Optional<string> sourceDiskName = default;
-            Optional<string> seedDiskName = default;
-            Optional<string> testMigrateDiskName = default;
-            Optional<string> migrateDiskName = default;
-            Optional<bool> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<bool> isDynamic = default;
-            Optional<string> diskType = default;
+            ResourceIdentifier storageContainerId = default;
+            string storageContainerLocalPath = default;
+            string sourceDiskId = default;
+            string sourceDiskName = default;
+            string seedDiskName = default;
+            string testMigrateDiskName = default;
+            string migrateDiskName = default;
+            bool? isOSDisk = default;
+            long? capacityInBytes = default;
+            bool? isDynamic = default;
+            string diskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciProtectedDiskProperties(storageContainerId.Value, storageContainerLocalPath.Value, sourceDiskId.Value, sourceDiskName.Value, seedDiskName.Value, testMigrateDiskName.Value, migrateDiskName.Value, Optional.ToNullable(isOSDisk), Optional.ToNullable(capacityInBytes), Optional.ToNullable(isDynamic), diskType.Value, serializedAdditionalRawData);
+            return new HyperVToAzStackHciProtectedDiskProperties(
+                storageContainerId,
+                storageContainerLocalPath,
+                sourceDiskId,
+                sourceDiskName,
+                seedDiskName,
+                testMigrateDiskName,
+                migrateDiskName,
+                isOSDisk,
+                capacityInBytes,
+                isDynamic,
+                diskType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options)

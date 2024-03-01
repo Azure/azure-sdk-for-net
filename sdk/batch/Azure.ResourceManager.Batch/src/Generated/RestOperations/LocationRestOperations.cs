@@ -64,7 +64,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BatchLocationQuota>> GetQuotasAsync(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateGetQuotasRequest(subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -90,7 +97,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BatchLocationQuota> GetQuotas(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateGetQuotasRequest(subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
@@ -145,7 +159,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportedSkusResult>> ListSupportedVirtualMachineSkusAsync(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedVirtualMachineSkusRequest(subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -173,7 +194,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportedSkusResult> ListSupportedVirtualMachineSkus(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedVirtualMachineSkusRequest(subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);
@@ -228,7 +256,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportedSkusResult>> ListSupportedCloudServiceSkusAsync(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedCloudServiceSkusRequest(subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -256,7 +291,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportedSkusResult> ListSupportedCloudServiceSkus(string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedCloudServiceSkusRequest(subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);
@@ -306,8 +348,18 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BatchNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, locationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -334,8 +386,18 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BatchNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, locationName, content);
             _pipeline.Send(message, cancellationToken);
@@ -378,8 +440,18 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportedSkusResult>> ListSupportedVirtualMachineSkusNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -408,8 +480,18 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportedSkusResult> ListSupportedVirtualMachineSkusNextPage(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedVirtualMachineSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);
@@ -452,8 +534,18 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportedSkusResult>> ListSupportedCloudServiceSkusNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -482,8 +574,18 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportedSkusResult> ListSupportedCloudServiceSkusNextPage(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListSupportedCloudServiceSkusNextPageRequest(nextLink, subscriptionId, locationName, maxresults, filter);
             _pipeline.Send(message, cancellationToken);

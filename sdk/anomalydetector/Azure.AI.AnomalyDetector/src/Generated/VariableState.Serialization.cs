@@ -27,27 +27,27 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Optional.IsDefined(FilledNARatio))
+            if (FilledNARatio.HasValue)
             {
                 writer.WritePropertyName("filledNARatio"u8);
                 writer.WriteNumberValue(FilledNARatio.Value);
             }
-            if (Optional.IsDefined(EffectiveCount))
+            if (EffectiveCount.HasValue)
             {
                 writer.WritePropertyName("effectiveCount"u8);
                 writer.WriteNumberValue(EffectiveCount.Value);
             }
-            if (Optional.IsDefined(FirstTimestamp))
+            if (FirstTimestamp.HasValue)
             {
                 writer.WritePropertyName("firstTimestamp"u8);
                 writer.WriteStringValue(FirstTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(LastTimestamp))
+            if (LastTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastTimestamp"u8);
                 writer.WriteStringValue(LastTimestamp.Value, "O");
@@ -90,11 +90,11 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<float> filledNARatio = default;
-            Optional<int> effectiveCount = default;
-            Optional<DateTimeOffset> firstTimestamp = default;
-            Optional<DateTimeOffset> lastTimestamp = default;
+            string variable = default;
+            float? filledNARatio = default;
+            int? effectiveCount = default;
+            DateTimeOffset? firstTimestamp = default;
+            DateTimeOffset? lastTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), serializedAdditionalRawData);
+            return new VariableState(
+                variable,
+                filledNARatio,
+                effectiveCount,
+                firstTimestamp,
+                lastTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VariableState>.Write(ModelReaderWriterOptions options)

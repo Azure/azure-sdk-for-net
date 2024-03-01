@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TemplateParameterType.ToString());
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(AllowedValues))
+            if (!(AllowedValues is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StrongType))
+            if (StrongType != null)
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             TemplateParameterType type = default;
-            Optional<BinaryData> defaultValue = default;
-            Optional<IList<BinaryData>> allowedValues = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> strongType = default;
+            BinaryData defaultValue = default;
+            IList<BinaryData> allowedValues = default;
+            string displayName = default;
+            string description = default;
+            string strongType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterDefinition(type, defaultValue.Value, Optional.ToList(allowedValues), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ParameterDefinition(
+                type,
+                defaultValue,
+                allowedValues ?? new ChangeTrackingList<BinaryData>(),
+                displayName,
+                description,
+                strongType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterDefinition>.Write(ModelReaderWriterOptions options)

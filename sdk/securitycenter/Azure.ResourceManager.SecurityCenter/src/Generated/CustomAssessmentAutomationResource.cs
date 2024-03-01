@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CustomAssessmentAutomationResource>> UpdateAsync(WaitUntil waitUntil, CustomAssessmentAutomationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CustomAssessmentAutomationResource> Update(WaitUntil waitUntil, CustomAssessmentAutomationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationResource.Update");
             scope.Start();

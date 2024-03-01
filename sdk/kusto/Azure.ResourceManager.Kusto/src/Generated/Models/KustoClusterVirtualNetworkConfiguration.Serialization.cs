@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(EnginePublicIPId);
             writer.WritePropertyName("dataManagementPublicIpId"u8);
             writer.WriteStringValue(DataManagementPublicIPId);
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string subnetId = default;
             string enginePublicIPId = default;
             string dataManagementPublicIPId = default;
-            Optional<KustoClusterVnetState> state = default;
+            KustoClusterVnetState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoClusterVirtualNetworkConfiguration>.Write(ModelReaderWriterOptions options)

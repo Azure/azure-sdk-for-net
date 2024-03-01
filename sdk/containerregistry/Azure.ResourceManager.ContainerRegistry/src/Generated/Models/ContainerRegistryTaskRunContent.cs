@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public ContainerRegistryTaskRunContent(ResourceIdentifier taskId)
         {
-            Argument.AssertNotNull(taskId, nameof(taskId));
+            if (taskId == null)
+            {
+                throw new ArgumentNullException(nameof(taskId));
+            }
 
             TaskId = taskId;
             RunRequestType = "TaskRunRequest";

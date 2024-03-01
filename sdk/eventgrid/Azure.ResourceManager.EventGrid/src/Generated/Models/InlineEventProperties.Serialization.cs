@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(DocumentationUri))
+            if (DocumentationUri != null)
             {
                 writer.WritePropertyName("documentationUrl"u8);
                 writer.WriteStringValue(DocumentationUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DataSchemaUri))
+            if (DataSchemaUri != null)
             {
                 writer.WritePropertyName("dataSchemaUrl"u8);
                 writer.WriteStringValue(DataSchemaUri.AbsoluteUri);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<Uri> documentationUri = default;
-            Optional<Uri> dataSchemaUri = default;
+            string description = default;
+            string displayName = default;
+            Uri documentationUri = default;
+            Uri dataSchemaUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InlineEventProperties(description.Value, displayName.Value, documentationUri.Value, dataSchemaUri.Value, serializedAdditionalRawData);
+            return new InlineEventProperties(description, displayName, documentationUri, dataSchemaUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InlineEventProperties>.Write(ModelReaderWriterOptions options)

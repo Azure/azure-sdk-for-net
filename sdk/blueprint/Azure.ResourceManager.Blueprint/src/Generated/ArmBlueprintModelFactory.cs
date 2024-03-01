@@ -36,7 +36,20 @@ namespace Azure.ResourceManager.Blueprint.Models
             parameters ??= new Dictionary<string, ParameterDefinition>();
             resourceGroups ??= new Dictionary<string, ResourceGroupDefinition>();
 
-            return new BlueprintData(id, name, resourceType, systemData, displayName, description, status, targetScope, parameters, resourceGroups, versions, layout, serializedAdditionalRawData: null);
+            return new BlueprintData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                description,
+                status,
+                targetScope,
+                parameters,
+                resourceGroups,
+                versions,
+                layout,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlueprintStatus"/>. </summary>
@@ -66,7 +79,13 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <returns> A new <see cref="Blueprint.ArtifactData"/> instance for mocking. </returns>
         public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new UnknownArtifact(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
+            return new UnknownArtifact(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Blueprint.PublishedBlueprintData"/>. </summary>
@@ -88,7 +107,20 @@ namespace Azure.ResourceManager.Blueprint.Models
             parameters ??= new Dictionary<string, ParameterDefinition>();
             resourceGroups ??= new Dictionary<string, ResourceGroupDefinition>();
 
-            return new PublishedBlueprintData(id, name, resourceType, systemData, displayName, description, status, targetScope, parameters, resourceGroups, blueprintName, changeNotes, serializedAdditionalRawData: null);
+            return new PublishedBlueprintData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                description,
+                status,
+                targetScope,
+                parameters,
+                resourceGroups,
+                blueprintName,
+                changeNotes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Blueprint.AssignmentData"/>. </summary>
@@ -113,7 +145,23 @@ namespace Azure.ResourceManager.Blueprint.Models
             parameters ??= new Dictionary<string, ParameterValue>();
             resourceGroups ??= new Dictionary<string, ResourceGroupValue>();
 
-            return new AssignmentData(id, name, resourceType, systemData, identity, displayName, description, blueprintId, scope, parameters, resourceGroups, status, locks, provisioningState, location, serializedAdditionalRawData: null);
+            return new AssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                displayName,
+                description,
+                blueprintId,
+                scope,
+                parameters,
+                resourceGroups,
+                status,
+                locks,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssignmentStatus"/>. </summary>
@@ -152,7 +200,18 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             deployments ??= new List<AssignmentDeploymentJob>();
 
-            return new AssignmentOperationData(id, name, resourceType, systemData, blueprintVersion, assignmentState, timeCreated, timeStarted, timeFinished, deployments?.ToList(), serializedAdditionalRawData: null);
+            return new AssignmentOperationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                blueprintVersion,
+                assignmentState,
+                timeCreated,
+                timeStarted,
+                timeFinished,
+                deployments?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssignmentJobCreatedResult"/>. </summary>
@@ -166,7 +225,13 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             properties ??= new Dictionary<string, string>();
 
-            return new AssignmentJobCreatedResult(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new AssignmentJobCreatedResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateArtifact"/>. </summary>
@@ -186,7 +251,19 @@ namespace Azure.ResourceManager.Blueprint.Models
             dependsOn ??= new List<string>();
             parameters ??= new Dictionary<string, ParameterValue>();
 
-            return new TemplateArtifact(id, name, resourceType, systemData, ArtifactKind.Template, serializedAdditionalRawData: null, displayName, description, dependsOn?.ToList(), template, resourceGroup, parameters);
+            return new TemplateArtifact(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ArtifactKind.Template,
+                serializedAdditionalRawData: null,
+                displayName,
+                description,
+                dependsOn?.ToList(),
+                template,
+                resourceGroup,
+                parameters);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoleAssignmentArtifact"/>. </summary>
@@ -205,7 +282,19 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             dependsOn ??= new List<string>();
 
-            return new RoleAssignmentArtifact(id, name, resourceType, systemData, ArtifactKind.RoleAssignment, serializedAdditionalRawData: null, displayName, description, dependsOn?.ToList(), roleDefinitionId, principalIds, resourceGroup);
+            return new RoleAssignmentArtifact(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ArtifactKind.RoleAssignment,
+                serializedAdditionalRawData: null,
+                displayName,
+                description,
+                dependsOn?.ToList(),
+                roleDefinitionId,
+                principalIds,
+                resourceGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentArtifact"/>. </summary>
@@ -225,7 +314,19 @@ namespace Azure.ResourceManager.Blueprint.Models
             dependsOn ??= new List<string>();
             parameters ??= new Dictionary<string, ParameterValue>();
 
-            return new PolicyAssignmentArtifact(id, name, resourceType, systemData, ArtifactKind.PolicyAssignment, serializedAdditionalRawData: null, displayName, description, dependsOn?.ToList(), policyDefinitionId, parameters, resourceGroup);
+            return new PolicyAssignmentArtifact(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ArtifactKind.PolicyAssignment,
+                serializedAdditionalRawData: null,
+                displayName,
+                description,
+                dependsOn?.ToList(),
+                policyDefinitionId,
+                parameters,
+                resourceGroup);
         }
     }
 }

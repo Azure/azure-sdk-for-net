@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RackLocation))
+            if (RackLocation != null)
             {
                 writer.WritePropertyName("rackLocation"u8);
                 writer.WriteStringValue(RackLocation);
             }
-            if (Optional.IsDefined(RackSerialNumber))
+            if (RackSerialNumber != null)
             {
                 writer.WritePropertyName("rackSerialNumber"u8);
                 writer.WriteStringValue(RackSerialNumber);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> rackLocation = default;
-            Optional<string> rackSerialNumber = default;
+            IDictionary<string, string> tags = default;
+            string rackLocation = default;
+            string rackSerialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackPatch(Optional.ToDictionary(tags), rackLocation.Value, rackSerialNumber.Value, serializedAdditionalRawData);
+            return new NetworkCloudRackPatch(tags ?? new ChangeTrackingDictionary<string, string>(), rackLocation, rackSerialNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackPatch>.Write(ModelReaderWriterOptions options)

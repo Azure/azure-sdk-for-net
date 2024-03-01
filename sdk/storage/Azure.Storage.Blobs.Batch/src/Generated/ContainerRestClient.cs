@@ -159,9 +159,18 @@ namespace Azure.Storage.Blobs.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SubmitBatchAsync(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
-            Argument.AssertNotNull(content, nameof(content));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (multipartContentType == null)
+            {
+                throw new ArgumentNullException(nameof(multipartContentType));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Container.SubmitBatch");
             scope.Start();
@@ -198,9 +207,18 @@ namespace Azure.Storage.Blobs.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response SubmitBatch(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
-            Argument.AssertNotNull(content, nameof(content));
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (multipartContentType == null)
+            {
+                throw new ArgumentNullException(nameof(multipartContentType));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Container.SubmitBatch");
             scope.Start();

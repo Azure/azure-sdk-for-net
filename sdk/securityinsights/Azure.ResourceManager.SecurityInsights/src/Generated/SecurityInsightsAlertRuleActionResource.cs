@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsAlertRuleActionResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsAlertRuleActionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsAlertRuleActionResource> Update(WaitUntil waitUntil, SecurityInsightsAlertRuleActionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionResource.Update");
             scope.Start();

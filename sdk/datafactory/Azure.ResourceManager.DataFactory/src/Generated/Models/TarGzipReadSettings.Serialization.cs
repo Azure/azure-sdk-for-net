@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
+            if (PreserveCompressionFileNameAsFolder != null)
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
                 JsonSerializer.Serialize(writer, PreserveCompressionFileNameAsFolder);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> preserveCompressionFileNameAsFolder = default;
+            DataFactoryElement<bool> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TarGzipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
+            return new TarGzipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder);
         }
 
         BinaryData IPersistableModel<TarGzipReadSettings>.Write(ModelReaderWriterOptions options)

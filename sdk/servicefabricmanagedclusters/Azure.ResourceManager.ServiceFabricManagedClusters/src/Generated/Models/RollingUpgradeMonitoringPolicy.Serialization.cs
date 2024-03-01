@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradeMonitoringPolicy(failureAction, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, serializedAdditionalRawData);
+            return new RollingUpgradeMonitoringPolicy(
+                failureAction,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradeMonitoringPolicy>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="url"/> is null. </exception>
         public WebHookActivity(string name, WebHookActivityMethod method, object url) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(url, nameof(url));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
 
             Method = method;
             Url = url;

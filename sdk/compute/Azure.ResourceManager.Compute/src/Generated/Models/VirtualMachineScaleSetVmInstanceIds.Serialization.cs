@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InstanceIds))
+            if (!(InstanceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceIds"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> instanceIds = default;
+            IList<string> instanceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmInstanceIds(Optional.ToList(instanceIds), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmInstanceIds(instanceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceIds>.Write(ModelReaderWriterOptions options)

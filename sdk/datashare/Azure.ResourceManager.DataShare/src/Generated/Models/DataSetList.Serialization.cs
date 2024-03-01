@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ShareDataSetData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ShareDataSetData> array = new List<ShareDataSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareDataSetData.DeserializeShareDataSetData(item));
+                        array.Add(ShareDataSetData.DeserializeShareDataSetData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSetList(nextLink.Value, value, serializedAdditionalRawData);
+            return new DataSetList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSetList>.Write(ModelReaderWriterOptions options)

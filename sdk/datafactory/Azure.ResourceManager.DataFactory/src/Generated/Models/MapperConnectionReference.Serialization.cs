@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionName))
+            if (ConnectionName != null)
             {
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (Optional.IsDefined(ConnectionType))
+            if (ConnectionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> connectionName = default;
-            Optional<MapperConnectionType> type = default;
+            string connectionName = default;
+            MapperConnectionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperConnectionReference(connectionName.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MapperConnectionReference(connectionName, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperConnectionReference>.Write(ModelReaderWriterOptions options)

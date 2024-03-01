@@ -71,14 +71,16 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "APIKey": return OnYourDataApiKeyAuthenticationOptions.DeserializeOnYourDataApiKeyAuthenticationOptions(element);
-                    case "ConnectionString": return OnYourDataConnectionStringAuthenticationOptions.DeserializeOnYourDataConnectionStringAuthenticationOptions(element);
-                    case "KeyAndKeyId": return OnYourDataKeyAndKeyIdAuthenticationOptions.DeserializeOnYourDataKeyAndKeyIdAuthenticationOptions(element);
-                    case "SystemAssignedManagedIdentity": return OnYourDataSystemAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataSystemAssignedManagedIdentityAuthenticationOptions(element);
-                    case "UserAssignedManagedIdentity": return OnYourDataUserAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(element);
+                    case "APIKey": return OnYourDataApiKeyAuthenticationOptions.DeserializeOnYourDataApiKeyAuthenticationOptions(element, options);
+                    case "ConnectionString": return OnYourDataConnectionStringAuthenticationOptions.DeserializeOnYourDataConnectionStringAuthenticationOptions(element, options);
+                    case "KeyAndKeyId": return OnYourDataKeyAndKeyIdAuthenticationOptions.DeserializeOnYourDataKeyAndKeyIdAuthenticationOptions(element, options);
+                    case "EncodedAPIKey": return OnYourDataEncodedApiKeyAuthenticationOptions.DeserializeOnYourDataEncodedApiKeyAuthenticationOptions(element, options);
+                    case "AccessToken": return OnYourDataAccessTokenAuthenticationOptions.DeserializeOnYourDataAccessTokenAuthenticationOptions(element, options);
+                    case "SystemAssignedManagedIdentity": return OnYourDataSystemAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataSystemAssignedManagedIdentityAuthenticationOptions(element, options);
+                    case "UserAssignedManagedIdentity": return OnYourDataUserAssignedManagedIdentityAuthenticationOptions.DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(element, options);
                 }
             }
-            return UnknownOnYourDataAuthenticationOptions.DeserializeUnknownOnYourDataAuthenticationOptions(element);
+            return UnknownOnYourDataAuthenticationOptions.DeserializeUnknownOnYourDataAuthenticationOptions(element, options);
         }
 
         BinaryData IPersistableModel<OnYourDataAuthenticationOptions>.Write(ModelReaderWriterOptions options)

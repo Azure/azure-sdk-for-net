@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -56,8 +55,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetApplianceId"/> or <paramref name="providerSpecificDetails"/> is null. </exception>
         public UpdateApplianceForReplicationProtectedItemProperties(string targetApplianceId, UpdateApplianceForReplicationProtectedItemProviderSpecificContent providerSpecificDetails)
         {
-            Argument.AssertNotNull(targetApplianceId, nameof(targetApplianceId));
-            Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
+            if (targetApplianceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetApplianceId));
+            }
+            if (providerSpecificDetails == null)
+            {
+                throw new ArgumentNullException(nameof(providerSpecificDetails));
+            }
 
             TargetApplianceId = targetApplianceId;
             ProviderSpecificDetails = providerSpecificDetails;

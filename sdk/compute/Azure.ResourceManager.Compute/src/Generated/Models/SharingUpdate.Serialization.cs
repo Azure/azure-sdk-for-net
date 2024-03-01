@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operationType"u8);
             writer.WriteStringValue(OperationType.ToString());
-            if (Optional.IsCollectionDefined(Groups))
+            if (!(Groups is ChangeTrackingList<SharingProfileGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SharingUpdateOperationType operationType = default;
-            Optional<IList<SharingProfileGroup>> groups = default;
+            IList<SharingProfileGroup> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item));
+                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item, options));
                     }
                     groups = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingUpdate(operationType, Optional.ToList(groups), serializedAdditionalRawData);
+            return new SharingUpdate(operationType, groups ?? new ChangeTrackingList<SharingProfileGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingUpdate>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FileFormats))
+            if (!(FileFormats is ChangeTrackingList<ScheduledActionFileFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fileFormats"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<ScheduledActionFileFormat>> fileFormats = default;
+            IList<ScheduledActionFileFormat> fileFormats = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileDestination(Optional.ToList(fileFormats), serializedAdditionalRawData);
+            return new FileDestination(fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileDestination>.Write(ModelReaderWriterOptions options)

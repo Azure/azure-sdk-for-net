@@ -32,6 +32,7 @@ internal static class ResourceExtensions
         string? serviceName = null;
         string? serviceNamespace = null;
         string? serviceInstance = null;
+        string? serviceVersion = null;
         bool? hasDefaultServiceName = null;
 
         if (instrumentationKey != null && resource.Attributes.Any())
@@ -62,6 +63,9 @@ internal static class ResourceExtensions
                 case AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
                     SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
                     continue;
+                case SemanticConventions.AttributeServiceVersion when attribute.Value is string _serviceVersion:
+                    serviceVersion = _serviceVersion;
+                    break;
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
                     if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
                     {
@@ -102,6 +106,11 @@ internal static class ResourceExtensions
         catch (Exception ex)
         {
             AzureMonitorExporterEventSource.Log.ErrorInitializingRoleInstanceToHostName(ex);
+        }
+
+        if (serviceVersion != null)
+        {
+            azureMonitorResource.ServiceVersion = serviceVersion;
         }
 
         if (aksResourceProcessor != null)

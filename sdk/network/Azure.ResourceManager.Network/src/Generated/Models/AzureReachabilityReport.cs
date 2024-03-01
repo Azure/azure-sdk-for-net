@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -54,9 +53,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregationLevel"/>, <paramref name="providerLocation"/> or <paramref name="reachabilityReport"/> is null. </exception>
         internal AzureReachabilityReport(string aggregationLevel, AzureReachabilityReportLocation providerLocation, IEnumerable<AzureReachabilityReportItem> reachabilityReport)
         {
-            Argument.AssertNotNull(aggregationLevel, nameof(aggregationLevel));
-            Argument.AssertNotNull(providerLocation, nameof(providerLocation));
-            Argument.AssertNotNull(reachabilityReport, nameof(reachabilityReport));
+            if (aggregationLevel == null)
+            {
+                throw new ArgumentNullException(nameof(aggregationLevel));
+            }
+            if (providerLocation == null)
+            {
+                throw new ArgumentNullException(nameof(providerLocation));
+            }
+            if (reachabilityReport == null)
+            {
+                throw new ArgumentNullException(nameof(reachabilityReport));
+            }
 
             AggregationLevel = aggregationLevel;
             ProviderLocation = providerLocation;

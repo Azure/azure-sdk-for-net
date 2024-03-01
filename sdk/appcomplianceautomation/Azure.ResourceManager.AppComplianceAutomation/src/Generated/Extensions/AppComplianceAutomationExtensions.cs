@@ -43,7 +43,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> Returns a <see cref="ReportResource"/> object. </returns>
         public static ReportResource GetReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppComplianceAutomationArmClient(client).GetReportResource(id);
         }
@@ -62,7 +65,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
         public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppComplianceAutomationArmClient(client).GetSnapshotResource(id);
         }
@@ -79,7 +85,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
         public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResources();
         }
@@ -117,7 +126,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         [ForwardsClientCalls]
         public static async Task<Response<ReportResource>> GetReportResourceAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResourceAsync(reportName, cancellationToken).ConfigureAwait(false);
         }
@@ -155,7 +167,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         [ForwardsClientCalls]
         public static Response<ReportResource> GetReportResource(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResource(reportName, cancellationToken);
         }

@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (PlaceholderImageUri != null)
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -32,7 +32,7 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             MediaInputType kind = "Unknown";
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -46,7 +46,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownMediaInput(kind, placeholderImageUri.Value);
+            return new UnknownMediaInput(kind, placeholderImageUri);
         }
     }
 }

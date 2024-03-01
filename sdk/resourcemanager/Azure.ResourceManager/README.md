@@ -388,7 +388,7 @@ ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}
 var createResult = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
 Console.WriteLine($"Resource {createResult.Value.Id.Name} in resource group {createResult.Value.Id.ResourceGroupName} updated");
 ```
-### Update GenericResourc Tags
+### Update GenericResource Tags
 ```C# Snippet:Update_GenericResourc_Tags
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceIdentifier id = new ResourceIdentifier("/subscriptions/{subscription_id}/resourceGroups/{resourcegroup_name}/providers/Microsoft.Network/virtualNetworks/{vnet_name}");

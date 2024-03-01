@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFunctionDefinitionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFunctionDefinitionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> GetAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
         public virtual Response<NetworkFunctionDefinitionGroupResource> Get(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFunctionDefinitionGroupResource>> GetIfExistsAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
         public virtual NullableResponse<NetworkFunctionDefinitionGroupResource> GetIfExists(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+            if (networkFunctionDefinitionGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(networkFunctionDefinitionGroupName));
+            }
+            if (networkFunctionDefinitionGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFunctionDefinitionGroupName));
+            }
 
             using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
             scope.Start();

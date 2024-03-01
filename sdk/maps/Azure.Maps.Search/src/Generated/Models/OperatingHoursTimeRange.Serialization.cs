@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<OperatingHoursTime> startTime = default;
-            Optional<OperatingHoursTime> endTime = default;
+            OperatingHoursTime startTime = default;
+            OperatingHoursTime endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new OperatingHoursTimeRange(startTime.Value, endTime.Value);
+            return new OperatingHoursTimeRange(startTime, endTime);
         }
     }
 }

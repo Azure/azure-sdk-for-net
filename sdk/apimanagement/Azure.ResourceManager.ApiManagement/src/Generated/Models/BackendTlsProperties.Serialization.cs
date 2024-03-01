@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ShouldValidateCertificateChain))
+            if (ShouldValidateCertificateChain.HasValue)
             {
                 writer.WritePropertyName("validateCertificateChain"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (Optional.IsDefined(ShouldValidateCertificateName))
+            if (ShouldValidateCertificateName.HasValue)
             {
                 writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<bool> validateCertificateChain = default;
-            Optional<bool> validateCertificateName = default;
+            bool? validateCertificateChain = default;
+            bool? validateCertificateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendTlsProperties(Optional.ToNullable(validateCertificateChain), Optional.ToNullable(validateCertificateName), serializedAdditionalRawData);
+            return new BackendTlsProperties(validateCertificateChain, validateCertificateName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendTlsProperties>.Write(ModelReaderWriterOptions options)

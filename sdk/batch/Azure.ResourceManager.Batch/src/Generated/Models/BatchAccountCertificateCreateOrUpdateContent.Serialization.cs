@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThumbprintAlgorithm))
+            if (ThumbprintAlgorithm != null)
             {
                 writer.WritePropertyName("thumbprintAlgorithm"u8);
                 writer.WriteStringValue(ThumbprintAlgorithm);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (ThumbprintString != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Optional.IsDefined(Format))
+            if (Format.HasValue)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Data))
+            if (Data != null)
             {
                 writer.WritePropertyName("data"u8);
 #if NET6_0_OR_GREATER
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> thumbprintAlgorithm = default;
-            Optional<string> thumbprint = default;
-            Optional<BatchAccountCertificateFormat> format = default;
-            Optional<BinaryData> data = default;
-            Optional<string> password = default;
+            SystemData systemData = default;
+            string thumbprintAlgorithm = default;
+            string thumbprint = default;
+            BatchAccountCertificateFormat? format = default;
+            BinaryData data = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountCertificateCreateOrUpdateContent(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), data.Value, password.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountCertificateCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                thumbprintAlgorithm,
+                thumbprint,
+                format,
+                data,
+                password,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountCertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

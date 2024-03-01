@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tcp))
+            if (Tcp.HasValue)
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
-            if (Optional.IsDefined(Udp))
+            if (Udp.HasValue)
             {
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
-            if (Optional.IsDefined(Icmp))
+            if (Icmp.HasValue)
             {
                 writer.WritePropertyName("icmp"u8);
                 writer.WriteNumberValue(Icmp.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> tcp = default;
-            Optional<int> udp = default;
-            Optional<int> icmp = default;
+            int? tcp = default;
+            int? udp = default;
+            int? icmp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PinholeTimeouts(Optional.ToNullable(tcp), Optional.ToNullable(udp), Optional.ToNullable(icmp), serializedAdditionalRawData);
+            return new PinholeTimeouts(tcp, udp, icmp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PinholeTimeouts>.Write(ModelReaderWriterOptions options)

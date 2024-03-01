@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ArmDeploymentWhatIfProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = ArmDeploymentWhatIfProperties.DeserializeArmDeploymentWhatIfProperties(property.Value);
+                    properties = ArmDeploymentWhatIfProperties.DeserializeArmDeploymentWhatIfProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentWhatIfContent(Optional.ToNullable(location), properties, serializedAdditionalRawData);
+            return new ArmDeploymentWhatIfContent(location, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentWhatIfContent>.Write(ModelReaderWriterOptions options)

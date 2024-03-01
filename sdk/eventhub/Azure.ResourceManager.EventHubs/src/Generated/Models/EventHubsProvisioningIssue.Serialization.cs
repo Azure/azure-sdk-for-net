@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Properties))
+            if (options.Format != "W" && Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EventHubsProvisioningIssueProperties> properties = default;
+            string name = default;
+            EventHubsProvisioningIssueProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    properties = EventHubsProvisioningIssueProperties.DeserializeEventHubsProvisioningIssueProperties(property.Value);
+                    properties = EventHubsProvisioningIssueProperties.DeserializeEventHubsProvisioningIssueProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsProvisioningIssue(name.Value, properties.Value, serializedAdditionalRawData);
+            return new EventHubsProvisioningIssue(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsProvisioningIssue>.Write(ModelReaderWriterOptions options)

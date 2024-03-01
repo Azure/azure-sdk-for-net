@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPrivileged))
+            if (IsPrivileged.HasValue)
             {
                 writer.WritePropertyName("privileged"u8);
                 writer.WriteBooleanValue(IsPrivileged.Value);
             }
-            if (Optional.IsDefined(AllowPrivilegeEscalation))
+            if (AllowPrivilegeEscalation.HasValue)
             {
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (Optional.IsDefined(RunAsGroup))
+            if (RunAsGroup.HasValue)
             {
                 writer.WritePropertyName("runAsGroup"u8);
                 writer.WriteNumberValue(RunAsGroup.Value);
             }
-            if (Optional.IsDefined(RunAsUser))
+            if (RunAsUser.HasValue)
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteNumberValue(RunAsUser.Value);
             }
-            if (Optional.IsDefined(SeccompProfile))
+            if (SeccompProfile != null)
             {
                 writer.WritePropertyName("seccompProfile"u8);
                 writer.WriteStringValue(SeccompProfile);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<bool> privileged = default;
-            Optional<bool> allowPrivilegeEscalation = default;
-            Optional<ContainerSecurityContextCapabilitiesDefinition> capabilities = default;
-            Optional<int> runAsGroup = default;
-            Optional<int> runAsUser = default;
-            Optional<string> seccompProfile = default;
+            bool? privileged = default;
+            bool? allowPrivilegeEscalation = default;
+            ContainerSecurityContextCapabilitiesDefinition capabilities = default;
+            int? runAsGroup = default;
+            int? runAsUser = default;
+            string seccompProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSecurityContextCapabilitiesDefinition.DeserializeContainerSecurityContextCapabilitiesDefinition(property.Value);
+                    capabilities = ContainerSecurityContextCapabilitiesDefinition.DeserializeContainerSecurityContextCapabilitiesDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("runAsGroup"u8))
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerSecurityContextDefinition(Optional.ToNullable(privileged), Optional.ToNullable(allowPrivilegeEscalation), capabilities.Value, Optional.ToNullable(runAsGroup), Optional.ToNullable(runAsUser), seccompProfile.Value, serializedAdditionalRawData);
+            return new ContainerSecurityContextDefinition(
+                privileged,
+                allowPrivilegeEscalation,
+                capabilities,
+                runAsGroup,
+                runAsUser,
+                seccompProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerSecurityContextDefinition>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (!(Certificates is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IList<string>> certificates = default;
+            IList<string> certificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterRawCertificate(Optional.ToList(certificates), serializedAdditionalRawData);
+            return new HciClusterRawCertificate(certificates ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterRawCertificate>.Write(ModelReaderWriterOptions options)

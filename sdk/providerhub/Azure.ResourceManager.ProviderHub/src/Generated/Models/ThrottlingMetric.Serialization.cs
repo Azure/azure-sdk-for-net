@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(MetricType.ToString());
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             ThrottlingMetricType type = default;
             long limit = default;
-            Optional<TimeSpan> interval = default;
+            TimeSpan? interval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThrottlingMetric(type, limit, Optional.ToNullable(interval), serializedAdditionalRawData);
+            return new ThrottlingMetric(type, limit, interval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThrottlingMetric>.Write(ModelReaderWriterOptions options)

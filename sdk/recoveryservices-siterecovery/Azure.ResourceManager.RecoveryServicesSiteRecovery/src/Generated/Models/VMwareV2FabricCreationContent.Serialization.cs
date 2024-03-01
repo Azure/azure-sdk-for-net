@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VMwareSiteId))
+            if (VMwareSiteId != null)
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (Optional.IsDefined(PhysicalSiteId))
+            if (PhysicalSiteId != null)
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vmwareSiteId = default;
-            Optional<ResourceIdentifier> physicalSiteId = default;
+            ResourceIdentifier vmwareSiteId = default;
+            ResourceIdentifier physicalSiteId = default;
             ResourceIdentifier migrationSolutionId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareV2FabricCreationContent(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId);
+            return new VMwareV2FabricCreationContent(instanceType, serializedAdditionalRawData, vmwareSiteId, physicalSiteId, migrationSolutionId);
         }
 
         BinaryData IPersistableModel<VMwareV2FabricCreationContent>.Write(ModelReaderWriterOptions options)

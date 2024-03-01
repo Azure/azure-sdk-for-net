@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientTrackingId))
+            if (ClientTrackingId != null)
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> clientTrackingId = default;
+            string clientTrackingId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Correlation(clientTrackingId.Value, serializedAdditionalRawData);
+            return new Correlation(clientTrackingId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Correlation>.Write(ModelReaderWriterOptions options)

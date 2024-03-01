@@ -286,7 +286,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningComputeResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningComputePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.Update");
             scope.Start();
@@ -332,7 +335,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<MachineLearningComputeResource> Update(WaitUntil waitUntil, MachineLearningComputePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.Update");
             scope.Start();
@@ -377,7 +383,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="customServices"/> is null. </exception>
         public virtual async Task<Response> UpdateCustomServicesAsync(IEnumerable<CustomService> customServices, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customServices, nameof(customServices));
+            if (customServices == null)
+            {
+                throw new ArgumentNullException(nameof(customServices));
+            }
 
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateCustomServices");
             scope.Start();
@@ -419,7 +428,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="customServices"/> is null. </exception>
         public virtual Response UpdateCustomServices(IEnumerable<CustomService> customServices, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customServices, nameof(customServices));
+            if (customServices == null)
+            {
+                throw new ArgumentNullException(nameof(customServices));
+            }
 
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateCustomServices");
             scope.Start();
@@ -849,7 +861,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="idleShutdownSetting"/> is null. </exception>
         public virtual async Task<Response> UpdateIdleShutdownSettingAsync(IdleShutdownSetting idleShutdownSetting, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(idleShutdownSetting, nameof(idleShutdownSetting));
+            if (idleShutdownSetting == null)
+            {
+                throw new ArgumentNullException(nameof(idleShutdownSetting));
+            }
 
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateIdleShutdownSetting");
             scope.Start();
@@ -891,7 +906,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="idleShutdownSetting"/> is null. </exception>
         public virtual Response UpdateIdleShutdownSetting(IdleShutdownSetting idleShutdownSetting, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(idleShutdownSetting, nameof(idleShutdownSetting));
+            if (idleShutdownSetting == null)
+            {
+                throw new ArgumentNullException(nameof(idleShutdownSetting));
+            }
 
             using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateIdleShutdownSetting");
             scope.Start();

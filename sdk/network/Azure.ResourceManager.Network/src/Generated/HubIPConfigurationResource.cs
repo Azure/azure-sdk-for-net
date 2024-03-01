@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HubIPConfigurationResource>> UpdateAsync(WaitUntil waitUntil, HubIPConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HubIPConfigurationResource> Update(WaitUntil waitUntil, HubIPConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationResource.Update");
             scope.Start();

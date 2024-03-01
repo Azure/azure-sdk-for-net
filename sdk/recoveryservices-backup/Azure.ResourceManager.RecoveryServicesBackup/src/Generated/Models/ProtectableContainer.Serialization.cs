@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            if (Optional.IsDefined(ContainerId))
+            if (ContainerId != null)
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element);
-                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element);
+                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element, options);
+                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element, options);
                 }
             }
-            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);
+            return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element, options);
         }
 
         BinaryData IPersistableModel<ProtectableContainer>.Write(ModelReaderWriterOptions options)

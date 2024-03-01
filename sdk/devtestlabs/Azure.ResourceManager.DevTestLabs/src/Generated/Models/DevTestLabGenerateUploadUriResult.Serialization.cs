@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UploadUri))
+            if (UploadUri != null)
             {
                 writer.WritePropertyName("uploadUri"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<Uri> uploadUri = default;
+            Uri uploadUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGenerateUploadUriResult(uploadUri.Value, serializedAdditionalRawData);
+            return new DevTestLabGenerateUploadUriResult(uploadUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGenerateUploadUriResult>.Write(ModelReaderWriterOptions options)

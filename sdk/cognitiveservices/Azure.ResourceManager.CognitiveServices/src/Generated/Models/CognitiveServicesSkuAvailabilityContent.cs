@@ -54,8 +54,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skus"/> or <paramref name="kind"/> is null. </exception>
         public CognitiveServicesSkuAvailabilityContent(IEnumerable<string> skus, string kind, ResourceType resourceType)
         {
-            Argument.AssertNotNull(skus, nameof(skus));
-            Argument.AssertNotNull(kind, nameof(kind));
+            if (skus == null)
+            {
+                throw new ArgumentNullException(nameof(skus));
+            }
+            if (kind == null)
+            {
+                throw new ArgumentNullException(nameof(kind));
+            }
 
             Skus = skus.ToList();
             Kind = kind;

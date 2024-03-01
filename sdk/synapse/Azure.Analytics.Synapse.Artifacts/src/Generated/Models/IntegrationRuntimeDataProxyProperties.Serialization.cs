@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(StagingLinkedService))
+            if (StagingLinkedService != null)
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<EntityReference> connectVia = default;
-            Optional<EntityReference> stagingLinkedService = default;
-            Optional<string> path = default;
+            EntityReference connectVia = default;
+            EntityReference stagingLinkedService = default;
+            string path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectVia"u8))
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value);
+            return new IntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path);
         }
 
         internal partial class IntegrationRuntimeDataProxyPropertiesConverter : JsonConverter<IntegrationRuntimeDataProxyProperties>

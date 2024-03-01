@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public WebActivityAuthentication(string type)
         {
-            Argument.AssertNotNull(type, nameof(type));
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
 
             Type = type;
         }

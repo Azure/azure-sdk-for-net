@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<string> resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value);
+            return new PartnerEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId);
         }
 
         BinaryData IPersistableModel<PartnerEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

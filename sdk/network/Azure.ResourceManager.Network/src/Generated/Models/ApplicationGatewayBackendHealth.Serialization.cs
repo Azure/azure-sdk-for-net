@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BackendAddressPools))
+            if (!(BackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendHealthPool> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backendAddressPools"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayBackendHealthPool>> backendAddressPools = default;
+            IReadOnlyList<ApplicationGatewayBackendHealthPool> backendAddressPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthPool> array = new List<ApplicationGatewayBackendHealthPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item));
+                        array.Add(ApplicationGatewayBackendHealthPool.DeserializeApplicationGatewayBackendHealthPool(item, options));
                     }
                     backendAddressPools = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealth(Optional.ToList(backendAddressPools), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealth(backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendHealthPool>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealth>.Write(ModelReaderWriterOptions options)

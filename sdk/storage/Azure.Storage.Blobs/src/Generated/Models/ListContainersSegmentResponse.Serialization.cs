@@ -49,7 +49,13 @@ namespace Azure.Storage.Blobs.Models
                 }
                 containerItems = array;
             }
-            return new ListContainersSegmentResponse(serviceEndpoint, prefix, marker, maxResults, containerItems, nextMarker);
+            return new ListContainersSegmentResponse(
+                serviceEndpoint,
+                prefix,
+                marker,
+                maxResults,
+                containerItems,
+                nextMarker);
         }
     }
 }

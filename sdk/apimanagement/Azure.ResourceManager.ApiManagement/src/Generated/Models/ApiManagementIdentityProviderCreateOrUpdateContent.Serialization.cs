@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityProviderType))
+            if (IdentityProviderType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
-            if (Optional.IsDefined(SignInTenant))
+            if (SignInTenant != null)
             {
                 writer.WritePropertyName("signinTenant"u8);
                 writer.WriteStringValue(SignInTenant);
             }
-            if (Optional.IsCollectionDefined(AllowedTenants))
+            if (!(AllowedTenants is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedTenants"u8);
                 writer.WriteStartArray();
@@ -69,37 +69,37 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Authority))
+            if (Authority != null)
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignUpPolicyName))
+            if (SignUpPolicyName != null)
             {
                 writer.WritePropertyName("signupPolicyName"u8);
                 writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Optional.IsDefined(SignInPolicyName))
+            if (SignInPolicyName != null)
             {
                 writer.WritePropertyName("signinPolicyName"u8);
                 writer.WriteStringValue(SignInPolicyName);
             }
-            if (Optional.IsDefined(ProfileEditingPolicyName))
+            if (ProfileEditingPolicyName != null)
             {
                 writer.WritePropertyName("profileEditingPolicyName"u8);
                 writer.WriteStringValue(ProfileEditingPolicyName);
             }
-            if (Optional.IsDefined(PasswordResetPolicyName))
+            if (PasswordResetPolicyName != null)
             {
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IdentityProviderType> type0 = default;
-            Optional<string> signinTenant = default;
-            Optional<IList<string>> allowedTenants = default;
-            Optional<string> authority = default;
-            Optional<string> signupPolicyName = default;
-            Optional<string> signinPolicyName = default;
-            Optional<string> profileEditingPolicyName = default;
-            Optional<string> passwordResetPolicyName = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            SystemData systemData = default;
+            IdentityProviderType? type0 = default;
+            string signinTenant = default;
+            IList<string> allowedTenants = default;
+            string authority = default;
+            string signupPolicyName = default;
+            string signinPolicyName = default;
+            string profileEditingPolicyName = default;
+            string passwordResetPolicyName = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +266,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementIdentityProviderCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                signinTenant,
+                allowedTenants ?? new ChangeTrackingList<string>(),
+                authority,
+                signupPolicyName,
+                signinPolicyName,
+                profileEditingPolicyName,
+                passwordResetPolicyName,
+                clientId,
+                clientSecret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

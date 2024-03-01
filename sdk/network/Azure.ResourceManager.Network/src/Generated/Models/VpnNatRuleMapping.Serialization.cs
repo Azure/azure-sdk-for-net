@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressSpace))
+            if (AddressSpace != null)
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
-            if (Optional.IsDefined(PortRange))
+            if (PortRange != null)
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteStringValue(PortRange);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> addressSpace = default;
-            Optional<string> portRange = default;
+            string addressSpace = default;
+            string portRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnNatRuleMapping(addressSpace.Value, portRange.Value, serializedAdditionalRawData);
+            return new VpnNatRuleMapping(addressSpace, portRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnNatRuleMapping>.Write(ModelReaderWriterOptions options)

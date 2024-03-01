@@ -80,9 +80,26 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteHybridConnectionNamespaceRelayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.CreateOrUpdate");
             scope.Start();
@@ -131,9 +148,26 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteHybridConnectionNamespaceRelayResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.CreateOrUpdate");
             scope.Start();
@@ -180,8 +214,22 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public virtual async Task<Response<SiteHybridConnectionNamespaceRelayResource>> GetAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.Get");
             scope.Start();
@@ -227,8 +275,22 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public virtual Response<SiteHybridConnectionNamespaceRelayResource> Get(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.Get");
             scope.Start();
@@ -274,8 +336,22 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.Exists");
             scope.Start();
@@ -319,8 +395,22 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public virtual Response<bool> Exists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.Exists");
             scope.Start();
@@ -364,8 +454,22 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteHybridConnectionNamespaceRelayResource>> GetIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.GetIfExists");
             scope.Start();
@@ -411,8 +515,22 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         public virtual NullableResponse<SiteHybridConnectionNamespaceRelayResource> GetIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            if (namespaceName == null)
+            {
+                throw new ArgumentNullException(nameof(namespaceName));
+            }
+            if (namespaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
+            }
+            if (relayName == null)
+            {
+                throw new ArgumentNullException(nameof(relayName));
+            }
+            if (relayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
+            }
 
             using var scope = _siteHybridConnectionNamespaceRelayWebAppsClientDiagnostics.CreateScope("SiteHybridConnectionNamespaceRelayCollection.GetIfExists");
             scope.Start();

@@ -66,9 +66,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubDescriptionData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,9 +118,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubDescriptionData> Get(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -158,10 +200,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, resourceName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -186,10 +252,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, resourceName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -237,10 +327,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -263,10 +377,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string resourceName, IotHubDescriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -308,9 +446,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -335,9 +494,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -377,7 +557,14 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubDescriptionListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -402,7 +589,14 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubDescriptionListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -447,8 +641,22 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubDescriptionListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -474,8 +682,22 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubDescriptionListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -523,9 +745,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubRegistryStatistics>> GetStatsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetStatsRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -552,9 +795,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubRegistryStatistics> GetStats(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetStatsRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -602,9 +866,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubSkuDescriptionListResult>> GetValidSkusAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetValidSkusRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -631,9 +916,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubSkuDescriptionListResult> GetValidSkus(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetValidSkusRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -684,10 +990,38 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="eventHubEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventHubConsumerGroupsListResult>> ListEventHubConsumerGroupsAsync(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
 
             using var message = CreateListEventHubConsumerGroupsRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -715,10 +1049,38 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="eventHubEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventHubConsumerGroupsListResult> ListEventHubConsumerGroups(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
 
             using var message = CreateListEventHubConsumerGroupsRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -771,11 +1133,46 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventHubConsumerGroupInfoData>> GetEventHubConsumerGroupAsync(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var message = CreateGetEventHubConsumerGroupRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -806,11 +1203,46 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventHubConsumerGroupInfoData> GetEventHubConsumerGroup(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var message = CreateGetEventHubConsumerGroupRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName, name);
             _pipeline.Send(message, cancellationToken);
@@ -870,12 +1302,50 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventHubConsumerGroupInfoData>> CreateEventHubConsumerGroupAsync(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCreateEventHubConsumerGroupRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -905,12 +1375,50 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventHubConsumerGroupInfoData> CreateEventHubConsumerGroup(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, EventHubConsumerGroupInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCreateEventHubConsumerGroupRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName, name, content);
             _pipeline.Send(message, cancellationToken);
@@ -963,11 +1471,46 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteEventHubConsumerGroupAsync(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var message = CreateDeleteEventHubConsumerGroupRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -991,11 +1534,46 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteEventHubConsumerGroup(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var message = CreateDeleteEventHubConsumerGroupRequest(subscriptionId, resourceGroupName, resourceName, eventHubEndpointName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1038,9 +1616,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubJobInfoListResult>> ListJobsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListJobsRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1067,9 +1666,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubJobInfoListResult> ListJobs(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListJobsRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -1119,10 +1739,38 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubJobInfo>> GetJobAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var message = CreateGetJobRequest(subscriptionId, resourceGroupName, resourceName, jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1150,10 +1798,38 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubJobInfo> GetJob(string subscriptionId, string resourceGroupName, string resourceName, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var message = CreateGetJobRequest(subscriptionId, resourceGroupName, resourceName, jobId);
             _pipeline.Send(message, cancellationToken);
@@ -1201,9 +1877,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubQuotaMetricInfoListResult>> GetQuotaMetricsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetQuotaMetricsRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1230,9 +1927,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubQuotaMetricInfoListResult> GetQuotaMetrics(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetQuotaMetricsRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -1280,9 +1998,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubEndpointHealthInfoListResult>> GetEndpointHealthAsync(string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
 
             using var message = CreateGetEndpointHealthRequest(subscriptionId, resourceGroupName, iotHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1309,9 +2048,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubEndpointHealthInfoListResult> GetEndpointHealth(string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
 
             using var message = CreateGetEndpointHealthRequest(subscriptionId, resourceGroupName, iotHubName);
             _pipeline.Send(message, cancellationToken);
@@ -1358,8 +2118,18 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubNameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1385,8 +2155,18 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubNameAvailabilityResponse> CheckNameAvailability(string subscriptionId, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
@@ -1439,10 +2219,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubTestAllRoutesResult>> TestAllRoutesAsync(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateTestAllRoutesRequest(subscriptionId, resourceGroupName, iotHubName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1470,10 +2274,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubTestAllRoutesResult> TestAllRoutes(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateTestAllRoutesRequest(subscriptionId, resourceGroupName, iotHubName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1526,10 +2354,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubTestRouteResult>> TestRouteAsync(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateTestRouteRequest(subscriptionId, resourceGroupName, iotHubName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1557,10 +2409,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubTestRouteResult> TestRoute(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestRouteContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateTestRouteRequest(subscriptionId, resourceGroupName, iotHubName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1608,9 +2484,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SharedAccessSignatureAuthorizationRuleListResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1637,9 +2534,30 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SharedAccessSignatureAuthorizationRuleListResult> ListKeys(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListKeysRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -1690,10 +2608,38 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SharedAccessSignatureAuthorizationRule>> GetKeysForKeyNameAsync(string subscriptionId, string resourceGroupName, string resourceName, string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var message = CreateGetKeysForKeyNameRequest(subscriptionId, resourceGroupName, resourceName, keyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1721,10 +2667,38 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SharedAccessSignatureAuthorizationRule> GetKeysForKeyName(string subscriptionId, string resourceGroupName, string resourceName, string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var message = CreateGetKeysForKeyNameRequest(subscriptionId, resourceGroupName, resourceName, keyName);
             _pipeline.Send(message, cancellationToken);
@@ -1777,10 +2751,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubJobInfo>> ExportDevicesAsync(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateExportDevicesRequest(subscriptionId, resourceGroupName, resourceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1808,10 +2806,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubJobInfo> ExportDevices(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateExportDevicesRequest(subscriptionId, resourceGroupName, resourceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1864,10 +2886,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubJobInfo>> ImportDevicesAsync(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateImportDevicesRequest(subscriptionId, resourceGroupName, resourceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1895,10 +2941,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubJobInfo> ImportDevices(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateImportDevicesRequest(subscriptionId, resourceGroupName, resourceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1938,8 +3008,18 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubDescriptionListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1965,8 +3045,18 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubDescriptionListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -2007,9 +3097,26 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubDescriptionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2036,9 +3143,26 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubDescriptionListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -2080,10 +3204,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubSkuDescriptionListResult>> GetValidSkusNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetValidSkusNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2111,10 +3259,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubSkuDescriptionListResult> GetValidSkusNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetValidSkusNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -2157,11 +3329,42 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="eventHubEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventHubConsumerGroupsListResult>> ListEventHubConsumerGroupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
 
             using var message = CreateListEventHubConsumerGroupsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, eventHubEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2190,11 +3393,42 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="eventHubEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventHubConsumerGroupsListResult> ListEventHubConsumerGroupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (eventHubEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(eventHubEndpointName));
+            }
+            if (eventHubEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubEndpointName));
+            }
 
             using var message = CreateListEventHubConsumerGroupsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName, eventHubEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -2236,10 +3470,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubJobInfoListResult>> ListJobsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListJobsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2267,10 +3525,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubJobInfoListResult> ListJobsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListJobsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -2312,10 +3594,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubQuotaMetricInfoListResult>> GetQuotaMetricsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetQuotaMetricsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2343,10 +3649,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubQuotaMetricInfoListResult> GetQuotaMetricsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateGetQuotaMetricsNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -2388,10 +3718,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IotHubEndpointHealthInfoListResult>> GetEndpointHealthNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
 
             using var message = CreateGetEndpointHealthNextPageRequest(nextLink, subscriptionId, resourceGroupName, iotHubName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2419,10 +3773,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IotHubEndpointHealthInfoListResult> GetEndpointHealthNextPage(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(iotHubName, nameof(iotHubName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (iotHubName == null)
+            {
+                throw new ArgumentNullException(nameof(iotHubName));
+            }
+            if (iotHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iotHubName));
+            }
 
             using var message = CreateGetEndpointHealthNextPageRequest(nextLink, subscriptionId, resourceGroupName, iotHubName);
             _pipeline.Send(message, cancellationToken);
@@ -2464,10 +3842,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SharedAccessSignatureAuthorizationRuleListResult>> ListKeysNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListKeysNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2495,10 +3897,34 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SharedAccessSignatureAuthorizationRuleListResult> ListKeysNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListKeysNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);

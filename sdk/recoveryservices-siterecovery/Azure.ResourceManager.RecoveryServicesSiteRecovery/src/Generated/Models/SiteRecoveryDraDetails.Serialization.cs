@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(BiosId))
+            if (options.Format != "W" && BiosId != null)
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
+            if (options.Format != "W" && LastHeartbeatReceivedOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ForwardProtectedItemCount))
+            if (options.Format != "W" && ForwardProtectedItemCount.HasValue)
             {
                 writer.WritePropertyName("forwardProtectedItemCount"u8);
                 writer.WriteNumberValue(ForwardProtectedItemCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReverseProtectedItemCount))
+            if (options.Format != "W" && ReverseProtectedItemCount.HasValue)
             {
                 writer.WritePropertyName("reverseProtectedItemCount"u8);
                 writer.WriteNumberValue(ReverseProtectedItemCount.Value);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> biosId = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<SiteRecoveryProtectionHealth> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<int> forwardProtectedItemCount = default;
-            Optional<int> reverseProtectedItemCount = default;
+            string id = default;
+            string name = default;
+            string biosId = default;
+            string version = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            SiteRecoveryProtectionHealth? health = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            int? forwardProtectedItemCount = default;
+            int? reverseProtectedItemCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDraDetails(id.Value, name.Value, biosId.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(forwardProtectedItemCount), Optional.ToNullable(reverseProtectedItemCount), serializedAdditionalRawData);
+            return new SiteRecoveryDraDetails(
+                id,
+                name,
+                biosId,
+                version,
+                lastHeartbeatUtc,
+                health,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                forwardProtectedItemCount,
+                reverseProtectedItemCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDraDetails>.Write(ModelReaderWriterOptions options)

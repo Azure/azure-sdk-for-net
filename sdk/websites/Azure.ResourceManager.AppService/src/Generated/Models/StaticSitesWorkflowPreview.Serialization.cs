@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Path))
+            if (options.Format != "W" && Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (options.Format != "W" && Optional.IsDefined(Contents))
+            if (options.Format != "W" && Contents != null)
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteStringValue(Contents);
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<string> contents = default;
+            SystemData systemData = default;
+            string path = default;
+            string contents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSitesWorkflowPreview(id, name, type, systemData.Value, path.Value, contents.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSitesWorkflowPreview(
+                id,
+                name,
+                type,
+                systemData,
+                path,
+                contents,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSitesWorkflowPreview>.Write(ModelReaderWriterOptions options)

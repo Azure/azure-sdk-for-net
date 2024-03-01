@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitProperty))
+            if (GitProperty != null)
             {
                 writer.WritePropertyName("gitProperty"u8);
                 writer.WriteObjectValue(GitProperty);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<ConfigurationServiceGitProperty> gitProperty = default;
+            ConfigurationServiceGitProperty gitProperty = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    gitProperty = ConfigurationServiceGitProperty.DeserializeConfigurationServiceGitProperty(property.Value);
+                    gitProperty = ConfigurationServiceGitProperty.DeserializeConfigurationServiceGitProperty(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceSettings(gitProperty.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceSettings(gitProperty, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceSettings>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -54,7 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contextUri"/> is null. </exception>
         public MachineLearningBuildContext(Uri contextUri)
         {
-            Argument.AssertNotNull(contextUri, nameof(contextUri));
+            if (contextUri == null)
+            {
+                throw new ArgumentNullException(nameof(contextUri));
+            }
 
             ContextUri = contextUri;
         }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,24 +53,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ShowInFeed))
+            if (ShowInFeed.HasValue)
             {
                 writer.WritePropertyName("showInFeed"u8);
                 writer.WriteBooleanValue(ShowInFeed.Value);
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<bool> showInFeed = default;
+            SystemData systemData = default;
+            string description = default;
+            string friendlyName = default;
+            bool? showInFeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), description.Value, friendlyName.Value, Optional.ToNullable(showInFeed), serializedAdditionalRawData);
+            return new VirtualApplicationGroupPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                friendlyName,
+                showInFeed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationGroupPatch>.Write(ModelReaderWriterOptions options)

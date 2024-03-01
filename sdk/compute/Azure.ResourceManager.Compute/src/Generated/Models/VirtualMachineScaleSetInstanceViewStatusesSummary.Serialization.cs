@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(StatusesSummary))
+            if (options.Format != "W" && !(StatusesSummary is ChangeTrackingList<VirtualMachineStatusCodeCount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statusesSummary"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineStatusCodeCount>> statusesSummary = default;
+            IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineStatusCodeCount> array = new List<VirtualMachineStatusCodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineStatusCodeCount.DeserializeVirtualMachineStatusCodeCount(item));
+                        array.Add(VirtualMachineStatusCodeCount.DeserializeVirtualMachineStatusCodeCount(item, options));
                     }
                     statusesSummary = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetInstanceViewStatusesSummary(Optional.ToList(statusesSummary), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetInstanceViewStatusesSummary(statusesSummary ?? new ChangeTrackingList<VirtualMachineStatusCodeCount>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetInstanceViewStatusesSummary>.Write(ModelReaderWriterOptions options)

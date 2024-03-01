@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
             writer.WriteObjectValue(Upgrade);
-            if (Optional.IsDefined(NodeImageSelection))
+            if (NodeImageSelection != null)
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
                 writer.WriteObjectValue(NodeImageSelection);
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ContainerServiceFleetManagedClusterUpgradeSpec upgrade = default;
-            Optional<NodeImageSelection> nodeImageSelection = default;
+            NodeImageSelection nodeImageSelection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgrade"u8))
                 {
-                    upgrade = ContainerServiceFleetManagedClusterUpgradeSpec.DeserializeContainerServiceFleetManagedClusterUpgradeSpec(property.Value);
+                    upgrade = ContainerServiceFleetManagedClusterUpgradeSpec.DeserializeContainerServiceFleetManagedClusterUpgradeSpec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeImageSelection"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    nodeImageSelection = NodeImageSelection.DeserializeNodeImageSelection(property.Value);
+                    nodeImageSelection = NodeImageSelection.DeserializeNodeImageSelection(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetManagedClusterUpdate>.Write(ModelReaderWriterOptions options)

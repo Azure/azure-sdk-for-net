@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CorsRules))
+            if (!(CorsRules is ChangeTrackingList<StorageCorsRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<StorageCorsRule>> corsRules = default;
+            IList<StorageCorsRule> corsRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageCorsRule> array = new List<StorageCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCorsRule.DeserializeStorageCorsRule(item));
+                        array.Add(StorageCorsRule.DeserializeStorageCorsRule(item, options));
                     }
                     corsRules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCorsRules(Optional.ToList(corsRules), serializedAdditionalRawData);
+            return new StorageCorsRules(corsRules ?? new ChangeTrackingList<StorageCorsRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCorsRules>.Write(ModelReaderWriterOptions options)

@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (Optional.IsDefined(SamplingOptions))
+            if (SamplingOptions != null)
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -47,7 +47,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            SamplingOptions samplingOptions = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -93,7 +93,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new HttpExtension(type, name, inputs, endpoint, image, samplingOptions.Value);
+            return new HttpExtension(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions);
         }
     }
 }

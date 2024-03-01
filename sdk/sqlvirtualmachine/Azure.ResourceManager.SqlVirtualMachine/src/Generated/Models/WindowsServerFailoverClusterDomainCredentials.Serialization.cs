@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterBootstrapAccountPassword))
+            if (ClusterBootstrapAccountPassword != null)
             {
                 writer.WritePropertyName("clusterBootstrapAccountPassword"u8);
                 writer.WriteStringValue(ClusterBootstrapAccountPassword);
             }
-            if (Optional.IsDefined(ClusterOperatorAccountPassword))
+            if (ClusterOperatorAccountPassword != null)
             {
                 writer.WritePropertyName("clusterOperatorAccountPassword"u8);
                 writer.WriteStringValue(ClusterOperatorAccountPassword);
             }
-            if (Optional.IsDefined(SqlServiceAccountPassword))
+            if (SqlServiceAccountPassword != null)
             {
                 writer.WritePropertyName("sqlServiceAccountPassword"u8);
                 writer.WriteStringValue(SqlServiceAccountPassword);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<string> clusterBootstrapAccountPassword = default;
-            Optional<string> clusterOperatorAccountPassword = default;
-            Optional<string> sqlServiceAccountPassword = default;
+            string clusterBootstrapAccountPassword = default;
+            string clusterOperatorAccountPassword = default;
+            string sqlServiceAccountPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsServerFailoverClusterDomainCredentials(clusterBootstrapAccountPassword.Value, clusterOperatorAccountPassword.Value, sqlServiceAccountPassword.Value, serializedAdditionalRawData);
+            return new WindowsServerFailoverClusterDomainCredentials(clusterBootstrapAccountPassword, clusterOperatorAccountPassword, sqlServiceAccountPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsServerFailoverClusterDomainCredentials>.Write(ModelReaderWriterOptions options)

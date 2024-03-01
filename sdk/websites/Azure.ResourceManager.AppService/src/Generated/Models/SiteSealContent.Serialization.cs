@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsLightTheme))
+            if (IsLightTheme.HasValue)
             {
                 writer.WritePropertyName("lightTheme"u8);
                 writer.WriteBooleanValue(IsLightTheme.Value);
             }
-            if (Optional.IsDefined(Locale))
+            if (Locale != null)
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> lightTheme = default;
-            Optional<string> locale = default;
+            bool? lightTheme = default;
+            string locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteSealContent(Optional.ToNullable(lightTheme), locale.Value, serializedAdditionalRawData);
+            return new SiteSealContent(lightTheme, locale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteSealContent>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<ManagedServicesMarketplaceRegistrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedServicesMarketplaceRegistrationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesMarketplaceRegistrationData> array = new List<ManagedServicesMarketplaceRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(item));
+                        array.Add(ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceRegistrationDefinitionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplaceRegistrationDefinitionList(value ?? new ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceRegistrationDefinitionList>.Write(ModelReaderWriterOptions options)

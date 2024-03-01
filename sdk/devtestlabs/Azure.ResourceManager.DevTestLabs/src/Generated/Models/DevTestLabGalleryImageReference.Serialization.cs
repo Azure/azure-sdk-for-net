@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Offer))
+            if (Offer != null)
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> osType = default;
-            Optional<string> version = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string osType = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImageReference(offer.Value, publisher.Value, sku.Value, osType.Value, version.Value, serializedAdditionalRawData);
+            return new DevTestLabGalleryImageReference(
+                offer,
+                publisher,
+                sku,
+                osType,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImageReference>.Write(ModelReaderWriterOptions options)

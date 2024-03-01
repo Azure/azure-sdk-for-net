@@ -62,8 +62,22 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FileWorkspaceDetailData>> GetAsync(string subscriptionId, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (fileWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(fileWorkspaceName));
+            }
+            if (fileWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, fileWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -91,8 +105,22 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FileWorkspaceDetailData> Get(string subscriptionId, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (fileWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(fileWorkspaceName));
+            }
+            if (fileWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, fileWorkspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -138,8 +166,22 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FileWorkspaceDetailData>> CreateAsync(string subscriptionId, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (fileWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(fileWorkspaceName));
+            }
+            if (fileWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, fileWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -165,8 +207,22 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FileWorkspaceDetailData> Create(string subscriptionId, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (fileWorkspaceName == null)
+            {
+                throw new ArgumentNullException(nameof(fileWorkspaceName));
+            }
+            if (fileWorkspaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileWorkspaceName));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, fileWorkspaceName);
             _pipeline.Send(message, cancellationToken);

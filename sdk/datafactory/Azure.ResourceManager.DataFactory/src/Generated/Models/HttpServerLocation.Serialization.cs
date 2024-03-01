@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelativeUri))
+            if (RelativeUri != null)
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 JsonSerializer.Serialize(writer, RelativeUri);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> relativeUrl = default;
+            DataFactoryElement<string> relativeUrl = default;
             string type = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpServerLocation(type, folderPath.Value, fileName.Value, additionalProperties, relativeUrl.Value);
+            return new HttpServerLocation(type, folderPath, fileName, additionalProperties, relativeUrl);
         }
 
         BinaryData IPersistableModel<HttpServerLocation>.Write(ModelReaderWriterOptions options)

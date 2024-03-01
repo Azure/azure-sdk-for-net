@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsClientCertEnabled))
+            if (IsClientCertEnabled.HasValue)
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<bool> clientCertEnabled = default;
+            bool? clientCertEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubTlsSettings(Optional.ToNullable(clientCertEnabled), serializedAdditionalRawData);
+            return new WebPubSubTlsSettings(clientCertEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubTlsSettings>.Write(ModelReaderWriterOptions options)

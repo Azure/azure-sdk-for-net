@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DatadogApiKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogApiKey>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DatadogApiKey> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogApiKey> array = new List<DatadogApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogApiKey.DeserializeDatadogApiKey(item));
+                        array.Add(DatadogApiKey.DeserializeDatadogApiKey(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogApiKeyListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogApiKeyListResponse(value ?? new ChangeTrackingList<DatadogApiKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogApiKeyListResponse>.Write(ModelReaderWriterOptions options)

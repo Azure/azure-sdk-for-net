@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(Days))
+            if (Days.HasValue)
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastEnabledOn))
+            if (options.Format != "W" && LastEnabledOn.HasValue)
             {
                 writer.WritePropertyName("lastEnabledTime"u8);
                 writer.WriteStringValue(LastEnabledOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MinRestoreOn))
+            if (options.Format != "W" && MinRestoreOn.HasValue)
             {
                 writer.WritePropertyName("minRestoreTime"u8);
                 writer.WriteStringValue(MinRestoreOn.Value, "O");
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enabled = default;
-            Optional<int> days = default;
-            Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<DateTimeOffset> minRestoreTime = default;
+            int? days = default;
+            DateTimeOffset? lastEnabledTime = default;
+            DateTimeOffset? minRestoreTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePolicy(enabled, Optional.ToNullable(days), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(minRestoreTime), serializedAdditionalRawData);
+            return new RestorePolicy(enabled, days, lastEnabledTime, minRestoreTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePolicy>.Write(ModelReaderWriterOptions options)

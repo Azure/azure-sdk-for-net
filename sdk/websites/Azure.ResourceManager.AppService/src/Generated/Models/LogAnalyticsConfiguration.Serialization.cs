@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomerId))
+            if (CustomerId != null)
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (Optional.IsDefined(SharedKey))
+            if (SharedKey != null)
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> customerId = default;
-            Optional<string> sharedKey = default;
+            string customerId = default;
+            string sharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsConfiguration(customerId.Value, sharedKey.Value, serializedAdditionalRawData);
+            return new LogAnalyticsConfiguration(customerId, sharedKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsConfiguration>.Write(ModelReaderWriterOptions options)

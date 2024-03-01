@@ -28,72 +28,72 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
-            if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
+            if (options.Format != "W" && BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadType))
+            if (options.Format != "W" && WorkloadType.HasValue)
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (Optional.IsDefined(ContainerName))
+            if (ContainerName != null)
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (SourceResourceId != null)
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoverOn))
+            if (LastRecoverOn.HasValue)
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupSetName))
+            if (BackupSetName != null)
             {
                 writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeletedOn))
+            if (DeferredDeletedOn.HasValue)
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
+            if (IsScheduledForDeferredDelete.HasValue)
             {
                 writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
+            if (DeferredDeleteTimeRemaining != null)
             {
                 writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
+            if (IsDeferredDeleteScheduleUpcoming.HasValue)
             {
                 writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
-            if (Optional.IsDefined(IsRehydrate))
+            if (IsRehydrate.HasValue)
             {
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (IsArchiveEnabled.HasValue)
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            if (SoftDeleteRetentionPeriodInDays.HasValue)
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VaultId))
+            if (options.Format != "W" && VaultId != null)
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
@@ -165,22 +165,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareProtectedItem": return FileshareProtectedItem.DeserializeFileshareProtectedItem(element);
-                    case "AzureIaaSVMProtectedItem": return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element);
-                    case "AzureVmWorkloadProtectedItem": return VmWorkloadProtectedItem.DeserializeVmWorkloadProtectedItem(element);
-                    case "AzureVmWorkloadSAPAseDatabase": return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element);
-                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element);
-                    case "AzureVmWorkloadSAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element);
-                    case "AzureVmWorkloadSQLDatabase": return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element);
-                    case "DPMProtectedItem": return DpmProtectedItem.DeserializeDpmProtectedItem(element);
-                    case "GenericProtectedItem": return GenericProtectedItem.DeserializeGenericProtectedItem(element);
-                    case "MabFileFolderProtectedItem": return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element);
-                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmProtectedItem.DeserializeIaasClassicComputeVmProtectedItem(element);
-                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectedItem.DeserializeIaasComputeVmProtectedItem(element);
-                    case "Microsoft.Sql/servers/databases": return SqlProtectedItem.DeserializeSqlProtectedItem(element);
+                    case "AzureFileShareProtectedItem": return FileshareProtectedItem.DeserializeFileshareProtectedItem(element, options);
+                    case "AzureIaaSVMProtectedItem": return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element, options);
+                    case "AzureVmWorkloadProtectedItem": return VmWorkloadProtectedItem.DeserializeVmWorkloadProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPAseDatabase": return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
+                    case "AzureVmWorkloadSQLDatabase": return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
+                    case "DPMProtectedItem": return DpmProtectedItem.DeserializeDpmProtectedItem(element, options);
+                    case "GenericProtectedItem": return GenericProtectedItem.DeserializeGenericProtectedItem(element, options);
+                    case "MabFileFolderProtectedItem": return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element, options);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmProtectedItem.DeserializeIaasClassicComputeVmProtectedItem(element, options);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmProtectedItem.DeserializeIaasComputeVmProtectedItem(element, options);
+                    case "Microsoft.Sql/servers/databases": return SqlProtectedItem.DeserializeSqlProtectedItem(element, options);
                 }
             }
-            return UnknownProtectedItem.DeserializeUnknownProtectedItem(element);
+            return UnknownProtectedItem.DeserializeUnknownProtectedItem(element, options);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectedItem>.Write(ModelReaderWriterOptions options)

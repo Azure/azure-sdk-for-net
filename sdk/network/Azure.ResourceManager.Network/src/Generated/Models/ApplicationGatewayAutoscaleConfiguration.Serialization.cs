@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("minCapacity"u8);
             writer.WriteNumberValue(MinCapacity);
-            if (Optional.IsDefined(MaxCapacity))
+            if (MaxCapacity.HasValue)
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int minCapacity = default;
-            Optional<int> maxCapacity = default;
+            int? maxCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, Optional.ToNullable(maxCapacity), serializedAdditionalRawData);
+            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, maxCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayAutoscaleConfiguration>.Write(ModelReaderWriterOptions options)

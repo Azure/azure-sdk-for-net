@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CosmosDBSqlClientEncryptionKeyData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBSqlClientEncryptionKeyData>> value = default;
+            IReadOnlyList<CosmosDBSqlClientEncryptionKeyData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlClientEncryptionKeyData> array = new List<CosmosDBSqlClientEncryptionKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(item));
+                        array.Add(CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientEncryptionKeysListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ClientEncryptionKeysListResult(value ?? new ChangeTrackingList<CosmosDBSqlClientEncryptionKeyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientEncryptionKeysListResult>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertsForAllJobFailures))
+            if (AlertsForAllJobFailures.HasValue)
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertsForAllJobFailures.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesAlertsState> alertsForAllJobFailures = default;
+            RecoveryServicesAlertsState? alertsForAllJobFailures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMonitorAlertSettings(Optional.ToNullable(alertsForAllJobFailures), serializedAdditionalRawData);
+            return new AzureMonitorAlertSettings(alertsForAllJobFailures, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureMonitorAlertSettings>.Write(ModelReaderWriterOptions options)

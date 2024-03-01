@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual async Task<Response<DeletedServerResource>> GetAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+            if (deletedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedServerName));
+            }
+            if (deletedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedServerName));
+            }
 
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual Response<DeletedServerResource> Get(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+            if (deletedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedServerName));
+            }
+            if (deletedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedServerName));
+            }
 
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+            if (deletedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedServerName));
+            }
+            if (deletedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedServerName));
+            }
 
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual Response<bool> Exists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+            if (deletedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedServerName));
+            }
+            if (deletedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedServerName));
+            }
 
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeletedServerResource>> GetIfExistsAsync(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+            if (deletedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedServerName));
+            }
+            if (deletedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedServerName));
+            }
 
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="deletedServerName"/> is null. </exception>
         public virtual NullableResponse<DeletedServerResource> GetIfExists(string deletedServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deletedServerName, nameof(deletedServerName));
+            if (deletedServerName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedServerName));
+            }
+            if (deletedServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedServerName));
+            }
 
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServerCollection.GetIfExists");
             scope.Start();

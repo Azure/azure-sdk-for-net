@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TasksList))
+            if (!(TasksList is ChangeTrackingList<WorkloadBackupJobTaskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PropertyBag))
+            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DynamicErrorMessage))
+            if (DynamicErrorMessage != null)
             {
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<WorkloadBackupJobTaskDetails>> tasksList = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<string> dynamicErrorMessage = default;
+            IList<WorkloadBackupJobTaskDetails> tasksList = default;
+            IDictionary<string, string> propertyBag = default;
+            string dynamicErrorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadBackupJobTaskDetails> array = new List<WorkloadBackupJobTaskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadBackupJobTaskDetails.DeserializeWorkloadBackupJobTaskDetails(item));
+                        array.Add(WorkloadBackupJobTaskDetails.DeserializeWorkloadBackupJobTaskDetails(item, options));
                     }
                     tasksList = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadBackupJobExtendedInfo(Optional.ToList(tasksList), Optional.ToDictionary(propertyBag), dynamicErrorMessage.Value, serializedAdditionalRawData);
+            return new WorkloadBackupJobExtendedInfo(tasksList ?? new ChangeTrackingList<WorkloadBackupJobTaskDetails>(), propertyBag ?? new ChangeTrackingDictionary<string, string>(), dynamicErrorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

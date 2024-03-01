@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<GalleryData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryData> array = new List<GalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryData.DeserializeGalleryData(item));
+                        array.Add(GalleryData.DeserializeGalleryData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryList(value, nextLink.Value, serializedAdditionalRawData);
+            return new GalleryList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryList>.Write(ModelReaderWriterOptions options)

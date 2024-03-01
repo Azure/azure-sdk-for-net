@@ -1,6 +1,18 @@
 # Release History
 
-## 5.11.0-beta.1 (Unreleased)
+## 5.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  A notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 5.11.0 (2024-02-13)
 
 ### Features Added
 
@@ -16,7 +28,7 @@
   - To
   - ReplyTo
 
-- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no behavioral change for those using the official checkpoint store implementations.
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  **There is no behavioral change for those using the official checkpoint store implementations.**
 
 ### Bugs Fixed
 
@@ -30,7 +42,7 @@
 
 - In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, it will now properly surrender ownership when processing stops.
 
-- Reduced the timeout for transient service failures when starting the buffered producer. This ixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
+- Reduced the timeout for transient service failures when starting the buffered producer. This fixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
 
 - Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
 

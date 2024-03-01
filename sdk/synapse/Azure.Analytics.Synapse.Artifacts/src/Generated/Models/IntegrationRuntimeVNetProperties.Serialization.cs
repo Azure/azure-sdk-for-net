@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VNetId))
+            if (VNetId != null)
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VNetId);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Optional.IsCollectionDefined(PublicIPs))
+            if (!(PublicIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> vNetId = default;
-            Optional<string> subnet = default;
-            Optional<IList<string>> publicIPs = default;
+            string vNetId = default;
+            string subnet = default;
+            IList<string> publicIPs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVNetProperties(vNetId.Value, subnet.Value, Optional.ToList(publicIPs), additionalProperties);
+            return new IntegrationRuntimeVNetProperties(vNetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), additionalProperties);
         }
 
         internal partial class IntegrationRuntimeVNetPropertiesConverter : JsonConverter<IntegrationRuntimeVNetProperties>

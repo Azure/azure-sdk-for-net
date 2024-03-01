@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsernameUriString))
+            if (UsernameUriString != null)
             {
                 writer.WritePropertyName("usernameUri"u8);
                 writer.WriteStringValue(UsernameUriString);
             }
-            if (Optional.IsDefined(PasswordUriString))
+            if (PasswordUriString != null)
             {
                 writer.WritePropertyName("passwordUri"u8);
                 writer.WriteStringValue(PasswordUriString);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> usernameUriString = default;
-            Optional<string> passwordUriString = default;
+            string usernameUriString = default;
+            string passwordUriString = default;
             CredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureKeyVaultSmbCredentials(type, serializedAdditionalRawData, usernameUriString.Value, passwordUriString.Value);
+            return new AzureKeyVaultSmbCredentials(type, serializedAdditionalRawData, usernameUriString, passwordUriString);
         }
 
         BinaryData IPersistableModel<AzureKeyVaultSmbCredentials>.Write(ModelReaderWriterOptions options)

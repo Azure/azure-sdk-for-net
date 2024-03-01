@@ -26,44 +26,44 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CpuCount))
+            if (options.Format != "W" && CpuCount.HasValue)
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemoryMB))
+            if (options.Format != "W" && MemoryMB.HasValue)
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
+            if (options.Format != "W" && ManagedResourceId != null)
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
+            if (options.Format != "W" && InventoryItemName != null)
             {
                 writer.WritePropertyName("inventoryItemName"u8);
                 writer.WriteStringValue(InventoryItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<int> cpuCount = default;
-            Optional<int> memoryMB = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
+            int? cpuCount = default;
+            int? memoryMB = default;
+            OSType? osType = default;
+            string osName = default;
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            string managedResourceId = default;
+            string uuid = default;
+            string inventoryItemName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineTemplateInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData, Optional.ToNullable(cpuCount), Optional.ToNullable(memoryMB), Optional.ToNullable(osType), osName.Value);
+            return new VirtualMachineTemplateInventoryItem(
+                inventoryType,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData,
+                cpuCount,
+                memoryMB,
+                osType,
+                osName);
         }
 
         BinaryData IPersistableModel<VirtualMachineTemplateInventoryItem>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (!(Messages is ChangeTrackingList<ChatResponseMessage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChatResponseMessage>> messages = default;
+            IReadOnlyList<ChatResponseMessage> messages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI
                     List<ChatResponseMessage> array = new List<ChatResponseMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item));
+                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item, options));
                     }
                     messages = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatExtensionsMessageContext(Optional.ToList(messages), serializedAdditionalRawData);
+            return new AzureChatExtensionsMessageContext(messages ?? new ChangeTrackingList<ChatResponseMessage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatExtensionsMessageContext>.Write(ModelReaderWriterOptions options)

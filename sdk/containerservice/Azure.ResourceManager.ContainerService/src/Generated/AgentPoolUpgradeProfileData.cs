@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal AgentPoolUpgradeProfileData(string kubernetesVersion, ContainerServiceOSType osType)
         {
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
+            if (kubernetesVersion == null)
+            {
+                throw new ArgumentNullException(nameof(kubernetesVersion));
+            }
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;

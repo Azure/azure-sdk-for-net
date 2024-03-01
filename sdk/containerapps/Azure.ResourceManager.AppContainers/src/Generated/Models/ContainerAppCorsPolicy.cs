@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public ContainerAppCorsPolicy(IEnumerable<string> allowedOrigins)
         {
-            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
+            if (allowedOrigins == null)
+            {
+                throw new ArgumentNullException(nameof(allowedOrigins));
+            }
 
             AllowedOrigins = allowedOrigins.ToList();
             AllowedMethods = new ChangeTrackingList<string>();

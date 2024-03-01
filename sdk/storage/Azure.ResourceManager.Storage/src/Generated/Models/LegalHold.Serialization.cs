@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
+            if (options.Format != "W" && HasLegalHold.HasValue)
             {
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            if (AllowProtectedAppendWritesAll.HasValue)
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> hasLegalHold = default;
+            bool? hasLegalHold = default;
             IList<string> tags = default;
-            Optional<bool> allowProtectedAppendWritesAll = default;
+            bool? allowProtectedAppendWritesAll = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegalHold(Optional.ToNullable(hasLegalHold), tags, Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
+            return new LegalHold(hasLegalHold, tags, allowProtectedAppendWritesAll, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegalHold>.Write(ModelReaderWriterOptions options)

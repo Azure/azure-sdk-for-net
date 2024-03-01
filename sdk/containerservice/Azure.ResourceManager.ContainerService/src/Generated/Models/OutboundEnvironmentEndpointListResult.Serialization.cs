@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IReadOnlyList<ContainerServiceOutboundEnvironmentEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceOutboundEnvironmentEndpoint> array = new List<ContainerServiceOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(item));
+                        array.Add(ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEnvironmentEndpointListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new OutboundEnvironmentEndpointListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEnvironmentEndpointListResult>.Write(ModelReaderWriterOptions options)

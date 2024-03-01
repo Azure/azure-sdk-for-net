@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -55,8 +54,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databases"/> or <paramref name="version"/> is null. </exception>
         internal MongoDBClusterInfo(IEnumerable<MongoDBDatabaseInfo> databases, bool supportsSharding, MongoDBClusterType clusterType, string version)
         {
-            Argument.AssertNotNull(databases, nameof(databases));
-            Argument.AssertNotNull(version, nameof(version));
+            if (databases == null)
+            {
+                throw new ArgumentNullException(nameof(databases));
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
 
             Databases = databases.ToList();
             SupportsSharding = supportsSharding;

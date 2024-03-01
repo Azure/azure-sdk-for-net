@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(Attributes))
+            if (Attributes != null)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<SecretAttributes> attributes = default;
+            string value = default;
+            string contentType = default;
+            SecretAttributes attributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
+                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretPatchProperties(value.Value, contentType.Value, attributes.Value, serializedAdditionalRawData);
+            return new SecretPatchProperties(value, contentType, attributes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretPatchProperties>.Write(ModelReaderWriterOptions options)

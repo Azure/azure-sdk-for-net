@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlVirtualNetworkRuleResource>> UpdateAsync(WaitUntil waitUntil, MySqlVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("MySqlVirtualNetworkRuleResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlVirtualNetworkRuleResource> Update(WaitUntil waitUntil, MySqlVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("MySqlVirtualNetworkRuleResource.Update");
             scope.Start();

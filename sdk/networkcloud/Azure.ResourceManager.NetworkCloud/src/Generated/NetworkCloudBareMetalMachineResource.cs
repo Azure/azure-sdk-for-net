@@ -199,7 +199,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Update");
             scope.Start();
@@ -245,7 +248,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Update");
             scope.Start();
@@ -717,7 +723,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunCommandAsync(WaitUntil waitUntil, BareMetalMachineRunCommandContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunCommand");
             scope.Start();
@@ -763,7 +772,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> RunCommand(WaitUntil waitUntil, BareMetalMachineRunCommandContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunCommand");
             scope.Start();
@@ -809,7 +821,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunDataExtractsAsync(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
@@ -855,7 +870,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> RunDataExtracts(WaitUntil waitUntil, BareMetalMachineRunDataExtractsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
@@ -901,7 +919,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RunReadCommandsAsync(WaitUntil waitUntil, BareMetalMachineRunReadCommandsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunReadCommands");
             scope.Start();
@@ -947,7 +968,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> RunReadCommands(WaitUntil waitUntil, BareMetalMachineRunReadCommandsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunReadCommands");
             scope.Start();
@@ -1161,8 +1185,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.AddTag");
             scope.Start();
@@ -1223,8 +1253,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkCloudBareMetalMachineResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.AddTag");
             scope.Start();
@@ -1284,7 +1320,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.SetTags");
             scope.Start();
@@ -1341,7 +1380,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkCloudBareMetalMachineResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.SetTags");
             scope.Start();
@@ -1398,7 +1440,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RemoveTag");
             scope.Start();
@@ -1458,7 +1503,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkCloudBareMetalMachineResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RemoveTag");
             scope.Start();

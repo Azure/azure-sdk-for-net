@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId.HasValue)
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterType))
+            if (options.Format != "W" && MeterType != null)
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<Guid> meterId = default;
-            Optional<string> meterType = default;
-            Optional<double> multiplier = default;
+            Guid? meterId = default;
+            string meterType = default;
+            double? multiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuCost(Optional.ToNullable(meterId), meterType.Value, Optional.ToNullable(multiplier), serializedAdditionalRawData);
+            return new DataBoxSkuCost(meterId, meterType, multiplier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuCost>.Write(ModelReaderWriterOptions options)

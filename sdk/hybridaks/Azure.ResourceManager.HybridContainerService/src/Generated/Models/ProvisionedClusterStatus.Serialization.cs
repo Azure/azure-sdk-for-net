@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ControlPlaneStatus))
+            if (!(ControlPlaneStatus is ChangeTrackingList<ProvisionedClusterAddonStatusProfile> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("controlPlaneStatus"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            if (options.Format != "W" && CurrentState.HasValue)
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteStringValue(CurrentState.Value.ToString());
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProvisionedClusterAddonStatusProfile>> controlPlaneStatus = default;
-            Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
-            Optional<string> errorMessage = default;
+            IReadOnlyList<ProvisionedClusterAddonStatusProfile> controlPlaneStatus = default;
+            HybridContainerServiceResourceProvisioningState? currentState = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterAddonStatusProfile> array = new List<ProvisionedClusterAddonStatusProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterAddonStatusProfile.DeserializeProvisionedClusterAddonStatusProfile(item));
+                        array.Add(ProvisionedClusterAddonStatusProfile.DeserializeProvisionedClusterAddonStatusProfile(item, options));
                     }
                     controlPlaneStatus = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterStatus(Optional.ToList(controlPlaneStatus), Optional.ToNullable(currentState), errorMessage.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterStatus(controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>(), currentState, errorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterStatus>.Write(ModelReaderWriterOptions options)

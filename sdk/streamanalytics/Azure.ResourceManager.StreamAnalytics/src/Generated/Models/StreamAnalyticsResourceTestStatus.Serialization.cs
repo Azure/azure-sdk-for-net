@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("error"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string status = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsResourceTestStatus(status.Value, code.Value, message.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsResourceTestStatus(status, code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsResourceTestStatus>.Write(ModelReaderWriterOptions options)

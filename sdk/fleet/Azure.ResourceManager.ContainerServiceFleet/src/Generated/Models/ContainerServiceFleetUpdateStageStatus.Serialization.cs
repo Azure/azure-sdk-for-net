@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            if (options.Format != "W" && !(Groups is ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AfterStageWaitStatus))
+            if (options.Format != "W" && AfterStageWaitStatus != null)
             {
                 writer.WritePropertyName("afterStageWaitStatus"u8);
                 writer.WriteObjectValue(AfterStageWaitStatus);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ContainerServiceFleetUpdateGroupStatus>> groups = default;
-            Optional<ContainerServiceFleetWaitStatus> afterStageWaitStatus = default;
+            ContainerServiceFleetUpdateStatus status = default;
+            string name = default;
+            IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups = default;
+            ContainerServiceFleetWaitStatus afterStageWaitStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateGroupStatus> array = new List<ContainerServiceFleetUpdateGroupStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateGroupStatus.DeserializeContainerServiceFleetUpdateGroupStatus(item));
+                        array.Add(ContainerServiceFleetUpdateGroupStatus.DeserializeContainerServiceFleetUpdateGroupStatus(item, options));
                     }
                     groups = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    afterStageWaitStatus = ContainerServiceFleetWaitStatus.DeserializeContainerServiceFleetWaitStatus(property.Value);
+                    afterStageWaitStatus = ContainerServiceFleetWaitStatus.DeserializeContainerServiceFleetWaitStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateStageStatus(status.Value, name.Value, Optional.ToList(groups), afterStageWaitStatus.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateStageStatus(status, name, groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(), afterStageWaitStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateStageStatus>.Write(ModelReaderWriterOptions options)

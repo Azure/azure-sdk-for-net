@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
-            if (Optional.IsDefined(RestoreParameters))
+            if (RestoreParameters != null)
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            string rid = default;
+            float? ts = default;
+            ETag? etag = default;
             string id = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            ResourceRestoreParameters restoreParameters = default;
+            CosmosDBAccountCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBTablePropertiesResource(id, restoreParameters.Value, Optional.ToNullable(createMode), serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new CosmosDBTablePropertiesResource(
+                id,
+                restoreParameters,
+                createMode,
+                serializedAdditionalRawData,
+                rid,
+                ts,
+                etag);
         }
 
         BinaryData IPersistableModel<CosmosDBTablePropertiesResource>.Write(ModelReaderWriterOptions options)

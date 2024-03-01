@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppBackupPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupPolicyName, NetAppBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -115,7 +125,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppBackupPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string backupPolicyName, NetAppBackupPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -164,7 +184,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<Response<NetAppBackupPolicyResource>> GetAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.Get");
             scope.Start();
@@ -209,7 +236,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual Response<NetAppBackupPolicyResource> Get(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.Get");
             scope.Start();
@@ -254,7 +288,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +317,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +346,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.Exists");
             scope.Start();
@@ -355,7 +396,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.Exists");
             scope.Start();
@@ -398,7 +446,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppBackupPolicyResource>> GetIfExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.GetIfExists");
             scope.Start();
@@ -443,7 +498,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual NullableResponse<NetAppBackupPolicyResource> GetIfExists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
+            if (backupPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(backupPolicyName));
+            }
+            if (backupPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(backupPolicyName));
+            }
 
             using var scope = _netAppBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("NetAppBackupPolicyCollection.GetIfExists");
             scope.Start();

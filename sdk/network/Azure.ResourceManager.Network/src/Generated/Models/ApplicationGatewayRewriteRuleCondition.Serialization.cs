@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Optional.IsDefined(Pattern))
+            if (Pattern != null)
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(IgnoreCase))
+            if (IgnoreCase.HasValue)
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(Negate))
+            if (Negate.HasValue)
             {
                 writer.WritePropertyName("negate"u8);
                 writer.WriteBooleanValue(Negate.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<string> pattern = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> negate = default;
+            string variable = default;
+            string pattern = default;
+            bool? ignoreCase = default;
+            bool? negate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRuleCondition(variable.Value, pattern.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(negate), serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRuleCondition(variable, pattern, ignoreCase, negate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRuleCondition>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InfraNetworkProfile))
+            if (InfraNetworkProfile != null)
             {
                 writer.WritePropertyName("infraNetworkProfile"u8);
                 writer.WriteObjectValue(InfraNetworkProfile);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClusterInfraNetworkProfile> infraNetworkProfile = default;
+            ProvisionedClusterInfraNetworkProfile infraNetworkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraNetworkProfile = ProvisionedClusterInfraNetworkProfile.DeserializeProvisionedClusterInfraNetworkProfile(property.Value);
+                    infraNetworkProfile = ProvisionedClusterInfraNetworkProfile.DeserializeProvisionedClusterInfraNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterCloudProviderProfile(infraNetworkProfile.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterCloudProviderProfile(infraNetworkProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterCloudProviderProfile>.Write(ModelReaderWriterOptions options)

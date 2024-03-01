@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("text"u8))
                 {
-                    text = InternalMessageTextDetails.DeserializeInternalMessageTextDetails(property.Value);
+                    text = InternalMessageTextDetails.DeserializeInternalMessageTextDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

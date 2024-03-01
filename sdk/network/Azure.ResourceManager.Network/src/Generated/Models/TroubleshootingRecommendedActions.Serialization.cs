@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionId))
+            if (ActionId != null)
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteStringValue(ActionId);
             }
-            if (Optional.IsDefined(ActionText))
+            if (ActionText != null)
             {
                 writer.WritePropertyName("actionText"u8);
                 writer.WriteStringValue(ActionText);
             }
-            if (Optional.IsDefined(ActionUri))
+            if (ActionUri != null)
             {
                 writer.WritePropertyName("actionUri"u8);
                 writer.WriteStringValue(ActionUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ActionUriText))
+            if (ActionUriText != null)
             {
                 writer.WritePropertyName("actionUriText"u8);
                 writer.WriteStringValue(ActionUriText);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> actionId = default;
-            Optional<string> actionText = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriText = default;
+            string actionId = default;
+            string actionText = default;
+            Uri actionUri = default;
+            string actionUriText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingRecommendedActions(actionId.Value, actionText.Value, actionUri.Value, actionUriText.Value, serializedAdditionalRawData);
+            return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingRecommendedActions>.Write(ModelReaderWriterOptions options)

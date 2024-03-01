@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserId))
+            if (UserId != null)
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(AccountInfo))
+            if (AccountInfo != null)
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (Optional.IsDefined(EnvironmentInfo))
+            if (EnvironmentInfo != null)
             {
                 writer.WritePropertyName("environmentInfo"u8);
                 writer.WriteObjectValue(EnvironmentInfo);
             }
-            if (Optional.IsDefined(SingleSignOnProperties))
+            if (SingleSignOnProperties != null)
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> userId = default;
-            Optional<DynatraceAccountInfo> accountInfo = default;
-            Optional<DynatraceEnvironmentInfo> environmentInfo = default;
-            Optional<DynatraceSingleSignOnProperties> singleSignOnProperties = default;
+            string userId = default;
+            DynatraceAccountInfo accountInfo = default;
+            DynatraceEnvironmentInfo environmentInfo = default;
+            DynatraceSingleSignOnProperties singleSignOnProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    accountInfo = DynatraceAccountInfo.DeserializeDynatraceAccountInfo(property.Value);
+                    accountInfo = DynatraceAccountInfo.DeserializeDynatraceAccountInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentInfo"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    environmentInfo = DynatraceEnvironmentInfo.DeserializeDynatraceEnvironmentInfo(property.Value);
+                    environmentInfo = DynatraceEnvironmentInfo.DeserializeDynatraceEnvironmentInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = DynatraceSingleSignOnProperties.DeserializeDynatraceSingleSignOnProperties(property.Value);
+                    singleSignOnProperties = DynatraceSingleSignOnProperties.DeserializeDynatraceSingleSignOnProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceEnvironmentProperties(userId.Value, accountInfo.Value, environmentInfo.Value, singleSignOnProperties.Value, serializedAdditionalRawData);
+            return new DynatraceEnvironmentProperties(userId, accountInfo, environmentInfo, singleSignOnProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceEnvironmentProperties>.Write(ModelReaderWriterOptions options)

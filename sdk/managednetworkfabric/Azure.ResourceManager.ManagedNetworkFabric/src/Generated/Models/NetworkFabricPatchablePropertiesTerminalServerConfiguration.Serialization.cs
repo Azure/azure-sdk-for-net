@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            if (PrimaryIPv4Prefix != null)
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            if (PrimaryIPv6Prefix != null)
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            if (SecondaryIPv4Prefix != null)
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            if (SecondaryIPv6Prefix != null)
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, serializedAdditionalRawData, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(
+                username,
+                password,
+                serialNumber,
+                serializedAdditionalRawData,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

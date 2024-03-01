@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,8 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         public DataFactoryBlobTrigger(string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService)
         {
-            Argument.AssertNotNull(folderPath, nameof(folderPath));
-            Argument.AssertNotNull(linkedService, nameof(linkedService));
+            if (folderPath == null)
+            {
+                throw new ArgumentNullException(nameof(folderPath));
+            }
+            if (linkedService == null)
+            {
+                throw new ArgumentNullException(nameof(linkedService));
+            }
 
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;

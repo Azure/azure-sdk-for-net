@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ReportResourceData(ReportProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
         }

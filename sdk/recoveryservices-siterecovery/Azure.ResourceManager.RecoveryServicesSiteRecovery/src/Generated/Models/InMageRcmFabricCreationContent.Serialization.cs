@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceAgentIdentity"u8))
                 {
-                    sourceAgentIdentity = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value);
+                    sourceAgentIdentity = IdentityProviderContent.DeserializeIdentityProviderContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

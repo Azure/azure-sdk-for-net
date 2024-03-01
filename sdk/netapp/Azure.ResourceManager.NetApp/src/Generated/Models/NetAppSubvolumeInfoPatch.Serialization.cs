@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 if (Size != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("size");
                 }
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<long?> size = default;
-            Optional<string> path = default;
+            long? size = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubvolumeInfoPatch(Optional.ToNullable(size), path.Value, serializedAdditionalRawData);
+            return new NetAppSubvolumeInfoPatch(size, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubvolumeInfoPatch>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSku))
+            if (VmSku != null)
             {
                 writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);
             }
-            if (Optional.IsDefined(IsAppServerCertified))
+            if (IsAppServerCertified.HasValue)
             {
                 writer.WritePropertyName("isAppServerCertified"u8);
                 writer.WriteBooleanValue(IsAppServerCertified.Value);
             }
-            if (Optional.IsDefined(IsDatabaseCertified))
+            if (IsDatabaseCertified.HasValue)
             {
                 writer.WritePropertyName("isDatabaseCertified"u8);
                 writer.WriteBooleanValue(IsDatabaseCertified.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> vmSku = default;
-            Optional<bool> isAppServerCertified = default;
-            Optional<bool> isDatabaseCertified = default;
+            string vmSku = default;
+            bool? isAppServerCertified = default;
+            bool? isDatabaseCertified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSupportedSku(vmSku.Value, Optional.ToNullable(isAppServerCertified), Optional.ToNullable(isDatabaseCertified), serializedAdditionalRawData);
+            return new SapSupportedSku(vmSku, isAppServerCertified, isDatabaseCertified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSupportedSku>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(BlobDuration))
+            if (BlobDuration.HasValue)
             {
                 writer.WritePropertyName("blobDuration"u8);
                 writer.WriteStringValue(BlobDuration.Value, "P");
             }
-            if (Optional.IsDefined(LogFilterPattern))
+            if (LogFilterPattern != null)
             {
                 writer.WritePropertyName("logFilterPattern"u8);
                 writer.WriteStringValue(LogFilterPattern);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<TimeSpan> blobDuration = default;
-            Optional<string> logFilterPattern = default;
+            string name = default;
+            string displayName = default;
+            TimeSpan? blobDuration = default;
+            string logFilterPattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value, serializedAdditionalRawData);
+            return new LogSpecification(name, displayName, blobDuration, logFilterPattern, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogSpecification>.Write(ModelReaderWriterOptions options)

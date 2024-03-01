@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -21,9 +20,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="ssisMigrationInfo"/> is null. </exception>
         public MigrateSsisTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, SsisMigrationInfo ssisMigrationInfo) : base(sourceConnectionInfo, targetConnectionInfo)
         {
-            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
-            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
-            Argument.AssertNotNull(ssisMigrationInfo, nameof(ssisMigrationInfo));
+            if (sourceConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(sourceConnectionInfo));
+            }
+            if (targetConnectionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(targetConnectionInfo));
+            }
+            if (ssisMigrationInfo == null)
+            {
+                throw new ArgumentNullException(nameof(ssisMigrationInfo));
+            }
 
             SsisMigrationInfo = ssisMigrationInfo;
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShareName"/> or <paramref name="deletedShareVersion"/> is null. </exception>
         public DeletedShare(string deletedShareName, string deletedShareVersion)
         {
-            Argument.AssertNotNull(deletedShareName, nameof(deletedShareName));
-            Argument.AssertNotNull(deletedShareVersion, nameof(deletedShareVersion));
+            if (deletedShareName == null)
+            {
+                throw new ArgumentNullException(nameof(deletedShareName));
+            }
+            if (deletedShareVersion == null)
+            {
+                throw new ArgumentNullException(nameof(deletedShareVersion));
+            }
 
             DeletedShareName = deletedShareName;
             DeletedShareVersion = deletedShareVersion;

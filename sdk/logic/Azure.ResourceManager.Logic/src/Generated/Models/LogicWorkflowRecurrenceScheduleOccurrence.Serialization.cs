@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Day))
+            if (Day.HasValue)
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Occurrence))
+            if (Occurrence.HasValue)
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicWorkflowDayOfWeek> day = default;
-            Optional<int> occurrence = default;
+            LogicWorkflowDayOfWeek? day = default;
+            int? occurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence), serializedAdditionalRawData);
+            return new LogicWorkflowRecurrenceScheduleOccurrence(day, occurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>.Write(ModelReaderWriterOptions options)

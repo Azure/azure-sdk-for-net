@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurviewResourceId))
+            if (PurviewResourceId != null)
             {
                 writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> purviewResourceId = default;
+            ResourceIdentifier purviewResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPurviewConfiguration(purviewResourceId.Value, serializedAdditionalRawData);
+            return new DataFactoryPurviewConfiguration(purviewResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPurviewConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<OperationDisplay> display = default;
-            Optional<string> origin = default;
+            string name = default;
+            OperationDisplay display = default;
+            string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     {
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value);
+                    display = OperationDisplay.DeserializeOperationDisplay(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("origin"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationResponse(name.Value, display.Value, origin.Value, serializedAdditionalRawData);
+            return new OperationResponse(name, display, origin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationResponse>.Write(ModelReaderWriterOptions options)

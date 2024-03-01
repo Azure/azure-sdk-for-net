@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Override))
+            if (Override.HasValue)
             {
                 writer.WritePropertyName("override"u8);
                 writer.WriteBooleanValue(Override.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> @override = default;
+            bool? @override = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecuteGovernanceRuleParams(Optional.ToNullable(@override), serializedAdditionalRawData);
+            return new ExecuteGovernanceRuleParams(@override, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecuteGovernanceRuleParams>.Write(ModelReaderWriterOptions options)

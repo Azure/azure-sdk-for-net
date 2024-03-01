@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("variableName"u8);
             writer.WriteStringValue(VariableName.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Selector != null)
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             WebApplicationFirewallMatchVariable variableName = default;
-            Optional<string> selector = default;
+            string selector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MatchVariable(variableName, selector.Value, serializedAdditionalRawData);
+            return new MatchVariable(variableName, selector, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MatchVariable>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual async Task<Response<BatchAccountDetectorResource>> GetAsync(string detectorId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+            if (detectorId == null)
+            {
+                throw new ArgumentNullException(nameof(detectorId));
+            }
+            if (detectorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorId));
+            }
 
             using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual Response<BatchAccountDetectorResource> Get(string detectorId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+            if (detectorId == null)
+            {
+                throw new ArgumentNullException(nameof(detectorId));
+            }
+            if (detectorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorId));
+            }
 
             using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+            if (detectorId == null)
+            {
+                throw new ArgumentNullException(nameof(detectorId));
+            }
+            if (detectorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorId));
+            }
 
             using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+            if (detectorId == null)
+            {
+                throw new ArgumentNullException(nameof(detectorId));
+            }
+            if (detectorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorId));
+            }
 
             using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual async Task<NullableResponse<BatchAccountDetectorResource>> GetIfExistsAsync(string detectorId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+            if (detectorId == null)
+            {
+                throw new ArgumentNullException(nameof(detectorId));
+            }
+            if (detectorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorId));
+            }
 
             using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="detectorId"/> is null. </exception>
         public virtual NullableResponse<BatchAccountDetectorResource> GetIfExists(string detectorId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorId, nameof(detectorId));
+            if (detectorId == null)
+            {
+                throw new ArgumentNullException(nameof(detectorId));
+            }
+            if (detectorId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorId));
+            }
 
             using var scope = _batchAccountDetectorBatchAccountClientDiagnostics.CreateScope("BatchAccountDetectorCollection.GetIfExists");
             scope.Start();

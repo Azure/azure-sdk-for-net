@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RenderingType))
+            if (RenderingType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RenderingType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DiagnosticDataRenderingType> type = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
+            DiagnosticDataRenderingType? type = default;
+            string title = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDataRendering(Optional.ToNullable(type), title.Value, description.Value, serializedAdditionalRawData);
+            return new DiagnosticDataRendering(type, title, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDataRendering>.Write(ModelReaderWriterOptions options)

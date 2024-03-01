@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && TimeCreated.HasValue)
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W" && LastModified.HasValue)
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlueprintResourceStatusBase(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new BlueprintResourceStatusBase(timeCreated, lastModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlueprintResourceStatusBase>.Write(ModelReaderWriterOptions options)

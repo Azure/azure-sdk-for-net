@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (FolderPath != null)
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            DataFactoryElement<string> folderPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowStagingInfo(linkedService, folderPath.Value, serializedAdditionalRawData);
+            return new DataFlowStagingInfo(linkedService, folderPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowStagingInfo>.Write(ModelReaderWriterOptions options)

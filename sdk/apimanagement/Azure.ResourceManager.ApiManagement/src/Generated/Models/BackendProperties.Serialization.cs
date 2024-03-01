@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceFabricCluster))
+            if (ServiceFabricCluster != null)
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
                 writer.WriteObjectValue(ServiceFabricCluster);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<BackendServiceFabricClusterProperties> serviceFabricCluster = default;
+            BackendServiceFabricClusterProperties serviceFabricCluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value);
+                    serviceFabricCluster = BackendServiceFabricClusterProperties.DeserializeBackendServiceFabricClusterProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendProperties(serviceFabricCluster.Value, serializedAdditionalRawData);
+            return new BackendProperties(serviceFabricCluster, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendProperties>.Write(ModelReaderWriterOptions options)

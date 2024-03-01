@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MetricName))
+            if (options.Format != "W" && MetricName != null)
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
+            if (options.Format != "W" && TimeGrain != null)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
-            Optional<string> unit = default;
-            Optional<string> timeGrain = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<double> value = default;
+            string metricName = default;
+            string unit = default;
+            string timeGrain = default;
+            DateTimeOffset? startTime = default;
+            double? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionMetricInfo(metricName.Value, unit.Value, timeGrain.Value, Optional.ToNullable(startTime), Optional.ToNullable(value), serializedAdditionalRawData);
+            return new RecommendedActionMetricInfo(
+                metricName,
+                unit,
+                timeGrain,
+                startTime,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionMetricInfo>.Write(ModelReaderWriterOptions options)

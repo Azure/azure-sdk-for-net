@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PerimeterGuid))
+            if (PerimeterGuid != null)
             {
                 writer.WritePropertyName("perimeterGuid"u8);
                 writer.WriteStringValue(PerimeterGuid);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> perimeterGuid = default;
-            Optional<AzureLocation> location = default;
+            string id = default;
+            string perimeterGuid = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsNetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkSecurityPerimeter>.Write(ModelReaderWriterOptions options)

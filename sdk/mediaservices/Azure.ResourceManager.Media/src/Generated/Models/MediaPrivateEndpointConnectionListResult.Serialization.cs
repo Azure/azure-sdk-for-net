@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MediaServicesPrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<MediaServicesPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                        array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MediaPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

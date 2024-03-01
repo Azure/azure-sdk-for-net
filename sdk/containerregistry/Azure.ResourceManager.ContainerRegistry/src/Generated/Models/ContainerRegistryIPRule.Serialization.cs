@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryIPRuleAction> action = default;
+            ContainerRegistryIPRuleAction? action = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryIPRule(Optional.ToNullable(action), value, serializedAdditionalRawData);
+            return new ContainerRegistryIPRule(action, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryIPRule>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MixedReality.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            if (options.Format != "W" && PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            if (options.Format != "W" && SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MixedRealityAccountKeys(primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new MixedRealityAccountKeys(primaryKey, secondaryKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MixedRealityAccountKeys>.Write(ModelReaderWriterOptions options)

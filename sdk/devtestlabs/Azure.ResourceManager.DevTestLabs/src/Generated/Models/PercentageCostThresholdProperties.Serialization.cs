@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ThresholdValue))
+            if (ThresholdValue.HasValue)
             {
                 writer.WritePropertyName("thresholdValue"u8);
                 writer.WriteNumberValue(ThresholdValue.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<double> thresholdValue = default;
+            double? thresholdValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PercentageCostThresholdProperties(Optional.ToNullable(thresholdValue), serializedAdditionalRawData);
+            return new PercentageCostThresholdProperties(thresholdValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PercentageCostThresholdProperties>.Write(ModelReaderWriterOptions options)

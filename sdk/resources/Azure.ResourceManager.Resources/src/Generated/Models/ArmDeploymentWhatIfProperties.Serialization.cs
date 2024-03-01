@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WhatIfSettings))
+            if (WhatIfSettings != null)
             {
                 writer.WritePropertyName("whatIfSettings"u8);
                 writer.WriteObjectValue(WhatIfSettings);
             }
-            if (Optional.IsDefined(Template))
+            if (Template != null)
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(TemplateLink))
+            if (TemplateLink != null)
             {
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -60,24 +60,24 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ParametersLink))
+            if (ParametersLink != null)
             {
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (Optional.IsDefined(DebugSetting))
+            if (DebugSetting != null)
             {
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (Optional.IsDefined(ErrorDeployment))
+            if (ErrorDeployment != null)
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment);
             }
-            if (Optional.IsDefined(ExpressionEvaluation))
+            if (ExpressionEvaluation != null)
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
                 writer.WriteObjectValue(ExpressionEvaluation);
@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmDeploymentWhatIfSettings> whatIfSettings = default;
-            Optional<BinaryData> template = default;
-            Optional<ArmDeploymentTemplateLink> templateLink = default;
-            Optional<BinaryData> parameters = default;
-            Optional<ArmDeploymentParametersLink> parametersLink = default;
+            ArmDeploymentWhatIfSettings whatIfSettings = default;
+            BinaryData template = default;
+            ArmDeploymentTemplateLink templateLink = default;
+            BinaryData parameters = default;
+            ArmDeploymentParametersLink parametersLink = default;
             ArmDeploymentMode mode = default;
-            Optional<DebugSetting> debugSetting = default;
-            Optional<ErrorDeployment> onErrorDeployment = default;
-            Optional<ExpressionEvaluationOptions> expressionEvaluationOptions = default;
+            DebugSetting debugSetting = default;
+            ErrorDeployment onErrorDeployment = default;
+            ExpressionEvaluationOptions expressionEvaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(property.Value);
+                    whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("template"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value);
+                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("expressionEvaluationOptions"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value);
+                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentWhatIfProperties(template.Value, templateLink.Value, parameters.Value, parametersLink.Value, mode, debugSetting.Value, onErrorDeployment.Value, expressionEvaluationOptions.Value, serializedAdditionalRawData, whatIfSettings.Value);
+            return new ArmDeploymentWhatIfProperties(
+                template,
+                templateLink,
+                parameters,
+                parametersLink,
+                mode,
+                debugSetting,
+                onErrorDeployment,
+                expressionEvaluationOptions,
+                serializedAdditionalRawData,
+                whatIfSettings);
         }
 
         BinaryData IPersistableModel<ArmDeploymentWhatIfProperties>.Write(ModelReaderWriterOptions options)

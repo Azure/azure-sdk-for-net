@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceType))
+            if (InstanceType != null)
             {
                 if (InstanceType != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> instanceType = default;
+            string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaterializationComputeResource(instanceType.Value, serializedAdditionalRawData);
+            return new MaterializationComputeResource(instanceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaterializationComputeResource>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SharedStorageAccountName))
+            if (SharedStorageAccountName != null)
             {
                 writer.WritePropertyName("sharedStorageAccountName"u8);
                 writer.WriteStringValue(SharedStorageAccountName);
             }
-            if (Optional.IsDefined(SharedStorageAccountPrivateEndPointName))
+            if (SharedStorageAccountPrivateEndPointName != null)
             {
                 writer.WritePropertyName("sharedStorageAccountPrivateEndPointName"u8);
                 writer.WriteStringValue(SharedStorageAccountPrivateEndPointName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> sharedStorageAccountName = default;
-            Optional<string> sharedStorageAccountPrivateEndPointName = default;
+            string sharedStorageAccountName = default;
+            string sharedStorageAccountPrivateEndPointName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedStorageResourceNames(sharedStorageAccountName.Value, sharedStorageAccountPrivateEndPointName.Value, serializedAdditionalRawData);
+            return new SharedStorageResourceNames(sharedStorageAccountName, sharedStorageAccountPrivateEndPointName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedStorageResourceNames>.Write(ModelReaderWriterOptions options)

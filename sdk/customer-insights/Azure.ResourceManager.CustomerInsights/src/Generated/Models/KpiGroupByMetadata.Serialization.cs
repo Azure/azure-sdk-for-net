@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(FieldName))
+            if (FieldName != null)
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (Optional.IsDefined(FieldType))
+            if (FieldType != null)
             {
                 writer.WritePropertyName("fieldType"u8);
                 writer.WriteStringValue(FieldType);
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<string> fieldName = default;
-            Optional<string> fieldType = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            string fieldName = default;
+            string fieldType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiGroupByMetadata(Optional.ToDictionary(displayName), fieldName.Value, fieldType.Value, serializedAdditionalRawData);
+            return new KpiGroupByMetadata(displayName ?? new ChangeTrackingDictionary<string, string>(), fieldName, fieldType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiGroupByMetadata>.Write(ModelReaderWriterOptions options)

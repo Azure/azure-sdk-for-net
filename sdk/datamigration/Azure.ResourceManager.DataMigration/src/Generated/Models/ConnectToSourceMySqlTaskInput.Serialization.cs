@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (Optional.IsDefined(TargetPlatform))
+            if (TargetPlatform.HasValue)
             {
                 writer.WritePropertyName("targetPlatform"u8);
                 writer.WriteStringValue(TargetPlatform.Value.ToString());
             }
-            if (Optional.IsDefined(CheckPermissionsGroup))
+            if (CheckPermissionsGroup.HasValue)
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsOfflineMigration))
+            if (IsOfflineMigration.HasValue)
             {
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             MySqlConnectionInfo sourceConnectionInfo = default;
-            Optional<MySqlTargetPlatformType> targetPlatform = default;
-            Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
-            Optional<bool> isOfflineMigration = default;
+            MySqlTargetPlatformType? targetPlatform = default;
+            ServerLevelPermissionsGroup? checkPermissionsGroup = default;
+            bool? isOfflineMigration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetPlatform"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, Optional.ToNullable(targetPlatform), Optional.ToNullable(checkPermissionsGroup), Optional.ToNullable(isOfflineMigration), serializedAdditionalRawData);
+            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, targetPlatform, checkPermissionsGroup, isOfflineMigration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceMySqlTaskInput>.Write(ModelReaderWriterOptions options)

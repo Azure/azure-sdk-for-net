@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, MySqlPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, MySqlPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<MySqlPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<MySqlPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<MySqlPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            if (privateEndpointConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
+            }
+            if (privateEndpointConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
+            }
 
             using var scope = _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MySqlPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

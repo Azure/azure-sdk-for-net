@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code.HasValue)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ContainerServiceStateCode> code = default;
+            ContainerServiceStateCode? code = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePowerState(Optional.ToNullable(code), serializedAdditionalRawData);
+            return new ContainerServicePowerState(code, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePowerState>.Write(ModelReaderWriterOptions options)

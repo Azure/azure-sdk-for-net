@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataStoreParametersList))
+            if (!(DataStoreParametersList is ChangeTrackingList<DataStoreSettings> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dataStoreParametersList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BackupDataSourceParametersList))
+            if (!(BackupDataSourceParametersList is ChangeTrackingList<BackupDataSourceSettings> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("backupDatasourceParametersList"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
-            Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
+            IList<DataStoreSettings> dataStoreParametersList = default;
+            IList<BackupDataSourceSettings> backupDatasourceParametersList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataStoreSettings> array = new List<DataStoreSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item));
+                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item, options));
                     }
                     dataStoreParametersList = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupDataSourceSettings> array = new List<BackupDataSourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item));
+                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item, options));
                     }
                     backupDatasourceParametersList = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList), serializedAdditionalRawData);
+            return new BackupInstancePolicySettings(dataStoreParametersList ?? new ChangeTrackingList<DataStoreSettings>(), backupDatasourceParametersList ?? new ChangeTrackingList<BackupDataSourceSettings>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstancePolicySettings>.Write(ModelReaderWriterOptions options)

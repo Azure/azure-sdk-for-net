@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(PoLogicalName))
+            if (PoLogicalName != null)
             {
                 writer.WritePropertyName("poLogicalName"u8);
                 writer.WriteStringValue(PoLogicalName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupDataSourceType> resourceType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> poLogicalName = default;
+            BackupDataSourceType? resourceType = default;
+            ResourceIdentifier resourceId = default;
+            string poLogicalName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupStatusContent(Optional.ToNullable(resourceType), resourceId.Value, poLogicalName.Value, serializedAdditionalRawData);
+            return new BackupStatusContent(resourceType, resourceId, poLogicalName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupStatusContent>.Write(ModelReaderWriterOptions options)

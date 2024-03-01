@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RoleAssignmentResourceFormatData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleAssignmentResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RoleAssignmentResourceFormatData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RoleAssignmentResourceFormatData> array = new List<RoleAssignmentResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(item));
+                        array.Add(RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleAssignmentListResult(value ?? new ChangeTrackingList<RoleAssignmentResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentListResult>.Write(ModelReaderWriterOptions options)

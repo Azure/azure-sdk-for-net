@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ScVmmCloudData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScVmmCloudData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ScVmmCloudData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmCloudData> array = new List<ScVmmCloudData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmCloudData.DeserializeScVmmCloudData(item));
+                        array.Add(ScVmmCloudData.DeserializeScVmmCloudData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CloudListResult(value ?? new ChangeTrackingList<ScVmmCloudData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudListResult>.Write(ModelReaderWriterOptions options)

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, NetAppAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, NetAppAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<NetAppAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.Get");
             scope.Start();
@@ -210,7 +237,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<NetAppAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.Get");
             scope.Start();
@@ -255,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +319,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +349,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.Exists");
             scope.Start();
@@ -358,7 +399,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.Exists");
             scope.Start();
@@ -401,7 +449,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.GetIfExists");
             scope.Start();
@@ -446,7 +501,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual NullableResponse<NetAppAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (accountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
+            }
 
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountCollection.GetIfExists");
             scope.Start();

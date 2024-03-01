@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
+            return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
         }
 
         internal static UnknownRecoveryProximityPlacementGroupCustomDetails DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
+                        return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support '{options.Format}' format.");

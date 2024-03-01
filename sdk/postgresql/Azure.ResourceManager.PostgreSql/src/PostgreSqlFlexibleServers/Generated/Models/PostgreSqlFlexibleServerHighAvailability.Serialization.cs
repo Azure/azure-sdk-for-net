@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(StandbyAvailabilityZone))
+            if (StandbyAvailabilityZone != null)
             {
                 writer.WritePropertyName("standbyAvailabilityZone"u8);
                 writer.WriteStringValue(StandbyAvailabilityZone);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<PostgreSqlFlexibleServerHighAvailabilityMode> mode = default;
-            Optional<PostgreSqlFlexibleServerHAState> state = default;
-            Optional<string> standbyAvailabilityZone = default;
+            PostgreSqlFlexibleServerHighAvailabilityMode? mode = default;
+            PostgreSqlFlexibleServerHAState? state = default;
+            string standbyAvailabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerHighAvailability(Optional.ToNullable(mode), Optional.ToNullable(state), standbyAvailabilityZone.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerHighAvailability>.Write(ModelReaderWriterOptions options)

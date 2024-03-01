@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
         public WaitActivity(string name, object waitTimeInSeconds) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(waitTimeInSeconds, nameof(waitTimeInSeconds));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (waitTimeInSeconds == null)
+            {
+                throw new ArgumentNullException(nameof(waitTimeInSeconds));
+            }
 
             WaitTimeInSeconds = waitTimeInSeconds;
             Type = "Wait";

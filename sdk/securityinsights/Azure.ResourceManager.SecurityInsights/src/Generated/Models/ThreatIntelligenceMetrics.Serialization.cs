@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<ThreatIntelligenceMetric> properties = default;
+            ThreatIntelligenceMetric properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    properties = ThreatIntelligenceMetric.DeserializeThreatIntelligenceMetric(property.Value);
+                    properties = ThreatIntelligenceMetric.DeserializeThreatIntelligenceMetric(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceMetrics(properties.Value, serializedAdditionalRawData);
+            return new ThreatIntelligenceMetrics(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceMetrics>.Write(ModelReaderWriterOptions options)

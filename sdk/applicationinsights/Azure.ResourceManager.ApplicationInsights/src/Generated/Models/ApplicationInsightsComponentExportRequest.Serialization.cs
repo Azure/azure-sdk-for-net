@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecordTypes))
+            if (RecordTypes != null)
             {
                 writer.WritePropertyName("RecordTypes"u8);
                 writer.WriteStringValue(RecordTypes);
             }
-            if (Optional.IsDefined(DestinationType))
+            if (DestinationType != null)
             {
                 writer.WritePropertyName("DestinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (Optional.IsDefined(DestinationAddress))
+            if (DestinationAddress != null)
             {
                 writer.WritePropertyName("DestinationAddress"u8);
                 writer.WriteStringValue(DestinationAddress);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled != null)
             {
                 writer.WritePropertyName("IsEnabled"u8);
                 writer.WriteStringValue(IsEnabled);
             }
-            if (Optional.IsDefined(NotificationQueueEnabled))
+            if (NotificationQueueEnabled != null)
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
                 writer.WriteStringValue(NotificationQueueEnabled);
             }
-            if (Optional.IsDefined(NotificationQueueUri))
+            if (NotificationQueueUri != null)
             {
                 writer.WritePropertyName("NotificationQueueUri"u8);
                 writer.WriteStringValue(NotificationQueueUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DestinationStorageSubscriptionId))
+            if (DestinationStorageSubscriptionId != null)
             {
                 writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
                 writer.WriteStringValue(DestinationStorageSubscriptionId);
             }
-            if (Optional.IsDefined(DestinationStorageLocationId))
+            if (DestinationStorageLocationId != null)
             {
                 writer.WritePropertyName("DestinationStorageLocationId"u8);
                 writer.WriteStringValue(DestinationStorageLocationId);
             }
-            if (Optional.IsDefined(DestinationAccountId))
+            if (DestinationAccountId != null)
             {
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> recordTypes = default;
-            Optional<string> destinationType = default;
-            Optional<string> destinationAddress = default;
-            Optional<string> isEnabled = default;
-            Optional<string> notificationQueueEnabled = default;
-            Optional<Uri> notificationQueueUri = default;
-            Optional<string> destinationStorageSubscriptionId = default;
-            Optional<string> destinationStorageLocationId = default;
-            Optional<string> destinationAccountId = default;
+            string recordTypes = default;
+            string destinationType = default;
+            string destinationAddress = default;
+            string isEnabled = default;
+            string notificationQueueEnabled = default;
+            Uri notificationQueueUri = default;
+            string destinationStorageSubscriptionId = default;
+            string destinationStorageLocationId = default;
+            string destinationAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentExportRequest(recordTypes.Value, destinationType.Value, destinationAddress.Value, isEnabled.Value, notificationQueueEnabled.Value, notificationQueueUri.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentExportRequest(
+                recordTypes,
+                destinationType,
+                destinationAddress,
+                isEnabled,
+                notificationQueueEnabled,
+                notificationQueueUri,
+                destinationStorageSubscriptionId,
+                destinationStorageLocationId,
+                destinationAccountId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentExportRequest>.Write(ModelReaderWriterOptions options)

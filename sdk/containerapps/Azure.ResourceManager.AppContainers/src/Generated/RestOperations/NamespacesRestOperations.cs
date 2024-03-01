@@ -72,10 +72,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string environmentName, ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, environmentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,10 +127,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string environmentName, ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, environmentName, content);
             _pipeline.Send(message, cancellationToken);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceImpactingEventStatus(value.Value, serializedAdditionalRawData);
+            return new ServiceImpactingEventStatus(value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceImpactingEventStatus>.Write(ModelReaderWriterOptions options)

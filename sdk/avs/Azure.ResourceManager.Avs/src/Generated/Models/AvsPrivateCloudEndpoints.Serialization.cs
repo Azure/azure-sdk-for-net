@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NsxtManager))
+            if (options.Format != "W" && NsxtManager != null)
             {
                 writer.WritePropertyName("nsxtManager"u8);
                 writer.WriteStringValue(NsxtManager);
             }
-            if (options.Format != "W" && Optional.IsDefined(Vcsa))
+            if (options.Format != "W" && Vcsa != null)
             {
                 writer.WritePropertyName("vcsa"u8);
                 writer.WriteStringValue(Vcsa);
             }
-            if (options.Format != "W" && Optional.IsDefined(HcxCloudManager))
+            if (options.Format != "W" && HcxCloudManager != null)
             {
                 writer.WritePropertyName("hcxCloudManager"u8);
                 writer.WriteStringValue(HcxCloudManager);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> nsxtManager = default;
-            Optional<string> vcsa = default;
-            Optional<string> hcxCloudManager = default;
+            string nsxtManager = default;
+            string vcsa = default;
+            string hcxCloudManager = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudEndpoints(nsxtManager.Value, vcsa.Value, hcxCloudManager.Value, serializedAdditionalRawData);
+            return new AvsPrivateCloudEndpoints(nsxtManager, vcsa, hcxCloudManager, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudEndpoints>.Write(ModelReaderWriterOptions options)

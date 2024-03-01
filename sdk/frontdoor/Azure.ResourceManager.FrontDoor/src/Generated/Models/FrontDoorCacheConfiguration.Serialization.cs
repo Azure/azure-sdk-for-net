@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryParameterStripDirective))
+            if (QueryParameterStripDirective.HasValue)
             {
                 writer.WritePropertyName("queryParameterStripDirective"u8);
                 writer.WriteStringValue(QueryParameterStripDirective.Value.ToString());
             }
-            if (Optional.IsDefined(QueryParameters))
+            if (QueryParameters != null)
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Optional.IsDefined(DynamicCompression))
+            if (DynamicCompression.HasValue)
             {
                 writer.WritePropertyName("dynamicCompression"u8);
                 writer.WriteStringValue(DynamicCompression.Value.ToString());
             }
-            if (Optional.IsDefined(CacheDuration))
+            if (CacheDuration.HasValue)
             {
                 writer.WritePropertyName("cacheDuration"u8);
                 writer.WriteStringValue(CacheDuration.Value, "P");
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorQuery> queryParameterStripDirective = default;
-            Optional<string> queryParameters = default;
-            Optional<DynamicCompressionEnabled> dynamicCompression = default;
-            Optional<TimeSpan> cacheDuration = default;
+            FrontDoorQuery? queryParameterStripDirective = default;
+            string queryParameters = default;
+            DynamicCompressionEnabled? dynamicCompression = default;
+            TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
+            return new FrontDoorCacheConfiguration(queryParameterStripDirective, queryParameters, dynamicCompression, cacheDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCacheConfiguration>.Write(ModelReaderWriterOptions options)

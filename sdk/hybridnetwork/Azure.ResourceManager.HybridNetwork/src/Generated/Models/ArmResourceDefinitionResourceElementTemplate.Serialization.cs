@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateType))
+            if (TemplateType.HasValue)
             {
                 writer.WritePropertyName("templateType"u8);
                 writer.WriteStringValue(TemplateType.Value.ToString());
             }
-            if (Optional.IsDefined(ParameterValues))
+            if (ParameterValues != null)
             {
                 writer.WritePropertyName("parameterValues"u8);
                 writer.WriteStringValue(ParameterValues);
             }
-            if (Optional.IsDefined(ArtifactProfile))
+            if (ArtifactProfile != null)
             {
                 writer.WritePropertyName("artifactProfile"u8);
                 writer.WriteObjectValue(ArtifactProfile);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<TemplateType> templateType = default;
-            Optional<string> parameterValues = default;
-            Optional<NSDArtifactProfile> artifactProfile = default;
+            TemplateType? templateType = default;
+            string parameterValues = default;
+            NSDArtifactProfile artifactProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value);
+                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmResourceDefinitionResourceElementTemplate(Optional.ToNullable(templateType), parameterValues.Value, artifactProfile.Value, serializedAdditionalRawData);
+            return new ArmResourceDefinitionResourceElementTemplate(templateType, parameterValues, artifactProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmResourceDefinitionResourceElementTemplate>.Write(ModelReaderWriterOptions options)

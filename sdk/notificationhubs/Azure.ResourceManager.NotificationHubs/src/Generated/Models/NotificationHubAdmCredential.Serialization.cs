@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Optional.IsDefined(AuthTokenUri))
+            if (AuthTokenUri != null)
             {
                 writer.WritePropertyName("authTokenUrl"u8);
                 writer.WriteStringValue(AuthTokenUri.AbsoluteUri);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Uri> authTokenUrl = default;
+            string clientId = default;
+            string clientSecret = default;
+            Uri authTokenUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubAdmCredential(clientId.Value, clientSecret.Value, authTokenUrl.Value, serializedAdditionalRawData);
+            return new NotificationHubAdmCredential(clientId, clientSecret, authTokenUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubAdmCredential>.Write(ModelReaderWriterOptions options)

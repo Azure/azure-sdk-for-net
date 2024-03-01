@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AttributeMappings))
+            if (!(AttributeMappings is ChangeTrackingList<MapperAttributeMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("attributeMappings"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<MapperAttributeMapping>> attributeMappings = default;
+            IList<MapperAttributeMapping> attributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeMapping> array = new List<MapperAttributeMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeMapping.DeserializeMapperAttributeMapping(item));
+                        array.Add(MapperAttributeMapping.DeserializeMapperAttributeMapping(item, options));
                     }
                     attributeMappings = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperAttributeMappings(Optional.ToList(attributeMappings), serializedAdditionalRawData);
+            return new MapperAttributeMappings(attributeMappings ?? new ChangeTrackingList<MapperAttributeMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperAttributeMappings>.Write(ModelReaderWriterOptions options)

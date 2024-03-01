@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAzureCoreNetworkFunctionApplication(document.RootElement, options);
+            return DeserializeAzureCoreNetworkFunctionApplication(document.RootElement, options);
         }
 
         internal static UnknownAzureCoreNetworkFunctionApplication DeserializeUnknownAzureCoreNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             AzureCoreArtifactType artifactType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAzureCoreNetworkFunctionApplication(name.Value, dependsOnProfile.Value, serializedAdditionalRawData, artifactType);
+            return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, serializedAdditionalRawData, artifactType);
         }
 
         BinaryData IPersistableModel<AzureCoreNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAzureCoreNetworkFunctionApplication(document.RootElement, options);
+                        return DeserializeAzureCoreNetworkFunctionApplication(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AzureCoreNetworkFunctionApplication)} does not support '{options.Format}' format.");

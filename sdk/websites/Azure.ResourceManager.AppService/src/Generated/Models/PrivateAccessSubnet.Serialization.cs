@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Key))
+            if (Key.HasValue)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteNumberValue(Key.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> key = default;
+            string name = default;
+            int? key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateAccessSubnet(name.Value, Optional.ToNullable(key), serializedAdditionalRawData);
+            return new PrivateAccessSubnet(name, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateAccessSubnet>.Write(ModelReaderWriterOptions options)

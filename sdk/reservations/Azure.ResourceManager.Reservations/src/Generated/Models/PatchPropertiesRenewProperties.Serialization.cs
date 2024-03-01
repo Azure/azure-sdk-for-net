@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurchaseProperties))
+            if (PurchaseProperties != null)
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationPurchaseContent> purchaseProperties = default;
+            ReservationPurchaseContent purchaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
+                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatchPropertiesRenewProperties(purchaseProperties.Value, serializedAdditionalRawData);
+            return new PatchPropertiesRenewProperties(purchaseProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatchPropertiesRenewProperties>.Write(ModelReaderWriterOptions options)

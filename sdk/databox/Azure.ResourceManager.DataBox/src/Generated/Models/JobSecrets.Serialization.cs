@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
+            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataboxJobSecrets.DeserializeDataboxJobSecrets(element);
-                    case "DataBoxCustomerDisk": return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element);
-                    case "DataBoxDisk": return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element);
-                    case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element);
+                    case "DataBox": return DataboxJobSecrets.DeserializeDataboxJobSecrets(element, options);
+                    case "DataBoxCustomerDisk": return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element, options);
+                    case "DataBoxDisk": return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element, options);
+                    case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element, options);
                 }
             }
-            return UnknownJobSecrets.DeserializeUnknownJobSecrets(element);
+            return UnknownJobSecrets.DeserializeUnknownJobSecrets(element, options);
         }
 
         BinaryData IPersistableModel<JobSecrets>.Write(ModelReaderWriterOptions options)

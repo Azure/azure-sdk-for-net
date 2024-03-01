@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (Optional.IsDefined(ActionsRequired))
+            if (ActionsRequired != null)
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status = default;
             string description = default;
-            Optional<string> actionsRequired = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesPrivateLinkServiceConnectionState(status, description, actionsRequired.Value, serializedAdditionalRawData);
+            return new DeviceProvisioningServicesPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServicePlacementPolicy(document.RootElement, options);
+            return DeserializeManagedServicePlacementPolicy(document.RootElement, options);
         }
 
         internal static UnknownServicePlacementPolicy DeserializeUnknownServicePlacementPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownServicePlacementPolicy(document.RootElement, options);
+                        return DeserializeManagedServicePlacementPolicy(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ManagedServicePlacementPolicy)} does not support '{options.Format}' format.");

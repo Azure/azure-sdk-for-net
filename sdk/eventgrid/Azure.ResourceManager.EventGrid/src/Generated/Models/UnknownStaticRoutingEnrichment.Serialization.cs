@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStaticRoutingEnrichment(document.RootElement, options);
+            return DeserializeStaticRoutingEnrichment(document.RootElement, options);
         }
 
         internal static UnknownStaticRoutingEnrichment DeserializeUnknownStaticRoutingEnrichment(JsonElement element, ModelReaderWriterOptions options = null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> key = default;
+            string key = default;
             StaticRoutingEnrichmentType valueType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownStaticRoutingEnrichment(key.Value, valueType, serializedAdditionalRawData);
+            return new UnknownStaticRoutingEnrichment(key, valueType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticRoutingEnrichment>.Write(ModelReaderWriterOptions options)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStaticRoutingEnrichment(document.RootElement, options);
+                        return DeserializeStaticRoutingEnrichment(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StaticRoutingEnrichment)} does not support '{options.Format}' format.");

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<BinaryData> content = default;
+            string title = default;
+            BinaryData content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicJsonSchema(title.Value, content.Value, serializedAdditionalRawData);
+            return new LogicJsonSchema(title, content, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicJsonSchema>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+            if (MaxConcurrentRequestsPerInstance.HasValue)
             {
                 writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
                 writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
             }
-            if (Optional.IsDefined(MaxQueueWait))
+            if (MaxQueueWait.HasValue)
             {
                 writer.WritePropertyName("maxQueueWait"u8);
                 writer.WriteStringValue(MaxQueueWait.Value, "P");
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (RequestTimeout.HasValue)
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteStringValue(RequestTimeout.Value, "P");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxConcurrentRequestsPerInstance = default;
-            Optional<TimeSpan> maxQueueWait = default;
-            Optional<TimeSpan> requestTimeout = default;
+            int? maxConcurrentRequestsPerInstance = default;
+            TimeSpan? maxQueueWait = default;
+            TimeSpan? requestTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOnlineRequestSettings(Optional.ToNullable(maxConcurrentRequestsPerInstance), Optional.ToNullable(maxQueueWait), Optional.ToNullable(requestTimeout), serializedAdditionalRawData);
+            return new MachineLearningOnlineRequestSettings(maxConcurrentRequestsPerInstance, maxQueueWait, requestTimeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineRequestSettings>.Write(ModelReaderWriterOptions options)

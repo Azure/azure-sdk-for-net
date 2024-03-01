@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DigitalTwinsPrivateLinkResourceData(DigitalTwinsPrivateLinkResourceProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
         }

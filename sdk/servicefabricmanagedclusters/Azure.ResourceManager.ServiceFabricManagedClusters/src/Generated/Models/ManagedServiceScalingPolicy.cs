@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -60,8 +59,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scalingMechanism"/> or <paramref name="scalingTrigger"/> is null. </exception>
         public ManagedServiceScalingPolicy(ManagedServiceScalingMechanism scalingMechanism, ManagedServiceScalingTrigger scalingTrigger)
         {
-            Argument.AssertNotNull(scalingMechanism, nameof(scalingMechanism));
-            Argument.AssertNotNull(scalingTrigger, nameof(scalingTrigger));
+            if (scalingMechanism == null)
+            {
+                throw new ArgumentNullException(nameof(scalingMechanism));
+            }
+            if (scalingTrigger == null)
+            {
+                throw new ArgumentNullException(nameof(scalingTrigger));
+            }
 
             ScalingMechanism = scalingMechanism;
             ScalingTrigger = scalingTrigger;

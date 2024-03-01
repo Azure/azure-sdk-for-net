@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core
             writer.WriteStringValue(InputBlobUri.AbsoluteUri);
             writer.WritePropertyName("outputBlobUri"u8);
             writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 SerializeErrorValue(writer);
@@ -35,15 +35,15 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             Uri inputBlobUri = default;
             Uri outputBlobUri = default;
-            Optional<ImportJobStatus> status = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> lastActionDateTime = default;
-            Optional<DateTimeOffset> finishedDateTime = default;
-            Optional<DateTimeOffset> purgeDateTime = default;
-            Optional<ResponseError> error = default;
+            ImportJobStatus? status = default;
+            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? lastActionDateTime = default;
+            DateTimeOffset? finishedDateTime = default;
+            DateTimeOffset? purgeDateTime = default;
+            ResponseError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,7 +116,16 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new ImportJob(id.Value, inputBlobUri, outputBlobUri, Optional.ToNullable(status), Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(finishedDateTime), Optional.ToNullable(purgeDateTime), error.Value);
+            return new ImportJob(
+                id,
+                inputBlobUri,
+                outputBlobUri,
+                status,
+                createdDateTime,
+                lastActionDateTime,
+                finishedDateTime,
+                purgeDateTime,
+                error);
         }
     }
 }

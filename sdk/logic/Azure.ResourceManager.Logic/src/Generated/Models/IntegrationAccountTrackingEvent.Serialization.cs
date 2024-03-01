@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(EventOn, "O");
             writer.WritePropertyName("recordType"u8);
             writer.WriteStringValue(RecordType.ToString());
-            if (Optional.IsDefined(Record))
+            if (Record != null)
             {
                 writer.WritePropertyName("record"u8);
 #if NET6_0_OR_GREATER
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationAccountEventLevel eventLevel = default;
             DateTimeOffset eventTime = default;
             IntegrationAccountTrackingRecordType recordType = default;
-            Optional<BinaryData> record = default;
-            Optional<IntegrationAccountTrackingEventErrorInfo> error = default;
+            BinaryData record = default;
+            IntegrationAccountTrackingEventErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = IntegrationAccountTrackingEventErrorInfo.DeserializeIntegrationAccountTrackingEventErrorInfo(property.Value);
+                    error = IntegrationAccountTrackingEventErrorInfo.DeserializeIntegrationAccountTrackingEventErrorInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountTrackingEvent(eventLevel, eventTime, recordType, record.Value, error.Value, serializedAdditionalRawData);
+            return new IntegrationAccountTrackingEvent(
+                eventLevel,
+                eventTime,
+                recordType,
+                record,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountTrackingEvent>.Write(ModelReaderWriterOptions options)

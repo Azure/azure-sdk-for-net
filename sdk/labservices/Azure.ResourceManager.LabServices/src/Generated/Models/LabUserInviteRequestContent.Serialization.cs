@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
 #if NET6_0_OR_GREATER
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<BinaryData> text = default;
+            BinaryData text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabUserInviteRequestContent(text.Value, serializedAdditionalRawData);
+            return new LabUserInviteRequestContent(text, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabUserInviteRequestContent>.Write(ModelReaderWriterOptions options)

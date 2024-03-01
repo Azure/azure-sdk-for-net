@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Optional.IsDefined(RenderingProperties))
+            if (RenderingProperties != null)
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppDiagnosticDataTableResult> table = default;
-            Optional<ContainerAppDiagnosticRendering> renderingProperties = default;
+            ContainerAppDiagnosticDataTableResult table = default;
+            ContainerAppDiagnosticRendering renderingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value);
+                    table = ContainerAppDiagnosticDataTableResult.DeserializeContainerAppDiagnosticDataTableResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renderingProperties"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    renderingProperties = ContainerAppDiagnosticRendering.DeserializeContainerAppDiagnosticRendering(property.Value);
+                    renderingProperties = ContainerAppDiagnosticRendering.DeserializeContainerAppDiagnosticRendering(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsDataApiResult(table.Value, renderingProperties.Value, serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsDataApiResult(table, renderingProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsDataApiResult>.Write(ModelReaderWriterOptions options)

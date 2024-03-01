@@ -44,26 +44,26 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            if (options.Format != "W" && DataSetId.HasValue)
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
             writer.WritePropertyName("kustoClusterResourceId"u8);
             writer.WriteStringValue(KustoClusterResourceId);
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
             ResourceIdentifier kustoClusterResourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            AzureLocation? location = default;
+            DataShareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoClusterDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
+            return new KustoClusterDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                kustoClusterResourceId,
+                location,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoClusterDataSet>.Write(ModelReaderWriterOptions options)

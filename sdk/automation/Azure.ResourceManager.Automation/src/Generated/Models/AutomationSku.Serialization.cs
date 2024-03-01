@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Family))
+            if (Family != null)
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             AutomationSkuName name = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            string family = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationSku(name, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new AutomationSku(name, family, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationSku>.Write(ModelReaderWriterOptions options)

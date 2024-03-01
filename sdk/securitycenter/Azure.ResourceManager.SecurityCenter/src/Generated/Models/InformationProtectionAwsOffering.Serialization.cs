@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InformationProtection))
+            if (InformationProtection != null)
             {
                 writer.WritePropertyName("informationProtection"u8);
                 writer.WriteObjectValue(InformationProtection);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsInformationProtection> informationProtection = default;
+            AwsInformationProtection informationProtection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value);
+                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionAwsOffering(offeringType, description.Value, serializedAdditionalRawData, informationProtection.Value);
+            return new InformationProtectionAwsOffering(offeringType, description, serializedAdditionalRawData, informationProtection);
         }
 
         BinaryData IPersistableModel<InformationProtectionAwsOffering>.Write(ModelReaderWriterOptions options)

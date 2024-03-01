@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
+            IPAddress ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeNodeIPAddress(ipAddress.Value, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeNodeIPAddress(ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeNodeIPAddress>.Write(ModelReaderWriterOptions options)

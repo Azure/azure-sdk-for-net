@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -24,8 +23,14 @@ namespace Azure.AI.FormRecognizer.Training
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="errors"/> is null. </exception>
         internal TrainingDocumentInfo(string name, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(errors, nameof(errors));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (errors == null)
+            {
+                throw new ArgumentNullException(nameof(errors));
+            }
 
             Name = name;
             PageCount = pageCount;

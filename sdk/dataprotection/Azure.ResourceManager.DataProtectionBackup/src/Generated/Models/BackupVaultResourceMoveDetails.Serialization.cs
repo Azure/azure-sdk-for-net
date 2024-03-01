@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(CompleteOn))
+            if (CompleteOn.HasValue)
             {
                 writer.WritePropertyName("completionTimeUtc"u8);
                 writer.WriteStringValue(CompleteOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceResourcePath))
+            if (SourceResourcePath != null)
             {
                 writer.WritePropertyName("sourceResourcePath"u8);
                 writer.WriteStringValue(SourceResourcePath);
             }
-            if (Optional.IsDefined(TargetResourcePath))
+            if (TargetResourcePath != null)
             {
                 writer.WritePropertyName("targetResourcePath"u8);
                 writer.WriteStringValue(TargetResourcePath);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> completionTimeUtc = default;
-            Optional<string> sourceResourcePath = default;
-            Optional<string> targetResourcePath = default;
+            string operationId = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? completionTimeUtc = default;
+            string sourceResourcePath = default;
+            string targetResourcePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultResourceMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourcePath.Value, targetResourcePath.Value, serializedAdditionalRawData);
+            return new BackupVaultResourceMoveDetails(
+                operationId,
+                startTimeUtc,
+                completionTimeUtc,
+                sourceResourcePath,
+                targetResourcePath,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultResourceMoveDetails>.Write(ModelReaderWriterOptions options)

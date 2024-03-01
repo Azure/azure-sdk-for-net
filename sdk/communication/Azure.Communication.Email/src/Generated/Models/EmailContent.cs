@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Email
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/> is null. </exception>
         public EmailContent(string subject)
         {
-            Argument.AssertNotNull(subject, nameof(subject));
+            if (subject == null)
+            {
+                throw new ArgumentNullException(nameof(subject));
+            }
 
             Subject = subject;
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -57,7 +56,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accessKey"/> is null. </exception>
         public DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent(string accessKey)
         {
-            Argument.AssertNotNull(accessKey, nameof(accessKey));
+            if (accessKey == null)
+            {
+                throw new ArgumentNullException(nameof(accessKey));
+            }
 
             AccessKey = accessKey;
         }

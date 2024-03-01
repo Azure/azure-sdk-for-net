@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<BotServiceProvider> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BotServiceProvider>> value = default;
+            string nextLink = default;
+            IReadOnlyList<BotServiceProvider> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServiceProvider> array = new List<BotServiceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServiceProvider.DeserializeBotServiceProvider(item));
+                        array.Add(BotServiceProvider.DeserializeBotServiceProvider(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceProviderResponseList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ServiceProviderResponseList(nextLink, value ?? new ChangeTrackingList<BotServiceProvider>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceProviderResponseList>.Write(ModelReaderWriterOptions options)

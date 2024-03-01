@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProjectionMode))
+            if (ProjectionMode.HasValue)
             {
                 writer.WritePropertyName("projectionMode"u8);
                 writer.WriteStringValue(ProjectionMode.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IndexProjectionMode> projectionMode = default;
+            IndexProjectionMode? projectionMode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchIndexerIndexProjectionsParameters(Optional.ToNullable(projectionMode), additionalProperties);
+            return new SearchIndexerIndexProjectionsParameters(projectionMode, additionalProperties);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (ZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteStringValue(ZoneRedundant.Value.ToString());
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(TargetResourceGroupName))
+            if (TargetResourceGroupName != null)
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceZoneRedundantSetting> zoneRedundant = default;
+            IDictionary<string, string> tags = default;
+            ResourceZoneRedundantSetting? zoneRedundant = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(zoneRedundant));
+            return new SqlDatabaseResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                zoneRedundant);
         }
 
         BinaryData IPersistableModel<SqlDatabaseResourceSettings>.Write(ModelReaderWriterOptions options)

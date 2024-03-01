@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteNumberValue(FrontendPortRangeStart);
             writer.WritePropertyName("frontendPortRangeEnd"u8);
             writer.WriteNumberValue(FrontendPortRangeEnd);
-            if (Optional.IsCollectionDefined(NetworkSecurityGroupRules))
+            if (!(NetworkSecurityGroupRules is ChangeTrackingList<BatchNetworkSecurityGroupRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityGroupRules"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             int backendPort = default;
             int frontendPortRangeStart = default;
             int frontendPortRangeEnd = default;
-            Optional<IList<BatchNetworkSecurityGroupRule>> networkSecurityGroupRules = default;
+            IList<BatchNetworkSecurityGroupRule> networkSecurityGroupRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchNetworkSecurityGroupRule> array = new List<BatchNetworkSecurityGroupRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item));
+                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item, options));
                     }
                     networkSecurityGroupRules = array;
                     continue;
@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchInboundNatPool(name, protocol, backendPort, frontendPortRangeStart, frontendPortRangeEnd, Optional.ToList(networkSecurityGroupRules), serializedAdditionalRawData);
+            return new BatchInboundNatPool(
+                name,
+                protocol,
+                backendPort,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                networkSecurityGroupRules ?? new ChangeTrackingList<BatchNetworkSecurityGroupRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchInboundNatPool>.Write(ModelReaderWriterOptions options)

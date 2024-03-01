@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal OperationStatusResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
 
             Status = status;
             Operations = new ChangeTrackingList<OperationStatusResult>();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            if (options.Format != "W" && OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            if (options.Format != "W" && EventTimestamp != null)
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
+            if (options.Format != "W" && DatabaseId != null)
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(DatabaseId);
             }
-            if (Optional.IsDefined(Database))
+            if (Database != null)
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteObjectValue(Database);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<CosmosDBOperationType> operationType = default;
-            Optional<string> eventTimestamp = default;
-            Optional<string> ownerId = default;
-            Optional<string> ownerResourceId = default;
-            Optional<RestorableSqlDatabasePropertiesResourceDatabase> database = default;
+            string rid = default;
+            CosmosDBOperationType? operationType = default;
+            string eventTimestamp = default;
+            string ownerId = default;
+            string ownerResourceId = default;
+            RestorableSqlDatabasePropertiesResourceDatabase database = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    database = RestorableSqlDatabasePropertiesResourceDatabase.DeserializeRestorableSqlDatabasePropertiesResourceDatabase(property.Value);
+                    database = RestorableSqlDatabasePropertiesResourceDatabase.DeserializeRestorableSqlDatabasePropertiesResourceDatabase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedRestorableSqlDatabaseResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, database.Value, serializedAdditionalRawData);
+            return new ExtendedRestorableSqlDatabaseResourceInfo(
+                rid,
+                operationType,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                database,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedRestorableSqlDatabaseResourceInfo>.Write(ModelReaderWriterOptions options)

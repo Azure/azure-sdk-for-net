@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlternativeType))
+            if (AlternativeType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlternativeType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ImageAlternativeType> type = default;
-            Optional<string> value = default;
+            ImageAlternativeType? type = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageAlternativeOption(Optional.ToNullable(type), value.Value, serializedAdditionalRawData);
+            return new ImageAlternativeOption(type, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageAlternativeOption>.Write(ModelReaderWriterOptions options)

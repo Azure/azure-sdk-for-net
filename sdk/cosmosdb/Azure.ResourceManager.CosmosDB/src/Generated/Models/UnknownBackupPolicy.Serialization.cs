@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (Optional.IsDefined(MigrationState))
+            if (MigrationState != null)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupPolicy(document.RootElement, options);
+            return DeserializeCosmosDBAccountBackupPolicy(document.RootElement, options);
         }
 
         internal static UnknownBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             BackupPolicyType type = "Unknown";
-            Optional<BackupPolicyMigrationState> migrationState = default;
+            BackupPolicyMigrationState migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
+                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBackupPolicy(type, migrationState.Value, serializedAdditionalRawData);
+            return new UnknownBackupPolicy(type, migrationState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountBackupPolicy>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBackupPolicy(document.RootElement, options);
+                        return DeserializeCosmosDBAccountBackupPolicy(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBAccountBackupPolicy)} does not support '{options.Format}' format.");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Name))
+            if (options.Format != "W" && !(Name is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<KustoResourceSkuCapabilities> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<KustoResourceSkuCapabilities>> capabilities = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<KustoResourceSkuCapabilities> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoResourceSkuCapabilities> array = new List<KustoResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoResourceSkuCapabilities.DeserializeKustoResourceSkuCapabilities(item));
+                        array.Add(KustoResourceSkuCapabilities.DeserializeKustoResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new KustoResourceSkuZoneDetails(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<KustoResourceSkuCapabilities>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoResourceSkuZoneDetails>.Write(ModelReaderWriterOptions options)

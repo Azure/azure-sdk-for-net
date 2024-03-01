@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StorageLocation);
             writer.WritePropertyName("skuName"u8);
             writer.WriteStringValue(SkuName.ToSerialString());
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
-            Optional<string> country = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country.Value, serializedAdditionalRawData);
+            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

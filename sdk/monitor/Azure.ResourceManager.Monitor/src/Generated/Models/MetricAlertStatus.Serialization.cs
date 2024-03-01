@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<MetricAlertStatusProperties> properties = default;
+            MetricAlertStatusProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    properties = MetricAlertStatusProperties.DeserializeMetricAlertStatusProperties(property.Value);
+                    properties = MetricAlertStatusProperties.DeserializeMetricAlertStatusProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatus(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MetricAlertStatus(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatus>.Write(ModelReaderWriterOptions options)

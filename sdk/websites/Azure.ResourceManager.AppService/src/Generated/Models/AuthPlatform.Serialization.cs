@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(ConfigFilePath))
+            if (ConfigFilePath != null)
             {
                 writer.WritePropertyName("configFilePath"u8);
                 writer.WriteStringValue(ConfigFilePath);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> configFilePath = default;
+            bool? enabled = default;
+            string runtimeVersion = default;
+            string configFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthPlatform(Optional.ToNullable(enabled), runtimeVersion.Value, configFilePath.Value, serializedAdditionalRawData);
+            return new AuthPlatform(enabled, runtimeVersion, configFilePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthPlatform>.Write(ModelReaderWriterOptions options)

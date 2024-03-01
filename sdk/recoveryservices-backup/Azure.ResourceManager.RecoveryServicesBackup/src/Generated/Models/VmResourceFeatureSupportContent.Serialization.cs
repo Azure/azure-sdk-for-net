@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(VmSku))
+            if (VmSku != null)
             {
                 writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<string> vmSku = default;
+            string vmSize = default;
+            string vmSku = default;
             string featureType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmResourceFeatureSupportContent(featureType, serializedAdditionalRawData, vmSize.Value, vmSku.Value);
+            return new VmResourceFeatureSupportContent(featureType, serializedAdditionalRawData, vmSize, vmSku);
         }
 
         BinaryData IPersistableModel<VmResourceFeatureSupportContent>.Write(ModelReaderWriterOptions options)

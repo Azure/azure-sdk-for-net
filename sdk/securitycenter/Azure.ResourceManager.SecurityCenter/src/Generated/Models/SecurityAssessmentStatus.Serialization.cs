@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            if (Optional.IsDefined(Cause))
+            if (Cause != null)
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             SecurityAssessmentStatusCode code = default;
-            Optional<string> cause = default;
-            Optional<string> description = default;
+            string cause = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentStatus(code, cause.Value, description.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentStatus(code, cause, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentStatus>.Write(ModelReaderWriterOptions options)

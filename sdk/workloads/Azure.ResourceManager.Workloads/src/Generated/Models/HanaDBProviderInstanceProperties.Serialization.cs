@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(DBName))
+            if (DBName != null)
             {
                 writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Optional.IsDefined(SqlPort))
+            if (SqlPort != null)
             {
                 writer.WritePropertyName("sqlPort"u8);
                 writer.WriteStringValue(SqlPort);
             }
-            if (Optional.IsDefined(InstanceNumber))
+            if (InstanceNumber != null)
             {
                 writer.WritePropertyName("instanceNumber"u8);
                 writer.WriteStringValue(InstanceNumber);
             }
-            if (Optional.IsDefined(DBUsername))
+            if (DBUsername != null)
             {
                 writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
-            if (Optional.IsDefined(DBPassword))
+            if (DBPassword != null)
             {
                 writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
-            if (Optional.IsDefined(DBPasswordUri))
+            if (DBPasswordUri != null)
             {
                 writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (SslCertificateUri != null)
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SslHostNameInCertificate))
+            if (SslHostNameInCertificate != null)
             {
                 writer.WritePropertyName("sslHostNameInCertificate"u8);
                 writer.WriteStringValue(SslHostNameInCertificate);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (SslPreference.HasValue)
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SapSid))
+            if (SapSid != null)
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbName = default;
-            Optional<string> sqlPort = default;
-            Optional<string> instanceNumber = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<string> sslHostNameInCertificate = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<string> sapSid = default;
+            string hostname = default;
+            string dbName = default;
+            string sqlPort = default;
+            string instanceNumber = default;
+            string dbUsername = default;
+            string dbPassword = default;
+            Uri dbPasswordUri = default;
+            Uri sslCertificateUri = default;
+            string sslHostNameInCertificate = default;
+            SapSslPreference? sslPreference = default;
+            string sapSid = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -215,7 +215,20 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HanaDBProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sslCertificateUri.Value, sslHostNameInCertificate.Value, Optional.ToNullable(sslPreference), sapSid.Value);
+            return new HanaDBProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname,
+                dbName,
+                sqlPort,
+                instanceNumber,
+                dbUsername,
+                dbPassword,
+                dbPasswordUri,
+                sslCertificateUri,
+                sslHostNameInCertificate,
+                sslPreference,
+                sapSid);
         }
 
         BinaryData IPersistableModel<HanaDBProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

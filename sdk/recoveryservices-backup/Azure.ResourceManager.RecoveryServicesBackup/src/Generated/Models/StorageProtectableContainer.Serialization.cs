@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (BackupManagementType.HasValue)
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
-            if (Optional.IsDefined(HealthStatus))
+            if (HealthStatus != null)
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
-            if (Optional.IsDefined(ContainerId))
+            if (ContainerId != null)
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
             ProtectableContainerType protectableContainerType = default;
-            Optional<string> healthStatus = default;
-            Optional<string> containerId = default;
+            string healthStatus = default;
+            string containerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value, serializedAdditionalRawData);
+            return new StorageProtectableContainer(
+                friendlyName,
+                backupManagementType,
+                protectableContainerType,
+                healthStatus,
+                containerId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProtectableContainer>.Write(ModelReaderWriterOptions options)

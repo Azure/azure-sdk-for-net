@@ -20,8 +20,14 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         internal MetadataTable(string id, string name)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Id = id;
             Name = name;

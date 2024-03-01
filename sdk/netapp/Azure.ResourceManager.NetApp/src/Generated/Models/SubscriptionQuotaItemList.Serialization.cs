@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppSubscriptionQuotaItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
+            IReadOnlyList<NetAppSubscriptionQuotaItem> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppSubscriptionQuotaItem> array = new List<NetAppSubscriptionQuotaItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item));
+                        array.Add(NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionQuotaItemList(Optional.ToList(value), serializedAdditionalRawData);
+            return new SubscriptionQuotaItemList(value ?? new ChangeTrackingList<NetAppSubscriptionQuotaItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionQuotaItemList>.Write(ModelReaderWriterOptions options)

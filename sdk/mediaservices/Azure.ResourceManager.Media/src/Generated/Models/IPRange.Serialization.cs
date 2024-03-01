@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Optional.IsDefined(SubnetPrefixLength))
+            if (SubnetPrefixLength.HasValue)
             {
                 writer.WritePropertyName("subnetPrefixLength"u8);
                 writer.WriteNumberValue(SubnetPrefixLength.Value);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPAddress> address = default;
-            Optional<int> subnetPrefixLength = default;
+            string name = default;
+            IPAddress address = default;
+            int? subnetPrefixLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPRange(name.Value, address.Value, Optional.ToNullable(subnetPrefixLength), serializedAdditionalRawData);
+            return new IPRange(name, address, subnetPrefixLength, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPRange>.Write(ModelReaderWriterOptions options)

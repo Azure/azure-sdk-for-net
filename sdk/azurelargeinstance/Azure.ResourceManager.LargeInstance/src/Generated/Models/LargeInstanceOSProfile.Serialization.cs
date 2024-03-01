@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputerName))
+            if (ComputerName != null)
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(SshPublicKey))
+            if (SshPublicKey != null)
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> osType = default;
-            Optional<string> version = default;
-            Optional<string> sshPublicKey = default;
+            string computerName = default;
+            string osType = default;
+            string version = default;
+            string sshPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceOSProfile(computerName.Value, osType.Value, version.Value, sshPublicKey.Value, serializedAdditionalRawData);
+            return new LargeInstanceOSProfile(computerName, osType, version, sshPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceOSProfile>.Write(ModelReaderWriterOptions options)

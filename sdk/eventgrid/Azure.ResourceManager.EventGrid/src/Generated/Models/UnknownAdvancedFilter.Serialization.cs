@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAdvancedFilter(document.RootElement, options);
+            return DeserializeAdvancedFilter(document.RootElement, options);
         }
 
         internal static UnknownAdvancedFilter DeserializeUnknownAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             AdvancedFilterOperatorType operatorType = "Unknown";
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAdvancedFilter(operatorType, key.Value, serializedAdditionalRawData);
+            return new UnknownAdvancedFilter(operatorType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdvancedFilter>.Write(ModelReaderWriterOptions options)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAdvancedFilter(document.RootElement, options);
+                        return DeserializeAdvancedFilter(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AdvancedFilter)} does not support '{options.Format}' format.");

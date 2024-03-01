@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string resultType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(id.Value, resultType, serializedAdditionalRawData);
+            return new UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
+                        return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutput)} does not support '{options.Format}' format.");

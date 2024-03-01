@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MocGroup))
+            if (MocGroup != null)
             {
                 writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
-            if (Optional.IsDefined(MocLocation))
+            if (MocLocation != null)
             {
                 writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
-            if (Optional.IsDefined(MocVnetName))
+            if (MocVnetName != null)
             {
                 writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> mocGroup = default;
-            Optional<string> mocLocation = default;
-            Optional<string> mocVnetName = default;
+            string mocGroup = default;
+            string mocLocation = default;
+            string mocVnetName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciInfraVnetProfile(mocGroup.Value, mocLocation.Value, mocVnetName.Value, serializedAdditionalRawData);
+            return new HciInfraVnetProfile(mocGroup, mocLocation, mocVnetName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciInfraVnetProfile>.Write(ModelReaderWriterOptions options)

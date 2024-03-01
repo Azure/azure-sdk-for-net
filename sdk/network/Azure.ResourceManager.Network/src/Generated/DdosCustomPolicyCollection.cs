@@ -80,8 +80,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DdosCustomPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ddosCustomPolicyName, DdosCustomPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -129,8 +139,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DdosCustomPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string ddosCustomPolicyName, DdosCustomPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -176,7 +196,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual async Task<Response<DdosCustomPolicyResource>> GetAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
             scope.Start();
@@ -221,7 +248,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual Response<DdosCustomPolicyResource> Get(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Get");
             scope.Start();
@@ -266,7 +300,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
             scope.Start();
@@ -309,7 +350,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.Exists");
             scope.Start();
@@ -352,7 +400,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<DdosCustomPolicyResource>> GetIfExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
             scope.Start();
@@ -397,7 +452,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual NullableResponse<DdosCustomPolicyResource> GetIfExists(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
+            if (ddosCustomPolicyName == null)
+            {
+                throw new ArgumentNullException(nameof(ddosCustomPolicyName));
+            }
+            if (ddosCustomPolicyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ddosCustomPolicyName));
+            }
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
             scope.Start();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupSetId))
+            if (BackupSetId != null)
             {
                 writer.WritePropertyName("backupSetId"u8);
                 writer.WriteStringValue(BackupSetId);
             }
-            if (Optional.IsDefined(FirstLsn))
+            if (FirstLsn != null)
             {
                 writer.WritePropertyName("firstLsn"u8);
                 writer.WriteStringValue(FirstLsn);
             }
-            if (Optional.IsDefined(LastLsn))
+            if (LastLsn != null)
             {
                 writer.WritePropertyName("lastLsn"u8);
                 writer.WriteStringValue(LastLsn);
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupType))
+            if (BackupType.HasValue)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ListOfBackupFiles))
+            if (!(ListOfBackupFiles is ChangeTrackingList<BackupFileInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("listOfBackupFiles"u8);
                 writer.WriteStartArray();
@@ -61,22 +61,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(BackupStartOn))
+            if (BackupStartOn.HasValue)
             {
                 writer.WritePropertyName("backupStartDate"u8);
                 writer.WriteStringValue(BackupStartOn.Value, "O");
             }
-            if (Optional.IsDefined(BackupFinishedOn))
+            if (BackupFinishedOn.HasValue)
             {
                 writer.WritePropertyName("backupFinishedDate"u8);
                 writer.WriteStringValue(BackupFinishedOn.Value, "O");
             }
-            if (Optional.IsDefined(IsBackupRestored))
+            if (IsBackupRestored.HasValue)
             {
                 writer.WritePropertyName("isBackupRestored"u8);
                 writer.WriteBooleanValue(IsBackupRestored.Value);
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> backupSetId = default;
-            Optional<string> firstLsn = default;
-            Optional<string> lastLsn = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<BackupFileInfo>> listOfBackupFiles = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> backupStartDate = default;
-            Optional<DateTimeOffset> backupFinishedDate = default;
-            Optional<bool> isBackupRestored = default;
+            string backupSetId = default;
+            string firstLsn = default;
+            string lastLsn = default;
+            DateTimeOffset? lastModifiedTime = default;
+            BackupType? backupType = default;
+            IReadOnlyList<BackupFileInfo> listOfBackupFiles = default;
+            string databaseName = default;
+            DateTimeOffset? backupStartDate = default;
+            DateTimeOffset? backupFinishedDate = default;
+            bool? isBackupRestored = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<BackupFileInfo> array = new List<BackupFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupFileInfo.DeserializeBackupFileInfo(item));
+                        array.Add(BackupFileInfo.DeserializeBackupFileInfo(item, options));
                     }
                     listOfBackupFiles = array;
                     continue;
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), Optional.ToList(listOfBackupFiles), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored), serializedAdditionalRawData);
+            return new BackupSetInfo(
+                backupSetId,
+                firstLsn,
+                lastLsn,
+                lastModifiedTime,
+                backupType,
+                listOfBackupFiles ?? new ChangeTrackingList<BackupFileInfo>(),
+                databaseName,
+                backupStartDate,
+                backupFinishedDate,
+                isBackupRestored,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupSetInfo>.Write(ModelReaderWriterOptions options)

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
-            if (Optional.IsDefined(ComputeLocation))
+            if (ComputeLocation != null)
             {
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 if (ResourceId != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
+            if (options.Format != "W" && !(ProvisioningErrors is ChangeTrackingList<MachineLearningError> collection && collection.IsUndefined))
             {
                 if (ProvisioningErrors != null)
                 {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("provisioningErrors");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
+            if (options.Format != "W" && IsAttachedCompute.HasValue)
             {
                 writer.WritePropertyName("isAttachedCompute"u8);
                 writer.WriteBooleanValue(IsAttachedCompute.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element);
-                    case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element);
-                    case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element);
-                    case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element);
-                    case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element);
-                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element);
-                    case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element);
-                    case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element);
-                    case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element);
-                    case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element);
+                    case "AKS": return MachineLearningAksCompute.DeserializeMachineLearningAksCompute(element, options);
+                    case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element, options);
+                    case "ComputeInstance": return MachineLearningComputeInstance.DeserializeMachineLearningComputeInstance(element, options);
+                    case "DataFactory": return MachineLearningDataFactoryCompute.DeserializeMachineLearningDataFactoryCompute(element, options);
+                    case "DataLakeAnalytics": return MachineLearningDataLakeAnalytics.DeserializeMachineLearningDataLakeAnalytics(element, options);
+                    case "Databricks": return MachineLearningDatabricksCompute.DeserializeMachineLearningDatabricksCompute(element, options);
+                    case "HDInsight": return MachineLearningHDInsightCompute.DeserializeMachineLearningHDInsightCompute(element, options);
+                    case "Kubernetes": return MachineLearningKubernetesCompute.DeserializeMachineLearningKubernetesCompute(element, options);
+                    case "SynapseSpark": return MachineLearningSynapseSpark.DeserializeMachineLearningSynapseSpark(element, options);
+                    case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element, options);
                 }
             }
-            return UnknownCompute.DeserializeUnknownCompute(element);
+            return UnknownCompute.DeserializeUnknownCompute(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeProperties>.Write(ModelReaderWriterOptions options)

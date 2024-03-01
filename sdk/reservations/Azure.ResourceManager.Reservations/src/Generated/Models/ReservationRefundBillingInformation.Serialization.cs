@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingPlan))
+            if (BillingPlan.HasValue)
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Optional.IsDefined(CompletedTransactions))
+            if (CompletedTransactions.HasValue)
             {
                 writer.WritePropertyName("completedTransactions"u8);
                 writer.WriteNumberValue(CompletedTransactions.Value);
             }
-            if (Optional.IsDefined(TotalTransactions))
+            if (TotalTransactions.HasValue)
             {
                 writer.WritePropertyName("totalTransactions"u8);
                 writer.WriteNumberValue(TotalTransactions.Value);
             }
-            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
+            if (BillingCurrencyTotalPaidAmount != null)
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
             }
-            if (Optional.IsDefined(BillingCurrencyProratedAmount))
+            if (BillingCurrencyProratedAmount != null)
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyProratedAmount);
             }
-            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
+            if (BillingCurrencyRemainingCommitmentAmount != null)
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> completedTransactions = default;
-            Optional<int> totalTransactions = default;
-            Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
-            Optional<PurchasePrice> billingCurrencyProratedAmount = default;
-            Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
+            ReservationBillingPlan? billingPlan = default;
+            int? completedTransactions = default;
+            int? totalTransactions = default;
+            PurchasePrice billingCurrencyTotalPaidAmount = default;
+            PurchasePrice billingCurrencyProratedAmount = default;
+            PurchasePrice billingCurrencyRemainingCommitmentAmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyProratedAmount"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyRemainingCommitmentAmount"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value, serializedAdditionalRawData);
+            return new ReservationRefundBillingInformation(
+                billingPlan,
+                completedTransactions,
+                totalTransactions,
+                billingCurrencyTotalPaidAmount,
+                billingCurrencyProratedAmount,
+                billingCurrencyRemainingCommitmentAmount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundBillingInformation>.Write(ModelReaderWriterOptions options)

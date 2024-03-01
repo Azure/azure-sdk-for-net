@@ -72,11 +72,46 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,11 +136,46 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId);
             _pipeline.Send(message, cancellationToken);
@@ -154,11 +224,46 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridRunbookWorkerData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -189,11 +294,46 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridRunbookWorkerData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId);
             _pipeline.Send(message, cancellationToken);
@@ -253,12 +393,50 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridRunbookWorkerData>> CreateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -288,12 +466,50 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridRunbookWorkerData> Create(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, HybridRunbookWorkerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId, content);
             _pipeline.Send(message, cancellationToken);
@@ -352,12 +568,50 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> MoveAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, HybridRunbookWorkerMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateMoveRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -382,12 +636,50 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="hybridRunbookWorkerGroupName"/> or <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Move(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId, HybridRunbookWorkerMoveContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerId, nameof(hybridRunbookWorkerId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerId == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerId));
+            }
+            if (hybridRunbookWorkerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateMoveRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, hybridRunbookWorkerId, content);
             _pipeline.Send(message, cancellationToken);
@@ -438,10 +730,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridRunbookWorkersListResult>> ListByHybridRunbookWorkerGroupAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
 
             using var message = CreateListByHybridRunbookWorkerGroupRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -470,10 +790,38 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridRunbookWorkersListResult> ListByHybridRunbookWorkerGroup(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
 
             using var message = CreateListByHybridRunbookWorkerGroupRequest(subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -517,11 +865,42 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridRunbookWorkersListResult>> ListByHybridRunbookWorkerGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
 
             using var message = CreateListByHybridRunbookWorkerGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -551,11 +930,42 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridRunbookWorkersListResult> ListByHybridRunbookWorkerGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (automationAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(automationAccountName));
+            }
+            if (automationAccountName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
+            }
+            if (hybridRunbookWorkerGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(hybridRunbookWorkerGroupName));
+            }
+            if (hybridRunbookWorkerGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hybridRunbookWorkerGroupName));
+            }
 
             using var message = CreateListByHybridRunbookWorkerGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, hybridRunbookWorkerGroupName, filter);
             _pipeline.Send(message, cancellationToken);

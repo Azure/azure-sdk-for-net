@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlExpression))
+            if (SqlExpression != null)
             {
                 writer.WritePropertyName("sqlExpression"u8);
                 writer.WriteStringValue(SqlExpression);
             }
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (CompatibilityLevel.HasValue)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteNumberValue(CompatibilityLevel.Value);
             }
-            if (Optional.IsDefined(RequiresPreprocessing))
+            if (RequiresPreprocessing.HasValue)
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> sqlExpression = default;
-            Optional<int> compatibilityLevel = default;
-            Optional<bool> requiresPreprocessing = default;
+            string sqlExpression = default;
+            int? compatibilityLevel = default;
+            bool? requiresPreprocessing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusFilterAction(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
+            return new ServiceBusFilterAction(sqlExpression, compatibilityLevel, requiresPreprocessing, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusFilterAction>.Write(ModelReaderWriterOptions options)

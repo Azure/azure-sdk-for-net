@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal LogsTableColumn(string name, LogsColumnType type)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             Type = type;

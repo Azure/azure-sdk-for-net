@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreserveOriginal))
+            if (PreserveOriginal.HasValue)
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> preserveOriginal = default;
+            bool? preserveOriginal = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AsciiFoldingTokenFilter(odataType, name, Optional.ToNullable(preserveOriginal));
+            return new AsciiFoldingTokenFilter(odataType, name, preserveOriginal);
         }
     }
 }

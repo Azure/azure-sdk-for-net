@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<InformationProtectionPolicy> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InformationProtectionPolicy>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<InformationProtectionPolicy> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<InformationProtectionPolicy> array = new List<InformationProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformationProtectionPolicy.DeserializeInformationProtectionPolicy(item));
+                        array.Add(InformationProtectionPolicy.DeserializeInformationProtectionPolicy(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionPolicyList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InformationProtectionPolicyList(value ?? new ChangeTrackingList<InformationProtectionPolicy>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionPolicyList>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cpu))
+            if (Cpu != null)
             {
                 if (Cpu != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu");
                 }
             }
-            if (Optional.IsDefined(Gpu))
+            if (Gpu != null)
             {
                 if (Gpu != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gpu");
                 }
             }
-            if (Optional.IsDefined(Memory))
+            if (Memory != null)
             {
                 if (Memory != null)
                 {
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> cpu = default;
-            Optional<string> gpu = default;
-            Optional<string> memory = default;
+            string cpu = default;
+            string gpu = default;
+            string memory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningContainerResourceSettings(cpu.Value, gpu.Value, memory.Value, serializedAdditionalRawData);
+            return new MachineLearningContainerResourceSettings(cpu, gpu, memory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerResourceSettings>.Write(ModelReaderWriterOptions options)

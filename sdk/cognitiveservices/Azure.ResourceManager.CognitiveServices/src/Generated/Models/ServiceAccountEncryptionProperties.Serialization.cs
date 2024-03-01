@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(KeySource))
+            if (KeySource.HasValue)
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesKeyVaultProperties> keyVaultProperties = default;
-            Optional<ServiceAccountEncryptionKeySource> keySource = default;
+            CognitiveServicesKeyVaultProperties keyVaultProperties = default;
+            ServiceAccountEncryptionKeySource? keySource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value);
+                    keyVaultProperties = CognitiveServicesKeyVaultProperties.DeserializeCognitiveServicesKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), serializedAdditionalRawData);
+            return new ServiceAccountEncryptionProperties(keyVaultProperties, keySource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountEncryptionProperties>.Write(ModelReaderWriterOptions options)

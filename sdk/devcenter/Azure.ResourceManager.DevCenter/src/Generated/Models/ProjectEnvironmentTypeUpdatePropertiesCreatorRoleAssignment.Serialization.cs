@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingDictionary<string, DevCenterEnvironmentRole> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
+            IDictionary<string, DevCenterEnvironmentRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     Dictionary<string, DevCenterEnvironmentRole> dictionary = new Dictionary<string, DevCenterEnvironmentRole>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value));
+                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value, options));
                     }
                     roles = dictionary;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Optional.ToDictionary(roles), serializedAdditionalRawData);
+            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>.Write(ModelReaderWriterOptions options)

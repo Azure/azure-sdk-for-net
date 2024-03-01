@@ -54,9 +54,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryFabricId"/>, <paramref name="recoveryFabricId"/> or <paramref name="groups"/> is null. </exception>
         public SiteRecoveryCreateRecoveryPlanProperties(ResourceIdentifier primaryFabricId, ResourceIdentifier recoveryFabricId, IEnumerable<SiteRecoveryPlanGroup> groups)
         {
-            Argument.AssertNotNull(primaryFabricId, nameof(primaryFabricId));
-            Argument.AssertNotNull(recoveryFabricId, nameof(recoveryFabricId));
-            Argument.AssertNotNull(groups, nameof(groups));
+            if (primaryFabricId == null)
+            {
+                throw new ArgumentNullException(nameof(primaryFabricId));
+            }
+            if (recoveryFabricId == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryFabricId));
+            }
+            if (groups == null)
+            {
+                throw new ArgumentNullException(nameof(groups));
+            }
 
             PrimaryFabricId = primaryFabricId;
             RecoveryFabricId = recoveryFabricId;

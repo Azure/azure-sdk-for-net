@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderSpecificContent))
+            if (ProviderSpecificContent != null)
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificContent);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<PolicyProviderSpecificContent> providerSpecificContent = default;
+            PolicyProviderSpecificContent providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificContent = PolicyProviderSpecificContent.DeserializePolicyProviderSpecificContent(property.Value);
+                    providerSpecificContent = PolicyProviderSpecificContent.DeserializePolicyProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreatePolicyProperties(providerSpecificContent.Value, serializedAdditionalRawData);
+            return new SiteRecoveryCreatePolicyProperties(providerSpecificContent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreatePolicyProperties>.Write(ModelReaderWriterOptions options)

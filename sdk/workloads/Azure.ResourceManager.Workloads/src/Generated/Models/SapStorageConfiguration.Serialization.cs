@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TransportFileShareConfiguration))
+            if (TransportFileShareConfiguration != null)
             {
                 writer.WritePropertyName("transportFileShareConfiguration"u8);
                 writer.WriteObjectValue(TransportFileShareConfiguration);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<FileShareConfiguration> transportFileShareConfiguration = default;
+            FileShareConfiguration transportFileShareConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value);
+                    transportFileShareConfiguration = FileShareConfiguration.DeserializeFileShareConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapStorageConfiguration(transportFileShareConfiguration.Value, serializedAdditionalRawData);
+            return new SapStorageConfiguration(transportFileShareConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapStorageConfiguration>.Write(ModelReaderWriterOptions options)

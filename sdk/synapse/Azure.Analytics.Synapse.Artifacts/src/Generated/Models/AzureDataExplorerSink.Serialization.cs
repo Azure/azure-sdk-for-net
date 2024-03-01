@@ -19,44 +19,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IngestionMappingName))
+            if (IngestionMappingName != null)
             {
                 writer.WritePropertyName("ingestionMappingName"u8);
                 writer.WriteObjectValue(IngestionMappingName);
             }
-            if (Optional.IsDefined(IngestionMappingAsJson))
+            if (IngestionMappingAsJson != null)
             {
                 writer.WritePropertyName("ingestionMappingAsJson"u8);
                 writer.WriteObjectValue(IngestionMappingAsJson);
             }
-            if (Optional.IsDefined(FlushImmediately))
+            if (FlushImmediately != null)
             {
                 writer.WritePropertyName("flushImmediately"u8);
                 writer.WriteObjectValue(FlushImmediately);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> ingestionMappingName = default;
-            Optional<object> ingestionMappingAsJson = default;
-            Optional<object> flushImmediately = default;
+            object ingestionMappingName = default;
+            object ingestionMappingAsJson = default;
+            object flushImmediately = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, ingestionMappingName.Value, ingestionMappingAsJson.Value, flushImmediately.Value);
+            return new AzureDataExplorerSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                ingestionMappingName,
+                ingestionMappingAsJson,
+                flushImmediately);
         }
 
         internal partial class AzureDataExplorerSinkConverter : JsonConverter<AzureDataExplorerSink>

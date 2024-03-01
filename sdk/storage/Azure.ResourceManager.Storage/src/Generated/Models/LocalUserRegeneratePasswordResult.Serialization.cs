@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SshPassword))
+            if (options.Format != "W" && SshPassword != null)
             {
                 writer.WritePropertyName("sshPassword"u8);
                 writer.WriteStringValue(SshPassword);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> sshPassword = default;
+            string sshPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalUserRegeneratePasswordResult(sshPassword.Value, serializedAdditionalRawData);
+            return new LocalUserRegeneratePasswordResult(sshPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalUserRegeneratePasswordResult>.Write(ModelReaderWriterOptions options)

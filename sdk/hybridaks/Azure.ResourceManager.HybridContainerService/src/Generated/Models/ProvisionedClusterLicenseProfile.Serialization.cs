@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureHybridBenefit))
+            if (AzureHybridBenefit.HasValue)
             {
                 writer.WritePropertyName("azureHybridBenefit"u8);
                 writer.WriteStringValue(AzureHybridBenefit.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClusterAzureHybridBenefit> azureHybridBenefit = default;
+            ProvisionedClusterAzureHybridBenefit? azureHybridBenefit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterLicenseProfile(Optional.ToNullable(azureHybridBenefit), serializedAdditionalRawData);
+            return new ProvisionedClusterLicenseProfile(azureHybridBenefit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterLicenseProfile>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LogicWorkflowRequestHistoryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicWorkflowRequestHistoryData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LogicWorkflowRequestHistoryData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowRequestHistoryData> array = new List<LogicWorkflowRequestHistoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowRequestHistoryData.DeserializeLogicWorkflowRequestHistoryData(item));
+                        array.Add(LogicWorkflowRequestHistoryData.DeserializeLogicWorkflowRequestHistoryData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRequestHistoryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRequestHistoryListResult(value ?? new ChangeTrackingList<LogicWorkflowRequestHistoryData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRequestHistoryListResult>.Write(ModelReaderWriterOptions options)

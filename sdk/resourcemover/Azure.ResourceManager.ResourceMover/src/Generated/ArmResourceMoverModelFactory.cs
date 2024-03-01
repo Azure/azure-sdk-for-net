@@ -33,7 +33,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MoverResourceSetData(id, name, resourceType, systemData, tags, location, etag, identity, properties, serializedAdditionalRawData: null);
+            return new MoverResourceSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                identity,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverResourceSetProperties"/>. </summary>
@@ -47,7 +57,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverResourceSetProperties"/> instance for mocking. </returns>
         public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation? sourceLocation = null, AzureLocation? targetLocation = null, AzureLocation? moveLocation = null, MoverProvisioningState? provisioningState = null, string version = null, MoveType? moveType = null, ResponseError errorsProperties = null)
         {
-            return new MoverResourceSetProperties(sourceLocation, targetLocation, moveLocation, provisioningState, version, moveType, errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new MoverResourceSetProperties(
+                sourceLocation,
+                targetLocation,
+                moveLocation,
+                provisioningState,
+                version,
+                moveType,
+                errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverOperationStatus"/>. </summary>
@@ -61,7 +79,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverOperationStatus"/> instance for mocking. </returns>
         public static MoverOperationStatus MoverOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, MoverOperationStatusError error = null, BinaryData properties = null)
         {
-            return new MoverOperationStatus(id, name, status, startOn, endOn, error, properties, serializedAdditionalRawData: null);
+            return new MoverOperationStatus(
+                id,
+                name,
+                status,
+                startOn,
+                endOn,
+                error,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverOperationStatusError"/>. </summary>
@@ -110,7 +136,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="ResourceMover.MoverResourceData"/> instance for mocking. </returns>
         public static MoverResourceData MoverResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MoverResourceProperties properties = null)
         {
-            return new MoverResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MoverResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverResourceProperties"/>. </summary>
@@ -139,7 +171,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
             dependsOn ??= new List<MoverResourceDependency>();
             dependsOnOverrides ??= new List<MoverResourceDependencyOverride>();
 
-            return new MoverResourceProperties(provisioningState, sourceId, targetId, existingTargetId, resourceSettings, sourceResourceSettings, moveStatus, dependsOn?.ToList(), dependsOnOverrides?.ToList(), isResolveRequired, errorsProperties != null ? new MoveResourcePropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new MoverResourceProperties(
+                provisioningState,
+                sourceId,
+                targetId,
+                existingTargetId,
+                resourceSettings,
+                sourceResourceSettings,
+                moveStatus,
+                dependsOn?.ToList(),
+                dependsOnOverrides?.ToList(),
+                isResolveRequired,
+                errorsProperties != null ? new MoveResourcePropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverResourcePropertiesMoveStatus"/>. </summary>
@@ -178,11 +222,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependencyType"> Defines the dependency type. </param>
         /// <param name="manualResolutionTargetId"> Defines the properties for manual resolution. </param>
         /// <param name="automaticResolutionResourceId"> Defines the properties for automatic resolution. </param>
-        /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
+        /// <param name="isDependencyOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
         /// <returns> A new <see cref="Models.MoverResourceDependency"/> instance for mocking. </returns>
-        public static MoverResourceDependency MoverResourceDependency(ResourceIdentifier id = null, string resolutionStatus = null, MoverResourceResolutionType? resolutionType = null, MoverDependencyType? dependencyType = null, ResourceIdentifier manualResolutionTargetId = null, ResourceIdentifier automaticResolutionResourceId = null, bool? isOptional = null)
+        public static MoverResourceDependency MoverResourceDependency(ResourceIdentifier id = null, string resolutionStatus = null, MoverResourceResolutionType? resolutionType = null, MoverDependencyType? dependencyType = null, ResourceIdentifier manualResolutionTargetId = null, ResourceIdentifier automaticResolutionResourceId = null, string isDependencyOptional = null)
         {
-            return new MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId != null ? new ManualResolutionProperties(manualResolutionTargetId, serializedAdditionalRawData: null) : null, automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId, serializedAdditionalRawData: null) : null, isOptional, serializedAdditionalRawData: null);
+            return new MoverResourceDependency(
+                id,
+                resolutionStatus,
+                resolutionType,
+                dependencyType,
+                manualResolutionTargetId != null ? new ManualResolutionProperties(manualResolutionTargetId, serializedAdditionalRawData: null) : null,
+                automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId, serializedAdditionalRawData: null) : null,
+                isDependencyOptional,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverUnresolvedDependency"/>. </summary>
@@ -237,7 +289,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverOperationsDiscovery"/> instance for mocking. </returns>
         public static MoverOperationsDiscovery MoverOperationsDiscovery(string name = null, bool? isDataAction = null, MoverDisplayInfo display = null, string origin = null, BinaryData properties = null)
         {
-            return new MoverOperationsDiscovery(name, isDataAction, display, origin, properties, serializedAdditionalRawData: null);
+            return new MoverOperationsDiscovery(
+                name,
+                isDataAction,
+                display,
+                origin,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverDisplayInfo"/>. </summary>

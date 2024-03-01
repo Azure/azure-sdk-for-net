@@ -62,7 +62,14 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            return new StatusSummary(
+                total,
+                failed,
+                success,
+                inProgress,
+                notYetStarted,
+                cancelled,
+                totalCharacterCharged);
         }
     }
 }

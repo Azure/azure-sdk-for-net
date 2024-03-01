@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectedResourceId))
+            if (options.Format != "W" && ConnectedResourceId != null)
             {
                 writer.WritePropertyName("connectedResourceId"u8);
                 writer.WriteStringValue(ConnectedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TcpPorts))
+            if (options.Format != "W" && TcpPorts != null)
             {
                 writer.WritePropertyName("tcpPorts"u8);
                 writer.WriteStringValue(TcpPorts);
             }
-            if (options.Format != "W" && Optional.IsDefined(UdpPorts))
+            if (options.Format != "W" && UdpPorts != null)
             {
                 writer.WritePropertyName("udpPorts"u8);
                 writer.WriteStringValue(UdpPorts);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> connectedResourceId = default;
-            Optional<string> tcpPorts = default;
-            Optional<string> udpPorts = default;
+            ResourceIdentifier connectedResourceId = default;
+            string tcpPorts = default;
+            string udpPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedResourceInfo(connectedResourceId.Value, tcpPorts.Value, udpPorts.Value, serializedAdditionalRawData);
+            return new ConnectedResourceInfo(connectedResourceId, tcpPorts, udpPorts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedResourceInfo>.Write(ModelReaderWriterOptions options)

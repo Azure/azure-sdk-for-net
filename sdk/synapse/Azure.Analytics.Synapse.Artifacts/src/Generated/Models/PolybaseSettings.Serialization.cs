@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RejectType))
+            if (RejectType.HasValue)
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (Optional.IsDefined(RejectValue))
+            if (RejectValue != null)
             {
                 writer.WritePropertyName("rejectValue"u8);
                 writer.WriteObjectValue(RejectValue);
             }
-            if (Optional.IsDefined(RejectSampleValue))
+            if (RejectSampleValue != null)
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 writer.WriteObjectValue(RejectSampleValue);
             }
-            if (Optional.IsDefined(UseTypeDefault))
+            if (UseTypeDefault != null)
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 writer.WriteObjectValue(UseTypeDefault);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<object> rejectValue = default;
-            Optional<object> rejectSampleValue = default;
-            Optional<object> useTypeDefault = default;
+            PolybaseSettingsRejectType? rejectType = default;
+            object rejectValue = default;
+            object rejectSampleValue = default;
+            object useTypeDefault = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
 
         internal partial class PolybaseSettingsConverter : JsonConverter<PolybaseSettings>

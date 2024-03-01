@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ItemType))
+            if (ItemType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorEndpointFilterItemType> type = default;
-            Optional<string> address = default;
+            ConnectionMonitorEndpointFilterItemType? type = default;
+            string address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpointFilterItem(Optional.ToNullable(type), address.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorEndpointFilterItem(type, address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpointFilterItem>.Write(ModelReaderWriterOptions options)

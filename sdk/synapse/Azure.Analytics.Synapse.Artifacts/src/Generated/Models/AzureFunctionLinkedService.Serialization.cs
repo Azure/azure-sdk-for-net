@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,27 +61,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("functionAppUrl"u8);
             writer.WriteObjectValue(FunctionAppUrl);
-            if (Optional.IsDefined(FunctionKey))
+            if (FunctionKey != null)
             {
                 writer.WritePropertyName("functionKey"u8);
                 writer.WriteObjectValue(FunctionKey);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteObjectValue(ResourceId);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
@@ -102,16 +102,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object functionAppUrl = default;
-            Optional<SecretBase> functionKey = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
-            Optional<object> resourceId = default;
-            Optional<object> authentication = default;
+            SecretBase functionKey = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
+            object resourceId = default;
+            object authentication = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, functionAppUrl, functionKey.Value, encryptedCredential.Value, credential.Value, resourceId.Value, authentication.Value);
+            return new AzureFunctionLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                functionAppUrl,
+                functionKey,
+                encryptedCredential,
+                credential,
+                resourceId,
+                authentication);
         }
 
         internal partial class AzureFunctionLinkedServiceConverter : JsonConverter<AzureFunctionLinkedService>

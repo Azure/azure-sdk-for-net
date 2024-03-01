@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScVmmServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmmServerName, ScVmmServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScVmmServerResource> CreateOrUpdate(WaitUntil waitUntil, string vmmServerName, ScVmmServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         public virtual async Task<Response<ScVmmServerResource>> GetAsync(string vmmServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         public virtual Response<ScVmmServerResource> Get(string vmmServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vmmServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         public virtual Response<bool> Exists(string vmmServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScVmmServerResource>> GetIfExistsAsync(string vmmServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
         public virtual NullableResponse<ScVmmServerResource> GetIfExists(string vmmServerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+            if (vmmServerName == null)
+            {
+                throw new ArgumentNullException(nameof(vmmServerName));
+            }
+            if (vmmServerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(vmmServerName));
+            }
 
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.GetIfExists");
             scope.Start();

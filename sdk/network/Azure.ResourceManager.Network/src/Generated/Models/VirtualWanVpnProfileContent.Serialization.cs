@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VpnServerConfigurationResourceId))
+            if (VpnServerConfigurationResourceId != null)
             {
                 writer.WritePropertyName("vpnServerConfigurationResourceId"u8);
                 writer.WriteStringValue(VpnServerConfigurationResourceId);
             }
-            if (Optional.IsDefined(AuthenticationMethod))
+            if (AuthenticationMethod.HasValue)
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vpnServerConfigurationResourceId = default;
-            Optional<NetworkAuthenticationMethod> authenticationMethod = default;
+            ResourceIdentifier vpnServerConfigurationResourceId = default;
+            NetworkAuthenticationMethod? authenticationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanVpnProfileContent(vpnServerConfigurationResourceId.Value, Optional.ToNullable(authenticationMethod), serializedAdditionalRawData);
+            return new VirtualWanVpnProfileContent(vpnServerConfigurationResourceId, authenticationMethod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWanVpnProfileContent>.Write(ModelReaderWriterOptions options)

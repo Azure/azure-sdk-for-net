@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             IReadOnlyList<AvailableApiManagementServiceSkuResult> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<AvailableApiManagementServiceSkuResult> array = new List<AvailableApiManagementServiceSkuResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(item));
+                        array.Add(AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuResults(value, nextLink.Value, serializedAdditionalRawData);
+            return new ResourceSkuResults(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuResults>.Write(ModelReaderWriterOptions options)

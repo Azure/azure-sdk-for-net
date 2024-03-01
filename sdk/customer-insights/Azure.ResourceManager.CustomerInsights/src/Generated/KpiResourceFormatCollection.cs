@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KpiResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kpiName, KpiResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KpiResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string kpiName, KpiResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
         public virtual async Task<Response<KpiResourceFormatResource>> GetAsync(string kpiName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
         public virtual Response<KpiResourceFormatResource> Get(string kpiName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string kpiName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
         public virtual Response<bool> Exists(string kpiName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
         public virtual async Task<NullableResponse<KpiResourceFormatResource>> GetIfExistsAsync(string kpiName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
         public virtual NullableResponse<KpiResourceFormatResource> GetIfExists(string kpiName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(kpiName, nameof(kpiName));
+            if (kpiName == null)
+            {
+                throw new ArgumentNullException(nameof(kpiName));
+            }
+            if (kpiName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(kpiName));
+            }
 
             using var scope = _kpiResourceFormatKpiClientDiagnostics.CreateScope("KpiResourceFormatCollection.GetIfExists");
             scope.Start();

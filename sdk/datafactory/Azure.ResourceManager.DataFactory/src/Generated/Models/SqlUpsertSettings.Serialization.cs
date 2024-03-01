@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UseTempDB))
+            if (UseTempDB != null)
             {
                 writer.WritePropertyName("useTempDB"u8);
                 JsonSerializer.Serialize(writer, UseTempDB);
             }
-            if (Optional.IsDefined(InterimSchemaName))
+            if (InterimSchemaName != null)
             {
                 writer.WritePropertyName("interimSchemaName"u8);
                 JsonSerializer.Serialize(writer, InterimSchemaName);
             }
-            if (Optional.IsDefined(Keys))
+            if (Keys != null)
             {
                 writer.WritePropertyName("keys"u8);
                 JsonSerializer.Serialize(writer, Keys);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> useTempDB = default;
-            Optional<DataFactoryElement<string>> interimSchemaName = default;
-            Optional<DataFactoryElement<IList<string>>> keys = default;
+            DataFactoryElement<bool> useTempDB = default;
+            DataFactoryElement<string> interimSchemaName = default;
+            DataFactoryElement<IList<string>> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlUpsertSettings(useTempDB.Value, interimSchemaName.Value, keys.Value, serializedAdditionalRawData);
+            return new SqlUpsertSettings(useTempDB, interimSchemaName, keys, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlUpsertSettings>.Write(ModelReaderWriterOptions options)

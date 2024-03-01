@@ -28,47 +28,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OwnerId))
+            if (OwnerId != null)
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(OwnerId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StateComment))
+            if (StateComment != null)
             {
                 writer.WritePropertyName("stateComment"u8);
                 writer.WriteStringValue(StateComment);
             }
-            if (Optional.IsDefined(AllowTracing))
+            if (AllowTracing.HasValue)
             {
                 writer.WritePropertyName("allowTracing"u8);
                 writer.WriteBooleanValue(AllowTracing.Value);
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> displayName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<SubscriptionState> state = default;
-            Optional<string> stateComment = default;
-            Optional<bool> allowTracing = default;
+            string ownerId = default;
+            string scope = default;
+            DateTimeOffset? expirationDate = default;
+            string displayName = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            SubscriptionState? state = default;
+            string stateComment = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSubscriptionPatch(ownerId.Value, scope.Value, Optional.ToNullable(expirationDate), displayName.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(state), stateComment.Value, Optional.ToNullable(allowTracing), serializedAdditionalRawData);
+            return new ApiManagementSubscriptionPatch(
+                ownerId,
+                scope,
+                expirationDate,
+                displayName,
+                primaryKey,
+                secondaryKey,
+                state,
+                stateComment,
+                allowTracing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSubscriptionPatch>.Write(ModelReaderWriterOptions options)

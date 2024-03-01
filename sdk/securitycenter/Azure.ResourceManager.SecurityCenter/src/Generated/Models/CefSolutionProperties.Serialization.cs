@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Agent))
+            if (Agent != null)
             {
                 writer.WritePropertyName("agent"u8);
                 writer.WriteStringValue(Agent);
             }
-            if (Optional.IsDefined(LastEventReceived))
+            if (LastEventReceived != null)
             {
                 writer.WritePropertyName("lastEventReceived"u8);
                 writer.WriteStringValue(LastEventReceived);
             }
-            if (Optional.IsDefined(DeviceVendor))
+            if (DeviceVendor != null)
             {
                 writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (Optional.IsDefined(DeviceType))
+            if (DeviceType != null)
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Optional.IsDefined(Workspace))
+            if (Workspace != null)
             {
                 writer.WritePropertyName("workspace"u8);
                 JsonSerializer.Serialize(writer, Workspace);
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> agent = default;
-            Optional<string> lastEventReceived = default;
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            string hostname = default;
+            string agent = default;
+            string lastEventReceived = default;
+            string deviceVendor = default;
+            string deviceType = default;
+            WritableSubResource workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CefSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, hostname.Value, agent.Value, lastEventReceived.Value);
+            return new CefSolutionProperties(
+                deviceVendor,
+                deviceType,
+                workspace,
+                additionalProperties,
+                hostname,
+                agent,
+                lastEventReceived);
         }
 
         BinaryData IPersistableModel<CefSolutionProperties>.Write(ModelReaderWriterOptions options)

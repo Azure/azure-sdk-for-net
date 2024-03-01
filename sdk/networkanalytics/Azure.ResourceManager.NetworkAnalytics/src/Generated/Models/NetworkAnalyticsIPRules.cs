@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         public NetworkAnalyticsIPRules(string action)
         {
-            Argument.AssertNotNull(action, nameof(action));
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             Action = action;
         }
