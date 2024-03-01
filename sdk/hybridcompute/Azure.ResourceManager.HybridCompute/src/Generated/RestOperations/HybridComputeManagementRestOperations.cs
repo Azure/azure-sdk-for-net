@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.HybridCompute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateUpgradeExtensionsRequestUri(string subscriptionId, string resourceGroupName, string machineName, MachineExtensionUpgrade extensionUpgradeParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
+            uri.AppendPath(machineName, true);
+            uri.AppendPath("/upgradeExtensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpgradeExtensionsRequest(string subscriptionId, string resourceGroupName, string machineName, MachineExtensionUpgrade extensionUpgradeParameters)
         {
             var message = _pipeline.CreateMessage();
