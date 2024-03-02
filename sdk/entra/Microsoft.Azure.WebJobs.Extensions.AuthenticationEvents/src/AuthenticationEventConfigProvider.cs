@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     [Extension("CustomAuthenticationExtension", "CustomAuthenticationExtension")]
     internal class AuthenticationEventConfigProvider : IExtensionConfigProvider, IAsyncConverter<HttpRequestMessage, HttpResponseMessage>
     {
-        private readonly ILogger _logger;
+        internal readonly ILogger _logger;
         private Uri _base_uri;
 
         /// <summary>The listeners that are attached to the functions that implement the AuthenticationEventTriggerAttribute.</summary>
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             //LogInformation(string.Format(AuthenticationEventResource.Log_EventHandler_Url, Uri));
         }
 
-        internal void LogInformation(string message)
+        internal void Log(string message, LogLevel logLevel = LogLevel.Information, params object[] args)
         {
             Console.WriteLine(message);
-            _logger.LogInformation(message);
+            _logger.Log(logLevel, message, args);
         }
 
         internal void DisplayAzureFunctionInfoToConsole(string functionName)

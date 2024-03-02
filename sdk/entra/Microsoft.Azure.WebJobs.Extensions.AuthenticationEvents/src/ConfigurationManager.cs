@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using System.Net.Http.Headers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -17,9 +16,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         private const string AuthenticationEventsKeyPrefix = "AuthenticationEvents__";
         private const string AuthorityUrlKey = AuthenticationEventsKeyPrefix + "AuthorityUrl";
-        private const string AuthorizedPartyAppIdKey =AuthenticationEventsKeyPrefix + "AuthorizedPartyAppId";
-        private const string AudienceAppIdKey =AuthenticationEventsKeyPrefix + "AudienceAppId";
-        private const string BypassTokenValidationKey =AuthenticationEventsKeyPrefix + "BypassTokenValidation";
+        private const string AuthorizedPartyAppIdKey = AuthenticationEventsKeyPrefix + "AuthorizedPartyAppId";
+        private const string AudienceAppIdKey = AuthenticationEventsKeyPrefix + "AudienceAppId";
+        private const string BypassTokenValidationKey = AuthenticationEventsKeyPrefix + "BypassTokenValidation";
+        private const string ShowPIIDataInLogsKey = AuthenticationEventsKeyPrefix + "ShowPIIDataInLogs";
 
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
 
@@ -110,6 +110,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         }
 
         /// <summary>
+        /// Show PII data in logs.
+        /// </summary>
+        internal static bool ShowPIIDataInLogs => GetConfigValue(ShowPIIDataInLogsKey, true);
+
+        /// <summary>
         /// If we should bypass the token validation.
         /// Use only for testing and development.
         /// </summary>
@@ -137,12 +142,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         /// <param name="environmentVariable">Definied Azure function application settings</param>
         /// <param name="defaultValue">Default value, most likely from auth trigger anotation</param>
-        /// <returns></returns>
+        /// <returns>Config Value found or default</returns>
         private static string GetConfigValue(string environmentVariable, string defaultValue)
         {
             return Environment.GetEnvironmentVariable(environmentVariable) ?? defaultValue;
         }
 
+        /// <summary>
+        /// Get config value from environment variable or use the default value.
+        /// </summary>
+        /// <typeparam name="T">Type the config value would be</typeparam>
+        /// <param name="environmentVariable">Definied Azure function application settings</param>
+        /// <param name="defaultValue">Default value, most likely from auth trigger anotation</param>
+        /// <returns>Config Value found or default</returns>
         private static T GetConfigValue<T>(string environmentVariable, T defaultValue) where T : struct
         {
             string value = GetConfigValue(environmentVariable, null);

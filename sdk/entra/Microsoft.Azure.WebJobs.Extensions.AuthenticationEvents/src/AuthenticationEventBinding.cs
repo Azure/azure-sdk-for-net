@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
+using Microsoft.Extensions.Logging;
+
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
 using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
@@ -226,14 +229,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             TokenValidator validator = TokenValidatorHelper.IsEzAuthValid(requestMessage.Headers) ? new TokenValidatorEZAuth() : new TokenValidatorInternal();
 
-            (bool valid, Dictionary<string, string> claims) = await validator.ValidateAndGetClaims(requestMessage, configurationManager).ConfigureAwait(false);
-            if (valid)
+            try
             {
-                return claims;
+                return await validator.ValidateAndGetClaims(requestMessage, configurationManager).ConfigureAwait(false);
             }
-            else
+            catch (Exception exceptionIfFailed)
             {
-                throw new UnauthorizedAccessException();
+                _configuration.Log(exceptionIfFailed.Message, logLevel: LogLevel.Error);
+                throw;
             }
         }
 

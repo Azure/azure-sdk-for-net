@@ -44,10 +44,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         /// <param name="configurationManager"></param>
         /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
-        /// <returns>True if azp/appid value matches the configured value.</returns>
-        internal static bool ValidateAuthorizationParty(ConfigurationManager configurationManager, string authoizedPartyValueFromTokenOrHeader)
+        internal static void ValidateAuthorizationParty(ConfigurationManager configurationManager, string authoizedPartyValueFromTokenOrHeader)
         {
-            return configurationManager.AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader);
+            if (configurationManager.AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader))
+            {
+                return;
+            }
+
+            throw new UnauthorizedAccessException($"Authorized Party Application ID '{authoizedPartyValueFromTokenOrHeader}' from token does match Authentication Event Trigger configuration AuthorizedPartyAppId '{configurationManager.AuthorizedPartyAppId}'.");
         }
     }
 }
