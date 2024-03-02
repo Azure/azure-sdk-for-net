@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         {
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task AssetEndpointProfilesCrudOperationsTest()
         {
