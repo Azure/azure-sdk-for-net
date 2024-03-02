@@ -38,7 +38,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookContent"/> is null. </exception>
         public virtual async Task<ArmOperation> ReplaceContentRunbookDraftAsync(WaitUntil waitUntil, Stream runbookContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(runbookContent, nameof(runbookContent));
+            if (runbookContent == null)
+            {
+                throw new ArgumentNullException(nameof(runbookContent));
+            }
 
             using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.ReplaceContentRunbookDraft");
             scope.Start();
@@ -76,7 +79,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookContent"/> is null. </exception>
         public virtual ArmOperation ReplaceContentRunbookDraft(WaitUntil waitUntil, Stream runbookContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(runbookContent, nameof(runbookContent));
+            if (runbookContent == null)
+            {
+                throw new ArgumentNullException(nameof(runbookContent));
+            }
 
             using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.ReplaceContentRunbookDraft");
             scope.Start();
