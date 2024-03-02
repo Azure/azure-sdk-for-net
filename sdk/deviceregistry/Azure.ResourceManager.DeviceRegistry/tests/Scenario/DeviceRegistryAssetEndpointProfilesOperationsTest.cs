@@ -13,7 +13,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
     public class DeviceRegistryAssetEndpointProfilesOperationsTest : DeviceRegistryManagementTestBase
     {
-        protected DeviceRegistryAssetEndpointProfilesOperationsTest(bool isAsync) : base(isAsync)
+        private readonly string _subscriptionId = "8c64812d-6e59-4e65-96b3-14a7cdb1a4e4";
+        private readonly string _rgNamePrefix = "deviceregistry-test-sdk-rg";
+        private readonly string _assetNamePrefix = "deviceregistry-test-assetendpointprofile-sdk";
+        private readonly string _extendedLocationName = "/subscriptions/8c64812d-6e59-4e65-96b3-14a7cdb1a4e4/resourceGroups/damontan-discoveredassets/providers/Microsoft.ExtendedLocation/customLocations/kind-damontan-local-k8s-prod-cl";
+
+        public DeviceRegistryAssetEndpointProfilesOperationsTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -21,12 +26,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         [RecordedTest]
         public async Task AssetEndpointProfilesCrudOperationsTest()
         {
-            var assetEndpointProfileName = Recording.GenerateAssetName("deviceregistry-test-assetendpointprofile-sdk");
+            var assetEndpointProfileName = Recording.GenerateAssetName(_assetNamePrefix);
 
-            // Get IoT Central apps collection for resource group.
-            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
-            var rg = await CreateResourceGroup(subscription, "deviceregistry-test-sdk-rg", AzureLocation.WestUS);
-            var extendedLocation = new ExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = "" };
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{_subscriptionId}"));
+            var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
+            var extendedLocation = new ExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
 
             var assetEndpointProfilesCollection = rg.GetAssetEndpointProfiles();
 
@@ -34,26 +38,33 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var assetEndpointProfileData = new AssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
             {
                 TargetAddress = new Uri("opc.tcp://aep-uri"),
-                UserAuthentication =
-                    {
-                        Mode = UserAuthenticationMode.Anonymous
-                    }
+                UserAuthentication = new UserAuthentication
+                {
+                    Mode = UserAuthenticationMode.Anonymous
+                }
             };
             var assetCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
             Assert.IsNotNull(assetCreateOrUpdateResponse.Value);
+            Assert.IsTrue(Guid.TryParse(assetCreateOrUpdateResponse.Value.Data.Uuid, out _));
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.TargetAddress, assetEndpointProfileData.TargetAddress);
 
             // Read DeviceRegistry AssetEndpointProfile
             var assetEndpointProfileReadResponse = await assetEndpointProfilesCollection.GetAsync(assetEndpointProfileName, CancellationToken.None);
-            var assetEndpointProfile = assetEndpointProfileReadResponse.Value;
-            Assert.IsNotNull(assetEndpointProfile);
+            Assert.IsNotNull(assetEndpointProfileReadResponse.Value);
+            Assert.IsTrue(Guid.TryParse(assetEndpointProfileReadResponse.Value.Data.Uuid, out _));
+            Assert.AreEqual(assetEndpointProfileReadResponse.Value.Data.TargetAddress, assetEndpointProfileData.TargetAddress);
 
             // Update DeviceRegistry AssetEndpointProfile
-            var assetPatchData = new AssetEndpointProfilePatch()
+            var assetEndpointProfile = assetEndpointProfileReadResponse.Value;
+            var assetPatchData = new AssetEndpointProfilePatch
             {
                 AdditionalConfiguration = "{\"foo\":\"bar\"}"
             };
             var assetEndpointProfileUpdateResponse = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, assetPatchData, CancellationToken.None);
             Assert.IsNotNull(assetEndpointProfileUpdateResponse.Value);
+            Assert.IsTrue(Guid.TryParse(assetEndpointProfileUpdateResponse.Value.Data.Uuid, out _));
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.TargetAddress, assetEndpointProfileData.TargetAddress);
+            Assert.AreEqual(assetEndpointProfileUpdateResponse.Value.Data.AdditionalConfiguration, assetPatchData.AdditionalConfiguration);
 
             // Delete DeviceRegistry AssetEndpointProfile
             await assetEndpointProfile.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
