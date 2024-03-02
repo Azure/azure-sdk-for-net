@@ -27,8 +27,14 @@ namespace Azure.Security.Attestation
         /// <param name="certificate">An X.509 Certificate which wraps the public key part of the <paramref name="signer"/>.</param>
         public AttestationTokenSigningKey(AsymmetricAlgorithm signer, X509Certificate2 certificate)
         {
-            Argument.AssertNotNull(signer, nameof(signer));
-            Argument.AssertNotNull(certificate, nameof(certificate));
+            if (signer == null)
+            {
+                throw new ArgumentNullException(nameof(signer));
+            }
+            if (certificate == null)
+            {
+                throw new ArgumentNullException(nameof(certificate));
+            }
             Signer = signer;
             Certificate = certificate;
             VerifySignerMatchesCertificate(signer, certificate);
@@ -40,7 +46,10 @@ namespace Azure.Security.Attestation
         /// <param name="certificate">An X.509 Certificate with a private key.</param>
         public AttestationTokenSigningKey(X509Certificate2 certificate)
         {
-            Argument.AssertNotNull(certificate, nameof(certificate));
+            if (certificate == null)
+            {
+                throw new ArgumentNullException(nameof(certificate));
+            }
             if (!certificate.HasPrivateKey)
             {
                 throw new ArgumentException($"Certificate provided {certificate.ToString()} does not have a private key.");

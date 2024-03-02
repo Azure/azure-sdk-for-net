@@ -59,9 +59,18 @@ namespace Azure.Security.Attestation
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
         public AttestationAdministrationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             _options = options;
 
@@ -229,7 +238,15 @@ namespace Azure.Security.Attestation
             AttestationTokenSigningKey signingKey = default,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(policyToSet, nameof(policyToSet));
+            if (policyToSet is null)
+            {
+                throw new ArgumentNullException(nameof(policyToSet));
+            }
+
+            if (string.IsNullOrWhiteSpace(policyToSet))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(policyToSet));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(SetPolicy)}");
             scope.Start();
@@ -512,8 +529,14 @@ namespace Azure.Security.Attestation
             AttestationTokenSigningKey existingSigningKey,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(existingSigningKey, nameof(existingSigningKey));
-            Argument.AssertNotNull(newSigningCertificate, nameof(newSigningCertificate));
+            if (existingSigningKey == null)
+            {
+                throw new ArgumentNullException(nameof(existingSigningKey));
+            }
+            if (newSigningCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(newSigningCertificate));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(AddPolicyManagementCertificate)}");
             scope.Start();
@@ -553,8 +576,14 @@ namespace Azure.Security.Attestation
             AttestationTokenSigningKey existingSigningKey,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(existingSigningKey, nameof(existingSigningKey));
-            Argument.AssertNotNull(newSigningCertificate, nameof(newSigningCertificate));
+            if (existingSigningKey == null)
+            {
+                throw new ArgumentNullException(nameof(existingSigningKey));
+            }
+            if (newSigningCertificate == null)
+            {
+                throw new ArgumentNullException(nameof(newSigningCertificate));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(AddPolicyManagementCertificate)}");
             scope.Start();

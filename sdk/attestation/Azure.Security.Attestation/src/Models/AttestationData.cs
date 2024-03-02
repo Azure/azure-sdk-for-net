@@ -27,7 +27,10 @@ namespace Azure.Security.Attestation
         /// <param name="dataIsJson">True if the binary data should be treated as JSON by the attestation service.</param>
         public AttestationData(BinaryData data, bool dataIsJson)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
             BinaryData = data;
             DataIsJson = dataIsJson;
             if (dataIsJson)

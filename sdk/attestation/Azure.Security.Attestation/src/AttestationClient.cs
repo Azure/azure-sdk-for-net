@@ -42,7 +42,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
-        public AttestationClient(Uri endpoint, TokenCredential credential): this(endpoint, credential, new AttestationClientOptions())
+        public AttestationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AttestationClientOptions())
         {
             Endpoint = endpoint;
         }
@@ -55,9 +55,18 @@ namespace Azure.Security.Attestation
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
         public AttestationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            /*Argument.AssertNotNull(credential, nameof(credential));*/
-            Argument.AssertNotNull(options, nameof(options));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            /*if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }*/
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             // Add the authentication policy to our builder.
             _pipeline = HttpPipelineBuilder.Build(options, credential != null ? new BearerTokenAuthenticationPolicy(credential, DefaultScope) : null);
@@ -117,8 +126,14 @@ namespace Azure.Security.Attestation
         ///</remarks>
         private async Task<AttestationResponse<AttestationResult>> AttestSgxEnclaveInternal(AttestationRequest request, bool async, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
-            Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+            if (request.Evidence == null)
+            {
+                throw new ArgumentNullException(nameof(request.Evidence));
+            }
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
             scope.Start();
             try
@@ -216,8 +231,15 @@ namespace Azure.Security.Attestation
         /// <seealso href="https://github.com/openenclave/openenclave"/>  for more information.
         private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(AttestationRequest request, bool async, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
-            Argument.AssertNotNull(request.Evidence, nameof(request.Evidence));
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            if (request.Evidence == null)
+            {
+                throw new ArgumentNullException(nameof(request.Evidence));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
             scope.Start();
@@ -229,7 +251,7 @@ namespace Azure.Security.Attestation
                     DraftPolicyForAttestation = request.DraftPolicyForAttestation,
                     RuntimeData = null,
                     InitTimeData = null,
-            };
+                };
 
                 if (request.InittimeData != null)
                 {
@@ -280,7 +302,10 @@ namespace Azure.Security.Attestation
         /// <returns>A <see cref="TpmAttestationResponse"/> containing the TPM attestation response.</returns>
         public virtual Response<TpmAttestationResponse> AttestTpm(TpmAttestationRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
             scope.Start();
             try
@@ -303,7 +328,10 @@ namespace Azure.Security.Attestation
         /// <returns>A <see cref="TpmAttestationResponse"/> containing the TPM attestation response.</returns>
         public virtual async Task<Response<TpmAttestationResponse>> AttestTpmAsync(TpmAttestationRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestTpm)}");
             scope.Start();
             try

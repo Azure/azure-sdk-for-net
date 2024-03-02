@@ -154,7 +154,8 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// An array of <see cref="X509Certificate"/> which represent a certificate chain used to sign the token.  <seealso href="https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6">RFC 7515 section 4.1.6</seealso> for details.
         /// </summary>
-        public X509Certificate2[] X509CertificateChain {
+        public X509Certificate2[] X509CertificateChain
+        {
             get
             {
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
@@ -307,7 +308,10 @@ namespace Azure.Security.Attestation
             // they need to have provided at least one certificate.
             if (attestationSigningCertificates != null)
             {
-                Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
+                if (attestationSigningCertificates[0] == null)
+                {
+                    throw new ArgumentNullException(nameof(attestationSigningCertificates));
+                }
             }
 
             AttestationSigner[] possibleCertificates = await GetCandidateSigningCertificatesInternalAsync(attestationSigningCertificates, async, cancellationToken).ConfigureAwait(false);
@@ -491,7 +495,10 @@ namespace Azure.Security.Attestation
         {
             if ((options?.ValidateIssuer).GetValueOrDefault())
             {
-                Argument.AssertNotNull(options?.ExpectedIssuer, nameof(options.ExpectedIssuer));
+                if (options?.ExpectedIssuer == null)
+                {
+                    throw new ArgumentNullException(nameof(options.ExpectedIssuer));
+                }
             }
             DateTimeOffset timeNow = DateTimeOffset.Now;
             if (Payload.ExpirationTime.HasValue && (options?.ValidateExpirationTime ?? true))
@@ -513,7 +520,7 @@ namespace Azure.Security.Attestation
                 }
             }
 
-            if (Payload.NotBeforeTime.HasValue && (options?.ValidateNotBeforeTime?? true))
+            if (Payload.NotBeforeTime.HasValue && (options?.ValidateNotBeforeTime ?? true))
             {
                 if (DateTimeOffset.Now.CompareTo(NotBeforeTime.Value) < 0)
                 {
@@ -548,7 +555,7 @@ namespace Azure.Security.Attestation
         /// <typeparam name="T">Underlying type for the token body.</typeparam>
         /// <returns>Returns the body of the attestation token.</returns>
         public virtual T GetBody<T>()
-            where T: class
+            where T : class
         {
             lock (_statelock)
             {
@@ -639,7 +646,10 @@ namespace Azure.Security.Attestation
                 }
             }
 
-            Argument.AssertNotNull(signingKey, nameof(signingKey));
+            if (signingKey == null)
+            {
+                throw new ArgumentNullException(nameof(signingKey));
+            }
 
             AsymmetricAlgorithm signer;
             if (signingKey.Certificate.HasPrivateKey)
