@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> query = default;
+            string name = default;
+            string query = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputedProperty(name.Value, query.Value, serializedAdditionalRawData);
+            return new ComputedProperty(name, query, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputedProperty>.Write(ModelReaderWriterOptions options)

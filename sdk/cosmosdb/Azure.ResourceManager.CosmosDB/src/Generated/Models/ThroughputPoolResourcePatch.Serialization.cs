@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBStatus> provisioningState = default;
-            Optional<int> maxThroughput = default;
+            CosmosDBStatus? provisioningState = default;
+            int? maxThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPoolResourcePatch(Optional.ToNullable(provisioningState), Optional.ToNullable(maxThroughput), serializedAdditionalRawData);
+            return new ThroughputPoolResourcePatch(provisioningState, maxThroughput, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThroughputPoolResourcePatch>.Write(ModelReaderWriterOptions options)

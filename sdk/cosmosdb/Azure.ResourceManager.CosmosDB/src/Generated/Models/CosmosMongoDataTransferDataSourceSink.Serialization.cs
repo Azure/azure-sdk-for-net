@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosMongoDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName.Value, databaseName, collectionName);
+            return new CosmosMongoDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName, databaseName, collectionName);
         }
 
         BinaryData IPersistableModel<CosmosMongoDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)

@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<DatabaseRestoreResourceInfo> databasesToRestore = default;
             IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore = default;
             IList<string> tablesToRestore = default;
-            Optional<string> sourceBackupLocation = default;
-            Optional<string> restoreSource = default;
-            Optional<DateTimeOffset> restoreTimestampInUtc = default;
-            Optional<bool> restoreWithTtlDisabled = default;
+            string sourceBackupLocation = default;
+            string restoreSource = default;
+            DateTimeOffset? restoreTimestampInUtc = default;
+            bool? restoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CosmosDBAccountRestoreParameters(
-                restoreSource.Value,
-                Optional.ToNullable(restoreTimestampInUtc),
-                Optional.ToNullable(restoreWithTtlDisabled),
+                restoreSource,
+                restoreTimestampInUtc,
+                restoreWithTtlDisabled,
                 serializedAdditionalRawData,
                 restoreMode,
                 databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(),

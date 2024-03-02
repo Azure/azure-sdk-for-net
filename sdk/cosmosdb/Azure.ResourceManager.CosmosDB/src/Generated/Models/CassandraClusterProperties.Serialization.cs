@@ -234,32 +234,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraProvisioningState> provisioningState = default;
-            Optional<string> restoreFromBackupId = default;
-            Optional<ResourceIdentifier> delegatedManagementSubnetId = default;
-            Optional<string> cassandraVersion = default;
-            Optional<string> clusterNameOverride = default;
-            Optional<CassandraAuthenticationMethod> authenticationMethod = default;
-            Optional<string> initialCassandraAdminPassword = default;
-            Optional<CassandraDataCenterSeedNode> prometheusEndpoint = default;
-            Optional<bool> repairEnabled = default;
-            Optional<AutoReplicate> autoReplicate = default;
+            CassandraProvisioningState? provisioningState = default;
+            string restoreFromBackupId = default;
+            ResourceIdentifier delegatedManagementSubnetId = default;
+            string cassandraVersion = default;
+            string clusterNameOverride = default;
+            CassandraAuthenticationMethod? authenticationMethod = default;
+            string initialCassandraAdminPassword = default;
+            CassandraDataCenterSeedNode prometheusEndpoint = default;
+            bool? repairEnabled = default;
+            AutoReplicate? autoReplicate = default;
             IList<CassandraCertificate> clientCertificates = default;
             IList<CassandraCertificate> externalGossipCertificates = default;
             IReadOnlyList<CassandraCertificate> gossipCertificates = default;
             IList<CassandraDataCenterSeedNode> externalSeedNodes = default;
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
             IList<string> externalDataCenters = default;
-            Optional<int> hoursBetweenBackups = default;
-            Optional<bool> deallocated = default;
-            Optional<bool> cassandraAuditLoggingEnabled = default;
-            Optional<CassandraClusterType> clusterType = default;
-            Optional<CassandraError> provisionError = default;
+            int? hoursBetweenBackups = default;
+            bool? deallocated = default;
+            bool? cassandraAuditLoggingEnabled = default;
+            CassandraClusterType? clusterType = default;
+            CassandraError provisionError = default;
             IList<string> extensions = default;
             IList<CassandraClusterBackupSchedule> backupSchedules = default;
-            Optional<ScheduledEventStrategy> scheduledEventStrategy = default;
-            Optional<AzureConnectionType> azureConnectionMethod = default;
-            Optional<string> privateLinkResourceId = default;
+            ScheduledEventStrategy? scheduledEventStrategy = default;
+            AzureConnectionType? azureConnectionMethod = default;
+            string privateLinkResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -525,32 +525,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraClusterProperties(
-                Optional.ToNullable(provisioningState),
-                restoreFromBackupId.Value,
-                delegatedManagementSubnetId.Value,
-                cassandraVersion.Value,
-                clusterNameOverride.Value,
-                Optional.ToNullable(authenticationMethod),
-                initialCassandraAdminPassword.Value,
-                prometheusEndpoint.Value,
-                Optional.ToNullable(repairEnabled),
-                Optional.ToNullable(autoReplicate),
+                provisioningState,
+                restoreFromBackupId,
+                delegatedManagementSubnetId,
+                cassandraVersion,
+                clusterNameOverride,
+                authenticationMethod,
+                initialCassandraAdminPassword,
+                prometheusEndpoint,
+                repairEnabled,
+                autoReplicate,
                 clientCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 externalGossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 gossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 externalSeedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
                 seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
                 externalDataCenters ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(hoursBetweenBackups),
-                Optional.ToNullable(deallocated),
-                Optional.ToNullable(cassandraAuditLoggingEnabled),
-                Optional.ToNullable(clusterType),
-                provisionError.Value,
+                hoursBetweenBackups,
+                deallocated,
+                cassandraAuditLoggingEnabled,
+                clusterType,
+                provisionError,
                 extensions ?? new ChangeTrackingList<string>(),
                 backupSchedules ?? new ChangeTrackingList<CassandraClusterBackupSchedule>(),
-                Optional.ToNullable(scheduledEventStrategy),
-                Optional.ToNullable(azureConnectionMethod),
-                privateLinkResourceId.Value,
+                scheduledEventStrategy,
+                azureConnectionMethod,
+                privateLinkResourceId,
                 serializedAdditionalRawData);
         }
 

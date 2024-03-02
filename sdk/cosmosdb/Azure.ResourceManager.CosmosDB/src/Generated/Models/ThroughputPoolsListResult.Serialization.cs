@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             IReadOnlyList<ThroughputPoolResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<ThroughputPoolResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<ThroughputPoolResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThroughputPoolsListResult>.Write(ModelReaderWriterOptions options)

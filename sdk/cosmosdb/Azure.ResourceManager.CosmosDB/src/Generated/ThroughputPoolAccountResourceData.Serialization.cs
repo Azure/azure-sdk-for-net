@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CosmosDBStatus> provisioningState = default;
-            Optional<string> accountResourceIdentifier = default;
-            Optional<string> accountLocation = default;
-            Optional<string> accountInstanceId = default;
+            SystemData systemData = default;
+            CosmosDBStatus? provisioningState = default;
+            string accountResourceIdentifier = default;
+            string accountLocation = default;
+            string accountInstanceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.CosmosDB
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                accountResourceIdentifier.Value,
-                accountLocation.Value,
-                accountInstanceId.Value,
+                systemData,
+                provisioningState,
+                accountResourceIdentifier,
+                accountLocation,
+                accountInstanceId,
                 serializedAdditionalRawData);
         }
 

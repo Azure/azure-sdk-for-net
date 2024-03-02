@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> command = default;
-            Optional<string> commandId = default;
-            Optional<BinaryData> arguments = default;
-            Optional<string> host = default;
-            Optional<bool> isAdmin = default;
-            Optional<bool> cassandraStopStart = default;
-            Optional<bool> readWrite = default;
-            Optional<string> result = default;
-            Optional<CommandStatus> status = default;
-            Optional<string> outputFile = default;
+            string command = default;
+            string commandId = default;
+            BinaryData arguments = default;
+            string host = default;
+            bool? isAdmin = default;
+            bool? cassandraStopStart = default;
+            bool? readWrite = default;
+            string result = default;
+            CommandStatus? status = default;
+            string outputFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,16 +212,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CommandPublicResource(
-                command.Value,
-                commandId.Value,
-                arguments.Value,
-                host.Value,
-                Optional.ToNullable(isAdmin),
-                Optional.ToNullable(cassandraStopStart),
-                Optional.ToNullable(readWrite),
-                result.Value,
-                Optional.ToNullable(status),
-                outputFile.Value,
+                command,
+                commandId,
+                arguments,
+                host,
+                isAdmin,
+                cassandraStopStart,
+                readWrite,
+                result,
+                status,
+                outputFile,
                 serializedAdditionalRawData);
         }
 

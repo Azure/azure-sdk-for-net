@@ -149,22 +149,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraProvisioningState> provisioningState = default;
-            Optional<AzureLocation> dataCenterLocation = default;
-            Optional<ResourceIdentifier> delegatedSubnetId = default;
-            Optional<int> nodeCount = default;
+            CassandraProvisioningState? provisioningState = default;
+            AzureLocation? dataCenterLocation = default;
+            ResourceIdentifier delegatedSubnetId = default;
+            int? nodeCount = default;
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
-            Optional<string> base64EncodedCassandraYamlFragment = default;
-            Optional<Uri> managedDiskCustomerKeyUri = default;
-            Optional<Uri> backupStorageCustomerKeyUri = default;
-            Optional<string> sku = default;
-            Optional<string> diskSku = default;
-            Optional<int> diskCapacity = default;
-            Optional<bool> availabilityZone = default;
-            Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
-            Optional<bool> deallocated = default;
-            Optional<CassandraError> provisionError = default;
-            Optional<string> privateEndpointIPAddress = default;
+            string base64EncodedCassandraYamlFragment = default;
+            Uri managedDiskCustomerKeyUri = default;
+            Uri backupStorageCustomerKeyUri = default;
+            string sku = default;
+            string diskSku = default;
+            int? diskCapacity = default;
+            bool? availabilityZone = default;
+            AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default;
+            bool? deallocated = default;
+            CassandraError provisionError = default;
+            string privateEndpointIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,22 +309,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CassandraDataCenterProperties(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(dataCenterLocation),
-                delegatedSubnetId.Value,
-                Optional.ToNullable(nodeCount),
+                provisioningState,
+                dataCenterLocation,
+                delegatedSubnetId,
+                nodeCount,
                 seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
-                base64EncodedCassandraYamlFragment.Value,
-                managedDiskCustomerKeyUri.Value,
-                backupStorageCustomerKeyUri.Value,
-                sku.Value,
-                diskSku.Value,
-                Optional.ToNullable(diskCapacity),
-                Optional.ToNullable(availabilityZone),
-                authenticationMethodLdapProperties.Value,
-                Optional.ToNullable(deallocated),
-                provisionError.Value,
-                privateEndpointIPAddress.Value,
+                base64EncodedCassandraYamlFragment,
+                managedDiskCustomerKeyUri,
+                backupStorageCustomerKeyUri,
+                sku,
+                diskSku,
+                diskCapacity,
+                availabilityZone,
+                authenticationMethodLdapProperties,
+                deallocated,
+                provisionError,
+                privateEndpointIPAddress,
                 serializedAdditionalRawData);
         }
 

@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
-            Optional<TimeSpan> duration = default;
-            Optional<DataTransferJobMode> mode = default;
+            string status = default;
+            long? processedCount = default;
+            long? totalCount = default;
+            DateTimeOffset? lastUpdatedUtcTime = default;
+            int? workerCount = default;
+            ErrorResponse error = default;
+            TimeSpan? duration = default;
+            DataTransferJobMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,14 +221,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 jobName,
                 source,
                 destination,
-                status.Value,
-                Optional.ToNullable(processedCount),
-                Optional.ToNullable(totalCount),
-                Optional.ToNullable(lastUpdatedUtcTime),
-                Optional.ToNullable(workerCount),
-                error.Value,
-                Optional.ToNullable(duration),
-                Optional.ToNullable(mode),
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcTime,
+                workerCount,
+                error,
+                duration,
+                mode,
                 serializedAdditionalRawData);
         }
 

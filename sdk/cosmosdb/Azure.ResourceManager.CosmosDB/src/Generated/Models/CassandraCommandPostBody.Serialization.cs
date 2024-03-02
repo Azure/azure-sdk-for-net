@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string command = default;
             IDictionary<string, string> arguments = default;
             string host = default;
-            Optional<bool> cassandraStopStart = default;
-            Optional<bool> readWrite = default;
+            bool? cassandraStopStart = default;
+            bool? readWrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 command,
                 arguments ?? new ChangeTrackingDictionary<string, string>(),
                 host,
-                Optional.ToNullable(cassandraStopStart),
-                Optional.ToNullable(readWrite),
+                cassandraStopStart,
+                readWrite,
                 serializedAdditionalRawData);
         }
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element, options);
                 }
             }
-            Optional<string> remoteAccountName = default;
+            string remoteAccountName = default;
             DataTransferComponent component = "BaseCosmosDataTransferDataSourceSink";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BaseCosmosDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName.Value);
+            return new BaseCosmosDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName);
         }
 
         BinaryData IPersistableModel<BaseCosmosDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
