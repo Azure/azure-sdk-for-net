@@ -8,8 +8,7 @@
 
 ## Getting started
 
-Typically, you will not need to install `System.ClientModel`.
-it will be installed for you when you install one of the client libraries using it.
+Typically, you will not need to install `System.ClientModel`.  It will be installed for you when you install a client library that uses it.
 
 ### Install the package
 
@@ -25,41 +24,54 @@ None needed for `System.ClientModel`.
 
 ### Authenticate the client
 
-The `System.ClientModel` package provides a `KeyCredential` type for authentication.
+The `System.ClientModel` package provides an `ApiKeyCredential` type for authentication.
 
 ## Key concepts
 
-The main shared concepts of `System.ClientModel` include:
+The main concepts used by types in `System.ClientModel` include:
 
 - Configuring service clients (`ClientPipelineOptions`).
 - Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
-- Exceptions for reporting errors from service requests in a consistent fashion (`ClientResultException`).
-- Customizing requests (`RequestOptions`).
-- Providing APIs to read and write models in different formats (`ModelReaderWriter`).
+- Handling exceptions that result from failed requests (`ClientResultException`).
+- Customizing HTTP requests (`RequestOptions`).
+- Reading and writing models in different formats (`ModelReaderWriter`).
+
+Below, you will find sections explaining these shared concepts in more detail.
 
 ## Examples
 
-### Send a message using the MessagePipeline
+### Configuring service clients
 
-A very basic client implementation might use the following approach:
+`System.ClientModel`-based clients provide a constructor that takes a service endpoint and a credential used to authenticate with the service.  They also provide an overload that takes an endpoint, a credential, and an instance of `ClientPipelineOptions` that can be used to configure the pipeline the client uses to send and receive HTTP requests and responses.
 
-```csharp
-ApiKeyCredential credential = new ApiKeyCredential(key);
-ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
-ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions, authenticationPolicy);
+`ClientPipelineOptions` allows overriding default client values for things like the network timeout used when sending a request or the maximum number of retries to send when a request fails.
 
-PipelineMessage message = pipeline.CreateMessage();
-message.Apply(requestOptions);
-message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-
-PipelineRequest request = message.Request;
-request.Method = "GET";
-request.Uri = new Uri("https://www.example.com/");
-request.Headers.Add("Accept", "application/json");
-
-pipeline.Send(message);
-Console.WriteLine(message.Response.Status);
+```C# Snippet:ClientModelConfigurationReadme
 ```
+
+For more information on client configuration, see [Client configuration samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/Configuration.md)
+
+### Accessing HTTP response details
+
+_Service clients_ have methods that are used to call cloud services to invoke service operations. These methods on a client are called _service methods_.
+
+`System.ClientModel`-based clients expose two types of service methods: _convenience methods_ and _protocol methods_.
+
+**Convenience methods** are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response can be obtained from the return value.
+
+**Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return only the raw HTTP response details.  These methods also take an optional `RequestOptions` value that allows the client pipeline and the request to be configured for the duration of the call.
+
+// TODO: move the below to the detailed sample file
+
+**Convenience methods** are service methods that take a strongly-typed model representing schematized data needed to communicate with the service as input, and return a strongly-typed model representing the payload from the service response as output. Having strongly-typed models that represent service concepts provides a layer of convenience over working with the raw payload format. This is because these models unify the client user experience when cloud services differ in payload formats.  That is, a client-user can learn the patterns for strongly-typed models that `System.ClientModel`-based clients provide, and use them together without having to reason about whether a cloud service represents resources using, for example, JSON or XML formats.
+
+**Protocol methods** are service methods that provide very little convenience over the raw HTTP APIs a cloud service exposes. They represent request and response message bodies using types that are very thin layers over raw JSON/binary/other formats. Users of client protocol methods must reference a service's API documentation directly, rather than relying on the client to provide developer conveniences via strongly-typing service schemas.
+
+
+
+### Handling exceptions that result from failed requests
+
+### Customizing HTTP requests
 
 ### Read and write persistable models
 
@@ -85,7 +97,7 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 
 ## Troubleshooting
 
-You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a pipeline's `Send` method.
+You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a client's service method.
 
 ## Next steps
 
