@@ -24,8 +24,26 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="sourceFields"/> is null.</exception>
         public SearchSuggester(string name, IEnumerable<string> sourceFields)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(sourceFields, nameof(sourceFields));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(name));
+            }
+            if (sourceFields == null)
+            {
+                throw new ArgumentNullException(nameof(sourceFields));
+            }
+            if (sourceFields is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(sourceFields));
+            }
+            if (!sourceFields.Any())
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(sourceFields));
+            }
 
             Name = name;
             SourceFields = sourceFields.ToList();

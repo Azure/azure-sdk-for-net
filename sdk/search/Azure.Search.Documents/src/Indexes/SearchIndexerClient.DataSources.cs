@@ -49,7 +49,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (dataSourceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnection));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
             scope.Start();
@@ -82,7 +85,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (dataSourceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnection));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateDataSourceConnection)}");
             scope.Start();
@@ -150,7 +156,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (dataSourceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnection));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
             scope.Start();
@@ -222,7 +231,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (dataSourceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnection));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateDataSourceConnection)}");
             scope.Start();
@@ -257,7 +269,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            if (dataSourceConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnectionName));
+            }
 
             return DeleteDataSourceConnection(
                 dataSourceConnectionName,
@@ -279,7 +294,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            if (dataSourceConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnectionName));
+            }
 
             return await DeleteDataSourceConnectionAsync(
                 dataSourceConnectionName,
@@ -307,7 +325,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (dataSourceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnection));
+            }
 
             return DeleteDataSourceConnection(
                 dataSourceConnection?.Name,
@@ -334,7 +355,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (dataSourceConnection == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnection));
+            }
 
             return await DeleteDataSourceConnectionAsync(
                 dataSourceConnection?.Name,
@@ -404,7 +428,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            if (dataSourceConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnectionName));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
             scope.Start();
@@ -434,7 +461,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            if (dataSourceConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceConnectionName));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(GetDataSourceConnection)}");
             scope.Start();

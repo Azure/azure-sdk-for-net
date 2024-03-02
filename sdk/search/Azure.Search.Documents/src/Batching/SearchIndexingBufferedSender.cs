@@ -121,7 +121,10 @@ namespace Azure.Search.Documents
             SearchClient searchClient,
             SearchIndexingBufferedSenderOptions<T> options = null)
         {
-            Argument.AssertNotNull(searchClient, nameof(searchClient));
+            if (searchClient == null)
+            {
+                throw new ArgumentNullException(nameof(searchClient));
+            }
             SearchClient = searchClient;
 
             options ??= new SearchIndexingBufferedSenderOptions<T>();

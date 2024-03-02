@@ -196,8 +196,18 @@ namespace Azure.Search.Documents.Models
         /// </returns>
         public static IndexDocumentsAction<SearchDocument> Delete(string keyName, string keyValue)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(keyValue, nameof(keyValue));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
+            if (keyValue == null)
+            {
+                throw new ArgumentNullException(nameof(keyValue));
+            }
 
             return new IndexDocumentsAction<SearchDocument>(
                 IndexActionType.Delete,

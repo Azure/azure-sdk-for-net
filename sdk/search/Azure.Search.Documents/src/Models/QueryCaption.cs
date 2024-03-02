@@ -20,8 +20,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="captionType">A value that specifies whether <see cref="SemanticSearchResult.Captions"/> should be returned as part of the search response.</param>
         public QueryCaption(QueryCaptionType captionType)
         {
-            Argument.AssertNotNull(captionType, nameof(captionType));
-
             CaptionType = captionType;
         }
 

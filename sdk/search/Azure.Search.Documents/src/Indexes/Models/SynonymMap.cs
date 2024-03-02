@@ -31,8 +31,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="synonyms"/> is null.</exception>
         public SynonymMap(string name, string synonyms)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(synonyms, nameof(synonyms));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(name));
+            }
+            if (synonyms == null)
+            {
+                throw new ArgumentNullException(nameof(synonyms));
+            }
+            if (synonyms.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(synonyms));
+            }
 
             Name = name;
             Format = DefaultFormat;
@@ -51,8 +65,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="reader"/> is null.</exception>
         public SynonymMap(string name, TextReader reader)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(reader, nameof(reader));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(name));
+            }
+            if (reader == null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
 
             Name = name;
             Format = DefaultFormat;

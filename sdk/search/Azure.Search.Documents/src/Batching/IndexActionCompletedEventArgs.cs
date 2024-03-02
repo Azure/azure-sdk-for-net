@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using Azure.Core;
 
@@ -61,7 +62,10 @@ namespace Azure.Search.Documents.Models
             CancellationToken cancellationToken = default)
             : base(sender, action, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(result, nameof(result));
+            if (result == null)
+            {
+                throw new ArgumentNullException(nameof(result));
+            }
             Result = result;
         }
     }

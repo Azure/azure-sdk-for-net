@@ -48,7 +48,10 @@ namespace Azure.Search.Documents
             double value,
             JsonSerializerOptions options)
         {
-            Argument.AssertNotNull(writer, nameof(writer));
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             Debug.Assert(options != null);
 
             if (double.IsPositiveInfinity(value))

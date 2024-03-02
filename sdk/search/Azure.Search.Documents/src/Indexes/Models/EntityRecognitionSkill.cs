@@ -40,8 +40,14 @@ namespace Azure.Search.Documents.Indexes.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public EntityRecognitionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
+            if (outputs == null)
+            {
+                throw new ArgumentNullException(nameof(outputs));
+            }
 
             Categories = new ChangeTrackingList<EntityCategory>();
             ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";

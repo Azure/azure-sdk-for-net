@@ -20,7 +20,10 @@ namespace Azure.Search.Documents
         /// <remarks>Please use one of the constant members over creating a custom value unless you have special needs for doing so.</remarks>
         public SearchAudience(string value)
         {
-            Argument.AssertNotNullOrEmpty(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             _value = value;
         }
 

@@ -23,8 +23,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="answerType">A value that specifies whether <see cref="SemanticSearchResults.Answers"/> should be returned as part of the search response.</param>
         public QueryAnswer(QueryAnswerType answerType)
         {
-            Argument.AssertNotNull(answerType, nameof(answerType));
-
             AnswerType = answerType;
         }
 

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -80,9 +81,18 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(indexer, nameof(indexer));
-            Argument.AssertNotNull(keyFieldName, nameof(keyFieldName));
-            Argument.AssertNotNull(documentKeys, nameof(documentKeys));
+            if (indexer == null)
+            {
+                throw new ArgumentNullException(nameof(indexer));
+            }
+            if (keyFieldName == null)
+            {
+                throw new ArgumentNullException(nameof(keyFieldName));
+            }
+            if (documentKeys == null)
+            {
+                throw new ArgumentNullException(nameof(documentKeys));
+            }
 
             var batch = IndexDocumentsBatch.Delete<SearchDocument>(
                 documentKeys.Select(k => new SearchDocument { [keyFieldName] = k }));

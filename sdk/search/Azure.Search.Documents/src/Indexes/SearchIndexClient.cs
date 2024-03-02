@@ -98,9 +98,15 @@ namespace Azure.Search.Documents.Indexes
             AzureKeyCredential credential,
             SearchClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
@@ -127,9 +133,15 @@ namespace Azure.Search.Documents.Indexes
             TokenCredential tokenCredential,
             SearchClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            if (tokenCredential == null)
+            {
+                throw new ArgumentNullException(nameof(tokenCredential));
+            }
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
@@ -215,7 +227,14 @@ namespace Azure.Search.Documents.Indexes
         /// </remarks>
         public virtual SearchClient GetSearchClient(string indexName)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            if (indexName == null)
+            {
+                throw new ArgumentNullException(nameof(indexName));
+            }
+            if (indexName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(indexName));
+            }
             return new SearchClient(
                 Endpoint,
                 indexName,
@@ -463,7 +482,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(index, nameof(index));
+            if (index == null)
+            {
+                throw new ArgumentNullException(nameof(index));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
             scope.Start();
@@ -511,7 +533,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(index, nameof(index));
+            if (index == null)
+            {
+                throw new ArgumentNullException(nameof(index));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
             scope.Start();
@@ -584,7 +609,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(index, nameof(index));
+            if (index == null)
+            {
+                throw new ArgumentNullException(nameof(index));
+            }
 
             return DeleteIndex(
                 index?.Name,
@@ -611,7 +639,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(index, nameof(index));
+            if (index == null)
+            {
+                throw new ArgumentNullException(nameof(index));
+            }
 
             return await DeleteIndexAsync(
                 index?.Name,
@@ -1002,7 +1033,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+            if (synonymMap == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMap));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
             scope.Start();
@@ -1043,7 +1077,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+            if (synonymMap == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMap));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
             scope.Start();
@@ -1115,7 +1152,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+            if (synonymMap == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMap));
+            }
 
             return DeleteSynonymMap(
                 synonymMap?.Name,
@@ -1142,7 +1182,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // Generated client validates indexName parameter first, which is not a parameter of this method.
-            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+            if (synonymMap == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMap));
+            }
 
             return await DeleteSynonymMapAsync(
                 synonymMap?.Name,

@@ -35,7 +35,10 @@ namespace Azure.Search.Documents
             DateTime value,
             JsonSerializerOptions options)
         {
-            Argument.AssertNotNull(writer, nameof(writer));
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             Debug.Assert(options != null);
             writer.WriteStringValue(JsonSerialization.Date(value, CultureInfo.InvariantCulture));
         }

@@ -51,7 +51,10 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeoLineString.Coordinates"/> is null.</exception>
         public static string EncodePolygon(GeoLineString line)
         {
-            Argument.AssertNotNull(line, nameof(line));
+            if (line == null)
+            {
+                throw new ArgumentNullException(nameof(line));
+            }
 
             if (line.Coordinates.Count < 4)
             {
@@ -71,7 +74,10 @@ namespace Azure.Search.Documents
 
         public static string EncodePolygon(GeoLinearRing linearRing)
         {
-            Argument.AssertNotNull(linearRing, nameof(linearRing));
+            if (linearRing == null)
+            {
+                throw new ArgumentNullException(nameof(linearRing));
+            }
 
             StringBuilder odata = new("geography'POLYGON((");
 
@@ -106,8 +112,14 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException"><paramref name="polygon"/> or <see cref="GeoPolygon.Rings"/> is null.</exception>
         public static string EncodePolygon(GeoPolygon polygon)
         {
-            Argument.AssertNotNull(polygon, nameof(polygon));
-            Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");
+            if (polygon == null)
+            {
+                throw new ArgumentNullException(nameof(polygon));
+            }
+            if (polygon.Rings == null)
+            {
+                throw new ArgumentNullException($"{nameof(polygon)}.{nameof(polygon.Rings)}");
+            }
 
             if (polygon.Rings.Count != 1)
             {
@@ -130,8 +142,14 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeographyLineStringProxy.Points"/> is null.</exception>
         public static string EncodePolygon(GeographyLineStringProxy line)
         {
-            Argument.AssertNotNull(line, nameof(line));
-            Argument.AssertNotNull(line.Points, $"{nameof(line)}.{nameof(line.Points)}");
+            if (line == null)
+            {
+                throw new ArgumentNullException(nameof(line));
+            }
+            if (line.Points == null)
+            {
+                throw new ArgumentNullException($"{nameof(line)}.{nameof(line.Points)}");
+            }
 
             if (line.Points.Count < 4)
             {
@@ -183,8 +201,14 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException"><paramref name="polygon"/> or <see cref="GeographyPolygonProxy.Rings"/> is null.</exception>
         public static string EncodePolygon(GeographyPolygonProxy polygon)
         {
-            Argument.AssertNotNull(polygon, nameof(polygon));
-            Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");
+            if (polygon == null)
+            {
+                throw new ArgumentNullException(nameof(polygon));
+            }
+            if (polygon.Rings == null)
+            {
+                throw new ArgumentNullException($"{nameof(polygon)}.{nameof(polygon.Rings)}");
+            }
 
             if (polygon.Rings.Count != 1)
             {

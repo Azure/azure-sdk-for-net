@@ -30,7 +30,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="value">The property value.</param>
         private protected void SetValue(string name, object value)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(name));
+            }
             _values[name] = value;
         }
 

@@ -20,7 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         private protected SearchFieldTemplate(string name, SearchFieldDataType type)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(name));
+            }
 
             Name = name;
             Type = type;
@@ -49,7 +56,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         public static implicit operator SearchField(SearchFieldTemplate value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             SearchField field = new SearchField(value.Name, value.Type);
             value.Save(field);

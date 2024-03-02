@@ -80,7 +80,10 @@ namespace Azure.Search.Documents.Indexes
         /// <remarks>This overload is used to find the Key field of a SearchIndex so we can associate indexing failures with actions.</remarks>
         internal IDictionary<string, SearchField> BuildMapping(Type modelType)
         {
-            Argument.AssertNotNull(modelType, nameof(modelType));
+            if (modelType == null)
+            {
+                throw new ArgumentNullException(nameof(modelType));
+            }
 
             ArgumentException FailOnNonObjectDataType()
             {

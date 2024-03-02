@@ -180,7 +180,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
+            if (skillset == null)
+            {
+                throw new ArgumentNullException(nameof(skillset));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
             scope.Start();
@@ -288,7 +291,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
+            if (skillset == null)
+            {
+                throw new ArgumentNullException(nameof(skillset));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateSkillset)}");
             scope.Start();
@@ -324,7 +330,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+            if (skillsetName == null)
+            {
+                throw new ArgumentNullException(nameof(skillsetName));
+            }
 
             return DeleteSkillset(
                 skillsetName,
@@ -346,7 +355,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+            if (skillsetName == null)
+            {
+                throw new ArgumentNullException(nameof(skillsetName));
+            }
 
             return await DeleteSkillsetAsync(
                 skillsetName,
@@ -374,7 +386,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
+            if (skillset == null)
+            {
+                throw new ArgumentNullException(nameof(skillset));
+            }
 
             return DeleteSkillset(
                 skillset?.Name,
@@ -401,7 +416,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(skillset, nameof(skillset));
+            if (skillset == null)
+            {
+                throw new ArgumentNullException(nameof(skillset));
+            }
 
             return await DeleteSkillsetAsync(
                 skillset?.Name,

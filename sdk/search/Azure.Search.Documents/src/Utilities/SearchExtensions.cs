@@ -93,8 +93,14 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(destination, nameof(destination));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
 
             if (async)
             {

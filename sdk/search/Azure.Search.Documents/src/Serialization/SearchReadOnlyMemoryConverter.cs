@@ -48,7 +48,10 @@ namespace Azure.Search.Documents
         /// <param name="options">The serializer options.</param>
         public override void Write(Utf8JsonWriter writer, ReadOnlyMemory<T> value, JsonSerializerOptions options)
         {
-            Argument.AssertNotNull(writer, nameof(writer));
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
             Debug.Assert(options != null);
 
             // Serialize ReadOnlyMemory<T> as a Single[] array using .Span.

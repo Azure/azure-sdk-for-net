@@ -62,10 +62,30 @@ namespace Azure.Core
             ClientDiagnostics clientDiagnostics)
             where T : SyncAsyncEventArgs
         {
-            Argument.AssertNotNull(e, nameof(e));
-            Argument.AssertNotNullOrEmpty(declaringTypeName, nameof(declaringTypeName));
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+            if (declaringTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(declaringTypeName));
+            }
+            if (declaringTypeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(declaringTypeName));
+            }
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
+            if (clientDiagnostics == null)
+            {
+                throw new ArgumentNullException(nameof(clientDiagnostics));
+            }
 
             // Get the invocation list, but return early if there's no work
             if (eventHandler == null) { return; }

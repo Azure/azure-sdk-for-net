@@ -136,7 +136,10 @@ namespace Azure.Search.Documents
         /// <returns>The OData representation of the point.</returns>
         private static string EncodeGeography(GeoPoint point)
         {
-            Argument.AssertNotNull(point, nameof(point));
+            if (point == null)
+            {
+                throw new ArgumentNullException(nameof(point));
+            }
             return EncodeGeography(point.Coordinates);
         }
 

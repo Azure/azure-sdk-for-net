@@ -16,8 +16,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"><paramref name="fieldName"/> or <paramref name="parameters"/> is null.</exception>
         public TagScoringFunction(string fieldName, double boost, TagScoringParameters parameters) : base(fieldName, boost)
         {
-            Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (fieldName == null)
+            {
+                throw new ArgumentNullException(nameof(fieldName));
+            }
+            if (fieldName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(fieldName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
             Parameters = parameters;
             Type = "tag";

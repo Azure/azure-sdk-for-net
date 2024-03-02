@@ -67,7 +67,14 @@ namespace Azure.Search.Documents.Models
         /// <returns>The continuation token's next page options.</returns>
         public static SearchOptions Deserialize(string continuationToken)
         {
-            Argument.AssertNotNullOrEmpty(continuationToken, nameof(continuationToken));
+            if (continuationToken == null)
+            {
+                throw new ArgumentNullException(nameof(continuationToken));
+            }
+            if (continuationToken.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(continuationToken));
+            }
             byte[] decoded = Convert.FromBase64String(continuationToken);
             try
             {

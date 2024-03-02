@@ -97,9 +97,15 @@ namespace Azure.Search.Documents.Indexes
             AzureKeyCredential credential,
             SearchClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
@@ -125,9 +131,15 @@ namespace Azure.Search.Documents.Indexes
             TokenCredential tokenCredential,
             SearchClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            if (tokenCredential == null)
+            {
+                throw new ArgumentNullException(nameof(tokenCredential));
+            }
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
@@ -293,7 +305,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(indexer, nameof(indexer));
+            if (indexer == null)
+            {
+                throw new ArgumentNullException(nameof(indexer));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
             scope.Start();
@@ -401,7 +416,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(indexer, nameof(indexer));
+            if (indexer == null)
+            {
+                throw new ArgumentNullException(nameof(indexer));
+            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(CreateOrUpdateIndexer)}");
             scope.Start();
@@ -437,7 +455,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(indexerName, nameof(indexerName));
+            if (indexerName == null)
+            {
+                throw new ArgumentNullException(nameof(indexerName));
+            }
 
             return DeleteIndexer(
                 indexerName,
@@ -459,7 +480,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(indexerName, nameof(indexerName));
+            if (indexerName == null)
+            {
+                throw new ArgumentNullException(nameof(indexerName));
+            }
 
             return await DeleteIndexerAsync(
                 indexerName,
@@ -487,7 +511,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(indexer, nameof(indexer));
+            if (indexer == null)
+            {
+                throw new ArgumentNullException(nameof(indexer));
+            }
 
             return DeleteIndexer(
                 indexer?.Name,
@@ -514,7 +541,10 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
-            Argument.AssertNotNull(indexer, nameof(indexer));
+            if (indexer == null)
+            {
+                throw new ArgumentNullException(nameof(indexer));
+            }
 
             return await DeleteIndexerAsync(
                 indexer?.Name,

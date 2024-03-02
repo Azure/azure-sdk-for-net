@@ -188,10 +188,23 @@ namespace Azure.Search.Documents
             AzureKeyCredential credential,
             SearchClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (indexName == null)
+            {
+                throw new ArgumentNullException(nameof(indexName));
+            }
+            if (indexName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(indexName));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
@@ -247,10 +260,23 @@ namespace Azure.Search.Documents
             TokenCredential tokenCredential,
             SearchClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             endpoint.AssertHttpsScheme(nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            if (indexName == null)
+            {
+                throw new ArgumentNullException(nameof(indexName));
+            }
+            if (indexName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(indexName));
+            }
+            if (tokenCredential == null)
+            {
+                throw new ArgumentNullException(nameof(tokenCredential));
+            }
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
@@ -872,7 +898,10 @@ namespace Azure.Search.Documents
             SearchOptions options,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             return SearchInternal<T>(
                 null,
@@ -926,7 +955,10 @@ namespace Azure.Search.Documents
             SearchOptions options,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             return await SearchInternal<T>(
                 null,
@@ -1403,7 +1435,10 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(batch, nameof(batch));
+            if (batch == null)
+            {
+                throw new ArgumentNullException(nameof(batch));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(IndexDocuments)}");
             scope.Start();

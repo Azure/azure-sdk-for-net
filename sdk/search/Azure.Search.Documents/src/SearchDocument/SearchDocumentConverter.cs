@@ -27,9 +27,18 @@ namespace Azure.Search.Documents.Models
             SearchDocument value,
             JsonSerializerOptions options)
         {
-            Argument.AssertNotNull(writer, nameof(writer));
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(options, nameof(options));
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
             JsonSerialization.WriteSearchDocument(
                 writer,
                 value,
@@ -48,8 +57,14 @@ namespace Azure.Search.Documents.Models
             Type typeToConvert,
             JsonSerializerOptions options)
         {
-            Argument.AssertNotNull(typeToConvert, nameof(typeToConvert));
-            Argument.AssertNotNull(options, nameof(options));
+            if (typeToConvert == null)
+            {
+                throw new ArgumentNullException(nameof(typeToConvert));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
             return JsonSerialization.ReadSearchDocument(
                 ref reader,
                 typeToConvert,

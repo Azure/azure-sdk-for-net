@@ -20,7 +20,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </param>
         public KeywordTokenizer(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new System.ArgumentNullException(nameof(name));
+            }
 
             ODataType = "#Microsoft.Azure.Search.KeywordTokenizerV2";
         }

@@ -19,7 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </param>
         public LuceneStandardTokenizer(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new System.ArgumentNullException(nameof(name));
+            }
 
             ODataType = "#Microsoft.Azure.Search.StandardTokenizerV2";
         }
