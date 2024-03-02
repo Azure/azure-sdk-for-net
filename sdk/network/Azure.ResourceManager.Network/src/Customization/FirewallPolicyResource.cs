@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<FirewallPolicyResource>> UpdateAsync(WaitUntil waitUntil, FirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.Update");
             scope.Start();
@@ -81,7 +84,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<FirewallPolicyResource> Update(WaitUntil waitUntil, FirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyResource.Update");
             scope.Start();

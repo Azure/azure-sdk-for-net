@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssociatedRouteTable))
+            if (AssociatedRouteTable != null)
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
                 writer.WriteObjectValue(AssociatedRouteTable);
             }
-            if (Optional.IsDefined(PropagatedRouteTables))
+            if (PropagatedRouteTables != null)
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
                 writer.WriteObjectValue(PropagatedRouteTables);
             }
-            if (Optional.IsDefined(InboundRouteMap))
+            if (InboundRouteMap != null)
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
                 writer.WriteObjectValue(InboundRouteMap);
             }
-            if (Optional.IsDefined(OutboundRouteMap))
+            if (OutboundRouteMap != null)
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
                 writer.WriteObjectValue(OutboundRouteMap);
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<RoutingConfigurationNfvSubResource> associatedRouteTable = default;
-            Optional<PropagatedRouteTableNfv> propagatedRouteTables = default;
-            Optional<RoutingConfigurationNfvSubResource> inboundRouteMap = default;
-            Optional<RoutingConfigurationNfvSubResource> outboundRouteMap = default;
+            RoutingConfigurationNfvSubResource associatedRouteTable = default;
+            PropagatedRouteTableNfv propagatedRouteTables = default;
+            RoutingConfigurationNfvSubResource inboundRouteMap = default;
+            RoutingConfigurationNfvSubResource outboundRouteMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("associatedRouteTable"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RoutingConfigurationNfv(associatedRouteTable.Value, propagatedRouteTables.Value, inboundRouteMap.Value, outboundRouteMap.Value);
+            return new RoutingConfigurationNfv(associatedRouteTable, propagatedRouteTables, inboundRouteMap, outboundRouteMap);
         }
 
         BinaryData IPersistableModel<RoutingConfigurationNfv>.Write(ModelReaderWriterOptions options)

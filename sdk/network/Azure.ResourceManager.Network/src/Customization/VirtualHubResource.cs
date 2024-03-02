@@ -118,7 +118,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+			{
+				throw new ArgumentNullException(nameof(content));
+			}
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetInboundRoutes");
             scope.Start();
@@ -158,7 +161,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+			{
+				throw new ArgumentNullException(nameof(content));
+			}
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetInboundRoutes");
             scope.Start();
@@ -198,7 +204,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+			{
+				throw new ArgumentNullException(nameof(content));
+			}
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetOutboundRoutes");
             scope.Start();
@@ -238,7 +247,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetOutboundRoutes");
             scope.Start();

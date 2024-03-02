@@ -35,8 +35,14 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.AddTag");
             scope.Start();
@@ -76,8 +82,14 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetworkVirtualApplianceSkuResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.AddTag");
             scope.Start();
@@ -116,7 +128,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+			{
+				throw new ArgumentNullException(nameof(tags));
+			}
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.SetTags");
             scope.Start();
@@ -156,7 +171,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetworkVirtualApplianceSkuResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+			{
+				throw new ArgumentNullException(nameof(tags));
+			}
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.SetTags");
             scope.Start();
@@ -196,7 +214,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.RemoveTag");
             scope.Start();
@@ -235,7 +256,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetworkVirtualApplianceSkuResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
 
             using var scope = _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics.CreateScope("NetworkVirtualApplianceSkuResource.RemoveTag");
             scope.Start();

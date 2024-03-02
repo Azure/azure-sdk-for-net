@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostResource.Update");
             scope.Start();
@@ -81,7 +84,10 @@ namespace Azure.ResourceManager.Network
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostResource.Update");
             scope.Start();
