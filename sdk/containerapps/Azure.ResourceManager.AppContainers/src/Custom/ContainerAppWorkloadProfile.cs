@@ -3,8 +3,8 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> SkuName for container app. </summary>
         public ContainerAppWorkloadProfile(string workloadProfileType, int minimumCount, int maximumCount)
         {
-            Argument.AssertNotNull(workloadProfileType, nameof(workloadProfileType));
+            if (workloadProfileType == null)
+            {
+                throw new ArgumentNullException(nameof(workloadProfileType));
+            }
 
             WorkloadProfileType = workloadProfileType;
             MinimumCount = minimumCount;

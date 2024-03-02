@@ -24,8 +24,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateId"/> is null. </exception>
         public ContainerAppCustomDomain(string name, ResourceIdentifier certificateId)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(certificateId, nameof(certificateId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (certificateId == null)
+            {
+                throw new ArgumentNullException(nameof(certificateId));
+            }
 
             Name = name;
             CertificateId = certificateId;
