@@ -146,11 +146,9 @@ namespace Azure
         #region ISerializable implementation
 
         /// <inheritdoc />
-        // TODO
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
-            : base("Serialization constructor must be added to ClientResultException.")
+            : base(info, context)
         {
-            Status = info.GetInt32(nameof(Status));
             ErrorCode = info.GetString(nameof(ErrorCode));
         }
 
@@ -159,7 +157,6 @@ namespace Azure
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            info.AddValue(nameof(Status), Status);
             info.AddValue(nameof(ErrorCode), ErrorCode);
 
             base.GetObjectData(info, context);
