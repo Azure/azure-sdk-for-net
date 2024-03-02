@@ -5,7 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ContainerGroupImageRegistryCredential(string server, string username)
         {
-            Argument.AssertNotNull(server, nameof(server));
-            Argument.AssertNotNull(username, nameof(username));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
             Server = server;
             Username = username;
