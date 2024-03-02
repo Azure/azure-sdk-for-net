@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
-            if (Optional.IsDefined(AuthMethod))
+            if (AuthMethod.HasValue)
             {
                 writer.WritePropertyName("authMethod"u8);
                 writer.WriteStringValue(AuthMethod.Value.ToString());
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(MagicCode))
+            if (MagicCode != null)
             {
                 writer.WritePropertyName("magicCode"u8);
                 writer.WriteStringValue(MagicCode);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string emailAddress = default;
-            Optional<EmailChannelAuthMethod> authMethod = default;
-            Optional<string> password = default;
-            Optional<string> magicCode = default;
+            EmailChannelAuthMethod? authMethod = default;
+            string password = default;
+            string magicCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             bool isEnabled = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailChannelProperties(emailAddress, Optional.ToNullable(authMethod), password.Value, magicCode.Value, isEnabled, serializedAdditionalRawData);
+            return new EmailChannelProperties(emailAddress, authMethod, password, magicCode, isEnabled, serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<EmailChannelProperties>.Write(ModelReaderWriterOptions options)
         {
