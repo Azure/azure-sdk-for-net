@@ -9,10 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Security.Claims;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -21,6 +21,7 @@ using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
 
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
+
 using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
@@ -198,7 +199,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else if (requestEvent.GetType() != _parameterInfo.ParameterType && ex == null && _parameterInfo.ParameterType != typeof(string))
             {
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Parm_Mismatch, requestEvent.GetType(), _parameterInfo.ParameterType));
+                throw new Exception(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Parm_Mismatch,
+                        arg0: requestEvent.GetType(),
+                        arg1: _parameterInfo.ParameterType));
             }
 
             requestEvent.StatusMessage = ex == null ? AuthenticationEventResource.Status_Good : ex.Message;

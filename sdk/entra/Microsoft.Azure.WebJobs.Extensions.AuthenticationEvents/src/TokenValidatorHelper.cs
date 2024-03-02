@@ -25,7 +25,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else
             {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Token_Version, version, string.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
+                throw new ArgumentException(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Token_Version,
+                        arg0: version,
+                        arg1: string.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
             }
         }
 
@@ -51,7 +56,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 return;
             }
 
-            throw new UnauthorizedAccessException($"Authorized Party Application ID '{authoizedPartyValueFromTokenOrHeader}' from token does match Authentication Event Trigger configuration AuthorizedPartyAppId '{configurationManager.AuthorizedPartyAppId}'.");
+            throw new UnauthorizedAccessException(
+                string.Format(
+                    provider: CultureInfo.CurrentCulture,
+                    format: AuthenticationEventResource.Ex_Invalid_AuthorizedPartyApplicationId,
+                    arg0: authoizedPartyValueFromTokenOrHeader,
+                    arg1: configurationManager.AuthorizedPartyAppId));
         }
     }
 }

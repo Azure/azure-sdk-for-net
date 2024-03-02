@@ -138,6 +138,9 @@
   <data name="Ex_Invalid_Action" xml:space="preserve">
     <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
   </data>
+  <data name="Ex_Invalid_AuthorizedPartyApplicationId" xml:space="preserve">
+    <value>Authorized Party Application ID '{0}' from token does match Authentication Event Trigger configuration AuthorizedPartyAppId '{1}'.</value>
+  </data>
   <data name="Ex_Invalid_Event" xml:space="preserve">
     <value>Invalid event type.</value>
   </data>
@@ -159,6 +162,9 @@
   <data name="Ex_Invalid_JsonPayload" xml:space="preserve">
     <value>Invalid Json Payload</value>
   </data>
+  <data name="Ex_Invalid_OIDC" xml:space="preserve">
+    <value>Not able to retrive Open ID Configuration with configured Authority URL '{0}'. Please verify Authority URL.</value>
+  </data>
   <data name="Ex_Invalid_Response" xml:space="preserve">
     <value>Response validation failed, see inner exceptions.</value>
   </data>
@@ -167,6 +173,9 @@
   </data>
   <data name="Ex_Invalid_SchemaVersion" xml:space="preserve">
     <value>Invalid version on Schema</value>
+  </data>
+  <data name="Ex_Invalid_Token" xml:space="preserve">
+    <value>No Access Token in request found.</value>
   </data>
   <data name="Ex_Leg_payload" xml:space="preserve">
     <value>Cannot assign legacy payload to cloud events.</value>

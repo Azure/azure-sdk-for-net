@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             if (string.IsNullOrWhiteSpace(accessToken))
             {
-                throw new UnauthorizedAccessException("No Access Token in request found.");
+                throw new UnauthorizedAccessException(AuthenticationEventResource.Ex_Invalid_Token);
             }
 
             JsonWebToken jsonWebToken = new JsonWebToken(accessToken);
@@ -50,7 +51,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             if (oidcConfig == null)
             {
-                throw new UnauthorizedAccessException($"Not able to retrive Open ID Configuration '{oidcConfig}' with configured Authority URL '{configurationManager.AuthorityUrl}'. Please verify Authority URL.");
+                throw new UnauthorizedAccessException(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Invalid_OIDC,
+                        arg0: oidcConfigAddress));
             }
 
             var handler = new JwtSecurityTokenHandler();

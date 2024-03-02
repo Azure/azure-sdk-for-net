@@ -10,6 +10,7 @@
 
 - Removing 'TeantId' from the AuthenticationEventTrigger Attribute API configuration
 - Adding 'AuthorizedPartyAppId', 'AuthorityUrl' to the AuthenticationEventTrigger Attribute API configuration
+- Adding 'AuthenticationEvents__ShowPIIDataInLogsKey` (defaults to true) to configuration manager for logging PIIData in logs
 
 ### Bugs Fixed
 

@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -15,6 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
+using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
+
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>The main configuration provider, this also handles the initial HTTP requests and response via IAsyncConverter.</summary>
@@ -23,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     [Extension("CustomAuthenticationExtension", "CustomAuthenticationExtension")]
     internal class AuthenticationEventConfigProvider : IExtensionConfigProvider, IAsyncConverter<HttpRequestMessage, HttpResponseMessage>
     {
-        internal readonly ILogger _logger;
+        private readonly ILogger _logger;
         private Uri _base_uri;
 
         /// <summary>The listeners that are attached to the functions that implement the AuthenticationEventTriggerAttribute.</summary>
