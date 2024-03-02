@@ -22,27 +22,27 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DisplayStatus))
+            if (DisplayStatus != null)
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Time))
+            if (Time.HasValue)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
@@ -58,11 +58,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<ComputeStatusLevelType> level = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
+            string code = default;
+            ComputeStatusLevelType? level = default;
+            string displayStatus = default;
+            string message = default;
+            DateTimeOffset? time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -99,16 +99,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                     continue;
                 }
             }
-            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            return new InstanceViewStatus(code, level, displayStatus, message, time);
         }
 
         private struct InstanceViewStatusProperties
         {
-            public Optional<string> Code { get; set; }
-            public Optional<ComputeStatusLevelType> Level { get; set; }
-            public Optional<string> DisplayStatus { get; set; }
-            public Optional<string> Message { get; set; }
-            public Optional<DateTimeOffset> Time { get; set; }
+            public string Code { get; set; }
+            public ComputeStatusLevelType? Level { get; set; }
+            public string DisplayStatus { get; set; }
+            public string    Message { get; set; }
+            public DateTimeOffset? Time { get; set; }
         }
 
         InstanceViewStatus IJsonModel<InstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

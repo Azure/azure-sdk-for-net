@@ -25,16 +25,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
-            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
-            Optional<string> capabilities = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            string resourceType = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ProviderExtendedLocation> locationMappings = default;
+            IReadOnlyList<ResourceTypeAlias> aliases = default;
+            IReadOnlyList<string> apiVersions = default;
+            string defaultApiVersion = default;
+            IReadOnlyList<ZoneMapping> zoneMappings = default;
+            IReadOnlyList<ApiProfile> apiProfiles = default;
+            string capabilities = default;
+            IReadOnlyDictionary<string, string> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -151,7 +151,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
+            return new ProviderResourceType(
+                resourceType,
+                locations ?? new ChangeTrackingList<string>(),
+                locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(),
+                aliases ?? new ChangeTrackingList<ResourceTypeAlias>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                defaultApiVersion,
+                zoneMappings ?? new ChangeTrackingList<ZoneMapping>(),
+                apiProfiles ?? new ChangeTrackingList<ApiProfile>(),
+                capabilities,
+                properties ?? new ChangeTrackingDictionary<string, string>());
         }
 
         void IJsonModel<ProviderResourceType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -159,12 +169,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if(Optional.IsDefined(ResourceType))
+            if(ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -174,7 +184,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -184,12 +194,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultApiVersion))
+            if (DefaultApiVersion != null)
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (Optional.IsCollectionDefined(ApiProfiles))
+            if (!(ApiProfiles is ChangeTrackingList<ApiProfile> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("apiProfiles"u8);
                 writer.WriteStartArray();
@@ -199,7 +209,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ZoneMappings))
+            if (!(ZoneMappings is ChangeTrackingList<ZoneMapping> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("zoneMappings"u8);
                 writer.WriteStartArray();
@@ -209,7 +219,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocationMappings))
+            if (!(LocationMappings is ChangeTrackingList<ProviderExtendedLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("locationMappings"u8);
                 writer.WriteStartArray();
@@ -219,12 +229,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Capabilities != null)
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStringValue(Capabilities);
             }
-            if (Optional.IsCollectionDefined(Aliases))
+            if (!(Aliases is ChangeTrackingList<ResourceTypeAlias> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -234,7 +244,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -250,16 +260,16 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ProviderResourceTypeProperties
         {
-            public Optional<string> ResourceType { get; set; }
-            public Optional<IReadOnlyList<string>> Locations { get; set; }
-            public Optional<IReadOnlyList<ProviderExtendedLocation>> LocationMappings { get; set; }
-            public Optional<IReadOnlyList<ResourceTypeAlias>> Aliases { get; set; }
-            public Optional<IReadOnlyList<string>> ApiVersions { get; set; }
-            public Optional<string> DefaultApiVersion { get; set; }
-            public Optional<IReadOnlyList<ZoneMapping>> ZoneMappings { get; set; }
-            public Optional<IReadOnlyList<ApiProfile>> ApiProfiles { get; set; }
-            public Optional<string> Capabilities { get; set; }
-            public Optional<IReadOnlyDictionary<string, string>> Properties { get; set; }
+            public string ResourceType { get; set; }
+            public IReadOnlyList<string> Locations { get; set; }
+            public IReadOnlyList<ProviderExtendedLocation> LocationMappings { get; set; }
+            public IReadOnlyList<ResourceTypeAlias> Aliases { get; set; }
+            public IReadOnlyList<string> ApiVersions { get; set; }
+            public string DefaultApiVersion { get; set; }
+            public IReadOnlyList<ZoneMapping> ZoneMappings { get; set; }
+            public IReadOnlyList<ApiProfile> ApiProfiles { get; set; }
+            public string Capabilities { get; set; }
+            public IReadOnlyDictionary<string, string> Properties { get; set; }
         }
 
         ProviderResourceType IJsonModel<ProviderResourceType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

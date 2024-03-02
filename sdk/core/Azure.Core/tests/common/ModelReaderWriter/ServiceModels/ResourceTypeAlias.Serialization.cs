@@ -25,12 +25,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
-            Optional<ResourceTypeAliasType> type = default;
-            Optional<string> defaultPath = default;
-            Optional<ResourceTypeAliasPattern> defaultPattern = default;
-            Optional<ResourceTypeAliasPathMetadata> defaultMetadata = default;
+            string name = default;
+            IReadOnlyList<ResourceTypeAliasPath> paths = default;
+            ResourceTypeAliasType? type = default;
+            string defaultPath = default;
+            ResourceTypeAliasPattern defaultPattern = default;
+            ResourceTypeAliasPathMetadata defaultMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,7 +85,13 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
+            return new ResourceTypeAlias(
+                name,
+                paths ?? new ChangeTrackingList<ResourceTypeAliasPath>(),
+                type,
+                defaultPath,
+                defaultPattern,
+                defaultMetadata);
         }
 
         void IJsonModel<ResourceTypeAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -93,12 +99,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Paths))
+            if (!(Paths is ChangeTrackingList<ResourceTypeAliasPath> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -108,22 +114,22 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AliasType))
+            if (AliasType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AliasType.ToString());
             }
-            if (Optional.IsDefined(DefaultPath))
+            if (DefaultPath != null)
             {
                 writer.WritePropertyName("defaultPath"u8);
                 writer.WriteStringValue(DefaultPath);
             }
-            if (Optional.IsDefined(DefaultPattern))
+            if (DefaultPattern != null)
             {
                 writer.WritePropertyName("defaultPattern"u8);
                 writer.WriteObjectValue(DefaultPattern);
             }
-            if (Optional.IsDefined(DefaultMetadata))
+            if (DefaultMetadata != null)
             {
                 writer.WritePropertyName("defaultMetadata"u8);
                 writer.WriteObjectValue(DefaultMetadata);
@@ -133,12 +139,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ResourceTypeAliasProperties
         {
-            public Optional<string> Name { get; set; }
-            public Optional<IReadOnlyList<ResourceTypeAliasPath>> Paths { get; set; }
-            public Optional<ResourceTypeAliasType> AliasType { get; set; }
-            public Optional<string> DefaultPath { get; set; }
-            public Optional<ResourceTypeAliasPattern> DefaultPattern { get; set; }
-            public Optional<ResourceTypeAliasPathMetadata> DefaultMetadata { get; set; }
+            public string Name { get; set; }
+            public IReadOnlyList<ResourceTypeAliasPath> Paths { get; set; }
+            public ResourceTypeAliasType? AliasType { get; set; }
+            public string DefaultPath { get; set; }
+            public ResourceTypeAliasPattern DefaultPattern { get; set; }
+            public ResourceTypeAliasPathMetadata DefaultMetadata { get; set; }
         }
 
         ResourceTypeAlias IJsonModel<ResourceTypeAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

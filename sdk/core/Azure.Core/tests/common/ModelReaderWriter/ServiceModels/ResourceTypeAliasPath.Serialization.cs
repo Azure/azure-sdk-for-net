@@ -25,10 +25,10 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<ResourceTypeAliasPattern> pattern = default;
-            Optional<ResourceTypeAliasPathMetadata> metadata = default;
+            string path = default;
+            IReadOnlyList<string> apiVersions = default;
+            ResourceTypeAliasPattern pattern = default;
+            ResourceTypeAliasPathMetadata metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceTypeAliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value, metadata.Value);
+            return new ResourceTypeAliasPath(path, apiVersions ?? new ChangeTrackingList<string>(), pattern, metadata);
         }
 
         void IJsonModel<ResourceTypeAliasPath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -77,12 +77,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -92,12 +92,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Pattern))
+            if (Pattern != null)
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteObjectValue(Pattern);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -107,10 +107,10 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ResourceTypeAliasPathProperties
         {
-            public Optional<string> Path { get; set; }
-            public Optional<IReadOnlyList<string>> ApiVersions { get; set; }
-            public Optional<ResourceTypeAliasPattern> Pattern { get; set; }
-            public Optional<ResourceTypeAliasPathMetadata> Metadata { get; set; }
+            public string Path { get; set; }
+            public IReadOnlyList<string> ApiVersions { get; set; }
+            public ResourceTypeAliasPattern Pattern { get; set; }
+            public ResourceTypeAliasPathMetadata Metadata { get; set; }
         }
 
         ResourceTypeAliasPath IJsonModel<ResourceTypeAliasPath>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

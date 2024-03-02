@@ -25,9 +25,9 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> type = default;
-            Optional<IReadOnlyList<string>> extendedLocations = default;
+            AzureLocation? location = default;
+            string type = default;
+            IReadOnlyList<string> extendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations));
+            return new ProviderExtendedLocation(location, type, extendedLocations ?? new ChangeTrackingList<string>());
         }
 
         void IJsonModel<ProviderExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -67,17 +67,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value.DisplayName);
             }
-            if (Optional.IsDefined(ProviderExtendedLocationType))
+            if (ProviderExtendedLocationType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProviderExtendedLocationType);
             }
-            if (Optional.IsCollectionDefined(ExtendedLocations))
+            if (!(ExtendedLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -92,9 +92,9 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ProviderExtendedLocationProperties
         {
-            public Optional<AzureLocation> Location { get; set; }
-            public Optional<string> ProviderExtendedLocationType { get; set; }
-            public Optional<IReadOnlyList<string>> ExtendedLocations { get; set; }
+            public AzureLocation? Location { get; set; }
+            public string ProviderExtendedLocationType { get; set; }
+            public IReadOnlyList<string> ExtendedLocations { get; set; }
         }
 
         ProviderExtendedLocation IJsonModel<ProviderExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

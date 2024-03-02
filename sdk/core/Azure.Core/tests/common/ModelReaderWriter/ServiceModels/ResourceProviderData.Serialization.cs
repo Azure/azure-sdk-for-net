@@ -23,12 +23,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> @namespace = default;
-            Optional<string> registrationState = default;
-            Optional<string> registrationPolicy = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
-            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            ResourceIdentifier id = default;
+            string @namespace = default;
+            string registrationState = default;
+            string registrationPolicy = default;
+            IReadOnlyList<ProviderResourceType> resourceTypes = default;
+            ProviderAuthorizationConsentState? providerAuthorizationConsentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -79,7 +79,13 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
+            return new ResourceProviderData(
+                id,
+                @namespace,
+                registrationState,
+                registrationPolicy,
+                resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
+                providerAuthorizationConsentState);
         }
 
         ResourceProviderData IPersistableModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -105,17 +111,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            if (!(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -125,17 +131,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RegistrationState))
+            if (RegistrationState != null)
             {
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState);
             }
-            if (Optional.IsDefined(RegistrationPolicy))
+            if (RegistrationPolicy != null)
             {
                 writer.WritePropertyName("registrationPolicy"u8);
                 writer.WriteStringValue(RegistrationPolicy);
             }
-            if (Optional.IsDefined(ProviderAuthorizationConsentState))
+            if (ProviderAuthorizationConsentState.HasValue)
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.ToString());
@@ -145,12 +151,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ResourceProviderDataProperties
         {
-            public Optional<ResourceIdentifier> Id { get; set; }
-            public Optional<string> Namespace { get; set; }
-            public Optional<string> RegistrationState { get; set; }
-            public Optional<string> RegistrationPolicy { get; set; }
-            public Optional<IReadOnlyList<ProviderResourceType>> ResourceTypes { get; set; }
-            public Optional<ProviderAuthorizationConsentState> ProviderAuthorizationConsentState { get; set; }
+            public ResourceIdentifier Id { get; set; }
+            public string Namespace { get; set; }
+            public string RegistrationState { get; set; }
+            public string RegistrationPolicy { get; set; }
+            public IReadOnlyList<ProviderResourceType> ResourceTypes { get; set; }
+            public ProviderAuthorizationConsentState? ProviderAuthorizationConsentState { get; set; }
         }
 
         ResourceProviderData IJsonModel<ResourceProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);

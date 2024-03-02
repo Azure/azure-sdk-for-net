@@ -43,12 +43,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.ToString());
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,17 +63,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformUpdateDomainCount))
+            if (PlatformUpdateDomainCount.HasValue)
             {
                 writer.WritePropertyName("platformUpdateDomainCount"u8);
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (Optional.IsDefined(PlatformFaultDomainCount))
+            if (PlatformFaultDomainCount.HasValue)
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualMachines))
+            if (!(VirtualMachines is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProximityPlacementGroup))
+            if (ProximityPlacementGroup != null)
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
@@ -100,18 +100,18 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ComputeSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformUpdateDomainCount = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<IList<WritableSubResource>> virtualMachines = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            SystemData systemData = default;
+            int? platformUpdateDomainCount = default;
+            int? platformFaultDomainCount = default;
+            IList<WritableSubResource> virtualMachines = default;
+            WritableSubResource proximityPlacementGroup = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -234,7 +234,19 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                     continue;
                 }
             }
-            return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
+            return new AvailabilitySetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                platformUpdateDomainCount,
+                platformFaultDomainCount,
+                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
+                proximityPlacementGroup,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>());
         }
 
         AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -250,18 +262,18 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 
         private struct AvailabilitySetDataProperties
         {
-            public Optional<ComputeSku> Sku { get; set; }
-            public Optional<IDictionary<string, string>> Tags { get; set; }
+            public ComputeSku Sku { get; set; }
+            public IDictionary<string, string> Tags { get; set; }
             public AzureLocation Location { get; set; }
             public ResourceIdentifier Id { get; set; }
             public string Name { get; set; }
             public ResourceType ResourceType { get; set; }
-            public Optional<SystemData> SystemData { get; set; }
-            public Optional<int> PlatformUpdateDomainCount { get; set; }
-            public Optional<int> PlatformFaultDomainCount { get; set; }
-            public Optional<IList<WritableSubResource>> VirtualMachines { get; set; }
-            public Optional<WritableSubResource> ProximityPlacementGroup { get; set; }
-            public Optional<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
+            public SystemData SystemData { get; set; }
+            public int? PlatformUpdateDomainCount { get; set; }
+            public int? PlatformFaultDomainCount { get; set; }
+            public IList<WritableSubResource> VirtualMachines { get; set; }
+            public WritableSubResource ProximityPlacementGroup { get; set; }
+            public IReadOnlyList<InstanceViewStatus> Statuses { get; set; }
         }
 
         AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

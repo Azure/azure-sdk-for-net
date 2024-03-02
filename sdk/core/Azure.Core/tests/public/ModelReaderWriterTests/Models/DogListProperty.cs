@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WritePropertyName("weight"u8);
             writer.WriteNumberValue(Weight);
 
-            if (Optional.IsCollectionDefined(FoodConsumed))
+            if (!(FoodConsumed is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("foodConsumed"u8);
                 writer.WriteStartArray();

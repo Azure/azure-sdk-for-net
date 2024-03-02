@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
             //Deserialize unknown subtype
             string kind = default;
-            Optional<string> name = default;
+            string name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {

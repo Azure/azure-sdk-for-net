@@ -24,8 +24,8 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceTypeAliasPathTokenType> type = default;
-            Optional<ResourceTypeAliasPathAttributes> attributes = default;
+            ResourceTypeAliasPathTokenType? type = default;
+            ResourceTypeAliasPathAttributes? attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceTypeAliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes));
+            return new ResourceTypeAliasPathMetadata(type, attributes);
         }
 
         void IJsonModel<ResourceTypeAliasPathMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -55,12 +55,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TokenType))
+            if (TokenType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TokenType.ToString());
             }
-            if (Optional.IsDefined(Attributes))
+            if (Attributes.HasValue)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStringValue(Attributes.ToString());
@@ -70,8 +70,8 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ResourceTypeAliasPathMetadataProperties
         {
-            public Optional<ResourceTypeAliasPathTokenType> TokenType { get; set; }
-            public Optional<ResourceTypeAliasPathAttributes> Attributes { get; set; }
+            public ResourceTypeAliasPathTokenType? TokenType { get; set; }
+            public ResourceTypeAliasPathAttributes? Attributes { get; set; }
         }
 
         ResourceTypeAliasPathMetadata IJsonModel<ResourceTypeAliasPathMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

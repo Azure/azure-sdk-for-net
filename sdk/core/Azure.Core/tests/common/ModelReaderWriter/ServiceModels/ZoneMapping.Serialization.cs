@@ -25,8 +25,8 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            AzureLocation? location = default;
+            IReadOnlyList<string> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ZoneMapping(Optional.ToNullable(location), Optional.ToList(zones));
+            return new ZoneMapping(location, zones ?? new ChangeTrackingList<string>());
         }
 
         void IJsonModel<ZoneMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -61,12 +61,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value.DisplayName);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -81,8 +81,8 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ZoneMappingProperties
         {
-            public Optional<AzureLocation> Location { get; set; }
-            public Optional<IReadOnlyList<string>> Zones { get; set; }
+            public AzureLocation? Location { get; set; }
+            public IReadOnlyList<string> Zones { get; set; }
         }
 
         ZoneMapping IJsonModel<ZoneMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -24,8 +24,8 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> profileVersion = default;
-            Optional<string> apiVersion = default;
+            string profileVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileVersion"u8))
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ApiProfile(profileVersion.Value, apiVersion.Value);
+            return new ApiProfile(profileVersion, apiVersion);
         }
 
         void IJsonModel<ApiProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -47,12 +47,12 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileVersion))
+            if (ProfileVersion != null)
             {
                 writer.WritePropertyName("profileVersion"u8);
                 writer.WriteStringValue(ProfileVersion);
             }
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -62,8 +62,8 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ApiProfileProperties
         {
-            public Optional<string> ProfileVersion { get; set; }
-            public Optional<string> ApiVersion { get; set; }
+            public string ProfileVersion { get; set; }
+            public string ApiVersion { get; set; }
         }
 
         ApiProfile IJsonModel<ApiProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

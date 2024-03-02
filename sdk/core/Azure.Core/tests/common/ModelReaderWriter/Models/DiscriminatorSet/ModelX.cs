@@ -48,12 +48,12 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (!(Fields is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -63,12 +63,12 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NullProperty))
+            if (NullProperty.HasValue)
             {
                 writer.WritePropertyName("nullProperty"u8);
                 writer.WriteNumberValue(NullProperty.Value);
             }
-            if (Optional.IsCollectionDefined(KeyValuePairs))
+            if (!(KeyValuePairs is ChangeTrackingDictionary<string, string> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("keyValuePairs"u8);
                 writer.WriteStartObject();
@@ -106,11 +106,11 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
             string kind = default;
-            Optional<string> name = default;
+            string name = default;
             int xProperty = default;
-            Optional<int> nullProperty = default;
-            Optional<IList<string>> fields = default;
-            Optional<IDictionary<string, string>> keyValuePairs = default;
+            int? nullProperty = default;
+            IList<string> fields = default;
+            IDictionary<string, string> keyValuePairs = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
 
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ModelX(kind, name, xProperty, Optional.ToNullable(nullProperty), Optional.ToList(fields), Optional.ToDictionary(keyValuePairs), rawData);
+            return new ModelX(
+                kind,
+                name,
+                xProperty,
+                nullProperty,
+                fields ?? new ChangeTrackingList<string>(),
+                keyValuePairs ?? new ChangeTrackingDictionary<string, string>(),
+                rawData);
         }
 
         ModelX IPersistableModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)

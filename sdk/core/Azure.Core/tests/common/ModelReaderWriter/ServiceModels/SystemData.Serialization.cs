@@ -35,12 +35,12 @@ namespace Azure.Core.Tests.Models.ResourceManager
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            string createdBy = default;
+            CreatedByType? createdByType = default;
+            DateTimeOffset? createdAt = default;
+            string lastModifiedBy = default;
+            CreatedByType? lastModifiedByType = default;
+            DateTimeOffset? lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -90,17 +90,17 @@ namespace Azure.Core.Tests.Models.ResourceManager
                     continue;
                 }
             }
-            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new SystemData(createdBy, createdByType, createdAt, lastModifiedBy, lastModifiedByType, lastModifiedAt);
         }
 
         private struct SystemDataProperties
         {
-            public Optional<string> CreatedBy { get; set; }
-            public Optional<CreatedByType> CreatedByType { get; set; }
-            public Optional<DateTimeOffset> CreatedOn { get; set; }
-            public Optional<string> LastModifiedBy { get; set; }
-            public Optional<CreatedByType> LastModifiedByType { get; set; }
-            public Optional<DateTimeOffset> LastModifiedOn { get; set; }
+            public string CreatedBy { get; set; }
+            public CreatedByType? CreatedByType { get; set; }
+            public DateTimeOffset? CreatedOn { get; set; }
+            public string LastModifiedBy { get; set; }
+            public CreatedByType? LastModifiedByType { get; set; }
+            public DateTimeOffset? LastModifiedOn { get; set; }
         }
 
         SystemData IJsonModel<SystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -23,7 +23,10 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChildModelXml(string value, string readonlyProperty)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             ChildValue = value;
             ChildReadOnlyProperty = readonlyProperty;

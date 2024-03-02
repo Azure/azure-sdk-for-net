@@ -24,9 +24,9 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> phrase = default;
-            Optional<string> variable = default;
-            Optional<ResourceTypeAliasPatternType> type = default;
+            string phrase = default;
+            string variable = default;
+            ResourceTypeAliasPatternType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phrase"u8))
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
+            return new ResourceTypeAliasPattern(phrase, variable, type);
         }
 
         void IJsonModel<ResourceTypeAliasPattern>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
@@ -57,17 +57,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Phrase))
+            if (Phrase != null)
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Optional.IsDefined(PatternType))
+            if (PatternType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PatternType.Value.ToSerialString());
@@ -77,9 +77,9 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         private struct ResourceTypeAliasPatternProperites
         {
-            public Optional<string> Phrase { get; set; }
-            public Optional<string> Variable { get; set; }
-            public Optional<ResourceTypeAliasPatternType> PatternType { get; set; }
+            public string Phrase { get; set; }
+            public string Variable { get; set; }
+            public ResourceTypeAliasPatternType? PatternType { get; set; }
         }
 
         ResourceTypeAliasPattern IJsonModel<ResourceTypeAliasPattern>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

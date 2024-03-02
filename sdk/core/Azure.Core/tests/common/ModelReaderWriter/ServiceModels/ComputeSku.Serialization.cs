@@ -22,17 +22,17 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -48,9 +48,9 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<long> capacity = default;
+            string name = default;
+            string tier = default;
+            long? capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,14 +73,14 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ComputeSku(name.Value, tier.Value, Optional.ToNullable(capacity));
+            return new ComputeSku(name, tier, capacity);
         }
 
         private struct ComputeSkuProperties
         {
-            public Optional<string> Name { get; set; }
-            public Optional<string> Tier { get; set; }
-            public Optional<long> Capacity { get; set; }
+            public string Name { get; set; }
+            public string Tier { get; set; }
+            public long? Capacity { get; set; }
         }
 
         ComputeSku IJsonModel<ComputeSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

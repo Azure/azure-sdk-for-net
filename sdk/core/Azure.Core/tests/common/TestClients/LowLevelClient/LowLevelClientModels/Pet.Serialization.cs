@@ -24,8 +24,8 @@ namespace Azure.Core.Experimental.Tests.Models
 
         internal static Pet DeserializePet(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> species = default;
+            string name = default;
+            string species = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -39,7 +39,7 @@ namespace Azure.Core.Experimental.Tests.Models
                     continue;
                 }
             }
-            return new Pet(name.Value, species.Value);
+            return new Pet(name, species);
         }
     }
 }
