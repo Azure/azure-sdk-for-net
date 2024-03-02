@@ -82,10 +82,10 @@ namespace Azure.Provisioning
         {
             if (scope is null) throw new ArgumentNullException(nameof(scope));
 
-            var azureName = GetAzureName(scope, resourceName);
             Scope = scope;
             Parameters = new List<Parameter>();
             Parent = parent ?? FindParentInScope(scope);
+            var azureName = GetAzureName(scope, resourceName);
             Scope.AddResource(this);
             ResourceData = createProperties(azureName);
             Version = version;
@@ -130,8 +130,14 @@ namespace Azure.Provisioning
                 stringBuilder.Append(c);
             }
 
-            stringBuilder.Append('-');
-            stringBuilder.Append(scope.EnvironmentName);
+            // If the resource requires "parent", don't append the environment name as the resource is scoped to the parent
+            // which already includes the environment name.
+            if (!NeedsParent())
+            {
+                stringBuilder.Append('-');
+                stringBuilder.Append(scope.EnvironmentName);
+            }
+
             return stringBuilder.ToString(0, Math.Min(stringBuilder.Length, 24));
         }
 

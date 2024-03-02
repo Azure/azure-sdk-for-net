@@ -31,7 +31,9 @@ namespace Azure.Provisioning.Storage
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new StorageSku(sku),
-                kind: kind))
+                kind: kind,
+                // access tier cannot be set for premium accounts
+                accessTier: sku != StorageSkuName.PremiumLrs && sku != StorageSkuName.PremiumZrs ? StorageAccountAccessTier.Hot : null))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }

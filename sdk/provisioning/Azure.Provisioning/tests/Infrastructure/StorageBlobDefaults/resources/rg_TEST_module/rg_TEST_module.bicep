@@ -10,7 +10,7 @@ resource storageAccount_melvnlpF2 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_NVMDcYVF9 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+resource blobService_AxsEJDmxI 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
   parent: storageAccount_melvnlpF2
   name: 'default'
   properties: {

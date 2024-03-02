@@ -39,7 +39,7 @@ resource keyVault_zomsD2kWf 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_gnJ6YLPh4 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+resource keyVaultAddAccessPolicy_P5xc7PJ0z 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
   parent: keyVault_zomsD2kWf
   name: 'add'
   properties: {
@@ -58,27 +58,27 @@ resource keyVaultAddAccessPolicy_gnJ6YLPh4 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_CBLh3EPfm 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_i5d2MB0md 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_zomsD2kWf
-  name: 'sqlAdminPassword-TEST'
+  name: 'sqlAdminPassword'
   properties: {
     value: sqlAdminPassword
   }
 }
 
-resource keyVaultSecret_QtRTwwecs 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_LNzTHfBsZ 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_zomsD2kWf
-  name: 'appUserPassword-TEST'
+  name: 'appUserPassword'
   properties: {
     value: appUserPassword
   }
 }
 
-resource keyVaultSecret_YNErVycWe 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_67mSbXkng 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_zomsD2kWf
-  name: 'connectionString-TEST'
+  name: 'connectionString'
   properties: {
-    value: 'Server=${sqlServer_2CRay8gJr.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_P8xenywiS.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_6rAKZufXn.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
@@ -105,7 +105,7 @@ resource webSite_IGuzwfciS 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_jW0EB5uhd 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_FiUwo15IY 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_IGuzwfciS
   name: 'appsettings'
 }
@@ -135,8 +135,8 @@ resource webSiteConfigLogs_GwVSHGFxS 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource sqlServer_2CRay8gJr 'Microsoft.Sql/servers@2022-08-01-preview' = {
-  name: 'sqlserver-TEST'
+resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2022-08-01-preview' = {
+  name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
   location: location
   properties: {
     administratorLogin: 'sqladmin'
@@ -147,16 +147,16 @@ resource sqlServer_2CRay8gJr 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_P8xenywiS 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
-  parent: sqlServer_2CRay8gJr
-  name: 'db-TEST'
+resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+  parent: sqlServer_9wIHMU1zj
+  name: 'db'
   properties: {
   }
 }
 
-resource sqlFirewallRule_MTg5B9jZr 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_2CRay8gJr
-  name: 'firewallRule-TEST'
+resource sqlFirewallRule_S9t9pYi6A 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_9wIHMU1zj
+  name: 'firewallRule'
   properties: {
     startIpAddress: '0.0.0.1'
     endIpAddress: '255.255.255.254'
@@ -192,11 +192,11 @@ SCRIPT_END
       }
       {
         name: 'DBSERVER'
-        value: sqlServer_2CRay8gJr.properties.fullyQualifiedDomainName
+        value: sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName
       }
       {
         name: 'DBNAME'
-        value: 'db-TEST'
+        value: 'db'
       }
       {
         name: 'APPUSERNAME'
@@ -236,7 +236,7 @@ resource webSite_TR8bo87ZZ 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_FmsJom6FN 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_EFVSysO15 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_TR8bo87ZZ
   name: 'appsettings'
   properties: {
@@ -247,4 +247,4 @@ resource applicationSettingsResource_FmsJom6FN 'Microsoft.Web/sites/config@2021-
 
 output vaultUri string = keyVault_zomsD2kWf.properties.vaultUri
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_IGuzwfciS.identity.principalId
-output sqlServerName string = sqlServer_2CRay8gJr.properties.fullyQualifiedDomainName
+output sqlServerName string = sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName
