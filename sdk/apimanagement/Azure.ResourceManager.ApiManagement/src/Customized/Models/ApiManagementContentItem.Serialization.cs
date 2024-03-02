@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<ApiManagementContentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentType>)this).GetFormatFromOptions(options) : options.Format;
-
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementContentItem)} does not support '{format}' format.");
             }
+
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementContentItem)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> properties = default;
+            IDictionary<string, BinaryData> properties = default;
             string id = default;
             string name = default;
             ResourceType type = default;
@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +151,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementContentItem(id, name, type, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ApiManagementContentItem(
+                id,
+                name,
+                type,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementContentItem>.Write(ModelReaderWriterOptions options)
@@ -164,9 +168,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new InvalidOperationException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
             }
         }
+
         ApiManagementContentItem IPersistableModel<ApiManagementContentItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementContentItem(document.RootElement, options);
                     }
                 default:
-                    throw new InvalidOperationException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
             }
         }
 

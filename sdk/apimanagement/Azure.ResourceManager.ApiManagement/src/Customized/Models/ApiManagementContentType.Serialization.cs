@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IJsonModel<ApiManagementContentType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentType>)this).GetFormatFromOptions(options) : options.Format;
-
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(ApiManagementContentType)} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementContentType)} does not support '{format}' format.");
             }
+
             writer.WriteStartObject();
             if (options.Format != "W")
             {
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentTypeIdentifier))
+            if (ContentTypeIdentifier != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ContentTypeIdentifier);
             }
-            if (Optional.IsDefined(ContentTypeName))
+            if (ContentTypeName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ContentTypeName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
 #if NET6_0_OR_GREATER
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -98,10 +98,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ApiManagementContentType IJsonModel<ApiManagementContentType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentType>)this).GetFormatFromOptions(options) : options.Format;
-
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(ApiManagementContentType)} does not support '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementContentType)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,14 +109,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementContentType DeserializeApiManagementContentType(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             string name = default;
             ResourceType type = default;
-            Optional<string> id0 = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<BinaryData> schema = default;
-            Optional<string> version = default;
+            string id0 = default;
+            string name0 = default;
+            string description = default;
+            BinaryData schema = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +170,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             schema = BinaryData.FromString(property0.Value.GetRawText());
@@ -185,8 +189,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementContentType(id, name, type, id0.Value, name0.Value, description.Value, schema.Value, version.Value, serializedAdditionalRawData);
+            return new ApiManagementContentType(
+                id,
+                name,
+                type,
+                id0,
+                name0,
+                description,
+                schema,
+                version,
+                serializedAdditionalRawData);
         }
+
         BinaryData IPersistableModel<ApiManagementContentType>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentType>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new InvalidOperationException($"The model {nameof(ApiManagementContentType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementContentType)} does not support '{options.Format}' format.");
             }
         }
 
