@@ -153,7 +153,6 @@ namespace Azure.Provisioning
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
         private protected void AssignParameter(object instance, string propertyName, Parameter parameter)
         {
-            ValidateOverrideCanBeAdded(instance, propertyName);
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {
                 overrides[propertyName] = parameter;
@@ -170,7 +169,6 @@ namespace Azure.Provisioning
 
         private protected void AssignProperty(object instance, string propertyName, string propertyValue)
         {
-            ValidateOverrideCanBeAdded(instance, propertyName);
             if (PropertyOverrides.TryGetValue(instance, out var overrides))
             {
                 overrides[propertyName] = propertyValue;
@@ -178,18 +176,6 @@ namespace Azure.Provisioning
             else
             {
                 PropertyOverrides.Add(instance, new Dictionary<string, string> {  { propertyName, propertyValue } });
-            }
-        }
-
-        private void ValidateOverrideCanBeAdded(object instance, string name)
-        {
-            if ((PropertyOverrides.TryGetValue(instance, out var instancePropertyOverrides) &&
-                 instancePropertyOverrides.ContainsKey(name)) ||
-                (ParameterOverrides.TryGetValue(instance, out var instanceParameterOverrides) &&
-                 instanceParameterOverrides.ContainsKey(name)))
-            {
-                throw new InvalidOperationException(
-                    $"A parameter or property override was already defined for property {name} in type {instance.GetType()}");
             }
         }
 
