@@ -74,8 +74,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
         public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
@@ -101,8 +107,14 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         internal ConfigurationClient(Uri endpoint, AzureKeyCredential credential, string syncToken, ConfigurationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ConfigurationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -121,8 +133,14 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         internal ConfigurationClient(Uri endpoint, TokenCredential credential, string syncToken, ConfigurationClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new ConfigurationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -154,7 +172,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return await AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
         }
 
@@ -168,7 +193,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return AddConfigurationSetting(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
@@ -261,7 +293,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return await SetConfigurationSettingAsync(new ConfigurationSetting(key, value, label), false, cancellationToken).ConfigureAwait(false);
         }
 
@@ -275,7 +314,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return SetConfigurationSetting(new ConfigurationSetting(key, value, label), false, cancellationToken);
         }
 
@@ -291,7 +337,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
@@ -333,7 +382,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute(OTelAttributeKey, setting?.Key);
             scope.Start();
@@ -373,7 +425,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response indicating the success of the operation.</returns>
         public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return await DeleteConfigurationSettingAsync(key, label, default, cancellationToken).ConfigureAwait(false);
         }
 
@@ -386,7 +445,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response indicating the success of the operation.</returns>
         public virtual Response DeleteConfigurationSetting(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return DeleteConfigurationSetting(key, label, default, cancellationToken);
         }
 
@@ -402,7 +468,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response indicating the success of the operation.</returns>
         public virtual async Task<Response> DeleteConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
             return await DeleteConfigurationSettingAsync(setting.Key, setting.Label, requestOptions, cancellationToken).ConfigureAwait(false);
         }
@@ -419,7 +488,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response indicating the success of the operation.</returns>
         public virtual Response DeleteConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
             return DeleteConfigurationSetting(setting.Key, setting.Label, requestOptions, cancellationToken);
         }
@@ -491,7 +563,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return await GetConfigurationSettingAsync(key, label, acceptDateTime: default, conditions: default, cancellationToken).ConfigureAwait(false);
         }
 
@@ -504,7 +583,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return GetConfigurationSetting(key, label, acceptDateTime: default, conditions: default, cancellationToken);
         }
 
@@ -520,7 +606,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = setting.ETag } : default;
             return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
         }
@@ -537,7 +626,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = setting.ETag } : default;
             return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
         }
@@ -551,7 +643,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime, conditions: default, cancellationToken).ConfigureAwait(false);
         }
 
@@ -564,7 +659,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime, conditions: default, cancellationToken);
         }
 
@@ -648,7 +746,10 @@ namespace Azure.Data.AppConfiguration
         /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
@@ -668,7 +769,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -689,7 +793,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
@@ -705,7 +816,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
@@ -723,7 +841,14 @@ namespace Azure.Data.AppConfiguration
         /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
@@ -741,7 +866,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettingsForSnapshot(string snapshotName, SettingFields fields, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
@@ -757,7 +889,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> GetSnapshotAsync(string snapshotName, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
@@ -791,7 +930,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> GetSnapshot(string snapshotName, IEnumerable<SnapshotFields> fields = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
@@ -829,8 +975,18 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<CreateSnapshotOperation> CreateSnapshotAsync(WaitUntil wait, string snapshotName, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(snapshot, nameof(snapshot));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
@@ -869,8 +1025,18 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual CreateSnapshotOperation CreateSnapshot(WaitUntil wait, string snapshotName, ConfigurationSnapshot snapshot, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            Argument.AssertNotNull(snapshot, nameof(snapshot));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
+            if (snapshot == null)
+            {
+                throw new ArgumentNullException(nameof(snapshot));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
@@ -904,7 +1070,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -935,7 +1108,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -967,7 +1147,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -999,7 +1186,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> ArchiveSnapshot(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.ArchiveSnapshot");
             scope.Start();
@@ -1030,7 +1224,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1061,7 +1262,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1093,7 +1301,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationSnapshot>> RecoverSnapshotAsync(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1125,7 +1340,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationSnapshot> RecoverSnapshot(string snapshotName, MatchConditions matchConditions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+            if (snapshotName == null)
+            {
+                throw new ArgumentNullException(nameof(snapshotName));
+            }
+            if (snapshotName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(snapshotName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.RecoverSnapshot");
             scope.Start();
@@ -1156,7 +1378,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ConfigurationSnapshot> GetSnapshotsAsync(SnapshotSelector selector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
             var name = selector.NameFilter;
             var fields = selector.Fields;
             var status = selector.Status;
@@ -1185,7 +1410,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ConfigurationSnapshot> GetSnapshots(SnapshotSelector selector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
             var name = selector.NameFilter;
             var fields = selector.Fields;
             var status = selector.Status;
@@ -1217,7 +1445,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(string keyFilter, string labelFilter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyFilter, nameof(keyFilter));
+            if (keyFilter == null)
+            {
+                throw new ArgumentNullException(nameof(keyFilter));
+            }
+            if (keyFilter.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(keyFilter));
+            }
             return GetRevisionsAsync(new SettingSelector { KeyFilter = keyFilter, LabelFilter = labelFilter }, cancellationToken);
         }
 
@@ -1229,7 +1464,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyFilter, nameof(keyFilter));
+            if (keyFilter == null)
+            {
+                throw new ArgumentNullException(nameof(keyFilter));
+            }
+            if (keyFilter.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(keyFilter));
+            }
             return GetRevisions(new SettingSelector { KeyFilter = keyFilter, LabelFilter = labelFilter }, cancellationToken);
         }
 
@@ -1240,7 +1482,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -1259,7 +1504,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<ConfigurationSetting> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(selector, nameof(selector));
+            if (selector == null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -1279,7 +1527,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, bool isReadOnly, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return await SetReadOnlyAsync(key, default, default, isReadOnly, true, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1291,7 +1546,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(string key, bool isReadOnly, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return SetReadOnlyAsync(key, default, default, isReadOnly, false, cancellationToken).EnsureCompleted();
         }
 
@@ -1304,7 +1566,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return await SetReadOnlyAsync(key, label, default, isReadOnly, true, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1317,7 +1586,14 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (key.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(key));
+            }
             return SetReadOnlyAsync(key, label, default, isReadOnly, false, cancellationToken).EnsureCompleted();
         }
 
@@ -1333,7 +1609,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(ConfigurationSetting setting, bool isReadOnly, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
             return await SetReadOnlyAsync(setting.Key, setting.Label, requestOptions, isReadOnly, true, cancellationToken).ConfigureAwait(false);
         }
@@ -1350,7 +1629,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(ConfigurationSetting setting, bool isReadOnly, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+            {
+                throw new ArgumentNullException(nameof(setting));
+            }
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
             return SetReadOnlyAsync(setting.Key, setting.Label, requestOptions, isReadOnly, false, cancellationToken).EnsureCompleted();
         }
@@ -1399,7 +1681,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="token">The synchronization token value.</param>
         public virtual void UpdateSyncToken(string token)
         {
-            Argument.AssertNotNull(token, nameof(token));
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
             _syncTokenPolicy.AddToken(token);
         }
 

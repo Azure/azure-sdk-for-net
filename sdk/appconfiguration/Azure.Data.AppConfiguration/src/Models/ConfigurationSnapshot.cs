@@ -16,7 +16,18 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
         public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
         {
-            Argument.AssertNotNull(filters, nameof(filters));
+            if (filters == null)
+            {
+                throw new ArgumentNullException(nameof(filters));
+            }
+            if (filters is ICollection<ConfigurationSettingsFilter> collectionOfT && collectionOfT.Count == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(filters));
+            }
+            if (!filters.Any())
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(filters));
+            }
 
             Filters = filters.ToList();
             Tags = new ChangeTrackingDictionary<string, string>();
