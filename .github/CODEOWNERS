@@ -232,7 +232,7 @@
 # ServiceOwners:                                                   @conhua @mengaims @juaduan @moreOver0
 
 # PRLabel: %Cognitive - Health Insights
-/sdk/healthinsights/                                               @asaflevi-ms
+/sdk/healthinsights/                                               @asaflevi-ms @tomsft @koen-mertens
 
 # ServiceLabel: %Cognitive - Health Insights
 # ServiceOwners:                                                   @asaflevi-ms
