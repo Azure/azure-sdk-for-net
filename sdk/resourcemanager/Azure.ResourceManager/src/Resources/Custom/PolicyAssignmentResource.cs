@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PolicyAssignmentResource>> UpdateAsync(WaitUntil waitUntil, PolicyAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PolicyAssignmentResource> Update(WaitUntil waitUntil, PolicyAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();

@@ -21,34 +21,34 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (format != "W" && Optional.IsDefined(Origin))
+            if (format != "W" && Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (format != "W" && Optional.IsDefined(Name))
+            if (format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("display"u8);
             writer.WriteStartObject();
-            if (format != "W" && Optional.IsDefined(Operation))
+            if (format != "W" && Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (format != "W" && Optional.IsDefined(Resource))
+            if (format != "W" && Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);
             }
-            if (format != "W" && Optional.IsDefined(Description))
+            if (format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (format != "W" && Optional.IsDefined(Provider))
+            if (format != "W" && Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Resources.Models
         {
             options ??= new ModelReaderWriterOptions("W");
 
-            Optional<string> origin = default;
-            Optional<string> name = default;
-            Optional<string> operation = default;
-            Optional<string> resource = default;
-            Optional<string> description = default;
-            Optional<string> provider = default;
+            string origin = default;
+            string name = default;
+            string operation = default;
+            string resource = default;
+            string description = default;
+            string provider = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmRestApi(origin.Value, name.Value, operation.Value, resource.Value, description.Value, provider.Value);
+            return new ArmRestApi(origin, name, operation, resource, description, provider);
         }
 
         BinaryData IPersistableModel<ArmRestApi>.Write(ModelReaderWriterOptions options)

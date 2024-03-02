@@ -30,8 +30,14 @@ namespace Azure.ResourceManager
         /// <param name="id"> The id of the parent for the collection. </param>
         protected ArmCollection(ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(client, nameof(client));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
 
             Client = client;
             Id = id;

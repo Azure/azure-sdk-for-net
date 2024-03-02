@@ -36,8 +36,14 @@ namespace Azure.ResourceManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         protected internal ArmResource(ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(client, nameof(client));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
 
             Client = client;
             Id = id;

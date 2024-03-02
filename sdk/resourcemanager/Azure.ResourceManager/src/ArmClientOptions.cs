@@ -34,7 +34,15 @@ namespace Azure.ResourceManager
         /// <param name="apiVersion"> The api version to use. </param>
         public void SetApiVersion(ResourceType resourceType, string apiVersion)
         {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+            if (apiVersion is null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+
+            if (apiVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(apiVersion));
+            }
 
             ResourceApiVersionOverrides[resourceType] = apiVersion;
         }

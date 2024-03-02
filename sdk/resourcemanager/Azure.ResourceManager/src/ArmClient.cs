@@ -67,12 +67,18 @@ namespace Azure.ResourceManager
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
         public ArmClient(TokenCredential credential, string defaultSubscriptionId, ArmClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             options ??= new ArmClientOptions();
             ArmEnvironment environment = options.Environment.HasValue ? options.Environment.Value : ArmEnvironment.AzurePublicCloud;
 
-            Argument.AssertNotNull(environment.Endpoint, nameof(environment.Endpoint));
+            if (environment.Endpoint == null)
+			{
+				throw new ArgumentNullException(nameof(environment.Endpoint));
+			}
 
             Endpoint = environment.Endpoint;
 

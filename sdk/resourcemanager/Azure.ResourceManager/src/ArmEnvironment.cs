@@ -48,8 +48,20 @@ namespace Azure.ResourceManager
         /// <param name="audience">Authentication audience.</param>
         public ArmEnvironment(Uri endpoint, string audience)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrWhiteSpace(audience, nameof(audience));
+            if (endpoint == null)
+			{
+				throw new ArgumentNullException(nameof(endpoint));
+			}
+
+            if (audience is null)
+            {
+                throw new ArgumentNullException(nameof(audience));
+            }
+
+            if (string.IsNullOrWhiteSpace(audience))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(audience));
+            }
 
             Endpoint = endpoint;
             Audience = audience;
