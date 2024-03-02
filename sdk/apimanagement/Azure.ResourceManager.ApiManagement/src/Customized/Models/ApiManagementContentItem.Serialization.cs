@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new InvalidOperationException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
             }
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> properties = default;
+            IDictionary<string, BinaryData> properties = default;
             string id = default;
             string name = default;
             ResourceType type = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementContentItem(id, name, type, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ApiManagementContentItem(id, name, type, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementContentItem>.Write(ModelReaderWriterOptions options)
