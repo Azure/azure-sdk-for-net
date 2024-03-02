@@ -171,9 +171,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/> or <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual async Task<Response<PublicIPAddressData>> GetPublicIPAddressDataAsync(string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
-            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (ipConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurationName));
+            }
+            if (ipConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
+            }
+            if (publicIPAddressName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPAddressName));
+            }
+            if (publicIPAddressName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
+            }
 
             using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetPublicIPAddressData");
             scope.Start();
@@ -211,9 +232,30 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/> or <paramref name="publicIPAddressName"/> is null. </exception>
         public virtual Response<PublicIPAddressData> GetPublicIPAddressData(string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
-            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (ipConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurationName));
+            }
+            if (ipConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
+            }
+            if (publicIPAddressName == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPAddressName));
+            }
+            if (publicIPAddressName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
+            }
 
             using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetPublicIPAddressData");
             scope.Start();
@@ -250,8 +292,22 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="PublicIPAddressData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (ipConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurationName));
+            }
+            if (ipConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
@@ -279,8 +335,22 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="PublicIPAddressData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
+            if (ipConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(ipConfigurationName));
+            }
+            if (ipConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkInterfaceName, ipConfigurationName);
@@ -351,7 +421,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual async Task<Response<NetworkInterfaceData>> GetNetworkInterfaceDataAsync(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceData");
             scope.Start();
@@ -387,7 +464,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         public virtual Response<NetworkInterfaceData> GetNetworkInterfaceData(string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            if (networkInterfaceName == null)
+            {
+                throw new ArgumentNullException(nameof(networkInterfaceName));
+            }
+            if (networkInterfaceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
+            }
 
             using var scope = _virtualMachineScaleSetsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceData");
             scope.Start();

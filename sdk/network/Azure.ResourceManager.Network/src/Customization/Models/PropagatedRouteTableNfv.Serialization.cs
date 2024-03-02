@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ids))
+            if (!(Ids is ChangeTrackingList<RoutingConfigurationNfvSubResource> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> labels = default;
-            Optional<IList<RoutingConfigurationNfvSubResource>> ids = default;
+            IList<string> labels = default;
+            IList<RoutingConfigurationNfvSubResource> ids = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labels"u8))
@@ -100,7 +100,9 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PropagatedRouteTableNfv(Optional.ToList(labels), Optional.ToList(ids));
+            return new PropagatedRouteTableNfv(
+                labels ?? new ChangeTrackingList<string>(),
+                ids ?? new ChangeTrackingList<RoutingConfigurationNfvSubResource>());
         }
 
         BinaryData IPersistableModel<PropagatedRouteTableNfv>.Write(ModelReaderWriterOptions options)
