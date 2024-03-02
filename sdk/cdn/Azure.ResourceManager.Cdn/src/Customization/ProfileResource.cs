@@ -39,9 +39,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
+            if (customDomains == null)
+            {
+                throw new ArgumentNullException(nameof(customDomains));
+            }
+            if (protocols == null)
+            {
+                throw new ArgumentNullException(nameof(protocols));
+            }
 
             ProfileResourceGetLogAnalyticsMetricsOptions options = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
             if (groupBy is not null)
@@ -94,9 +103,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
+            if (customDomains == null)
+            {
+                throw new ArgumentNullException(nameof(customDomains));
+            }
+            if (protocols == null)
+            {
+                throw new ArgumentNullException(nameof(protocols));
+            }
 
             ProfileResourceGetLogAnalyticsMetricsOptions options = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
             if (groupBy is not null)
@@ -146,8 +164,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (rankings == null)
+            {
+                throw new ArgumentNullException(nameof(customDomains));
+            }
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             ProfileResourceGetLogAnalyticsRankingsOptions options = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
             if (customDomains is not null)
@@ -183,8 +207,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public virtual Response<RankingsResponse> GetLogAnalyticsRankings(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (rankings == null)
+            {
+                throw new ArgumentNullException(nameof(customDomains));
+            }
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             ProfileResourceGetLogAnalyticsRankingsOptions options = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
             if (customDomains is not null)
@@ -221,7 +251,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             ProfileResourceGetWafLogAnalyticsMetricsOptions options = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity);
             if (actions is not null)
@@ -272,7 +305,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             ProfileResourceGetWafLogAnalyticsMetricsOptions options = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity);
             if (actions is not null)
@@ -323,8 +359,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
+            if (rankings == null)
+            {
+                throw new ArgumentNullException(nameof(rankings));
+            }
 
             ProfileResourceGetWafLogAnalyticsRankingsOptions options = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
             if (actions is not null)
@@ -368,8 +410,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
+            if (rankings == null)
+            {
+                throw new ArgumentNullException(nameof(rankings));
+            }
 
             ProfileResourceGetWafLogAnalyticsRankingsOptions options = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
             if (actions is not null)
