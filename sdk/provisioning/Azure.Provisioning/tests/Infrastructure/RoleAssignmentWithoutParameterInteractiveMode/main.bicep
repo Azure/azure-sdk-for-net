@@ -15,7 +15,7 @@ resource storageAccount_YRiDhR43q 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_lnEDXlX5c 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+resource blobService_mCwWns176 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
   parent: storageAccount_YRiDhR43q
   name: 'default'
   properties: {

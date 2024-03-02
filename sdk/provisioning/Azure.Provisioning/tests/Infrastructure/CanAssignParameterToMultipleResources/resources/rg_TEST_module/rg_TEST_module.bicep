@@ -8,7 +8,7 @@ resource storageAccount_melvnlpF2 'Microsoft.Storage/storageAccounts@2022-09-01'
   sku: {
     name: 'Premium_LRS'
   }
-  kind: 'StorageV2'
+  kind: 'BlockBlobStorage'
   properties: {
   }
 }
@@ -19,8 +19,9 @@ resource storageAccount_DysMV79Ig 'Microsoft.Storage/storageAccounts@2022-09-01'
   sku: {
     name: 'Standard_LRS'
   }
-  kind: 'StorageV2'
+  kind: 'BlobStorage'
   properties: {
+    accessTier: 'Hot'
   }
 }
 
@@ -30,7 +31,8 @@ resource storageAccount_I0kTuAmmD 'Microsoft.Storage/storageAccounts@2022-09-01'
   sku: {
     name: 'Standard_LRS'
   }
-  kind: 'StorageV2'
+  kind: 'BlobStorage'
   properties: {
+    accessTier: 'Hot'
   }
 }

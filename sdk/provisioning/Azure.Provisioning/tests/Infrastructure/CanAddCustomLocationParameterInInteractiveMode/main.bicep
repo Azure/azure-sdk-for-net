@@ -13,7 +13,7 @@ resource storageAccount_YRiDhR43q 'Microsoft.Storage/storageAccounts@2022-09-01'
   sku: {
     name: 'Premium_LRS'
   }
-  kind: 'StorageV2'
+  kind: 'BlockBlobStorage'
   properties: {
   }
 }

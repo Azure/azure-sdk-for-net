@@ -45,8 +45,10 @@ namespace Azure.Provisioning.Tests
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
 
             AppServicePlan appServicePlan = infra.AddAppServicePlan();
+            Assert.True(appServicePlan.Properties.Name.EndsWith(infra.EnvironmentName));
 
             WebSite frontEnd = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
+            Assert.True(frontEnd.Properties.Name.EndsWith(infra.EnvironmentName));
 
             Assert.AreEqual(Guid.Empty.ToString(), frontEnd.Properties.AppServicePlanId.SubscriptionId);
 
@@ -59,9 +61,11 @@ namespace Azure.Provisioning.Tests
                 .AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId
 
             KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, "sqlAdminPassword");
+            Assert.False(sqlAdminSecret.Properties.Name.EndsWith(infra.EnvironmentName));
             sqlAdminSecret.AssignParameter(secret => secret.Properties.Value, sqlAdminPasswordParam);
 
             KeyVaultSecret appUserSecret = new KeyVaultSecret(infra, "appUserPassword");
+            Assert.False(appUserSecret.Properties.Name.EndsWith(infra.EnvironmentName));
             appUserSecret.AssignParameter(secret => secret.Properties.Value, appUserPasswordParam);
 
             SqlServer sqlServer = new SqlServer(infra, "sqlserver");
@@ -69,10 +73,13 @@ namespace Azure.Provisioning.Tests
             Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
 
             SqlDatabase sqlDatabase = new SqlDatabase(infra, sqlServer);
+            Assert.False(sqlDatabase.Properties.Name.EndsWith(infra.EnvironmentName));
 
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(infra, "connectionString", sqlDatabase.GetConnectionString(appUserPasswordParam));
+            Assert.False(sqlAzureConnectionStringSecret.Properties.Name.EndsWith(infra.EnvironmentName));
 
             SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, "firewallRule");
+            Assert.False(sqlFirewallRule.Properties.Name.EndsWith(infra.EnvironmentName));
 
             DeploymentScript deploymentScript = new DeploymentScript(
                 infra,
@@ -83,8 +90,10 @@ namespace Azure.Provisioning.Tests
                 sqlAdminPasswordParam);
 
             WebSite backEnd = new WebSite(infra, "backEnd", appServicePlan, WebSiteRuntime.Dotnetcore, "6.0");
+            Assert.True(backEnd.Properties.Name.EndsWith(infra.EnvironmentName));
 
             WebSiteConfigLogs logs = new WebSiteConfigLogs(infra, "logs", frontEnd);
+            Assert.False(logs.Properties.Name.EndsWith(infra.EnvironmentName));
 
             infra.Build(GetOutputPath());
 

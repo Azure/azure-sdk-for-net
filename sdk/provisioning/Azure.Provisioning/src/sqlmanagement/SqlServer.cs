@@ -34,6 +34,7 @@ namespace Azure.Provisioning.Sql
                 administratorLogin: "sqladmin",
                 administratorLoginPassword: Guid.Empty.ToString()))
         {
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
         /// <inheritdoc/>
@@ -45,6 +46,12 @@ namespace Azure.Provisioning.Sql
                 result = scope.GetOrAddResourceGroup();
             }
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName)
+        {
+            return $"toLower(take(concat('{resourceName}', uniqueString(resourceGroup().id)), 24))";
         }
     }
 }
