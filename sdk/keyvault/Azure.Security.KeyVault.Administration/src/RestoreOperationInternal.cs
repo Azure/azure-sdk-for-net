@@ -34,8 +34,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public RestoreOperationInternal(KeyVaultBackupClient client, string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(client, nameof(client));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
 
             _client = client;
             _id = id;
@@ -49,8 +55,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal RestoreOperationInternal(KeyVaultBackupClient client, ResponseWithHeaders<THeaders> response)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(response, nameof(response));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
+            if (response == null)
+			{
+				throw new ArgumentNullException(nameof(response));
+			}
 
             _client = client;
             _response = response.GetRawResponse();
@@ -80,9 +92,18 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
         internal RestoreOperationInternal(TResponseType value, Response response, KeyVaultBackupClient client)
         {
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(response, nameof(response));
-            Argument.AssertNotNull(client, nameof(client));
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
+            if (response == null)
+			{
+				throw new ArgumentNullException(nameof(response));
+			}
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
 
             _client = client;
             _response = response;

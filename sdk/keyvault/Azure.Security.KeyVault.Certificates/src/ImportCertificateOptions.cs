@@ -38,8 +38,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="certificate"/> is null.</exception>
         public ImportCertificateOptions(string name, byte[] certificate)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(certificate, nameof(certificate));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (certificate == null)
+			{
+				throw new ArgumentNullException(nameof(certificate));
+			}
 
             Name = name;
             Certificate = certificate;

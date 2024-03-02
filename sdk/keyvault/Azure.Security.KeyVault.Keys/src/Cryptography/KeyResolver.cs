@@ -50,7 +50,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentNullException"><paramref name="credential"/> is null.</exception>
         public KeyResolver(TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             options ??= new CryptographyClientOptions();
 
@@ -71,7 +74,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual CryptographyClient Resolve(Uri keyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(keyId, nameof(keyId));
+            if (keyId == null)
+			{
+				throw new ArgumentNullException(nameof(keyId));
+			}
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
             scope.AddAttribute(OTelKeyIdKey, keyId.OriginalString);
@@ -79,7 +85,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                Argument.AssertNotNull(keyId, nameof(keyId));
+                if (keyId == null)
+			{
+				throw new ArgumentNullException(nameof(keyId));
+			}
 
                 KeyVaultKey key = GetKey(keyId, cancellationToken);
 
@@ -104,7 +113,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual async Task<CryptographyClient> ResolveAsync(Uri keyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(keyId, nameof(keyId));
+            if (keyId == null)
+			{
+				throw new ArgumentNullException(nameof(keyId));
+			}
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
             scope.AddAttribute(OTelKeyIdKey, keyId.OriginalString);
@@ -112,7 +124,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                Argument.AssertNotNull(keyId, nameof(keyId));
+                if (keyId == null)
+			{
+				throw new ArgumentNullException(nameof(keyId));
+			}
 
                 KeyVaultKey key = await GetKeyAsync(keyId, cancellationToken).ConfigureAwait(false);
 

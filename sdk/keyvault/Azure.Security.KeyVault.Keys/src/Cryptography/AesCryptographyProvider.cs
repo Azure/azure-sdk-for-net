@@ -29,7 +29,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override DecryptResult Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (parameters == null)
+			{
+				throw new ArgumentNullException(nameof(parameters));
+			}
 
             ThrowIfTimeInvalid();
 
@@ -57,7 +60,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override EncryptResult Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (parameters == null)
+			{
+				throw new ArgumentNullException(nameof(parameters));
+			}
 
             ThrowIfTimeInvalid();
 
@@ -89,7 +95,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
+            if (encryptedKey == null)
+			{
+				throw new ArgumentNullException(nameof(encryptedKey));
+			}
 
             AesKw keyWrapAlgorithm = algorithm.GetAesKeyWrapAlgorithm();
             if (keyWrapAlgorithm == null)
@@ -117,7 +126,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
 
             ThrowIfTimeInvalid();
 

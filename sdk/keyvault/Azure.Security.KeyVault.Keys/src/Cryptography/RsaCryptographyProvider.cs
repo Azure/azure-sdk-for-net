@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Security.Cryptography;
 using System.Threading;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
@@ -28,7 +28,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override EncryptResult Encrypt(EncryptParameters parameters, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (parameters == null)
+			{
+				throw new ArgumentNullException(nameof(parameters));
+			}
 
             ThrowIfTimeInvalid();
 
@@ -58,7 +61,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override DecryptResult Decrypt(DecryptParameters parameters, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (parameters == null)
+			{
+				throw new ArgumentNullException(nameof(parameters));
+			}
 
             if (MustRemote)
             {
@@ -93,7 +99,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            if (digest == null)
+			{
+				throw new ArgumentNullException(nameof(digest));
+			}
 
             ThrowIfTimeInvalid();
 
@@ -131,8 +140,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
-            Argument.AssertNotNull(signature, nameof(signature));
+            if (digest == null)
+			{
+				throw new ArgumentNullException(nameof(digest));
+			}
+            if (signature == null)
+			{
+				throw new ArgumentNullException(nameof(signature));
+			}
 
             HashAlgorithmName hashAlgorithm = algorithm.GetHashAlgorithmName();
             if (hashAlgorithm == default)
@@ -161,7 +176,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override WrapResult WrapKey(KeyWrapAlgorithm algorithm, byte[] key, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
 
             ThrowIfTimeInvalid();
 
@@ -190,7 +208,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override UnwrapResult UnwrapKey(KeyWrapAlgorithm algorithm, byte[] encryptedKey, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(encryptedKey, nameof(encryptedKey));
+            if (encryptedKey == null)
+			{
+				throw new ArgumentNullException(nameof(encryptedKey));
+			}
 
             if (MustRemote)
             {

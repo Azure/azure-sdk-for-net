@@ -38,8 +38,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public KeyVaultSettingsClient(Uri vaultUri, TokenCredential credential, KeyVaultAdministrationClientOptions options)
         {
-            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (vaultUri == null)
+			{
+				throw new ArgumentNullException(nameof(vaultUri));
+			}
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             VaultUri = vaultUri;
 
@@ -74,7 +80,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultSetting> GetSetting(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
@@ -100,7 +113,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultSetting>> GetSettingAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
@@ -166,7 +186,10 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual Response<KeyVaultSetting> UpdateSetting(KeyVaultSetting setting, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+			{
+				throw new ArgumentNullException(nameof(setting));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
@@ -190,7 +213,10 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultSetting>> UpdateSettingAsync(KeyVaultSetting setting, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setting, nameof(setting));
+            if (setting == null)
+			{
+				throw new ArgumentNullException(nameof(setting));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();

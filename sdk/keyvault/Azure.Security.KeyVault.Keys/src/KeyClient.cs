@@ -63,8 +63,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public KeyClient(Uri vaultUri, TokenCredential credential, KeyClientOptions options)
         {
-            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (vaultUri == null)
+			{
+				throw new ArgumentNullException(nameof(vaultUri));
+			}
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             options ??= new KeyClientOptions();
             string apiVersion = options.GetVersionString();
@@ -95,8 +101,18 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> CreateKey(string name, KeyType keyType, CreateKeyOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotDefault(ref keyType, nameof(keyType));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (keyType.Equals(default))
+            {
+                throw new ArgumentException("Value cannot be empty.", nameof(keyType));
+            }
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
@@ -129,8 +145,18 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> CreateKeyAsync(string name, KeyType keyType, CreateKeyOptions keyOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotDefault(ref keyType, nameof(keyType));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
+            if (keyType.Equals(default))
+            {
+                throw new ArgumentException("Value cannot be empty.", nameof(keyType));
+            }
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
@@ -160,7 +186,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> CreateEcKey(CreateEcKeyOptions ecKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ecKeyOptions, nameof(ecKeyOptions));
+            if (ecKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(ecKeyOptions));
+			}
 
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
@@ -190,7 +219,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> CreateEcKeyAsync(CreateEcKeyOptions ecKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ecKeyOptions, nameof(ecKeyOptions));
+            if (ecKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(ecKeyOptions));
+			}
 
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
@@ -220,7 +252,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> CreateRsaKey(CreateRsaKeyOptions rsaKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rsaKeyOptions, nameof(rsaKeyOptions));
+            if (rsaKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(rsaKeyOptions));
+			}
 
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
@@ -250,7 +285,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> CreateRsaKeyAsync(CreateRsaKeyOptions rsaKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rsaKeyOptions, nameof(rsaKeyOptions));
+            if (rsaKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(rsaKeyOptions));
+			}
 
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
@@ -280,7 +318,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> CreateOctKey(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+            if (octKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(octKeyOptions));
+			}
 
             var parameters = new KeyRequestParameters(octKeyOptions);
 
@@ -310,7 +351,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> CreateOctKeyAsync(CreateOctKeyOptions octKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(octKeyOptions, nameof(octKeyOptions));
+            if (octKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(octKeyOptions));
+			}
 
             var parameters = new KeyRequestParameters(octKeyOptions);
 
@@ -346,7 +390,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> UpdateKeyProperties(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+			{
+				throw new ArgumentNullException(nameof(properties));
+			}
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
@@ -383,7 +430,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> UpdateKeyPropertiesAsync(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+			{
+				throw new ArgumentNullException(nameof(properties));
+			}
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
@@ -419,7 +469,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultKey> GetKey(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -453,7 +510,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultKey>> GetKeyAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -532,7 +596,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<KeyProperties> GetPropertiesOfKeyVersions(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
@@ -553,7 +624,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<KeyProperties> GetPropertiesOfKeyVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{KeysPath}{name}/versions");
 
@@ -576,7 +654,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DeletedKey> GetDeletedKey(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -609,7 +694,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DeletedKey>> GetDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -649,7 +741,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual DeleteKeyOperation StartDeleteKey(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -690,7 +789,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<DeleteKeyOperation> StartDeleteKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -765,7 +871,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response PurgeDeletedKey(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -799,7 +912,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response> PurgeDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -835,7 +955,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual RecoverDeletedKeyOperation StartRecoverDeletedKey(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -872,7 +999,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<RecoverDeletedKeyOperation> StartRecoverDeletedKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -915,7 +1049,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<byte[]> BackupKey(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -959,7 +1100,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<byte[]>> BackupKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -1004,7 +1152,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> RestoreKeyBackup(byte[] backup, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backup, nameof(backup));
+            if (backup == null)
+			{
+				throw new ArgumentNullException(nameof(backup));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RestoreKeyBackup)}");
             scope.Start();
@@ -1046,7 +1197,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> RestoreKeyBackupAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backup, nameof(backup));
+            if (backup == null)
+			{
+				throw new ArgumentNullException(nameof(backup));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RestoreKeyBackup)}");
             scope.Start();
@@ -1081,8 +1235,18 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> ImportKey(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (keyMaterial == null)
+			{
+				throw new ArgumentNullException(nameof(keyMaterial));
+			}
 
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
@@ -1120,8 +1284,18 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> ImportKeyAsync(string name, JsonWebKey keyMaterial, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (keyMaterial == null)
+			{
+				throw new ArgumentNullException(nameof(keyMaterial));
+			}
 
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
@@ -1157,7 +1331,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> ImportKey(ImportKeyOptions importKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
+            if (importKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(importKeyOptions));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute(OTelKeyNameKey, importKeyOptions.Name);
@@ -1191,7 +1368,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> ImportKeyAsync(ImportKeyOptions importKeyOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
+            if (importKeyOptions == null)
+			{
+				throw new ArgumentNullException(nameof(importKeyOptions));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute(OTelKeyNameKey, importKeyOptions.Name);
@@ -1217,8 +1397,15 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is less than 0.</exception>
         public virtual Response<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default)
         {
-            // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
-            Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
+            // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints
+            if (count < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value is less than the minimum allowed.");
+            }
+            if (count > int.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value is greater than the maximum allowed.");
+            }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetRandomBytes)}");
             scope.Start();
@@ -1245,7 +1432,14 @@ namespace Azure.Security.KeyVault.Keys
         public virtual async Task<Response<byte[]>> GetRandomBytesAsync(int count, CancellationToken cancellationToken = default)
         {
             // Service currently documents 1 to 128 inclusive but we must not tightly couple to service constraints.
-            Argument.AssertInRange(count, 1, int.MaxValue, nameof(count));
+            if (count < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value is less than the minimum allowed.");
+            }
+            if (count > int.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value is greater than the maximum allowed.");
+            }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetRandomBytes)}");
             scope.Start();
@@ -1295,7 +1489,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<ReleaseKeyResult> ReleaseKey(ReleaseKeyOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute(OTelKeyNameKey, options.Name);
@@ -1346,7 +1543,10 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<ReleaseKeyResult>> ReleaseKeyAsync(ReleaseKeyOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ReleaseKey)}");
             scope.AddAttribute(OTelKeyNameKey, options.Name);
@@ -1385,7 +1585,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="keyName"/> is null.</exception>
         public virtual CryptographyClient GetCryptographyClient(string keyName, string keyVersion = null)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+			{
+				throw new ArgumentNullException(nameof(keyName));
+			}
+			if (keyName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+			}
 
             Uri keyUri = CreateKeyUri(VaultUri, keyName, keyVersion);
             KeyVaultPipeline pipeline = new(keyUri, _pipeline.ApiVersion, _pipeline.HttpPipeline, _pipeline.Diagnostics);
@@ -1409,7 +1616,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyRotationPolicy> GetKeyRotationPolicy(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+			{
+				throw new ArgumentNullException(nameof(keyName));
+			}
+			if (keyName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
             scope.AddAttribute(OTelKeyNameKey, keyName);
@@ -1441,7 +1655,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyRotationPolicy>> GetKeyRotationPolicyAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+			{
+				throw new ArgumentNullException(nameof(keyName));
+			}
+			if (keyName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKeyRotationPolicy)}");
             scope.AddAttribute(OTelKeyNameKey, keyName);
@@ -1473,7 +1694,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultKey> RotateKey(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RotateKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -1505,7 +1733,14 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultKey>> RotateKeyAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RotateKey)}");
             scope.AddAttribute(OTelKeyNameKey, name);
@@ -1539,8 +1774,18 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyRotationPolicy> UpdateKeyRotationPolicy(string keyName, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(policy, nameof(policy));
+            if (keyName == null)
+			{
+				throw new ArgumentNullException(nameof(keyName));
+			}
+			if (keyName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+			}
+            if (policy == null)
+			{
+				throw new ArgumentNullException(nameof(policy));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
             scope.AddAttribute(OTelKeyNameKey, keyName);
@@ -1574,8 +1819,18 @@ namespace Azure.Security.KeyVault.Keys
         [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyRotationPolicy>> UpdateKeyRotationPolicyAsync(string keyName, KeyRotationPolicy policy, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(policy, nameof(policy));
+            if (keyName == null)
+			{
+				throw new ArgumentNullException(nameof(keyName));
+			}
+			if (keyName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+			}
+            if (policy == null)
+			{
+				throw new ArgumentNullException(nameof(policy));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyRotationPolicy)}");
             scope.AddAttribute(OTelKeyNameKey, keyName);

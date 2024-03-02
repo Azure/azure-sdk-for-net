@@ -27,8 +27,14 @@ namespace Azure.Security.KeyVault.Keys
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, JsonWebKey value, JsonSerializerOptions options)
         {
-            Argument.AssertNotNull(writer, nameof(writer));
-            Argument.AssertNotNull(value, nameof(value));
+            if (writer == null)
+			{
+				throw new ArgumentNullException(nameof(writer));
+			}
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             writer.WriteStartObject();
             value.WriteProperties(writer, withId: true);

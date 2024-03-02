@@ -67,8 +67,22 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
         public CertificatePolicy(string issuerName, string subject)
         {
-            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
-            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+            if (issuerName == null)
+			{
+				throw new ArgumentNullException(nameof(issuerName));
+			}
+			if (issuerName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(issuerName));
+			}
+            if (subject == null)
+			{
+				throw new ArgumentNullException(nameof(subject));
+			}
+			if (subject.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subject));
+			}
 
             IssuerName = issuerName;
             Subject = subject;
@@ -83,8 +97,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
         public CertificatePolicy(string issuerName, SubjectAlternativeNames subjectAlternativeNames)
         {
-            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
-            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (issuerName == null)
+			{
+				throw new ArgumentNullException(nameof(issuerName));
+			}
+			if (issuerName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(issuerName));
+			}
+            if (subjectAlternativeNames == null)
+			{
+				throw new ArgumentNullException(nameof(subjectAlternativeNames));
+			}
             if (subjectAlternativeNames.IsEmpty)
             {
                 throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
@@ -104,9 +128,26 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="subject"/>, <paramref name="issuerName"/>, or <paramref name="subjectAlternativeNames"/> is null.</exception>
         public CertificatePolicy(string issuerName, string subject, SubjectAlternativeNames subjectAlternativeNames)
         {
-            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
-            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
-            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (issuerName == null)
+			{
+				throw new ArgumentNullException(nameof(issuerName));
+			}
+			if (issuerName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(issuerName));
+			}
+            if (subject == null)
+			{
+				throw new ArgumentNullException(nameof(subject));
+			}
+			if (subject.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subject));
+			}
+            if (subjectAlternativeNames == null)
+			{
+				throw new ArgumentNullException(nameof(subjectAlternativeNames));
+			}
             if (subjectAlternativeNames.IsEmpty)
             {
                 throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));

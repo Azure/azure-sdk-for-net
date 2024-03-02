@@ -30,8 +30,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="x509Certificates"/> is null.</exception>
         public MergeCertificateOptions(string name, IEnumerable<byte[]> x509Certificates)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(x509Certificates, nameof(x509Certificates));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (x509Certificates == null)
+			{
+				throw new ArgumentNullException(nameof(x509Certificates));
+			}
 
             Name = name;
             X509Certificates = x509Certificates;

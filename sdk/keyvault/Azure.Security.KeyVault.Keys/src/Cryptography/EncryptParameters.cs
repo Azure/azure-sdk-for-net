@@ -158,7 +158,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal EncryptParameters(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv, byte[] additionalAuthenticatedData)
         {
-            Argument.AssertNotNull(plaintext, nameof(plaintext));
+            if (plaintext == null)
+			{
+				throw new ArgumentNullException(nameof(plaintext));
+			}
 
             Algorithm = algorithm;
             Plaintext = plaintext;

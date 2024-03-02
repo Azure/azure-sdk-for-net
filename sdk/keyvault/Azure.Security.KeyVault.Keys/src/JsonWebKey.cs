@@ -106,7 +106,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
         public JsonWebKey(Aes aesProvider, IEnumerable<KeyOperation> keyOps = default)
         {
-            Argument.AssertNotNull(aesProvider, nameof(aesProvider));
+            if (aesProvider == null)
+			{
+				throw new ArgumentNullException(nameof(aesProvider));
+			}
 
             _keyOps = new List<KeyOperation>(keyOps ?? s_aesKeyOperation);
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
@@ -128,7 +131,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
         public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
-            Argument.AssertNotNull(ecdsa, nameof(ecdsa));
+            if (ecdsa == null)
+			{
+				throw new ArgumentNullException(nameof(ecdsa));
+			}
 
             _keyOps = new List<KeyOperation>(keyOps ?? (includePrivateParameters ? s_eCPrivateKeyOperation : s_eCPublicKeyOperation));
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);
@@ -149,7 +155,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
         public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default, IEnumerable<KeyOperation> keyOps = default)
         {
-            Argument.AssertNotNull(rsaProvider, nameof(rsaProvider));
+            if (rsaProvider == null)
+			{
+				throw new ArgumentNullException(nameof(rsaProvider));
+			}
 
             _keyOps = new List<KeyOperation>(keyOps ?? (includePrivateParameters ? s_rSAPrivateKeyOperation : s_rSAPublicKeyOperation));
             KeyOps = new ReadOnlyCollection<KeyOperation>(_keyOps);

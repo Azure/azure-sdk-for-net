@@ -26,7 +26,10 @@ namespace Azure.Security.KeyVault.Keys
         /// </remarks>
         public KeyVaultKeyIdentifier(Uri id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
 
             if (KeyVaultIdentifier.TryParse(id, out KeyVaultIdentifier identifier))
             {

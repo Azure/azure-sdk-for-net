@@ -47,7 +47,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         public override SignResult Sign(SignatureAlgorithm algorithm, byte[] digest, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(digest, nameof(digest));
+            if (digest == null)
+			{
+				throw new ArgumentNullException(nameof(digest));
+			}
 
             ThrowIfTimeInvalid();
 
@@ -94,8 +97,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public override VerifyResult Verify(SignatureAlgorithm algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken)
         {
             // The JWK is not supported by this client. Send to the server.
-            Argument.AssertNotNull(digest, nameof(digest));
-            Argument.AssertNotNull(signature, nameof(signature));
+            if (digest == null)
+			{
+				throw new ArgumentNullException(nameof(digest));
+			}
+            if (signature == null)
+			{
+				throw new ArgumentNullException(nameof(signature));
+			}
 
             // The JWK is not supported by this client. Send to the server.
             if (KeyMaterial is null)
