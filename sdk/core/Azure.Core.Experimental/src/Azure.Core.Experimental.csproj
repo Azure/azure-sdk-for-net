@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Temporarily include these excluded shared code to keep testframework properly to compile -->
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+    <!-- End of temporary file inclusion -->
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
