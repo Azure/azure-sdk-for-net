@@ -27,7 +27,10 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
         public ConfidentialLedgerCertificateClient(Uri certificateEndpoint, ConfidentialLedgerCertificateClientOptions options)
         {
-            Argument.AssertNotNull(certificateEndpoint, nameof(certificateEndpoint));
+            if (certificateEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(certificateEndpoint));
+            }
 
             // TODO: properly generate the client without a credential.
             _tokenCredential = null;
