@@ -29,17 +29,17 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteEndArray();
             writer.WritePropertyName("typeId");
             writer.WriteStringValue(TimeSeriesTypeId);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(HierarchyIds))
+            if (!(HierarchyIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("hierarchyIds");
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InstanceFields))
+            if (!(InstanceFields is ChangeTrackingDictionary<string, object> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("instanceFields");
                 writer.WriteStartObject();
@@ -67,10 +67,10 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             TimeSeriesId timeSeriesId = default;
             string typeId = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IList<string>> hierarchyIds = default;
-            Optional<IDictionary<string, object>> instanceFields = default;
+            string name = default;
+            string description = default;
+            IList<string> hierarchyIds = default;
+            IDictionary<string, object> instanceFields = default;
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"))
@@ -140,10 +140,10 @@ namespace Azure.IoT.TimeSeriesInsights
             return new TimeSeriesInstance(
                 timeSeriesId,
                 typeId,
-                name.Value,
-                description.Value,
-                Optional.ToList(hierarchyIds),
-                Optional.ToDictionary(instanceFields));
+                name,
+                description,
+                hierarchyIds ?? new ChangeTrackingList<string>(),
+                instanceFields ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

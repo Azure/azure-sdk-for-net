@@ -28,8 +28,14 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal TimeSeriesInsightsHierarchies(TimeSeriesHierarchiesRestClient hierarchiesRestClient, ClientDiagnostics clientDiagnostics)
         {
-            Argument.AssertNotNull(hierarchiesRestClient, nameof(hierarchiesRestClient));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (hierarchiesRestClient == null)
+            {
+                throw new ArgumentNullException(nameof(hierarchiesRestClient));
+            }
+            if (clientDiagnostics == null)
+            {
+                throw new ArgumentNullException(nameof(clientDiagnostics));
+            }
 
             _hierarchiesRestClient = hierarchiesRestClient;
             _clientDiagnostics = clientDiagnostics;
@@ -190,7 +196,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+                if (timeSeriesHierarchyNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyNames));
+                }
+                if (timeSeriesHierarchyNames is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
+                if (!timeSeriesHierarchyNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest()
                 {
@@ -242,7 +259,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+                if (timeSeriesHierarchyNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyNames));
+                }
+                if (timeSeriesHierarchyNames is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
+                if (!timeSeriesHierarchyNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest()
                 {
@@ -318,7 +346,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+                if (timeSeriesHierarchyIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyIds));
+                }
+                if (timeSeriesHierarchyIds is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
+                if (!timeSeriesHierarchyIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest()
                 {
@@ -370,7 +409,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+                if (timeSeriesHierarchyIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyIds));
+                }
+                if (timeSeriesHierarchyIds is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
+                if (!timeSeriesHierarchyIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest()
                 {
@@ -458,7 +508,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchies, nameof(timeSeriesHierarchies));
+                if (timeSeriesHierarchies == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchies));
+                }
+                if (timeSeriesHierarchies is ICollection<TimeSeriesHierarchy> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchies));
+                }
+                if (!timeSeriesHierarchies.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchies));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest();
 
@@ -509,7 +570,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchies, nameof(timeSeriesHierarchies));
+                if (timeSeriesHierarchies == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchies));
+                }
+                if (timeSeriesHierarchies is ICollection<TimeSeriesHierarchy> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchies));
+                }
+                if (!timeSeriesHierarchies.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchies));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest();
 
@@ -558,7 +630,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+                if (timeSeriesHierarchyNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyNames));
+                }
+                if (timeSeriesHierarchyNames is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
+                if (!timeSeriesHierarchyNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest
                 {
@@ -609,7 +692,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+                if (timeSeriesHierarchyNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyNames));
+                }
+                if (timeSeriesHierarchyNames is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
+                if (!timeSeriesHierarchyNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyNames));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest
                 {
@@ -685,7 +779,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+                if (timeSeriesHierarchyIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyIds));
+                }
+                if (timeSeriesHierarchyIds is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
+                if (!timeSeriesHierarchyIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest
                 {
@@ -735,7 +840,18 @@ namespace Azure.IoT.TimeSeriesInsights
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+                if (timeSeriesHierarchyIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesHierarchyIds));
+                }
+                if (timeSeriesHierarchyIds is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
+                if (!timeSeriesHierarchyIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesHierarchyIds));
+                }
 
                 var batchRequest = new HierarchiesBatchRequest
                 {

@@ -27,12 +27,12 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteEndArray();
             writer.WritePropertyName("searchSpan");
             writer.WriteObjectValue(SearchSpan);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter");
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsCollectionDefined(ProjectedProperties))
+            if (!(ProjectedProperties is ChangeTrackingList<TimeSeriesInsightsEventProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("projectedProperties");
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Take))
+            if (Take.HasValue)
             {
                 writer.WritePropertyName("take");
                 writer.WriteNumberValue(Take.Value);

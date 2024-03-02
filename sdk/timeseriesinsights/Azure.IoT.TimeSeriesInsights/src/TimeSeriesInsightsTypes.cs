@@ -28,8 +28,14 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal TimeSeriesInsightsTypes(TimeSeriesTypesRestClient typesRestClient, ClientDiagnostics clientDiagnostics)
         {
-            Argument.AssertNotNull(typesRestClient, nameof(typesRestClient));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (typesRestClient == null)
+            {
+                throw new ArgumentNullException(nameof(typesRestClient));
+            }
+            if (clientDiagnostics == null)
+            {
+                throw new ArgumentNullException(nameof(clientDiagnostics));
+            }
 
             _typesRestClient = typesRestClient;
             _clientDiagnostics = clientDiagnostics;
@@ -191,7 +197,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                if (timeSeriesTypeNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeNames));
+                }
+                if (timeSeriesTypeNames is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
+                if (!timeSeriesTypeNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
 
                 var batchRequest = new TypesBatchRequest()
                 {
@@ -243,7 +260,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                if (timeSeriesTypeNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeNames));
+                }
+                if (timeSeriesTypeNames is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
+                if (!timeSeriesTypeNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
 
                 var batchRequest = new TypesBatchRequest()
                 {
@@ -319,7 +347,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                if (timeSeriesTypeIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeIds));
+                }
+                if (timeSeriesTypeIds is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
+                if (!timeSeriesTypeIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
 
                 var batchRequest = new TypesBatchRequest()
                 {
@@ -371,7 +410,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                if (timeSeriesTypeIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeIds));
+                }
+                if (timeSeriesTypeIds is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
+                if (!timeSeriesTypeIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
 
                 var batchRequest = new TypesBatchRequest()
                 {
@@ -456,7 +506,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypes, nameof(timeSeriesTypes));
+                if (timeSeriesTypes == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypes));
+                }
+                if (timeSeriesTypes is ICollection<TimeSeriesType> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypes));
+                }
+                if (!timeSeriesTypes.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypes));
+                }
 
                 var batchRequest = new TypesBatchRequest();
 
@@ -507,7 +568,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypes, nameof(timeSeriesTypes));
+                if (timeSeriesTypes == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypes));
+                }
+                if (timeSeriesTypes is ICollection<TimeSeriesType> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypes));
+                }
+                if (!timeSeriesTypes.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypes));
+                }
 
                 var batchRequest = new TypesBatchRequest();
 
@@ -556,7 +628,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                if (timeSeriesTypeNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeNames));
+                }
+                if (timeSeriesTypeNames is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
+                if (!timeSeriesTypeNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
 
                 var batchRequest = new TypesBatchRequest
                 {
@@ -607,7 +690,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+                if (timeSeriesTypeNames == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeNames));
+                }
+                if (timeSeriesTypeNames is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
+                if (!timeSeriesTypeNames.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeNames));
+                }
 
                 var batchRequest = new TypesBatchRequest
                 {
@@ -680,7 +774,18 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                if (timeSeriesTypeIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeIds));
+                }
+                if (timeSeriesTypeIds is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
+                if (!timeSeriesTypeIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
 
                 var batchRequest = new TypesBatchRequest
                 {
@@ -730,7 +835,18 @@ namespace Azure.IoT.TimeSeriesInsights
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                if (timeSeriesTypeIds == null)
+                {
+                    throw new ArgumentNullException(nameof(timeSeriesTypeIds));
+                }
+                if (timeSeriesTypeIds is ICollection<string> collection && collection.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
+                if (!timeSeriesTypeIds.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(timeSeriesTypeIds));
+                }
 
                 var batchRequest = new TypesBatchRequest
                 {

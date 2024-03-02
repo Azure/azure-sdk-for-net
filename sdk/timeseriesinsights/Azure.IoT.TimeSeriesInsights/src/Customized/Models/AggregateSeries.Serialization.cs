@@ -27,14 +27,14 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteEndArray();
             writer.WritePropertyName("searchSpan");
             writer.WriteObjectValue(SearchSpan);
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter");
                 writer.WriteObjectValue(Filter);
             }
             writer.WritePropertyName("interval");
             writer.WriteStringValue(Interval, "P");
-            if (Optional.IsCollectionDefined(ProjectedVariables))
+            if (!(ProjectedVariables is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("projectedVariables");
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InlineVariables))
+            if (!(InlineVariables is ChangeTrackingDictionary<string, TimeSeriesVariable> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("inlineVariables");
                 writer.WriteStartObject();

@@ -21,7 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights
         void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeSeriesIds))
+            if (!(TimeSeriesIds is ChangeTrackingList<TimeSeriesId> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("timeSeriesIds");
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Names))
+            if (!(Names is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("names");
                 writer.WriteStartArray();

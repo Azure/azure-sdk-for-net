@@ -25,8 +25,14 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal TimeSeriesInsightsQueries(QueryRestClient queryRestClient, ClientDiagnostics clientDiagnostics)
         {
-            Argument.AssertNotNull(queryRestClient, nameof(queryRestClient));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (queryRestClient == null)
+            {
+                throw new ArgumentNullException(nameof(queryRestClient));
+            }
+            if (clientDiagnostics == null)
+            {
+                throw new ArgumentNullException(nameof(clientDiagnostics));
+            }
 
             _queryRestClient = queryRestClient;
             _clientDiagnostics = clientDiagnostics;

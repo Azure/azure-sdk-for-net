@@ -116,9 +116,22 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </remarks>
         public TimeSeriesInsightsClient(string environmentFqdn, TokenCredential credential, TimeSeriesInsightsClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(environmentFqdn, nameof(environmentFqdn));
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
+            if (environmentFqdn == null)
+            {
+                throw new ArgumentNullException(nameof(environmentFqdn));
+            }
+            if (environmentFqdn.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string", nameof(environmentFqdn));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
