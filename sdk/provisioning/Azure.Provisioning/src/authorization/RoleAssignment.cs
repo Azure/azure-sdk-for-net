@@ -61,7 +61,7 @@ namespace Azure.Provisioning.Authorization
         {
             var data = (RoleAssignmentData)ResourceData;
             return
-                $"guid('{resource.Name}', {(data.PrincipalId == null ? "principalId" : "'" + data.PrincipalId + "'")}," +
+                $"guid({resource.Name}.id, {(data.PrincipalId == null ? "principalId" : "'" + data.PrincipalId + "'")}," +
                 $" {SubscriptionResourceIdFunction}({(resource.Scope.Configuration?.UseInteractiveMode != true ? "'" + Id.SubscriptionId + "', " : string.Empty)}" +
                 $"'{RoleDefinitionResourceType}', '{data.RoleDefinitionId.Name}'))";
         }
