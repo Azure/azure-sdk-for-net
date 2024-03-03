@@ -3,18 +3,17 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Moq" />
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
 
 </Project>

@@ -24,11 +24,17 @@ using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.TestFramework;
+using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
 
 namespace Azure.Provisioning.Tests
 {
-    public class ProvisioningTests
+    public class ProvisioningTests : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
+        public ProvisioningTests() : base(isAsync: true)
+        {
+        }
+
         private static readonly string _infrastructureRoot = Path.Combine(GetGitRoot(), "sdk", "provisioning", "Azure.Provisioning", "tests", "Infrastructure");
 
         [Test]
@@ -405,22 +411,22 @@ namespace Azure.Provisioning.Tests
 
         public async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
         {
-            if (TestEnvironment.GlobalIsRunningInCI)
-            {
-                return;
-            }
+            // if (CoreTestEnvironment.GlobalIsRunningInCI)
+            // {
+            //     return;
+            // }
 
             var testPath = Path.Combine(_infrastructureRoot, TestContext.CurrentContext.Test.Name);
-            var client = new ArmClient(new DefaultAzureCredential());
+            var client = GetArmClient();
             ResourceGroupResource? rg = null;
 
-            SubscriptionResource subscription = await client.GetSubscriptions().GetAsync(Environment.GetEnvironmentVariable("SUBSCRIPTION_ID"));
+            SubscriptionResource subscription = await client.GetSubscriptions().GetAsync(Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID"));
 
             try
             {
                 var bicepPath = Path.Combine(testPath, "main.bicep");
                 var args = Path.Combine(
-                    TestEnvironment.RepositoryRoot,
+                    CoreTestEnvironment.RepositoryRoot,
                     "eng",
                     "scripts",
                     $"Validate-Bicep.ps1 {bicepPath}");
