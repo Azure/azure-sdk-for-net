@@ -47,8 +47,8 @@ public partial class Entity
         Argument.AssertNotNull(file, nameof(file));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        ImportBusinessMetadataRequest importBusinessMetadataRequest = new ImportBusinessMetadataRequest(file, fileName);
-        Response response = ImportBusinessMetadata(importBusinessMetadataRequest.ToRequestContent(), context);
+        BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file, fileName);
+        Response response = ImportBusinessMetadata(businessMetadataOptions.ToRequestContent(), context);
         return Response.FromValue(BulkImportResult.FromResponse(response), response);
     }
 }

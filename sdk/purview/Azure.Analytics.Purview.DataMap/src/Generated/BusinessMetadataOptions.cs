@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    /// <summary> The ImportBusinessMetadataRequest. </summary>
-    internal partial class ImportBusinessMetadataRequest
+    /// <summary> Business metadata to send to the service. </summary>
+    internal partial class BusinessMetadataOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImportBusinessMetadataRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public ImportBusinessMetadataRequest(BinaryData file)
+        public BusinessMetadataOptions(BinaryData file)
         {
             Argument.AssertNotNull(file, nameof(file));
 
             File = file;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportBusinessMetadataRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportBusinessMetadataRequest(BinaryData file, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BusinessMetadataOptions(BinaryData file, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             File = file;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportBusinessMetadataRequest"/> for deserialization. </summary>
-        internal ImportBusinessMetadataRequest()
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/> for deserialization. </summary>
+        internal BusinessMetadataOptions()
         {
         }
 

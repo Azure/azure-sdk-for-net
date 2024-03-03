@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
         {
             var client = GetDataMapClient().GetGlossaryClient();
             Response fetchResponse = client.BatchGet(1, null, null, true, new RequestContext());
-            Console.WriteLine(fetchResponse);
+            // Console.WriteLine(fetchResponse.Content);
             Assert.AreEqual(200, fetchResponse.Status);
         }
 
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
         {
             var client = GetDataMapClient().GetTypeDefinitionClient();
             Response<AtlasTypeDef> response = client.GetByName("AtlasGlossary");
-            Console.WriteLine(response);
+            // Console.WriteLine(response);
             Assert.AreEqual(200, response.GetRawResponse().Status);
         }
     }

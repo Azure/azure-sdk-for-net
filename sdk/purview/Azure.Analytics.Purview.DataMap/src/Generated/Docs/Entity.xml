@@ -5701,7 +5701,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="ImportBusinessMetadataAsync(BinaryData,CancellationToken)">
+    <member name="ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)">
       <example>
 This sample shows how to call ImportBusinessMetadataAsync.
 <code><![CDATA[
@@ -5709,7 +5709,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(BinaryData.FromObjectAsJson(new object()));
+BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
 ]]></code>
 This sample shows how to call ImportBusinessMetadataAsync with all parameters.
 <code><![CDATA[
@@ -5717,10 +5718,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(BinaryData.FromObjectAsJson(new object()));
+BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
 ]]></code></example>
     </member>
-    <member name="ImportBusinessMetadata(BinaryData,CancellationToken)">
+    <member name="ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)">
       <example>
 This sample shows how to call ImportBusinessMetadata.
 <code><![CDATA[
@@ -5728,7 +5730,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-Response<BulkImportResult> response = client.ImportBusinessMetadata(BinaryData.FromObjectAsJson(new object()));
+BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
 ]]></code>
 This sample shows how to call ImportBusinessMetadata with all parameters.
 <code><![CDATA[
@@ -5736,7 +5739,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-Response<BulkImportResult> response = client.ImportBusinessMetadata(BinaryData.FromObjectAsJson(new object()));
+BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
 ]]></code></example>
     </member>
     <member name="ImportBusinessMetadataAsync(RequestContent,RequestContext)">

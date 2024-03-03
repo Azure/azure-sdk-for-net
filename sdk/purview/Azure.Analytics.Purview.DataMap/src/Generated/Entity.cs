@@ -3635,32 +3635,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="file"> InputStream of file. </param>
+        /// <param name="businessMetadataOptions"> Business metadata to send to the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BinaryData,CancellationToken)']/*" />
-        public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(BinaryData file, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataOptions"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(BusinessMetadataOptions businessMetadataOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ImportBusinessMetadataRequest importBusinessMetadataRequest = new ImportBusinessMetadataRequest(file);
-            Response response = await ImportBusinessMetadataAsync(importBusinessMetadataRequest.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = businessMetadataOptions.ToRequestContent();
+            Response response = await ImportBusinessMetadataAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="file"> InputStream of file. </param>
+        /// <param name="businessMetadataOptions"> Business metadata to send to the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BinaryData,CancellationToken)']/*" />
-        public virtual Response<BulkImportResult> ImportBusinessMetadata(BinaryData file, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataOptions"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)']/*" />
+        public virtual Response<BulkImportResult> ImportBusinessMetadata(BusinessMetadataOptions businessMetadataOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ImportBusinessMetadataRequest importBusinessMetadataRequest = new ImportBusinessMetadataRequest(file);
-            Response response = ImportBusinessMetadata(importBusinessMetadataRequest.ToRequestContent(), context);
+            using RequestContent content = businessMetadataOptions.ToRequestContent();
+            Response response = ImportBusinessMetadata(content, context);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
 
@@ -3674,7 +3674,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportBusinessMetadataAsync(BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3713,7 +3713,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportBusinessMetadata(BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

@@ -6075,7 +6075,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
         }
 
         [Test]
@@ -6086,7 +6087,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
         }
 
         [Test]
@@ -6147,7 +6149,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
         }
 
         [Test]
@@ -6158,7 +6161,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
         }
 
         [Test]

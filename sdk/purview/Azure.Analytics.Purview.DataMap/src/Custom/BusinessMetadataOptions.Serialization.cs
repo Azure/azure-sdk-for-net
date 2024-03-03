@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap;
-internal partial class ImportBusinessMetadataRequest
+internal partial class BusinessMetadataOptions
 {
     // CUSTOM CODE NOTE:
     // Implement custom serialization code to compose a request with Content-Type:
@@ -22,7 +22,12 @@ internal partial class ImportBusinessMetadataRequest
         return content;
     }
 
-    public ImportBusinessMetadataRequest(BinaryData file, String fileName)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BusinessMetadataOptions"/> class.
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="fileName"></param>
+    public BusinessMetadataOptions(BinaryData file, String fileName)
     {
         Argument.AssertNotNull(file, nameof(file));
 
@@ -30,11 +35,11 @@ internal partial class ImportBusinessMetadataRequest
         FileName = fileName;
     }
 
-    /// <summary> Initializes a new instance of <see cref="ImportBusinessMetadataRequest"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
     /// <param name="file"> InputStream of file. </param>
     /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="fileName"> Name of file. </param>
-    internal ImportBusinessMetadataRequest(BinaryData file, IDictionary<string, BinaryData> serializedAdditionalRawData, String fileName)
+    internal BusinessMetadataOptions(BinaryData file, IDictionary<string, BinaryData> serializedAdditionalRawData, String fileName)
     {
         File = file;
         FileName = fileName;

@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    internal partial class ImportBusinessMetadataRequest : IUtf8JsonSerializable, IJsonModel<ImportBusinessMetadataRequest>
+    internal partial class BusinessMetadataOptions : IUtf8JsonSerializable, IJsonModel<BusinessMetadataOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportBusinessMetadataRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BusinessMetadataOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ImportBusinessMetadataRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BusinessMetadataOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportBusinessMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BusinessMetadataOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportBusinessMetadataRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BusinessMetadataOptions)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,19 +47,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        ImportBusinessMetadataRequest IJsonModel<ImportBusinessMetadataRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BusinessMetadataOptions IJsonModel<BusinessMetadataOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportBusinessMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BusinessMetadataOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportBusinessMetadataRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BusinessMetadataOptions)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImportBusinessMetadataRequest(document.RootElement, options);
+            return DeserializeBusinessMetadataOptions(document.RootElement, options);
         }
 
-        internal static ImportBusinessMetadataRequest DeserializeImportBusinessMetadataRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BusinessMetadataOptions DeserializeBusinessMetadataOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -83,46 +83,46 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportBusinessMetadataRequest(file, serializedAdditionalRawData);
+            return new BusinessMetadataOptions(file, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImportBusinessMetadataRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BusinessMetadataOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportBusinessMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BusinessMetadataOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportBusinessMetadataRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BusinessMetadataOptions)} does not support '{options.Format}' format.");
             }
         }
 
-        ImportBusinessMetadataRequest IPersistableModel<ImportBusinessMetadataRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BusinessMetadataOptions IPersistableModel<BusinessMetadataOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportBusinessMetadataRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BusinessMetadataOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImportBusinessMetadataRequest(document.RootElement, options);
+                        return DeserializeBusinessMetadataOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportBusinessMetadataRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BusinessMetadataOptions)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImportBusinessMetadataRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BusinessMetadataOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImportBusinessMetadataRequest FromResponse(Response response)
+        internal static BusinessMetadataOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImportBusinessMetadataRequest(document.RootElement);
+            return DeserializeBusinessMetadataOptions(document.RootElement);
         }
     }
 }
