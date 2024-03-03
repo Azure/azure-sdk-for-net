@@ -46,12 +46,11 @@ namespace Azure.Provisioning
         {
             Properties = (T)ResourceData;
 
-            // Resources that have a non-RG parent do not require a location value
-            if (scope.Configuration?.UseInteractiveMode == true && Parent is ResourceGroup)
+            if (scope.Configuration?.UseInteractiveMode == true)
             {
                 // We can't use the lambda overload because not all of the T's will inherit from TrackedResourceData
                 // TODO we may need to add a protected LocationSelector property in the future if there are exceptions to the rule
-                AssignParameter(Properties, "Location", new Parameter("location", null, defaultValue: $"{ResourceGroup.AnonymousResourceGroupName}.location", isExpression: true));
+                AssignParameter(Properties, "Location", new Parameter("location", null, defaultValue: $"{ResourceGroup.ResourceGroupFunction}.location", isExpression: true));
             }
         }
 

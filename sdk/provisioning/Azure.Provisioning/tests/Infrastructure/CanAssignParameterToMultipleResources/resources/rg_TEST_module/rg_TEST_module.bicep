@@ -29,7 +29,7 @@ resource storageAccount_I0kTuAmmD 'Microsoft.Storage/storageAccounts@2022-09-01'
   name: toLower(take(concat('sa2', uniqueString(resourceGroup().id)), 24))
   location: overrideLocation
   sku: {
-    name: 'Standard_LRS'
+    name: 'Premium_LRS'
   }
   kind: 'BlobStorage'
   properties: {
