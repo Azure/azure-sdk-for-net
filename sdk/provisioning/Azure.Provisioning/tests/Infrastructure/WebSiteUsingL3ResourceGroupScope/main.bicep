@@ -30,7 +30,7 @@ resource keyVault_zomsD2kWf 'Microsoft.KeyVault/vaults@2023-02-01' = {
     'key': 'value'
   }
   properties: {
-    tenantId: tenant()
+    tenantId: tenant().tenantId
     sku: {
       name: 'standard'
       family: 'A'
@@ -42,6 +42,7 @@ resource keyVault_zomsD2kWf 'Microsoft.KeyVault/vaults@2023-02-01' = {
 resource keyVaultAddAccessPolicy_P5xc7PJ0z 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
   parent: keyVault_zomsD2kWf
   name: 'add'
+  location: location
   properties: {
     accessPolicies: [
       {
@@ -61,6 +62,7 @@ resource keyVaultAddAccessPolicy_P5xc7PJ0z 'Microsoft.KeyVault/vaults/accessPoli
 resource keyVaultSecret_i5d2MB0md 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_zomsD2kWf
   name: 'sqlAdminPassword'
+  location: location
   properties: {
     value: sqlAdminPassword
   }
@@ -69,6 +71,7 @@ resource keyVaultSecret_i5d2MB0md 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
 resource keyVaultSecret_LNzTHfBsZ 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_zomsD2kWf
   name: 'appUserPassword'
+  location: location
   properties: {
     value: appUserPassword
   }
@@ -77,6 +80,7 @@ resource keyVaultSecret_LNzTHfBsZ 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
 resource keyVaultSecret_67mSbXkng 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_zomsD2kWf
   name: 'connectionString'
+  location: location
   properties: {
     value: 'Server=${sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_6rAKZufXn.name}; User=appUser; Password=${appUserPassword}'
   }
@@ -150,6 +154,7 @@ resource sqlServer_9wIHMU1zj 'Microsoft.Sql/servers@2022-08-01-preview' = {
 resource sqlDatabase_6rAKZufXn 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
   parent: sqlServer_9wIHMU1zj
   name: 'db'
+  location: location
   properties: {
   }
 }

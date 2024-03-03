@@ -69,6 +69,7 @@ namespace Azure.Provisioning.Tests
             appUserSecret.AssignParameter(secret => secret.Properties.Value, appUserPasswordParam);
 
             SqlServer sqlServer = new SqlServer(infra, "sqlserver");
+            sqlServer.AssignProperty(sql => sql.AdministratorLogin, "'sqladmin'");
             sqlServer.AssignParameter(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
             Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
 
@@ -78,7 +79,7 @@ namespace Azure.Provisioning.Tests
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(infra, "connectionString", sqlDatabase.GetConnectionString(appUserPasswordParam));
             Assert.False(sqlAzureConnectionStringSecret.Properties.Name.EndsWith(infra.EnvironmentName));
 
-            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, "firewallRule");
+            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, name: "firewallRule");
             Assert.False(sqlFirewallRule.Properties.Name.EndsWith(infra.EnvironmentName));
 
             DeploymentScript deploymentScript = new DeploymentScript(
@@ -113,6 +114,87 @@ namespace Azure.Provisioning.Tests
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync();
+        }
+
+        [Test]
+        public async Task SqlServerUsingAdminPassword()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var sqlServer = new SqlServer(
+                infrastructure,
+                "sqlserver",
+                adminLogin: new Parameter("adminLogin", "SQL Server administrator login"),
+                adminPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true));
+            _ = new SqlDatabase(infrastructure, sqlServer);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(
+                parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "admin" },
+                        adminPassword = new { value = "password" }
+                    }),
+                interactiveMode: true);
+        }
+
+        [Test]
+        public async Task SqlServerUsingIdentity()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+
+            var admin = new SqlServerAdministrator(
+                new Parameter("adminLogin", "SQL Server administrator login"),
+                new Parameter("adminObjectId", "SQL Server administrator Object ID"));
+
+            var sqlServer = new SqlServer(
+                infrastructure,
+                "sqlserver",
+                administrator: admin);
+
+            _ = new SqlDatabase(infrastructure, sqlServer);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(
+                parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "admin" },
+                        adminObjectId = new { value = Guid.Empty.ToString() }
+                    }),
+                interactiveMode: true);
+        }
+
+        [Test]
+        public async Task SqlServerUsingHybrid()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+
+            var admin = new SqlServerAdministrator(
+                new Parameter("adminIdentityLogin", "SQL Server administrator login"),
+                new Parameter("adminObjectId", "SQL Server administrator Object ID"));
+
+            var sqlServer = new SqlServer(
+                infrastructure,
+                "sqlserver",
+                adminLogin: new Parameter("adminLogin", "SQL Server administrator login"),
+                adminPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true),
+                administrator: admin);
+
+            _ = new SqlDatabase(infrastructure, sqlServer);
+            _ = new SqlFirewallRule(infrastructure, sqlServer);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(
+                parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "admin" },
+                        adminPassword = new { value = "password" },
+                        adminIdentityLogin = new { value = "admin" },
+                        adminObjectId = new { value = Guid.Empty.ToString() }
+                    }),
+                interactiveMode: true);
         }
 
         [Test]
@@ -317,7 +399,7 @@ namespace Azure.Provisioning.Tests
             var account2 = infra.AddStorageAccount(
                 name: "sa2",
                 kind: StorageKind.BlobStorage,
-                sku: StorageSkuName.StandardLrs
+                sku: StorageSkuName.PremiumLrs
             );
             account2.AssignParameter(a => a.Location, overrideLocation);
 
