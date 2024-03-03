@@ -240,7 +240,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<DnsCaaRecordResource>> UpdateAsync(DnsCaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordResource.Update");
             scope.Start();
@@ -275,7 +278,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<DnsCaaRecordResource> Update(DnsCaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordResource.Update");
             scope.Start();

@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsMXRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mxRecordName, DnsMXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("DnsMXRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsMXRecordResource> CreateOrUpdate(WaitUntil waitUntil, string mxRecordName, DnsMXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("DnsMXRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual async Task<Response<DnsMXRecordResource>> GetAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("DnsMXRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual Response<DnsMXRecordResource> Get(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("DnsMXRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("DnsMXRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("DnsMXRecordCollection.Exists");
             scope.Start();

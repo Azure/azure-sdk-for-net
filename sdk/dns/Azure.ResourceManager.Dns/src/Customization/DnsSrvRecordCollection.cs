@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsSrvRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string srvRecordName, DnsSrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (srvRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(srvRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSrvRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsSrvRecordResource> CreateOrUpdate(WaitUntil waitUntil, string srvRecordName, DnsSrvRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (srvRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(srvRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSrvRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         public virtual async Task<Response<DnsSrvRecordResource>> GetAsync(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            if (srvRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(srvRecordName));
+			}
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSrvRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         public virtual Response<DnsSrvRecordResource> Get(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            if (srvRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(srvRecordName));
+			}
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSrvRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            if (srvRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(srvRecordName));
+			}
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSrvRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="srvRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string srvRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(srvRecordName, nameof(srvRecordName));
+            if (srvRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(srvRecordName));
+			}
 
             using var scope = _srvRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSrvRecordCollection.Exists");
             scope.Start();

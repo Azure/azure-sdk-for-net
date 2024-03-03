@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsNSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string nsRecordName, DnsNSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (nsRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(nsRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("DnsNSRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsNSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string nsRecordName, DnsNSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (nsRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(nsRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("DnsNSRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
         public virtual async Task<Response<DnsNSRecordResource>> GetAsync(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
+            if (nsRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(nsRecordName));
+			}
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("DnsNSRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
         public virtual Response<DnsNSRecordResource> Get(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
+            if (nsRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(nsRecordName));
+			}
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("DnsNSRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
+            if (nsRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(nsRecordName));
+			}
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("DnsNSRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="nsRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string nsRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nsRecordName, nameof(nsRecordName));
+            if (nsRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(nsRecordName));
+			}
 
             using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("DnsNSRecordCollection.Exists");
             scope.Start();

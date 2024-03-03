@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsCaaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string caaRecordName, DnsCaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (caaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(caaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsCaaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string caaRecordName, DnsCaaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (caaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(caaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
         public virtual async Task<Response<DnsCaaRecordResource>> GetAsync(string caaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
+            if (caaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(caaRecordName));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
         public virtual Response<DnsCaaRecordResource> Get(string caaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
+            if (caaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(caaRecordName));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string caaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
+            if (caaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(caaRecordName));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="caaRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string caaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(caaRecordName, nameof(caaRecordName));
+            if (caaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(caaRecordName));
+			}
 
             using var scope = _caaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsCaaRecordCollection.Exists");
             scope.Start();

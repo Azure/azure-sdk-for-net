@@ -80,11 +80,38 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordData>> UpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, string relativeRecordSetName, DnsSoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
+            if (relativeRecordSetName == null)
+			{
+				throw new ArgumentNullException(nameof(relativeRecordSetName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, relativeRecordSetName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,11 +142,38 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordData> Update(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, string relativeRecordSetName, DnsSoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
+            if (relativeRecordSetName == null)
+			{
+				throw new ArgumentNullException(nameof(relativeRecordSetName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, relativeRecordSetName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -187,11 +241,38 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, string relativeRecordSetName, DnsSoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
+            if (relativeRecordSetName == null)
+			{
+				throw new ArgumentNullException(nameof(relativeRecordSetName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, relativeRecordSetName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -224,11 +305,38 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, string relativeRecordSetName, DnsSoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
+            if (relativeRecordSetName == null)
+			{
+				throw new ArgumentNullException(nameof(relativeRecordSetName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, relativeRecordSetName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -282,10 +390,34 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordData>> GetAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
+            if (relativeRecordSetName == null)
+			{
+				throw new ArgumentNullException(nameof(relativeRecordSetName));
+			}
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, relativeRecordSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -316,10 +448,34 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordData> Get(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
-            Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
+            if (relativeRecordSetName == null)
+			{
+				throw new ArgumentNullException(nameof(relativeRecordSetName));
+			}
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, relativeRecordSetName);
             _pipeline.Send(message, cancellationToken);
@@ -381,9 +537,30 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordListResult>> ListByTypeAsync(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -413,9 +590,30 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordListResult> ListByType(string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, zoneName, dnsRecordType, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
@@ -473,9 +671,30 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordListResult>> ListByDnsZoneAsync(string subscriptionId, string resourceGroupName, string zoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByDnsZoneRequest(subscriptionId, resourceGroupName, zoneName, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -504,9 +723,30 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordListResult> ListByDnsZone(string subscriptionId, string resourceGroupName, string zoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByDnsZoneRequest(subscriptionId, resourceGroupName, zoneName, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
@@ -553,10 +793,34 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordListResult>> ListByTypeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, zoneName, dnsRecordType, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -587,10 +851,34 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordListResult> ListByTypeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string zoneName, DnsRecordType dnsRecordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, zoneName, dnsRecordType, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
@@ -636,10 +924,34 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DnsSoaRecordListResult>> ListByDnsZoneNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string zoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByDnsZoneNextPageRequest(nextLink, subscriptionId, resourceGroupName, zoneName, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -669,10 +981,34 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DnsSoaRecordListResult> ListByDnsZoneNextPage(string nextLink, string subscriptionId, string resourceGroupName, string zoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (zoneName == null)
+			{
+				throw new ArgumentNullException(nameof(zoneName));
+			}
+			if (zoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(zoneName));
+			}
 
             using var message = CreateListByDnsZoneNextPageRequest(nextLink, subscriptionId, resourceGroupName, zoneName, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);

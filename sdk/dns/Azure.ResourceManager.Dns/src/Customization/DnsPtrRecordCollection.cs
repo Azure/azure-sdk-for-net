@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsPtrRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsPtrRecordResource> CreateOrUpdate(WaitUntil waitUntil, string ptrRecordName, DnsPtrRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual async Task<Response<DnsPtrRecordResource>> GetAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual Response<DnsPtrRecordResource> Get(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsPtrRecordCollection.Exists");
             scope.Start();

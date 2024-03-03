@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         void IJsonModel<DnsRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -42,14 +41,14 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -60,22 +59,22 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TtlInSeconds))
+            if (TtlInSeconds.HasValue)
             {
                 writer.WritePropertyName("TTL"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(TargetResource))
+            if (TargetResource != null)
             {
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(DnsARecords))
+            if (!(DnsARecords is ChangeTrackingList<DnsARecordInfo> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 writer.WritePropertyName("ARecords"u8);
                 writer.WriteStartArray();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsAaaaRecords))
+            if (!(DnsAaaaRecords is ChangeTrackingList<DnsAaaaRecordInfo> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 writer.WritePropertyName("AAAARecords"u8);
                 writer.WriteStartArray();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsMXRecords))
+            if (!(DnsMXRecords is ChangeTrackingList<DnsMXRecordInfo> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 writer.WritePropertyName("MXRecords"u8);
                 writer.WriteStartArray();
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsNSRecords))
+            if (!(DnsNSRecords is ChangeTrackingList<DnsNSRecordInfo> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 writer.WritePropertyName("NSRecords"u8);
                 writer.WriteStartArray();
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsPtrRecords))
+            if (!(DnsPtrRecords is ChangeTrackingList<DnsPtrRecordInfo> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 writer.WritePropertyName("PTRRecords"u8);
                 writer.WriteStartArray();
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsSrvRecords))
+            if (!(DnsSrvRecords is ChangeTrackingList<DnsSoaRecordInfo> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 writer.WritePropertyName("SRVRecords"u8);
                 writer.WriteStartArray();
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsTxtRecords))
+            if (!(DnsTxtRecords is ChangeTrackingList<DnsTxtRecordInfo> changeTrackingList5 && changeTrackingList5.IsUndefined))
             {
                 writer.WritePropertyName("TXTRecords"u8);
                 writer.WriteStartArray();
@@ -145,17 +144,17 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DnsCnameRecordInfo))
+            if (DnsCnameRecordInfo != null)
             {
                 writer.WritePropertyName("CNAMERecord"u8);
                 writer.WriteObjectValue(DnsCnameRecordInfo);
             }
-            if (Optional.IsDefined(DnsSoaRecordInfo))
+            if (DnsSoaRecordInfo != null)
             {
                 writer.WritePropertyName("DnsSOARecord"u8);
                 writer.WriteObjectValue(DnsSoaRecordInfo);
             }
-            if (Optional.IsCollectionDefined(DnsCaaRecords))
+            if (!(DnsCaaRecords is ChangeTrackingList<DnsCaaRecordInfo> changeTrackingList6 && changeTrackingList6.IsUndefined))
             {
                 writer.WritePropertyName("caaRecords"u8);
                 writer.WriteStartArray();
@@ -203,26 +202,26 @@ namespace Azure.ResourceManager.Dns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<string> provisioningState = default;
-            Optional<WritableSubResource> targetResource = default;
-            Optional<IList<DnsARecordInfo>> aRecords = default;
-            Optional<IList<DnsAaaaRecordInfo>> aaaaRecords = default;
-            Optional<IList<DnsMXRecordInfo>> mxRecords = default;
-            Optional<IList<DnsNSRecordInfo>> nsRecords = default;
-            Optional<IList<DnsPtrRecordInfo>> ptrRecords = default;
-            Optional<IList<DnsSrvRecordInfo>> srvRecords = default;
-            Optional<IList<DnsTxtRecordInfo>> txtRecords = default;
-            Optional<DnsCnameRecordInfo> cnameRecord = default;
-            Optional<DnsSoaRecordInfo> soaRecord = default;
-            Optional<IList<DnsCaaRecordInfo>> caaRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            string provisioningState = default;
+            WritableSubResource targetResource = default;
+            IList<DnsARecordInfo> aRecords = default;
+            IList<DnsAaaaRecordInfo> aaaaRecords = default;
+            IList<DnsMXRecordInfo> mxRecords = default;
+            IList<DnsNSRecordInfo> nsRecords = default;
+            IList<DnsPtrRecordInfo> ptrRecords = default;
+            IList<DnsSrvRecordInfo> srvRecords = default;
+            IList<DnsTxtRecordInfo> txtRecords = default;
+            DnsCnameRecordInfo cnameRecord = default;
+            DnsSoaRecordInfo soaRecord = default;
+            IList<DnsCaaRecordInfo> caaRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -449,7 +448,28 @@ namespace Azure.ResourceManager.Dns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords), serializedAdditionalRawData);
+            return new DnsRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                provisioningState,
+                targetResource,
+                aRecords ?? new ChangeTrackingList<DnsARecordInfo>(),
+                aaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>(),
+                mxRecords ?? new ChangeTrackingList<DnsMXRecordInfo>(),
+                nsRecords ?? new ChangeTrackingList<DnsNSRecordInfo>(),
+                ptrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>(),
+                srvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>(),
+                txtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>(),
+                cnameRecord,
+                soaRecord,
+                caaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>(),
+                serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<DnsRecordData>.Write(ModelReaderWriterOptions options)
         {

@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsSoaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string soaRecordName, DnsSoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsSoaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string soaRecordName, DnsSoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual async Task<Response<DnsSoaRecordResource>> GetAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual Response<DnsSoaRecordResource> Get(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Exists");
             scope.Start();
