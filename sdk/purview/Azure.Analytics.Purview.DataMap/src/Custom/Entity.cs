@@ -39,15 +39,14 @@ public partial class Entity
 
     /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
     /// <param name="file"> InputStream of file. </param>
-    /// <param name="fileName"> File name. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-    public virtual Response<BulkImportResult> ImportBusinessMetadata(BinaryData file, String fileName, CancellationToken cancellationToken = default)
+    public virtual Response<BulkImportResult> ImportBusinessMetadata(BinaryData file, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(file, nameof(file));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file, fileName);
+        BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file);
         Response response = ImportBusinessMetadata(businessMetadataOptions.ToRequestContent(), context);
         return Response.FromValue(BulkImportResult.FromResponse(response), response);
     }

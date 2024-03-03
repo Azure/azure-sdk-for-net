@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    internal partial class BusinessMetadataOptions : IUtf8JsonSerializable, IJsonModel<BusinessMetadataOptions>
+    public partial class BusinessMetadataOptions : IUtf8JsonSerializable, IJsonModel<BusinessMetadataOptions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BusinessMetadataOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Business metadata to send to the service. </summary>
-    internal partial class BusinessMetadataOptions
+    public partial class BusinessMetadataOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
