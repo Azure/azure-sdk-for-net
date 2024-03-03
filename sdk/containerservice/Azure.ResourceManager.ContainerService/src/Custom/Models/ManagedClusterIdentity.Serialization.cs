@@ -25,22 +25,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (options.Format != "W" && PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ResourceIdentityType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceIdentityType.ToString());
-            }
-            if (Optional.IsCollectionDefined(DelegatedResources))
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ResourceIdentityType.ToString());
+            if (!(DelegatedResources is ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("delegatedResources"u8);
                 writer.WriteStartObject();
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (!(UserAssignedIdentities is ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity> dictionary1 && dictionary1.IsUndefined))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -100,11 +97,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
             ManagedServiceIdentityType type = default;
-            Optional<IDictionary<string, ManagedClusterDelegatedIdentity>> delegatedResources = default;
-            Optional<IDictionary<ResourceIdentifier, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources = default;
+            IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +167,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type, Optional.ToDictionary(delegatedResources), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new ManagedClusterIdentity(
+                principalId,
+                tenantId,
+                type,
+                delegatedResources ?? new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>(),
+                userAssignedIdentities ?? new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterIdentity>.Write(ModelReaderWriterOptions options)
