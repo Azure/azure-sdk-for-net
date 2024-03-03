@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ResourceManager
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         private const string ResourceTypeName = "Microsoft.Resources/tenants";
+        internal const string TenantIdExpression = "tenant().tenantId";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Tenant"/>.

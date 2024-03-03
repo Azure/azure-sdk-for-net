@@ -75,7 +75,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   properties: {
-    tenantId: tenant()
+    tenantId: tenant().tenantId
     sku: {
       name: 'standard'
       family: 'A'

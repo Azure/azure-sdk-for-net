@@ -48,7 +48,7 @@ namespace Azure.Provisioning.KeyVaults
             AddOutput(kv => kv.Properties.VaultUri, "vaultUri");
             if (scope.Root.Properties.TenantId == Guid.Empty)
             {
-                AssignProperty(kv => kv.Properties.TenantId, "tenant()");
+                AssignProperty(kv => kv.Properties.TenantId, Tenant.TenantIdExpression);
             }
         }
 

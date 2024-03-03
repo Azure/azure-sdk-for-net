@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ResourceManager
     public class ResourceGroup : Resource<ResourceGroupData>
     {
         internal static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
-        internal const string AnonymousResourceGroupName = "resourceGroup()";
+        internal const string ResourceGroupFunction = "resourceGroup()";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroup"/>.
@@ -48,7 +48,7 @@ namespace Azure.Provisioning.ResourceManager
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName)
         {
-            return scope.Configuration?.UseInteractiveMode == true ? AnonymousResourceGroupName : base.GetAzureName(scope, resourceName);
+            return scope.Configuration?.UseInteractiveMode == true ? ResourceGroupFunction : base.GetAzureName(scope, resourceName);
         }
     }
 }

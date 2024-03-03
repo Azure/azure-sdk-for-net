@@ -33,7 +33,7 @@ namespace Azure.Provisioning.Storage
                 sku: new StorageSku(sku),
                 kind: kind,
                 // access tier cannot be set for premium accounts
-                accessTier: sku != StorageSkuName.PremiumLrs && sku != StorageSkuName.PremiumZrs ? StorageAccountAccessTier.Hot : null))
+                accessTier: kind == StorageKind.BlobStorage || kind == StorageKind.StorageV2 ? StorageAccountAccessTier.Hot : null))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
