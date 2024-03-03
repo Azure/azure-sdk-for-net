@@ -29,15 +29,16 @@ using CoreTestEnvironment = Azure.Core.TestFramework.TestEnvironment;
 
 namespace Azure.Provisioning.Tests
 {
+    [AsyncOnly]
     public class ProvisioningTests : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
-        public ProvisioningTests() : base(isAsync: true)
+        public ProvisioningTests(bool async) : base(async)
         {
         }
 
         private static readonly string _infrastructureRoot = Path.Combine(GetGitRoot(), "sdk", "provisioning", "Azure.Provisioning", "tests", "Infrastructure");
 
-        [Test]
+        [RecordedTest]
         public async Task WebSiteUsingL1()
         {
             var infra = new TestInfrastructure();
@@ -112,7 +113,7 @@ namespace Azure.Provisioning.Tests
                 }));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ResourceGroupOnly()
         {
             TestInfrastructure infrastructure = new TestInfrastructure();
@@ -122,7 +123,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SqlServerUsingAdminPassword()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -144,7 +145,7 @@ namespace Azure.Provisioning.Tests
                 interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SqlServerUsingIdentity()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -171,7 +172,7 @@ namespace Azure.Provisioning.Tests
                 interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SqlServerUsingHybrid()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -203,7 +204,7 @@ namespace Azure.Provisioning.Tests
                 interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
@@ -225,7 +226,7 @@ namespace Azure.Provisioning.Tests
                 }));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task WebSiteUsingL3()
         {
             var infra = new TestInfrastructure();
@@ -249,7 +250,7 @@ namespace Azure.Provisioning.Tests
                 }));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task WebSiteUsingL3SpecificSubscription()
         {
             var infra = new TestInfrastructure();
@@ -272,7 +273,7 @@ namespace Azure.Provisioning.Tests
                 }));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task WebSiteUsingL3ResourceGroupScope()
         {
             var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, configuration: new Configuration { UseInteractiveMode = true });
@@ -297,7 +298,7 @@ namespace Azure.Provisioning.Tests
                 }), interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
@@ -308,7 +309,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RoleAssignmentWithParameter()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -322,7 +323,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync(BinaryData.FromObjectAsJson(new { principalId = new { value = Guid.Empty }}), interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RoleAssignmentWithoutParameter()
         {
             var infra = new TestInfrastructure();
@@ -336,7 +337,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RoleAssignmentWithoutParameterInteractiveMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -350,7 +351,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync(interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public void RoleAssignmentPrincipalMustBeSuppliedInNonInteractiveMode()
         {
             var infra = new TestInfrastructure();
@@ -360,7 +361,7 @@ namespace Azure.Provisioning.Tests
             Assert.Throws<InvalidOperationException>(() => storageAccount.AssignRole(RoleDefinition.StorageBlobDataContributor));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StorageBlobDefaultsInPromptMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -371,7 +372,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync(interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanAddCustomLocationParameterInInteractiveMode()
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -388,7 +389,7 @@ namespace Azure.Provisioning.Tests
                 interactiveMode: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CanAssignParameterToMultipleResources()
         {
             var infra = new TestInfrastructure();
@@ -418,7 +419,7 @@ namespace Azure.Provisioning.Tests
                 }));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StorageBlobDropDown()
         {
             var infra = new TestInfrastructure();
@@ -433,7 +434,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppConfiguration()
         {
             var infra = new TestInfrastructure();
@@ -443,7 +444,7 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public void MultipleSubscriptions()
         {
             // ensure deterministic subscription names and directories
@@ -459,7 +460,7 @@ namespace Azure.Provisioning.Tests
             // await ValidateBicepAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OutputsSpanningModules()
         {
             var infra = new TestInfrastructure();
