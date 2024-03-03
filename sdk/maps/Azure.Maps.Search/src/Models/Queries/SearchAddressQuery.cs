@@ -23,7 +23,10 @@ namespace Azure.Maps.Search
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public SearchAddressQuery(string query, SearchAddressOptions options = null)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
             this.Query = query;
             this.SearchAddressOptions = options;
         }

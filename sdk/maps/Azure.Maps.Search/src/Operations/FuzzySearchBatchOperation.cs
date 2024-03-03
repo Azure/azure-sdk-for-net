@@ -33,8 +33,14 @@ namespace Azure.Maps.Search
         /// </param>
         internal FuzzySearchBatchOperation(MapsSearchClient client, Uri followUpUrl)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(followUpUrl, nameof(followUpUrl));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+            if (followUpUrl == null)
+            {
+                throw new ArgumentNullException(nameof(followUpUrl));
+            }
 
             try
             {
@@ -88,8 +94,14 @@ namespace Azure.Maps.Search
             Response initialResponse,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(id, nameof(id));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
             _id = id;
             _value = null;

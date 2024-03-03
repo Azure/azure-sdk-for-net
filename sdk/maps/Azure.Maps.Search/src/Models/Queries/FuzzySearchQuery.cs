@@ -23,7 +23,10 @@ namespace Azure.Maps.Search.Models
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public FuzzySearchQuery(string query, FuzzySearchOptions options = null)
         {
-            Argument.AssertNotNull(query, nameof(query));
+            if (query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
             this.Query = query;
             this.FuzzySearchOptions = options;
         }

@@ -40,7 +40,10 @@ namespace Azure.Maps.Search
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
         public MapsSearchClient(AzureKeyCredential credential)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             var endpoint = new Uri("https://atlas.microsoft.com");
             var options = new MapsSearchClientOptions();
@@ -54,7 +57,10 @@ namespace Azure.Maps.Search
         /// <param name="options"> The options for configuring the client. </param>
         public MapsSearchClient(AzureKeyCredential credential, MapsSearchClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
@@ -68,7 +74,10 @@ namespace Azure.Maps.Search
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         public MapsSearchClient(TokenCredential credential, string clientId)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             var endpoint = new Uri("https://atlas.microsoft.com");
             var options = new MapsSearchClientOptions();
@@ -84,7 +93,10 @@ namespace Azure.Maps.Search
         /// <param name="options"> The options for configuring the client. </param>
         public MapsSearchClient(TokenCredential credential, string clientId, MapsSearchClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
@@ -99,7 +111,10 @@ namespace Azure.Maps.Search
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
         public MapsSearchClient(AzureSasCredential credential)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             var endpoint = new Uri("https://atlas.microsoft.com");
             var options = new MapsSearchClientOptions();
@@ -114,7 +129,10 @@ namespace Azure.Maps.Search
         /// <param name="options"> The options for configuring the client. </param>
         public MapsSearchClient(AzureSasCredential credential, MapsSearchClientOptions options)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
 
             var endpoint = options.Endpoint;
             options ??= new MapsSearchClientOptions();
