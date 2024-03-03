@@ -433,7 +433,10 @@ namespace Azure.Storage.Files.DataLake
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(fileSystemUri, nameof(fileSystemUri));
+            if (fileSystemUri == null)
+			{
+				throw new ArgumentNullException(nameof(fileSystemUri));
+			}
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             options ??= new DataLakeClientOptions();
             _uri = fileSystemUri;

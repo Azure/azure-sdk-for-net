@@ -28,7 +28,10 @@ namespace Azure.Storage.Blobs.Models
 
         private BlobRequestConditions(BlobRequestConditions deepCopySource) : base(deepCopySource)
         {
-            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
+            if (deepCopySource == null)
+			{
+				throw new ArgumentNullException(nameof(deepCopySource));
+			}
             LeaseId = deepCopySource.LeaseId;
         }
 

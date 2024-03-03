@@ -55,7 +55,10 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <inheritdoc />
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+			{
+				throw new ArgumentNullException(nameof(info));
+			}
 
             info.AddValue(nameof(ContinuationToken), ContinuationToken);
 

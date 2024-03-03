@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement.JobPlan
 {
@@ -39,10 +38,26 @@ namespace Azure.Storage.DataMovement.JobPlan
             int jobPart,
             Stream headerStream)
         {
-            Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(jobPart, nameof(jobPart));
-            Argument.AssertNotNull(headerStream, nameof(headerStream));
+            if (checkpointerPath is null)
+            {
+                throw new ArgumentNullException(nameof(checkpointerPath));
+            }
+            if (checkpointerPath.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(checkpointerPath));
+            }
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
+            if (headerStream == null)
+			{
+				throw new ArgumentNullException(nameof(headerStream));
+			}
 
             JobPartPlanFileName fileName = new JobPartPlanFileName(checkpointerPath: checkpointerPath, id: id, jobPartNumber: jobPart);
             JobPartPlanFile result = new JobPartPlanFile()

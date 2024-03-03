@@ -160,7 +160,10 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus jobPartStatus = default,
             long? length = default)
         {
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (clientDiagnostics == null)
+			{
+				throw new ArgumentNullException(nameof(clientDiagnostics));
+			}
 
             // if default is passed, the job part status will be queued
             JobPartStatus = jobPartStatus ?? new DataTransferStatus();

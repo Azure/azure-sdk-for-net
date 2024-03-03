@@ -244,7 +244,14 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         public virtual async Task PauseTransferIfRunningAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            if (transferId == null)
+			{
+				throw new ArgumentNullException(nameof(transferId));
+			}
+			if (transferId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(transferId));
+			}
             if (!_dataTransfers.TryGetValue(transferId, out DataTransfer transfer))
             {
                 throw Errors.InvalidTransferId(nameof(PauseTransferIfRunningAsync), transferId);
@@ -346,7 +353,14 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
+            if (transferId == null)
+            {
+                throw new ArgumentNullException(nameof(transferId));
+            }
+            if (string.IsNullOrWhiteSpace(transferId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(transferId));
+            }
 
             if (!await _checkpointer.IsResumableAsync(transferId, cancellationToken).ConfigureAwait(false))
             {
@@ -451,8 +465,14 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
-            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+            if (sourceResource == null)
+			{
+				throw new ArgumentNullException(nameof(sourceResource));
+			}
+            if (destinationResource == null)
+			{
+				throw new ArgumentNullException(nameof(destinationResource));
+			}
 
             transferOptions ??= new DataTransferOptions();
 

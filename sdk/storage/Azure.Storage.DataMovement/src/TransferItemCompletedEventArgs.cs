@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System;
 using System.Threading;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -51,8 +51,14 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
-            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+            if (sourceResource == null)
+            {
+                throw new ArgumentNullException(nameof(sourceResource));
+            }
+            if (destinationResource == null)
+            {
+                throw new ArgumentNullException(nameof(destinationResource));
+            }
             SourceResource = sourceResource;
             DestinationResource = destinationResource;
         }

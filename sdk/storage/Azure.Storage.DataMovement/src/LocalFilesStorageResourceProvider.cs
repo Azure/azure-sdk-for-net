@@ -33,7 +33,10 @@ namespace Azure.Storage.DataMovement
 
         private StorageResource FromTransferProperties(DataTransferProperties properties, bool getSource)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+			{
+				throw new ArgumentNullException(nameof(properties));
+			}
             Uri storedUri = getSource ? properties.SourceUri : properties.DestinationUri;
             return properties.IsContainer
                 ? new LocalDirectoryStorageResourceContainer(storedUri)

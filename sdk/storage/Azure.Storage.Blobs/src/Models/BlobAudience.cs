@@ -25,7 +25,14 @@ namespace Azure.Storage.Blobs.Models
         /// <remarks>Please use one of the static constant members over creating a custom value unless you have specific scenario for doing so.</remarks>
         public BlobAudience(string value)
         {
-            Argument.AssertNotNullOrEmpty(value, nameof(value));
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
+			if (value.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(value));
+			}
             _value = value;
         }
 

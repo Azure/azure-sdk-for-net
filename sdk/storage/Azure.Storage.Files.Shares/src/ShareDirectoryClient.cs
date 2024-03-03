@@ -357,7 +357,10 @@ namespace Azure.Storage.Files.Shares
             ClientDiagnostics diagnostics,
             ShareClientOptions options)
         {
-            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
+            if (directoryUri == null)
+			{
+				throw new ArgumentNullException(nameof(directoryUri));
+			}
             options ??= new ShareClientOptions();
             _uri = directoryUri;
             _clientConfiguration = new ShareClientConfiguration(
@@ -402,7 +405,10 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
+            if (directoryUri == null)
+			{
+				throw new ArgumentNullException(nameof(directoryUri));
+			}
             options ??= new ShareClientOptions();
             _uri = directoryUri;
             _clientConfiguration = new ShareClientConfiguration(

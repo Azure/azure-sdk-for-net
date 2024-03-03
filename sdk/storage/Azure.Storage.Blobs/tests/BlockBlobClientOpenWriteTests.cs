@@ -25,7 +25,10 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override BlockBlobClient GetResourceClient(BlobContainerClient container, string resourceName = null, BlobClientOptions options = null)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
 
             string blobName = resourceName ?? GetNewResourceName();
 
@@ -39,8 +42,14 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task ModifyAsync(BlockBlobClient client, Stream data)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(data, nameof(data));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             // open write doesn't support modification, we need to manually edit the blob
 

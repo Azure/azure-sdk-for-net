@@ -177,11 +177,20 @@ namespace Azure.Storage.DataMovement.Tests
         /// <returns></returns>
         private List<HttpRange> GetRanges(long blockSize, long expectedLength)
         {
-            Argument.AssertNotDefault(ref blockSize, name: nameof(blockSize));
-            Argument.AssertNotDefault(ref expectedLength, name: nameof(expectedLength));
+            if (blockSize.Equals(default))
+            {
+                throw new ArgumentException("Value cannot be empty.", nameof(blockSize));
+            }
+            if (expectedLength.Equals(default))
+            {
+                throw new ArgumentException("Value cannot be empty.", nameof(expectedLength));
+            }
             if (expectedLength < blockSize)
             {
-                Argument.AssertInRange(blockSize, expectedLength, default, nameof(blockSize));
+                if (blockSize < expectedLength)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(blockSize), "Value is less than the minimum allowed.");
+                }
             }
             List<HttpRange> ranges = new List<HttpRange>();
 

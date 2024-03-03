@@ -376,7 +376,10 @@ namespace Azure.Storage.Blobs.Specialized
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(blobUri, nameof(blobUri));
+            if (blobUri == null)
+			{
+				throw new ArgumentNullException(nameof(blobUri));
+			}
             options ??= new BlobClientOptions();
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))

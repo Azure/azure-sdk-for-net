@@ -69,7 +69,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override void Serialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
             BinaryWriter writer = new(stream);
@@ -108,7 +111,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal static ShareFileDestinationCheckpointData Deserialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
             BinaryReader reader = new BinaryReader(stream);
 

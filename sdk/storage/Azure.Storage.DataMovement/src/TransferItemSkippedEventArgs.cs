@@ -52,8 +52,14 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(sourceResource, nameof(sourceResource));
-            Argument.AssertNotNull(destinationResource, nameof(destinationResource));
+            if (sourceResource == null)
+			{
+				throw new ArgumentNullException(nameof(sourceResource));
+			}
+            if (destinationResource == null)
+			{
+				throw new ArgumentNullException(nameof(destinationResource));
+			}
             SourceResource = sourceResource;
             DestinationResource = destinationResource;
         }

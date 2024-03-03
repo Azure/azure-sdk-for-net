@@ -95,16 +95,62 @@ namespace Azure.Storage.DataMovement.JobPlan
             StorageResourceCheckpointData sourceCheckpointData,
             StorageResourceCheckpointData destinationCheckpointData)
         {
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            Argument.AssertNotNullOrEmpty(sourceProviderId, nameof(sourceProviderId));
-            Argument.AssertNotNullOrEmpty(destinationProviderId, nameof(destinationProviderId));
-            Argument.AssertNotNull(jobStatus, nameof(jobStatus));
-            Argument.AssertNotNull(createTime, nameof(createTime));
-            Argument.AssertNotNullOrEmpty(parentSourcePath, nameof(parentSourcePath));
-            Argument.AssertNotNullOrEmpty(parentDestinationPath, nameof(parentDestinationPath));
-            Argument.AssertNotNull(sourceCheckpointData, nameof(sourceCheckpointData));
-            Argument.AssertNotNull(destinationCheckpointData, nameof(destinationCheckpointData));
+            if (version == null)
+			{
+				throw new ArgumentNullException(nameof(version));
+			}
+            if (transferId == null)
+			{
+				throw new ArgumentNullException(nameof(transferId));
+			}
+			if (transferId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(transferId));
+			}
+            if (sourceProviderId == null)
+			{
+				throw new ArgumentNullException(nameof(sourceProviderId));
+			}
+			if (sourceProviderId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(sourceProviderId));
+			}
+            if (destinationProviderId == null)
+			{
+				throw new ArgumentNullException(nameof(destinationProviderId));
+			}
+			if (destinationProviderId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(destinationProviderId));
+			}
+            if (jobStatus == null)
+			{
+				throw new ArgumentNullException(nameof(jobStatus));
+			}
+            if (parentSourcePath == null)
+			{
+				throw new ArgumentNullException(nameof(parentSourcePath));
+			}
+			if (parentSourcePath.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(parentSourcePath));
+			}
+            if (parentDestinationPath == null)
+			{
+				throw new ArgumentNullException(nameof(parentDestinationPath));
+			}
+			if (parentDestinationPath.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(parentDestinationPath));
+			}
+            if (sourceCheckpointData == null)
+			{
+				throw new ArgumentNullException(nameof(sourceCheckpointData));
+			}
+            if (destinationCheckpointData == null)
+			{
+				throw new ArgumentNullException(nameof(destinationCheckpointData));
+			}
 
             if (sourceProviderId.Length > DataMovementConstants.JobPlanFile.ProviderIdMaxLength)
             {
@@ -163,7 +209,10 @@ namespace Azure.Storage.DataMovement.JobPlan
 
         public void Serialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
             int currentVariableLengthIndex = DataMovementConstants.JobPlanFile.VariableLengthStartIndex;
             BinaryWriter writer = new BinaryWriter(stream);
@@ -222,7 +271,10 @@ namespace Azure.Storage.DataMovement.JobPlan
 
         public static JobPlanHeader Deserialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
             BinaryReader reader = new BinaryReader(stream);
             reader.BaseStream.Position = 0;

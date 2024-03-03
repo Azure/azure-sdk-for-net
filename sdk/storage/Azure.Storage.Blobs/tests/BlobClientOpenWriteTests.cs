@@ -42,7 +42,10 @@ namespace Azure.Storage.Blobs.Tests
         #region Client-Specific Impl
         protected override BlobClient GetResourceClient(BlobContainerClient container, string resourceName = null, BlobClientOptions options = null)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
 
             string blobName = resourceName ?? GetNewResourceName();
 
@@ -57,8 +60,14 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task ModifyAsync(BlobClient client, Stream data)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(data, nameof(data));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             // need a block blob client to modify
             var blockClient = ClientBuilder.ToBlockBlobClient(client);

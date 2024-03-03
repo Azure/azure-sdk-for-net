@@ -59,9 +59,23 @@ namespace Azure.Storage.DataMovement.JobPlan
             string id,
             int jobPartNumber)
         {
-            Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(jobPartNumber, nameof(jobPartNumber));
+            if (checkpointerPath is null)
+            {
+                throw new ArgumentNullException(nameof(checkpointerPath));
+            }
+            if (checkpointerPath.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(checkpointerPath));
+            }
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
+
             PrefixPath = checkpointerPath;
             Id = id;
             JobPartNumber = jobPartNumber;
@@ -73,7 +87,14 @@ namespace Azure.Storage.DataMovement.JobPlan
         public JobPartPlanFileName(string fullPath)
         {
             // Check if empty
-            Argument.CheckNotNullOrEmpty(fullPath, nameof(fullPath));
+            if (fullPath is null)
+            {
+                throw new ArgumentNullException(nameof(fullPath));
+            }
+            if (fullPath.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fullPath));
+            }
 
             PrefixPath = Path.GetDirectoryName(fullPath);
             if (!Path.HasExtension(fullPath) ||

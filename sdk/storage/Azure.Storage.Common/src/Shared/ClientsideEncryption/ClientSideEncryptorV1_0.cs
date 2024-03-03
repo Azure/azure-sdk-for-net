@@ -19,7 +19,10 @@ namespace Azure.Storage.Cryptography
 
         public ClientSideEncryptorV1_0(ClientSideEncryptionOptions options)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
 #pragma warning disable CS0618 // obsolete
             if (options.EncryptionVersion != ClientSideEncryptionVersion.V1_0)
             {

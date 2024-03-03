@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
-using Azure.Core;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -59,7 +59,10 @@ namespace Azure.Storage.Queues
             CancellationToken cancellationToken)
             : base(isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNull(queueClient, nameof(queueClient));
+            if (queueClient == null)
+			{
+				throw new ArgumentNullException(nameof(queueClient));
+			}
             Queue = queueClient;
             ReceivedMessage = receivedMessage;
             PeekedMessage = peekedMessage;

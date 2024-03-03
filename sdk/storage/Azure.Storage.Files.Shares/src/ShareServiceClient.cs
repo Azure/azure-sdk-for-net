@@ -316,7 +316,10 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            if (serviceUri == null)
+			{
+				throw new ArgumentNullException(nameof(serviceUri));
+			}
             options ??= new ShareClientOptions();
             _uri = serviceUri;
             _clientConfiguration = new ShareClientConfiguration(

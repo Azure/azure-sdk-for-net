@@ -432,7 +432,10 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             ClientSideEncryptionOptions clientSideEncryption)
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            if (serviceUri == null)
+			{
+				throw new ArgumentNullException(nameof(serviceUri));
+			}
             _uri = serviceUri;
             _clientConfiguration = clientConfiguration;
             _authenticationPolicy = authentication;

@@ -70,7 +70,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         protected override DataLakeFileClient GetResourceClient(DataLakeFileSystemClient container, string resourceName = null, DataLakeClientOptions options = null)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
 
             string fileName = resourceName ?? GetNewResourceName();
 

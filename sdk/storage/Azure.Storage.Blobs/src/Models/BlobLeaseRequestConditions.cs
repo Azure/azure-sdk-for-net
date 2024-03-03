@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -24,7 +24,10 @@ namespace Azure.Storage.Blobs.Models
 
         internal BlobLeaseRequestConditions(BlobLeaseRequestConditions deepCopySource)
         {
-            Argument.AssertNotNull(deepCopySource, nameof(deepCopySource));
+            if (deepCopySource == null)
+			{
+				throw new ArgumentNullException(nameof(deepCopySource));
+			}
 
             TagConditions = deepCopySource.TagConditions;
 

@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -161,23 +160,49 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResource DestinationResource = default;
             if (transferType == TransferDirection.Download)
             {
-                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
-                Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
+                if (sourceContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(sourceContainer));
+                }
+                if (localDirectory == null)
+                {
+                    throw new ArgumentNullException(nameof(localDirectory));
+                }
+                if (localDirectory.Length == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty string.", nameof(localDirectory));
+                }
                 SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer, blobProvider);
                 DestinationResource ??= localProvider.FromFile(Path.Combine(localDirectory, storagePath));
             }
             else if (transferType == TransferDirection.Copy)
             {
-                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
-                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
+                if (sourceContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(sourceContainer));
+                }
+                if (destinationContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(destinationContainer));
+                }
                 SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer, blobProvider);
                 DestinationResource ??= CreateBlobDestinationResource(destinationContainer, blobProvider, storagePath);
             }
             else
             {
                 // Default to Upload
-                Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
-                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
+                if (localDirectory == null)
+                {
+                    throw new ArgumentNullException(nameof(localDirectory));
+                }
+                if (localDirectory.Length == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty string.", nameof(localDirectory));
+                }
+                if (destinationContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(destinationContainer));
+                }
                 SourceResource ??= await CreateLocalFileSourceResourceAsync(size, localDirectory, localProvider);
                 DestinationResource ??= CreateBlobDestinationResource(destinationContainer, blobProvider, storagePath);
             }
@@ -203,7 +228,10 @@ namespace Azure.Storage.DataMovement.Tests
             BlobsStorageResourceProvider blobProvider = default,
             LocalFilesStorageResourceProvider localProvider = default)
         {
-            Argument.AssertNotNull(manager, nameof(manager));
+            if (manager == null)
+            {
+                throw new ArgumentNullException(nameof(manager));
+            }
             if (sourceResource == default && destinationResource == default)
             {
                 (StorageResource source, StorageResource dest) = await CreateStorageResourcesAsync(
@@ -686,8 +714,18 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResource DestinationResource = default;
             if (transferType == TransferDirection.Download)
             {
-                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
-                Argument.AssertNotNullOrEmpty(destinationDirectoryPath, nameof(destinationDirectoryPath));
+                if (sourceContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(sourceContainer));
+                }
+                if (destinationDirectoryPath == null)
+                {
+                    throw new ArgumentNullException(nameof(destinationDirectoryPath));
+                }
+                if (destinationDirectoryPath.Length == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty string.", nameof(destinationDirectoryPath));
+                }
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,
                     blobCount: transferCount,
@@ -698,8 +736,14 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else if (transferType == TransferDirection.Copy)
             {
-                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
-                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
+                if (sourceContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(sourceContainer));
+                }
+                if (destinationContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(destinationContainer));
+                }
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
                     BlobDirectoryPrefix = GetNewBlobDirectoryName(),
@@ -715,8 +759,18 @@ namespace Azure.Storage.DataMovement.Tests
             else
             {
                 // Default to Upload
-                Argument.AssertNotNullOrEmpty(sourceDirectoryPath, nameof(sourceDirectoryPath));
-                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
+                if (sourceDirectoryPath == null)
+                {
+                    throw new ArgumentNullException(nameof(sourceDirectoryPath));
+                }
+                if (sourceDirectoryPath.Length == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty string.", nameof(sourceDirectoryPath));
+                }
+                if (destinationContainer == null)
+                {
+                    throw new ArgumentNullException(nameof(destinationContainer));
+                }
                 SourceResource ??= await CreateLocalDirectorySourceResourceAsync(
                     size: size,
                     fileCount: transferCount,
@@ -753,7 +807,10 @@ namespace Azure.Storage.DataMovement.Tests
             BlobsStorageResourceProvider blobProvider = default,
             LocalFilesStorageResourceProvider localProvider = default)
         {
-            Argument.AssertNotNull(manager, nameof(manager));
+            if (manager == null)
+            {
+                throw new ArgumentNullException(nameof(manager));
+            }
             if (sourceResource == default && destinationResource == default)
             {
                 (StorageResource source, StorageResource dest) = await CreateStorageResourceContainersAsync(

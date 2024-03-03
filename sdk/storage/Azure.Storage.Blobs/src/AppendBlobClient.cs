@@ -1219,7 +1219,10 @@ namespace Azure.Storage.Blobs.Specialized
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Argument.AssertNotNull(content, nameof(content));
+                if (content == null)
+                {
+                    throw new ArgumentNullException(nameof(content));
+                }
 
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),

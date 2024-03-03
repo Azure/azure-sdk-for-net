@@ -63,8 +63,10 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
-            Argument.AssertNotNull(behaviors, nameof(behaviors));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (clientDiagnostics == null)
+			{
+				throw new ArgumentNullException(nameof(clientDiagnostics));
+			}
 
             _queuePutBlockTask = behaviors.QueuePutBlockTask
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueuePutBlockTask));

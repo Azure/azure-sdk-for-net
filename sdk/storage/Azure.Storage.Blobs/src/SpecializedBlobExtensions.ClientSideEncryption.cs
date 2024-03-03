@@ -91,13 +91,25 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             // argument validation
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
             ClientSideEncryptionOptions operationEncryptionOptions = encryptionOptionsOverride
                 ?? client.ClientSideEncryption
                 ?? throw new ArgumentException($"{nameof(ClientSideEncryptionOptions)} are not configured on this client and none were provided for the operation.");
-            Argument.AssertNotNull(operationEncryptionOptions.KeyEncryptionKey, nameof(ClientSideEncryptionOptions.KeyEncryptionKey));
-            Argument.AssertNotNull(operationEncryptionOptions.KeyResolver, nameof(ClientSideEncryptionOptions.KeyResolver));
-            Argument.AssertNotNull(operationEncryptionOptions.KeyWrapAlgorithm, nameof(ClientSideEncryptionOptions.KeyWrapAlgorithm));
+            if (operationEncryptionOptions.KeyEncryptionKey == null)
+			{
+				throw new ArgumentNullException(nameof(ClientSideEncryptionOptions.KeyEncryptionKey));
+			}
+            if (operationEncryptionOptions.KeyResolver == null)
+			{
+				throw new ArgumentNullException(nameof(ClientSideEncryptionOptions.KeyResolver));
+			}
+            if (operationEncryptionOptions.KeyWrapAlgorithm == null)
+			{
+				throw new ArgumentNullException(nameof(ClientSideEncryptionOptions.KeyWrapAlgorithm));
+			}
 
             using (client.ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobClient)))
             {

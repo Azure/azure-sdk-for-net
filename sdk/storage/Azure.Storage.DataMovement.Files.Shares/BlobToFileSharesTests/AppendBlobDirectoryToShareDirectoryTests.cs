@@ -240,7 +240,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             ShareDirectoryClient directory,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(directory, nameof(directory));
+            if (directory == null)
+			{
+				throw new ArgumentNullException(nameof(directory));
+			}
 
             Queue<ShareDirectoryClient> toScan = new();
             toScan.Enqueue(directory);

@@ -195,7 +195,10 @@ namespace Azure.Storage.Blobs
 
         internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange, string rawEncryptionData)
         {
-            Argument.AssertNotNull(rawEncryptionData, nameof(rawEncryptionData));
+            if (rawEncryptionData == null)
+			{
+				throw new ArgumentNullException(nameof(rawEncryptionData));
+			}
             EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(rawEncryptionData);
             return GetEncryptedBlobRange(originalRange, encryptionData);
         }

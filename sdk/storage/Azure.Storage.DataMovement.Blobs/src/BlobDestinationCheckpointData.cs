@@ -65,7 +65,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override void Serialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
             int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             BinaryWriter writer = new BinaryWriter(stream);
@@ -111,7 +114,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal static BlobDestinationCheckpointData Deserialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
             BinaryReader reader = new BinaryReader(stream);
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement.JobPlan
 {
@@ -46,9 +45,26 @@ namespace Azure.Storage.DataMovement.JobPlan
             string id,
             Stream headerStream)
         {
-            Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(headerStream, nameof(headerStream));
+            if (checkpointerPath == null)
+			{
+				throw new ArgumentNullException(nameof(checkpointerPath));
+			}
+			if (checkpointerPath.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(checkpointerPath));
+			}
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+			if (id.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+			}
+            if (headerStream == null)
+			{
+				throw new ArgumentNullException(nameof(headerStream));
+			}
 
             string fileName = $"{id}{DataMovementConstants.JobPlanFile.FileExtension}";
             string filePath = Path.Combine(checkpointerPath, fileName);
@@ -64,7 +80,14 @@ namespace Azure.Storage.DataMovement.JobPlan
 
         public static JobPlanFile LoadExistingJobPlanFile(string fullPath)
         {
-            Argument.AssertNotNullOrEmpty(fullPath, nameof(fullPath));
+            if (fullPath == null)
+			{
+				throw new ArgumentNullException(nameof(fullPath));
+			}
+			if (fullPath.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(fullPath));
+			}
 
             // File name is just the transfer id
             string transferId = Path.GetFileNameWithoutExtension(fullPath);

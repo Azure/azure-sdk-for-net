@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -13,8 +14,14 @@ namespace Azure.Storage.DataMovement.Tests
 
         public TransferManagerFactory(TransferManagerOptions options)
         {
-            Argument.CheckNotNull(options, nameof(options));
-            Argument.CheckNotNull(options.CheckpointerOptions, nameof(options.CheckpointerOptions));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+            if (options.CheckpointerOptions == null)
+            {
+                throw new ArgumentNullException(nameof(options.CheckpointerOptions));
+            }
             _options = options;
         }
 
@@ -23,7 +30,14 @@ namespace Azure.Storage.DataMovement.Tests
             if (dataTransfers != default)
             {
                 // populate checkpointer
-                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointerOptions.CheckpointerPath, nameof(dataTransfers));
+                if (_options.CheckpointerOptions.CheckpointerPath is null)
+                {
+                    throw new ArgumentNullException(nameof(dataTransfers));
+                }
+                if (string.IsNullOrWhiteSpace(_options.CheckpointerOptions.CheckpointerPath))
+                {
+                    throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(dataTransfers));
+                }
                 LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointerOptions.CheckpointerPath);
                 checkpointerFactory.BuildCheckpointer(dataTransfers);
             }

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -44,7 +43,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         protected override DataLakeFileClient GetResourceClient(DataLakeFileSystemClient container, string resourceName = null, DataLakeClientOptions options = null)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
 
             string fileName = resourceName ?? GetNewResourceName();
 

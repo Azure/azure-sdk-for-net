@@ -44,9 +44,26 @@ namespace Azure.Storage.Tests.Shared
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            Argument.AssertNotNull(buffer, nameof(buffer));
-            Argument.AssertInRange(offset, 0, buffer.Length - 1, nameof(offset));
-            Argument.AssertInRange(count, 0, buffer.Length - offset, nameof(count));
+            if (buffer == null)
+			{
+				throw new ArgumentNullException(nameof(buffer));
+            }
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Value is less than the minimum allowed.");
+            }
+            if (offset > buffer.Length - 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset), "Value is greater than the maximum allowed.");
+            }
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value is less than the minimum allowed.");
+            }
+            if (count > buffer.Length - offset)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), "Value is greater than the maximum allowed.");
+            }
 
             int dataOffset = (int) (Position % _data.Length);
             int toRead = (int)Math.Min(Math.Min(count, _length - Position), _data.Length - dataOffset);

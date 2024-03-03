@@ -43,7 +43,14 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
             : base(isRunningSynchronously, cancellationToken)
         {
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            if (transferId == null)
+            {
+                throw new ArgumentNullException(nameof(transferId));
+            }
+            if (transferId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(transferId));
+            }
             TransferId = transferId;
         }
     }

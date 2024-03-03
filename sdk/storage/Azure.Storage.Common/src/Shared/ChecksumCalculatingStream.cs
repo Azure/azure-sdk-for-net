@@ -63,8 +63,14 @@ namespace Azure.Storage
 
         private ChecksumCalculatingStream(Stream stream, AppendChecksumCalculation appendChecksumCalculation, bool isReadMode)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
-            Argument.AssertNotNull(appendChecksumCalculation, nameof(appendChecksumCalculation));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
+            if (appendChecksumCalculation == null)
+			{
+				throw new ArgumentNullException(nameof(appendChecksumCalculation));
+			}
 
             CanRead = isReadMode;
             CanWrite = !isReadMode;
@@ -114,7 +120,14 @@ namespace Azure.Storage
             CancellationToken cancellationToken)
         {
             AssertCanRead();
-            Argument.AssertInRange(_stream.Position, _initialPosition, _nextToBeChecksummedPosition, nameof(Stream.Position));
+            if (_stream.Position < _initialPosition)
+            {
+                throw new ArgumentOutOfRangeException(nameof(Stream.Position), "Value is less than the minimum allowed.");
+            }
+            if (_stream.Position > _nextToBeChecksummedPosition)
+            {
+                throw new ArgumentOutOfRangeException(nameof(Stream.Position), "Value is greater than the maximum allowed.");
+            }
             long startingPosition = _stream.Position;
             int read = await _stream.ReadInternal(buffer, offset, count, async, cancellationToken).ConfigureAwait(false);
 

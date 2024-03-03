@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -56,11 +55,17 @@ namespace Azure.Storage.DataMovement
         {
             if (success && exception != null)
             {
-                Argument.AssertNull(exception, nameof(exception));
+                if (exception is not null)
+                {
+                    throw new ArgumentException("Value must be null.", nameof(exception));
+                }
             }
             else if (!success && exception == null)
             {
-                Argument.AssertNotNull(exception, nameof(exception));
+                if (exception == null)
+                {
+                    throw new ArgumentNullException(nameof(exception));
+                }
             }
             Success = success;
             Offset = offset;

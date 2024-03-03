@@ -46,7 +46,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override ShareFileClient GetResourceClient(ShareClient container, string resourceName = null, ShareClientOptions options = null)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
 
             string fileName = resourceName ?? GetNewResourceName();
 

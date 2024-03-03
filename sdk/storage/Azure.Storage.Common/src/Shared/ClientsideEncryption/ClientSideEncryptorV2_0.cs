@@ -21,9 +21,18 @@ namespace Azure.Storage.Cryptography
 
         public ClientSideEncryptorV2_0(ClientSideEncryptionOptions options)
         {
-            Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(options.KeyEncryptionKey, nameof(options.KeyEncryptionKey));
-            Argument.AssertNotNull(options.KeyWrapAlgorithm, nameof(options.KeyWrapAlgorithm));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
+            if (options.KeyEncryptionKey == null)
+			{
+				throw new ArgumentNullException(nameof(options.KeyEncryptionKey));
+			}
+            if (options.KeyWrapAlgorithm == null)
+			{
+				throw new ArgumentNullException(nameof(options.KeyWrapAlgorithm));
+			}
             if (options.EncryptionVersion != ClientSideEncryptionVersion.V2_0)
             {
                 Errors.InvalidArgument(nameof(options.EncryptionVersion));

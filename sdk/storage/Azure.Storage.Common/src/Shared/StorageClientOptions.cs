@@ -49,8 +49,14 @@ namespace Azure.Storage
         /// <returns>An authentication policy.</returns>
         public static HttpPipelinePolicy AsPolicy<TUriBuilder>(this AzureSasCredential credential, Uri resourceUri)
         {
-            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (resourceUri == null)
+			{
+				throw new ArgumentNullException(nameof(resourceUri));
+			}
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
             var queryParameters = resourceUri.GetQueryParameters();
             if (queryParameters.ContainsKey("sig"))
             {

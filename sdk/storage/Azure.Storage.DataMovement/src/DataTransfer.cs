@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -56,8 +57,18 @@ namespace Azure.Storage.DataMovement
             TransferManager transferManager,
             DataTransferStatus status = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(transferManager, nameof(transferManager));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
+            if (transferManager == null)
+			{
+				throw new ArgumentNullException(nameof(transferManager));
+			}
             status ??= new DataTransferStatus();
             _state = new DataTransferInternalState(id, status);
             TransferManager = transferManager;

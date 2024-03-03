@@ -369,7 +369,10 @@ namespace Azure.Storage.Queues
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(queueUri, nameof(queueUri));
+            if (queueUri == null)
+			{
+				throw new ArgumentNullException(nameof(queueUri));
+			}
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
@@ -3288,7 +3291,10 @@ namespace Azure.Storage.Queues.Specialized
         /// <returns>A new <see cref="QueueServiceClient"/> instance.</returns>
         public static QueueServiceClient GetParentQueueServiceClient(this QueueClient client)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
             return client.GetParentQueueServiceClientCore();
         }
     }

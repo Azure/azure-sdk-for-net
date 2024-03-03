@@ -226,7 +226,10 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, BlobClientOptions options = default)
         {
-            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            if (blobContainerUri == null)
+			{
+				throw new ArgumentNullException(nameof(blobContainerUri));
+			}
             _uri = blobContainerUri;
             _authenticationPolicy = null;
             options ??= new BlobClientOptions();
@@ -269,7 +272,10 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobContainerClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
         {
-            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            if (blobContainerUri == null)
+			{
+				throw new ArgumentNullException(nameof(blobContainerUri));
+			}
             HttpPipelinePolicy authPolicy = credential.AsPolicy();
             _uri = blobContainerUri;
             _authenticationPolicy = authPolicy;
@@ -315,7 +321,10 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public BlobContainerClient(Uri blobContainerUri, AzureSasCredential credential, BlobClientOptions options = default)
         {
-            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            if (blobContainerUri == null)
+			{
+				throw new ArgumentNullException(nameof(blobContainerUri));
+			}
             _uri = blobContainerUri;
             _authenticationPolicy = credential.AsPolicy<BlobUriBuilder>(blobContainerUri);
             options ??= new BlobClientOptions();
@@ -357,7 +366,10 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
-            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
+            if (blobContainerUri == null)
+			{
+				throw new ArgumentNullException(nameof(blobContainerUri));
+			}
             _uri = blobContainerUri;
 
             string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();

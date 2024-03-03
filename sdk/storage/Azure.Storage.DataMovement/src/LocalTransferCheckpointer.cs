@@ -61,9 +61,22 @@ namespace Azure.Storage.DataMovement
             StorageResource destination,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(destination, nameof(destination));
+            if (transferId == null)
+			{
+				throw new ArgumentNullException(nameof(transferId));
+			}
+			if (transferId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(transferId));
+			}
+            if (source == null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+            if (destination == null)
+			{
+				throw new ArgumentNullException(nameof(destination));
+			}
 
             if (_transferStates.ContainsKey(transferId))
             {
@@ -104,9 +117,18 @@ namespace Azure.Storage.DataMovement
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            Argument.AssertNotNull(partNumber, nameof(partNumber));
-            Argument.AssertNotNull(headerStream, nameof(headerStream));
+            if (transferId == null)
+			{
+				throw new ArgumentNullException(nameof(transferId));
+			}
+			if (transferId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(transferId));
+			}
+            if (headerStream == null)
+			{
+				throw new ArgumentNullException(nameof(headerStream));
+			}
             headerStream.Position = 0;
 
             JobPartPlanFile mappedFile = await JobPartPlanFile.CreateJobPartPlanFileAsync(
@@ -244,7 +266,14 @@ namespace Azure.Storage.DataMovement
 
         public override Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(transferId, nameof(transferId));
+            if (transferId == null)
+            {
+                throw new ArgumentNullException(nameof(transferId));
+            }
+            if (string.IsNullOrWhiteSpace(transferId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(transferId));
+            }
 
             List<string> filesToDelete = new List<string>();
 

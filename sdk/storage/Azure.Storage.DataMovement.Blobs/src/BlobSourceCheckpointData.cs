@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -18,7 +18,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override void Serialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
@@ -30,7 +33,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal static BlobSourceCheckpointData Deserialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
             BinaryReader reader = new BinaryReader(stream);
 
             // Version

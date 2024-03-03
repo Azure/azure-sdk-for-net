@@ -101,8 +101,18 @@ namespace Azure.Storage.Shared
             bool async,
             CancellationToken cancellationToken)
         {
-            Argument.AssertInRange(minCount, 0L, maxCount, nameof(minCount));
-            Argument.AssertInRange(maxCount, minCount, long.MaxValue, nameof(maxCount));
+            if (minCount < 0L)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minCount), "Value is less than the minimum allowed.");
+            }
+            if (minCount > maxCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minCount), "Value is greater than the maximum allowed.");
+            }
+            if (maxCount > long.MaxValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxCount), "Value is less than the minimum allowed.");
+            }
 
             long totalRead = 0;
 

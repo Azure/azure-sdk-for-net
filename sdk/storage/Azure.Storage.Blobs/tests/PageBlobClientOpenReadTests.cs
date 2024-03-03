@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -19,7 +19,10 @@ namespace Azure.Storage.Blobs.Tests
         #region Client-Specific Impl
         protected override PageBlobClient GetResourceClient(BlobContainerClient container, string resourceName = null, BlobClientOptions options = null)
         {
-            Argument.AssertNotNull(container, nameof(container));
+            if (container == null)
+			{
+				throw new ArgumentNullException(nameof(container));
+			}
 
             string blobName = resourceName ?? GetNewResourceName();
 
@@ -34,8 +37,14 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task StageDataAsync(PageBlobClient client, Stream data)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(data, nameof(data));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using Stream writeStream = await client.OpenWriteAsync(overwrite: true, position: 0, new PageBlobOpenWriteOptions
             {
@@ -46,8 +55,14 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task ModifyDataAsync(PageBlobClient client, Stream data, ModifyDataMode mode)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(data, nameof(data));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             long position = mode switch
             {

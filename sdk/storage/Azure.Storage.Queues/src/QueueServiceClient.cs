@@ -284,7 +284,10 @@ namespace Azure.Storage.Queues
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+            if (serviceUri == null)
+			{
+				throw new ArgumentNullException(nameof(serviceUri));
+			}
             _uri = serviceUri;
             options ??= new QueueClientOptions();
 
@@ -317,8 +320,14 @@ namespace Azure.Storage.Queues
             Uri serviceUri,
             QueueClientConfiguration clientConfiguration)
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
-            Argument.AssertNotNull(clientConfiguration, nameof(clientConfiguration));
+            if (serviceUri == null)
+			{
+				throw new ArgumentNullException(nameof(serviceUri));
+			}
+            if (clientConfiguration == null)
+			{
+				throw new ArgumentNullException(nameof(clientConfiguration));
+			}
             _uri = serviceUri;
             _clientConfiguration = clientConfiguration;
             _serviceRestClient = BuildServiceRestClient();

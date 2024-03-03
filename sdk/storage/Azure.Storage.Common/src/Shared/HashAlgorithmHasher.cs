@@ -29,7 +29,10 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
 
 #if NET5_0_OR_GREATER
             return async

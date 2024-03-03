@@ -126,9 +126,18 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
-            Argument.AssertNotNullOrEmpty(ranges, nameof(ranges));
-            Argument.AssertNotNull(behaviors, nameof(behaviors));
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (ranges is null)
+            {
+                throw new ArgumentNullException(nameof(ranges));
+            }
+            if (ranges.Count == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(ranges));
+            }
+            if (clientDiagnostics == null)
+			{
+				throw new ArgumentNullException(nameof(clientDiagnostics));
+			}
 
             // Set values
             _copyToDestinationFile = behaviors.CopyToDestinationFile

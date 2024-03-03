@@ -113,7 +113,10 @@ namespace Azure.Storage.Blobs
                     : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
-            Argument.AssertNotNull(transferValidation, nameof(transferValidation));
+            if (transferValidation == null)
+			{
+				throw new ArgumentNullException(nameof(transferValidation));
+			}
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
             if (!transferValidation.AutoValidateChecksum)
             {

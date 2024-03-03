@@ -53,7 +53,8 @@ namespace Azure.Storage.Shared
                 _progressHandler = new AggregatingProgressIncrementer(progressHandler);
             }
 
-            _checksumAlgorithm = Argument.CheckNotNull(transferValidation, nameof(transferValidation)).ChecksumAlgorithm;
+            transferValidation = transferValidation ?? throw new ArgumentNullException(nameof(transferValidation));
+            _checksumAlgorithm = transferValidation.ChecksumAlgorithm;
             if (!transferValidation.PrecalculatedChecksum.IsEmpty)
             {
                 if (UseMasterCrc)

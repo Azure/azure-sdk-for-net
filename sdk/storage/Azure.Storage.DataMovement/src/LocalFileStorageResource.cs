@@ -46,7 +46,15 @@ namespace Azure.Storage.DataMovement
         /// <param name="path"></param>
         public LocalFileStorageResource(string path)
         {
-            Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(path));
+            }
             UriBuilder uriBuilder = new UriBuilder()
             {
                 Scheme = Uri.UriSchemeFile,
@@ -62,8 +70,19 @@ namespace Azure.Storage.DataMovement
         /// <param name="uri"></param>
         internal LocalFileStorageResource(Uri uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
+            if (uri == null)
+			{
+				throw new ArgumentNullException(nameof(uri));
+            }
+            if (uri.AbsoluteUri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
+            if (string.IsNullOrWhiteSpace(uri.AbsoluteUri))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(uri));
+            }
             _uri = uri;
         }
 

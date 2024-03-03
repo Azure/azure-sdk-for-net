@@ -152,7 +152,10 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferItemCompletedEventArgs> singleTransferEventHandler,
             ClientDiagnostics clientDiagnostics)
         {
-            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
+            if (clientDiagnostics == null)
+			{
+				throw new ArgumentNullException(nameof(clientDiagnostics));
+			}
 
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
             _dataTransfer.TransferStatus.TrySetTransferStateChange(DataTransferState.Queued);

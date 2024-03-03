@@ -511,7 +511,10 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource)
             {
-                Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+                if (transferProperties == null)
+                {
+                    throw new ArgumentNullException(nameof(transferProperties));
+                }
 
                 if (isSource)
                 {

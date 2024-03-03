@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -27,15 +26,18 @@ namespace Azure.Storage
             StorageTransferOptions value,
             string name)
         {
-            Argument.AssertNotNull(
-                value.InitialTransferSize,
-                $"{name}.{nameof(StorageTransferOptions.InitialTransferSize)}");
-            Argument.AssertNotNull(
-                value.MaximumTransferSize,
-                $"{name}.{nameof(StorageTransferOptions.MaximumTransferSize)}");
-            Argument.AssertNotNull(
-                value.MaximumConcurrency,
-                $"{name}.{nameof(StorageTransferOptions.MaximumConcurrency)}");
+            if (value.InitialTransferSize == null)
+            {
+                throw new ArgumentNullException($"{name}.{nameof(StorageTransferOptions.InitialTransferSize)}");
+            }
+            if (value.MaximumTransferSize == null)
+            {
+                throw new ArgumentNullException($"{name}.{nameof(StorageTransferOptions.MaximumTransferSize)}");
+            }
+            if (value.MaximumConcurrency == null)
+            {
+                throw new ArgumentNullException($"{name}.{nameof(StorageTransferOptions.MaximumConcurrency)}");
+            }
         }
 
         /// <summary>
@@ -70,23 +72,32 @@ namespace Azure.Storage
             long upperBoundMaximum = long.MaxValue,
             int upperBoundConcurrency = int.MaxValue)
         {
-            Argument.AssertInRange(
-                value.InitialTransferSize.Value,
-                1,
-                upperBoundInitial,
-                $"{name}.{nameof(StorageTransferOptions.InitialTransferSize)}");
+            if (value.InitialTransferSize.Value < 1)
+            {
+                throw new ArgumentOutOfRangeException($"{name}.{nameof(StorageTransferOptions.InitialTransferSize)}", "Value is less than the minimum allowed.");
+            }
+            if (value.InitialTransferSize.Value > upperBoundInitial)
+            {
+                throw new ArgumentOutOfRangeException($"{name}.{nameof(StorageTransferOptions.InitialTransferSize)}", "Value is greater than the maximum allowed.");
+            }
 
-            Argument.AssertInRange(
-                value.MaximumTransferSize.Value,
-                1,
-                upperBoundMaximum,
-                $"{name}.{nameof(StorageTransferOptions.MaximumTransferSize)}");
+            if (value.MaximumTransferSize.Value < 1)
+            {
+                throw new ArgumentOutOfRangeException($"{name}.{nameof(StorageTransferOptions.MaximumTransferSize)}", "Value is less than the minimum allowed.");
+            }
+            if (value.MaximumTransferSize.Value > upperBoundMaximum)
+            {
+                throw new ArgumentOutOfRangeException($"{name}.{nameof(StorageTransferOptions.MaximumTransferSize)}", "Value is greater than the maximum allowed.");
+            }
 
-            Argument.AssertInRange(
-                value.MaximumConcurrency.Value,
-                1,
-                upperBoundConcurrency,
-                $"{name}.{nameof(StorageTransferOptions.MaximumConcurrency)}");
+            if (value.MaximumConcurrency.Value < 1)
+            {
+                throw new ArgumentOutOfRangeException($"{name}.{nameof(StorageTransferOptions.MaximumConcurrency)}", "Value is less than the minimum allowed.");
+            }
+            if (value.MaximumConcurrency.Value > upperBoundConcurrency)
+            {
+                throw new ArgumentOutOfRangeException($"{name}.{nameof(StorageTransferOptions.MaximumConcurrency)}", "Value is greater than the maximum allowed.");
+            }
         }
     }
 }

@@ -6,10 +6,8 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
 
@@ -246,18 +244,12 @@ namespace Azure.Storage
         {
             // initialize isn't required for all services and can use a no-op; rest are required
             _initializeDestinationInternal = behaviors.InitializeDestination ?? InitializeNoOp;
-            _singleUploadStreamingInternal = Argument.CheckNotNull(
-                behaviors.SingleUploadStreaming, nameof(behaviors.SingleUploadStreaming));
-            _singleUploadBinaryDataInternal = Argument.CheckNotNull(
-                behaviors.SingleUploadBinaryData, nameof(behaviors.SingleUploadBinaryData));
-            _uploadPartitionStreamingInternal = Argument.CheckNotNull(
-                behaviors.UploadPartitionStreaming, nameof(behaviors.UploadPartitionStreaming));
-            _uploadPartitionBinaryDataInternal = Argument.CheckNotNull(
-                behaviors.UploadPartitionBinaryData, nameof(behaviors.UploadPartitionBinaryData));
-            _commitPartitionedUploadInternal = Argument.CheckNotNull(
-                behaviors.CommitPartitionedUpload, nameof(behaviors.CommitPartitionedUpload));
-            _createScope = Argument.CheckNotNull(
-                behaviors.Scope, nameof(behaviors.Scope));
+            _singleUploadStreamingInternal = behaviors.SingleUploadStreaming ?? throw new ArgumentNullException(nameof(behaviors.SingleUploadStreaming));
+            _singleUploadBinaryDataInternal = behaviors.SingleUploadBinaryData ?? throw new ArgumentNullException(nameof(behaviors.SingleUploadBinaryData));
+            _uploadPartitionStreamingInternal = behaviors.UploadPartitionStreaming ?? throw new ArgumentNullException(nameof(behaviors.UploadPartitionStreaming));
+            _uploadPartitionBinaryDataInternal = behaviors.UploadPartitionBinaryData ?? throw new ArgumentNullException(nameof(behaviors.UploadPartitionBinaryData));
+            _commitPartitionedUploadInternal = behaviors.CommitPartitionedUpload ?? throw new ArgumentNullException(nameof(behaviors.CommitPartitionedUpload));
+            _createScope = behaviors.Scope ?? throw new ArgumentNullException(nameof(behaviors.Scope));
 
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
@@ -292,8 +284,8 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            _validationAlgorithm = Argument.CheckNotNull(transferValidation, nameof(transferValidation))
-                .ChecksumAlgorithm.ResolveAuto();
+            transferValidation = transferValidation ?? throw new ArgumentNullException(nameof(transferValidation));
+            _validationAlgorithm = transferValidation.ChecksumAlgorithm.ResolveAuto();
             if (!transferValidation.PrecalculatedChecksum.IsEmpty)
             {
                 if (UseMasterCrc)
@@ -318,7 +310,10 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
             long length = content.ToMemory().Length;
@@ -418,7 +413,10 @@ namespace Azure.Storage
             bool async,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
             Errors.VerifyStreamPosition(content, nameof(content));
 
             if (content.CanSeek && content.Position > 0)
@@ -579,8 +577,14 @@ namespace Azure.Storage
                 bool async,
                 CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(validationOptions, nameof(validationOptions));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (validationOptions == null)
+            {
+                throw new ArgumentNullException(nameof(validationOptions));
+            }
 
             bool usingChecksumStream =
                 validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None &&

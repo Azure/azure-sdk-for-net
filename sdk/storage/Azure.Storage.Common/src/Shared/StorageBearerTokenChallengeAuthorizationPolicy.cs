@@ -27,7 +27,15 @@ namespace Azure.Storage
         /// <param name="enableTenantDiscovery"> </param>
         public StorageBearerTokenChallengeAuthorizationPolicy(TokenCredential credential, string scope, bool enableTenantDiscovery) : base(credential, scope)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            if (scope.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scope));
+            }
             _scopes = new[] { scope };
             _enableTenantDiscovery = enableTenantDiscovery;
         }
@@ -42,7 +50,10 @@ namespace Azure.Storage
             credential,
             scopes)
         {
-            Argument.AssertNotNull(scopes, nameof(scopes));
+            if (scopes == null)
+			{
+				throw new ArgumentNullException(nameof(scopes));
+			}
             _scopes = scopes.ToArray();
             _enableTenantDiscovery = enableTenantDiscovery;
         }

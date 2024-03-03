@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -49,7 +48,14 @@ namespace Azure.Storage.DataMovement.Tests
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null) : base(async, mode)
         {
-            Argument.CheckNotNullOrEmpty(expectedOverwriteExceptionMessage, nameof(expectedOverwriteExceptionMessage));
+            if (expectedOverwriteExceptionMessage == null)
+            {
+                throw new ArgumentNullException(nameof(expectedOverwriteExceptionMessage));
+            }
+            if (expectedOverwriteExceptionMessage.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(expectedOverwriteExceptionMessage));
+            }
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
             _expectedOverwriteExceptionMessage = expectedOverwriteExceptionMessage;
         }

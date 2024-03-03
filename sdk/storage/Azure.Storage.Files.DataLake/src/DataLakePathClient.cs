@@ -503,7 +503,10 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics diagnostics,
             DataLakeClientOptions options)
         {
-            Argument.AssertNotNull(pathUri, nameof(pathUri));
+            if (pathUri == null)
+			{
+				throw new ArgumentNullException(nameof(pathUri));
+			}
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
             _uri = pathUri;
@@ -566,7 +569,10 @@ namespace Azure.Storage.Files.DataLake
             AzureSasCredential sasCredential,
             TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(pathUri, nameof(pathUri));
+            if (pathUri == null)
+			{
+				throw new ArgumentNullException(nameof(pathUri));
+			}
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
             _uri = pathUri;

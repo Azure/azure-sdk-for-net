@@ -68,7 +68,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <inheritdoc />
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            if (info == null)
+			{
+				throw new ArgumentNullException(nameof(info));
+			}
             info.AddValue(nameof(ResourceUri), ResourceUri);
             info.AddValue(nameof(ExpectedETag), ExpectedETag);
             info.AddValue(nameof(ActualETag), ActualETag);

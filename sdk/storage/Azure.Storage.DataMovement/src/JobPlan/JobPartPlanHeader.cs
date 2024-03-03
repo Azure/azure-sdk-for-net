@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Core;
 
 namespace Azure.Storage.DataMovement.JobPlan
 {
@@ -90,14 +89,58 @@ namespace Azure.Storage.DataMovement.JobPlan
             byte priority,
             DataTransferStatus jobPartStatus)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            Argument.AssertNotNull(createTime, nameof(createTime));
-            Argument.AssertNotNullOrEmpty(sourceTypeId, nameof(sourceTypeId));
-            Argument.AssertNotNullOrWhiteSpace(destinationTypeId, nameof(destinationTypeId));
-            Argument.AssertNotNullOrEmpty(sourcePath, nameof(sourcePath));
-            Argument.AssertNotNullOrWhiteSpace(destinationPath, nameof(destinationPath));
-            Argument.AssertNotNull(jobPartStatus, nameof(jobPartStatus));
+            if (version is null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (version.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
+            }
+            if (transferId is null)
+            {
+                throw new ArgumentNullException(nameof(transferId));
+            }
+            if (transferId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(transferId));
+            }
+            if (sourceTypeId is null)
+            {
+                throw new ArgumentNullException(nameof(sourceTypeId));
+            }
+            if (sourceTypeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceTypeId));
+            }
+            if (destinationTypeId == null)
+            {
+                throw new ArgumentNullException(nameof(destinationTypeId));
+            }
+            if (string.IsNullOrWhiteSpace(destinationTypeId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(destinationTypeId));
+            }
+            if (sourcePath is null)
+            {
+                throw new ArgumentNullException(nameof(sourcePath));
+            }
+            if (sourcePath.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourcePath));
+            }
+            if (destinationPath == null)
+            {
+                throw new ArgumentNullException(nameof(destinationPath));
+            }
+            if (string.IsNullOrWhiteSpace(destinationPath))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(destinationPath));
+            }
+            if (jobPartStatus == null)
+			{
+				throw new ArgumentNullException(nameof(jobPartStatus));
+			}
 
             if (version.Length != DataMovementConstants.JobPartPlanFile.VersionStrLength)
             {
@@ -142,7 +185,10 @@ namespace Azure.Storage.DataMovement.JobPlan
 
         public void Serialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
             BinaryWriter writer = new BinaryWriter(stream);
             int currentVariableLengthIndex = DataMovementConstants.JobPartPlanFile.VariableLengthStartIndex;
 
@@ -197,7 +243,10 @@ namespace Azure.Storage.DataMovement.JobPlan
 
         public static JobPartPlanHeader Deserialize(Stream stream)
         {
-            Argument.AssertNotNull(stream, nameof(stream));
+            if (stream == null)
+			{
+				throw new ArgumentNullException(nameof(stream));
+			}
             BinaryReader reader = new BinaryReader(stream);
             reader.BaseStream.Position = 0;
 
