@@ -93,7 +93,10 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         public DigitalTwinsClient(Uri endpoint, TokenCredential credential, DigitalTwinsClientOptions options)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
@@ -492,7 +495,10 @@ namespace Azure.DigitalTwins.Core
 
             try
             {
-                Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+                if (jsonPatchDocument == null)
+                {
+                    throw new ArgumentNullException(nameof(jsonPatchDocument));
+                }
                 UpdateDigitalTwinOptions options = ifMatch == null
                     ? null
                     : new UpdateDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() };
@@ -533,7 +539,10 @@ namespace Azure.DigitalTwins.Core
 
             try
             {
-                Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+                if (jsonPatchDocument == null)
+                {
+                    throw new ArgumentNullException(nameof(jsonPatchDocument));
+                }
                 UpdateDigitalTwinOptions options = ifMatch == null
                     ? null
                     : new UpdateDigitalTwinOptions { IfMatch = ifMatch.Value.ToString() };
@@ -682,7 +691,10 @@ namespace Azure.DigitalTwins.Core
 
             try
             {
-                Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+                if (jsonPatchDocument == null)
+                {
+                    throw new ArgumentNullException(nameof(jsonPatchDocument));
+                }
                 UpdateComponentOptions options = ifMatch == null
                     ? null
                     : new UpdateComponentOptions { IfMatch = ifMatch.Value.ToString() };
@@ -736,7 +748,10 @@ namespace Azure.DigitalTwins.Core
 
             try
             {
-                Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+                if (jsonPatchDocument == null)
+                {
+                    throw new ArgumentNullException(nameof(jsonPatchDocument));
+                }
                 UpdateComponentOptions options = ifMatch == null
                     ? null
                     : new UpdateComponentOptions { IfMatch = ifMatch.Value.ToString() };
@@ -1448,7 +1463,10 @@ namespace Azure.DigitalTwins.Core
 
             try
             {
-                Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+                if (jsonPatchDocument == null)
+                {
+                    throw new ArgumentNullException(nameof(jsonPatchDocument));
+                }
                 UpdateRelationshipOptions options = ifMatch == null
                     ? null
                     : new UpdateRelationshipOptions { IfMatch = ifMatch.Value.ToString() };
@@ -1501,7 +1519,10 @@ namespace Azure.DigitalTwins.Core
 
             try
             {
-                Argument.AssertNotNull(jsonPatchDocument, nameof(jsonPatchDocument));
+                if (jsonPatchDocument == null)
+                {
+                    throw new ArgumentNullException(nameof(jsonPatchDocument));
+                }
                 UpdateRelationshipOptions options = ifMatch == null
                     ? null
                     : new UpdateRelationshipOptions { IfMatch = ifMatch.Value.ToString() };

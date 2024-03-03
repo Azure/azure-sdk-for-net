@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
@@ -53,7 +54,10 @@ namespace Azure.DigitalTwins.Core
         /// </code>
         public static bool TryGetQueryCharge<T>(Page<T> page, out float queryCharge)
         {
-            Argument.AssertNotNull(page, nameof(page));
+            if (page == null)
+            {
+                throw new ArgumentNullException(nameof(page));
+            }
 
             if (!page.GetRawResponse().Headers.TryGetValue(QueryChargeHeader, out string queryChargeHeaderValue))
             {

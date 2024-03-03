@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -15,7 +16,10 @@ namespace Azure.DigitalTwins.Core.Serialization
         /// <returns>A json array</returns>
         internal static string BuildArrayPayload(IEnumerable<string> entities)
         {
-            Argument.AssertNotNull(entities, nameof(entities));
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
             return $"[{string.Join(",", entities)}]";
         }
     }
