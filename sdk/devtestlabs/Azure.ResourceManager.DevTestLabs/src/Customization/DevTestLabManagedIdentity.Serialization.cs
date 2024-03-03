@@ -24,22 +24,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 throw new FormatException($"The model {nameof(DevTestLabManagedIdentity)} does not support '{format}' format.");
             }
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedIdentityType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ManagedIdentityType.ToString());
-            }
-            if (Optional.IsDefined(PrincipalId))
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ManagedIdentityType.ToString());
+            if (PrincipalId.HasValue)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ClientSecretUri))
+            if (ClientSecretUri != null)
             {
                 writer.WritePropertyName("clientSecretUrl"u8);
                 writer.WriteStringValue(ClientSecretUri.AbsoluteUri);
@@ -82,10 +79,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentityType> type = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<Uri> clientSecretUrl = default;
+            ManagedServiceIdentityType type = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            Uri clientSecretUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +129,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabManagedIdentity(type, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), clientSecretUrl.Value, serializedAdditionalRawData);
+            return new DevTestLabManagedIdentity(type, principalId,tenantId, clientSecretUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabManagedIdentity>.Write(ModelReaderWriterOptions options)
