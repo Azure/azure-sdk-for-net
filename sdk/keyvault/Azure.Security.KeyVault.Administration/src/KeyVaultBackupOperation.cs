@@ -35,8 +35,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
         public KeyVaultBackupOperation(KeyVaultBackupClient client, string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(client, nameof(client));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
 
             _client = client;
             _id = id;
@@ -63,9 +69,18 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         internal KeyVaultBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(response, nameof(response));
-            Argument.AssertNotNull(client, nameof(client));
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
+            if (response == null)
+			{
+				throw new ArgumentNullException(nameof(response));
+			}
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
 
             _response = response;
             _value = value;

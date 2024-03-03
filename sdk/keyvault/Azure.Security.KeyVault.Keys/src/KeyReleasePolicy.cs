@@ -34,7 +34,10 @@ namespace Azure.Security.KeyVault.Keys
         /// </example>
         public KeyReleasePolicy(BinaryData encodedPolicy)
         {
-            Argument.AssertNotNull(encodedPolicy, nameof(encodedPolicy));
+            if (encodedPolicy == null)
+			{
+				throw new ArgumentNullException(nameof(encodedPolicy));
+			}
             EncodedPolicy = encodedPolicy;
         }
 

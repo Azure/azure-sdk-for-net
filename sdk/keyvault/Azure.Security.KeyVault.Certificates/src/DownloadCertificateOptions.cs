@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Security.Cryptography.X509Certificates;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -17,7 +17,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="certificateName">The name of the certificate to download.</param>
         public DownloadCertificateOptions(string certificateName)
         {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            if (certificateName == null)
+			{
+				throw new ArgumentNullException(nameof(certificateName));
+			}
+			if (certificateName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
+			}
 
             CertificateName = certificateName;
         }

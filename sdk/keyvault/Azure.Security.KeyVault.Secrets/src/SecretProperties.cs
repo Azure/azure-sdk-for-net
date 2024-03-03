@@ -41,7 +41,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public SecretProperties(string name)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Name = name;
         }
@@ -53,7 +60,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public SecretProperties(Uri id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
 
             ParseId(id);
         }

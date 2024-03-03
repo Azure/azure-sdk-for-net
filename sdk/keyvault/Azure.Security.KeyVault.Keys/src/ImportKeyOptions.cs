@@ -28,7 +28,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="keyMaterial"/> is null.</exception>
         public ImportKeyOptions(string name, JsonWebKey keyMaterial)
         {
-            Argument.AssertNotNull(keyMaterial, nameof(keyMaterial));
+            if (keyMaterial == null)
+			{
+				throw new ArgumentNullException(nameof(keyMaterial));
+			}
 
             Properties = new KeyProperties(name);
             Key = keyMaterial;

@@ -21,8 +21,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal RemoteCryptographyClient(Uri keyId, TokenCredential credential, CryptographyClientOptions options)
         {
-            Argument.AssertNotNull(keyId, nameof(keyId));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (keyId == null)
+			{
+				throw new ArgumentNullException(nameof(keyId));
+			}
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             _keyId = keyId;
             _keyIdStr = _keyId.OriginalString;

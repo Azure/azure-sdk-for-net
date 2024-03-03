@@ -15,7 +15,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="resourceId">The Resource Id for the given Resource.</param>
         public KeyVaultRoleScope(Uri resourceId)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+			{
+				throw new ArgumentNullException(nameof(resourceId));
+			}
 
             // Remove the version segment from a Key Id, if present.
             string[] segments = resourceId.Segments;

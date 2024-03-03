@@ -58,8 +58,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public SecretClient(Uri vaultUri, TokenCredential credential, SecretClientOptions options)
         {
-            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (vaultUri == null)
+			{
+				throw new ArgumentNullException(nameof(vaultUri));
+			}
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             options ??= new SecretClientOptions();
             string apiVersion = options.GetVersionString();
@@ -90,7 +96,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultSecret>> GetSecretAsync(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -123,7 +136,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultSecret> GetSecret(string name, string version = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -161,7 +181,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{SecretsPath}{name}/versions");
 
@@ -188,7 +215,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Pageable<SecretProperties> GetPropertiesOfSecretVersions(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Uri firstPageUri = _pipeline.CreateFirstPageUri($"{SecretsPath}{name}/versions");
 
@@ -246,8 +280,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<SecretProperties>> UpdateSecretPropertiesAsync(SecretProperties properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, nameof(properties.Version));
+            if (properties == null)
+			{
+				throw new ArgumentNullException(nameof(properties));
+			}
+            if (properties.Version == null)
+			{
+				throw new ArgumentNullException(nameof(properties.Version));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute(OTelSecretNameKey, properties.Name);
@@ -280,8 +320,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<SecretProperties> UpdateSecretProperties(SecretProperties properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, nameof(properties.Version));
+            if (properties == null)
+			{
+				throw new ArgumentNullException(nameof(properties));
+			}
+            if (properties.Version == null)
+			{
+				throw new ArgumentNullException(nameof(properties.Version));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute(OTelSecretNameKey, properties.Name);
@@ -313,7 +359,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultSecret>> SetSecretAsync(KeyVaultSecret secret, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(secret, nameof(secret));
+            if (secret == null)
+			{
+				throw new ArgumentNullException(nameof(secret));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
             scope.AddAttribute(OTelSecretNameKey, secret.Name);
@@ -344,7 +393,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultSecret> SetSecret(KeyVaultSecret secret, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(secret, nameof(secret));
+            if (secret == null)
+			{
+				throw new ArgumentNullException(nameof(secret));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
             scope.AddAttribute(OTelSecretNameKey, secret.Name);
@@ -419,7 +471,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<DeleteSecretOperation> StartDeleteSecretAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -457,7 +516,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual DeleteSecretOperation StartDeleteSecret(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -489,7 +555,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DeletedSecret>> GetDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -520,7 +593,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DeletedSecret> GetDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -587,7 +667,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<RecoverDeletedSecretOperation> StartRecoverDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -621,7 +708,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual RecoverDeletedSecretOperation StartRecoverDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -655,7 +749,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> PurgeDeletedSecretAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -688,7 +789,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response PurgeDeletedSecret(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -720,7 +828,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<byte[]>> BackupSecretAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -754,7 +869,14 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<byte[]> BackupSecret(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
             scope.AddAttribute(OTelSecretNameKey, name);
@@ -786,7 +908,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<SecretProperties>> RestoreSecretBackupAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backup, nameof(backup));
+            if (backup == null)
+			{
+				throw new ArgumentNullException(nameof(backup));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(RestoreSecretBackup)}");
             scope.Start();
@@ -815,7 +940,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<SecretProperties> RestoreSecretBackup(byte[] backup, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backup, nameof(backup));
+            if (backup == null)
+			{
+				throw new ArgumentNullException(nameof(backup));
+			}
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(RestoreSecretBackup)}");
             scope.Start();

@@ -26,8 +26,22 @@ namespace Azure.Security.KeyVault.Keys
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="targetAttestationToken"/> is null.</exception>
         public ReleaseKeyOptions(string name, string targetAttestationToken)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(targetAttestationToken, nameof(targetAttestationToken));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (targetAttestationToken == null)
+			{
+				throw new ArgumentNullException(nameof(targetAttestationToken));
+			}
+			if (targetAttestationToken.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(targetAttestationToken));
+			}
 
             Name = name;
             TargetAttestationToken = targetAttestationToken;

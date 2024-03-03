@@ -24,7 +24,10 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="value">The string value of the instance.</param>
         public KeyExportEncryptionAlgorithm(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             _value = value;
         }

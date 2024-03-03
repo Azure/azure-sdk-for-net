@@ -23,7 +23,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public KeyVaultSetting(string name, bool value)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Name = name;
             Value = new KeyVaultSettingValue(value);
@@ -39,8 +46,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="settingType">The type specifier of the value.</param>
         internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             Name = name;
             Value = new KeyVaultSettingValue(value, settingType);

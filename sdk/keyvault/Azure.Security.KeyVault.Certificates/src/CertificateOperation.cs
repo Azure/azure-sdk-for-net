@@ -30,8 +30,18 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the certificate being created.</param>
         public CertificateOperation(CertificateClient client, string name)
         {
-            Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (client == null)
+			{
+				throw new ArgumentNullException(nameof(client));
+			}
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             Properties = new CertificateOperationProperties(client.VaultUri, name);
 

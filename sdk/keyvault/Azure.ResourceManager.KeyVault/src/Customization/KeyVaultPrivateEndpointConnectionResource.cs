@@ -34,8 +34,14 @@ namespace Azure.ResourceManager.KeyVault
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<KeyVaultPrivateEndpointConnectionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.AddTag");
             scope.Start();
@@ -75,8 +81,14 @@ namespace Azure.ResourceManager.KeyVault
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KeyVaultPrivateEndpointConnectionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
+            if (value == null)
+			{
+				throw new ArgumentNullException(nameof(value));
+			}
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.AddTag");
             scope.Start();
@@ -115,7 +127,10 @@ namespace Azure.ResourceManager.KeyVault
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<KeyVaultPrivateEndpointConnectionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+			{
+				throw new ArgumentNullException(nameof(tags));
+			}
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.SetTags");
             scope.Start();
@@ -155,7 +170,10 @@ namespace Azure.ResourceManager.KeyVault
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KeyVaultPrivateEndpointConnectionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+			{
+				throw new ArgumentNullException(nameof(tags));
+			}
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.SetTags");
             scope.Start();
@@ -195,7 +213,10 @@ namespace Azure.ResourceManager.KeyVault
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<KeyVaultPrivateEndpointConnectionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.RemoveTag");
             scope.Start();
@@ -234,7 +255,10 @@ namespace Azure.ResourceManager.KeyVault
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KeyVaultPrivateEndpointConnectionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+			{
+				throw new ArgumentNullException(nameof(key));
+			}
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.RemoveTag");
             scope.Start();

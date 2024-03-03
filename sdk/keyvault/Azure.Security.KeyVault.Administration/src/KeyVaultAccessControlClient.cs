@@ -52,8 +52,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public KeyVaultAccessControlClient(Uri vaultUri, TokenCredential credential, KeyVaultAdministrationClientOptions options)
         {
-            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (vaultUri == null)
+			{
+				throw new ArgumentNullException(nameof(vaultUri));
+			}
+            if (credential == null)
+			{
+				throw new ArgumentNullException(nameof(credential));
+			}
 
             VaultUri = vaultUri;
 
@@ -228,7 +234,10 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(CreateOrUpdateRoleDefinitionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateOrUpdateRoleDefinition)}");
             scope.Start();
@@ -261,7 +270,10 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual Response<KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(CreateOrUpdateRoleDefinitionOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateOrUpdateRoleDefinition)}");
             scope.Start();
@@ -428,8 +440,22 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNullOrEmpty(principalId, nameof(principalId));
+            if (roleDefinitionId == null)
+			{
+				throw new ArgumentNullException(nameof(roleDefinitionId));
+			}
+			if (roleDefinitionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+			}
+            if (principalId == null)
+			{
+				throw new ArgumentNullException(nameof(principalId));
+			}
+			if (principalId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(principalId));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
             scope.Start();
@@ -462,8 +488,22 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleDefinitionId, string principalId, Guid? roleAssignmentName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
-            Argument.AssertNotNullOrEmpty(principalId, nameof(principalId));
+            if (roleDefinitionId == null)
+			{
+				throw new ArgumentNullException(nameof(roleDefinitionId));
+			}
+			if (roleDefinitionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(roleDefinitionId));
+			}
+            if (principalId == null)
+			{
+				throw new ArgumentNullException(nameof(principalId));
+			}
+			if (principalId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(principalId));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(CreateRoleAssignment)}");
             scope.Start();
@@ -495,7 +535,14 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual Response<KeyVaultRoleAssignment> GetRoleAssignment(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            if (roleAssignmentName == null)
+			{
+				throw new ArgumentNullException(nameof(roleAssignmentName));
+			}
+			if (roleAssignmentName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentName));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
             scope.Start();
@@ -523,7 +570,14 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultRoleAssignment>> GetRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            if (roleAssignmentName == null)
+			{
+				throw new ArgumentNullException(nameof(roleAssignmentName));
+			}
+			if (roleAssignmentName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentName));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(GetRoleAssignment)}");
             scope.Start();
@@ -552,7 +606,14 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual Response DeleteRoleAssignment(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            if (roleAssignmentName == null)
+			{
+				throw new ArgumentNullException(nameof(roleAssignmentName));
+			}
+			if (roleAssignmentName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentName));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
             scope.Start();
@@ -580,7 +641,14 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<Response> DeleteRoleAssignmentAsync(KeyVaultRoleScope roleScope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            if (roleAssignmentName == null)
+			{
+				throw new ArgumentNullException(nameof(roleAssignmentName));
+			}
+			if (roleAssignmentName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentName));
+			}
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultAccessControlClient)}.{nameof(DeleteRoleAssignment)}");
             scope.Start();

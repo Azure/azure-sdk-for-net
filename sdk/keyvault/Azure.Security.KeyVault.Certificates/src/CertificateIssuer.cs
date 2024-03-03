@@ -53,7 +53,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public CertificateIssuer(string name)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
 
             _properties = new IssuerProperties(name);
         }
@@ -70,8 +77,22 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="provider"/> is null.</exception>
         public CertificateIssuer(string name, string provider)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(provider, nameof(provider));
+            if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+			if (name.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+			}
+            if (provider == null)
+			{
+				throw new ArgumentNullException(nameof(provider));
+			}
+			if (provider.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(provider));
+			}
 
             _properties = new IssuerProperties(name)
             {

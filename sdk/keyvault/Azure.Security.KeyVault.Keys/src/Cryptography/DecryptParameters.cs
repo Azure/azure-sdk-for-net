@@ -137,7 +137,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal DecryptParameters(EncryptionAlgorithm algorithm, byte[] ciphertext)
         {
-            Argument.AssertNotNull(ciphertext, nameof(ciphertext));
+            if (ciphertext == null)
+			{
+				throw new ArgumentNullException(nameof(ciphertext));
+			}
 
             Algorithm = algorithm;
             Ciphertext = ciphertext;
@@ -145,8 +148,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal DecryptParameters(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv)
         {
-            Argument.AssertNotNull(ciphertext, nameof(ciphertext));
-            Argument.AssertNotNull(iv, nameof(iv));
+            if (ciphertext == null)
+			{
+				throw new ArgumentNullException(nameof(ciphertext));
+			}
+            if (iv == null)
+			{
+				throw new ArgumentNullException(nameof(iv));
+			}
 
             Algorithm = algorithm;
             Ciphertext = ciphertext;
@@ -155,9 +164,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal DecryptParameters(EncryptionAlgorithm algorithm, byte[] ciphertext, byte[] iv, byte[] authenticationTag, byte[] additionalAuthenticatedData)
         {
-            Argument.AssertNotNull(ciphertext, nameof(ciphertext));
-            Argument.AssertNotNull(iv, nameof(iv));
-            Argument.AssertNotNull(authenticationTag, nameof(authenticationTag));
+            if (ciphertext == null)
+			{
+				throw new ArgumentNullException(nameof(ciphertext));
+			}
+            if (iv == null)
+			{
+				throw new ArgumentNullException(nameof(iv));
+			}
+            if (authenticationTag == null)
+			{
+				throw new ArgumentNullException(nameof(authenticationTag));
+			}
 
             Algorithm = algorithm;
             Ciphertext = ciphertext;
