@@ -42,3 +42,12 @@ resource sqlDatabase_qFhDi2oga 'Microsoft.Sql/servers/databases@2022-08-01-previ
   properties: {
   }
 }
+
+resource sqlFirewallRule_l3kW1XrET 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_Yt40VknQJ
+  name: 'fw'
+  properties: {
+    startIpAddress: '0.0.0.1'
+    endIpAddress: '255.255.255.254'
+  }
+}
