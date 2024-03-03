@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 throw new FormatException($"The model {nameof(LoadTestingCmkIdentity)} does not support '{format}' format.");
             }
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (IdentityType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 if (ResourceId != null)
                 {
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<LoadTestingCmkIdentityType> type = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            LoadTestingCmkIdentityType? type = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingCmkIdentity(Optional.ToNullable(type), resourceId.Value, serializedAdditionalRawData);
+            return new LoadTestingCmkIdentity(type, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingCmkIdentity>.Write(ModelReaderWriterOptions options)
