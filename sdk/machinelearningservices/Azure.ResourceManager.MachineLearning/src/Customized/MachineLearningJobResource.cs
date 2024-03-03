@@ -39,7 +39,10 @@ namespace Azure.ResourceManager.MachineLearning
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<MachineLearningJobResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningJobData data, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Update");
             scope.Start();
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.MachineLearning
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<MachineLearningJobResource> Update(WaitUntil waitUntil, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobResource.Update");
             scope.Start();

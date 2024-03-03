@@ -19,8 +19,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier)
         {
-            Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
-            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
+            if (keyVaultArmId == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultArmId));
+            }
+            if (keyIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(keyIdentifier));
+            }
 
             KeyVaultArmId = keyVaultArmId;
             KeyIdentifier = keyIdentifier;

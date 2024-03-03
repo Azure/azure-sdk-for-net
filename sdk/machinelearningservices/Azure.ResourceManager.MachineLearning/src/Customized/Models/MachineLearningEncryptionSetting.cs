@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningEncryptionSetting(MachineLearningEncryptionStatus status, MachineLearningEncryptionKeyVaultProperties keyVaultProperties)
         {
-            Argument.AssertNotNull(keyVaultProperties, nameof(keyVaultProperties));
+            if (keyVaultProperties == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultProperties));
+            }
 
             Status = status;
             KeyVaultProperties = keyVaultProperties;
