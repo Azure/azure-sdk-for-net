@@ -17,10 +17,11 @@ namespace Azure.Provisioning.Sql
         /// Initializes a new instance of the <see cref="SqlFirewallRule"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
-        public SqlFirewallRule(IConstruct scope, string name = "fw", string version = "2020-11-01-preview")
-            : base(scope, null, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlFirewallRuleData(
+        public SqlFirewallRule(IConstruct scope, SqlServer? parent = default, string name = "fw", string version = "2020-11-01-preview")
+            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlFirewallRuleData(
                 name: name,
                 resourceType: ResourceTypeName,
                 startIPAddress: "0.0.0.1",

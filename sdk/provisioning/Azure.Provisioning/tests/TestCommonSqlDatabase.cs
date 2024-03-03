@@ -42,7 +42,7 @@ namespace Azure.Provisioning.Tests
 
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(this, "connectionString", SqlDatabase.GetConnectionString(appUserPasswordParam));
 
-            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(this, "firewallRule");
+            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(this, name: "firewallRule");
             Parameter databaseName = new Parameter("appUserPassword", "Application user password", isSecure: true);
             DeploymentScript deploymentScript = new DeploymentScript(
                 this,

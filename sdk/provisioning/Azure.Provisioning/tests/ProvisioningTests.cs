@@ -79,7 +79,7 @@ namespace Azure.Provisioning.Tests
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(infra, "connectionString", sqlDatabase.GetConnectionString(appUserPasswordParam));
             Assert.False(sqlAzureConnectionStringSecret.Properties.Name.EndsWith(infra.EnvironmentName));
 
-            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, "firewallRule");
+            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, name: "firewallRule");
             Assert.False(sqlFirewallRule.Properties.Name.EndsWith(infra.EnvironmentName));
 
             DeploymentScript deploymentScript = new DeploymentScript(
@@ -182,6 +182,7 @@ namespace Azure.Provisioning.Tests
                 administrator: admin);
 
             _ = new SqlDatabase(infrastructure, sqlServer);
+            _ = new SqlFirewallRule(infrastructure, sqlServer);
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(
