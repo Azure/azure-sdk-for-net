@@ -24,7 +24,7 @@ public partial class AzureChatExtensionsOptions : IUtf8JsonSerializable
             (dataSource as IUtf8JsonSerializable).Write(writer);
         }
         writer.WriteEndArray();
-        if (Optional.IsDefined(EnhancementOptions))
+        if (EnhancementOptions != null)
         {
             writer.WritePropertyName("enhancements");
             writer.WriteObjectValue(EnhancementOptions);

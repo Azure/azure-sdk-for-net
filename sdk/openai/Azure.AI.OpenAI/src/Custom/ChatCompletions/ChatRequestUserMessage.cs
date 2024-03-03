@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -50,7 +51,14 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// </exception>
     public ChatRequestUserMessage(string content)
     {
-        Argument.AssertNotNullOrEmpty(content, nameof(content));
+        if (content == null)
+        {
+            throw new ArgumentNullException(nameof(content));
+        }
+        if (content.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(content));
+        }
         Role = ChatRole.User;
         Content = content;
     }
@@ -64,7 +72,24 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// </exception>
     public ChatRequestUserMessage(IEnumerable<ChatMessageContentItem> content)
     {
-        Argument.AssertNotNullOrEmpty(content, nameof(content));
+        if (content == null)
+        {
+            throw new ArgumentNullException(nameof(content));
+        }
+        // .NET Framework's Enumerable.Any() always allocates an enumerator, so we optimize for collections here.
+        if (content is ICollection<ChatMessageContentItem> collectionOfT && collectionOfT.Count == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty collection.", nameof(content));
+        }
+        if (content is ICollection collection && collection.Count == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty collection.", nameof(content));
+        }
+        using IEnumerator<ChatMessageContentItem> e = content.GetEnumerator();
+        if (!e.MoveNext())
+        {
+            throw new ArgumentException("Value cannot be an empty collection.", nameof(content));
+        }
         Role = ChatRole.User;
         MultimodalContentItems = content.ToList();
     }
@@ -78,7 +103,14 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// </exception>
     public ChatRequestUserMessage(params ChatMessageContentItem[] content)
     {
-        Argument.AssertNotNullOrEmpty(content, nameof(content));
+        if (content == null)
+        {
+            throw new ArgumentNullException(nameof(content));
+        }
+        if (content.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty collection.", nameof(content));
+        }
         Role = ChatRole.User;
         MultimodalContentItems = content.ToList();
     }

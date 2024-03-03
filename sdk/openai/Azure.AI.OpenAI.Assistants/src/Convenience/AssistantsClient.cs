@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants;
 
@@ -86,7 +85,10 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(run, nameof(run));
+        if (run == null)
+        {
+            throw new ArgumentNullException(nameof(run));
+        }
         return GetRunSteps(run.ThreadId, run.Id, limit, order, after, before, cancellationToken);
     }
 
@@ -106,7 +108,10 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(run, nameof(run));
+        if (run == null)
+        {
+            throw new ArgumentNullException(nameof(run));
+        }
         return GetRunStepsAsync(run.ThreadId, run.Id, limit, order, after, before, cancellationToken);
     }
 
@@ -117,7 +122,10 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
     public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(run, nameof(run));
+        if (run == null)
+        {
+            throw new ArgumentNullException(nameof(run));
+        }
         return SubmitToolOutputsToRun(run.ThreadId, run.Id, toolOutputs, cancellationToken);
     }
 
@@ -128,7 +136,10 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
     public virtual Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(run, nameof(run));
+        if (run == null)
+        {
+            throw new ArgumentNullException(nameof(run));
+        }
         return SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, toolOutputs, cancellationToken);
     }
 

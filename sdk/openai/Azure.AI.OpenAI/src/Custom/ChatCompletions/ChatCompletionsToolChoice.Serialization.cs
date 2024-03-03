@@ -13,11 +13,11 @@ public partial class ChatCompletionsToolChoice : IUtf8JsonSerializable
 {
     void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
     {
-        if (Optional.IsDefined(Preset) && Preset.ToString() != null)
+        if (Preset.ToString() != null)
         {
             writer.WriteStringValue(Preset.ToString());
         }
-        else if (Optional.IsDefined(Function))
+        else if (Function != null)
         {
             writer.WriteStartObject();
             {

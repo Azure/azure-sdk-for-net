@@ -56,8 +56,18 @@ public partial class EmbeddingsOptions
     /// </exception>
     public EmbeddingsOptions(string deploymentName, IEnumerable<string> input)
     {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        Argument.AssertNotNull(input, nameof(input));
+        if (deploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(deploymentName));
+        }
+        if (deploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
+        }
+        if (input == null)
+        {
+            throw new ArgumentNullException(nameof(input));
+        }
 
         DeploymentName = deploymentName;
         Input = input.ToList();

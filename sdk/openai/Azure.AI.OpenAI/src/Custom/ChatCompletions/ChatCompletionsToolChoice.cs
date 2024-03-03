@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
@@ -64,7 +63,10 @@ public partial class ChatCompletionsToolChoice
     /// </exception>
     public ChatCompletionsToolChoice(FunctionDefinition functionDefinition)
     {
-        Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
+        if (functionDefinition == null)
+        {
+            throw new ArgumentNullException(nameof(functionDefinition));
+        }
         Function = functionDefinition;
     }
 
@@ -82,7 +84,10 @@ public partial class ChatCompletionsToolChoice
     /// </exception>
     public ChatCompletionsToolChoice(ChatCompletionsFunctionToolDefinition functionToolDefinition)
     {
-        Argument.AssertNotNull(functionToolDefinition, nameof(functionToolDefinition));
+        if (functionToolDefinition == null)
+        {
+            throw new ArgumentNullException(nameof(functionToolDefinition));
+        }
         Function = functionToolDefinition.Function;
     }
 

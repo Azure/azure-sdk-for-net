@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System;
 
 namespace Azure.AI.OpenAI;
 
@@ -39,8 +39,14 @@ public partial class ChatCompletionsFunctionToolCall : ChatCompletionsToolCall
     /// </remarks>
     public ChatCompletionsFunctionToolCall(string id, string name, string arguments) : base(id)
     {
-        Argument.AssertNotNull(name, nameof(name));
-        Argument.AssertNotNull(arguments, nameof(arguments));
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+        if (arguments == null)
+        {
+            throw new ArgumentNullException(nameof(arguments));
+        }
         Type = "function";
         Function = new(name, arguments);
     }

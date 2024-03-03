@@ -219,8 +219,18 @@ public partial class CompletionsOptions
     /// </exception>
     public CompletionsOptions(string deploymentName, IEnumerable<string> prompts)
     {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        Argument.AssertNotNull(prompts, nameof(prompts));
+        if (deploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(deploymentName));
+        }
+        if (deploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
+        }
+        if (prompts == null)
+        {
+            throw new ArgumentNullException(nameof(prompts));
+        }
 
         DeploymentName = deploymentName;
         Prompts = prompts.ToList();

@@ -43,8 +43,14 @@ public partial class OpenAIClient
     /// </exception>
     public OpenAIClient(Uri endpoint, AzureKeyCredential keyCredential, OpenAIClientOptions options)
     {
-        Argument.AssertNotNull(endpoint, nameof(endpoint));
-        Argument.AssertNotNull(keyCredential, nameof(keyCredential));
+        if (endpoint == null)
+        {
+            throw new ArgumentNullException(nameof(endpoint));
+        }
+        if (keyCredential == null)
+        {
+            throw new ArgumentNullException(nameof(keyCredential));
+        }
         options ??= new OpenAIClientOptions();
 
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -81,8 +87,14 @@ public partial class OpenAIClient
     /// </exception>
     public OpenAIClient(Uri endpoint, TokenCredential tokenCredential, OpenAIClientOptions options)
     {
-        Argument.AssertNotNull(endpoint, nameof(endpoint));
-        Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+        if (endpoint == null)
+        {
+            throw new ArgumentNullException(nameof(endpoint));
+        }
+        if (tokenCredential == null)
+        {
+            throw new ArgumentNullException(nameof(tokenCredential));
+        }
         options ??= new OpenAIClientOptions();
 
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -145,8 +157,18 @@ public partial class OpenAIClient
         CompletionsOptions completionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
-        Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
+        if (completionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions));
+        }
+        if (completionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions.DeploymentName));
+        }
+        if (completionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(completionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
         scope.Start();
@@ -184,8 +206,18 @@ public partial class OpenAIClient
         CompletionsOptions completionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
-        Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
+        if (completionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions));
+        }
+        if (completionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions.DeploymentName));
+        }
+        if (completionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(completionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletions");
         scope.Start();
@@ -231,8 +263,18 @@ public partial class OpenAIClient
         CompletionsOptions completionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
-        Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
+        if (completionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions));
+        }
+        if (completionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions.DeploymentName));
+        }
+        if (completionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(completionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetCompletionsStreaming");
         scope.Start();
@@ -284,8 +326,18 @@ public partial class OpenAIClient
         CompletionsOptions completionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
-        Argument.AssertNotNullOrEmpty(completionsOptions.DeploymentName, nameof(completionsOptions.DeploymentName));
+        if (completionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions));
+        }
+        if (completionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(completionsOptions.DeploymentName));
+        }
+        if (completionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(completionsOptions.DeploymentName));
+        }
 
         completionsOptions.InternalShouldStreamResponse = true;
 
@@ -329,8 +381,18 @@ public partial class OpenAIClient
         ChatCompletionsOptions chatCompletionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-        Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
+        if (chatCompletionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions));
+        }
+        if (chatCompletionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions.DeploymentName));
+        }
+        if (chatCompletionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(chatCompletionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
         scope.Start();
@@ -366,8 +428,18 @@ public partial class OpenAIClient
         ChatCompletionsOptions chatCompletionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-        Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
+        if (chatCompletionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions));
+        }
+        if (chatCompletionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions.DeploymentName));
+        }
+        if (chatCompletionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(chatCompletionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletions");
         scope.Start();
@@ -413,8 +485,18 @@ public partial class OpenAIClient
         ChatCompletionsOptions chatCompletionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-        Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
+        if (chatCompletionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions));
+        }
+        if (chatCompletionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions.DeploymentName));
+        }
+        if (chatCompletionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(chatCompletionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
         scope.Start();
@@ -470,8 +552,18 @@ public partial class OpenAIClient
         ChatCompletionsOptions chatCompletionsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
-        Argument.AssertNotNullOrEmpty(chatCompletionsOptions.DeploymentName, nameof(chatCompletionsOptions.DeploymentName));
+        if (chatCompletionsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions));
+        }
+        if (chatCompletionsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(chatCompletionsOptions.DeploymentName));
+        }
+        if (chatCompletionsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(chatCompletionsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetChatCompletionsStreaming");
         scope.Start();
@@ -518,8 +610,18 @@ public partial class OpenAIClient
         EmbeddingsOptions embeddingsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
-        Argument.AssertNotNullOrEmpty(embeddingsOptions.DeploymentName, nameof(embeddingsOptions.DeploymentName));
+        if (embeddingsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(embeddingsOptions));
+        }
+        if (embeddingsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(embeddingsOptions.DeploymentName));
+        }
+        if (embeddingsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(embeddingsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
         scope.Start();
@@ -553,8 +655,18 @@ public partial class OpenAIClient
         EmbeddingsOptions embeddingsOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
-        Argument.AssertNotNullOrEmpty(embeddingsOptions.DeploymentName, nameof(embeddingsOptions.DeploymentName));
+        if (embeddingsOptions == null)
+        {
+            throw new ArgumentNullException(nameof(embeddingsOptions));
+        }
+        if (embeddingsOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(embeddingsOptions.DeploymentName));
+        }
+        if (embeddingsOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(embeddingsOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetEmbeddings");
         scope.Start();
@@ -600,10 +712,20 @@ public partial class OpenAIClient
         ImageGenerationOptions imageGenerationOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+        if (imageGenerationOptions == null)
+        {
+            throw new ArgumentNullException(nameof(imageGenerationOptions));
+        }
         if (_isConfiguredForAzureOpenAI)
         {
-            Argument.AssertNotNullOrEmpty(imageGenerationOptions.DeploymentName, nameof(imageGenerationOptions.DeploymentName));
+            if (imageGenerationOptions.DeploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(imageGenerationOptions.DeploymentName));
+            }
+            if (imageGenerationOptions.DeploymentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageGenerationOptions.DeploymentName));
+            }
         }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImageGenerations");
@@ -651,10 +773,20 @@ public partial class OpenAIClient
         ImageGenerationOptions imageGenerationOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
+        if (imageGenerationOptions == null)
+        {
+            throw new ArgumentNullException(nameof(imageGenerationOptions));
+        }
         if (_isConfiguredForAzureOpenAI)
         {
-            Argument.AssertNotNullOrEmpty(imageGenerationOptions.DeploymentName, nameof(imageGenerationOptions.DeploymentName));
+            if (imageGenerationOptions.DeploymentName == null)
+            {
+                throw new ArgumentNullException(nameof(imageGenerationOptions.DeploymentName));
+            }
+            if (imageGenerationOptions.DeploymentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(imageGenerationOptions.DeploymentName));
+            }
         }
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetImageGenerations");
         scope.Start();
@@ -695,8 +827,18 @@ public partial class OpenAIClient
         AudioTranscriptionOptions audioTranscriptionOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
-        Argument.AssertNotNullOrEmpty(audioTranscriptionOptions.DeploymentName, nameof(audioTranscriptionOptions.DeploymentName));
+        if (audioTranscriptionOptions == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranscriptionOptions));
+        }
+        if (audioTranscriptionOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranscriptionOptions.DeploymentName));
+        }
+        if (audioTranscriptionOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(audioTranscriptionOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
         scope.Start();
@@ -736,8 +878,18 @@ public partial class OpenAIClient
         AudioTranscriptionOptions audioTranscriptionOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
-        Argument.AssertNotNullOrEmpty(audioTranscriptionOptions.DeploymentName, nameof(audioTranscriptionOptions.DeploymentName));
+        if (audioTranscriptionOptions == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranscriptionOptions));
+        }
+        if (audioTranscriptionOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranscriptionOptions.DeploymentName));
+        }
+        if (audioTranscriptionOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(audioTranscriptionOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
         scope.Start();
@@ -777,8 +929,18 @@ public partial class OpenAIClient
         AudioTranslationOptions audioTranslationOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
-        Argument.AssertNotNullOrEmpty(audioTranslationOptions.DeploymentName, nameof(audioTranslationOptions.DeploymentName));
+        if (audioTranslationOptions == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranslationOptions));
+        }
+        if (audioTranslationOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranslationOptions.DeploymentName));
+        }
+        if (audioTranslationOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(audioTranslationOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
         scope.Start();
@@ -818,8 +980,18 @@ public partial class OpenAIClient
         AudioTranslationOptions audioTranslationOptions,
         CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
-        Argument.AssertNotNullOrEmpty(audioTranslationOptions.DeploymentName, nameof(audioTranslationOptions.DeploymentName));
+        if (audioTranslationOptions == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranslationOptions));
+        }
+        if (audioTranslationOptions.DeploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(audioTranslationOptions.DeploymentName));
+        }
+        if (audioTranslationOptions.DeploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(audioTranslationOptions.DeploymentName));
+        }
 
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
         scope.Start();

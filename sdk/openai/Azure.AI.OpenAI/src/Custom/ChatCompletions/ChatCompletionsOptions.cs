@@ -233,8 +233,18 @@ public partial class ChatCompletionsOptions
     /// </exception>
     public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatRequestMessage> messages)
     {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        Argument.AssertNotNull(messages, nameof(messages));
+        if (deploymentName == null)
+        {
+            throw new ArgumentNullException(nameof(deploymentName));
+        }
+        if (deploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
+        }
+        if (messages == null)
+        {
+            throw new ArgumentNullException(nameof(messages));
+        }
 
         DeploymentName = deploymentName;
         Messages = messages.ToList();

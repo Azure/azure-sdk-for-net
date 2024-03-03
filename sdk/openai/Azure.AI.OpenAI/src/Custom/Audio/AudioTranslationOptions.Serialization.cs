@@ -20,20 +20,20 @@ public partial class AudioTranslationOptions
 
         content.Add(MultipartContent.Create(DeploymentName), "model", new Dictionary<string, string>());
 
-        if (Optional.IsDefined(ResponseFormat))
+        if (ResponseFormat.HasValue)
         {
             content.Add(MultipartContent.Create(ResponseFormat.ToString()), "response_format", new Dictionary<string, string>());
         }
-        if (Optional.IsDefined(Prompt))
+        if (Prompt != null)
         {
             content.Add(MultipartContent.Create(Prompt), "prompt", new Dictionary<string, string>());
         }
-        if (Optional.IsDefined(Temperature))
+        if (Temperature.HasValue)
         {
             content.Add(MultipartContent.Create(Temperature.Value), "temperature", new Dictionary<string, string>());
         }
 
-        string filename = Optional.IsDefined(Filename) ? Filename : "file";
+        string filename = Filename != null ? Filename : "file";
         content.Add(MultipartContent.Create(AudioData), new Dictionary<string, string>()
         {
             ["Content-Disposition"] = $"form-data; name=file; filename={filename}",

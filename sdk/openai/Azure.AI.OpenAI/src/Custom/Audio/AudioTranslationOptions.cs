@@ -73,8 +73,18 @@ public partial class AudioTranslationOptions
     /// </exception>
     public AudioTranslationOptions(string deploymentName, BinaryData audioData)
     {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        Argument.AssertNotNull(audioData, nameof(audioData));
+        if (deploymentName is null)
+        {
+            throw new ArgumentNullException(nameof(deploymentName));
+        }
+        if (deploymentName.Length == 0)
+        {
+            throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
+        }
+        if (audioData == null)
+        {
+            throw new ArgumentNullException(nameof(audioData));
+        }
 
         DeploymentName = deploymentName;
         AudioData = audioData;

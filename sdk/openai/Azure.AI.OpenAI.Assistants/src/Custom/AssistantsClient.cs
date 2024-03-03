@@ -41,8 +41,14 @@ public partial class AssistantsClient
     /// </exception>
     public AssistantsClient(Uri endpoint, AzureKeyCredential keyCredential, AssistantsClientOptions options)
     {
-        Argument.AssertNotNull(endpoint, nameof(endpoint));
-        Argument.AssertNotNull(keyCredential, nameof(keyCredential));
+        if (endpoint == null)
+        {
+            throw new ArgumentNullException(nameof(endpoint));
+        }
+        if (keyCredential == null)
+        {
+            throw new ArgumentNullException(nameof(keyCredential));
+        }
         options ??= new AssistantsClientOptions();
 
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -90,8 +96,14 @@ public partial class AssistantsClient
     /// </exception>
     public AssistantsClient(Uri endpoint, TokenCredential tokenCredential, AssistantsClientOptions options)
     {
-        Argument.AssertNotNull(endpoint, nameof(endpoint));
-        Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+        if (endpoint == null)
+        {
+            throw new ArgumentNullException(nameof(endpoint));
+        }
+        if (tokenCredential == null)
+        {
+            throw new ArgumentNullException(nameof(tokenCredential));
+        }
         options ??= new AssistantsClientOptions();
 
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -134,7 +146,10 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentNullException"> <paramref name="openAIApiKey"/> is null. </exception>
     public AssistantsClient(string openAIApiKey, AssistantsClientOptions options)
     {
-        Argument.AssertNotNull(openAIApiKey, nameof(openAIApiKey));
+        if (openAIApiKey == null)
+        {
+            throw new ArgumentNullException(nameof(openAIApiKey));
+        }
         options ??= new AssistantsClientOptions();
 
         ClientDiagnostics = new ClientDiagnostics(options, true);
