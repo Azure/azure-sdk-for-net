@@ -7,7 +7,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -85,11 +84,38 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsTxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -122,11 +148,38 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsTxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -190,11 +243,38 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordData>> UpdateAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsTxtRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -225,11 +305,38 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordData> Update(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, PrivateDnsTxtRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -287,10 +394,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -316,10 +447,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -368,10 +523,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordData>> GetAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -402,10 +581,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordData> Get(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, string aaaaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
-            Argument.AssertNotNull(aaaaRecordName, nameof(aaaaRecordName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
+            if (aaaaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(aaaaRecordName));
+			}
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, aaaaRecordName);
             _pipeline.Send(message, cancellationToken);
@@ -467,9 +670,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordListResult>> ListByTypeAsync(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -499,9 +723,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordListResult> ListByType(string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListByTypeRequest(subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
@@ -559,9 +804,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -590,9 +856,30 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordListResult> List(string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
@@ -639,10 +926,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordListResult>> ListByTypeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -673,10 +984,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordListResult> ListByTypeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, RecordType recordType, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListByTypeNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, recordType, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);
@@ -722,10 +1057,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateDnsTxtRecordListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -755,10 +1114,34 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateDnsTxtRecordListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateZoneName, int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+            if (nextLink == null)
+			{
+				throw new ArgumentNullException(nameof(nextLink));
+			}
+            if (subscriptionId == null)
+			{
+				throw new ArgumentNullException(nameof(subscriptionId));
+			}
+			if (subscriptionId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+			}
+            if (resourceGroupName == null)
+			{
+				throw new ArgumentNullException(nameof(resourceGroupName));
+			}
+			if (resourceGroupName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+			}
+            if (privateZoneName == null)
+			{
+				throw new ArgumentNullException(nameof(privateZoneName));
+			}
+			if (privateZoneName.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(privateZoneName));
+			}
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateZoneName, top, recordsetnamesuffix);
             _pipeline.Send(message, cancellationToken);

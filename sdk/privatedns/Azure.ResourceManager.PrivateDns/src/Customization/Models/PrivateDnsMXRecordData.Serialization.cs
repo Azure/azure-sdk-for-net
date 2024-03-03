@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.PrivateDns
                 throw new FormatException($"The model {nameof(PrivateDnsMXRecordData)} does not support '{format}' format.");
             }
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -44,12 +43,12 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TtlInSeconds))
+            if (TtlInSeconds.HasValue)
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(PrivateDnsMXRecords))
+            if (!(PrivateDnsMXRecords is ChangeTrackingList<PrivateDnsMXRecordInfo> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 writer.WritePropertyName("mxRecords"u8);
                 writer.WriteStartArray();
@@ -98,16 +97,16 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<bool> isAutoRegistered = default;
-            Optional<IList<PrivateDnsMXRecordInfo>> mxRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            bool? isAutoRegistered = default;
+            IList<PrivateDnsMXRecordInfo> mxRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +219,18 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsMXRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(mxRecords), serializedAdditionalRawData);
+            return new PrivateDnsMXRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                isAutoRegistered,
+                mxRecords ?? new ChangeTrackingList<PrivateDnsMXRecordInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsMXRecordData>.Write(ModelReaderWriterOptions options)

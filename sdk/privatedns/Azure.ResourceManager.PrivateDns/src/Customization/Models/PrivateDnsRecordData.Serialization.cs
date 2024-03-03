@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.PrivateDns
                 throw new FormatException($"The model {nameof(PrivateDnsRecordData)} does not support '{format}' format.");
             }
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -44,12 +43,12 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TtlInSeconds))
+            if (TtlInSeconds.HasValue)
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(ARecords))
+            if (!(ARecords is ChangeTrackingList<PrivateDnsARecordInfo> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AaaaRecords))
+            if (!(AaaaRecords is ChangeTrackingList<PrivateDnsAaaaRecordInfo> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 writer.WritePropertyName("aaaaRecords"u8);
                 writer.WriteStartArray();
@@ -69,12 +68,12 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateDnsCnameRecordInfo))
+            if (PrivateDnsCnameRecordInfo != null)
             {
                 writer.WritePropertyName("cnameRecord"u8);
                 writer.WriteObjectValue(PrivateDnsCnameRecordInfo);
             }
-            if (Optional.IsCollectionDefined(MXRecords))
+            if (!(MXRecords is ChangeTrackingList<PrivateDnsMXRecordInfo> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 writer.WritePropertyName("mxRecords"u8);
                 writer.WriteStartArray();
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PtrRecords))
+            if (!(PtrRecords is ChangeTrackingList<PrivateDnsPtrRecordInfo> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 writer.WritePropertyName("ptrRecords"u8);
                 writer.WriteStartArray();
@@ -94,12 +93,12 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateDnsSoaRecordInfo))
+            if (PrivateDnsSoaRecordInfo != null)
             {
                 writer.WritePropertyName("soaRecord"u8);
                 writer.WriteObjectValue(PrivateDnsSoaRecordInfo);
             }
-            if (Optional.IsCollectionDefined(SrvRecords))
+            if (!(SrvRecords is ChangeTrackingList<PrivateDnsSrvRecordInfo> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 writer.WritePropertyName("srvRecords"u8);
                 writer.WriteStartArray();
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.PrivateDns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TxtRecords))
+            if (!(TxtRecords is ChangeTrackingList<PrivateDnsTxtRecordInfo> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -158,23 +157,23 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<bool> isAutoRegistered = default;
-            Optional<IList<PrivateDnsARecordInfo>> aRecords = default;
-            Optional<IList<PrivateDnsAaaaRecordInfo>> aaaaRecords = default;
-            Optional<PrivateDnsCnameRecordInfo> privateDnsCnameRecordInfo = default;
-            Optional<IList<PrivateDnsMXRecordInfo>> mxRecords = default;
-            Optional<IList<PrivateDnsPtrRecordInfo>> ptrRecords = default;
-            Optional<PrivateDnsSoaRecordInfo> privateDnsSoaRecordInfo = default;
-            Optional<IList<PrivateDnsSrvRecordInfo>> srvRecords = default;
-            Optional<IList<PrivateDnsTxtRecordInfo>> txtRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            bool? isAutoRegistered = default;
+            IList<PrivateDnsARecordInfo> aRecords = default;
+            IList<PrivateDnsAaaaRecordInfo> aaaaRecords = default;
+            PrivateDnsCnameRecordInfo privateDnsCnameRecordInfo = default;
+            IList<PrivateDnsMXRecordInfo> mxRecords = default;
+            IList<PrivateDnsPtrRecordInfo> ptrRecords = default;
+            PrivateDnsSoaRecordInfo privateDnsSoaRecordInfo = default;
+            IList<PrivateDnsSrvRecordInfo> srvRecords = default;
+            IList<PrivateDnsTxtRecordInfo> txtRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -382,8 +381,27 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords), Optional.ToList(aaaaRecords), privateDnsCnameRecordInfo.Value, Optional.ToList(mxRecords), Optional.ToList(ptrRecords), privateDnsSoaRecordInfo.Value, Optional.ToList(srvRecords), Optional.ToList(txtRecords), serializedAdditionalRawData);
+            return new PrivateDnsRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                isAutoRegistered,
+                aRecords ?? new ChangeTrackingList<PrivateDnsARecordInfo>(),
+                aaaaRecords ?? new ChangeTrackingList<PrivateDnsAaaaRecordInfo>(),
+                privateDnsCnameRecordInfo,
+                mxRecords ?? new ChangeTrackingList<PrivateDnsMXRecordInfo>(),
+                ptrRecords ?? new ChangeTrackingList<PrivateDnsPtrRecordInfo>(),
+                privateDnsSoaRecordInfo,
+                srvRecords ?? new ChangeTrackingList<PrivateDnsSrvRecordInfo>(),
+                txtRecords ?? new ChangeTrackingList<PrivateDnsTxtRecordInfo>(),
+                serializedAdditionalRawData);
         }
+
         BinaryData IPersistableModel<PrivateDnsRecordData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsRecordData>)this).GetFormatFromOptions(options) : options.Format;

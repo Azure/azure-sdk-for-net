@@ -8,7 +8,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<PrivateDnsSoaRecordData> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -76,8 +75,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateDnsSrvRecordData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PrivateDnsSrvRecordData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +107,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsSrvRecordListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateDnsSrvRecordListResult(
+                value ?? new ChangeTrackingList<PrivateDnsSrvRecordData>(),
+                nextLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsSrvRecordListResult>.Write(ModelReaderWriterOptions options)

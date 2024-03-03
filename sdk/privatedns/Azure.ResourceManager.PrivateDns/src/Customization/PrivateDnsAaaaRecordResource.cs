@@ -240,7 +240,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<PrivateDnsAaaaRecordResource>> UpdateAsync(PrivateDnsAaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _aaaaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsAaaaRecordResource.Update");
             scope.Start();
@@ -275,7 +278,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<PrivateDnsAaaaRecordResource> Update(PrivateDnsAaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _aaaaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsAaaaRecordResource.Update");
             scope.Start();

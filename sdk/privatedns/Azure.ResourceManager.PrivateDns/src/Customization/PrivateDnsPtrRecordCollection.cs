@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateDnsPtrRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ptrRecordName, PrivateDnsPtrRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsPtrRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateDnsPtrRecordResource> CreateOrUpdate(WaitUntil waitUntil, string ptrRecordName, PrivateDnsPtrRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsPtrRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual async Task<Response<PrivateDnsPtrRecordResource>> GetAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsPtrRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual Response<PrivateDnsPtrRecordResource> Get(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsPtrRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsPtrRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="ptrRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string ptrRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ptrRecordName, nameof(ptrRecordName));
+            if (ptrRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(ptrRecordName));
+			}
 
             using var scope = _ptrRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsPtrRecordCollection.Exists");
             scope.Start();

@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateDnsMXRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mxRecordName, PrivateDnsMXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateDnsMXRecordResource> CreateOrUpdate(WaitUntil waitUntil, string mxRecordName, PrivateDnsMXRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual async Task<Response<PrivateDnsMXRecordResource>> GetAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual Response<PrivateDnsMXRecordResource> Get(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(mxRecordName, nameof(mxRecordName));
+            if (mxRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(mxRecordName));
+			}
 
             using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Exists");
             scope.Start();

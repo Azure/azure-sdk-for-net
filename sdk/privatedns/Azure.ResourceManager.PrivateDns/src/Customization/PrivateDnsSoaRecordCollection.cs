@@ -76,8 +76,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateDnsSoaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string soaRecordName, PrivateDnsSoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -118,8 +124,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateDnsSoaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string soaRecordName, PrivateDnsSoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
+            if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordCollection.CreateOrUpdate");
             scope.Start();
@@ -156,7 +168,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual async Task<Response<PrivateDnsSoaRecordResource>> GetAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordCollection.Get");
             scope.Start();
@@ -192,7 +207,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual Response<PrivateDnsSoaRecordResource> Get(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordCollection.Get");
             scope.Start();
@@ -332,7 +350,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordCollection.Exists");
             scope.Start();
@@ -366,7 +387,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
         public virtual Response<bool> Exists(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(soaRecordName, nameof(soaRecordName));
+            if (soaRecordName == null)
+			{
+				throw new ArgumentNullException(nameof(soaRecordName));
+			}
 
             using var scope = _soaRecordInfoRecordSetsClientDiagnostics.CreateScope("PrivateDnsSoaRecordCollection.Exists");
             scope.Start();
