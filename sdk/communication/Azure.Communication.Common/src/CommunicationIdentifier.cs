@@ -65,7 +65,14 @@ namespace Azure.Communication
         /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, <see cref="MicrosoftTeamsAppIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
         public static CommunicationIdentifier FromRawId(string rawId)
         {
-            Argument.AssertNotNullOrEmpty(rawId, nameof(rawId));
+            if (rawId == null)
+			{
+				throw new ArgumentNullException(nameof(rawId));
+			}
+			if (rawId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(rawId));
+			}
 
             if (rawId.StartsWith(Phone, StringComparison.OrdinalIgnoreCase))
             {

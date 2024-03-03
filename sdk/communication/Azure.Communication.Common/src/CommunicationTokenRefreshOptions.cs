@@ -54,7 +54,10 @@ namespace Azure.Communication
             bool refreshProactively,
             Func<CancellationToken, string> tokenRefresher)
         {
-            Argument.AssertNotNull(tokenRefresher, nameof(tokenRefresher));
+            if (tokenRefresher == null)
+			{
+				throw new ArgumentNullException(nameof(tokenRefresher));
+			}
             RefreshProactively = refreshProactively;
             TokenRefresher = tokenRefresher;
         }

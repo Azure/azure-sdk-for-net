@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,7 +14,10 @@ namespace Azure.Communication
 
         public StaticTokenCredential(string token)
         {
-            Argument.AssertNotNull(token, nameof(token));
+            if (token == null)
+			{
+				throw new ArgumentNullException(nameof(token));
+			}
 
             _accessToken = JwtTokenParser.CreateAccessToken(token);
         }

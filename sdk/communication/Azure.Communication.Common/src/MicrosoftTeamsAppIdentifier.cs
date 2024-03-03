@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System;
 
 namespace Azure.Communication
 {
@@ -57,7 +57,14 @@ namespace Azure.Communication
         /// </exception>
         public MicrosoftTeamsAppIdentifier(string appId, CommunicationCloudEnvironment? cloud = null)
         {
-            Argument.AssertNotNullOrEmpty(appId, nameof(appId));
+            if (appId == null)
+			{
+				throw new ArgumentNullException(nameof(appId));
+			}
+			if (appId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(appId));
+			}
             AppId = appId;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
         }

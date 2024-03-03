@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System;
 
 namespace Azure.Communication
 {
@@ -29,7 +29,14 @@ namespace Azure.Communication
         /// </exception>
         public CommunicationUserIdentifier(string id)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+			if (id.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+			}
             Id = id;
         }
 

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System;
 
 namespace Azure.Communication
 {
@@ -65,7 +65,14 @@ namespace Azure.Communication
         /// </exception>
         public MicrosoftTeamsUserIdentifier(string userId, bool isAnonymous = false, CommunicationCloudEnvironment? cloud = null, string rawId = null)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+			{
+				throw new ArgumentNullException(nameof(userId));
+			}
+			if (userId.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+			}
             UserId = userId;
             IsAnonymous = isAnonymous;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;

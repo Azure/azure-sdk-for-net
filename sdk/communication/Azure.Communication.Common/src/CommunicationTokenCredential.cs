@@ -30,7 +30,10 @@ namespace Azure.Communication
         /// <param name="options">Options for how the token will be refreshed</param>
         public CommunicationTokenCredential(CommunicationTokenRefreshOptions options)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+			{
+				throw new ArgumentNullException(nameof(options));
+			}
             _tokenCredential = new AutoRefreshTokenCredential(options);
         }
 

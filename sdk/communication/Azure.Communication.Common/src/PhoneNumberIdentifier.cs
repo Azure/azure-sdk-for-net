@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using System;
 
 namespace Azure.Communication
 {
@@ -36,7 +36,14 @@ namespace Azure.Communication
         /// </exception>
         public PhoneNumberIdentifier(string phoneNumber, string rawId = null)
         {
-            Argument.AssertNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
+            if (phoneNumber == null)
+			{
+				throw new ArgumentNullException(nameof(phoneNumber));
+			}
+			if (phoneNumber.Length == 0)
+			{
+				throw new ArgumentException("Value cannot be an empty string.", nameof(phoneNumber));
+			}
             PhoneNumber = phoneNumber;
             _rawId = rawId;
         }
