@@ -26,7 +26,14 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
         public EmailAddress(string address)
         {
-            Argument.AssertNotNullOrWhiteSpace(address, nameof(address));
+            if (address == null)
+            {
+                throw new ArgumentNullException(nameof(address));
+            }
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(address));
+            }
             Address = address;
             DisplayName = string.Empty;
         }

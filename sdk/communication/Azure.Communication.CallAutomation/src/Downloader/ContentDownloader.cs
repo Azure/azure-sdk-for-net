@@ -21,7 +21,10 @@ namespace Azure.Communication.CallAutomation
 
         internal async Task<Response<Stream>> DownloadStreamingInternal(Uri sourceEndpoint, HttpRange range, bool async, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(sourceEndpoint, nameof(sourceEndpoint));
+            if (sourceEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(sourceEndpoint));
+            }
 
             Response<Stream> response;
             if (async)

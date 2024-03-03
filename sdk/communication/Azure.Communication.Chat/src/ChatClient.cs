@@ -29,8 +29,14 @@ namespace Azure.Communication.Chat
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public ChatClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
-            Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (communicationTokenCredential == null)
+            {
+                throw new ArgumentNullException(nameof(communicationTokenCredential));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             _chatClientOptions = options ?? new ChatClientOptions();
             _communicationTokenCredential = communicationTokenCredential;
             _endpointUrl = endpoint;

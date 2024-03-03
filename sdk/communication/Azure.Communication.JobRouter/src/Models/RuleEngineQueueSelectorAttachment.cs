@@ -27,7 +27,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="rule"/> is null. </exception>
         public RuleEngineQueueSelectorAttachment(RouterRule rule)
         {
-            Argument.AssertNotNull(rule, nameof(rule));
+            if (rule == null)
+            {
+                throw new ArgumentNullException(nameof(rule));
+            }
 
             Kind = QueueSelectorAttachmentKind.RuleEngine;
             Rule = rule;

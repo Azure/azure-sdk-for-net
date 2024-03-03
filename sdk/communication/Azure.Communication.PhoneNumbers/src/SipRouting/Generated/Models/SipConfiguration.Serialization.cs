@@ -16,7 +16,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Trunks))
+            if (!(Trunks is ChangeTrackingDictionary<string, SipTrunk> dictionary && dictionary.IsUndefined))
             {
                 writer.WritePropertyName("trunks");
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Routes))
+            if (!(Routes is ChangeTrackingList<SipTrunkRoute> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("routes");
                 writer.WriteStartArray();

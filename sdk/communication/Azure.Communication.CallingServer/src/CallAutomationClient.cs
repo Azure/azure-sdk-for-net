@@ -31,7 +31,11 @@ namespace Azure.Communication.CallingServer
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public CallAutomationClient(string connectionString)
             : this(
-                  ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                  ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                   new CallAutomationClientOptions())
         { }
 
@@ -40,8 +44,12 @@ namespace Azure.Communication.CallingServer
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallAutomationClient(string connectionString, CallAutomationClientOptions options)
             : this(
-                  ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                  Argument.CheckNotNull(options, nameof(options)))
+                  ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
+                  options ?? throw new ArgumentNullException(nameof(options)))
         { }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -50,8 +58,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallAutomationClient(Uri endpoint, TokenCredential credential, CallAutomationClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                credential ?? throw new ArgumentNullException(nameof(credential)),
                 options ?? new CallAutomationClientOptions())
         { }
 

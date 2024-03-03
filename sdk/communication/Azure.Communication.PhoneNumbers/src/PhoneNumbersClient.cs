@@ -33,7 +33,11 @@ namespace Azure.Communication.PhoneNumbers
         /// </summary>
         public PhoneNumbersClient(string connectionString)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 new PhoneNumbersClientOptions())
         { }
 
@@ -42,7 +46,11 @@ namespace Azure.Communication.PhoneNumbers
         /// </summary>
         public PhoneNumbersClient(string connectionString, PhoneNumbersClientOptions options)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new PhoneNumbersClientOptions())
         { }
 
@@ -52,8 +60,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public PhoneNumbersClient(Uri endpoint, AzureKeyCredential keyCredential, PhoneNumbersClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                keyCredential ?? throw new ArgumentNullException(nameof(keyCredential)),
                 options ?? new PhoneNumbersClientOptions())
         { }
 
@@ -65,8 +73,8 @@ namespace Azure.Communication.PhoneNumbers
         /// </summary>
         public PhoneNumbersClient(Uri endpoint, TokenCredential tokenCredential, PhoneNumbersClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                tokenCredential ?? throw new ArgumentNullException(nameof(tokenCredential)),
                 options ?? new PhoneNumbersClientOptions())
         { }
 
@@ -140,7 +148,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartReleasePhoneNumber)}");
             scope.Start();
@@ -327,7 +338,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PhoneNumberSearchResult>> GetPhoneNumberSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchId, nameof(searchId));
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
             scope.Start();
@@ -347,7 +361,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PhoneNumberSearchResult> GetPhoneNumberSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchId, nameof(searchId));
+            if (searchId == null)
+            {
+                throw new ArgumentNullException(nameof(searchId));
+            }
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumberSearchResult)}");
             scope.Start();

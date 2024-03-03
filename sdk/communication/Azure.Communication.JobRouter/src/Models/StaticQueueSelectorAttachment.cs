@@ -16,7 +16,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="queueSelector"/> is null. </exception>
         public StaticQueueSelectorAttachment(RouterQueueSelector queueSelector)
         {
-            Argument.AssertNotNull(queueSelector, nameof(queueSelector));
+            if (queueSelector == null)
+            {
+                throw new ArgumentNullException(nameof(queueSelector));
+            }
 
             Kind = QueueSelectorAttachmentKind.Static;
             QueueSelector = queueSelector;

@@ -17,7 +17,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
         public ChannelAffinity(CommunicationIdentifier participant)
         {
-            Argument.AssertNotNull(participant, nameof(participant));
+            if (participant == null)
+            {
+                throw new ArgumentNullException(nameof(participant));
+            }
 
             Participant = participant;
         }

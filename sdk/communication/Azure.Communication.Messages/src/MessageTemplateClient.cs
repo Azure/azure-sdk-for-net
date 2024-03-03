@@ -22,7 +22,11 @@ namespace Azure.Communication.Messages
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public MessageTemplateClient(string connectionString)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 new CommunicationMessagesClientOptions())
         {
         }
@@ -32,7 +36,11 @@ namespace Azure.Communication.Messages
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public MessageTemplateClient(string connectionString, CommunicationMessagesClientOptions options)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new CommunicationMessagesClientOptions())
         {
         }
@@ -43,8 +51,8 @@ namespace Azure.Communication.Messages
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options = default)
              : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                credential ?? throw new ArgumentNullException(nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
             _keyCredential = credential;
@@ -84,7 +92,10 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal MessageTemplateClient(Uri endpoint, CommunicationMessagesClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

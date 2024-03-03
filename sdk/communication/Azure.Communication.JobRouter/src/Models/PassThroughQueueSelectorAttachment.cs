@@ -17,8 +17,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughQueueSelectorAttachment(string key, LabelOperator labelOperator)
         {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
-            Argument.AssertNotNull(labelOperator, nameof(labelOperator));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(key));
+            }
 
             Kind = QueueSelectorAttachmentKind.PassThrough;
             Key = key;

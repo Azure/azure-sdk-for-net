@@ -31,7 +31,11 @@ namespace Azure.Communication.Rooms
         /// <param name="connectionString"></param>
         public RoomsClient(string connectionString)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 new RoomsClientOptions())
         { }
 
@@ -42,7 +46,11 @@ namespace Azure.Communication.Rooms
         /// <param name="options"></param>
         public RoomsClient(string connectionString, RoomsClientOptions options)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new RoomsClientOptions())
         { }
 
@@ -54,8 +62,8 @@ namespace Azure.Communication.Rooms
         /// <param name="options"></param>
         public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                credential ?? throw new ArgumentNullException(nameof(credential)),
                 options ?? new RoomsClientOptions())
         { }
 
@@ -67,8 +75,8 @@ namespace Azure.Communication.Rooms
         /// <param name="options"></param>
         public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                credential ?? throw new ArgumentNullException(nameof(credential)),
                 options ?? new RoomsClientOptions())
         { }
 

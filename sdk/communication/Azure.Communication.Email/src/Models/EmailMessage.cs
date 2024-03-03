@@ -19,9 +19,18 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="recipientAddress"/> or <paramref name="content"/> is null. </exception>
         public EmailMessage(string senderAddress, string recipientAddress, EmailContent content)
         {
-            Argument.AssertNotNull(senderAddress, nameof(senderAddress));
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(recipientAddress, nameof(recipientAddress));
+            if (senderAddress == null)
+            {
+                throw new ArgumentNullException(nameof(senderAddress));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (recipientAddress == null)
+            {
+                throw new ArgumentNullException(nameof(recipientAddress));
+            }
 
             Headers = new ChangeTrackingDictionary<string, string>();
             SenderAddress = senderAddress;
@@ -41,9 +50,18 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
         public EmailMessage(string senderAddress, EmailRecipients recipients, EmailContent content)
         {
-            Argument.AssertNotNull(senderAddress, nameof(senderAddress));
-            Argument.AssertNotNull(recipients, nameof(recipients));
-            Argument.AssertNotNull(content, nameof(content));
+            if (senderAddress == null)
+            {
+                throw new ArgumentNullException(nameof(senderAddress));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (recipients == null)
+            {
+                throw new ArgumentNullException(nameof(recipients));
+            }
 
             Headers = new ChangeTrackingDictionary<string, string>();
             SenderAddress = senderAddress;

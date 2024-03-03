@@ -19,7 +19,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="queueSelectors"/> is null. </exception>
         public QueueWeightedAllocation(double weight, IEnumerable<RouterQueueSelector> queueSelectors)
         {
-            Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
+            if (queueSelectors == null)
+            {
+                throw new ArgumentNullException(nameof(queueSelectors));
+            }
 
             Weight = weight;
             QueueSelectors = queueSelectors.ToList();

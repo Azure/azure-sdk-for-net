@@ -41,7 +41,10 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MessageTemplateLocation(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             Kind = "location";
         }
 
@@ -53,7 +56,10 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal MessageTemplateLocation(string name, double latitudeInternal, double longitudeInternal) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             Kind = "location";
         }
 

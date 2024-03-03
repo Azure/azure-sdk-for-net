@@ -13,7 +13,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="functionKey"/> is null. </exception>
         public FunctionRouterRuleCredential(string functionKey)
         {
-            Argument.AssertNotNullOrWhiteSpace(functionKey, nameof(functionKey));
+            if (functionKey == null)
+            {
+                throw new ArgumentNullException(nameof(functionKey));
+            }
+            if (string.IsNullOrWhiteSpace(functionKey))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(functionKey));
+            }
             FunctionKey = functionKey;
         }
 
@@ -31,8 +38,22 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="appKey"/> or <paramref name="clientId"/> is null. </exception>
         public FunctionRouterRuleCredential(string appKey, string clientId)
         {
-            Argument.AssertNotNullOrWhiteSpace(appKey, nameof(appKey));
-            Argument.AssertNotNullOrWhiteSpace(clientId, nameof(clientId));
+            if (appKey == null)
+            {
+                throw new ArgumentNullException(nameof(appKey));
+            }
+            if (string.IsNullOrWhiteSpace(appKey))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(appKey));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (string.IsNullOrWhiteSpace(clientId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(clientId));
+            }
 
             AppKey = appKey;
             ClientId = clientId;

@@ -13,7 +13,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="workerSelector"/> is null. </exception>
         public StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector)
         {
-            Argument.AssertNotNull(workerSelector, nameof(workerSelector));
+            if (workerSelector == null)
+            {
+                throw new ArgumentNullException(nameof(workerSelector));
+            }
 
             Kind = WorkerSelectorAttachmentKind.Static;
             WorkerSelector = workerSelector;

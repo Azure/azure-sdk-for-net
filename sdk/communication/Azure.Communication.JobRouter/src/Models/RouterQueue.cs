@@ -15,7 +15,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         public RouterQueue(string queueId)
         {
-            Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (string.IsNullOrWhiteSpace(queueId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(queueId));
+            }
 
             Id = queueId;
         }

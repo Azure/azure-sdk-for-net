@@ -14,7 +14,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="ssmlText"/> is null. </exception>
         public SsmlSource(string ssmlText)
         {
-            Argument.AssertNotNull(ssmlText, nameof(ssmlText));
+            if (ssmlText == null)
+            {
+                throw new ArgumentNullException(nameof(ssmlText));
+            }
             SsmlText = ssmlText;
         }
 

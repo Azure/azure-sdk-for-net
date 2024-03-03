@@ -26,7 +26,11 @@ namespace Azure.Communication.Identity
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public CommunicationIdentityClient(string connectionString)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 new CommunicationIdentityClientOptions())
         { }
 
@@ -35,7 +39,11 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(string connectionString, CommunicationIdentityClientOptions options)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -45,8 +53,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                keyCredential ?? throw new ArgumentNullException(nameof(keyCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 
@@ -56,8 +64,8 @@ namespace Azure.Communication.Identity
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CommunicationIdentityClient(Uri endpoint, TokenCredential tokenCredential, CommunicationIdentityClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                tokenCredential ?? throw new ArgumentNullException(nameof(tokenCredential)),
                 options ?? new CommunicationIdentityClientOptions())
         { }
 

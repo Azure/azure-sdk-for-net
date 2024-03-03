@@ -13,7 +13,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public FunctionRouterRule(Uri functionAppUri)
         {
-            Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
+            if (functionAppUri == null)
+            {
+                throw new ArgumentNullException(nameof(functionAppUri));
+            }
 
             Kind = RouterRuleKind.Function;
             FunctionUri = functionAppUri;

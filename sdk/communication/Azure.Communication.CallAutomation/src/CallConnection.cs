@@ -376,7 +376,10 @@ namespace Azure.Communication.CallAutomation
         private static AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantOptions options)
         {
             // validate ParticipantToAdd is not null
-            Argument.AssertNotNull(options.ParticipantToAdd, nameof(options.ParticipantToAdd));
+            if (options.ParticipantToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(options.ParticipantToAdd));
+            }
 
             AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
@@ -533,7 +536,10 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 // validate RequestInitiator is not null or empty
-                Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
+                if (options.ParticipantToRemove == null)
+                {
+                    throw new ArgumentNullException(nameof(options.ParticipantToRemove));
+                }
 
                 RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
 

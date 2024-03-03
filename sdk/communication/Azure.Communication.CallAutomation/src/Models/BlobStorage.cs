@@ -22,7 +22,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="containerUri">Url of a container or a location within a container. </param>
         public BlobStorage(Uri containerUri)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            if (containerUri == null)
+            {
+                throw new ArgumentNullException(nameof(containerUri));
+            }
             ContainerUri = containerUri;
             StorageType = RecordingStorageType.BlobStorage;
         }

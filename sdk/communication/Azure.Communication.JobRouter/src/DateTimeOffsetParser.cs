@@ -19,7 +19,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"></exception>
         public static DateTimeOffset ParseAndGetDateTimeOffset(string input)
         {
-            Argument.AssertNotNullOrWhiteSpace(input, nameof(input));
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(input));
+            }
 
             var parseSuccessful = DateTimeOffset.TryParse(
                 input,

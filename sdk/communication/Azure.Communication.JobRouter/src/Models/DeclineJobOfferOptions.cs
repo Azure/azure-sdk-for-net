@@ -24,8 +24,22 @@ namespace Azure.Communication.JobRouter
 
         public DeclineJobOfferOptions(string workerId, string offerId)
         {
-            Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
-            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            if (workerId == null)
+            {
+                throw new ArgumentNullException(nameof(workerId));
+            }
+            if (workerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(workerId));
+            }
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
+            if (offerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
+            }
 
             WorkerId = workerId;
             OfferId = offerId;

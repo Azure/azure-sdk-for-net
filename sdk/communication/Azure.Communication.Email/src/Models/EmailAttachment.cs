@@ -20,9 +20,18 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="contentType"/> or <paramref name="content"/> is null. </exception>
         public EmailAttachment(string name, string contentType, BinaryData content)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(contentType, nameof(contentType));
-            Argument.AssertNotNull(content, nameof(content));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (contentType == null)
+            {
+                throw new ArgumentNullException(nameof(contentType));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             Name = name;
             ContentType = contentType;

@@ -20,7 +20,10 @@ namespace Azure.Communication.CallAutomation
         /// </exception>
         public ServerCallLocator(string id)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new System.ArgumentNullException(nameof(id));
+            }
             Id = id;
         }
 

@@ -15,7 +15,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         public RouterJob(string jobId)
         {
-            Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(jobId));
+            }
             Id = jobId;
 
             _labels = new ChangeTrackingDictionary<string, BinaryData>();

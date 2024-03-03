@@ -21,8 +21,14 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="transportUri"/> or <paramref name="locale"/> is null. </exception>
         public TranscriptionOptions(Uri transportUri, TranscriptionTransport transportType, string locale, bool startTranscription)
         {
-            Argument.AssertNotNull(transportUri, nameof(transportUri));
-            Argument.AssertNotNull(locale, nameof(locale));
+            if (transportUri == null)
+            {
+                throw new ArgumentNullException(nameof(transportUri));
+            }
+            if (locale == null)
+            {
+                throw new ArgumentNullException(nameof(locale));
+            }
 
             TransportUrl = transportUri;
             TranscriptionTransport = transportType;

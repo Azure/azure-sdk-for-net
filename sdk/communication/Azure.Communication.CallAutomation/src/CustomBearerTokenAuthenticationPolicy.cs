@@ -45,8 +45,14 @@ namespace Azure.Communication.Pipeline
             TimeSpan tokenRefreshOffset,
             TimeSpan tokenRefreshRetryDelay)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(scopes, nameof(scopes));
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            if (scopes == null)
+            {
+                throw new ArgumentNullException(nameof(scopes));
+            }
 
             _scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay);

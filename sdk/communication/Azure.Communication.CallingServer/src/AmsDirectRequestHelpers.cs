@@ -10,9 +10,22 @@ namespace Azure.Communication.CallingServer
     {
         internal static HttpMessage GetHttpMessage(CallRecording client, Uri requestEndpoint, RequestMethod requestMethod, HttpRange? rangeHeader = null)
         {
-            Argument.CheckNotNull(client, nameof(client));
-            Argument.CheckNotNull(requestEndpoint, nameof(requestEndpoint));
-            Argument.CheckNotNullOrEmpty(requestMethod.Method, nameof(requestMethod));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+            if (requestEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(requestEndpoint));
+            }
+            if (requestMethod.Method == null)
+            {
+                throw new ArgumentNullException(nameof(requestMethod));
+            }
+            if (requestMethod.Method.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(requestMethod));
+            }
 
             HttpMessage message = client._pipeline.CreateMessage();
             Request request = message.Request;

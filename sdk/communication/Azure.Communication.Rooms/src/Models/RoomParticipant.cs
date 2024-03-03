@@ -15,7 +15,10 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public RoomParticipant(CommunicationIdentifier communicationIdentifier)
         {
-            Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
+            if (communicationIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(communicationIdentifier));
+            }
             CommunicationIdentifier = communicationIdentifier;
         }
 
@@ -25,7 +28,10 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="rawId"/> is null. </exception>
         internal RoomParticipant(string rawId, ParticipantRole role)
         {
-            Argument.AssertNotNull(rawId, nameof(rawId));
+            if (rawId == null)
+            {
+                throw new ArgumentNullException(nameof(rawId));
+            }
             CommunicationIdentifier = CommunicationIdentifier.FromRawId(rawId);
             RawId = rawId;
             Role = role;

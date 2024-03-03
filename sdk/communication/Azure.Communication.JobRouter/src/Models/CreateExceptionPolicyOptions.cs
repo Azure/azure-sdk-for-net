@@ -21,8 +21,18 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionRules"/> is null. </exception>
         public CreateExceptionPolicyOptions(string exceptionPolicyId, IEnumerable<ExceptionRule> exceptionRules)
         {
-            Argument.AssertNotNullOrWhiteSpace(exceptionPolicyId, nameof(exceptionPolicyId));
-            Argument.AssertNotNull(exceptionRules, nameof(exceptionRules));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (string.IsNullOrWhiteSpace(exceptionPolicyId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(exceptionPolicyId));
+            }
+            if (exceptionRules == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionRules));
+            }
 
             ExceptionPolicyId = exceptionPolicyId;
             ExceptionRules.AddRange(exceptionRules);

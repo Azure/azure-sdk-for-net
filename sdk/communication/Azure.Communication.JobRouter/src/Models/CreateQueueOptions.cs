@@ -21,8 +21,22 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         public CreateQueueOptions(string queueId, string distributionPolicyId)
         {
-            Argument.AssertNotNullOrWhiteSpace(queueId, nameof(queueId));
-            Argument.AssertNotNullOrWhiteSpace(distributionPolicyId, nameof(distributionPolicyId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (string.IsNullOrWhiteSpace(queueId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(queueId));
+            }
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (string.IsNullOrWhiteSpace(distributionPolicyId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(distributionPolicyId));
+            }
 
             QueueId = queueId;
             DistributionPolicyId = distributionPolicyId;

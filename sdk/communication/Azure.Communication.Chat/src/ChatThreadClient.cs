@@ -34,9 +34,18 @@ namespace Azure.Communication.Chat
 
         public ChatThreadClient(string threadId, Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
-            Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (communicationTokenCredential == null)
+            {
+                throw new ArgumentNullException(nameof(communicationTokenCredential));
+            }
             options ??= new ChatClientOptions();
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);

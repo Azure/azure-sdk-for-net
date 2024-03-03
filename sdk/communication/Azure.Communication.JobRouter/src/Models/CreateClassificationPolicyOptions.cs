@@ -19,7 +19,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
         public CreateClassificationPolicyOptions(string classificationPolicyId)
         {
-            Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (string.IsNullOrWhiteSpace(classificationPolicyId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(classificationPolicyId));
+            }
 
             ClassificationPolicyId = classificationPolicyId;
         }

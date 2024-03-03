@@ -26,7 +26,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterAdministrationClient(string connectionString, JobRouterClientOptions options = default)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new JobRouterClientOptions())
         {
         }
@@ -37,8 +41,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterAdministrationClient(Uri endpoint, AzureKeyCredential credential, JobRouterClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                credential ?? throw new ArgumentNullException(nameof(credential)),
                 options ?? new JobRouterClientOptions())
         {
         }
@@ -49,8 +53,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterAdministrationClient(Uri endpoint, TokenCredential credential, JobRouterClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                credential ?? throw new ArgumentNullException(nameof(credential)),
                 options ?? new JobRouterClientOptions())
         {
         }
@@ -72,7 +76,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal JobRouterAdministrationClient(Uri endpoint, JobRouterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -262,11 +269,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateClassificationPolicyAsync(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
@@ -302,11 +325,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateClassificationPolicy(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
@@ -538,11 +577,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateDistributionPolicyAsync(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
@@ -578,11 +633,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateDistributionPolicy(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
@@ -818,11 +889,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateExceptionPolicyAsync(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
@@ -858,11 +945,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateExceptionPolicy(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
@@ -1109,11 +1212,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateQueueAsync(string queueId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
@@ -1149,11 +1268,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateQueue(string queueId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch != null)
+            {
+                throw new ArgumentException("Service does not support the If-None-Match header for this operation.", nameof(requestConditions));
+            }
+            if (requestConditions?.IfModifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Modified-Since header for this operation.", nameof(requestConditions));
+            }
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
@@ -1248,7 +1383,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal JobRouterAdministrationClient(Uri endpoint, HttpPipeline pipeline, JobRouterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
             options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

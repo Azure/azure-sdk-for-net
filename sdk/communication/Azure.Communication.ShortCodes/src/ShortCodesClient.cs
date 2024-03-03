@@ -27,7 +27,11 @@ namespace Azure.Communication.ShortCodes
         /// </summary>
         public ShortCodesClient(string connectionString)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 new ShortCodesClientOptions())
         { }
 
@@ -36,7 +40,11 @@ namespace Azure.Communication.ShortCodes
         /// </summary>
         public ShortCodesClient(string connectionString, ShortCodesClientOptions options)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new ShortCodesClientOptions())
         { }
 
@@ -46,8 +54,8 @@ namespace Azure.Communication.ShortCodes
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public ShortCodesClient(Uri endpoint, AzureKeyCredential keyCredential, ShortCodesClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                keyCredential ?? throw new ArgumentNullException(nameof(keyCredential)),
                 options ?? new ShortCodesClientOptions())
         { }
 
@@ -59,8 +67,8 @@ namespace Azure.Communication.ShortCodes
         /// </summary>
         public ShortCodesClient(Uri endpoint, TokenCredential tokenCredential, ShortCodesClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                tokenCredential ?? throw new ArgumentNullException(nameof(tokenCredential)),
                 options ?? new ShortCodesClientOptions())
         { }
 
@@ -194,7 +202,10 @@ namespace Azure.Communication.ShortCodes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(body, nameof(body));
+                if (body == null)
+                {
+                    throw new ArgumentNullException(nameof(body));
+                }
 
                 Response<USProgramBrief> response = await RestClient.UpsertUSProgramBriefAsync(programBriefId, body, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
@@ -216,7 +227,10 @@ namespace Azure.Communication.ShortCodes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(body, nameof(body));
+                if (body == null)
+                {
+                    throw new ArgumentNullException(nameof(body));
+                }
 
                 Response<USProgramBrief> response = RestClient.UpsertUSProgramBrief(programBriefId, body, cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());

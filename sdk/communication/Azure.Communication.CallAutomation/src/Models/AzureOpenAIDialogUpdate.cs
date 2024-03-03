@@ -19,7 +19,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
         public AzureOpenAIDialogUpdate(IDictionary<string, object> context) : base(DialogInputType.AzureOpenAI)
         {
-            Argument.AssertNotNull(context, nameof(context));
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
             Context = context;
         }

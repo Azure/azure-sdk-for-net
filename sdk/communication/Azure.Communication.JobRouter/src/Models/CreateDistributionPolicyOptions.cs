@@ -20,9 +20,22 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         public CreateDistributionPolicyOptions(string distributionPolicyId, TimeSpan offerExpiresAfter, DistributionMode mode)
         {
-            Argument.AssertNotNullOrWhiteSpace(distributionPolicyId, nameof(distributionPolicyId));
-            Argument.AssertNotNull(offerExpiresAfter, nameof(offerExpiresAfter));
-            Argument.AssertNotNull(mode, nameof(mode));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (string.IsNullOrWhiteSpace(distributionPolicyId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(distributionPolicyId));
+            }
+            if (offerExpiresAfter == null)
+            {
+                throw new ArgumentNullException(nameof(offerExpiresAfter));
+            }
+            if (mode == null)
+            {
+                throw new ArgumentNullException(nameof(mode));
+            }
 
             DistributionPolicyId = distributionPolicyId;
             OfferExpiresAfter = offerExpiresAfter;

@@ -23,8 +23,22 @@ namespace Azure.Communication.JobRouter
 
         public CompleteJobOptions(string jobId, string assignmentId)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (assignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentId));
+            }
+            if (assignmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentId));
+            }
 
             JobId = jobId;
             AssignmentId = assignmentId;

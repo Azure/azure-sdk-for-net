@@ -29,7 +29,11 @@ namespace Azure.Communication.Sms
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public SmsClient(string connectionString)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 new SmsClientOptions())
         { }
 
@@ -38,7 +42,11 @@ namespace Azure.Communication.Sms
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(string connectionString, SmsClientOptions options)
             : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                ConnectionString.Parse(connectionString == null
+                      ? throw new ArgumentNullException(nameof(connectionString))
+                      : connectionString.Length == 0
+                        ? throw new ArgumentException("Value cannot be an empty string.", nameof(connectionString))
+                        : connectionString),
                 options ?? new SmsClientOptions())
         { }
 
@@ -48,8 +56,8 @@ namespace Azure.Communication.Sms
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(Uri endpoint, AzureKeyCredential keyCredential, SmsClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                keyCredential ?? throw new ArgumentNullException(nameof(keyCredential)),
                 options ?? new SmsClientOptions())
         { }
 
@@ -59,8 +67,8 @@ namespace Azure.Communication.Sms
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public SmsClient(Uri endpoint, TokenCredential tokenCredential, SmsClientOptions options = default)
             : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                endpoint?.AbsoluteUri ?? throw new ArgumentNullException(nameof(endpoint)),
+                tokenCredential ?? throw new ArgumentNullException(nameof(tokenCredential)),
                 options ?? new SmsClientOptions())
         { }
 
@@ -109,8 +117,22 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual async Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(from, nameof(from));
-            Argument.AssertNotNullOrEmpty(to, nameof(to));
+            if (from == null)
+            {
+                throw new ArgumentNullException(nameof(from));
+            }
+            if (from.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(from));
+            }
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+            if (to.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(to));
+            }
             Response<IReadOnlyList<SmsSendResult>> response = await SendAsync(from, new[] { to }, message, options, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value[0], response.GetRawResponse());
         }
@@ -129,8 +151,22 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
         public virtual Response<SmsSendResult> Send(string from, string to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(from, nameof(from));
-            Argument.AssertNotNullOrEmpty(to, nameof(to));
+            if (from == null)
+            {
+                throw new ArgumentNullException(nameof(from));
+            }
+            if (from.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(from));
+            }
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+            if (to.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(to));
+            }
             Response<IReadOnlyList<SmsSendResult>> response = Send(from, new[] { to }, message, options, cancellationToken);
             return Response.FromValue(response.Value[0], response.GetRawResponse());
         }
@@ -151,10 +187,32 @@ namespace Azure.Communication.Sms
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(from, nameof(from));
-                Argument.AssertNotNullOrEmpty(to, nameof(to));
+                if (from == null)
+                {
+                    throw new ArgumentNullException(nameof(from));
+                }
+                if (from.Length == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty string.", nameof(from));
+                }
+                if (to == null)
+                {
+                    throw new ArgumentNullException(nameof(to));
+                }
+                if (to is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(to));
+                }
+                if (!to.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(to));
+                }
                 IEnumerable<SmsRecipient> recipients = to.Select(x =>
-                    new SmsRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to)))
+                    new SmsRecipient(x == null
+                        ? throw new ArgumentNullException(nameof(to))
+                        : x.Length == 0
+                            ? throw new ArgumentException("Value cannot be an empty string.", nameof(to))
+                            : x)
                     {
                         RepeatabilityRequestId = Guid.NewGuid().ToString(),
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
@@ -186,11 +244,33 @@ namespace Azure.Communication.Sms
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(from, nameof(from));
-                Argument.AssertNotNullOrEmpty(to, nameof(to));
+                if (from == null)
+                {
+                    throw new ArgumentNullException(nameof(from));
+                }
+                if (from.Length == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty string.", nameof(from));
+                }
+                if (to == null)
+                {
+                    throw new ArgumentNullException(nameof(to));
+                }
+                if (to is ICollection<string> collectionOfT && collectionOfT.Count == 0)
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(to));
+                }
+                if (!to.Any())
+                {
+                    throw new ArgumentException("Value cannot be an empty collection.", nameof(to));
+                }
 
                 IEnumerable<SmsRecipient> recipients = to.Select(x =>
-                    new SmsRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to)))
+                    new SmsRecipient(x == null
+                        ? throw new ArgumentNullException(nameof(to))
+                        : x.Length == 0
+                            ? throw new ArgumentException("Value cannot be an empty string.", nameof(to))
+                            : x)
                     {
                         RepeatabilityRequestId = Guid.NewGuid().ToString(),
                         RepeatabilityFirstSent = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),

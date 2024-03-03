@@ -23,9 +23,30 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
         public CreateJobWithClassificationPolicyOptions(string jobId, string channelId, string classificationPolicyId)
         {
-            Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
-            Argument.AssertNotNullOrWhiteSpace(channelId, nameof(channelId));
-            Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (string.IsNullOrWhiteSpace(jobId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(jobId));
+            }
+            if (channelId == null)
+            {
+                throw new ArgumentNullException(nameof(channelId));
+            }
+            if (string.IsNullOrWhiteSpace(channelId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(channelId));
+            }
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (string.IsNullOrWhiteSpace(classificationPolicyId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(classificationPolicyId));
+            }
 
             JobId = jobId;
             ChannelId = channelId;

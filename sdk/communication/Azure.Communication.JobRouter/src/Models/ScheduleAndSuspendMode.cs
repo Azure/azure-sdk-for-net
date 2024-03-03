@@ -13,7 +13,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
         public ScheduleAndSuspendMode(DateTimeOffset scheduleAt)
         {
-            Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
+            if (scheduleAt == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleAt));
+            }
 
             Kind = JobMatchingModeKind.ScheduleAndSuspend;
             ScheduleAt = scheduleAt;

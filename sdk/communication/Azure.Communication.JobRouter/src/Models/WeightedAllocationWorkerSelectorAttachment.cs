@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="allocations"/> is null. </exception>
         public WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations)
         {
-            Argument.AssertNotNull(allocations, nameof(allocations));
+            if (allocations == null)
+            {
+                throw new ArgumentNullException(nameof(allocations));
+            }
 
             Kind = WorkerSelectorAttachmentKind.WeightedAllocation;
             Allocations = allocations.ToList();

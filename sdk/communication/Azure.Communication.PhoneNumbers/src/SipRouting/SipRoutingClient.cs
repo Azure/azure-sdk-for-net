@@ -471,13 +471,23 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         private static T AssertNotNull<T>(T argument, string argumentName)
             where T : class
         {
-            Argument.AssertNotNull(argument, argumentName);
+            if (argument == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
             return argument;
         }
 
         private static string AssertNotNullOrEmpty(string argument, string argumentName)
         {
-            Argument.AssertNotNullOrEmpty(argument, argumentName);
+            if (argument == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+            if (string.IsNullOrEmpty(argument))
+            {
+                throw new ArgumentException("Value cannot be an empty string.", argumentName);
+            }
             return argument;
         }
     }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -12,8 +13,22 @@ namespace Azure.Communication.JobRouter
         /// <param name="clientSecret"> Client secret for Contoso Authorization server. </param>
         public OAuth2WebhookClientCredential(string clientId, string clientSecret)
         {
-            Argument.AssertNotNullOrWhiteSpace(clientId, nameof(clientId));
-            Argument.AssertNotNullOrWhiteSpace(clientSecret, nameof(clientSecret));
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (string.IsNullOrWhiteSpace(clientId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(clientId));
+            }
+            if (clientSecret == null)
+            {
+                throw new ArgumentNullException(nameof(clientSecret));
+            }
+            if (string.IsNullOrWhiteSpace(clientSecret))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(clientSecret));
+            }
 
             ClientId = clientId;
             ClientSecret = clientSecret;

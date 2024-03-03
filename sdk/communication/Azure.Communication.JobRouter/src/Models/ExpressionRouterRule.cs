@@ -16,7 +16,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public ExpressionRouterRule(string expression)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
 
             Kind = RouterRuleKind.Expression;
             Language = ExpressionRouterRuleLanguage.PowerFx.ToString();

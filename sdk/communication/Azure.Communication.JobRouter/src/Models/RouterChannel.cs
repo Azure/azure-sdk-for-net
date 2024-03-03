@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -14,8 +15,18 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         public RouterChannel(string channelId, int capacityCostPerJob)
         {
-            Argument.AssertNotNullOrWhiteSpace(channelId, nameof(channelId));
-            Argument.AssertInRange(capacityCostPerJob, 0, int.MaxValue, nameof(capacityCostPerJob));
+            if (channelId == null)
+            {
+                throw new ArgumentNullException(nameof(channelId));
+            }
+            if (string.IsNullOrWhiteSpace(channelId))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(channelId));
+            }
+            if (capacityCostPerJob < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(capacityCostPerJob), "Value is less than the minimum allowed.");
+            }
 
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;
