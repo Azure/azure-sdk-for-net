@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An async collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceIdentifierData> GetAllSiteIdentifierDataAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
+            if (nameIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(nameIdentifier));
+            }
 
             async Task<Page<AppServiceIdentifierData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -69,7 +72,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> A collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceIdentifierData> GetAllSiteIdentifierData(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
+            if (nameIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(nameIdentifier));
+            }
 
             Page<AppServiceIdentifierData> FirstPageFunc(int? pageSizeHint)
             {

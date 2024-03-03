@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.AppService.Models
         [Obsolete("This property has been replaced by ResourceUriString", false)]
         public AppServiceTableStorageApplicationLogsConfig(Uri SasUri)
         {
-            Argument.AssertNotNull(SasUri, nameof(SasUri));
+            if (SasUri == null)
+            {
+                throw new ArgumentNullException(nameof(SasUri));
+            }
         }
     }
 }
