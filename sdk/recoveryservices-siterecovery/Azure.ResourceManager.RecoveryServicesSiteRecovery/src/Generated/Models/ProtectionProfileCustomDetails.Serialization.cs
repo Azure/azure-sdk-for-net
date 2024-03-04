@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingProtectionProfile.DeserializeExistingProtectionProfile(element);
-                    case "New": return NewProtectionProfile.DeserializeNewProtectionProfile(element);
+                    case "Existing": return ExistingProtectionProfile.DeserializeExistingProtectionProfile(element, options);
+                    case "New": return NewProtectionProfile.DeserializeNewProtectionProfile(element, options);
                 }
             }
-            return UnknownProtectionProfileCustomDetails.DeserializeUnknownProtectionProfileCustomDetails(element);
+            return UnknownProtectionProfileCustomDetails.DeserializeUnknownProtectionProfileCustomDetails(element, options);
         }
 
         BinaryData IPersistableModel<ProtectionProfileCustomDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputePrivateLinkResourceData>> value = default;
+            IReadOnlyList<ComputePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputePrivateLinkResourceData> array = new List<ComputePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item));
+                        array.Add(ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ComputePrivateLinkResourceListResult(value ?? new ChangeTrackingList<ComputePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

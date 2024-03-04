@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AppConfigurationStoreData(AzureLocation location, AppConfigurationSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             PrivateEndpointConnections = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();

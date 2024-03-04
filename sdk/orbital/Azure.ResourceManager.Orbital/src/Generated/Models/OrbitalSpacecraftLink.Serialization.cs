@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Orbital.Models
             float bandwidthMHz = default;
             OrbitalLinkDirection direction = default;
             OrbitalLinkPolarization polarization = default;
-            Optional<IReadOnlyList<AuthorizedGroundStation>> authorizations = default;
+            IReadOnlyList<AuthorizedGroundStation> authorizations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<AuthorizedGroundStation> array = new List<AuthorizedGroundStation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizedGroundStation.DeserializeAuthorizedGroundStation(item));
+                        array.Add(AuthorizedGroundStation.DeserializeAuthorizedGroundStation(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -139,7 +140,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalSpacecraftLink(name, centerFrequencyMHz, bandwidthMHz, direction, polarization, Optional.ToList(authorizations), serializedAdditionalRawData);
+            return new OrbitalSpacecraftLink(
+                name,
+                centerFrequencyMHz,
+                bandwidthMHz,
+                direction,
+                polarization,
+                authorizations ?? new ChangeTrackingList<AuthorizedGroundStation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalSpacecraftLink>.Write(ModelReaderWriterOptions options)

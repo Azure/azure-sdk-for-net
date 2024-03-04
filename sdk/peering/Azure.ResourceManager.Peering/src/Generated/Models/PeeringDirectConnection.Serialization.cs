@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<int> bandwidthInMbps = default;
-            Optional<int> provisionedBandwidthInMbps = default;
-            Optional<PeeringSessionAddressProvider> sessionAddressProvider = default;
-            Optional<bool> useForPeeringService = default;
-            Optional<string> microsoftTrackingId = default;
-            Optional<int> peeringDBFacilityId = default;
-            Optional<PeeringConnectionState> connectionState = default;
-            Optional<PeeringBgpSession> bgpSession = default;
-            Optional<string> connectionIdentifier = default;
-            Optional<string> errorMessage = default;
+            int? bandwidthInMbps = default;
+            int? provisionedBandwidthInMbps = default;
+            PeeringSessionAddressProvider? sessionAddressProvider = default;
+            bool? useForPeeringService = default;
+            string microsoftTrackingId = default;
+            int? peeringDBFacilityId = default;
+            PeeringConnectionState? connectionState = default;
+            PeeringBgpSession bgpSession = default;
+            string connectionIdentifier = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value);
+                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionIdentifier"u8))
@@ -212,7 +213,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new PeeringDirectConnection(
+                bandwidthInMbps,
+                provisionedBandwidthInMbps,
+                sessionAddressProvider,
+                useForPeeringService,
+                microsoftTrackingId,
+                peeringDBFacilityId,
+                connectionState,
+                bgpSession,
+                connectionIdentifier,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringDirectConnection>.Write(ModelReaderWriterOptions options)

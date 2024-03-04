@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ArmDeploymentOperation>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ArmDeploymentOperation> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDeploymentOperation> array = new List<ArmDeploymentOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDeploymentOperation.DeserializeArmDeploymentOperation(item));
+                        array.Add(ArmDeploymentOperation.DeserializeArmDeploymentOperation(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperationsListResult(value ?? new ChangeTrackingList<ArmDeploymentOperation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationsListResult>.Write(ModelReaderWriterOptions options)

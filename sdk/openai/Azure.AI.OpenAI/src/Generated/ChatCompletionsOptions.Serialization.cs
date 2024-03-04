@@ -193,25 +193,25 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             IList<ChatRequestMessage> messages = default;
-            Optional<IList<FunctionDefinition>> functions = default;
-            Optional<FunctionDefinition> functionCall = default;
-            Optional<int> maxTokens = default;
-            Optional<float> temperature = default;
-            Optional<float> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
-            Optional<string> user = default;
-            Optional<int> n = default;
-            Optional<IList<string>> stop = default;
-            Optional<float> presencePenalty = default;
-            Optional<float> frequencyPenalty = default;
-            Optional<bool> stream = default;
-            Optional<string> model = default;
-            Optional<IList<AzureChatExtensionConfiguration>> dataSources = default;
-            Optional<AzureChatEnhancementConfiguration> enhancements = default;
-            Optional<long> seed = default;
-            Optional<ChatCompletionsResponseFormat> responseFormat = default;
-            Optional<IList<ChatCompletionsToolDefinition>> tools = default;
-            Optional<BinaryData> toolChoice = default;
+            IList<FunctionDefinition> functions = default;
+            FunctionDefinition functionCall = default;
+            int? maxTokens = default;
+            float? temperature = default;
+            float? topP = default;
+            IDictionary<int, int> logitBias = default;
+            string user = default;
+            int? n = default;
+            IList<string> stop = default;
+            float? presencePenalty = default;
+            float? frequencyPenalty = default;
+            bool? stream = default;
+            string model = default;
+            IList<AzureChatExtensionConfiguration> dataSources = default;
+            AzureChatEnhancementConfiguration enhancements = default;
+            long? seed = default;
+            ChatCompletionsResponseFormat responseFormat = default;
+            IList<ChatCompletionsToolDefinition> tools = default;
+            BinaryData toolChoice = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,7 @@ namespace Azure.AI.OpenAI
                     List<ChatRequestMessage> array = new List<ChatRequestMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatRequestMessage.DeserializeChatRequestMessage(item));
+                        array.Add(ChatRequestMessage.DeserializeChatRequestMessage(item, options));
                     }
                     messages = array;
                     continue;
@@ -235,7 +235,7 @@ namespace Azure.AI.OpenAI
                     List<FunctionDefinition> array = new List<FunctionDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionDefinition.DeserializeFunctionDefinition(item));
+                        array.Add(FunctionDefinition.DeserializeFunctionDefinition(item, options));
                     }
                     functions = array;
                     continue;
@@ -246,7 +246,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionDefinition.DeserializeFunctionDefinition(property.Value);
+                    functionCall = FunctionDefinition.DeserializeFunctionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("max_tokens"u8))
@@ -350,7 +350,7 @@ namespace Azure.AI.OpenAI
                     List<AzureChatExtensionConfiguration> array = new List<AzureChatExtensionConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureChatExtensionConfiguration.DeserializeAzureChatExtensionConfiguration(item));
+                        array.Add(AzureChatExtensionConfiguration.DeserializeAzureChatExtensionConfiguration(item, options));
                     }
                     dataSources = array;
                     continue;
@@ -361,7 +361,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    enhancements = AzureChatEnhancementConfiguration.DeserializeAzureChatEnhancementConfiguration(property.Value);
+                    enhancements = AzureChatEnhancementConfiguration.DeserializeAzureChatEnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("seed"u8))
@@ -379,7 +379,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    responseFormat = ChatCompletionsResponseFormat.DeserializeChatCompletionsResponseFormat(property.Value);
+                    responseFormat = ChatCompletionsResponseFormat.DeserializeChatCompletionsResponseFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tools"u8))
@@ -391,7 +391,7 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolDefinition> array = new List<ChatCompletionsToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolDefinition.DeserializeChatCompletionsToolDefinition(item));
+                        array.Add(ChatCompletionsToolDefinition.DeserializeChatCompletionsToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
@@ -411,7 +411,28 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsOptions(messages, Optional.ToList(functions), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, Optional.ToList(dataSources), enhancements.Value, Optional.ToNullable(seed), responseFormat.Value, Optional.ToList(tools), toolChoice.Value, serializedAdditionalRawData);
+            return new ChatCompletionsOptions(
+                messages,
+                functions ?? new ChangeTrackingList<FunctionDefinition>(),
+                functionCall,
+                maxTokens,
+                temperature,
+                topP,
+                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                n,
+                stop ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                stream,
+                model,
+                dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
+                enhancements,
+                seed,
+                responseFormat,
+                tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
+                toolChoice,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)

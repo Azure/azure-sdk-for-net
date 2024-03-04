@@ -7,7 +7,6 @@
 
 using System;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         public HealthcareLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, HealthcareResult results) : base(lastUpdateDateTime, status)
         {
-            Argument.AssertNotNull(results, nameof(results));
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
 
             Results = results;
             Kind = AnalyzeTextLROResultsKind.HealthcareLROResults;

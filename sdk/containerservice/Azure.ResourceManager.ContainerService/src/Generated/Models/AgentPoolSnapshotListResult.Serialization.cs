@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AgentPoolSnapshotData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AgentPoolSnapshotData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolSnapshotData> array = new List<AgentPoolSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item));
+                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolSnapshotListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AgentPoolSnapshotListResult(value ?? new ChangeTrackingList<AgentPoolSnapshotData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolSnapshotListResult>.Write(ModelReaderWriterOptions options)

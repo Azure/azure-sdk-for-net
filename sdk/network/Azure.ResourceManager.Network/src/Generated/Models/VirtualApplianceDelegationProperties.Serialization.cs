@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            string serviceName = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplianceDelegationProperties(serviceName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VirtualApplianceDelegationProperties(serviceName, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplianceDelegationProperties>.Write(ModelReaderWriterOptions options)

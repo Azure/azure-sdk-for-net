@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -220,27 +221,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> createdDateUTC = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Optional<string> query = default;
-            Optional<TimeSpan> queryFrequency = default;
-            Optional<TimeSpan> queryPeriod = default;
-            Optional<SecurityInsightsAlertSeverity> severity = default;
-            Optional<SecurityInsightsAlertRuleTriggerOperator> triggerOperator = default;
-            Optional<int> triggerThreshold = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
-            Optional<string> version = default;
-            Optional<EventGroupingSettings> eventGroupingSettings = default;
-            Optional<IDictionary<string, string>> customDetails = default;
-            Optional<IList<SecurityInsightsAlertRuleEntityMapping>> entityMappings = default;
-            Optional<SecurityInsightsAlertDetailsOverride> alertDetailsOverride = default;
+            SystemData systemData = default;
+            int? alertRulesCreatedByTemplateCount = default;
+            DateTimeOffset? createdDateUTC = default;
+            DateTimeOffset? lastUpdatedDateUTC = default;
+            string description = default;
+            string displayName = default;
+            IList<AlertRuleTemplateDataSource> requiredDataConnectors = default;
+            SecurityInsightsAlertRuleTemplateStatus? status = default;
+            string query = default;
+            TimeSpan? queryFrequency = default;
+            TimeSpan? queryPeriod = default;
+            SecurityInsightsAlertSeverity? severity = default;
+            SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default;
+            int? triggerThreshold = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
+            string version = default;
+            EventGroupingSettings eventGroupingSettings = default;
+            IDictionary<string, string> customDetails = default;
+            IList<SecurityInsightsAlertRuleEntityMapping> entityMappings = default;
+            SecurityInsightsAlertDetailsOverride alertDetailsOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<AlertRuleTemplateDataSource> array = new List<AlertRuleTemplateDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item));
+                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;
@@ -432,7 +433,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value);
+                            eventGroupingSettings = EventGroupingSettings.DeserializeEventGroupingSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customDetails"u8))
@@ -458,7 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsAlertRuleEntityMapping> array = new List<SecurityInsightsAlertRuleEntityMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item));
+                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item, options));
                             }
                             entityMappings = array;
                             continue;
@@ -469,7 +470,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value);
+                            alertDetailsOverride = SecurityInsightsAlertDetailsOverride.DeserializeSecurityInsightsAlertDetailsOverride(property0.Value, options);
                             continue;
                         }
                     }
@@ -481,7 +482,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), query.Value, Optional.ToNullable(queryFrequency), Optional.ToNullable(queryPeriod), Optional.ToNullable(severity), Optional.ToNullable(triggerOperator), Optional.ToNullable(triggerThreshold), Optional.ToList(tactics), Optional.ToList(techniques), version.Value, eventGroupingSettings.Value, Optional.ToDictionary(customDetails), Optional.ToList(entityMappings), alertDetailsOverride.Value);
+            return new ScheduledAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                alertRulesCreatedByTemplateCount,
+                createdDateUTC,
+                lastUpdatedDateUTC,
+                description,
+                displayName,
+                requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
+                status,
+                query,
+                queryFrequency,
+                queryPeriod,
+                severity,
+                triggerOperator,
+                triggerThreshold,
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                version,
+                eventGroupingSettings,
+                customDetails ?? new ChangeTrackingDictionary<string, string>(),
+                entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>(),
+                alertDetailsOverride);
         }
 
         BinaryData IPersistableModel<ScheduledAlertRuleTemplate>.Write(ModelReaderWriterOptions options)

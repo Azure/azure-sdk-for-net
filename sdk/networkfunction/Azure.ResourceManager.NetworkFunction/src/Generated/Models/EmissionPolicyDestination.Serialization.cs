@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<EmissionDestinationType> destinationType = default;
+            EmissionDestinationType? destinationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmissionPolicyDestination(Optional.ToNullable(destinationType), serializedAdditionalRawData);
+            return new EmissionPolicyDestination(destinationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmissionPolicyDestination>.Write(ModelReaderWriterOptions options)

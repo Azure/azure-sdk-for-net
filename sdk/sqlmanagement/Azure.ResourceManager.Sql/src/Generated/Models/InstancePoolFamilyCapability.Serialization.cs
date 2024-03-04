@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<IReadOnlyList<InstancePoolVcoresCapability>> supportedVcoresValues = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
+            IReadOnlyList<InstancePoolVcoresCapability> supportedVcoresValues = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolVcoresCapability> array = new List<InstancePoolVcoresCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolVcoresCapability.DeserializeInstancePoolVcoresCapability(item));
+                        array.Add(InstancePoolVcoresCapability.DeserializeInstancePoolVcoresCapability(item, options));
                     }
                     supportedVcoresValues = array;
                     continue;
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolFamilyCapability(name.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolFamilyCapability(
+                name,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                supportedVcoresValues ?? new ChangeTrackingList<InstancePoolVcoresCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolFamilyCapability>.Write(ModelReaderWriterOptions options)

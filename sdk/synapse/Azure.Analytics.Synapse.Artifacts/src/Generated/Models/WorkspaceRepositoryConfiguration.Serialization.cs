@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -82,17 +83,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> hostName = default;
-            Optional<string> accountName = default;
-            Optional<string> projectName = default;
-            Optional<string> repositoryName = default;
-            Optional<string> collaborationBranch = default;
-            Optional<string> rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> clientId = default;
-            Optional<GitHubClientSecret> clientSecret = default;
+            string type = default;
+            string hostName = default;
+            string accountName = default;
+            string projectName = default;
+            string repositoryName = default;
+            string collaborationBranch = default;
+            string rootFolder = default;
+            string lastCommitId = default;
+            Guid? tenantId = default;
+            string clientId = default;
+            GitHubClientSecret clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -159,7 +160,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), clientId.Value, clientSecret.Value);
+            return new WorkspaceRepositoryConfiguration(
+                type,
+                hostName,
+                accountName,
+                projectName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                tenantId,
+                clientId,
+                clientSecret);
         }
 
         internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>

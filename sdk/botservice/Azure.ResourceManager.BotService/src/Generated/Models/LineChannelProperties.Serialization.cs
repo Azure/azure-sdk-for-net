@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             IList<LineRegistration> lineRegistrations = default;
-            Optional<Uri> callbackUrl = default;
-            Optional<bool> isValidated = default;
+            Uri callbackUrl = default;
+            bool? isValidated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<LineRegistration> array = new List<LineRegistration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LineRegistration.DeserializeLineRegistration(item));
+                        array.Add(LineRegistration.DeserializeLineRegistration(item, options));
                     }
                     lineRegistrations = array;
                     continue;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated), serializedAdditionalRawData);
+            return new LineChannelProperties(lineRegistrations, callbackUrl, isValidated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LineChannelProperties>.Write(ModelReaderWriterOptions options)

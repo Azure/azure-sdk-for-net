@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlPrivateLinkResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PostgreSqlPrivateLinkResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlPrivateLinkResourceData> array = new List<PostgreSqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(item));
+                        array.Add(PostgreSqlPrivateLinkResourceData.DeserializePostgreSqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlPrivateLinkResourceListResult(value ?? new ChangeTrackingList<PostgreSqlPrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

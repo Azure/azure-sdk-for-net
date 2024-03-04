@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -75,10 +76,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element);
+                    case "String": return StaticStringRoutingEnrichment.DeserializeStaticStringRoutingEnrichment(element, options);
                 }
             }
-            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element);
+            return UnknownStaticRoutingEnrichment.DeserializeUnknownStaticRoutingEnrichment(element, options);
         }
 
         BinaryData IPersistableModel<StaticRoutingEnrichment>.Write(ModelReaderWriterOptions options)

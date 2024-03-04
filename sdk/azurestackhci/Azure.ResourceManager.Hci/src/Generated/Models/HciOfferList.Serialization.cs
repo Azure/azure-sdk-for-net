@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OfferData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<OfferData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<OfferData> array = new List<OfferData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferData.DeserializeOfferData(item));
+                        array.Add(OfferData.DeserializeOfferData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciOfferList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HciOfferList(value ?? new ChangeTrackingList<OfferData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciOfferList>.Write(ModelReaderWriterOptions options)

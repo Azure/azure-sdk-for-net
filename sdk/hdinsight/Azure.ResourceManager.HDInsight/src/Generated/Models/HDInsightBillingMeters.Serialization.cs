@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> meterParameter = default;
-            Optional<string> meter = default;
-            Optional<string> unit = default;
+            string meterParameter = default;
+            string meter = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingMeters(meterParameter.Value, meter.Value, unit.Value, serializedAdditionalRawData);
+            return new HDInsightBillingMeters(meterParameter, meter, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingMeters>.Write(ModelReaderWriterOptions options)

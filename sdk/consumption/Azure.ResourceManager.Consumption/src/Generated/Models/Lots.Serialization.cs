@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionLotSummary>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConsumptionLotSummary> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionLotSummary> array = new List<ConsumptionLotSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionLotSummary.DeserializeConsumptionLotSummary(item));
+                        array.Add(ConsumptionLotSummary.DeserializeConsumptionLotSummary(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Lots(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new Lots(value ?? new ChangeTrackingList<ConsumptionLotSummary>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Lots>.Write(ModelReaderWriterOptions options)

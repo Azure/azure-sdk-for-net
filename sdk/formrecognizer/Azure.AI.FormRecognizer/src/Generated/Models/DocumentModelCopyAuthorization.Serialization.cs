@@ -76,7 +76,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelCopyAuthorization(targetResourceId, targetResourceRegion, targetModelId, targetModelLocation, accessToken, expirationDateTime);
+            return new DocumentModelCopyAuthorization(
+                targetResourceId,
+                targetResourceRegion,
+                targetModelId,
+                targetModelLocation,
+                accessToken,
+                expirationDateTime);
         }
     }
 }

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseReplicationLinkData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SynapseReplicationLinkData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseReplicationLinkData> array = new List<SynapseReplicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(item));
+                        array.Add(SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseReplicationLinkListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseReplicationLinkListResult(value ?? new ChangeTrackingList<SynapseReplicationLinkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseReplicationLinkListResult>.Write(ModelReaderWriterOptions options)

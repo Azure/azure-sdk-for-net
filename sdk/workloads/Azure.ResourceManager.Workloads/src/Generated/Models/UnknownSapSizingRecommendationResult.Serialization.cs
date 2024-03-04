@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSapSizingRecommendationResult(document.RootElement, options);
+            return DeserializeSapSizingRecommendationResult(document.RootElement, options);
         }
 
         internal static UnknownSapSizingRecommendationResult DeserializeUnknownSapSizingRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSapSizingRecommendationResult(document.RootElement, options);
+                        return DeserializeSapSizingRecommendationResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SapSizingRecommendationResult)} does not support '{options.Format}' format.");

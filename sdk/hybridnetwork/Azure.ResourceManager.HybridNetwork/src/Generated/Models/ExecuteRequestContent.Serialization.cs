@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("requestMetadata"u8))
                 {
-                    requestMetadata = RequestMetadata.DeserializeRequestMetadata(property.Value);
+                    requestMetadata = RequestMetadata.DeserializeRequestMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

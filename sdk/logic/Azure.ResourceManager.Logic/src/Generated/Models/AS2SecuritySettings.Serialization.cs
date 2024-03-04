@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -94,15 +95,15 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             bool overrideGroupSigningCertificate = default;
-            Optional<string> signingCertificateName = default;
-            Optional<string> encryptionCertificateName = default;
+            string signingCertificateName = default;
+            string encryptionCertificateName = default;
             bool enableNrrForInboundEncodedMessages = default;
             bool enableNrrForInboundDecodedMessages = default;
             bool enableNrrForOutboundMdn = default;
             bool enableNrrForOutboundEncodedMessages = default;
             bool enableNrrForOutboundDecodedMessages = default;
             bool enableNrrForInboundMdn = default;
-            Optional<string> sha2AlgorithmFormat = default;
+            string sha2AlgorithmFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2SecuritySettings(overrideGroupSigningCertificate, signingCertificateName.Value, encryptionCertificateName.Value, enableNrrForInboundEncodedMessages, enableNrrForInboundDecodedMessages, enableNrrForOutboundMdn, enableNrrForOutboundEncodedMessages, enableNrrForOutboundDecodedMessages, enableNrrForInboundMdn, sha2AlgorithmFormat.Value, serializedAdditionalRawData);
+            return new AS2SecuritySettings(
+                overrideGroupSigningCertificate,
+                signingCertificateName,
+                encryptionCertificateName,
+                enableNrrForInboundEncodedMessages,
+                enableNrrForInboundDecodedMessages,
+                enableNrrForOutboundMdn,
+                enableNrrForOutboundEncodedMessages,
+                enableNrrForOutboundDecodedMessages,
+                enableNrrForInboundMdn,
+                sha2AlgorithmFormat,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2SecuritySettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -134,20 +135,20 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> diskId = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> maxDiskSizeGB = default;
-            Optional<int> bus = default;
-            Optional<int> lun = default;
-            Optional<string> busType = default;
-            Optional<string> vhdType = default;
-            Optional<string> volumeType = default;
-            Optional<string> vhdFormatType = default;
-            Optional<string> templateDiskId = default;
-            Optional<StorageQoSPolicyDetails> storageQoSPolicy = default;
-            Optional<CreateDiffDisk> createDiffDisk = default;
+            string name = default;
+            string displayName = default;
+            string diskId = default;
+            int? diskSizeGB = default;
+            int? maxDiskSizeGB = default;
+            int? bus = default;
+            int? lun = default;
+            string busType = default;
+            string vhdType = default;
+            string volumeType = default;
+            string vhdFormatType = default;
+            string templateDiskId = default;
+            StorageQoSPolicyDetails storageQoSPolicy = default;
+            CreateDiffDisk? createDiffDisk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value);
+                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createDiffDisk"u8))
@@ -252,7 +253,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDisk(name.Value, displayName.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(maxDiskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, volumeType.Value, vhdFormatType.Value, templateDiskId.Value, storageQoSPolicy.Value, Optional.ToNullable(createDiffDisk), serializedAdditionalRawData);
+            return new VirtualDisk(
+                name,
+                displayName,
+                diskId,
+                diskSizeGB,
+                maxDiskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                volumeType,
+                vhdFormatType,
+                templateDiskId,
+                storageQoSPolicy,
+                createDiffDisk,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDisk>.Write(ModelReaderWriterOptions options)

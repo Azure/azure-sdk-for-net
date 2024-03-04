@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SourceControlSyncJobStream>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SourceControlSyncJobStream> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SourceControlSyncJobStream> array = new List<SourceControlSyncJobStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(item));
+                        array.Add(SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobStreamListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SourceControlSyncJobStreamListResult(value ?? new ChangeTrackingList<SourceControlSyncJobStream>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobStreamListResult>.Write(ModelReaderWriterOptions options)

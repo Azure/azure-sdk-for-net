@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppDetectorResource>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+            if (detectorName == null)
+            {
+                throw new ArgumentNullException(nameof(detectorName));
+            }
+            if (detectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
+            }
 
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<ContainerAppDetectorResource> Get(string detectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+            if (detectorName == null)
+            {
+                throw new ArgumentNullException(nameof(detectorName));
+            }
+            if (detectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
+            }
 
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+            if (detectorName == null)
+            {
+                throw new ArgumentNullException(nameof(detectorName));
+            }
+            if (detectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
+            }
 
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+            if (detectorName == null)
+            {
+                throw new ArgumentNullException(nameof(detectorName));
+            }
+            if (detectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
+            }
 
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppDetectorResource>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+            if (detectorName == null)
+            {
+                throw new ArgumentNullException(nameof(detectorName));
+            }
+            if (detectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
+            }
 
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppDetectorResource> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+            if (detectorName == null)
+            {
+                throw new ArgumentNullException(nameof(detectorName));
+            }
+            if (detectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
+            }
 
             using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
             scope.Start();

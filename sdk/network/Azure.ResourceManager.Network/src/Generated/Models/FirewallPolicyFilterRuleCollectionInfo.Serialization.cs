@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyFilterRuleCollectionAction> action = default;
-            Optional<IList<FirewallPolicyRule>> rules = default;
+            FirewallPolicyFilterRuleCollectionAction action = default;
+            IList<FirewallPolicyRule> rules = default;
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
-            Optional<string> name = default;
-            Optional<int> priority = default;
+            string name = default;
+            int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    action = FirewallPolicyFilterRuleCollectionAction.DeserializeFirewallPolicyFilterRuleCollectionAction(property.Value);
+                    action = FirewallPolicyFilterRuleCollectionAction.DeserializeFirewallPolicyFilterRuleCollectionAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyRule> array = new List<FirewallPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyRule.DeserializeFirewallPolicyRule(item));
+                        array.Add(FirewallPolicyRule.DeserializeFirewallPolicyRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -148,7 +149,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyFilterRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), serializedAdditionalRawData, action.Value, Optional.ToList(rules));
+            return new FirewallPolicyFilterRuleCollectionInfo(
+                ruleCollectionType,
+                name,
+                priority,
+                serializedAdditionalRawData,
+                action,
+                rules ?? new ChangeTrackingList<FirewallPolicyRule>());
         }
 
         BinaryData IPersistableModel<FirewallPolicyFilterRuleCollectionInfo>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -22,10 +21,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/>, <paramref name="kerberosKdcAddress"/>, <paramref name="kerberosPrincipal"/> or <paramref name="kerberosRealm"/> is null. </exception>
         public KerberosPasswordCredentials(KerberosPasswordSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm)
         {
-            Argument.AssertNotNull(secrets, nameof(secrets));
-            Argument.AssertNotNull(kerberosKdcAddress, nameof(kerberosKdcAddress));
-            Argument.AssertNotNull(kerberosPrincipal, nameof(kerberosPrincipal));
-            Argument.AssertNotNull(kerberosRealm, nameof(kerberosRealm));
+            if (secrets == null)
+            {
+                throw new ArgumentNullException(nameof(secrets));
+            }
+            if (kerberosKdcAddress == null)
+            {
+                throw new ArgumentNullException(nameof(kerberosKdcAddress));
+            }
+            if (kerberosPrincipal == null)
+            {
+                throw new ArgumentNullException(nameof(kerberosPrincipal));
+            }
+            if (kerberosRealm == null)
+            {
+                throw new ArgumentNullException(nameof(kerberosRealm));
+            }
 
             Secrets = secrets;
             KerberosKdcAddress = kerberosKdcAddress;

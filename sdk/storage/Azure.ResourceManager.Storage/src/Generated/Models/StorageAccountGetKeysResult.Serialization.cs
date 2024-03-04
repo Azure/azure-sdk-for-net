@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageAccountKey>> keys = default;
+            IReadOnlyList<StorageAccountKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountKey> array = new List<StorageAccountKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountKey.DeserializeStorageAccountKey(item));
+                        array.Add(StorageAccountKey.DeserializeStorageAccountKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountGetKeysResult(Optional.ToList(keys), serializedAdditionalRawData);
+            return new StorageAccountGetKeysResult(keys ?? new ChangeTrackingList<StorageAccountKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountGetKeysResult>.Write(ModelReaderWriterOptions options)

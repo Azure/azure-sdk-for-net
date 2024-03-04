@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScopeConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeConnectionName, ScopeConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScopeConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string scopeConnectionName, ScopeConnectionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
         public virtual async Task<Response<ScopeConnectionResource>> GetAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
         public virtual Response<ScopeConnectionResource> Get(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Get");
             scope.Start();
@@ -332,7 +366,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Exists");
             scope.Start();
@@ -375,7 +416,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.Exists");
             scope.Start();
@@ -418,7 +466,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScopeConnectionResource>> GetIfExistsAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
             scope.Start();
@@ -463,7 +518,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
         public virtual NullableResponse<ScopeConnectionResource> GetIfExists(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scopeConnectionName, nameof(scopeConnectionName));
+            if (scopeConnectionName == null)
+            {
+                throw new ArgumentNullException(nameof(scopeConnectionName));
+            }
+            if (scopeConnectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeConnectionName));
+            }
 
             using var scope = _scopeConnectionClientDiagnostics.CreateScope("ScopeConnectionCollection.GetIfExists");
             scope.Start();

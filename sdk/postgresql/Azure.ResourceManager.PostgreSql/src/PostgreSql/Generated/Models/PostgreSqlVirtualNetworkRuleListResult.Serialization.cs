@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlVirtualNetworkRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PostgreSqlVirtualNetworkRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlVirtualNetworkRuleData> array = new List<PostgreSqlVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(item));
+                        array.Add(PostgreSqlVirtualNetworkRuleData.DeserializePostgreSqlVirtualNetworkRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlVirtualNetworkRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlVirtualNetworkRuleListResult(value ?? new ChangeTrackingList<PostgreSqlVirtualNetworkRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlVirtualNetworkRuleListResult>.Write(ModelReaderWriterOptions options)

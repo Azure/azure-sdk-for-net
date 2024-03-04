@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>> endpoints = default;
+            string category = default;
+            IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint> array = new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item));
+                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, endpoints ?? new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(ModelReaderWriterOptions options)

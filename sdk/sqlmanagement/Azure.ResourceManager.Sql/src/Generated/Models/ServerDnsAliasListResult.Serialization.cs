@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerDnsAliasData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlServerDnsAliasData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDnsAliasData> array = new List<SqlServerDnsAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(item));
+                        array.Add(SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerDnsAliasListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServerDnsAliasListResult(value ?? new ChangeTrackingList<SqlServerDnsAliasData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerDnsAliasListResult>.Write(ModelReaderWriterOptions options)

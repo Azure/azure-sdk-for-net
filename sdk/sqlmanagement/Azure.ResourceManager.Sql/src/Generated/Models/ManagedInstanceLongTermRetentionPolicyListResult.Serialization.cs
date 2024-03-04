@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedInstanceLongTermRetentionPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedInstanceLongTermRetentionPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceLongTermRetentionPolicyData> array = new List<ManagedInstanceLongTermRetentionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(item));
+                        array.Add(ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceLongTermRetentionPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedInstanceLongTermRetentionPolicyListResult(value ?? new ChangeTrackingList<ManagedInstanceLongTermRetentionPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceLongTermRetentionPolicyListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<Uri> accountUrl = default;
-            Optional<string> filesystem = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<bool> createManagedPrivateEndpoint = default;
+            Uri accountUrl = default;
+            string filesystem = default;
+            ResourceIdentifier resourceId = default;
+            bool? createManagedPrivateEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value, resourceId.Value, Optional.ToNullable(createManagedPrivateEndpoint), serializedAdditionalRawData);
+            return new SynapseDataLakeStorageAccountDetails(accountUrl, filesystem, resourceId, createManagedPrivateEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataLakeStorageAccountDetails>.Write(ModelReaderWriterOptions options)

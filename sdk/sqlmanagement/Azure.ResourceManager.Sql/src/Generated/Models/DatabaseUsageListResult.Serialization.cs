@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatabaseUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DatabaseUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DatabaseUsage> array = new List<DatabaseUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseUsage.DeserializeDatabaseUsage(item));
+                        array.Add(DatabaseUsage.DeserializeDatabaseUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseUsageListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatabaseUsageListResult(value ?? new ChangeTrackingList<DatabaseUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseUsageListResult>.Write(ModelReaderWriterOptions options)

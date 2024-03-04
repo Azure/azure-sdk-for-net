@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -138,11 +139,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Stateful": return StatefulServiceProperties.DeserializeStatefulServiceProperties(element);
-                    case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element);
+                    case "Stateful": return StatefulServiceProperties.DeserializeStatefulServiceProperties(element, options);
+                    case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element, options);
                 }
             }
-            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element);
+            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)

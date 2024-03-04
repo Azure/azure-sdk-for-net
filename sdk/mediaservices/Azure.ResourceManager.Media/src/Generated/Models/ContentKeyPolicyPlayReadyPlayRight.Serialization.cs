@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -117,19 +118,19 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<TimeSpan> firstPlayExpiration = default;
-            Optional<int> scmsRestriction = default;
-            Optional<int> agcAndColorStripeRestriction = default;
-            Optional<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction> explicitAnalogTelevisionOutputRestriction = default;
+            TimeSpan? firstPlayExpiration = default;
+            int? scmsRestriction = default;
+            int? agcAndColorStripeRestriction = default;
+            ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction = default;
             bool digitalVideoOnlyContentRestriction = default;
             bool imageConstraintForAnalogComponentVideoRestriction = default;
             bool imageConstraintForAnalogComputerMonitorRestriction = default;
             ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput = default;
-            Optional<int> uncompressedDigitalVideoOpl = default;
-            Optional<int> compressedDigitalVideoOpl = default;
-            Optional<int> analogVideoOpl = default;
-            Optional<int> compressedDigitalAudioOpl = default;
-            Optional<int> uncompressedDigitalAudioOpl = default;
+            int? uncompressedDigitalVideoOpl = default;
+            int? compressedDigitalVideoOpl = default;
+            int? analogVideoOpl = default;
+            int? compressedDigitalAudioOpl = default;
+            int? uncompressedDigitalAudioOpl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value);
+                    explicitAnalogTelevisionOutputRestriction = ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.DeserializeContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("digitalVideoOnlyContentRestriction"u8))
@@ -241,7 +242,21 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl), serializedAdditionalRawData);
+            return new ContentKeyPolicyPlayReadyPlayRight(
+                firstPlayExpiration,
+                scmsRestriction,
+                agcAndColorStripeRestriction,
+                explicitAnalogTelevisionOutputRestriction,
+                digitalVideoOnlyContentRestriction,
+                imageConstraintForAnalogComponentVideoRestriction,
+                imageConstraintForAnalogComputerMonitorRestriction,
+                allowPassingVideoContentToUnknownOutput,
+                uncompressedDigitalVideoOpl,
+                compressedDigitalVideoOpl,
+                analogVideoOpl,
+                compressedDigitalAudioOpl,
+                uncompressedDigitalAudioOpl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> mtu = default;
-            Optional<IReadOnlyList<IPAddress>> utilityAddresses = default;
-            Optional<IList<IPAddress>> dnsServers = default;
-            Optional<string> dnsSearchDomain = default;
-            Optional<string> ntpServer = default;
+            int? mtu = default;
+            IReadOnlyList<IPAddress> utilityAddresses = default;
+            IList<IPAddress> dnsServers = default;
+            string dnsSearchDomain = default;
+            string ntpServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheNetworkSettings(Optional.ToNullable(mtu), Optional.ToList(utilityAddresses), Optional.ToList(dnsServers), dnsSearchDomain.Value, ntpServer.Value, serializedAdditionalRawData);
+            return new StorageCacheNetworkSettings(
+                mtu,
+                utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
+                dnsServers ?? new ChangeTrackingList<IPAddress>(),
+                dnsSearchDomain,
+                ntpServer,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheNetworkSettings>.Write(ModelReaderWriterOptions options)

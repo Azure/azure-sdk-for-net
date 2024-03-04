@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -91,10 +92,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> uniqueOfferId = default;
-            Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
-            Optional<ETag> etag = default;
-            Optional<long> messageCode = default;
+            string uniqueOfferId = default;
+            IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = default;
+            ETag? etag = default;
+            long? messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     Dictionary<string, PrivateStorePlanDetails> dictionary = new Dictionary<string, PrivateStorePlanDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value));
+                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value, options));
                     }
                     plansDetails = dictionary;
                     continue;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode), serializedAdditionalRawData);
+            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails ?? new ChangeTrackingDictionary<string, PrivateStorePlanDetails>(), etag, messageCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovalRequestResult>.Write(ModelReaderWriterOptions options)

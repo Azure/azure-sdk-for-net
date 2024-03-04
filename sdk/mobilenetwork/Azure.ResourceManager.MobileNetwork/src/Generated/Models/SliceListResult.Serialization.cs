@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkSliceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MobileNetworkSliceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkSliceData> array = new List<MobileNetworkSliceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkSliceData.DeserializeMobileNetworkSliceData(item));
+                        array.Add(MobileNetworkSliceData.DeserializeMobileNetworkSliceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SliceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SliceListResult(value ?? new ChangeTrackingList<MobileNetworkSliceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SliceListResult>.Write(ModelReaderWriterOptions options)

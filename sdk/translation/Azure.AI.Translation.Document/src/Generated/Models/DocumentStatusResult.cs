@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -25,9 +24,18 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedToLanguageCode"/> or <paramref name="id"/> is null. </exception>
         internal DocumentStatusResult(Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id)
         {
-            Argument.AssertNotNull(sourceDocumentUri, nameof(sourceDocumentUri));
-            Argument.AssertNotNull(translatedToLanguageCode, nameof(translatedToLanguageCode));
-            Argument.AssertNotNull(id, nameof(id));
+            if (sourceDocumentUri == null)
+            {
+                throw new ArgumentNullException(nameof(sourceDocumentUri));
+            }
+            if (translatedToLanguageCode == null)
+            {
+                throw new ArgumentNullException(nameof(translatedToLanguageCode));
+            }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
             SourceDocumentUri = sourceDocumentUri;
             CreatedOn = createdOn;

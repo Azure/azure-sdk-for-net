@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -102,14 +103,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> principalOid = default;
-            Optional<string> policyDefinitionAction = default;
+            DateTimeOffset? timestamp = default;
+            Guid? tenantId = default;
+            string principalOid = default;
+            string policyDefinitionAction = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ComponentEventDetails(id, name, type, systemData.Value, Optional.ToNullable(timestamp), Optional.ToNullable(tenantId), principalOid.Value, policyDefinitionAction.Value, additionalProperties);
+            return new ComponentEventDetails(
+                id,
+                name,
+                type,
+                systemData,
+                timestamp,
+                tenantId,
+                principalOid,
+                policyDefinitionAction,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ComponentEventDetails>.Write(ModelReaderWriterOptions options)

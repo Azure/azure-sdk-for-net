@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricType = default;
-            Optional<IReadOnlyList<SiteRecoverySubnet>> subnets = default;
-            Optional<string> friendlyName = default;
-            Optional<string> networkType = default;
+            string fabricType = default;
+            IReadOnlyList<SiteRecoverySubnet> subnets = default;
+            string friendlyName = default;
+            string networkType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySubnet> array = new List<SiteRecoverySubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item));
+                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item, options));
                     }
                     subnets = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryNetworkProperties(fabricType.Value, Optional.ToList(subnets), friendlyName.Value, networkType.Value, serializedAdditionalRawData);
+            return new SiteRecoveryNetworkProperties(fabricType, subnets ?? new ChangeTrackingList<SiteRecoverySubnet>(), friendlyName, networkType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryNetworkProperties>.Write(ModelReaderWriterOptions options)

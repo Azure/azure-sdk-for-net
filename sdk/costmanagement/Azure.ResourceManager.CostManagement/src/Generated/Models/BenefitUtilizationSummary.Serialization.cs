@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "IncludedQuantity": return IncludedQuantityUtilizationSummary.DeserializeIncludedQuantityUtilizationSummary(element);
-                    case "SavingsPlan": return SavingsPlanUtilizationSummary.DeserializeSavingsPlanUtilizationSummary(element);
+                    case "IncludedQuantity": return IncludedQuantityUtilizationSummary.DeserializeIncludedQuantityUtilizationSummary(element, options);
+                    case "SavingsPlan": return SavingsPlanUtilizationSummary.DeserializeSavingsPlanUtilizationSummary(element, options);
                 }
             }
-            return UnknownBenefitUtilizationSummary.DeserializeUnknownBenefitUtilizationSummary(element);
+            return UnknownBenefitUtilizationSummary.DeserializeUnknownBenefitUtilizationSummary(element, options);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummary>.Write(ModelReaderWriterOptions options)

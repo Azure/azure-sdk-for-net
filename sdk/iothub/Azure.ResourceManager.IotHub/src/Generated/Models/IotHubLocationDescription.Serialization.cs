@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IotHubReplicaRoleType> role = default;
+            AzureLocation? location = default;
+            IotHubReplicaRoleType? role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubLocationDescription(Optional.ToNullable(location), Optional.ToNullable(role), serializedAdditionalRawData);
+            return new IotHubLocationDescription(location, role, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubLocationDescription>.Write(ModelReaderWriterOptions options)

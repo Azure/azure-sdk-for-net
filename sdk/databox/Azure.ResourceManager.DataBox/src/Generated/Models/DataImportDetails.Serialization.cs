@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -72,14 +73,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountDetails accountDetails = default;
-            Optional<LogCollectionLevel> logCollectionLevel = default;
+            LogCollectionLevel? logCollectionLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
+                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataImportDetails(accountDetails, Optional.ToNullable(logCollectionLevel), serializedAdditionalRawData);
+            return new DataImportDetails(accountDetails, logCollectionLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataImportDetails>.Write(ModelReaderWriterOptions options)

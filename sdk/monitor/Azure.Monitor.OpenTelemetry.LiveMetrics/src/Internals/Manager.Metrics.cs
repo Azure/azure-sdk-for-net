@@ -18,8 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal readonly DoubleBuffer _documentBuffer = new();
         internal static bool? s_isAzureWebApp = null;
 
-        private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
-        private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
+        //private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
+        //private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -48,6 +48,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
                 // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
+                //TODO: Apply filters
+                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
+                //    if (metric.CheckFilters(telemetry, out filteringErrors))
 
                 dataPoint.Documents.Add(item);
 
@@ -88,31 +91,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
-            foreach (var metricPoint in CollectPerfCounters())
-            {
-                dataPoint.Metrics.Add(metricPoint);
-            }
+            // TODO: Reenable Perf Counters
+            //foreach (var metricPoint in CollectPerfCounters())
+            //{
+            //    dataPoint.Metrics.Add(metricPoint);
+            //}
 
             return dataPoint;
         }
 
-        public IEnumerable<Models.MetricPoint> CollectPerfCounters()
-        {
-            // PERFORMANCE COUNTERS
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _performanceCounter_CommittedBytes.NextValue(),
-                Weight = 1
-            };
+        //public IEnumerable<Models.MetricPoint> CollectPerfCounters()
+        //{
+        //    // PERFORMANCE COUNTERS
+        //    yield return new Models.MetricPoint
+        //    {
+        //        Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
+        //        Value = _performanceCounter_CommittedBytes.NextValue(),
+        //        Weight = 1
+        //    };
 
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                Value = _performanceCounter_ProcessorTime.NextValue(),
-                Weight = 1
-            };
-        }
+        //    yield return new Models.MetricPoint
+        //    {
+        //        Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
+        //        Value = _performanceCounter_ProcessorTime.NextValue(),
+        //        Weight = 1
+        //    };
+        //}
 
         /// <summary>
         /// Searches for the environment variable specific to Azure Web App.

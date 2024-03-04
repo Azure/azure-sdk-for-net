@@ -125,5 +125,3 @@ stages:
         ArtifactName: packages
         TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         TargetDocRepoName: ${{ parameters.TargetDocRepoName }}
-        ${{ if eq(parameters.ReleaseDependsOnLiveTests, 'false') }}:
-          Environment: 'nuget-break-glass-approvers'

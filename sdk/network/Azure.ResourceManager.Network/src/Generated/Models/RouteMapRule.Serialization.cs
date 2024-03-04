@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<RouteCriterion>> matchCriteria = default;
-            Optional<IList<RouteMapAction>> actions = default;
-            Optional<RouteMapNextStepBehavior> nextStepIfMatched = default;
+            string name = default;
+            IList<RouteCriterion> matchCriteria = default;
+            IList<RouteMapAction> actions = default;
+            RouteMapNextStepBehavior? nextStepIfMatched = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteCriterion> array = new List<RouteCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCriterion.DeserializeRouteCriterion(item));
+                        array.Add(RouteCriterion.DeserializeRouteCriterion(item, options));
                     }
                     matchCriteria = array;
                     continue;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapAction> array = new List<RouteMapAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapAction.DeserializeRouteMapAction(item));
+                        array.Add(RouteMapAction.DeserializeRouteMapAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapRule(name.Value, Optional.ToList(matchCriteria), Optional.ToList(actions), Optional.ToNullable(nextStepIfMatched), serializedAdditionalRawData);
+            return new RouteMapRule(name, matchCriteria ?? new ChangeTrackingList<RouteCriterion>(), actions ?? new ChangeTrackingList<RouteMapAction>(), nextStepIfMatched, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapRule>.Write(ModelReaderWriterOptions options)

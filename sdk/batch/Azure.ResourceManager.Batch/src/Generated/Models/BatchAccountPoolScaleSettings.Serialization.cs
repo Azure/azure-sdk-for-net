@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchAccountFixedScaleSettings> fixedScale = default;
-            Optional<BatchAccountAutoScaleSettings> autoScale = default;
+            BatchAccountFixedScaleSettings fixedScale = default;
+            BatchAccountAutoScaleSettings autoScale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value);
+                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value);
+                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolScaleSettings(fixedScale.Value, autoScale.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolScaleSettings(fixedScale, autoScale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolScaleSettings>.Write(ModelReaderWriterOptions options)

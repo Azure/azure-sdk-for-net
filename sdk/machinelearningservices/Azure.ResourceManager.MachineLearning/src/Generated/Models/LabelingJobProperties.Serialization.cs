@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -335,30 +336,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> createdDateTime = default;
-            Optional<LabelingDataConfiguration> dataConfiguration = default;
-            Optional<LabelingJobInstructions> jobInstructions = default;
-            Optional<IDictionary<string, LabelCategory>> labelCategories = default;
-            Optional<LabelingJobMediaProperties> labelingJobMediaProperties = default;
-            Optional<MachineLearningAssistConfiguration> mlAssistConfiguration = default;
-            Optional<ProgressMetrics> progressMetrics = default;
-            Optional<Guid> projectId = default;
-            Optional<JobProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<JobStatusMessage>> statusMessages = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            DateTimeOffset? createdDateTime = default;
+            LabelingDataConfiguration dataConfiguration = default;
+            LabelingJobInstructions jobInstructions = default;
+            IDictionary<string, LabelCategory> labelCategories = default;
+            LabelingJobMediaProperties labelingJobMediaProperties = default;
+            MachineLearningAssistConfiguration mlAssistConfiguration = default;
+            ProgressMetrics progressMetrics = default;
+            Guid? projectId = default;
+            JobProvisioningState? provisioningState = default;
+            IReadOnlyList<JobStatusMessage> statusMessages = default;
+            ResourceIdentifier componentId = default;
+            ResourceIdentifier computeId = default;
+            string displayName = default;
+            string experimentName = default;
+            MachineLearningIdentityConfiguration identity = default;
+            bool? isArchived = default;
             JobType jobType = default;
-            Optional<NotificationSetting> notificationSetting = default;
-            Optional<IDictionary<string, SecretConfiguration>> secretsConfiguration = default;
-            Optional<IDictionary<string, MachineLearningJobService>> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            NotificationSetting notificationSetting = default;
+            IDictionary<string, SecretConfiguration> secretsConfiguration = default;
+            IDictionary<string, MachineLearningJobService> services = default;
+            MachineLearningJobStatus? status = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -380,7 +381,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataConfiguration = null;
                         continue;
                     }
-                    dataConfiguration = LabelingDataConfiguration.DeserializeLabelingDataConfiguration(property.Value);
+                    dataConfiguration = LabelingDataConfiguration.DeserializeLabelingDataConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobInstructions"u8))
@@ -390,7 +391,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         jobInstructions = null;
                         continue;
                     }
-                    jobInstructions = LabelingJobInstructions.DeserializeLabelingJobInstructions(property.Value);
+                    jobInstructions = LabelingJobInstructions.DeserializeLabelingJobInstructions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("labelCategories"u8))
@@ -403,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelCategory> dictionary = new Dictionary<string, LabelCategory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LabelCategory.DeserializeLabelCategory(property0.Value));
+                        dictionary.Add(property0.Name, LabelCategory.DeserializeLabelCategory(property0.Value, options));
                     }
                     labelCategories = dictionary;
                     continue;
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         labelingJobMediaProperties = null;
                         continue;
                     }
-                    labelingJobMediaProperties = LabelingJobMediaProperties.DeserializeLabelingJobMediaProperties(property.Value);
+                    labelingJobMediaProperties = LabelingJobMediaProperties.DeserializeLabelingJobMediaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mlAssistConfiguration"u8))
@@ -424,7 +425,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    mlAssistConfiguration = MachineLearningAssistConfiguration.DeserializeMachineLearningAssistConfiguration(property.Value);
+                    mlAssistConfiguration = MachineLearningAssistConfiguration.DeserializeMachineLearningAssistConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressMetrics"u8))
@@ -434,7 +435,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         progressMetrics = null;
                         continue;
                     }
-                    progressMetrics = ProgressMetrics.DeserializeProgressMetrics(property.Value);
+                    progressMetrics = ProgressMetrics.DeserializeProgressMetrics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("projectId"u8))
@@ -465,7 +466,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<JobStatusMessage> array = new List<JobStatusMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobStatusMessage.DeserializeJobStatusMessage(item));
+                        array.Add(JobStatusMessage.DeserializeJobStatusMessage(item, options));
                     }
                     statusMessages = array;
                     continue;
@@ -512,7 +513,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         identity = null;
                         continue;
                     }
-                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value);
+                    identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isArchived"u8))
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notificationSetting = null;
                         continue;
                     }
-                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretsConfiguration"u8))
@@ -549,7 +550,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value, options));
                     }
                     secretsConfiguration = dictionary;
                     continue;
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value, options));
                     }
                     services = dictionary;
                     continue;
@@ -624,7 +625,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToNullable(createdDateTime), dataConfiguration.Value, jobInstructions.Value, Optional.ToDictionary(labelCategories), labelingJobMediaProperties.Value, mlAssistConfiguration.Value, progressMetrics.Value, Optional.ToNullable(projectId), Optional.ToNullable(provisioningState), Optional.ToList(statusMessages));
+            return new LabelingJobProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                jobType,
+                notificationSetting,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
+                createdDateTime,
+                dataConfiguration,
+                jobInstructions,
+                labelCategories ?? new ChangeTrackingDictionary<string, LabelCategory>(),
+                labelingJobMediaProperties,
+                mlAssistConfiguration,
+                progressMetrics,
+                projectId,
+                provisioningState,
+                statusMessages ?? new ChangeTrackingList<JobStatusMessage>());
         }
 
         BinaryData IPersistableModel<LabelingJobProperties>.Write(ModelReaderWriterOptions options)

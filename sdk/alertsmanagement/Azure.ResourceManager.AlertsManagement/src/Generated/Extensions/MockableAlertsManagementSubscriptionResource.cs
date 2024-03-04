@@ -265,7 +265,10 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("MockableAlertsManagementSubscriptionResource.GetServiceAlertSummary");
             scope.Start();
@@ -307,7 +310,10 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<ServiceAlertSummary> GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
 
             using var scope = ServiceAlertAlertsClientDiagnostics.CreateScope("MockableAlertsManagementSubscriptionResource.GetServiceAlertSummary");
             scope.Start();

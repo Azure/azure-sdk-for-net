@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -113,12 +114,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<FeatureWindow> featureWindow = default;
-            Optional<MaterializationComputeResource> resource = default;
-            Optional<IDictionary<string, string>> sparkConfiguration = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string description = default;
+            string displayName = default;
+            FeatureWindow featureWindow = default;
+            MaterializationComputeResource resource = default;
+            IDictionary<string, string> sparkConfiguration = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featureWindow = null;
                         continue;
                     }
-                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value);
+                    featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value);
+                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))
@@ -186,7 +187,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureSetVersionBackfillContent(description.Value, displayName.Value, featureWindow.Value, resource.Value, Optional.ToDictionary(sparkConfiguration), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new FeatureSetVersionBackfillContent(
+                description,
+                displayName,
+                featureWindow,
+                resource,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureSetVersionBackfillContent>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual async Task<Response<AgFoodPlatformPrivateLinkResource>> GetAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+            if (subResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(subResourceName));
+            }
+            if (subResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
+            }
 
             using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual Response<AgFoodPlatformPrivateLinkResource> Get(string subResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+            if (subResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(subResourceName));
+            }
+            if (subResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
+            }
 
             using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -228,7 +242,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+            if (subResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(subResourceName));
+            }
+            if (subResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
+            }
 
             using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -271,7 +292,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string subResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+            if (subResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(subResourceName));
+            }
+            if (subResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
+            }
 
             using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -314,7 +342,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<AgFoodPlatformPrivateLinkResource>> GetIfExistsAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+            if (subResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(subResourceName));
+            }
+            if (subResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
+            }
 
             using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -359,7 +394,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         public virtual NullableResponse<AgFoodPlatformPrivateLinkResource> GetIfExists(string subResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subResourceName, nameof(subResourceName));
+            if (subResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(subResourceName));
+            }
+            if (subResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subResourceName));
+            }
 
             using var scope = _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("AgFoodPlatformPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -44,8 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> value = default;
-            Optional<NotebookParameterType> type = default;
+            object value = default;
+            NotebookParameterType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -68,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookParameter(value.Value, Optional.ToNullable(type));
+            return new NotebookParameter(value, type);
         }
 
         internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>

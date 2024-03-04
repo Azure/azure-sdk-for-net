@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            Guid? tenantId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountResourceAccessRule(Optional.ToNullable(tenantId), resourceId.Value, serializedAdditionalRawData);
+            return new StorageAccountResourceAccessRule(tenantId, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountResourceAccessRule>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -28,9 +27,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
         public WebClientCertificateAuthentication(object url, SecretBase pfx, SecretBase password) : base(url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(pfx, nameof(pfx));
-            Argument.AssertNotNull(password, nameof(password));
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+            if (pfx == null)
+            {
+                throw new ArgumentNullException(nameof(pfx));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             Pfx = pfx;
             Password = password;

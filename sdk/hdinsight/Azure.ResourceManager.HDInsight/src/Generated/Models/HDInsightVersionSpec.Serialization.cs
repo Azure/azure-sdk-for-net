@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> displayName = default;
-            Optional<bool> isDefault = default;
-            Optional<IReadOnlyDictionary<string, string>> componentVersions = default;
+            string friendlyName = default;
+            string displayName = default;
+            bool? isDefault = default;
+            IReadOnlyDictionary<string, string> componentVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVersionSpec(friendlyName.Value, displayName.Value, Optional.ToNullable(isDefault), Optional.ToDictionary(componentVersions), serializedAdditionalRawData);
+            return new HDInsightVersionSpec(friendlyName, displayName, isDefault, componentVersions ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVersionSpec>.Write(ModelReaderWriterOptions options)

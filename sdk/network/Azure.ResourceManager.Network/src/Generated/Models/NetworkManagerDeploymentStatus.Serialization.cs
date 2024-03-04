@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
-            Optional<NetworkManagerDeploymentState> deploymentStatus = default;
-            Optional<IReadOnlyList<string>> configurationIds = default;
-            Optional<NetworkConfigurationDeploymentType> deploymentType = default;
-            Optional<string> errorMessage = default;
+            DateTimeOffset? commitTime = default;
+            string region = default;
+            NetworkManagerDeploymentState? deploymentStatus = default;
+            IReadOnlyList<string> configurationIds = default;
+            NetworkConfigurationDeploymentType? deploymentType = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatus(
+                commitTime,
+                region,
+                deploymentStatus,
+                configurationIds ?? new ChangeTrackingList<string>(),
+                deploymentType,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatus>.Write(ModelReaderWriterOptions options)

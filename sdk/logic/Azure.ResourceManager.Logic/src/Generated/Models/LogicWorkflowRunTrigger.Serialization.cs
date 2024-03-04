@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -162,20 +163,20 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> inputs = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<BinaryData> outputs = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<DateTimeOffset> scheduledTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> trackingId = default;
-            Optional<Correlation> correlation = default;
-            Optional<string> code = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<BinaryData> error = default;
-            Optional<BinaryData> trackedProperties = default;
+            string name = default;
+            BinaryData inputs = default;
+            LogicContentLink inputsLink = default;
+            BinaryData outputs = default;
+            LogicContentLink outputsLink = default;
+            DateTimeOffset? scheduledTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? trackingId = default;
+            Correlation correlation = default;
+            string code = default;
+            LogicWorkflowStatus? status = default;
+            BinaryData error = default;
+            BinaryData trackedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    inputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    inputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputs"u8))
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    outputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value);
+                    outputsLink = LogicContentLink.DeserializeLogicContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledTime"u8))
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    correlation = Correlation.DeserializeCorrelation(property.Value);
+                    correlation = Correlation.DeserializeCorrelation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("code"u8))
@@ -304,7 +305,22 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Optional.ToNullable(scheduledTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(trackingId), correlation.Value, code.Value, Optional.ToNullable(status), error.Value, trackedProperties.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRunTrigger(
+                name,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                scheduledTime,
+                startTime,
+                endTime,
+                trackingId,
+                correlation,
+                code,
+                status,
+                error,
+                trackedProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunTrigger>.Write(ModelReaderWriterOptions options)

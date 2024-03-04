@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DedicatedHsmData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DedicatedHsmData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<DedicatedHsmData> array = new List<DedicatedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item));
+                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHsmListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DedicatedHsmListResult(value ?? new ChangeTrackingList<DedicatedHsmData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedHsmListResult>.Write(ModelReaderWriterOptions options)

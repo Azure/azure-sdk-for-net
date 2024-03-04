@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<long> iopsMaximum = default;
-            Optional<long> iopsMinimum = default;
-            Optional<long> bandwidthLimit = default;
-            Optional<string> policyId = default;
+            string name = default;
+            string id = default;
+            long? iopsMaximum = default;
+            long? iopsMinimum = default;
+            long? bandwidthLimit = default;
+            string policyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQoSPolicy(name.Value, id.Value, Optional.ToNullable(iopsMaximum), Optional.ToNullable(iopsMinimum), Optional.ToNullable(bandwidthLimit), policyId.Value, serializedAdditionalRawData);
+            return new StorageQoSPolicy(
+                name,
+                id,
+                iopsMaximum,
+                iopsMinimum,
+                bandwidthLimit,
+                policyId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageQoSPolicy>.Write(ModelReaderWriterOptions options)

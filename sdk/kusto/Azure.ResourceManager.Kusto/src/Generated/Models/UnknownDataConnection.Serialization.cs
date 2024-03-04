@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataConnection(document.RootElement, options);
+            return DeserializeKustoDataConnectionData(document.RootElement, options);
         }
 
         internal static UnknownDataConnection DeserializeUnknownDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData);
+            return new UnknownDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoDataConnectionData>.Write(ModelReaderWriterOptions options)
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataConnection(document.RootElement, options);
+                        return DeserializeKustoDataConnectionData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(KustoDataConnectionData)} does not support '{options.Format}' format.");

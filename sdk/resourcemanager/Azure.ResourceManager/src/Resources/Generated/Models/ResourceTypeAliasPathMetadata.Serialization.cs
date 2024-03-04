@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ResourceTypeAliasPathTokenType> type = default;
-            Optional<ResourceTypeAliasPathAttributes> attributes = default;
+            ResourceTypeAliasPathTokenType? type = default;
+            ResourceTypeAliasPathAttributes? attributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes), serializedAdditionalRawData);
+            return new ResourceTypeAliasPathMetadata(type, attributes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)

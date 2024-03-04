@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> inboundNatRuleName = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
+            string inboundNatRuleName = default;
+            LoadBalancingTransportProtocol? protocol = default;
+            int? frontendPort = default;
+            int? backendPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), serializedAdditionalRawData);
+            return new InboundNatRulePortMapping(inboundNatRuleName, protocol, frontendPort, backendPort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundNatRulePortMapping>.Write(ModelReaderWriterOptions options)

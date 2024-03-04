@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusQueueAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusQueueAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<ServiceBusQueueAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<ServiceBusQueueAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceBusQueueAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual NullableResponse<ServiceBusQueueAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            if (authorizationRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(authorizationRuleName));
+            }
+            if (authorizationRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
+            }
 
             using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.GetIfExists");
             scope.Start();

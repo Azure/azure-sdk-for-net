@@ -20,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="on"/> is null. </exception>
         public SwitchActivity(string name, DataFactoryExpression @on) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(@on, nameof(@on));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (@on == null)
+            {
+                throw new ArgumentNullException(nameof(@on));
+            }
 
             On = @on;
             Cases = new ChangeTrackingList<SwitchCaseActivity>();
@@ -51,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Cases = cases;
             DefaultActivities = defaultActivities;
             ActivityType = activityType ?? "Switch";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SwitchActivity"/> for deserialization. </summary>
+        internal SwitchActivity()
+        {
         }
 
         /// <summary> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </summary>

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedInstanceAdministratorData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedInstanceAdministratorData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceAdministratorData> array = new List<ManagedInstanceAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(item));
+                        array.Add(ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceAdministratorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedInstanceAdministratorListResult(value ?? new ChangeTrackingList<ManagedInstanceAdministratorData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceAdministratorListResult>.Write(ModelReaderWriterOptions options)

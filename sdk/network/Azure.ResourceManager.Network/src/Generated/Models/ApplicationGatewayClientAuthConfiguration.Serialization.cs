@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> verifyClientCertIssuerDN = default;
-            Optional<ApplicationGatewayClientRevocationOption> verifyClientRevocation = default;
+            bool? verifyClientCertIssuerDN = default;
+            ApplicationGatewayClientRevocationOption? verifyClientRevocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayClientAuthConfiguration(Optional.ToNullable(verifyClientCertIssuerDN), Optional.ToNullable(verifyClientRevocation), serializedAdditionalRawData);
+            return new ApplicationGatewayClientAuthConfiguration(verifyClientCertIssuerDN, verifyClientRevocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayClientAuthConfiguration>.Write(ModelReaderWriterOptions options)

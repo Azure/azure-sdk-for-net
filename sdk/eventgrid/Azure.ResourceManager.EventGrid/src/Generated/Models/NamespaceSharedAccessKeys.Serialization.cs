@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> key1 = default;
-            Optional<string> key2 = default;
+            string key1 = default;
+            string key2 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceSharedAccessKeys(key1.Value, key2.Value, serializedAdditionalRawData);
+            return new NamespaceSharedAccessKeys(key1, key2, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceSharedAccessKeys>.Write(ModelReaderWriterOptions options)

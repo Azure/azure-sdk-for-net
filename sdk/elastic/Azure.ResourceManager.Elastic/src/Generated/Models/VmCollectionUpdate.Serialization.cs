@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> vmResourceId = default;
-            Optional<OperationName> operationName = default;
+            string vmResourceId = default;
+            OperationName? operationName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmCollectionUpdate(vmResourceId.Value, Optional.ToNullable(operationName), serializedAdditionalRawData);
+            return new VmCollectionUpdate(vmResourceId, operationName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmCollectionUpdate>.Write(ModelReaderWriterOptions options)

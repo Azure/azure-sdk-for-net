@@ -101,15 +101,15 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<OnYourDataAuthenticationOptions> authentication = default;
-            Optional<int> topNDocuments = default;
-            Optional<bool> inScope = default;
-            Optional<int> strictness = default;
-            Optional<string> roleInformation = default;
+            OnYourDataAuthenticationOptions authentication = default;
+            int? topNDocuments = default;
+            bool? inScope = default;
+            int? strictness = default;
+            string roleInformation = default;
             string projectResourceId = default;
             string name = default;
             string version = default;
-            Optional<string> filter = default;
+            string filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
+                    authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("topNDocuments"u8))
@@ -181,7 +181,17 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMachineLearningIndexChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, projectResourceId, name, version, filter.Value, serializedAdditionalRawData);
+            return new AzureMachineLearningIndexChatExtensionParameters(
+                authentication,
+                topNDocuments,
+                inScope,
+                strictness,
+                roleInformation,
+                projectResourceId,
+                name,
+                version,
+                filter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureMachineLearningIndexChatExtensionParameters>.Write(ModelReaderWriterOptions options)

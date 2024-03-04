@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> manifestFile = default;
-            Optional<string> manifestHash = default;
-            Optional<string> backupManifestCloudPath = default;
+            string manifestFile = default;
+            string manifestHash = default;
+            string backupManifestCloudPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDiskDetails(manifestFile.Value, manifestHash.Value, backupManifestCloudPath.Value, serializedAdditionalRawData);
+            return new ExportDiskDetails(manifestFile, manifestHash, backupManifestCloudPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDiskDetails>.Write(ModelReaderWriterOptions options)

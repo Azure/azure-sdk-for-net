@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             IList<AlertsManagementDayOfWeek> daysOfWeek = default;
             RecurrenceType recurrenceType = default;
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> endTime = default;
+            TimeSpan? startTime = default;
+            TimeSpan? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData, daysOfWeek);
+            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, startTime, endTime, serializedAdditionalRawData, daysOfWeek);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleWeeklyRecurrence>.Write(ModelReaderWriterOptions options)

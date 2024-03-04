@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DataShareProvisioningState? provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<DataShareTriggerStatus> triggerStatus = default;
-            Optional<string> userName = default;
+            DataShareTriggerStatus? triggerStatus = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +234,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, Optional.ToNullable(synchronizationMode), synchronizationTime, Optional.ToNullable(triggerStatus), userName.Value);
+            return new ScheduledTrigger(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                createdAt,
+                provisioningState,
+                recurrenceInterval,
+                synchronizationMode,
+                synchronizationTime,
+                triggerStatus,
+                userName);
         }
 
         BinaryData IPersistableModel<ScheduledTrigger>.Write(ModelReaderWriterOptions options)

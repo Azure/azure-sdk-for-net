@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxSkuName name = default;
-            Optional<string> displayName = default;
-            Optional<string> family = default;
+            string displayName = default;
+            string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSku(name, displayName.Value, family.Value, serializedAdditionalRawData);
+            return new DataBoxSku(name, displayName, family, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSku>.Write(ModelReaderWriterOptions options)

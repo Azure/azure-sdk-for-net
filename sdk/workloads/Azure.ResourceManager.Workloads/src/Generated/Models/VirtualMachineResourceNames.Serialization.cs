@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -110,11 +111,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> hostName = default;
-            Optional<IList<NetworkInterfaceResourceNames>> networkInterfaces = default;
-            Optional<string> osDiskName = default;
-            Optional<IDictionary<string, IList<string>>> dataDiskNames = default;
+            string vmName = default;
+            string hostName = default;
+            IList<NetworkInterfaceResourceNames> networkInterfaces = default;
+            string osDiskName = default;
+            IDictionary<string, IList<string>> dataDiskNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<NetworkInterfaceResourceNames> array = new List<NetworkInterfaceResourceNames>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceResourceNames.DeserializeNetworkInterfaceResourceNames(item));
+                        array.Add(NetworkInterfaceResourceNames.DeserializeNetworkInterfaceResourceNames(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -180,7 +181,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineResourceNames(vmName.Value, hostName.Value, Optional.ToList(networkInterfaces), osDiskName.Value, Optional.ToDictionary(dataDiskNames), serializedAdditionalRawData);
+            return new VirtualMachineResourceNames(
+                vmName,
+                hostName,
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(),
+                osDiskName,
+                dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineResourceNames>.Write(ModelReaderWriterOptions options)

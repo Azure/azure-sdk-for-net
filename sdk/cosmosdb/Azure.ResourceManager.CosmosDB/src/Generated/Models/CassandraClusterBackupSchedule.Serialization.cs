@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> scheduleName = default;
-            Optional<string> cronExpression = default;
-            Optional<int> retentionInHours = default;
+            string scheduleName = default;
+            string cronExpression = default;
+            int? retentionInHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterBackupSchedule(scheduleName.Value, cronExpression.Value, Optional.ToNullable(retentionInHours), serializedAdditionalRawData);
+            return new CassandraClusterBackupSchedule(scheduleName, cronExpression, retentionInHours, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterBackupSchedule>.Write(ModelReaderWriterOptions options)

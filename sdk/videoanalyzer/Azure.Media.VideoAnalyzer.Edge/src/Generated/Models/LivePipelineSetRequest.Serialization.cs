@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             LivePipeline livePipeline = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livePipeline"u8))
@@ -52,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineSetRequest(methodName, apiVersion.Value, livePipeline);
+            return new LivePipelineSetRequest(methodName, apiVersion, livePipeline);
         }
     }
 }

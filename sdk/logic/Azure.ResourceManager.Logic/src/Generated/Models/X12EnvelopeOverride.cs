@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -59,13 +58,34 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetNamespace"/>, <paramref name="protocolVersion"/>, <paramref name="messageId"/>, <paramref name="responsibleAgencyCode"/>, <paramref name="headerVersion"/>, <paramref name="senderApplicationId"/> or <paramref name="receiverApplicationId"/> is null. </exception>
         public X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, X12DateFormat dateFormat, X12TimeFormat timeFormat)
         {
-            Argument.AssertNotNull(targetNamespace, nameof(targetNamespace));
-            Argument.AssertNotNull(protocolVersion, nameof(protocolVersion));
-            Argument.AssertNotNull(messageId, nameof(messageId));
-            Argument.AssertNotNull(responsibleAgencyCode, nameof(responsibleAgencyCode));
-            Argument.AssertNotNull(headerVersion, nameof(headerVersion));
-            Argument.AssertNotNull(senderApplicationId, nameof(senderApplicationId));
-            Argument.AssertNotNull(receiverApplicationId, nameof(receiverApplicationId));
+            if (targetNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(targetNamespace));
+            }
+            if (protocolVersion == null)
+            {
+                throw new ArgumentNullException(nameof(protocolVersion));
+            }
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (responsibleAgencyCode == null)
+            {
+                throw new ArgumentNullException(nameof(responsibleAgencyCode));
+            }
+            if (headerVersion == null)
+            {
+                throw new ArgumentNullException(nameof(headerVersion));
+            }
+            if (senderApplicationId == null)
+            {
+                throw new ArgumentNullException(nameof(senderApplicationId));
+            }
+            if (receiverApplicationId == null)
+            {
+                throw new ArgumentNullException(nameof(receiverApplicationId));
+            }
 
             TargetNamespace = targetNamespace;
             ProtocolVersion = protocolVersion;

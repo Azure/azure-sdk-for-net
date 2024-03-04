@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string value = default;
-            Optional<string> description = default;
+            string description = default;
             JobInputType jobInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningLiteralJobInput(description.Value, jobInputType, serializedAdditionalRawData, value);
+            return new MachineLearningLiteralJobInput(description, jobInputType, serializedAdditionalRawData, value);
         }
 
         BinaryData IPersistableModel<MachineLearningLiteralJobInput>.Write(ModelReaderWriterOptions options)

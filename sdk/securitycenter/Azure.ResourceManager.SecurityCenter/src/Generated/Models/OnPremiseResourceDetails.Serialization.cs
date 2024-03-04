@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element);
+                    case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
                 }
             }
             ResourceIdentifier workspaceId = default;
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnPremiseResourceDetails(source, serializedAdditionalRawData, workspaceId, vmuuid, sourceComputerId, machineName);
+            return new OnPremiseResourceDetails(
+                source,
+                serializedAdditionalRawData,
+                workspaceId,
+                vmuuid,
+                sourceComputerId,
+                machineName);
         }
 
         BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options)

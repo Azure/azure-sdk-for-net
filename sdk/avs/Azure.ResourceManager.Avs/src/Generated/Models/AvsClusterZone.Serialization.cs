@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> hosts = default;
-            Optional<string> zone = default;
+            IReadOnlyList<string> hosts = default;
+            string zone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsClusterZone(Optional.ToList(hosts), zone.Value, serializedAdditionalRawData);
+            return new AvsClusterZone(hosts ?? new ChangeTrackingList<string>(), zone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsClusterZone>.Write(ModelReaderWriterOptions options)

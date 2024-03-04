@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<FilterTrackPropertyCondition> array = new List<FilterTrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item));
+                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item, options));
                     }
                     trackSelections = array;
                     continue;

@@ -265,7 +265,10 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BlobServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _blobServiceClientDiagnostics.CreateScope("BlobServiceResource.CreateOrUpdate");
             scope.Start();
@@ -311,7 +314,10 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BlobServiceResource> CreateOrUpdate(WaitUntil waitUntil, BlobServiceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _blobServiceClientDiagnostics.CreateScope("BlobServiceResource.CreateOrUpdate");
             scope.Start();

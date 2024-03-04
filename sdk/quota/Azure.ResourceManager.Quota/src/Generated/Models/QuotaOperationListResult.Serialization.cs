@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuotaOperationResult>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<QuotaOperationResult> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<QuotaOperationResult> array = new List<QuotaOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item));
+                        array.Add(QuotaOperationResult.DeserializeQuotaOperationResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaOperationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaOperationListResult(value ?? new ChangeTrackingList<QuotaOperationResult>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaOperationListResult>.Write(ModelReaderWriterOptions options)

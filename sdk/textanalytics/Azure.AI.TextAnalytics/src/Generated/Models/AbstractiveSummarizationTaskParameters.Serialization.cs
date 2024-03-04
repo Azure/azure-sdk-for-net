@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -44,10 +45,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
-            Optional<int> sentenceCount = default;
-            Optional<StringIndexType> stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
+            int? sentenceCount = default;
+            StringIndexType? stringIndexType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -83,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationTaskParameters(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), modelVersion.Value, Optional.ToNullable(loggingOptOut));
+            return new AbstractiveSummarizationTaskParameters(sentenceCount, stringIndexType, modelVersion, loggingOptOut);
         }
     }
 }

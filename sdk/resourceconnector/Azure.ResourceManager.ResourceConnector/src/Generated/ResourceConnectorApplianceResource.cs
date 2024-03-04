@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ResourceConnectorApplianceResource>> UpdateAsync(ResourceConnectorAppliancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.Update");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ResourceConnectorApplianceResource> Update(ResourceConnectorAppliancePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.Update");
             scope.Start();
@@ -521,7 +527,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="upgradeGraph"/> is null. </exception>
         public virtual async Task<Response<ApplianceUpgradeGraph>> GetUpgradeGraphAsync(string upgradeGraph, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(upgradeGraph, nameof(upgradeGraph));
+            if (upgradeGraph == null)
+            {
+                throw new ArgumentNullException(nameof(upgradeGraph));
+            }
+            if (upgradeGraph.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(upgradeGraph));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetUpgradeGraph");
             scope.Start();
@@ -564,7 +577,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="upgradeGraph"/> is null. </exception>
         public virtual Response<ApplianceUpgradeGraph> GetUpgradeGraph(string upgradeGraph, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(upgradeGraph, nameof(upgradeGraph));
+            if (upgradeGraph == null)
+            {
+                throw new ArgumentNullException(nameof(upgradeGraph));
+            }
+            if (upgradeGraph.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(upgradeGraph));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.GetUpgradeGraph");
             scope.Start();
@@ -607,8 +627,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ResourceConnectorApplianceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.AddTag");
             scope.Start();
@@ -669,8 +695,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ResourceConnectorApplianceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.AddTag");
             scope.Start();
@@ -730,7 +762,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ResourceConnectorApplianceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.SetTags");
             scope.Start();
@@ -787,7 +822,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ResourceConnectorApplianceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.SetTags");
             scope.Start();
@@ -844,7 +882,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ResourceConnectorApplianceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.RemoveTag");
             scope.Start();
@@ -904,7 +945,10 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ResourceConnectorApplianceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceResource.RemoveTag");
             scope.Start();

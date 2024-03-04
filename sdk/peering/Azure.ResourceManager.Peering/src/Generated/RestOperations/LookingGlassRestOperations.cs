@@ -69,9 +69,22 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LookingGlassOutput>> InvokeAsync(string subscriptionId, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (sourceLocation == null)
+            {
+                throw new ArgumentNullException(nameof(sourceLocation));
+            }
+            if (destinationIP == null)
+            {
+                throw new ArgumentNullException(nameof(destinationIP));
+            }
 
             using var message = CreateInvokeRequest(subscriptionId, command, sourceType, sourceLocation, destinationIP);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -100,9 +113,22 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LookingGlassOutput> Invoke(string subscriptionId, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (sourceLocation == null)
+            {
+                throw new ArgumentNullException(nameof(sourceLocation));
+            }
+            if (destinationIP == null)
+            {
+                throw new ArgumentNullException(nameof(destinationIP));
+            }
 
             using var message = CreateInvokeRequest(subscriptionId, command, sourceType, sourceLocation, destinationIP);
             _pipeline.Send(message, cancellationToken);

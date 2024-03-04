@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             int order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
+            IList<DeliveryRuleCondition> conditions = default;
             IList<DeliveryRuleAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                        array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                        array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryRule(name.Value, order, Optional.ToList(conditions), actions, serializedAdditionalRawData);
+            return new DeliveryRule(name, order, conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryRule>.Write(ModelReaderWriterOptions options)

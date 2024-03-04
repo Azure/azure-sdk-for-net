@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<InstanceViewStatusesSummary> roleInstance = default;
-            Optional<string> sdkVersion = default;
-            Optional<IReadOnlyList<string>> privateIds = default;
-            Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
+            InstanceViewStatusesSummary roleInstance = default;
+            string sdkVersion = default;
+            IReadOnlyList<string> privateIds = default;
+            IReadOnlyList<ResourceInstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value);
+                    roleInstance = InstanceViewStatusesSummary.DeserializeInstanceViewStatusesSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sdkVersion"u8))
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceInstanceView(roleInstance.Value, sdkVersion.Value, Optional.ToList(privateIds), Optional.ToList(statuses), serializedAdditionalRawData);
+            return new CloudServiceInstanceView(roleInstance, sdkVersion, privateIds ?? new ChangeTrackingList<string>(), statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceInstanceView>.Write(ModelReaderWriterOptions options)

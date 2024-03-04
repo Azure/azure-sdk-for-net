@@ -41,7 +41,22 @@ namespace Azure.ResourceManager.Dns.Models
             registrationVirtualNetworks ??= new List<WritableSubResource>();
             resolutionVirtualNetworks ??= new List<WritableSubResource>();
 
-            return new DnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, maxNumberOfRecordsPerRecord, numberOfRecords, nameServers?.ToList(), zoneType, registrationVirtualNetworks?.ToList(), resolutionVirtualNetworks?.ToList(), serializedAdditionalRawData: null);
+            return new DnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                maxNumberOfRecords,
+                maxNumberOfRecordsPerRecord,
+                numberOfRecords,
+                nameServers?.ToList(),
+                zoneType,
+                registrationVirtualNetworks?.ToList(),
+                resolutionVirtualNetworks?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReferenceResult"/>. </summary>

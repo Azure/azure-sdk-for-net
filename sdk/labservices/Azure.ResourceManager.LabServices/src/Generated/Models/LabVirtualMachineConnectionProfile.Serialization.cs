@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -100,13 +101,13 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> sshAuthority = default;
-            Optional<Uri> sshInBrowserUrl = default;
-            Optional<string> rdpAuthority = default;
-            Optional<Uri> rdpInBrowserUrl = default;
-            Optional<string> adminUsername = default;
-            Optional<string> nonAdminUsername = default;
+            IPAddress privateIPAddress = default;
+            string sshAuthority = default;
+            Uri sshInBrowserUrl = default;
+            string rdpAuthority = default;
+            Uri rdpInBrowserUrl = default;
+            string adminUsername = default;
+            string nonAdminUsername = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,15 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineConnectionProfile(privateIPAddress.Value, sshAuthority.Value, sshInBrowserUrl.Value, rdpAuthority.Value, rdpInBrowserUrl.Value, adminUsername.Value, nonAdminUsername.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineConnectionProfile(
+                privateIPAddress,
+                sshAuthority,
+                sshInBrowserUrl,
+                rdpAuthority,
+                rdpInBrowserUrl,
+                adminUsername,
+                nonAdminUsername,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineConnectionProfile>.Write(ModelReaderWriterOptions options)

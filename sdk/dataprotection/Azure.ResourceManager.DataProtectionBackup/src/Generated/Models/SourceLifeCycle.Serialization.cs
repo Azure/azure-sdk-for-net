@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -80,19 +81,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
-            Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
+            IList<TargetCopySetting> targetDataStoreCopySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteAfter"u8))
                 {
-                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value);
+                    deleteAfter = DataProtectionBackupDeleteSetting.DeserializeDataProtectionBackupDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStore"u8))
                 {
-                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
+                    sourceDataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDataStoreCopySettings"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<TargetCopySetting> array = new List<TargetCopySetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item));
+                        array.Add(TargetCopySetting.DeserializeTargetCopySetting(item, options));
                     }
                     targetDataStoreCopySettings = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings), serializedAdditionalRawData);
+            return new SourceLifeCycle(deleteAfter, sourceDataStore, targetDataStoreCopySettings ?? new ChangeTrackingList<TargetCopySetting>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceLifeCycle>.Write(ModelReaderWriterOptions options)

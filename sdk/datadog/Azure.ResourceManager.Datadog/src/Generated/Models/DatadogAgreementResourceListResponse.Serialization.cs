@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogAgreementResourceProperties>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DatadogAgreementResourceProperties> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogAgreementResourceProperties> array = new List<DatadogAgreementResourceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item));
+                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatadogAgreementResourceListResponse(value ?? new ChangeTrackingList<DatadogAgreementResourceProperties>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementResourceListResponse>.Write(ModelReaderWriterOptions options)

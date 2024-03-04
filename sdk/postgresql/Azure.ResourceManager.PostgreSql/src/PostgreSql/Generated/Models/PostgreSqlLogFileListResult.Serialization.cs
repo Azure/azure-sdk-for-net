@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlLogFile>> value = default;
+            IReadOnlyList<PostgreSqlLogFile> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlLogFile> array = new List<PostgreSqlLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlLogFile.DeserializePostgreSqlLogFile(item));
+                        array.Add(PostgreSqlLogFile.DeserializePostgreSqlLogFile(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlLogFileListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlLogFileListResult(value ?? new ChangeTrackingList<PostgreSqlLogFile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlLogFileListResult>.Write(ModelReaderWriterOptions options)

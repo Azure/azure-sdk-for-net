@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlClusterServerResource>> GetAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<CosmosDBForPostgreSqlClusterServerResource> Get(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerCollection.Get");
             scope.Start();
@@ -228,7 +242,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerCollection.Exists");
             scope.Start();
@@ -271,7 +292,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerCollection.Exists");
             scope.Start();
@@ -314,7 +342,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBForPostgreSqlClusterServerResource>> GetIfExistsAsync(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerCollection.GetIfExists");
             scope.Start();
@@ -359,7 +394,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBForPostgreSqlClusterServerResource> GetIfExists(string serverName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            if (serverName == null)
+            {
+                throw new ArgumentNullException(nameof(serverName));
+            }
+            if (serverName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
+            }
 
             using var scope = _cosmosDBForPostgreSqlClusterServerServersClientDiagnostics.CreateScope("CosmosDBForPostgreSqlClusterServerCollection.GetIfExists");
             scope.Start();

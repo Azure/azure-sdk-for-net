@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<AppServiceDomainNameIdentifier> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceDomainNameIdentifier> array = new List<AppServiceDomainNameIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(item));
+                        array.Add(AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDomainNameIdentifierListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AppServiceDomainNameIdentifierListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDomainNameIdentifierListResult>.Write(ModelReaderWriterOptions options)

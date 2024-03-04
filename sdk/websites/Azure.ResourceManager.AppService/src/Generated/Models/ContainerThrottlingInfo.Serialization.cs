@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> periods = default;
-            Optional<int> throttledPeriods = default;
-            Optional<int> throttledTime = default;
+            int? periods = default;
+            int? throttledPeriods = default;
+            int? throttledTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerThrottlingInfo(Optional.ToNullable(periods), Optional.ToNullable(throttledPeriods), Optional.ToNullable(throttledTime), serializedAdditionalRawData);
+            return new ContainerThrottlingInfo(periods, throttledPeriods, throttledTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerThrottlingInfo>.Write(ModelReaderWriterOptions options)

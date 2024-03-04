@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="systemNumber"/> or <paramref name="clientId"/> is null. </exception>
         public SapBWLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId)
         {
-            Argument.AssertNotNull(server, nameof(server));
-            Argument.AssertNotNull(systemNumber, nameof(systemNumber));
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+            if (systemNumber == null)
+            {
+                throw new ArgumentNullException(nameof(systemNumber));
+            }
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             Server = server;
             SystemNumber = systemNumber;
@@ -54,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "SapBW";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/> for deserialization. </summary>
+        internal SapBWLinkedService()
+        {
         }
 
         /// <summary> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </summary>

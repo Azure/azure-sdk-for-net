@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> storageContainerId = default;
-            Optional<string> storageContainerLocalPath = default;
-            Optional<string> sourceDiskId = default;
-            Optional<string> sourceDiskName = default;
-            Optional<string> seedDiskName = default;
-            Optional<string> testMigrateDiskName = default;
-            Optional<string> migrateDiskName = default;
-            Optional<bool> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<bool> isDynamic = default;
-            Optional<string> diskType = default;
+            ResourceIdentifier storageContainerId = default;
+            string storageContainerLocalPath = default;
+            string sourceDiskId = default;
+            string sourceDiskName = default;
+            string seedDiskName = default;
+            string testMigrateDiskName = default;
+            string migrateDiskName = default;
+            bool? isOSDisk = default;
+            long? capacityInBytes = default;
+            bool? isDynamic = default;
+            string diskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +212,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciProtectedDiskProperties(storageContainerId.Value, storageContainerLocalPath.Value, sourceDiskId.Value, sourceDiskName.Value, seedDiskName.Value, testMigrateDiskName.Value, migrateDiskName.Value, Optional.ToNullable(isOSDisk), Optional.ToNullable(capacityInBytes), Optional.ToNullable(isDynamic), diskType.Value, serializedAdditionalRawData);
+            return new VMwareToAzStackHciProtectedDiskProperties(
+                storageContainerId,
+                storageContainerLocalPath,
+                sourceDiskId,
+                sourceDiskName,
+                seedDiskName,
+                testMigrateDiskName,
+                migrateDiskName,
+                isOSDisk,
+                capacityInBytes,
+                isDynamic,
+                diskType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options)

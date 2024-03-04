@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> retentionInMb = default;
-            Optional<int> retentionInDays = default;
-            Optional<bool> enabled = default;
+            int? retentionInMb = default;
+            int? retentionInDays = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemHttpLogsConfig(Optional.ToNullable(retentionInMb), Optional.ToNullable(retentionInDays), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new FileSystemHttpLogsConfig(retentionInMb, retentionInDays, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemHttpLogsConfig>.Write(ModelReaderWriterOptions options)

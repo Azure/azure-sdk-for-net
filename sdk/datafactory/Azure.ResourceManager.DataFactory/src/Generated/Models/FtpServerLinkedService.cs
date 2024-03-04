@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public FtpServerLinkedService(DataFactoryElement<string> host)
         {
-            Argument.AssertNotNull(host, nameof(host));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
 
             Host = host;
             LinkedServiceType = "FtpServer";
@@ -52,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             EnableSsl = enableSsl;
             EnableServerCertificateValidation = enableServerCertificateValidation;
             LinkedServiceType = linkedServiceType ?? "FtpServer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FtpServerLinkedService"/> for deserialization. </summary>
+        internal FtpServerLinkedService()
+        {
         }
 
         /// <summary> Host name of the FTP server. Type: string (or Expression with resultType string). </summary>

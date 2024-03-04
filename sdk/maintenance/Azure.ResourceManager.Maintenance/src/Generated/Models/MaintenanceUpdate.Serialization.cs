@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceImpactType> impactType = default;
-            Optional<MaintenanceUpdateStatus> status = default;
-            Optional<int> impactDurationInSec = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            MaintenanceScope? maintenanceScope = default;
+            MaintenanceImpactType? impactType = default;
+            MaintenanceUpdateStatus? status = default;
+            int? impactDurationInSec = default;
+            DateTimeOffset? notBefore = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,14 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceUpdate(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value, serializedAdditionalRawData);
+            return new MaintenanceUpdate(
+                maintenanceScope,
+                impactType,
+                status,
+                impactDurationInSec,
+                notBefore,
+                resourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceUpdate>.Write(ModelReaderWriterOptions options)

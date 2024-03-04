@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SapProviderInstanceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapProviderInstanceData> array = new List<SapProviderInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item));
+                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderInstanceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProviderInstanceListResult(value ?? new ChangeTrackingList<SapProviderInstanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderInstanceListResult>.Write(ModelReaderWriterOptions options)

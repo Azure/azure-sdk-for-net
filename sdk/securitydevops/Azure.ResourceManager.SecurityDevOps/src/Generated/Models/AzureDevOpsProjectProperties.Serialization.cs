@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> projectId = default;
-            Optional<string> orgName = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
+            ProvisioningState? provisioningState = default;
+            string projectId = default;
+            string orgName = default;
+            AutoDiscovery? autoDiscovery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsProjectProperties(Optional.ToNullable(provisioningState), projectId.Value, orgName.Value, Optional.ToNullable(autoDiscovery), serializedAdditionalRawData);
+            return new AzureDevOpsProjectProperties(provisioningState, projectId, orgName, autoDiscovery, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsProjectProperties>.Write(ModelReaderWriterOptions options)

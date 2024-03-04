@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApplicationGatewayData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayData> array = new List<ApplicationGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item));
+                        array.Add(ApplicationGatewayData.DeserializeApplicationGatewayData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayListResult(value ?? new ChangeTrackingList<ApplicationGatewayData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayListResult>.Write(ModelReaderWriterOptions options)

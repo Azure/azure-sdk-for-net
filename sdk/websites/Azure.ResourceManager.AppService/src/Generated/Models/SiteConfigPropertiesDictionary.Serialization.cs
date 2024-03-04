@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> use32BitWorkerProcess = default;
-            Optional<string> linuxFxVersion = default;
-            Optional<string> javaVersion = default;
-            Optional<string> powerShellVersion = default;
+            bool? use32BitWorkerProcess = default;
+            string linuxFxVersion = default;
+            string javaVersion = default;
+            string powerShellVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value, serializedAdditionalRawData);
+            return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteConfigPropertiesDictionary>.Write(ModelReaderWriterOptions options)

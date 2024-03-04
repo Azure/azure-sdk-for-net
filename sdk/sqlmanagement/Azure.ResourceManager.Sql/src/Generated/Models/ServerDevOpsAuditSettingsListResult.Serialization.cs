@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerDevOpsAuditingSettingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlServerDevOpsAuditingSettingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDevOpsAuditingSettingData> array = new List<SqlServerDevOpsAuditingSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(item));
+                        array.Add(SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerDevOpsAuditSettingsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServerDevOpsAuditSettingsListResult(value ?? new ChangeTrackingList<SqlServerDevOpsAuditingSettingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerDevOpsAuditSettingsListResult>.Write(ModelReaderWriterOptions options)

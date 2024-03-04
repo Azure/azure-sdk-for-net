@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         protected MonitoringInputDataBase(JobInputType jobInputType, Uri uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Columns = new ChangeTrackingDictionary<string, string>();
             JobInputType = jobInputType;

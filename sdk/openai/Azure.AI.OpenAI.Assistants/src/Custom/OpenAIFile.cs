@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,12 +16,10 @@ namespace Azure.AI.OpenAI.Assistants;
  * a nullable integer.
  */
 
+[CodeGenSerialization(nameof(Size), DeserializationValueHook = nameof(DeserializeNullableSize))]
 public partial class OpenAIFile
 {
-    /// <summary> The size of the file, in bytes. </summary>
-    [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeNullableSize))]
-    public int Size { get; }
-
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void DeserializeNullableSize(JsonProperty property, ref int size)
     {
         if (property.Value.ValueKind == JsonValueKind.Null)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -80,14 +81,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             WebConnectivityEndpoint web = default;
-            Optional<IReadOnlyList<SshConnectivityEndpoint>> ssh = default;
+            IReadOnlyList<SshConnectivityEndpoint> ssh = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("web"u8))
                 {
-                    web = WebConnectivityEndpoint.DeserializeWebConnectivityEndpoint(property.Value);
+                    web = WebConnectivityEndpoint.DeserializeWebConnectivityEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ssh"u8))
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<SshConnectivityEndpoint> array = new List<SshConnectivityEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshConnectivityEndpoint.DeserializeSshConnectivityEndpoint(item));
+                        array.Add(SshConnectivityEndpoint.DeserializeSshConnectivityEndpoint(item, options));
                     }
                     ssh = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterConnectivityProfile(web, Optional.ToList(ssh), serializedAdditionalRawData);
+            return new ClusterConnectivityProfile(web, ssh ?? new ChangeTrackingList<SshConnectivityEndpoint>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterConnectivityProfile>.Write(ModelReaderWriterOptions options)

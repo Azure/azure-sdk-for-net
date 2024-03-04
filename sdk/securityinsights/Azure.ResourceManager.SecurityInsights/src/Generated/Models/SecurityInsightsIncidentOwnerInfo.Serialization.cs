@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> assignedTo = default;
-            Optional<Guid> objectId = default;
-            Optional<string> userPrincipalName = default;
-            Optional<SecurityInsightsIncidentOwnerType> ownerType = default;
+            string email = default;
+            string assignedTo = default;
+            Guid? objectId = default;
+            string userPrincipalName = default;
+            SecurityInsightsIncidentOwnerType? ownerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentOwnerInfo(email.Value, assignedTo.Value, Optional.ToNullable(objectId), userPrincipalName.Value, Optional.ToNullable(ownerType), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentOwnerInfo(
+                email,
+                assignedTo,
+                objectId,
+                userPrincipalName,
+                ownerType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentOwnerInfo>.Write(ModelReaderWriterOptions options)

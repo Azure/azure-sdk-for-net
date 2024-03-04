@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string quotaId = default;
             ResourceProviderCapabilitiesEffect effect = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> requiredFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderCapabilities(quotaId, effect, Optional.ToList(requiredFeatures), serializedAdditionalRawData);
+            return new ResourceProviderCapabilities(quotaId, effect, requiredFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderCapabilities>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> privateRanges = default;
-            Optional<AutoLearnPrivateRangesMode> autoLearnPrivateRanges = default;
+            IList<string> privateRanges = default;
+            AutoLearnPrivateRangesMode? autoLearnPrivateRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicySnat(Optional.ToList(privateRanges), Optional.ToNullable(autoLearnPrivateRanges), serializedAdditionalRawData);
+            return new FirewallPolicySnat(privateRanges ?? new ChangeTrackingList<string>(), autoLearnPrivateRanges, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicySnat>.Write(ModelReaderWriterOptions options)

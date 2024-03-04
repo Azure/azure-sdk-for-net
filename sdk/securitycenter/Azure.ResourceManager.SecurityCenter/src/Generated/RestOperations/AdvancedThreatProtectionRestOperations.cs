@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<AdvancedThreatProtectionSettingData>> GetAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             using var message = CreateGetRequest(resourceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response<AdvancedThreatProtectionSettingData> Get(string resourceId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
 
             using var message = CreateGetRequest(resourceId);
             _pipeline.Send(message, cancellationToken);
@@ -135,8 +141,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response<AdvancedThreatProtectionSettingData>> CreateAsync(string resourceId, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(resourceId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -161,8 +173,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="data"/> is null. </exception>
         public Response<AdvancedThreatProtectionSettingData> Create(string resourceId, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException(nameof(resourceId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(resourceId, data);
             _pipeline.Send(message, cancellationToken);

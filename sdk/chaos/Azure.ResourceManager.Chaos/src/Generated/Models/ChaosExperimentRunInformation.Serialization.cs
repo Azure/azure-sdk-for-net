@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChaosExperimentRunStepStatus>> steps = default;
+            IReadOnlyList<ChaosExperimentRunStepStatus> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunStepStatus> array = new List<ChaosExperimentRunStepStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item));
+                        array.Add(ChaosExperimentRunStepStatus.DeserializeChaosExperimentRunStepStatus(item, options));
                     }
                     steps = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentRunInformation(Optional.ToList(steps), serializedAdditionalRawData);
+            return new ChaosExperimentRunInformation(steps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentRunInformation>.Write(ModelReaderWriterOptions options)

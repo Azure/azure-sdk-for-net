@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubRoutingSource> routingSource = default;
-            Optional<RoutingMessage> message = default;
-            Optional<RoutingTwin> twin = default;
+            IotHubRoutingSource? routingSource = default;
+            RoutingMessage message = default;
+            RoutingTwin twin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    message = RoutingMessage.DeserializeRoutingMessage(property.Value);
+                    message = RoutingMessage.DeserializeRoutingMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("twin"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value);
+                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubTestAllRoutesContent(Optional.ToNullable(routingSource), message.Value, twin.Value, serializedAdditionalRawData);
+            return new IotHubTestAllRoutesContent(routingSource, message, twin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubTestAllRoutesContent>.Write(ModelReaderWriterOptions options)

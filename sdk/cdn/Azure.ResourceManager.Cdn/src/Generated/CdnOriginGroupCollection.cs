@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CdnOriginGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string originGroupName, CdnOriginGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CdnOriginGroupResource> CreateOrUpdate(WaitUntil waitUntil, string originGroupName, CdnOriginGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual async Task<Response<CdnOriginGroupResource>> GetAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual Response<CdnOriginGroupResource> Get(string originGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<CdnOriginGroupResource>> GetIfExistsAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
         public virtual NullableResponse<CdnOriginGroupResource> GetIfExists(string originGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(originGroupName, nameof(originGroupName));
+            if (originGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(originGroupName));
+            }
+            if (originGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(originGroupName));
+            }
 
             using var scope = _cdnOriginGroupClientDiagnostics.CreateScope("CdnOriginGroupCollection.GetIfExists");
             scope.Start();

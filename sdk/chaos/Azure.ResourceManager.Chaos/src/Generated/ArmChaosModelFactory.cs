@@ -30,7 +30,17 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
         public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null)
         {
-            return new ChaosCapabilityData(id, name, resourceType, systemData, publisher, targetType, description, parametersSchema, urn, serializedAdditionalRawData: null);
+            return new ChaosCapabilityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publisher,
+                targetType,
+                description,
+                parametersSchema,
+                urn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityTypeData"/>. </summary>
@@ -55,7 +65,23 @@ namespace Azure.ResourceManager.Chaos.Models
             azureRbacActions ??= new List<string>();
             azureRbacDataActions ??= new List<string>();
 
-            return new ChaosCapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, azureRbacActions?.ToList(), azureRbacDataActions?.ToList(), runtimeKind != null ? new ChaosCapabilityTypeRuntimeProperties(runtimeKind, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ChaosCapabilityTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                publisher,
+                targetType,
+                displayName,
+                description,
+                parametersSchema,
+                urn,
+                kind,
+                azureRbacActions?.ToList(),
+                azureRbacDataActions?.ToList(),
+                runtimeKind != null ? new ChaosCapabilityTypeRuntimeProperties(runtimeKind, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosExperimentData"/>. </summary>
@@ -80,7 +106,18 @@ namespace Azure.ResourceManager.Chaos.Models
             steps ??= new List<ChaosExperimentStep>();
             selectors ??= new List<ChaosTargetSelector>();
 
-            return new ChaosExperimentData(id, name, resourceType, systemData, tags, location, identity, provisioningState, steps?.ToList(), selectors?.ToList(), serializedAdditionalRawData: null);
+            return new ChaosExperimentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                steps?.ToList(),
+                selectors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosExperimentExecutionData"/>. </summary>
@@ -94,7 +131,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
         public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null)
         {
-            return new ChaosExperimentExecutionData(id, name, resourceType, systemData, status, startedOn, stoppedOn, serializedAdditionalRawData: null);
+            return new ChaosExperimentExecutionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status,
+                startedOn,
+                stoppedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
@@ -113,7 +158,18 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             runInformationSteps ??= new List<ChaosExperimentRunStepStatus>();
 
-            return new ExperimentExecutionDetails(id, name, resourceType, systemData, status, startedOn, stoppedOn, failureReason, lastActionOn, runInformationSteps != null ? new ChaosExperimentRunInformation(runInformationSteps?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ExperimentExecutionDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status,
+                startedOn,
+                stoppedOn,
+                failureReason,
+                lastActionOn,
+                runInformationSteps != null ? new ChaosExperimentRunInformation(runInformationSteps?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChaosExperimentRunStepStatus"/>. </summary>
@@ -154,7 +210,14 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             targets ??= new List<ExperimentExecutionActionTargetDetailsProperties>();
 
-            return new ChaosExperimentRunActionStatus(actionName, actionId, status, startOn, endOn, targets?.ToList(), serializedAdditionalRawData: null);
+            return new ChaosExperimentRunActionStatus(
+                actionName,
+                actionId,
+                status,
+                startOn,
+                endOn,
+                targets?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
@@ -166,7 +229,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <returns> A new <see cref="Models.ExperimentExecutionActionTargetDetailsProperties"/> instance for mocking. </returns>
         public static ExperimentExecutionActionTargetDetailsProperties ExperimentExecutionActionTargetDetailsProperties(string status = null, string target = null, DateTimeOffset? targetFailedOn = null, DateTimeOffset? targetCompletedOn = null, ExperimentExecutionActionTargetDetailsError error = null)
         {
-            return new ExperimentExecutionActionTargetDetailsProperties(status, target, targetFailedOn, targetCompletedOn, error, serializedAdditionalRawData: null);
+            return new ExperimentExecutionActionTargetDetailsProperties(
+                status,
+                target,
+                targetFailedOn,
+                targetCompletedOn,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionActionTargetDetailsError"/>. </summary>
@@ -193,7 +262,17 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             resourceTypes ??= new List<string>();
 
-            return new ChaosTargetTypeData(id, name, resourceType, systemData, location, displayName, description, propertiesSchema, resourceTypes?.ToList(), serializedAdditionalRawData: null);
+            return new ChaosTargetTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                displayName,
+                description,
+                propertiesSchema,
+                resourceTypes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosTargetData"/>. </summary>
@@ -208,7 +287,14 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             properties ??= new Dictionary<string, BinaryData>();
 
-            return new ChaosTargetData(id, name, resourceType, systemData, location, properties, serializedAdditionalRawData: null);
+            return new ChaosTargetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
     }
 }

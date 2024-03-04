@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
-            Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
-            Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;
+            PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess = default;
+            ResourceIdentifier delegatedSubnetResourceId = default;
+            ResourceIdentifier privateDnsZoneArmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerNetwork(Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneArmResourceId.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneArmResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerNetwork>.Write(ModelReaderWriterOptions options)

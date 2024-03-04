@@ -69,10 +69,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> GetAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,10 +130,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> Get(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetRequest(subscriptionId, providerNamespace, resourceType, sku);
             _pipeline.Send(message, cancellationToken);
@@ -162,11 +218,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, sku, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,11 +282,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> CreateOrUpdate(string subscriptionId, string providerNamespace, string resourceType, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, resourceType, sku, data);
             _pipeline.Send(message, cancellationToken);
@@ -249,10 +367,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -276,10 +422,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string providerNamespace, string resourceType, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, providerNamespace, resourceType, sku);
             _pipeline.Send(message, cancellationToken);
@@ -328,11 +502,46 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -363,11 +572,46 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> GetNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
             _pipeline.Send(message, cancellationToken);
@@ -427,12 +671,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -462,12 +744,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku, data);
             _pipeline.Send(message, cancellationToken);
@@ -520,11 +840,46 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -549,11 +904,46 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, sku);
             _pipeline.Send(message, cancellationToken);
@@ -605,12 +995,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -642,12 +1074,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> GetNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
             _pipeline.Send(message, cancellationToken);
@@ -710,13 +1184,58 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -747,13 +1266,58 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku, data);
             _pipeline.Send(message, cancellationToken);
@@ -809,12 +1373,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -840,12 +1446,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, sku);
             _pipeline.Send(message, cancellationToken);
@@ -900,13 +1548,62 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> GetNestedResourceTypeThirdAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -939,13 +1636,62 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> GetNestedResourceTypeThird(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateGetNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird, sku);
             _pipeline.Send(message, cancellationToken);
@@ -1011,14 +1757,66 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuData>> CreateOrUpdateNestedResourceTypeThirdAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird, sku, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1050,14 +1848,66 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuData> CreateOrUpdateNestedResourceTypeThird(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird, sku, data);
             _pipeline.Send(message, cancellationToken);
@@ -1116,13 +1966,62 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteNestedResourceTypeThirdAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1149,13 +2048,62 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/>, <paramref name="nestedResourceTypeThird"/> or <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteNestedResourceTypeThird(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
-            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (sku.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
+            }
 
             using var message = CreateDeleteNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird, sku);
             _pipeline.Send(message, cancellationToken);
@@ -1199,9 +2147,30 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsAsync(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsRequest(subscriptionId, providerNamespace, resourceType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1228,9 +2197,30 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrations(string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsRequest(subscriptionId, providerNamespace, resourceType);
             _pipeline.Send(message, cancellationToken);
@@ -1281,10 +2271,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeFirstAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1312,10 +2330,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeFirst(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             _pipeline.Send(message, cancellationToken);
@@ -1369,11 +2415,46 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="nestedResourceTypeSecond"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeSecondAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1402,11 +2483,46 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="nestedResourceTypeSecond"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeSecond(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeSecondRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond);
             _pipeline.Send(message, cancellationToken);
@@ -1463,12 +2579,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeThirdAsync(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1498,12 +2656,54 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeThird(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             _pipeline.Send(message, cancellationToken);
@@ -1545,10 +2745,34 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1576,10 +2800,34 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType);
             _pipeline.Send(message, cancellationToken);
@@ -1622,11 +2870,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1655,11 +2934,42 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/> or <paramref name="nestedResourceTypeFirst"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeFirstNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeFirstNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst);
             _pipeline.Send(message, cancellationToken);
@@ -1703,12 +3013,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="nestedResourceTypeSecond"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1738,12 +3086,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/> or <paramref name="nestedResourceTypeSecond"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeSecondNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeSecondNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond);
             _pipeline.Send(message, cancellationToken);
@@ -1788,13 +3174,58 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceTypeSkuListResult>> ListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1825,13 +3256,58 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceType"/>, <paramref name="nestedResourceTypeFirst"/>, <paramref name="nestedResourceTypeSecond"/> or <paramref name="nestedResourceTypeThird"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceTypeSkuListResult> ListByResourceTypeRegistrationsNestedResourceTypeThirdNextPage(string nextLink, string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeFirst, nameof(nestedResourceTypeFirst));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeSecond, nameof(nestedResourceTypeSecond));
-            Argument.AssertNotNullOrEmpty(nestedResourceTypeThird, nameof(nestedResourceTypeThird));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (providerNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(providerNamespace));
+            }
+            if (providerNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException(nameof(resourceType));
+            }
+            if (resourceType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
+            }
+            if (nestedResourceTypeFirst == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeFirst.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeFirst));
+            }
+            if (nestedResourceTypeSecond == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeSecond.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeSecond));
+            }
+            if (nestedResourceTypeThird == null)
+            {
+                throw new ArgumentNullException(nameof(nestedResourceTypeThird));
+            }
+            if (nestedResourceTypeThird.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(nestedResourceTypeThird));
+            }
 
             using var message = CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, subscriptionId, providerNamespace, resourceType, nestedResourceTypeFirst, nestedResourceTypeSecond, nestedResourceTypeThird);
             _pipeline.Send(message, cancellationToken);

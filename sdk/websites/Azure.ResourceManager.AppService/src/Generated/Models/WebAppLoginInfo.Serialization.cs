@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<LoginRoutes> routes = default;
-            Optional<AppServiceTokenStore> tokenStore = default;
-            Optional<bool> preserveUrlFragmentsForLogins = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<WebAppCookieExpiration> cookieExpiration = default;
-            Optional<LoginFlowNonceSettings> nonce = default;
+            LoginRoutes routes = default;
+            AppServiceTokenStore tokenStore = default;
+            bool? preserveUrlFragmentsForLogins = default;
+            IList<string> allowedExternalRedirectUrls = default;
+            WebAppCookieExpiration cookieExpiration = default;
+            LoginFlowNonceSettings nonce = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value);
+                    routes = LoginRoutes.DeserializeLoginRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tokenStore"u8))
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value);
+                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value);
+                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonce"u8))
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value);
+                    nonce = LoginFlowNonceSettings.DeserializeLoginFlowNonceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppLoginInfo(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value, serializedAdditionalRawData);
+            return new WebAppLoginInfo(
+                routes,
+                tokenStore,
+                preserveUrlFragmentsForLogins,
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                cookieExpiration,
+                nonce,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppLoginInfo>.Write(ModelReaderWriterOptions options)

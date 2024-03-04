@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> firstStripeName = default;
-            Optional<int> numberOfStripes = default;
-            Optional<int> backupSizeMB = default;
-            Optional<DateTimeOffset> restoreStartedTimestampUtc = default;
-            Optional<DateTimeOffset> restoreFinishedTimestampUtc = default;
+            string status = default;
+            string firstStripeName = default;
+            int? numberOfStripes = default;
+            int? backupSizeMB = default;
+            DateTimeOffset? restoreStartedTimestampUtc = default;
+            DateTimeOffset? restoreFinishedTimestampUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +157,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseRestoreDetailBackupSetProperties(status.Value, firstStripeName.Value, Optional.ToNullable(numberOfStripes), Optional.ToNullable(backupSizeMB), Optional.ToNullable(restoreStartedTimestampUtc), Optional.ToNullable(restoreFinishedTimestampUtc), serializedAdditionalRawData);
+            return new ManagedDatabaseRestoreDetailBackupSetProperties(
+                status,
+                firstStripeName,
+                numberOfStripes,
+                backupSizeMB,
+                restoreStartedTimestampUtc,
+                restoreFinishedTimestampUtc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(ModelReaderWriterOptions options)

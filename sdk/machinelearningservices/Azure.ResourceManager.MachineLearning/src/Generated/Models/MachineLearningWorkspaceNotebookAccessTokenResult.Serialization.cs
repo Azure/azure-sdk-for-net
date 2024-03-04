@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<int> expiresIn = default;
-            Optional<string> hostName = default;
-            Optional<string> notebookResourceId = default;
-            Optional<string> publicDns = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<string> tokenType = default;
+            string accessToken = default;
+            int? expiresIn = default;
+            string hostName = default;
+            string notebookResourceId = default;
+            string publicDns = default;
+            string refreshToken = default;
+            string scope = default;
+            string tokenType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(
+                accessToken,
+                expiresIn,
+                hostName,
+                notebookResourceId,
+                publicDns,
+                refreshToken,
+                scope,
+                tokenType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(ModelReaderWriterOptions options)

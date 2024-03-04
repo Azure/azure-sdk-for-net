@@ -105,12 +105,12 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<string> titleField = default;
-            Optional<string> urlField = default;
-            Optional<string> filepathField = default;
-            Optional<IList<string>> contentFields = default;
-            Optional<string> contentFieldsSeparator = default;
-            Optional<IList<string>> vectorFields = default;
+            string titleField = default;
+            string urlField = default;
+            string filepathField = default;
+            IList<string> contentFields = default;
+            string contentFieldsSeparator = default;
+            IList<string> vectorFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticsearchIndexFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, Optional.ToList(contentFields), contentFieldsSeparator.Value, Optional.ToList(vectorFields), serializedAdditionalRawData);
+            return new ElasticsearchIndexFieldMappingOptions(
+                titleField,
+                urlField,
+                filepathField,
+                contentFields ?? new ChangeTrackingList<string>(),
+                contentFieldsSeparator,
+                vectorFields ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticsearchIndexFieldMappingOptions>.Write(ModelReaderWriterOptions options)

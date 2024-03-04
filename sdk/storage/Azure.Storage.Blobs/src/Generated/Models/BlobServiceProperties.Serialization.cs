@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -97,7 +98,14 @@ namespace Azure.Storage.Blobs.Models
                 }
                 cors = array;
             }
-            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
+            return new BlobServiceProperties(
+                logging,
+                hourMetrics,
+                minuteMetrics,
+                cors,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                staticWebsite);
         }
     }
 }

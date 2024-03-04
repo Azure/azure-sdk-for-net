@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -72,14 +73,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             ContainerResourceRequestsContent requests = default;
-            Optional<ContainerResourceLimits> limits = default;
+            ContainerResourceLimits limits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requests"u8))
                 {
-                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value);
+                    requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limits"u8))
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value);
+                    limits = ContainerResourceLimits.DeserializeContainerResourceLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerResourceRequirements(requests, limits.Value, serializedAdditionalRawData);
+            return new ContainerResourceRequirements(requests, limits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerResourceRequirements>.Write(ModelReaderWriterOptions options)

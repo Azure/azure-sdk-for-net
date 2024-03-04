@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPAddress> address = default;
-            Optional<int> subnetPrefixLength = default;
+            string name = default;
+            IPAddress address = default;
+            int? subnetPrefixLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPRange(name.Value, address.Value, Optional.ToNullable(subnetPrefixLength), serializedAdditionalRawData);
+            return new IPRange(name, address, subnetPrefixLength, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPRange>.Write(ModelReaderWriterOptions options)

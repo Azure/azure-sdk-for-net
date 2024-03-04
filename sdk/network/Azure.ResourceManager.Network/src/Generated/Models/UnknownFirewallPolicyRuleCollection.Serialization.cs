@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFirewallPolicyRuleCollection(document.RootElement, options);
+            return DeserializeFirewallPolicyRuleCollectionInfo(document.RootElement, options);
         }
 
         internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             FirewallPolicyRuleCollectionType ruleCollectionType = "Unknown";
-            Optional<string> name = default;
-            Optional<int> priority = default;
+            string name = default;
+            int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name.Value, Optional.ToNullable(priority), serializedAdditionalRawData);
+            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name, priority, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyRuleCollectionInfo>.Write(ModelReaderWriterOptions options)
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFirewallPolicyRuleCollection(document.RootElement, options);
+                        return DeserializeFirewallPolicyRuleCollectionInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FirewallPolicyRuleCollectionInfo)} does not support '{options.Format}' format.");

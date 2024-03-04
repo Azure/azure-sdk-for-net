@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string name = default;
-            Optional<bool> useSubDomainName = default;
+            bool? useSubDomainName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCustomDomain(name, Optional.ToNullable(useSubDomainName), serializedAdditionalRawData);
+            return new StorageCustomDomain(name, useSubDomainName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCustomDomain>.Write(ModelReaderWriterOptions options)

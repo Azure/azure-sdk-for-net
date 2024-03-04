@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OutboundFirewallRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<OutboundFirewallRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<OutboundFirewallRuleData> array = new List<OutboundFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(item));
+                        array.Add(OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundFirewallRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OutboundFirewallRuleListResult(value ?? new ChangeTrackingList<OutboundFirewallRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundFirewallRuleListResult>.Write(ModelReaderWriterOptions options)

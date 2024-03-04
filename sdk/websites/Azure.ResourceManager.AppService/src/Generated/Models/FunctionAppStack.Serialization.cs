@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -123,16 +124,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayText = default;
-            Optional<string> value = default;
-            Optional<IReadOnlyList<FunctionAppMajorVersion>> majorVersions = default;
-            Optional<StackPreferredOS> preferredOS = default;
+            SystemData systemData = default;
+            string displayText = default;
+            string value = default;
+            IReadOnlyList<FunctionAppMajorVersion> majorVersions = default;
+            StackPreferredOS? preferredOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<FunctionAppMajorVersion> array = new List<FunctionAppMajorVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FunctionAppMajorVersion.DeserializeFunctionAppMajorVersion(item));
+                                array.Add(FunctionAppMajorVersion.DeserializeFunctionAppMajorVersion(item, options));
                             }
                             majorVersions = array;
                             continue;
@@ -226,7 +227,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOS), kind.Value, serializedAdditionalRawData);
+            return new FunctionAppStack(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                displayText,
+                value,
+                majorVersions ?? new ChangeTrackingList<FunctionAppMajorVersion>(),
+                preferredOS,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppStack>.Write(ModelReaderWriterOptions options)

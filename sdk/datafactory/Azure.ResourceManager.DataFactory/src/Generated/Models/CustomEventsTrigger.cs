@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         public CustomEventsTrigger(IEnumerable<BinaryData> events, string scope)
         {
-            Argument.AssertNotNull(events, nameof(events));
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (events == null)
+            {
+                throw new ArgumentNullException(nameof(events));
+            }
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             Events = events.ToList();
             Scope = scope;
@@ -47,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Events = events;
             Scope = scope;
             TriggerType = triggerType ?? "CustomEventsTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/> for deserialization. </summary>
+        internal CustomEventsTrigger()
+        {
         }
 
         /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecurityRuleListResult(value ?? new ChangeTrackingList<SecurityRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityRuleListResult>.Write(ModelReaderWriterOptions options)

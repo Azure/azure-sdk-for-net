@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UnencryptedCredentials>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<UnencryptedCredentials> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<UnencryptedCredentials> array = new List<UnencryptedCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item));
+                        array.Add(UnencryptedCredentials.DeserializeUnencryptedCredentials(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnencryptedCredentialsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UnencryptedCredentialsList(value ?? new ChangeTrackingList<UnencryptedCredentials>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnencryptedCredentialsList>.Write(ModelReaderWriterOptions options)

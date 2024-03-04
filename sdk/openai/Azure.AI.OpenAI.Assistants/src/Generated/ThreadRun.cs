@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -67,13 +66,34 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
         internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(model, nameof(model));
-            Argument.AssertNotNull(instructions, nameof(instructions));
-            Argument.AssertNotNull(tools, nameof(tools));
-            Argument.AssertNotNull(fileIds, nameof(fileIds));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+            if (assistantId == null)
+            {
+                throw new ArgumentNullException(nameof(assistantId));
+            }
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+            if (instructions == null)
+            {
+                throw new ArgumentNullException(nameof(instructions));
+            }
+            if (tools == null)
+            {
+                throw new ArgumentNullException(nameof(tools));
+            }
+            if (fileIds == null)
+            {
+                throw new ArgumentNullException(nameof(fileIds));
+            }
 
             Id = id;
             ThreadId = threadId;
@@ -172,6 +192,16 @@ namespace Azure.AI.OpenAI.Assistants
         public IReadOnlyList<string> FileIds { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
         public DateTimeOffset CreatedAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this item expires. </summary>
+        public DateTimeOffset? ExpiresAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this item was started. </summary>
+        public DateTimeOffset? StartedAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this completed. </summary>
+        public DateTimeOffset? CompletedAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this was cancelled. </summary>
+        public DateTimeOffset? CancelledAt { get; }
+        /// <summary> The Unix timestamp, in seconds, representing when this failed. </summary>
+        public DateTimeOffset? FailedAt { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

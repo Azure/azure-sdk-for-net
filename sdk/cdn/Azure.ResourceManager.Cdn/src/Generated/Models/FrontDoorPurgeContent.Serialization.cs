@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IList<string> contentPaths = default;
-            Optional<IList<string>> domains = default;
+            IList<string> domains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorPurgeContent(contentPaths, Optional.ToList(domains), serializedAdditionalRawData);
+            return new FrontDoorPurgeContent(contentPaths, domains ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorPurgeContent>.Write(ModelReaderWriterOptions options)

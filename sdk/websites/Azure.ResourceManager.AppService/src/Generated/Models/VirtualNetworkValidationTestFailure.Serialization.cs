@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -103,13 +104,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> testName = default;
-            Optional<string> details = default;
+            SystemData systemData = default;
+            string testName = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +172,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkValidationTestFailure(id, name, type, systemData.Value, testName.Value, details.Value, kind.Value, serializedAdditionalRawData);
+            return new VirtualNetworkValidationTestFailure(
+                id,
+                name,
+                type,
+                systemData,
+                testName,
+                details,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkValidationTestFailure>.Write(ModelReaderWriterOptions options)

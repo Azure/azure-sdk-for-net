@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> description = default;
-            Optional<Uri> restrictedAccessUri = default;
-            Optional<bool> autoAdd = default;
-            Optional<IReadOnlyList<string>> targets = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
+            string id = default;
+            string name = default;
+            string version = default;
+            string description = default;
+            Uri restrictedAccessUri = default;
+            bool? autoAdd = default;
+            IReadOnlyList<string> targets = default;
+            IReadOnlyList<QuotaDimension> quotaDimensions = default;
+            IReadOnlyList<PricingDetail> pricingDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDetail> array = new List<PricingDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDetail.DeserializePricingDetail(item));
+                        array.Add(PricingDetail.DeserializePricingDetail(item, options));
                     }
                     pricingDetails = array;
                     continue;
@@ -223,7 +224,17 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Optional.ToNullable(autoAdd), Optional.ToList(targets), Optional.ToList(quotaDimensions), Optional.ToList(pricingDetails), serializedAdditionalRawData);
+            return new SkuDescription(
+                id,
+                name,
+                version,
+                description,
+                restrictedAccessUri,
+                autoAdd,
+                targets ?? new ChangeTrackingList<string>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDetails ?? new ChangeTrackingList<PricingDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuDescription>.Write(ModelReaderWriterOptions options)

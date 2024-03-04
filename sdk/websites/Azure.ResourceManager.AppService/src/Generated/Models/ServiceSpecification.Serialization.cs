@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
-            Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
+            IReadOnlyList<MetricSpecification> metricSpecifications = default;
+            IReadOnlyList<LogSpecification> logSpecifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricSpecification> array = new List<MetricSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSpecification.DeserializeMetricSpecification(item));
+                        array.Add(MetricSpecification.DeserializeMetricSpecification(item, options));
                     }
                     metricSpecifications = array;
                     continue;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<LogSpecification> array = new List<LogSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogSpecification.DeserializeLogSpecification(item));
+                        array.Add(LogSpecification.DeserializeLogSpecification(item, options));
                     }
                     logSpecifications = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications), serializedAdditionalRawData);
+            return new ServiceSpecification(metricSpecifications ?? new ChangeTrackingList<MetricSpecification>(), logSpecifications ?? new ChangeTrackingList<LogSpecification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSpecification>.Write(ModelReaderWriterOptions options)

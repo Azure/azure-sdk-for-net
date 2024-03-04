@@ -22,8 +22,14 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> or <paramref name="parameters"/> is null. </exception>
         public TemplateArtifact(BinaryData template, IDictionary<string, ParameterValue> parameters)
         {
-            Argument.AssertNotNull(template, nameof(template));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
             DependsOn = new ChangeTrackingList<string>();
             Template = template;

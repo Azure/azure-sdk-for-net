@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -151,21 +152,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
-            Optional<string> dpmServerName = default;
-            Optional<string> containerName = default;
-            Optional<string> containerType = default;
-            Optional<string> workloadType = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<DpmErrorInfo>> errorDetails = default;
-            Optional<DpmBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            TimeSpan? duration = default;
+            string dpmServerName = default;
+            string containerName = default;
+            string containerType = default;
+            string workloadType = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<DpmErrorInfo> errorDetails = default;
+            DpmBackupJobExtendedInfo extendedInfo = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DpmErrorInfo> array = new List<DpmErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DpmErrorInfo.DeserializeDpmErrorInfo(item));
+                        array.Add(DpmErrorInfo.DeserializeDpmErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmBackupJobExtendedInfo.DeserializeDpmBackupJobExtendedInfo(property.Value);
+                    extendedInfo = DpmBackupJobExtendedInfo.DeserializeDpmBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -295,7 +296,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), dpmServerName.Value, containerName.Value, containerType.Value, workloadType.Value, Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new DpmBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                duration,
+                dpmServerName,
+                containerName,
+                containerType,
+                workloadType,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<DpmErrorInfo>(),
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<DpmBackupJob>.Write(ModelReaderWriterOptions options)

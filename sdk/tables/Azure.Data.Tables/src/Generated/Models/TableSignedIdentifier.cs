@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.Data.Tables.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public TableSignedIdentifier(string id, TableAccessPolicy accessPolicy)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
             Id = id;
             AccessPolicy = accessPolicy;

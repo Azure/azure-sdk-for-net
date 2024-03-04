@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         public DataReplicationPolicyProperties(PolicyModelCustomProperties customProperties)
         {
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
+            if (customProperties == null)
+            {
+                throw new ArgumentNullException(nameof(customProperties));
+            }
 
             CustomProperties = customProperties;
         }

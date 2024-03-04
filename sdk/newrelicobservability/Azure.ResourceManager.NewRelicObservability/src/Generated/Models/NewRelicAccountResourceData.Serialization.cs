@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> organizationId = default;
-            Optional<string> accountId = default;
-            Optional<string> accountName = default;
-            Optional<AzureLocation> region = default;
+            SystemData systemData = default;
+            string organizationId = default;
+            string accountId = default;
+            string accountName = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicAccountResourceData(id, name, type, systemData.Value, organizationId.Value, accountId.Value, accountName.Value, Optional.ToNullable(region), serializedAdditionalRawData);
+            return new NewRelicAccountResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                organizationId,
+                accountId,
+                accountName,
+                region,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicAccountResourceData>.Write(ModelReaderWriterOptions options)

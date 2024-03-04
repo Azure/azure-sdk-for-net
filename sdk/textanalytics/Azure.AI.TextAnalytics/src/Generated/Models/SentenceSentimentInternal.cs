@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -27,11 +26,26 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="targets"/> or <paramref name="assessments"/> is null. </exception>
         public SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IEnumerable<SentenceTarget> targets, IEnumerable<SentenceAssessment> assessments)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(sentiment, nameof(sentiment));
-            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
-            Argument.AssertNotNull(targets, nameof(targets));
-            Argument.AssertNotNull(assessments, nameof(assessments));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (sentiment == null)
+            {
+                throw new ArgumentNullException(nameof(sentiment));
+            }
+            if (confidenceScores == null)
+            {
+                throw new ArgumentNullException(nameof(confidenceScores));
+            }
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
+            }
+            if (assessments == null)
+            {
+                throw new ArgumentNullException(nameof(assessments));
+            }
 
             Text = text;
             Sentiment = sentiment;

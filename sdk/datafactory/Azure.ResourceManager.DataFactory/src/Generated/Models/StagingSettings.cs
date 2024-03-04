@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public StagingSettings(DataFactoryLinkedServiceReference linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             LinkedServiceName = linkedServiceName;
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -37,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Path = path;
             EnableCompression = enableCompression;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StagingSettings"/> for deserialization. </summary>
+        internal StagingSettings()
+        {
         }
 
         /// <summary> Staging linked service reference. </summary>

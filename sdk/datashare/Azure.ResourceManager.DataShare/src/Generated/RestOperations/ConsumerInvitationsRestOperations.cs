@@ -192,7 +192,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public async Task<Response<DataShareConsumerInvitationData>> RejectInvitationAsync(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateRejectInvitationRequest(location, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -217,7 +220,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public Response<DataShareConsumerInvitationData> RejectInvitation(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateRejectInvitationRequest(location, data);
             _pipeline.Send(message, cancellationToken);
@@ -256,7 +262,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ConsumerInvitationList>> ListInvitationsNextPageAsync(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListInvitationsNextPageRequest(nextLink, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -281,7 +290,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ConsumerInvitationList> ListInvitationsNextPage(string nextLink, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListInvitationsNextPageRequest(nextLink, skipToken);
             _pipeline.Send(message, cancellationToken);

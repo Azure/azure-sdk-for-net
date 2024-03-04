@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagementPartner;
 
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationResponse>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<OperationResponse> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     List<OperationResponse> array = new List<OperationResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationResponse.DeserializeOperationResponse(item));
+                        array.Add(OperationResponse.DeserializeOperationResponse(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OperationList(value ?? new ChangeTrackingList<OperationResponse>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationList>.Write(ModelReaderWriterOptions options)

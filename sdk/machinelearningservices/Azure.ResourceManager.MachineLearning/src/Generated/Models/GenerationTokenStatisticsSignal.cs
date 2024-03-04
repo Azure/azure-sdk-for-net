@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/> is null. </exception>
         public GenerationTokenStatisticsSignal(IEnumerable<GenerationTokenStatisticsMetricThreshold> metricThresholds, double samplingRate)
         {
-            Argument.AssertNotNull(metricThresholds, nameof(metricThresholds));
+            if (metricThresholds == null)
+            {
+                throw new ArgumentNullException(nameof(metricThresholds));
+            }
 
             MetricThresholds = metricThresholds.ToList();
             SamplingRate = samplingRate;

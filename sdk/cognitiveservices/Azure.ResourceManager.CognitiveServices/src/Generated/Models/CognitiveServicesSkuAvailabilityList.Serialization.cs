@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> type = default;
-            Optional<string> skuName = default;
-            Optional<bool> skuAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            string kind = default;
+            string type = default;
+            string skuName = default;
+            bool? skuAvailable = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuAvailabilityList(kind.Value, type.Value, skuName.Value, Optional.ToNullable(skuAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            return new CognitiveServicesSkuAvailabilityList(
+                kind,
+                type,
+                skuName,
+                skuAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuAvailabilityList>.Write(ModelReaderWriterOptions options)

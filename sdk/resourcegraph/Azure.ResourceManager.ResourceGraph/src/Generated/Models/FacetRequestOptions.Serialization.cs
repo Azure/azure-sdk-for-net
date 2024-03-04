@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<string> sortBy = default;
-            Optional<FacetSortOrder> sortOrder = default;
-            Optional<string> filter = default;
-            Optional<int> top = default;
+            string sortBy = default;
+            FacetSortOrder? sortOrder = default;
+            string filter = default;
+            int? top = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacetRequestOptions(sortBy.Value, Optional.ToNullable(sortOrder), filter.Value, Optional.ToNullable(top), serializedAdditionalRawData);
+            return new FacetRequestOptions(sortBy, sortOrder, filter, top, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacetRequestOptions>.Write(ModelReaderWriterOptions options)

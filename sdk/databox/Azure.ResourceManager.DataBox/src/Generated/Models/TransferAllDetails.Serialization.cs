@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Optional<bool> transferAllBlobs = default;
-            Optional<bool> transferAllFiles = default;
+            bool? transferAllBlobs = default;
+            bool? transferAllFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferAllDetails(dataAccountType, Optional.ToNullable(transferAllBlobs), Optional.ToNullable(transferAllFiles), serializedAdditionalRawData);
+            return new TransferAllDetails(dataAccountType, transferAllBlobs, transferAllFiles, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferAllDetails>.Write(ModelReaderWriterOptions options)

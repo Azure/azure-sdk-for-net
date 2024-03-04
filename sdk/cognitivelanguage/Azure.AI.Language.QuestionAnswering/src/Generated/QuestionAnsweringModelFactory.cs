@@ -38,7 +38,15 @@ namespace Azure.AI.Language.QuestionAnswering
             questions ??= new List<string>();
             metadata ??= new Dictionary<string, string>();
 
-            return new KnowledgeBaseAnswer(questions?.ToList(), answer, confidence, qnaId, source, metadata, dialog, shortAnswer);
+            return new KnowledgeBaseAnswer(
+                questions?.ToList(),
+                answer,
+                confidence,
+                qnaId,
+                source,
+                metadata,
+                dialog,
+                shortAnswer);
         }
 
         /// <summary> Initializes a new instance of <see cref="QuestionAnswering.KnowledgeBaseAnswerDialog"/>. </summary>
@@ -93,7 +101,13 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <returns> A new <see cref="QuestionAnswering.TextAnswer"/> instance for mocking. </returns>
         public static TextAnswer TextAnswer(string answer = null, double? confidence = null, string id = null, AnswerSpan shortAnswer = null, int? offset = null, int? length = null)
         {
-            return new TextAnswer(answer, confidence, id, shortAnswer, offset, length);
+            return new TextAnswer(
+                answer,
+                confidence,
+                id,
+                shortAnswer,
+                offset,
+                length);
         }
     }
 }

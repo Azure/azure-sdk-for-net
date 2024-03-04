@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureDevOpsConnectorStats>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AzureDevOpsConnectorStats> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsConnectorStats> array = new List<AzureDevOpsConnectorStats>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats(item));
+                        array.Add(AzureDevOpsConnectorStats.DeserializeAzureDevOpsConnectorStats(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorStatsListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureDevOpsConnectorStatsListResponse(value ?? new ChangeTrackingList<AzureDevOpsConnectorStats>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorStatsListResponse>.Write(ModelReaderWriterOptions options)

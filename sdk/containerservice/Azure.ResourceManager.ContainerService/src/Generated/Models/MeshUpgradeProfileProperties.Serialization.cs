@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> revision = default;
-            Optional<IList<string>> upgrades = default;
-            Optional<IList<CompatibleVersions>> compatibleWith = default;
+            string revision = default;
+            IList<string> upgrades = default;
+            IList<CompatibleVersions> compatibleWith = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<CompatibleVersions> array = new List<CompatibleVersions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CompatibleVersions.DeserializeCompatibleVersions(item));
+                        array.Add(CompatibleVersions.DeserializeCompatibleVersions(item, options));
                     }
                     compatibleWith = array;
                     continue;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshUpgradeProfileProperties(revision.Value, Optional.ToList(upgrades), Optional.ToList(compatibleWith), serializedAdditionalRawData);
+            return new MeshUpgradeProfileProperties(revision, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshUpgradeProfileProperties>.Write(ModelReaderWriterOptions options)

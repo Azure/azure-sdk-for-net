@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ExcelDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            if (linkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(linkedServiceName));
+            }
 
             DatasetType = "Excel";
         }
@@ -56,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Compression = compression;
             NullValue = nullValue;
             DatasetType = datasetType ?? "Excel";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExcelDataset"/> for deserialization. </summary>
+        internal ExcelDataset()
+        {
         }
 
         /// <summary>

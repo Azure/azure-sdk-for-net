@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<string> status = default;
-            Optional<BackupErrorDetail> errorDetail = default;
-            Optional<string> sourceResourceId = default;
+            string nodeName = default;
+            string status = default;
+            BackupErrorDetail errorDetail = default;
+            string sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DistributedNodesInfo(nodeName.Value, status.Value, errorDetail.Value, sourceResourceId.Value, serializedAdditionalRawData);
+            return new DistributedNodesInfo(nodeName, status, errorDetail, sourceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributedNodesInfo>.Write(ModelReaderWriterOptions options)

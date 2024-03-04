@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -116,15 +117,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<string>> imageNames = default;
-            Optional<bool> isPushEnabled = default;
-            Optional<bool> noCache = default;
-            Optional<string> dockerFilePath = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
-            Optional<string> target = default;
+            IList<string> imageNames = default;
+            bool? isPushEnabled = default;
+            bool? noCache = default;
+            string dockerFilePath = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
+            string target = default;
             ContainerRegistryTaskStepType type = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item, options));
                     }
                     arguments = array;
                     continue;
@@ -206,7 +207,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryDockerBuildStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath.Value, Optional.ToList(arguments), target.Value);
+            return new ContainerRegistryDockerBuildStepUpdateContent(
+                type,
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData,
+                imageNames ?? new ChangeTrackingList<string>(),
+                isPushEnabled,
+                noCache,
+                dockerFilePath,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target);
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(ModelReaderWriterOptions options)

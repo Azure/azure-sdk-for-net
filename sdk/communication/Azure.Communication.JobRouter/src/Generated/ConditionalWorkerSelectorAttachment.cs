@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -21,8 +20,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="workerSelectors"/> is null. </exception>
         internal ConditionalWorkerSelectorAttachment(RouterRule condition, IEnumerable<RouterWorkerSelector> workerSelectors)
         {
-            Argument.AssertNotNull(condition, nameof(condition));
-            Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+            if (workerSelectors == null)
+            {
+                throw new ArgumentNullException(nameof(workerSelectors));
+            }
 
             Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;
@@ -31,12 +36,18 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
-        internal ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind)
+        internal ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterRule condition, IList<RouterWorkerSelector> workerSelectors) : base(kind, serializedAdditionalRawData)
         {
             Condition = condition;
             WorkerSelectors = workerSelectors;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConditionalWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal ConditionalWorkerSelectorAttachment()
+        {
         }
 
         /// <summary>

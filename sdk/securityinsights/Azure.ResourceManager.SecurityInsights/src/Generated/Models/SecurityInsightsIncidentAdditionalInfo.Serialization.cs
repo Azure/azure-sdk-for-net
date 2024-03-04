@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<int> alertsCount = default;
-            Optional<int> bookmarksCount = default;
-            Optional<int> commentsCount = default;
-            Optional<IReadOnlyList<string>> alertProductNames = default;
-            Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
+            int? alertsCount = default;
+            int? bookmarksCount = default;
+            int? commentsCount = default;
+            IReadOnlyList<string> alertProductNames = default;
+            IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentAdditionalInfo(Optional.ToNullable(alertsCount), Optional.ToNullable(bookmarksCount), Optional.ToNullable(commentsCount), Optional.ToList(alertProductNames), Optional.ToList(tactics), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentAdditionalInfo(
+                alertsCount,
+                bookmarksCount,
+                commentsCount,
+                alertProductNames ?? new ChangeTrackingList<string>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentAdditionalInfo>.Write(ModelReaderWriterOptions options)

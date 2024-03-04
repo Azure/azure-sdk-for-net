@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -18,20 +17,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<string> houseNumber = default;
-            Optional<string> poBox = default;
-            Optional<string> road = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
-            Optional<string> postalCode = default;
-            Optional<string> countryRegion = default;
-            Optional<string> streetAddress = default;
-            Optional<string> unit = default;
-            Optional<string> cityDistrict = default;
-            Optional<string> stateDistrict = default;
-            Optional<string> suburb = default;
-            Optional<string> house = default;
-            Optional<string> level = default;
+            string houseNumber = default;
+            string poBox = default;
+            string road = default;
+            string city = default;
+            string state = default;
+            string postalCode = default;
+            string countryRegion = default;
+            string streetAddress = default;
+            string unit = default;
+            string cityDistrict = default;
+            string stateDistrict = default;
+            string suburb = default;
+            string house = default;
+            string level = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("houseNumber"u8))
@@ -105,7 +104,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AddressValue(houseNumber.Value, poBox.Value, road.Value, city.Value, state.Value, postalCode.Value, countryRegion.Value, streetAddress.Value, unit.Value, cityDistrict.Value, stateDistrict.Value, suburb.Value, house.Value, level.Value);
+            return new AddressValue(
+                houseNumber,
+                poBox,
+                road,
+                city,
+                state,
+                postalCode,
+                countryRegion,
+                streetAddress,
+                unit,
+                cityDistrict,
+                stateDistrict,
+                suburb,
+                house,
+                level);
         }
     }
 }

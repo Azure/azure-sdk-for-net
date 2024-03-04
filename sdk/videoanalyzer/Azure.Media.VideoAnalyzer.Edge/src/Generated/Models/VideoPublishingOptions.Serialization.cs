@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> enableVideoPreviewImage = default;
+            string enableVideoPreviewImage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableVideoPreviewImage"u8))
@@ -38,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoPublishingOptions(enableVideoPreviewImage.Value);
+            return new VideoPublishingOptions(enableVideoPreviewImage);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -139,14 +140,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<VolumeDefinitionType> type = default;
-            Optional<bool?> readOnly = default;
-            Optional<string> source = default;
-            Optional<string> target = default;
-            Optional<string> consistency = default;
-            Optional<MountBindOptions> bind = default;
-            Optional<VolumeOptions> volume = default;
-            Optional<TmpfsOptions> tmpfs = default;
+            VolumeDefinitionType? type = default;
+            bool? readOnly = default;
+            string source = default;
+            string target = default;
+            string consistency = default;
+            MountBindOptions bind = default;
+            VolumeOptions volume = default;
+            TmpfsOptions tmpfs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         bind = null;
                         continue;
                     }
-                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value);
+                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volume"u8))
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         volume = null;
                         continue;
                     }
-                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value);
+                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tmpfs"u8))
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         tmpfs = null;
                         continue;
                     }
-                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value);
+                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -226,7 +227,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeDefinition(Optional.ToNullable(type), Optional.ToNullable(readOnly), source.Value, target.Value, consistency.Value, bind.Value, volume.Value, tmpfs.Value, serializedAdditionalRawData);
+            return new VolumeDefinition(
+                type,
+                readOnly,
+                source,
+                target,
+                consistency,
+                bind,
+                volume,
+                tmpfs,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeDefinition>.Write(ModelReaderWriterOptions options)

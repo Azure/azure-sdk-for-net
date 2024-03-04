@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
@@ -121,13 +122,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> serverUri = default;
-            Optional<string> databaseName = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<NestedResourceProvisioningState> nestedResourceProvisioningState = default;
+            SystemData systemData = default;
+            Uri serverUri = default;
+            string databaseName = default;
+            string runtimeVersion = default;
+            string userName = default;
+            string password = default;
+            NestedResourceProvisioningState? nestedResourceProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +213,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Optional.ToNullable(nestedResourceProvisioningState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsHiveMetastore(
+                id,
+                name,
+                type,
+                systemData,
+                serverUri,
+                databaseName,
+                runtimeVersion,
+                userName,
+                password,
+                nestedResourceProvisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsHiveMetastore>.Write(ModelReaderWriterOptions options)

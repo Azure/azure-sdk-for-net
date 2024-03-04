@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -92,15 +93,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<BigDataPoolReference> bigDataPool = default;
-            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
-            Optional<NotebookSessionProperties> sessionProperties = default;
+            string description = default;
+            BigDataPoolReference bigDataPool = default;
+            SparkConfigurationReference targetSparkConfiguration = default;
+            NotebookSessionProperties sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
             int nbformatMinor = default;
             IList<NotebookCell> cells = default;
-            Optional<NotebookFolder> folder = default;
+            NotebookFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +178,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, targetSparkConfiguration.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+            return new Notebook(
+                description,
+                bigDataPool,
+                targetSparkConfiguration,
+                sessionProperties,
+                metadata,
+                nbformat,
+                nbformatMinor,
+                cells,
+                folder,
+                additionalProperties);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

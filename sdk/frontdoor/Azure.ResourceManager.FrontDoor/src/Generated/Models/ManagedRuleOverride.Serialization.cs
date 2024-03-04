@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> enabledState = default;
-            Optional<RuleMatchActionType> action = default;
-            Optional<IList<ManagedRuleExclusion>> exclusions = default;
+            ManagedRuleEnabledState? enabledState = default;
+            RuleMatchActionType? action = default;
+            IList<ManagedRuleExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item));
+                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action), Optional.ToList(exclusions), serializedAdditionalRawData);
+            return new ManagedRuleOverride(ruleId, enabledState, action, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)

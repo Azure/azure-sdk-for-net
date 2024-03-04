@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<bool> clientCertEnabled = default;
+            bool? clientCertEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRTlsSettings(Optional.ToNullable(clientCertEnabled), serializedAdditionalRawData);
+            return new SignalRTlsSettings(clientCertEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRTlsSettings>.Write(ModelReaderWriterOptions options)

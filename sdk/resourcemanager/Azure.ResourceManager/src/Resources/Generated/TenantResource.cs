@@ -449,7 +449,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<TenantResourceProvider>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProvider");
             scope.Start();
@@ -489,7 +496,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Response<TenantResourceProvider> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProvider");
             scope.Start();

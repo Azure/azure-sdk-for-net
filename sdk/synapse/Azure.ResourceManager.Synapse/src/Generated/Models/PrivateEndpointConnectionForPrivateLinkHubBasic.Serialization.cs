@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<SynapsePrivateEndpointConnectionProperties> properties = default;
+            string id = default;
+            SynapsePrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    properties = SynapsePrivateEndpointConnectionProperties.DeserializeSynapsePrivateEndpointConnectionProperties(property.Value);
+                    properties = SynapsePrivateEndpointConnectionProperties.DeserializeSynapsePrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionForPrivateLinkHubBasic(id.Value, properties.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionForPrivateLinkHubBasic(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionForPrivateLinkHubBasic>.Write(ModelReaderWriterOptions options)

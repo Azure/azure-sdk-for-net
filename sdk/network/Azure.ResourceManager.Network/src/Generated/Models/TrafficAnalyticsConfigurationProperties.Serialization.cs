@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> workspaceId = default;
-            Optional<string> workspaceRegion = default;
-            Optional<ResourceIdentifier> workspaceResourceId = default;
-            Optional<int> trafficAnalyticsInterval = default;
+            bool? enabled = default;
+            string workspaceId = default;
+            string workspaceRegion = default;
+            ResourceIdentifier workspaceResourceId = default;
+            int? trafficAnalyticsInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficAnalyticsConfigurationProperties(Optional.ToNullable(enabled), workspaceId.Value, workspaceRegion.Value, workspaceResourceId.Value, Optional.ToNullable(trafficAnalyticsInterval), serializedAdditionalRawData);
+            return new TrafficAnalyticsConfigurationProperties(
+                enabled,
+                workspaceId,
+                workspaceRegion,
+                workspaceResourceId,
+                trafficAnalyticsInterval,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficAnalyticsConfigurationProperties>.Write(ModelReaderWriterOptions options)

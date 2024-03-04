@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<string> kubeConfig = default;
+            string kubeConfig = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesConnectionDetails(instanceType, serializedAdditionalRawData, kubeConfig.Value);
+            return new KubernetesConnectionDetails(instanceType, serializedAdditionalRawData, kubeConfig);
         }
 
         BinaryData IPersistableModel<KubernetesConnectionDetails>.Write(ModelReaderWriterOptions options)

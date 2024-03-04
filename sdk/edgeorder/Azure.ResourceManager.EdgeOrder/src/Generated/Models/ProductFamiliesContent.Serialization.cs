@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IDictionary<string, IList<FilterableProperty>> filterableProperties = default;
-            Optional<CustomerSubscriptionDetails> customerSubscriptionDetails = default;
+            CustomerSubscriptionDetails customerSubscriptionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<FilterableProperty> array = new List<FilterableProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                                array.Add(FilterableProperty.DeserializeFilterableProperty(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value);
+                    customerSubscriptionDetails = CustomerSubscriptionDetails.DeserializeCustomerSubscriptionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails.Value, serializedAdditionalRawData);
+            return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamiliesContent>.Write(ModelReaderWriterOptions options)

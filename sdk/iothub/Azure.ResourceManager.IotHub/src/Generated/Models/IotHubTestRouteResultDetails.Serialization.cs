@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteCompilationError>> compilationErrors = default;
+            IReadOnlyList<RouteCompilationError> compilationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RouteCompilationError> array = new List<RouteCompilationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCompilationError.DeserializeRouteCompilationError(item));
+                        array.Add(RouteCompilationError.DeserializeRouteCompilationError(item, options));
                     }
                     compilationErrors = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubTestRouteResultDetails(Optional.ToList(compilationErrors), serializedAdditionalRawData);
+            return new IotHubTestRouteResultDetails(compilationErrors ?? new ChangeTrackingList<RouteCompilationError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubTestRouteResultDetails>.Write(ModelReaderWriterOptions options)

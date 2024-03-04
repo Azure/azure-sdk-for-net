@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<string> operationId = default;
-            Optional<string> message = default;
+            ContainerServiceFleetUpdateStatus status = default;
+            string name = default;
+            ResourceIdentifier clusterResourceId = default;
+            string operationId = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MemberUpdateStatus(status.Value, name.Value, clusterResourceId.Value, operationId.Value, message.Value, serializedAdditionalRawData);
+            return new MemberUpdateStatus(
+                status,
+                name,
+                clusterResourceId,
+                operationId,
+                message,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MemberUpdateStatus>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> hasLegalHold = default;
-            Optional<IReadOnlyList<LegalHoldTag>> tags = default;
-            Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
+            bool? hasLegalHold = default;
+            IReadOnlyList<LegalHoldTag> tags = default;
+            ProtectedAppendWritesHistory protectedAppendWritesHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
+                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item, options));
                     }
                     tags = array;
                     continue;
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);
+                    protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegalHoldProperties(Optional.ToNullable(hasLegalHold), Optional.ToList(tags), protectedAppendWritesHistory.Value, serializedAdditionalRawData);
+            return new LegalHoldProperties(hasLegalHold, tags ?? new ChangeTrackingList<LegalHoldTag>(), protectedAppendWritesHistory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegalHoldProperties>.Write(ModelReaderWriterOptions options)

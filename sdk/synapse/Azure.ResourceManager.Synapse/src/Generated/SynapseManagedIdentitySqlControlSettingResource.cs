@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseManagedIdentitySqlControlSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseManagedIdentitySqlControlSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsClientDiagnostics.CreateScope("SynapseManagedIdentitySqlControlSettingResource.CreateOrUpdate");
             scope.Start();
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseManagedIdentitySqlControlSettingResource> CreateOrUpdate(WaitUntil waitUntil, SynapseManagedIdentitySqlControlSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsClientDiagnostics.CreateScope("SynapseManagedIdentitySqlControlSettingResource.CreateOrUpdate");
             scope.Start();

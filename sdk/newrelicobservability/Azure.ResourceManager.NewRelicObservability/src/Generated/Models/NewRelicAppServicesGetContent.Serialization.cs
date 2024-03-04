@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> azureResourceIds = default;
+            IList<ResourceIdentifier> azureResourceIds = default;
             string userEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicAppServicesGetContent(Optional.ToList(azureResourceIds), userEmail, serializedAdditionalRawData);
+            return new NewRelicAppServicesGetContent(azureResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), userEmail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicAppServicesGetContent>.Write(ModelReaderWriterOptions options)

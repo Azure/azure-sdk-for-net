@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemSquashMode> mode = default;
-            Optional<string> noSquashNidLists = default;
-            Optional<long> squashUID = default;
-            Optional<long> squashGID = default;
-            Optional<string> status = default;
+            AmlFileSystemSquashMode? mode = default;
+            string noSquashNidLists = default;
+            long? squashUID = default;
+            long? squashGID = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemRootSquashSettings(Optional.ToNullable(mode), noSquashNidLists.Value, Optional.ToNullable(squashUID), Optional.ToNullable(squashGID), status.Value, serializedAdditionalRawData);
+            return new AmlFileSystemRootSquashSettings(
+                mode,
+                noSquashNidLists,
+                squashUID,
+                squashGID,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemRootSquashSettings>.Write(ModelReaderWriterOptions options)

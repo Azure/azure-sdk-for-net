@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<IReadOnlyList<PerfMonSample>> values = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            IReadOnlyList<PerfMonSample> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PerfMonSample> array = new List<PerfMonSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PerfMonSample.DeserializePerfMonSample(item));
+                        array.Add(PerfMonSample.DeserializePerfMonSample(item, options));
                     }
                     values = array;
                     continue;
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfMonSet(name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new PerfMonSet(
+                name,
+                startTime,
+                endTime,
+                timeGrain,
+                values ?? new ChangeTrackingList<PerfMonSample>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfMonSet>.Write(ModelReaderWriterOptions options)

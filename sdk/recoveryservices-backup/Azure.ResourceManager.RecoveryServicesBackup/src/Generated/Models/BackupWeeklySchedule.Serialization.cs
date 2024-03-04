@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
-            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            IList<BackupDayOfWeek> scheduleRunDays = default;
+            IList<DateTimeOffset> scheduleRunTimes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupWeeklySchedule(Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), serializedAdditionalRawData);
+            return new BackupWeeklySchedule(scheduleRunDays ?? new ChangeTrackingList<BackupDayOfWeek>(), scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupWeeklySchedule>.Write(ModelReaderWriterOptions options)

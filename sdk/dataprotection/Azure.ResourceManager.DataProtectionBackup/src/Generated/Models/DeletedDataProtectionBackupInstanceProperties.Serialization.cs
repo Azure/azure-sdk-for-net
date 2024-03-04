@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -121,18 +122,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupInstanceDeletionInfo> deletionInfo = default;
-            Optional<string> friendlyName = default;
+            BackupInstanceDeletionInfo deletionInfo = default;
+            string friendlyName = default;
             DataSourceInfo dataSourceInfo = default;
-            Optional<DataSourceSetInfo> dataSourceSetInfo = default;
+            DataSourceSetInfo dataSourceSetInfo = default;
             BackupInstancePolicyInfo policyInfo = default;
-            Optional<BackupInstanceProtectionStatusDetails> protectionStatus = default;
-            Optional<CurrentProtectionState> currentProtectionState = default;
-            Optional<ResponseError> protectionErrorDetails = default;
-            Optional<string> provisioningState = default;
-            Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
-            Optional<BackupValidationType> validationType = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            BackupInstanceProtectionStatusDetails protectionStatus = default;
+            CurrentProtectionState? currentProtectionState = default;
+            ResponseError protectionErrorDetails = default;
+            string provisioningState = default;
+            DataProtectionBackupAuthCredentials datasourceAuthCredentials = default;
+            BackupValidationType? validationType = default;
+            DataProtectionIdentityDetails identityDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    deletionInfo = BackupInstanceDeletionInfo.DeserializeBackupInstanceDeletionInfo(property.Value);
+                    deletionInfo = BackupInstanceDeletionInfo.DeserializeBackupInstanceDeletionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("dataSourceInfo"u8))
                 {
-                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSourceSetInfo"u8))
@@ -163,12 +164,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyInfo"u8))
                 {
-                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value);
+                    policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectionStatus"u8))
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value);
+                    protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentProtectionState"u8))
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationType"u8))
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -241,7 +242,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedDataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), identityDetails.Value, objectType, serializedAdditionalRawData, deletionInfo.Value);
+            return new DeletedDataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                protectionStatus,
+                currentProtectionState,
+                protectionErrorDetails,
+                provisioningState,
+                datasourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                serializedAdditionalRawData,
+                deletionInfo);
         }
 
         BinaryData IPersistableModel<DeletedDataProtectionBackupInstanceProperties>.Write(ModelReaderWriterOptions options)

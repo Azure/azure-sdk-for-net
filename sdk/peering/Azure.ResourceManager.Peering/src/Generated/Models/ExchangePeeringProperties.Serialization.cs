@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringExchangeConnection>> connections = default;
-            Optional<WritableSubResource> peerAsn = default;
+            IList<PeeringExchangeConnection> connections = default;
+            WritableSubResource peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item));
+                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item, options));
                     }
                     connections = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePeeringProperties(Optional.ToList(connections), peerAsn, serializedAdditionalRawData);
+            return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePeeringProperties>.Write(ModelReaderWriterOptions options)

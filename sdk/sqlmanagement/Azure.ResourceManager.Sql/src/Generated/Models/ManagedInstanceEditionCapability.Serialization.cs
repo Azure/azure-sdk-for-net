@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ManagedInstanceFamilyCapability>> supportedFamilies = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies = default;
+            IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
+            bool? zoneRedundant = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceFamilyCapability> array = new List<ManagedInstanceFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item));
+                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item, options));
                     }
                     supportedFamilies = array;
                     continue;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
                     }
                     supportedStorageCapabilities = array;
                     continue;
@@ -176,7 +177,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceEditionCapability(
+                name,
+                supportedFamilies ?? new ChangeTrackingList<ManagedInstanceFamilyCapability>(),
+                supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
+                zoneRedundant,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceEditionCapability>.Write(ModelReaderWriterOptions options)

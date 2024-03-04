@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 return null;
             }
             IReadOnlyList<LargeInstanceData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceData> array = new List<LargeInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceData.DeserializeLargeInstanceData(item));
+                        array.Add(LargeInstanceData.DeserializeLargeInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureLargeInstanceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AzureLargeInstanceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureLargeInstanceListResult>.Write(ModelReaderWriterOptions options)

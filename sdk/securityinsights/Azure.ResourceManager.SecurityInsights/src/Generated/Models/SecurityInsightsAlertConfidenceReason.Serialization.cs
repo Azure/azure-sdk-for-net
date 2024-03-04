@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> reason = default;
-            Optional<string> reasonType = default;
+            string reason = default;
+            string reasonType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertConfidenceReason(reason.Value, reasonType.Value, serializedAdditionalRawData);
+            return new SecurityInsightsAlertConfidenceReason(reason, reasonType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertConfidenceReason>.Write(ModelReaderWriterOptions options)

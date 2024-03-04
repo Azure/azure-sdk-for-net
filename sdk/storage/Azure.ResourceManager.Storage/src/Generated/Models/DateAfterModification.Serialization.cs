@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<float> daysAfterModificationGreaterThan = default;
-            Optional<float> daysAfterLastAccessTimeGreaterThan = default;
-            Optional<float> daysAfterLastTierChangeGreaterThan = default;
-            Optional<float> daysAfterCreationGreaterThan = default;
+            float? daysAfterModificationGreaterThan = default;
+            float? daysAfterLastAccessTimeGreaterThan = default;
+            float? daysAfterLastTierChangeGreaterThan = default;
+            float? daysAfterCreationGreaterThan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan), Optional.ToNullable(daysAfterLastTierChangeGreaterThan), Optional.ToNullable(daysAfterCreationGreaterThan), serializedAdditionalRawData);
+            return new DateAfterModification(daysAfterModificationGreaterThan, daysAfterLastAccessTimeGreaterThan, daysAfterLastTierChangeGreaterThan, daysAfterCreationGreaterThan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DateAfterModification>.Write(ModelReaderWriterOptions options)

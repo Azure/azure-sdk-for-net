@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public LoadBalancerBackendAddressPoolReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
-            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
+            if (sourceArmResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceArmResourceId));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolReferenceInfo"/>. </summary>

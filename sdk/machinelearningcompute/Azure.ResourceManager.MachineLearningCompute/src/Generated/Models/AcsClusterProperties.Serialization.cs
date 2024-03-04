@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -101,13 +102,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> clusterFqdn = default;
+            string clusterFqdn = default;
             OrchestratorType orchestratorType = default;
-            Optional<KubernetesClusterProperties> orchestratorProperties = default;
-            Optional<IList<SystemService>> systemServices = default;
-            Optional<int> masterCount = default;
-            Optional<int> agentCount = default;
-            Optional<AgentVmSizeType> agentVmSize = default;
+            KubernetesClusterProperties orchestratorProperties = default;
+            IList<SystemService> systemServices = default;
+            int? masterCount = default;
+            int? agentCount = default;
+            AgentVmSizeType? agentVmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value);
+                    orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("systemServices"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<SystemService> array = new List<SystemService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SystemService.DeserializeSystemService(item));
+                        array.Add(SystemService.DeserializeSystemService(item, options));
                     }
                     systemServices = array;
                     continue;
@@ -178,7 +179,15 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
+            return new AcsClusterProperties(
+                clusterFqdn,
+                orchestratorType,
+                orchestratorProperties,
+                systemServices ?? new ChangeTrackingList<SystemService>(),
+                masterCount,
+                agentCount,
+                agentVmSize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)

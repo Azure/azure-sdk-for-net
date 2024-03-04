@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingPolicyData>> value = default;
-            Optional<string> odataNextLink = default;
+            IReadOnlyList<StreamingPolicyData> value = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyData> array = new List<StreamingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyData.DeserializeStreamingPolicyData(item));
+                        array.Add(StreamingPolicyData.DeserializeStreamingPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyListResult(Optional.ToList(value), odataNextLink.Value, serializedAdditionalRawData);
+            return new StreamingPolicyListResult(value ?? new ChangeTrackingList<StreamingPolicyData>(), odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> name = default;
+            string containerName = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleStorageBlobDestination(containerName.Value, storageAccountResourceId.Value, name.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleStorageBlobDestination(containerName, storageAccountResourceId, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleStorageBlobDestination>.Write(ModelReaderWriterOptions options)

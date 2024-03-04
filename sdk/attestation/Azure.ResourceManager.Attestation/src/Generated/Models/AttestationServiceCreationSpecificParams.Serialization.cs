@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<JsonWebKeySet> policySigningCertificates = default;
+            PublicNetworkAccessType? publicNetworkAccess = default;
+            JsonWebKeySet policySigningCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    policySigningCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);
+                    policySigningCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationServiceCreationSpecificParams(Optional.ToNullable(publicNetworkAccess), policySigningCertificates.Value, serializedAdditionalRawData);
+            return new AttestationServiceCreationSpecificParams(publicNetworkAccess, policySigningCertificates, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationServiceCreationSpecificParams>.Write(ModelReaderWriterOptions options)

@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string emailAddress = default;
-            Optional<EmailChannelAuthMethod> authMethod = default;
-            Optional<string> password = default;
-            Optional<string> magicCode = default;
+            EmailChannelAuthMethod? authMethod = default;
+            string password = default;
+            string magicCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             bool isEnabled = default;
@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authMethod = property.Value.GetInt32().ToEmailChannelAuthMethod();
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailChannelProperties(emailAddress, Optional.ToNullable(authMethod), password.Value, magicCode.Value, isEnabled, serializedAdditionalRawData);
+            return new EmailChannelProperties(emailAddress, authMethod, password, magicCode, isEnabled, serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<EmailChannelProperties>.Write(ModelReaderWriterOptions options)
         {

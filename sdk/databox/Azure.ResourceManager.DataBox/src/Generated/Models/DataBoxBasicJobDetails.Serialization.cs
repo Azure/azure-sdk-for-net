@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -187,13 +188,13 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataBoxJobDetails.DeserializeDataBoxJobDetails(element);
-                    case "DataBoxCustomerDisk": return DataBoxCustomerDiskJobDetails.DeserializeDataBoxCustomerDiskJobDetails(element);
-                    case "DataBoxDisk": return DataBoxDiskJobDetails.DeserializeDataBoxDiskJobDetails(element);
-                    case "DataBoxHeavy": return DataBoxHeavyJobDetails.DeserializeDataBoxHeavyJobDetails(element);
+                    case "DataBox": return DataBoxJobDetails.DeserializeDataBoxJobDetails(element, options);
+                    case "DataBoxCustomerDisk": return DataBoxCustomerDiskJobDetails.DeserializeDataBoxCustomerDiskJobDetails(element, options);
+                    case "DataBoxDisk": return DataBoxDiskJobDetails.DeserializeDataBoxDiskJobDetails(element, options);
+                    case "DataBoxHeavy": return DataBoxHeavyJobDetails.DeserializeDataBoxHeavyJobDetails(element, options);
                 }
             }
-            return UnknownJobDetails.DeserializeUnknownJobDetails(element);
+            return UnknownJobDetails.DeserializeUnknownJobDetails(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxBasicJobDetails>.Write(ModelReaderWriterOptions options)

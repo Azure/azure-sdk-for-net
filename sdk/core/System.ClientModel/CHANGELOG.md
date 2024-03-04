@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2024-02-29)
+
+### Features Added
+
+- Added `ExtractResponse` method to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
+- Added `CreateAsync` factory method to `ClientResultException` to allow creating exceptions in an async context.
+- Added an implicit cast from `string` to `ApiKeyCredential`.
+- Added an implicit cast from `ClientResult<T>` to `T`.
+
+### Breaking Changes
+
+- Changed `HttpClientPipelineTransport.Shared` and `ClientRetryPolicy.Default` from static readonly fields to static properties.
+- Changed `PipelineResponse.Content` property from abstract to virtual.
+- Removed the `ResponseBufferingPolicy` and moved response buffering functionality into `PipelineTransport`.
+
+### Other Changes
+
+- Made `CancellationToken` parameter passed to `BinaryContent.WriteTo` optional.
 
 ## 1.1.0-beta.1 (2024-02-01)
 

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<string> keyVersion = default;
-            Optional<UserAssignedIdentityProperties> identity = default;
+            string keyName = default;
+            Uri keyVaultUri = default;
+            string keyVersion = default;
+            UserAssignedIdentityProperties identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    identity = UserAssignedIdentityProperties.DeserializeUserAssignedIdentityProperties(property.Value);
+                    identity = UserAssignedIdentityProperties.DeserializeUserAssignedIdentityProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusKeyVaultProperties(keyName.Value, keyVaultUri.Value, keyVersion.Value, identity.Value, serializedAdditionalRawData);
+            return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusKeyVaultProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> totalIngressBytesTransferred = default;
-            Optional<long> totalEgressBytesTransferred = default;
-            Optional<int> vpnClientConnectionsCount = default;
-            Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
+            long? totalIngressBytesTransferred = default;
+            long? totalEgressBytesTransferred = default;
+            int? vpnClientConnectionsCount = default;
+            IReadOnlyList<string> allocatedIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses), serializedAdditionalRawData);
+            return new VpnClientConnectionHealth(totalIngressBytesTransferred, totalEgressBytesTransferred, vpnClientConnectionsCount, allocatedIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealth>.Write(ModelReaderWriterOptions options)

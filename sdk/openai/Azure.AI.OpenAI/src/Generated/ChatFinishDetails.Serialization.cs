@@ -71,11 +71,11 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "stop": return StopFinishDetails.DeserializeStopFinishDetails(element);
-                    case "max_tokens": return MaxTokensFinishDetails.DeserializeMaxTokensFinishDetails(element);
+                    case "stop": return StopFinishDetails.DeserializeStopFinishDetails(element, options);
+                    case "max_tokens": return MaxTokensFinishDetails.DeserializeMaxTokensFinishDetails(element, options);
                 }
             }
-            return UnknownChatFinishDetails.DeserializeUnknownChatFinishDetails(element);
+            return UnknownChatFinishDetails.DeserializeUnknownChatFinishDetails(element, options);
         }
 
         BinaryData IPersistableModel<ChatFinishDetails>.Write(ModelReaderWriterOptions options)

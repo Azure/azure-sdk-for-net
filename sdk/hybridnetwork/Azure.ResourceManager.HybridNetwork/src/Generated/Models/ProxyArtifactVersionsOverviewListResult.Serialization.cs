@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProxyArtifactVersionsListOverview>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProxyArtifactVersionsListOverview> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ProxyArtifactVersionsListOverview> array = new List<ProxyArtifactVersionsListOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(item));
+                        array.Add(ProxyArtifactVersionsListOverview.DeserializeProxyArtifactVersionsListOverview(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactVersionsOverviewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProxyArtifactVersionsOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactVersionsListOverview>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactVersionsOverviewListResult>.Write(ModelReaderWriterOptions options)

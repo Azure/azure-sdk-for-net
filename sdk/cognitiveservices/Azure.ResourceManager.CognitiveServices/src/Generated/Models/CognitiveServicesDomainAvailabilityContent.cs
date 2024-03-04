@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subdomainName"/> is null. </exception>
         public CognitiveServicesDomainAvailabilityContent(string subdomainName, ResourceType resourceType)
         {
-            Argument.AssertNotNull(subdomainName, nameof(subdomainName));
+            if (subdomainName == null)
+            {
+                throw new ArgumentNullException(nameof(subdomainName));
+            }
 
             SubdomainName = subdomainName;
             ResourceType = resourceType;

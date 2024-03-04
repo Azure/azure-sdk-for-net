@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<HealthcareAssertion> assertion = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
+            HealthcareAssertion assertion = default;
+            string name = default;
+            IReadOnlyList<HealthcareEntityLink> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assertion"u8))
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareLinkingProperties(assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareLinkingProperties(assertion, name, links ?? new ChangeTrackingList<HealthcareEntityLink>());
         }
     }
 }

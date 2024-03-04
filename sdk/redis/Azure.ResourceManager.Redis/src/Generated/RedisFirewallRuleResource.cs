@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisFirewallRuleResource>> UpdateAsync(WaitUntil waitUntil, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RedisFirewallRuleResource> Update(WaitUntil waitUntil, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleResource.Update");
             scope.Start();

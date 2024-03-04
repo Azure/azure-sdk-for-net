@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkSimGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MobileNetworkSimGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkSimGroupData> array = new List<MobileNetworkSimGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(item));
+                        array.Add(MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SimGroupListResult(value ?? new ChangeTrackingList<MobileNetworkSimGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimGroupListResult>.Write(ModelReaderWriterOptions options)

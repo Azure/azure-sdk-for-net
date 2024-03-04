@@ -157,5 +157,57 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.IsTrue(gotResponseContentFilterResults);
             }
         }
+
+        [RecordedTest]
+        [LiveOnly] // pending timed recording playback integration, this must be live
+        [TestCase(Service.NonAzure)] // Azure OpenAI's default RAI behavior introduces timing confounds
+        public async Task StreamingChatDoesNotBlockEnumerator(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                DeploymentName = deploymentOrModelName,
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Of course! What do you need help with?"),
+                    new ChatRequestUserMessage("What temperature should I bake pizza at?"),
+                },
+            };
+
+            StreamingResponse<StreamingChatCompletionsUpdate> response
+                = await client.GetChatCompletionsStreamingAsync(requestOptions);
+            Assert.That(response, Is.Not.Null);
+
+            IAsyncEnumerable<StreamingChatCompletionsUpdate> updateEnumerable = response.EnumerateValues();
+            IAsyncEnumerator<StreamingChatCompletionsUpdate> updateEnumerator = updateEnumerable.GetAsyncEnumerator();
+
+            int tasksAlreadyComplete = 0;
+            int tasksNotYetComplete = 0;
+
+            while (true)
+            {
+                ValueTask<bool> hasNextTask = updateEnumerator.MoveNextAsync();
+                if (hasNextTask.IsCompleted)
+                {
+                    tasksAlreadyComplete++;
+                }
+                else
+                {
+                    tasksNotYetComplete++;
+                }
+                if (!await hasNextTask)
+                {
+                    break;
+                }
+            }
+            Assert.That(
+                tasksNotYetComplete,
+                Is.GreaterThan(tasksAlreadyComplete / 5),
+                "Live streaming is expected to encounter a significant proportion of not yet buffered reads");
+        }
     }
 }

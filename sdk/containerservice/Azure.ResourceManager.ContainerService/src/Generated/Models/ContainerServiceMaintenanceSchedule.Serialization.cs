@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<DailySchedule> daily = default;
-            Optional<ContainerServiceMaintenanceWeeklySchedule> weekly = default;
-            Optional<ContainerServiceMaintenanceAbsoluteMonthlySchedule> absoluteMonthly = default;
-            Optional<ContainerServiceMaintenanceRelativeMonthlySchedule> relativeMonthly = default;
+            DailySchedule daily = default;
+            ContainerServiceMaintenanceWeeklySchedule weekly = default;
+            ContainerServiceMaintenanceAbsoluteMonthlySchedule absoluteMonthly = default;
+            ContainerServiceMaintenanceRelativeMonthlySchedule relativeMonthly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    daily = DailySchedule.DeserializeDailySchedule(property.Value);
+                    daily = DailySchedule.DeserializeDailySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weekly"u8))
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value);
+                    weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("absoluteMonthly"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value);
+                    absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("relativeMonthly"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value);
+                    relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceMaintenanceSchedule(daily.Value, weekly.Value, absoluteMonthly.Value, relativeMonthly.Value, serializedAdditionalRawData);
+            return new ContainerServiceMaintenanceSchedule(daily, weekly, absoluteMonthly, relativeMonthly, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceMaintenanceSchedule>.Write(ModelReaderWriterOptions options)

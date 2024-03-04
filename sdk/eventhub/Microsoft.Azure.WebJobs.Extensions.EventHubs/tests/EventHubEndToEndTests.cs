@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
@@ -93,14 +94,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_SingleDispatch()
         {
+            var watch = ValueStopwatch.StartNew();
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobs>();
+
             using (jobHost)
             {
                 await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub), new { input = "data" });
 
-                bool result = _eventWait1.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
                 Assert.True(result);
 
+                using var cancellationSource = new CancellationTokenSource(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
+                await AwaitCheckpointing(host, cancellationSource.Token);
                 await StopWithDrainAsync(host);
             }
 
@@ -158,14 +163,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_SingleDispatch_BinaryData()
         {
+            var watch = ValueStopwatch.StartNew();
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobsBinaryData>();
+
             using (jobHost)
             {
                 await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobsBinaryData.SendEvent_TestHub), new { input = "data" });
 
-                bool result = _eventWait1.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
                 Assert.True(result);
 
+                using var cancellationSource = new CancellationTokenSource(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
+                await AwaitCheckpointing(host, cancellationSource.Token);
                 await StopWithDrainAsync(host);
             }
 
@@ -209,30 +218,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
-        }
-
-        private static void AssertSingleDispatchLogs(IHost host)
-        {
-            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
-                .GetAllLogMessages();
-
-            Assert.AreEqual(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Trigger Details:")
-                && x.FormattedMessage.Contains("Offset:")).Count(), 1);
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("OpenAsync")).Any());
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("lease")
-                && x.FormattedMessage.Contains("offset")
-                && x.FormattedMessage.Contains("sequenceNumber")).Any());
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Sending events to EventHub")).Any());
-
-            AssertAzureSdkLogs(logMessages);
         }
 
         [Test]
@@ -332,15 +317,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_MultipleDispatch()
         {
+            var watch = ValueStopwatch.StartNew();
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobs>();
+
             using (jobHost)
             {
                 int numEvents = 5;
                 await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
 
-                bool result = _eventWait1.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
                 Assert.True(result);
 
+                using var cancellationSource = new CancellationTokenSource(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
+                await AwaitCheckpointing(host, cancellationSource.Token);
                 await StopWithDrainAsync(host);
             }
 
@@ -350,15 +339,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_MultipleDispatch_BinaryData()
         {
+            var watch = ValueStopwatch.StartNew();
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobsBinaryData>();
+
             using (jobHost)
             {
                 int numEvents = 5;
                 await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobsBinaryData.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
 
-                bool result = _eventWait1.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
                 Assert.True(result);
 
+                using var cancellationSource = new CancellationTokenSource(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
+                await AwaitCheckpointing(host, cancellationSource.Token);
                 await StopWithDrainAsync(host);
             }
 
@@ -370,6 +363,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             const int minEventBatchSize = 5;
 
+            var watch = ValueStopwatch.StartNew();
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchMinBatchSizeJobs>(
                 builder =>
                 {
@@ -393,9 +387,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int numEvents = 5;
                 await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchMinBatchSizeJobs.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
 
-                bool result = _eventWait1.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
                 Assert.True(result);
 
+                using var cancellationSource = new CancellationTokenSource(GetRemainingTimeoutMilliseconds(watch.GetElapsedTime()));
+                await AwaitCheckpointing(host, cancellationSource.Token);
                 await StopWithDrainAsync(host);
             }
 
@@ -558,6 +554,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        private static void AssertSingleDispatchLogs(IHost host)
+        {
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
+
+            Assert.AreEqual(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Trigger Details:")
+                && x.FormattedMessage.Contains("Offset:")).Count(), 1);
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("CheckpointAsync")
+                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("offset")
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Sending events to EventHub")).Any());
+
+            AssertAzureSdkLogs(logMessages);
+        }
+
         private static void AssertMultipleDispatchLogsMinBatch(IHost host)
         {
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
@@ -606,17 +626,36 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             AssertAzureSdkLogs(logMessages);
         }
 
+        private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
+        {
+            Assert.True(logMessages.Any(x => x.Category.StartsWith("Azure.")));
+        }
+
         private static async Task StopWithDrainAsync(IHost host)
         {
-            // Enable drain mode so checkpointing occurs when stopping
             var drainModeManager = host.Services.GetService<IDrainModeManager>();
             await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
             await host.StopAsync();
         }
 
-        private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
+         private static async Task AwaitCheckpointing(IHost host, CancellationToken cancellationToken)
         {
-            Assert.True(logMessages.Any(x => x.Category.StartsWith("Azure.")));
+            var logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
+
+            while (true)
+            {
+                if (logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                    && x.FormattedMessage.Contains("CheckpointAsync")
+                    && x.FormattedMessage.Contains("sequenceNumber")).Any())
+                {
+                    return;
+                }
+
+                // No need to explicitly check the cancellation token;
+                // the delay will throw if the token is signaled.
+                await Task.Delay(100, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         public class EventHubTestSingleDispatchJobs
@@ -886,7 +925,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         EventHubConsumerClient.DefaultConsumerGroupName,
                         partition,
                         producer.Identifier,
-                        new CheckpointPosition(-1, -1),
+                        new CheckpointPosition(-1),
                         CancellationToken.None);
                 }
             }

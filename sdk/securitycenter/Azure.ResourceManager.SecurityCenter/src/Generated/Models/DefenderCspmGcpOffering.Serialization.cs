@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderCspmGcpOfferingCiemDiscovery> ciemDiscovery = default;
-            Optional<DefenderCspmGcpOfferingVmScanners> vmScanners = default;
-            Optional<DefenderCspmGcpOfferingDataSensitivityDiscovery> dataSensitivityDiscovery = default;
-            Optional<DefenderCspmGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery = default;
+            DefenderCspmGcpOfferingVmScanners vmScanners = default;
+            DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery = default;
+            DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    ciemDiscovery = DefenderCspmGcpOfferingCiemDiscovery.DeserializeDefenderCspmGcpOfferingCiemDiscovery(property.Value);
+                    ciemDiscovery = DefenderCspmGcpOfferingCiemDiscovery.DeserializeDefenderCspmGcpOfferingCiemDiscovery(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmScanners"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vmScanners = DefenderCspmGcpOfferingVmScanners.DeserializeDefenderCspmGcpOfferingVmScanners(property.Value);
+                    vmScanners = DefenderCspmGcpOfferingVmScanners.DeserializeDefenderCspmGcpOfferingVmScanners(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataSensitivityDiscovery"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    dataSensitivityDiscovery = DefenderCspmGcpOfferingDataSensitivityDiscovery.DeserializeDefenderCspmGcpOfferingDataSensitivityDiscovery(property.Value);
+                    dataSensitivityDiscovery = DefenderCspmGcpOfferingDataSensitivityDiscovery.DeserializeDefenderCspmGcpOfferingDataSensitivityDiscovery(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersImageAssessment"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderCspmGcpOfferingMdcContainersImageAssessment.DeserializeDefenderCspmGcpOfferingMdcContainersImageAssessment(property.Value);
+                    mdcContainersImageAssessment = DefenderCspmGcpOfferingMdcContainersImageAssessment.DeserializeDefenderCspmGcpOfferingMdcContainersImageAssessment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -168,7 +169,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderCspmGcpOffering(offeringType, description.Value, serializedAdditionalRawData, ciemDiscovery.Value, vmScanners.Value, dataSensitivityDiscovery.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            return new DefenderCspmGcpOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                ciemDiscovery,
+                vmScanners,
+                dataSensitivityDiscovery,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
 
         BinaryData IPersistableModel<DefenderCspmGcpOffering>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SearchServiceQueryKey>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SearchServiceQueryKey> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceQueryKey> array = new List<SearchServiceQueryKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item));
+                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListQueryKeysResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListQueryKeysResult(value ?? new ChangeTrackingList<SearchServiceQueryKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListQueryKeysResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<VersioningScheme> versioningScheme = default;
-            Optional<string> versionQueryName = default;
-            Optional<string> versionHeaderName = default;
+            string id = default;
+            string name = default;
+            string description = default;
+            VersioningScheme? versioningScheme = default;
+            string versionQueryName = default;
+            string versionHeaderName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiVersionSetContractDetails(id.Value, name.Value, description.Value, Optional.ToNullable(versioningScheme), versionQueryName.Value, versionHeaderName.Value, serializedAdditionalRawData);
+            return new ApiVersionSetContractDetails(
+                id,
+                name,
+                description,
+                versioningScheme,
+                versionQueryName,
+                versionHeaderName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiVersionSetContractDetails>.Write(ModelReaderWriterOptions options)

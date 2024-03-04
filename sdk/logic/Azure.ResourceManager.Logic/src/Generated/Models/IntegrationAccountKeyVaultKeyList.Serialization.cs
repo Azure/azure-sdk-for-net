@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountKeyVaultKey>> value = default;
-            Optional<string> skipToken = default;
+            IReadOnlyList<IntegrationAccountKeyVaultKey> value = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountKeyVaultKey> array = new List<IntegrationAccountKeyVaultKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(item));
+                        array.Add(IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountKeyVaultKeyList(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new IntegrationAccountKeyVaultKeyList(value ?? new ChangeTrackingList<IntegrationAccountKeyVaultKey>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountKeyVaultKeyList>.Write(ModelReaderWriterOptions options)

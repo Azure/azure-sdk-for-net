@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -98,11 +99,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Aggregate": return AggregateFunctionProperties.DeserializeAggregateFunctionProperties(element);
-                    case "Scalar": return ScalarFunctionProperties.DeserializeScalarFunctionProperties(element);
+                    case "Aggregate": return AggregateFunctionProperties.DeserializeAggregateFunctionProperties(element, options);
+                    case "Scalar": return ScalarFunctionProperties.DeserializeScalarFunctionProperties(element, options);
                 }
             }
-            return UnknownFunctionProperties.DeserializeUnknownFunctionProperties(element);
+            return UnknownFunctionProperties.DeserializeUnknownFunctionProperties(element, options);
         }
 
         BinaryData IPersistableModel<StreamingJobFunctionProperties>.Write(ModelReaderWriterOptions options)

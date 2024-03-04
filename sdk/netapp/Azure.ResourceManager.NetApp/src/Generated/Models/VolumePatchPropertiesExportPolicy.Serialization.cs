@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IList<NetAppVolumeExportPolicyRule>> rules = default;
+            IList<NetAppVolumeExportPolicyRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeExportPolicyRule> array = new List<NetAppVolumeExportPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(item));
+                        array.Add(NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumePatchPropertiesExportPolicy(Optional.ToList(rules), serializedAdditionalRawData);
+            return new VolumePatchPropertiesExportPolicy(rules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumePatchPropertiesExportPolicy>.Write(ModelReaderWriterOptions options)

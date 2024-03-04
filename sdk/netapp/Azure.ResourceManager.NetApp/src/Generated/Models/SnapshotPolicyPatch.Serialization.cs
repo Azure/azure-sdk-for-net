@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -131,18 +132,18 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SnapshotPolicyHourlySchedule> hourlySchedule = default;
-            Optional<SnapshotPolicyDailySchedule> dailySchedule = default;
-            Optional<SnapshotPolicyWeeklySchedule> weeklySchedule = default;
-            Optional<SnapshotPolicyMonthlySchedule> monthlySchedule = default;
-            Optional<bool> enabled = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            SnapshotPolicyHourlySchedule hourlySchedule = default;
+            SnapshotPolicyDailySchedule dailySchedule = default;
+            SnapshotPolicyWeeklySchedule weeklySchedule = default;
+            SnapshotPolicyMonthlySchedule monthlySchedule = default;
+            bool? enabled = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value);
+                            hourlySchedule = SnapshotPolicyHourlySchedule.DeserializeSnapshotPolicyHourlySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dailySchedule"u8))
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value);
+                            dailySchedule = SnapshotPolicyDailySchedule.DeserializeSnapshotPolicyDailySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("weeklySchedule"u8))
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value);
+                            weeklySchedule = SnapshotPolicyWeeklySchedule.DeserializeSnapshotPolicyWeeklySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("monthlySchedule"u8))
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.NetApp.Models
                             {
                                 continue;
                             }
-                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value);
+                            monthlySchedule = SnapshotPolicyMonthlySchedule.DeserializeSnapshotPolicyMonthlySchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -258,7 +259,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Optional.ToNullable(enabled), provisioningState.Value, serializedAdditionalRawData);
+            return new SnapshotPolicyPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hourlySchedule,
+                dailySchedule,
+                weeklySchedule,
+                monthlySchedule,
+                enabled,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyPatch>.Write(ModelReaderWriterOptions options)

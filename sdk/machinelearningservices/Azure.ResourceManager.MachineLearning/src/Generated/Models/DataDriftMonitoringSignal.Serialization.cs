@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -142,14 +143,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringDataSegment> dataSegment = default;
-            Optional<IDictionary<string, MonitoringFeatureDataType>> featureDataTypeOverride = default;
-            Optional<MonitoringFeatureFilterBase> features = default;
+            MonitoringDataSegment dataSegment = default;
+            IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
+            MonitoringFeatureFilterBase features = default;
             IList<DataDriftMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataSegment = null;
                         continue;
                     }
-                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value);
+                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("featureDataTypeOverride"u8))
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         features = null;
                         continue;
                     }
-                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value);
+                    features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricThresholds"u8))
@@ -195,19 +196,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<DataDriftMetricThresholdBase> array = new List<DataDriftMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item));
+                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item, options));
                     }
                     metricThresholds = array;
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -245,7 +246,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, dataSegment.Value, Optional.ToDictionary(featureDataTypeOverride), features.Value, metricThresholds, productionData, referenceData);
+            return new DataDriftMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                dataSegment,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
+                features,
+                metricThresholds,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<DataDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)

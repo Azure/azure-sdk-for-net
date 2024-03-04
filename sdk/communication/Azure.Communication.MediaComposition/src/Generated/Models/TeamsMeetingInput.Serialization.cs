@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             }
             string teamsJoinUrl = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("teamsJoinUrl"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new TeamsMeetingInput(kind, placeholderImageUri.Value, teamsJoinUrl);
+            return new TeamsMeetingInput(kind, placeholderImageUri, teamsJoinUrl);
         }
     }
 }

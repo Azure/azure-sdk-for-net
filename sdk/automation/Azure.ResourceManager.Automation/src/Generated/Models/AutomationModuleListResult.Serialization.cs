@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationModuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutomationModuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationModuleData> array = new List<AutomationModuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationModuleData.DeserializeAutomationModuleData(item));
+                        array.Add(AutomationModuleData.DeserializeAutomationModuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationModuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationModuleListResult(value ?? new ChangeTrackingList<AutomationModuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationModuleListResult>.Write(ModelReaderWriterOptions options)

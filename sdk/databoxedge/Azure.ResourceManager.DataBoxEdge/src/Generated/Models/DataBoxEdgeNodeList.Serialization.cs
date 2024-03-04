@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeNode>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataBoxEdgeNode> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeNode> array = new List<DataBoxEdgeNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeNode.DeserializeDataBoxEdgeNode(item));
+                        array.Add(DataBoxEdgeNode.DeserializeDataBoxEdgeNode(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNodeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeNodeList(value ?? new ChangeTrackingList<DataBoxEdgeNode>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNodeList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> state = default;
+            string name = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerSubscriptionRegisteredFeatures(name.Value, state.Value, serializedAdditionalRawData);
+            return new CustomerSubscriptionRegisteredFeatures(name, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomerSubscriptionRegisteredFeatures>.Write(ModelReaderWriterOptions options)

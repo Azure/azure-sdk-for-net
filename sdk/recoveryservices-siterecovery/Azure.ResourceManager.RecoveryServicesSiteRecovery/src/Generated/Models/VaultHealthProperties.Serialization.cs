@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> vaultErrors = default;
-            Optional<ResourceHealthSummary> protectedItemsHealth = default;
-            Optional<ResourceHealthSummary> fabricsHealth = default;
-            Optional<ResourceHealthSummary> containersHealth = default;
+            IReadOnlyList<SiteRecoveryHealthError> vaultErrors = default;
+            ResourceHealthSummary protectedItemsHealth = default;
+            ResourceHealthSummary fabricsHealth = default;
+            ResourceHealthSummary containersHealth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     vaultErrors = array;
                     continue;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
+                    protectedItemsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fabricsHealth"u8))
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
+                    fabricsHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containersHealth"u8))
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    containersHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value);
+                    containersHealth = ResourceHealthSummary.DeserializeResourceHealthSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultHealthProperties(Optional.ToList(vaultErrors), protectedItemsHealth.Value, fabricsHealth.Value, containersHealth.Value, serializedAdditionalRawData);
+            return new VaultHealthProperties(vaultErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), protectedItemsHealth, fabricsHealth, containersHealth, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultHealthProperties>.Write(ModelReaderWriterOptions options)

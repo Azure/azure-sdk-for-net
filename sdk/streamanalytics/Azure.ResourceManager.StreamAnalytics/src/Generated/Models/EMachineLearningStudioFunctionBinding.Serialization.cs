@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> endpoint = default;
-            Optional<string> apiKey = default;
-            Optional<MachineLearningStudioInputs> inputs = default;
-            Optional<IList<MachineLearningStudioOutputColumn>> outputs = default;
-            Optional<int> batchSize = default;
+            string endpoint = default;
+            string apiKey = default;
+            MachineLearningStudioInputs inputs = default;
+            IList<MachineLearningStudioOutputColumn> outputs = default;
+            int? batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            inputs = MachineLearningStudioInputs.DeserializeMachineLearningStudioInputs(property0.Value);
+                            inputs = MachineLearningStudioInputs.DeserializeMachineLearningStudioInputs(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<MachineLearningStudioOutputColumn> array = new List<MachineLearningStudioOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item));
+                                array.Add(MachineLearningStudioOutputColumn.DeserializeMachineLearningStudioOutputColumn(item, options));
                             }
                             outputs = array;
                             continue;
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EMachineLearningStudioFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs.Value, Optional.ToList(outputs), Optional.ToNullable(batchSize));
+            return new EMachineLearningStudioFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                endpoint,
+                apiKey,
+                inputs,
+                outputs ?? new ChangeTrackingList<MachineLearningStudioOutputColumn>(),
+                batchSize);
         }
 
         BinaryData IPersistableModel<EMachineLearningStudioFunctionBinding>.Write(ModelReaderWriterOptions options)

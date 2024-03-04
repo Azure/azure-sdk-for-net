@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> networkInterfaceName = default;
+            string networkInterfaceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceResourceNames(networkInterfaceName.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceResourceNames(networkInterfaceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceResourceNames>.Write(ModelReaderWriterOptions options)

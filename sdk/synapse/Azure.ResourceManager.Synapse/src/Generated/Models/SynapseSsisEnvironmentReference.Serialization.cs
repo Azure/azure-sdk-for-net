@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> environmentFolderName = default;
-            Optional<string> environmentName = default;
-            Optional<string> referenceType = default;
+            long? id = default;
+            string environmentFolderName = default;
+            string environmentName = default;
+            string referenceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value, serializedAdditionalRawData);
+            return new SynapseSsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSsisEnvironmentReference>.Write(ModelReaderWriterOptions options)

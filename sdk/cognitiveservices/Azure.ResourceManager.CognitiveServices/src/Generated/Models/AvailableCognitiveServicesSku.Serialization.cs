@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> kind = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<CognitiveServicesSkuRestrictions>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            string kind = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<CognitiveServicesSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuRestrictions> array = new List<CognitiveServicesSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuRestrictions.DeserializeCognitiveServicesSkuRestrictions(item));
+                        array.Add(CognitiveServicesSkuRestrictions.DeserializeCognitiveServicesSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -168,7 +169,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableCognitiveServicesSku(resourceType.Value, name.Value, tier.Value, kind.Value, Optional.ToList(locations), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new AvailableCognitiveServicesSku(
+                resourceType,
+                name,
+                tier,
+                kind,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                restrictions ?? new ChangeTrackingList<CognitiveServicesSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableCognitiveServicesSku>.Write(ModelReaderWriterOptions options)

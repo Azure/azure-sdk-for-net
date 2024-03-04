@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             EventHubsAccessKeyType keyType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsRegenerateAccessKeyContent(keyType, key.Value, serializedAdditionalRawData);
+            return new EventHubsRegenerateAccessKeyContent(keyType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsRegenerateAccessKeyContent>.Write(ModelReaderWriterOptions options)

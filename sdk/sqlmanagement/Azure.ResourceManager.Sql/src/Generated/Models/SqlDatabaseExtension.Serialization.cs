@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DatabaseExtensionOperationMode> operationMode = default;
-            Optional<StorageKeyType> storageKeyType = default;
-            Optional<string> storageKey = default;
-            Optional<Uri> storageUri = default;
+            SystemData systemData = default;
+            DatabaseExtensionOperationMode? operationMode = default;
+            StorageKeyType? storageKeyType = default;
+            string storageKey = default;
+            Uri storageUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +195,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseExtension(id, name, type, systemData.Value, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value, serializedAdditionalRawData);
+            return new SqlDatabaseExtension(
+                id,
+                name,
+                type,
+                systemData,
+                operationMode,
+                storageKeyType,
+                storageKey,
+                storageUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseExtension>.Write(ModelReaderWriterOptions options)

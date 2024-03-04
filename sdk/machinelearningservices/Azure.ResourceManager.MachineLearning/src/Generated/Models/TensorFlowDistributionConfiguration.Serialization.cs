@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> parameterServerCount = default;
-            Optional<int?> workerCount = default;
+            int? parameterServerCount = default;
+            int? workerCount = default;
             DistributionType distributionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TensorFlowDistributionConfiguration(distributionType, serializedAdditionalRawData, Optional.ToNullable(parameterServerCount), Optional.ToNullable(workerCount));
+            return new TensorFlowDistributionConfiguration(distributionType, serializedAdditionalRawData, parameterServerCount, workerCount);
         }
 
         BinaryData IPersistableModel<TensorFlowDistributionConfiguration>.Write(ModelReaderWriterOptions options)

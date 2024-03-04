@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VhdImageArtifactProfile> vhdArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            VhdImageArtifactProfile vhdArtifactProfile = default;
+            WritableSubResource artifactStore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value);
+                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCoreVhdImageArtifactProfile(artifactStore, serializedAdditionalRawData, vhdArtifactProfile.Value);
+            return new AzureCoreVhdImageArtifactProfile(artifactStore, serializedAdditionalRawData, vhdArtifactProfile);
         }
 
         BinaryData IPersistableModel<AzureCoreVhdImageArtifactProfile>.Write(ModelReaderWriterOptions options)

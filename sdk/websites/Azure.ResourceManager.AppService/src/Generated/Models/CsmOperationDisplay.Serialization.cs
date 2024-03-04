@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> provider = default;
-            Optional<string> resource = default;
-            Optional<string> operation = default;
-            Optional<string> description = default;
+            string provider = default;
+            string resource = default;
+            string operation = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmOperationDisplay(provider.Value, resource.Value, operation.Value, description.Value, serializedAdditionalRawData);
+            return new CsmOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmOperationDisplay>.Write(ModelReaderWriterOptions options)

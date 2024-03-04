@@ -86,7 +86,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new FileSink(type, name, inputs, baseDirectoryPath, fileNamePattern, maximumSizeMiB);
+            return new FileSink(
+                type,
+                name,
+                inputs,
+                baseDirectoryPath,
+                fileNamePattern,
+                maximumSizeMiB);
         }
     }
 }

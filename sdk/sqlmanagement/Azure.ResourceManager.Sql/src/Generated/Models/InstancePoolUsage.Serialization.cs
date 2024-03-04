@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<InstancePoolUsageName> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<int> requestedLimit = default;
+            ResourceIdentifier id = default;
+            InstancePoolUsageName name = default;
+            ResourceType? type = default;
+            string unit = default;
+            int? currentValue = default;
+            int? limit = default;
+            int? requestedLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value);
+                    name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolUsage(id.Value, name.Value, Optional.ToNullable(type), unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit), serializedAdditionalRawData);
+            return new InstancePoolUsage(
+                id,
+                name,
+                type,
+                unit,
+                currentValue,
+                limit,
+                requestedLimit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolUsage>.Write(ModelReaderWriterOptions options)

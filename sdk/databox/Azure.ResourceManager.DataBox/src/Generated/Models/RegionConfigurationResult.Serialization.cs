@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ScheduleAvailabilityResponse> scheduleAvailabilityResponse = default;
-            Optional<TransportAvailabilityResponse> transportAvailabilityResponse = default;
-            Optional<DataCenterAddressResult> dataCenterAddressResponse = default;
+            ScheduleAvailabilityResponse scheduleAvailabilityResponse = default;
+            TransportAvailabilityResponse transportAvailabilityResponse = default;
+            DataCenterAddressResult dataCenterAddressResponse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(property.Value);
+                    scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityResponse"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(property.Value);
+                    transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressResponse"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
+                    dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionConfigurationResult(scheduleAvailabilityResponse.Value, transportAvailabilityResponse.Value, dataCenterAddressResponse.Value, serializedAdditionalRawData);
+            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, dataCenterAddressResponse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationResult>.Write(ModelReaderWriterOptions options)

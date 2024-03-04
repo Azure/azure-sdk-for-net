@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> unit = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<IList<DiagnosticMetricSample>> values = default;
+            string name = default;
+            string unit = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            IList<DiagnosticMetricSample> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticMetricSample> array = new List<DiagnosticMetricSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item));
+                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item, options));
                     }
                     values = array;
                     continue;
@@ -162,7 +163,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticMetricSet(name.Value, unit.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new DiagnosticMetricSet(
+                name,
+                unit,
+                startTime,
+                endTime,
+                timeGrain,
+                values ?? new ChangeTrackingList<DiagnosticMetricSample>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticMetricSet>.Write(ModelReaderWriterOptions options)

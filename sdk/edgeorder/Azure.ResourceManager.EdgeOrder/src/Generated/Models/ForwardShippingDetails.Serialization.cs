@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> carrierName = default;
-            Optional<string> carrierDisplayName = default;
-            Optional<string> trackingId = default;
-            Optional<Uri> trackingUrl = default;
+            string carrierName = default;
+            string carrierDisplayName = default;
+            string trackingId = default;
+            Uri trackingUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForwardShippingDetails(carrierName.Value, carrierDisplayName.Value, trackingId.Value, trackingUrl.Value, serializedAdditionalRawData);
+            return new ForwardShippingDetails(carrierName, carrierDisplayName, trackingId, trackingUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForwardShippingDetails>.Write(ModelReaderWriterOptions options)

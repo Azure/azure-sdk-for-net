@@ -34,7 +34,18 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IotHubDescriptionData(id, name, resourceType, systemData, tags, location, etag, properties, sku, identity, serializedAdditionalRawData: null);
+            return new IotHubDescriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                properties,
+                sku,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubProperties"/>. </summary>
@@ -74,7 +85,32 @@ namespace Azure.ResourceManager.IotHub.Models
             messagingEndpoints ??= new Dictionary<string, MessagingEndpointProperties>();
             locations ??= new List<IotHubLocationDescription>();
 
-            return new IotHubProperties(authorizationPolicies?.ToList(), disableLocalAuth, disableDeviceSas, disableModuleSas, restrictOutboundNetworkAccess, allowedFqdns?.ToList(), publicNetworkAccess, ipFilterRules?.ToList(), networkRuleSets, minTlsVersion, privateEndpointConnections?.ToList(), provisioningState, state, hostName, eventHubEndpoints, routing, storageEndpoints, messagingEndpoints, enableFileUploadNotifications, cloudToDevice, comments, features, locations?.ToList(), enableDataResidency, serializedAdditionalRawData: null);
+            return new IotHubProperties(
+                authorizationPolicies?.ToList(),
+                disableLocalAuth,
+                disableDeviceSas,
+                disableModuleSas,
+                restrictOutboundNetworkAccess,
+                allowedFqdns?.ToList(),
+                publicNetworkAccess,
+                ipFilterRules?.ToList(),
+                networkRuleSets,
+                minTlsVersion,
+                privateEndpointConnections?.ToList(),
+                provisioningState,
+                state,
+                hostName,
+                eventHubEndpoints,
+                routing,
+                storageEndpoints,
+                messagingEndpoints,
+                enableFileUploadNotifications,
+                cloudToDevice,
+                comments,
+                features,
+                locations?.ToList(),
+                enableDataResidency,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHub.IotHubPrivateEndpointConnectionData"/>. </summary>
@@ -86,7 +122,13 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static IotHubPrivateEndpointConnectionData IotHubPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubPrivateEndpointConnectionProperties properties = null)
         {
-            return new IotHubPrivateEndpointConnectionData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new IotHubPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventHubCompatibleEndpointProperties"/>. </summary>
@@ -100,7 +142,13 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             partitionIds ??= new List<string>();
 
-            return new EventHubCompatibleEndpointProperties(retentionTimeInDays, partitionCount, partitionIds?.ToList(), eventHubCompatibleName, endpoint, serializedAdditionalRawData: null);
+            return new EventHubCompatibleEndpointProperties(
+                retentionTimeInDays,
+                partitionCount,
+                partitionIds?.ToList(),
+                eventHubCompatibleName,
+                endpoint,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoutingCosmosDBSqlApiProperties"/>. </summary>
@@ -120,7 +168,21 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.RoutingCosmosDBSqlApiProperties"/> instance for mocking. </returns>
         public static RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, Uri endpointUri = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null)
         {
-            return new RoutingCosmosDBSqlApiProperties(name, id, subscriptionId, resourceGroup, endpointUri, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null, primaryKey, secondaryKey, databaseName, containerName, partitionKeyName, partitionKeyTemplate, serializedAdditionalRawData: null);
+            return new RoutingCosmosDBSqlApiProperties(
+                name,
+                id,
+                subscriptionId,
+                resourceGroup,
+                endpointUri,
+                authenticationType,
+                userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null,
+                primaryKey,
+                secondaryKey,
+                databaseName,
+                containerName,
+                partitionKeyName,
+                partitionKeyTemplate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubLocationDescription"/>. </summary>
@@ -185,7 +247,14 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             properties ??= new Dictionary<string, BinaryData>();
 
-            return new EventHubConsumerGroupInfoData(id, name, resourceType, systemData, properties, etag, serializedAdditionalRawData: null);
+            return new EventHubConsumerGroupInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubJobInfo"/>. </summary>
@@ -200,7 +269,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubJobInfo"/> instance for mocking. </returns>
         public static IotHubJobInfo IotHubJobInfo(string jobId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IotHubJobType? jobType = null, IotHubJobStatus? status = null, string failureReason = null, string statusMessage = null, string parentJobId = null)
         {
-            return new IotHubJobInfo(jobId, startOn, endOn, jobType, status, failureReason, statusMessage, parentJobId, serializedAdditionalRawData: null);
+            return new IotHubJobInfo(
+                jobId,
+                startOn,
+                endOn,
+                jobType,
+                status,
+                failureReason,
+                statusMessage,
+                parentJobId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubQuotaMetricInfo"/>. </summary>
@@ -223,7 +301,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubEndpointHealthInfo"/> instance for mocking. </returns>
         public static IotHubEndpointHealthInfo IotHubEndpointHealthInfo(string endpointId = null, IotHubEndpointHealthStatus? healthStatus = null, string lastKnownError = null, DateTimeOffset? lastKnownErrorOn = null, DateTimeOffset? lastSuccessfulSendAttemptOn = null, DateTimeOffset? lastSendAttemptOn = null)
         {
-            return new IotHubEndpointHealthInfo(endpointId, healthStatus, lastKnownError, lastKnownErrorOn, lastSuccessfulSendAttemptOn, lastSendAttemptOn, serializedAdditionalRawData: null);
+            return new IotHubEndpointHealthInfo(
+                endpointId,
+                healthStatus,
+                lastKnownError,
+                lastKnownErrorOn,
+                lastSuccessfulSendAttemptOn,
+                lastSendAttemptOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubNameAvailabilityResponse"/>. </summary>
@@ -246,7 +331,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubUserSubscriptionQuota"/> instance for mocking. </returns>
         public static IotHubUserSubscriptionQuota IotHubUserSubscriptionQuota(string iotHubTypeId = null, string userSubscriptionQuotaType = null, string unit = null, int? currentValue = null, int? limit = null, IotHubTypeName name = null)
         {
-            return new IotHubUserSubscriptionQuota(iotHubTypeId, userSubscriptionQuotaType, unit, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new IotHubUserSubscriptionQuota(
+                iotHubTypeId,
+                userSubscriptionQuotaType,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubTypeName"/>. </summary>
@@ -336,7 +428,15 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.ExportDevicesContent"/> instance for mocking. </returns>
         public static ExportDevicesContent ExportDevicesContent(Uri exportBlobContainerUri = null, bool excludeKeys = default, string exportBlobName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = null, string configurationsBlobName = null)
         {
-            return new ExportDevicesContent(exportBlobContainerUri, excludeKeys, exportBlobName, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null, includeConfigurations, configurationsBlobName, serializedAdditionalRawData: null);
+            return new ExportDevicesContent(
+                exportBlobContainerUri,
+                excludeKeys,
+                exportBlobName,
+                authenticationType,
+                userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null,
+                includeConfigurations,
+                configurationsBlobName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubImportDevicesContent"/>. </summary>
@@ -351,7 +451,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubImportDevicesContent"/> instance for mocking. </returns>
         public static IotHubImportDevicesContent IotHubImportDevicesContent(Uri inputBlobContainerUri = null, Uri outputBlobContainerUri = null, string inputBlobName = null, string outputBlobName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, bool? includeConfigurations = null, string configurationsBlobName = null)
         {
-            return new IotHubImportDevicesContent(inputBlobContainerUri, outputBlobContainerUri, inputBlobName, outputBlobName, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null, includeConfigurations, configurationsBlobName, serializedAdditionalRawData: null);
+            return new IotHubImportDevicesContent(
+                inputBlobContainerUri,
+                outputBlobContainerUri,
+                inputBlobName,
+                outputBlobName,
+                authenticationType,
+                userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity, serializedAdditionalRawData: null) : null,
+                includeConfigurations,
+                configurationsBlobName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHub.IotHubCertificateDescriptionData"/>. </summary>
@@ -364,7 +473,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="IotHub.IotHubCertificateDescriptionData"/> instance for mocking. </returns>
         public static IotHubCertificateDescriptionData IotHubCertificateDescriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubCertificateProperties properties = null, ETag? etag = null)
         {
-            return new IotHubCertificateDescriptionData(id, name, resourceType, systemData, properties, etag, serializedAdditionalRawData: null);
+            return new IotHubCertificateDescriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateProperties"/>. </summary>
@@ -378,7 +494,15 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
         public static IotHubCertificateProperties IotHubCertificateProperties(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, BinaryData certificate = null)
         {
-            return new IotHubCertificateProperties(subject, expireOn, thumbprintString, isVerified, createdOn, updatedOn, certificate, serializedAdditionalRawData: null);
+            return new IotHubCertificateProperties(
+                subject,
+                expireOn,
+                thumbprintString,
+                isVerified,
+                createdOn,
+                updatedOn,
+                certificate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificateWithNonceDescription"/>. </summary>
@@ -391,7 +515,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubCertificateWithNonceDescription"/> instance for mocking. </returns>
         public static IotHubCertificateWithNonceDescription IotHubCertificateWithNonceDescription(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubCertificatePropertiesWithNonce properties = null, ETag? etag = null)
         {
-            return new IotHubCertificateWithNonceDescription(id, name, resourceType, systemData, properties, etag, serializedAdditionalRawData: null);
+            return new IotHubCertificateWithNonceDescription(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubCertificatePropertiesWithNonce"/>. </summary>
@@ -406,7 +537,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
         public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isVerified = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string verificationCode = null, BinaryData certificate = null)
         {
-            return new IotHubCertificatePropertiesWithNonce(subject, expireOn, thumbprintString, isVerified, createdOn, updatedOn, verificationCode, certificate, serializedAdditionalRawData: null);
+            return new IotHubCertificatePropertiesWithNonce(
+                subject,
+                expireOn,
+                thumbprintString,
+                isVerified,
+                createdOn,
+                updatedOn,
+                verificationCode,
+                certificate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/>. </summary>
@@ -418,7 +558,13 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointGroupInformationData"/> instance for mocking. </returns>
         public static IotHubPrivateEndpointGroupInformationData IotHubPrivateEndpointGroupInformationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotHubPrivateEndpointGroupInformationProperties properties = null)
         {
-            return new IotHubPrivateEndpointGroupInformationData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new IotHubPrivateEndpointGroupInformationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotHubPrivateEndpointGroupInformationProperties"/>. </summary>

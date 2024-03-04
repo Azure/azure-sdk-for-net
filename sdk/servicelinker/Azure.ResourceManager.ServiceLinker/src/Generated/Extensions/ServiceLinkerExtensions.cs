@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableServiceLinkerArmClient(client).GetLinkerResources(scope);
         }
@@ -80,7 +83,10 @@ namespace Azure.ResourceManager.ServiceLinker
         [ForwardsClientCalls]
         public static async Task<Response<LinkerResource>> GetLinkerResourceAsync(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableServiceLinkerArmClient(client).GetLinkerResourceAsync(scope, linkerName, cancellationToken).ConfigureAwait(false);
         }
@@ -119,7 +125,10 @@ namespace Azure.ResourceManager.ServiceLinker
         [ForwardsClientCalls]
         public static Response<LinkerResource> GetLinkerResource(this ArmClient client, ResourceIdentifier scope, string linkerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableServiceLinkerArmClient(client).GetLinkerResource(scope, linkerName, cancellationToken);
         }
@@ -138,7 +147,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> Returns a <see cref="LinkerResource"/> object. </returns>
         public static LinkerResource GetLinkerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableServiceLinkerArmClient(client).GetLinkerResource(id);
         }
@@ -155,7 +167,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <returns> An object representing collection of LinkerResources and their operations over a LinkerResource. </returns>
         public static LinkerResourceCollection GetLinkerResources(this ArmResource armResource)
         {
-            Argument.AssertNotNull(armResource, nameof(armResource));
+            if (armResource == null)
+            {
+                throw new ArgumentNullException(nameof(armResource));
+            }
 
             return GetMockableServiceLinkerArmResource(armResource).GetLinkerResources();
         }
@@ -193,7 +208,10 @@ namespace Azure.ResourceManager.ServiceLinker
         [ForwardsClientCalls]
         public static async Task<Response<LinkerResource>> GetLinkerResourceAsync(this ArmResource armResource, string linkerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(armResource, nameof(armResource));
+            if (armResource == null)
+            {
+                throw new ArgumentNullException(nameof(armResource));
+            }
 
             return await GetMockableServiceLinkerArmResource(armResource).GetLinkerResourceAsync(linkerName, cancellationToken).ConfigureAwait(false);
         }
@@ -231,7 +249,10 @@ namespace Azure.ResourceManager.ServiceLinker
         [ForwardsClientCalls]
         public static Response<LinkerResource> GetLinkerResource(this ArmResource armResource, string linkerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(armResource, nameof(armResource));
+            if (armResource == null)
+            {
+                throw new ArgumentNullException(nameof(armResource));
+            }
 
             return GetMockableServiceLinkerArmResource(armResource).GetLinkerResource(linkerName, cancellationToken);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SourceLocation> sourceLocation = default;
-            Optional<TargetLocation> targetLocation = default;
+            SourceLocation sourceLocation = default;
+            TargetLocation targetLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value);
+                    sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value);
+                    targetLocation = TargetLocation.DeserializeTargetLocation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupConfiguration(sourceLocation.Value, targetLocation.Value, serializedAdditionalRawData);
+            return new BackupConfiguration(sourceLocation, targetLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupConfiguration>.Write(ModelReaderWriterOptions options)

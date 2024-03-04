@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
-            Optional<int> cores = default;
-            Optional<int> memoryGiB = default;
-            Optional<string> displayName = default;
+            string category = default;
+            ContainerAppAvailableWorkloadProfileApplicability? applicability = default;
+            int? cores = default;
+            int? memoryGiB = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), displayName.Value, serializedAdditionalRawData);
+            return new ContainerAppAvailableWorkloadProfileProperties(
+                category,
+                applicability,
+                cores,
+                memoryGiB,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Write(ModelReaderWriterOptions options)

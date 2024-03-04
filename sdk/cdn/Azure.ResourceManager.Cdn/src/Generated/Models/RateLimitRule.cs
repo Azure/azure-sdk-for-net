@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -24,8 +23,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="matchConditions"/> is null. </exception>
         public RateLimitRule(string name, int priority, IEnumerable<CustomRuleMatchCondition> matchConditions, OverrideActionType action, int rateLimitThreshold, int rateLimitDurationInMinutes) : base(name, priority, matchConditions, action)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(matchConditions, nameof(matchConditions));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (matchConditions == null)
+            {
+                throw new ArgumentNullException(nameof(matchConditions));
+            }
 
             RateLimitThreshold = rateLimitThreshold;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;

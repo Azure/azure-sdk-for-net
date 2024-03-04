@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> exitCode = default;
-            Optional<DateTimeOffset> finishTime = default;
-            Optional<string> detailStatus = default;
+            string state = default;
+            DateTimeOffset? startTime = default;
+            int? exitCode = default;
+            DateTimeOffset? finishTime = default;
+            string detailStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerState(state.Value, Optional.ToNullable(startTime), Optional.ToNullable(exitCode), Optional.ToNullable(finishTime), detailStatus.Value, serializedAdditionalRawData);
+            return new ContainerState(
+                state,
+                startTime,
+                exitCode,
+                finishTime,
+                detailStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerState>.Write(ModelReaderWriterOptions options)

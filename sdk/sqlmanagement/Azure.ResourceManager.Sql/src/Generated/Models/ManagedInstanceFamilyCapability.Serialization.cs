@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<IReadOnlyList<ManagedInstanceVcoresCapability>> supportedVcoresValues = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            string sku = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
+            IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceVcoresCapability> array = new List<ManagedInstanceVcoresCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceVcoresCapability.DeserializeManagedInstanceVcoresCapability(item));
+                        array.Add(ManagedInstanceVcoresCapability.DeserializeManagedInstanceVcoresCapability(item, options));
                     }
                     supportedVcoresValues = array;
                     continue;
@@ -172,7 +173,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceFamilyCapability(name.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceFamilyCapability(
+                name,
+                sku,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                supportedVcoresValues ?? new ChangeTrackingList<ManagedInstanceVcoresCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceFamilyCapability>.Write(ModelReaderWriterOptions options)

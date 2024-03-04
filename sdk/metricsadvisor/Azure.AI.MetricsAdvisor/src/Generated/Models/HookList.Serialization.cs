@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NotificationHook>> value = default;
+            string nextLink = default;
+            IReadOnlyList<NotificationHook> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HookList(nextLink.Value, Optional.ToList(value));
+            return new HookList(nextLink, value ?? new ChangeTrackingList<NotificationHook>());
         }
     }
 }

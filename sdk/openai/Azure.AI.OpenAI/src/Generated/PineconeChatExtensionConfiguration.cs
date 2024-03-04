@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    /// A specific representation of configurable options for Elasticsearch when using it as an Azure OpenAI chat
+    /// A specific representation of configurable options for Pinecone when using it as an Azure OpenAI chat
     /// extension.
     /// </summary>
     public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConfiguration
