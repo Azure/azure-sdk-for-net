@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class ProblemClassificationsClassificationResult : IUtf8JsonSerializable, IJsonModel<ProblemClassificationsClassificationResult>
+    public partial class ServiceProblemClassificationResult : IUtf8JsonSerializable, IJsonModel<ServiceProblemClassificationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProblemClassificationsClassificationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceProblemClassificationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ProblemClassificationsClassificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceProblemClassificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationsClassificationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceProblemClassificationResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Support.Models
             }
             writer.WritePropertyName("relatedService"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceIdRelatedServiceId != null)
+            if (options.Format != "W" && RelatedServiceId != null)
             {
                 writer.WritePropertyName("serviceId"u8);
-                writer.WriteStringValue(ServiceIdRelatedServiceId);
+                writer.WriteStringValue(RelatedServiceId);
             }
             if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (!(ResourceTypes is ChangeTrackingList<ResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteEndObject();
         }
 
-        ProblemClassificationsClassificationResult IJsonModel<ProblemClassificationsClassificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceProblemClassificationResult IJsonModel<ServiceProblemClassificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationsClassificationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceProblemClassificationResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProblemClassificationsClassificationResult(document.RootElement, options);
+            return DeserializeServiceProblemClassificationResult(document.RootElement, options);
         }
 
-        internal static ProblemClassificationsClassificationResult DeserializeProblemClassificationsClassificationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceProblemClassificationResult DeserializeServiceProblemClassificationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Support.Models
             string problemId = default;
             string title = default;
             string description = default;
-            string serviceId = default;
+            ResourceIdentifier serviceId = default;
             string problemClassificationId = default;
             ResourceIdentifier serviceId0 = default;
             string displayName = default;
-            IReadOnlyList<string> resourceTypes = default;
+            IReadOnlyList<ResourceType> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,11 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 if (property.NameEquals("serviceId"u8))
                 {
-                    serviceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        continue;
+                    }
+                    serviceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("problemClassificationId"u8))
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         if (property0.NameEquals("serviceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -178,10 +182,10 @@ namespace Azure.ResourceManager.Support.Models
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceType> array = new List<ResourceType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new ResourceType(item.GetString()));
                             }
                             resourceTypes = array;
                             continue;
@@ -195,7 +199,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationsClassificationResult(
+            return new ServiceProblemClassificationResult(
                 problemId,
                 title,
                 description,
@@ -203,39 +207,39 @@ namespace Azure.ResourceManager.Support.Models
                 problemClassificationId,
                 serviceId0,
                 displayName,
-                resourceTypes ?? new ChangeTrackingList<string>(),
+                resourceTypes ?? new ChangeTrackingList<ResourceType>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProblemClassificationsClassificationResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceProblemClassificationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationsClassificationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceProblemClassificationResult)} does not support '{options.Format}' format.");
             }
         }
 
-        ProblemClassificationsClassificationResult IPersistableModel<ProblemClassificationsClassificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceProblemClassificationResult IPersistableModel<ServiceProblemClassificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProblemClassificationsClassificationResult(document.RootElement, options);
+                        return DeserializeServiceProblemClassificationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationsClassificationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceProblemClassificationResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProblemClassificationsClassificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceProblemClassificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

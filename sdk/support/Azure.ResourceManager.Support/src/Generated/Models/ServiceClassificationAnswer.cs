@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="ServiceClassificationAnswer"/>. </summary>
         internal ServiceClassificationAnswer()
         {
-            ResourceTypesChildServiceResourceTypes = new ChangeTrackingList<string>();
+            ResourceTypesChildServiceResourceTypes = new ChangeTrackingList<ResourceType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceClassificationAnswer"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="serviceIdChildServiceId"> Azure resource Id of the service. </param>
         /// <param name="displayNameChildServiceDisplayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypesChildServiceResourceTypes"> List of applicable ARM resource types for this service. </param>
-        internal ServiceClassificationAnswer(ResourceIdentifier serviceId, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier serviceIdChildServiceId, string displayNameChildServiceDisplayName, IReadOnlyList<string> resourceTypesChildServiceResourceTypes) : base(serviceId, displayName, resourceTypes, serializedAdditionalRawData)
+        internal ServiceClassificationAnswer(ResourceIdentifier serviceId, string displayName, IReadOnlyList<ResourceType> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier serviceIdChildServiceId, string displayNameChildServiceDisplayName, IReadOnlyList<ResourceType> resourceTypesChildServiceResourceTypes) : base(serviceId, displayName, resourceTypes, serializedAdditionalRawData)
         {
             ServiceIdChildServiceId = serviceIdChildServiceId;
             DisplayNameChildServiceDisplayName = displayNameChildServiceDisplayName;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Localized name of the azure service. </summary>
         public string DisplayNameChildServiceDisplayName { get; }
         /// <summary> List of applicable ARM resource types for this service. </summary>
-        public IReadOnlyList<string> ResourceTypesChildServiceResourceTypes { get; }
+        public IReadOnlyList<ResourceType> ResourceTypesChildServiceResourceTypes { get; }
     }
 }

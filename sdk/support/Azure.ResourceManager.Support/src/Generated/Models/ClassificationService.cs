@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="ClassificationService"/>. </summary>
         internal ClassificationService()
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            ResourceTypes = new ChangeTrackingList<ResourceType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClassificationService"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="displayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassificationService(ResourceIdentifier serviceId, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClassificationService(ResourceIdentifier serviceId, string displayName, IReadOnlyList<ResourceType> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceId = serviceId;
             DisplayName = displayName;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Localized name of the azure service. </summary>
         public string DisplayName { get; }
         /// <summary> List of applicable ARM resource types for this service. </summary>
-        public IReadOnlyList<string> ResourceTypes { get; }
+        public IReadOnlyList<ResourceType> ResourceTypes { get; }
     }
 }

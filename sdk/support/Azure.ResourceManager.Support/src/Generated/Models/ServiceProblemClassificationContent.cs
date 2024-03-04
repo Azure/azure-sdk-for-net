@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Input to problem classification Classification API. </summary>
-    public partial class ProblemClassificationContent
+    public partial class ServiceProblemClassificationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Support.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueSummary"/> is null. </exception>
-        public ProblemClassificationContent(string issueSummary)
+        public ServiceProblemClassificationContent(string issueSummary)
         {
             if (issueSummary == null)
             {
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Support.Models
             IssueSummary = issueSummary;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationContent(string issueSummary, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceProblemClassificationContent(string issueSummary, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueSummary = issueSummary;
             ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationContent"/> for deserialization. </summary>
-        internal ProblemClassificationContent()
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationContent"/> for deserialization. </summary>
+        internal ServiceProblemClassificationContent()
         {
         }
 

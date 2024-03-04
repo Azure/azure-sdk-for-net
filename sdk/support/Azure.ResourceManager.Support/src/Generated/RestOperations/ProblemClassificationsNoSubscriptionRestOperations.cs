@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateClassifyProblemsRequest(string problemServiceName, ProblemClassificationContent content)
+        internal HttpMessage CreateClassifyProblemsRequest(string problemServiceName, ServiceProblemClassificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProblemClassificationResult>> ClassifyProblemsAsync(string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceProblemClassificationListResult>> ClassifyProblemsAsync(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (problemServiceName == null)
             {
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        ProblemClassificationResult value = default;
+                        ServiceProblemClassificationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProblemClassificationResult.DeserializeProblemClassificationResult(document.RootElement);
+                        value = ServiceProblemClassificationListResult.DeserializeServiceProblemClassificationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProblemClassificationResult> ClassifyProblems(string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public Response<ServiceProblemClassificationListResult> ClassifyProblems(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (problemServiceName == null)
             {
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Support
             {
                 case 200:
                     {
-                        ProblemClassificationResult value = default;
+                        ServiceProblemClassificationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProblemClassificationResult.DeserializeProblemClassificationResult(document.RootElement);
+                        value = ServiceProblemClassificationListResult.DeserializeServiceProblemClassificationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

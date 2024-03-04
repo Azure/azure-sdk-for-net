@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ProblemClassificationResult>> ClassifyProblemClassificationAsync(string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (problemServiceName == null)
             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblemClassification");
+            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServiceProblem");
             scope.Start();
             try
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<ProblemClassificationResult> ClassifyProblemClassification(string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (problemServiceName == null)
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblemClassification");
+            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServiceProblem");
             scope.Start();
             try
             {

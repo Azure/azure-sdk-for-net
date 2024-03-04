@@ -89,16 +89,26 @@ rename-mapping:
   MessageProperties: ChatTranscriptMessageProperties
   UploadFile: UploadFileContent
   LookUpResourceIdResponse: LookUpResourceIdResult
+  LookUpResourceIdResponse.resourceId: -|arm-id
   ServiceClassificationRequest: ServiceClassificationContent
   ResourceType: SupportResourceTypeName
   LookUpResourceIdRequest.type: ResourceType
-  ProblemClassificationsClassificationInput: ProblemClassificationContent
-  ProblemClassificationsClassificationOutput: ProblemClassificationResult
+  ProblemClassificationsClassificationInput: ServiceProblemClassificationContent
+  ProblemClassificationsClassificationOutput: ServiceProblemClassificationListResult
+  ProblemClassificationsClassificationResult: ServiceProblemClassificationResult
+  ProblemClassificationsClassificationResult.serviceId: -|arm-id
+  ProblemClassificationsClassificationResult.relatedService.serviceId: RelatedServiceId
+  ClassificationService.resourceTypes: -|resource-type
+
+models-to-treat-empty-string-as-null:
+  - LookUpResourceIdResult
+  - ServiceProblemClassificationResult
+  - ClassificationService
 
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability
   SupportTickets_CheckNameAvailability: CheckSupportTicketNameAvailability
   LookUpResourceId_Post: LookUpResourceId
-  ProblemClassificationsNoSubscription_classifyProblems: ClassifyProblemClassification
-  ProblemClassifications_classifyProblems: ClassifyProblemClassification
+  ProblemClassificationsNoSubscription_classifyProblems: ClassifyServiceProblem
+  ProblemClassifications_classifyProblems: ClassifyServiceProblem
 ```

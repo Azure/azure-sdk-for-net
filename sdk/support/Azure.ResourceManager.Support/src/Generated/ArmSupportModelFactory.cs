@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="displayNameChildServiceDisplayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypesChildServiceResourceTypes"> List of applicable ARM resource types for this service. </param>
         /// <returns> A new <see cref="Models.ServiceClassificationAnswer"/> instance for mocking. </returns>
-        public static ServiceClassificationAnswer ServiceClassificationAnswer(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<string> resourceTypes = null, ResourceIdentifier serviceIdChildServiceId = null, string displayNameChildServiceDisplayName = null, IEnumerable<string> resourceTypesChildServiceResourceTypes = null)
+        public static ServiceClassificationAnswer ServiceClassificationAnswer(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null, ResourceIdentifier serviceIdChildServiceId = null, string displayNameChildServiceDisplayName = null, IEnumerable<ResourceType> resourceTypesChildServiceResourceTypes = null)
         {
-            resourceTypes ??= new List<string>();
-            resourceTypesChildServiceResourceTypes ??= new List<string>();
+            resourceTypes ??= new List<ResourceType>();
+            resourceTypesChildServiceResourceTypes ??= new List<ResourceType>();
 
             return new ServiceClassificationAnswer(
                 serviceId,
@@ -80,53 +80,53 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="displayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
         /// <returns> A new <see cref="Models.ClassificationService"/> instance for mocking. </returns>
-        public static ClassificationService ClassificationService(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<string> resourceTypes = null)
+        public static ClassificationService ClassificationService(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null)
         {
-            resourceTypes ??= new List<string>();
+            resourceTypes ??= new List<ResourceType>();
 
             return new ClassificationService(serviceId, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceProblemClassificationContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
-        /// <returns> A new <see cref="Models.ProblemClassificationContent"/> instance for mocking. </returns>
-        public static ProblemClassificationContent ProblemClassificationContent(string issueSummary = null, ResourceIdentifier resourceId = null)
+        /// <returns> A new <see cref="Models.ServiceProblemClassificationContent"/> instance for mocking. </returns>
+        public static ServiceProblemClassificationContent ServiceProblemClassificationContent(string issueSummary = null, ResourceIdentifier resourceId = null)
         {
-            return new ProblemClassificationContent(issueSummary, resourceId, serializedAdditionalRawData: null);
+            return new ServiceProblemClassificationContent(issueSummary, resourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceProblemClassificationListResult"/>. </summary>
         /// <param name="problemClassificationResults"> Set of problem classification objects classified. </param>
-        /// <returns> A new <see cref="Models.ProblemClassificationResult"/> instance for mocking. </returns>
-        public static ProblemClassificationResult ProblemClassificationResult(IEnumerable<ProblemClassificationsClassificationResult> problemClassificationResults = null)
+        /// <returns> A new <see cref="Models.ServiceProblemClassificationListResult"/> instance for mocking. </returns>
+        public static ServiceProblemClassificationListResult ServiceProblemClassificationListResult(IEnumerable<ServiceProblemClassificationResult> problemClassificationResults = null)
         {
-            problemClassificationResults ??= new List<ProblemClassificationsClassificationResult>();
+            problemClassificationResults ??= new List<ServiceProblemClassificationResult>();
 
-            return new ProblemClassificationResult(problemClassificationResults?.ToList(), serializedAdditionalRawData: null);
+            return new ServiceProblemClassificationListResult(problemClassificationResults?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationsClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceProblemClassificationResult"/>. </summary>
         /// <param name="problemId"> Identifier that may be used for solution discovery or some other purposes. </param>
         /// <param name="title"> Title of the problem classification result. </param>
         /// <param name="description"> Description of the problem classification result. </param>
         /// <param name="serviceId"> Identifier of the service associated with this problem classification result. </param>
         /// <param name="problemClassificationId"> Identifier that may be used for support ticket creation. </param>
-        /// <param name="serviceIdRelatedServiceId"> Azure resource Id of the service. </param>
+        /// <param name="relatedServiceId"> Azure resource Id of the service. </param>
         /// <param name="displayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
-        /// <returns> A new <see cref="Models.ProblemClassificationsClassificationResult"/> instance for mocking. </returns>
-        public static ProblemClassificationsClassificationResult ProblemClassificationsClassificationResult(string problemId = null, string title = null, string description = null, string serviceId = null, string problemClassificationId = null, ResourceIdentifier serviceIdRelatedServiceId = null, string displayName = null, IEnumerable<string> resourceTypes = null)
+        /// <returns> A new <see cref="Models.ServiceProblemClassificationResult"/> instance for mocking. </returns>
+        public static ServiceProblemClassificationResult ServiceProblemClassificationResult(string problemId = null, string title = null, string description = null, ResourceIdentifier serviceId = null, string problemClassificationId = null, ResourceIdentifier relatedServiceId = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null)
         {
-            resourceTypes ??= new List<string>();
+            resourceTypes ??= new List<ResourceType>();
 
-            return new ProblemClassificationsClassificationResult(
+            return new ServiceProblemClassificationResult(
                 problemId,
                 title,
                 description,
                 serviceId,
                 problemClassificationId,
-                serviceIdRelatedServiceId,
+                relatedServiceId,
                 displayName,
                 resourceTypes?.ToList(),
                 serializedAdditionalRawData: null);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="Models.LookUpResourceIdResult"/>. </summary>
         /// <param name="resourceId"> The resource Id of support resource type. </param>
         /// <returns> A new <see cref="Models.LookUpResourceIdResult"/> instance for mocking. </returns>
-        public static LookUpResourceIdResult LookUpResourceIdResult(string resourceId = null)
+        public static LookUpResourceIdResult LookUpResourceIdResult(ResourceIdentifier resourceId = null)
         {
             return new LookUpResourceIdResult(resourceId, serializedAdditionalRawData: null);
         }

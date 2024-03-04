@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> ProblemClassification Classification result object. </summary>
-    public partial class ProblemClassificationsClassificationResult
+    public partial class ServiceProblemClassificationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,30 +46,30 @@ namespace Azure.ResourceManager.Support.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsClassificationResult"/>. </summary>
-        internal ProblemClassificationsClassificationResult()
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationResult"/>. </summary>
+        internal ServiceProblemClassificationResult()
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            ResourceTypes = new ChangeTrackingList<ResourceType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationResult"/>. </summary>
         /// <param name="problemId"> Identifier that may be used for solution discovery or some other purposes. </param>
         /// <param name="title"> Title of the problem classification result. </param>
         /// <param name="description"> Description of the problem classification result. </param>
         /// <param name="serviceId"> Identifier of the service associated with this problem classification result. </param>
         /// <param name="problemClassificationId"> Identifier that may be used for support ticket creation. </param>
-        /// <param name="serviceIdRelatedServiceId"> Azure resource Id of the service. </param>
+        /// <param name="relatedServiceId"> Azure resource Id of the service. </param>
         /// <param name="displayName"> Localized name of the azure service. </param>
         /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationsClassificationResult(string problemId, string title, string description, string serviceId, string problemClassificationId, ResourceIdentifier serviceIdRelatedServiceId, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceProblemClassificationResult(string problemId, string title, string description, ResourceIdentifier serviceId, string problemClassificationId, ResourceIdentifier relatedServiceId, string displayName, IReadOnlyList<ResourceType> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProblemId = problemId;
             Title = title;
             Description = description;
             ServiceId = serviceId;
             ProblemClassificationId = problemClassificationId;
-            ServiceIdRelatedServiceId = serviceIdRelatedServiceId;
+            RelatedServiceId = relatedServiceId;
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Description of the problem classification result. </summary>
         public string Description { get; }
         /// <summary> Identifier of the service associated with this problem classification result. </summary>
-        public string ServiceId { get; }
+        public ResourceIdentifier ServiceId { get; }
         /// <summary> Identifier that may be used for support ticket creation. </summary>
         public string ProblemClassificationId { get; }
         /// <summary> Azure resource Id of the service. </summary>
-        public ResourceIdentifier ServiceIdRelatedServiceId { get; }
+        public ResourceIdentifier RelatedServiceId { get; }
         /// <summary> Localized name of the azure service. </summary>
         public string DisplayName { get; }
         /// <summary> List of applicable ARM resource types for this service. </summary>
-        public IReadOnlyList<string> ResourceTypes { get; }
+        public IReadOnlyList<ResourceType> ResourceTypes { get; }
     }
 }

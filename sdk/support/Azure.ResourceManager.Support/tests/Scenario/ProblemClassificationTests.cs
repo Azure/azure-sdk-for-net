@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task ClassifyProblems()
         {
-            var problemClassificationContent = new ProblemClassificationContent(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
-            var problemClassificationOutput = await DefaultSubscription.ClassifyProblemClassificationAsync(_serviceId, problemClassificationContent);
+            var problemClassificationContent = new ServiceProblemClassificationContent(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
+            var problemClassificationOutput = await DefaultSubscription.ClassifyServiceProblemAsync(_serviceId, problemClassificationContent);
             this.ValidateProblemClassification(problemClassificationOutput.Value.ProblemClassificationResults.FirstOrDefault());
         }
 
-        private void ValidateProblemClassification(ProblemClassificationsClassificationResult problemClassification)
+        private void ValidateProblemClassification(ServiceProblemClassificationResult problemClassification)
         {
             Assert.IsNotNull(problemClassification);
             Assert.IsNotEmpty(problemClassification.ServiceId);

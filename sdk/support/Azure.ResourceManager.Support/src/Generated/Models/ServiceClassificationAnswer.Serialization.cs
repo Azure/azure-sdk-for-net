@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (!(ResourceTypes is ChangeTrackingList<ResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayNameChildServiceDisplayName);
             }
-            if (!(ResourceTypesChildServiceResourceTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (!(ResourceTypesChildServiceResourceTypes is ChangeTrackingList<ResourceType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Support.Models
             }
             ResourceIdentifier serviceId = default;
             string displayName = default;
-            IReadOnlyList<string> resourceTypes = default;
+            IReadOnlyList<ResourceType> resourceTypes = default;
             ResourceIdentifier serviceId0 = default;
             string displayName0 = default;
-            IReadOnlyList<string> resourceTypes0 = default;
+            IReadOnlyList<ResourceType> resourceTypes0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceType> array = new List<ResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Support.Models
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceType> array = new List<ResourceType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new ResourceType(item.GetString()));
                             }
                             resourceTypes0 = array;
                             continue;
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.Support.Models
             return new ServiceClassificationAnswer(
                 serviceId,
                 displayName,
-                resourceTypes ?? new ChangeTrackingList<string>(),
+                resourceTypes ?? new ChangeTrackingList<ResourceType>(),
                 serializedAdditionalRawData,
                 serviceId0,
                 displayName0,
-                resourceTypes0 ?? new ChangeTrackingList<string>());
+                resourceTypes0 ?? new ChangeTrackingList<ResourceType>());
         }
 
         BinaryData IPersistableModel<ServiceClassificationAnswer>.Write(ModelReaderWriterOptions options)

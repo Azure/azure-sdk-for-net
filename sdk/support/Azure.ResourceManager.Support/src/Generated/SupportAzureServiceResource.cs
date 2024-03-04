@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Support
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ProblemClassificationResult>> ClassifyProblemClassificationAsync(ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyProblemClassification");
+            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyServiceProblem");
             scope.Start();
             try
             {
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.Support
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ProblemClassificationResult> ClassifyProblemClassification(ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyProblemClassification");
+            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyServiceProblem");
             scope.Start();
             try
             {

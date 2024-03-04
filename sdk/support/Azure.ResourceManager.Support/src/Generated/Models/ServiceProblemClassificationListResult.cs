@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Output of the problem classification Classification API. </summary>
-    public partial class ProblemClassificationResult
+    public partial class ServiceProblemClassificationListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Support.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationResult"/>. </summary>
-        internal ProblemClassificationResult()
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationListResult"/>. </summary>
+        internal ServiceProblemClassificationListResult()
         {
-            ProblemClassificationResults = new ChangeTrackingList<ProblemClassificationsClassificationResult>();
+            ProblemClassificationResults = new ChangeTrackingList<ServiceProblemClassificationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProblemClassificationListResult"/>. </summary>
         /// <param name="problemClassificationResults"> Set of problem classification objects classified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationResult(IReadOnlyList<ProblemClassificationsClassificationResult> problemClassificationResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceProblemClassificationListResult(IReadOnlyList<ServiceProblemClassificationResult> problemClassificationResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProblemClassificationResults = problemClassificationResults;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Set of problem classification objects classified. </summary>
-        public IReadOnlyList<ProblemClassificationsClassificationResult> ProblemClassificationResults { get; }
+        public IReadOnlyList<ServiceProblemClassificationResult> ProblemClassificationResults { get; }
     }
 }

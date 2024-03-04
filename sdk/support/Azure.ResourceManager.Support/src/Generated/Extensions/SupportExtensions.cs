@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyProblemClassification(string,ProblemClassificationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyServiceProblem(string,ServiceProblemClassificationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -604,14 +604,14 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ProblemClassificationResult>> ClassifyProblemClassificationAsync(this SubscriptionResource subscriptionResource, string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(this SubscriptionResource subscriptionResource, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionResource == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionResource));
             }
 
-            return await GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyProblemClassificationAsync(problemServiceName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServiceProblemAsync(problemServiceName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyProblemClassification(string,ProblemClassificationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyServiceProblem(string,ServiceProblemClassificationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -645,14 +645,14 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<ProblemClassificationResult> ClassifyProblemClassification(this SubscriptionResource subscriptionResource, string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
+        public static Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(this SubscriptionResource subscriptionResource, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionResource == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionResource));
             }
 
-            return GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyProblemClassification(problemServiceName, content, cancellationToken);
+            return GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServiceProblem(problemServiceName, content, cancellationToken);
         }
 
         /// <summary>

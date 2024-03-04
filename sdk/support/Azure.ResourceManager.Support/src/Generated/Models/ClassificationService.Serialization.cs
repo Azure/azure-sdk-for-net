@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (!(ResourceTypes is ChangeTrackingList<ResourceType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.Support.Models
             }
             ResourceIdentifier serviceId = default;
             string displayName = default;
-            IReadOnlyList<string> resourceTypes = default;
+            IReadOnlyList<ResourceType> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceType> array = new List<ResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassificationService(serviceId, displayName, resourceTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ClassificationService(serviceId, displayName, resourceTypes ?? new ChangeTrackingList<ResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassificationService>.Write(ModelReaderWriterOptions options)

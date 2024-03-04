@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -53,13 +54,13 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="LookUpResourceIdResult"/>. </summary>
         /// <param name="resourceId"> The resource Id of support resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LookUpResourceIdResult(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LookUpResourceIdResult(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource Id of support resource type. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }
