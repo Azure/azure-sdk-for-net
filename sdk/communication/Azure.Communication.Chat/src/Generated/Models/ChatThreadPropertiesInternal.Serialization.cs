@@ -26,7 +26,8 @@ namespace Azure.Communication.Chat
             DateTimeOffset createdOn = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
             Optional<DateTimeOffset> deletedOn = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            Optional<ChatRetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,8 +73,24 @@ namespace Azure.Communication.Chat
                     metadata = dictionary;
                     continue;
                 }
+                if (property.NameEquals("retentionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retentionPolicy = ChatRetentionPolicy.DeserializeChatRetentionPolicy(property.Value);
+                    continue;
+                }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn), Optional.ToDictionary(metadata));
+            return new ChatThreadPropertiesInternal(
+                id,
+                topic,
+                createdOn,
+                createdByCommunicationIdentifier,
+                Optional.ToNullable(deletedOn),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                retentionPolicy.Value);
         }
     }
 }

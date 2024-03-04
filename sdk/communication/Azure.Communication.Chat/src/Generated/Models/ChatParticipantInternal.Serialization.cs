@@ -30,7 +30,7 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("shareHistoryTime"u8);
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.Communication.Chat
             CommunicationIdentifierModel communicationIdentifier = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> shareHistoryTime = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))
@@ -90,7 +90,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime), Optional.ToDictionary(metadata));
+            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime), metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }
