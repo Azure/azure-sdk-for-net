@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (!(FirewallRules is ChangeTrackingList<AnalysisIPv4FirewallRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsPowerBIServiceEnabled.HasValue)
+            if (Optional.IsDefined(IsPowerBIServiceEnabled))
             {
                 writer.WritePropertyName("enablePowerBIService"u8);
                 writer.WriteBooleanValue(IsPowerBIServiceEnabled.Value);
