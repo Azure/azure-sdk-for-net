@@ -10,19 +10,21 @@ parameters:
   ArtifactName: ''
   ArtifactPath: ''
   CustomCondition: true
-  DisplayName: 'Publish Artifacts'
 
 steps:
-  - task: 1ES.PublishPipelineArtifact@1
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
     condition: and(succeeded(), ${{ parameters.CustomCondition }})
-    displayName: '${{ parameters.DisplayName }} - ${{ parameters.ArtifactName }}'
-    inputs:
-      artifact: '${{ parameters.ArtifactName }}'
-      path: '${{ parameters.ArtifactPath }}'
+    displayName: Set Artifact Name
+
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
+    condition: and(failed(), ${{ parameters.CustomCondition }})
+    displayName: Set Failed Artifact Name
 
   - task: 1ES.PublishPipelineArtifact@1
-    condition: and(failed(), ${{ parameters.CustomCondition }})
-    displayName: 'Failed - ${{ parameters.DisplayName }} - ${{ parameters.ArtifactName }}'
+    condition: and(succeeded(), ${{ parameters.CustomCondition }})
+    displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
     inputs:
-      artifact: '${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)'
+      artifact: '$(PublishArtifactName)'
       path: '${{ parameters.ArtifactPath }}'
