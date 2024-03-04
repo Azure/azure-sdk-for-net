@@ -10,19 +10,18 @@ parameters:
   ArtifactName: ''
   ArtifactPath: ''
   CustomCondition: true
-  DisplayName: 'Publish Artifacts'
 
 steps:
-  - task: 1ES.PublishPipelineArtifact@1
+  - task: PublishPipelineArtifact@1
     condition: and(succeeded(), ${{ parameters.CustomCondition }})
-    displayName: '${{ parameters.DisplayName }} - ${{ parameters.ArtifactName }}'
+    displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
     inputs:
-      artifact: '${{ parameters.ArtifactName }}'
+      artifactName: '${{ parameters.ArtifactName }}'
       path: '${{ parameters.ArtifactPath }}'
 
-  - task: 1ES.PublishPipelineArtifact@1
+  - task: PublishPipelineArtifact@1
     condition: and(failed(), ${{ parameters.CustomCondition }})
-    displayName: 'Failed - ${{ parameters.DisplayName }} - ${{ parameters.ArtifactName }}'
+    displayName: 'Publish failed ${{ parameters.ArtifactName }} Artifacts'
     inputs:
-      artifact: '${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)'
+      artifactName: '${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)'
       path: '${{ parameters.ArtifactPath }}'
