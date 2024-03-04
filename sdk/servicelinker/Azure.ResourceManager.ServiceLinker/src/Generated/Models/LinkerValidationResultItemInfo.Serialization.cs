@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Result.HasValue)
+            if (Optional.IsDefined(Result))
             {
                 if (Result != null)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("result");
                 }
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 if (ErrorMessage != null)
                 {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 if (ErrorCode != null)
                 {

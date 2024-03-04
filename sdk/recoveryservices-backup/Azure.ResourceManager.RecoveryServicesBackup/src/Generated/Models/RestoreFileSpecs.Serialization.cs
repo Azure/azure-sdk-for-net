@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (FileSpecType != null)
+            if (Optional.IsDefined(FileSpecType))
             {
                 writer.WritePropertyName("fileSpecType"u8);
                 writer.WriteStringValue(FileSpecType);
             }
-            if (TargetFolderPath != null)
+            if (Optional.IsDefined(TargetFolderPath))
             {
                 writer.WritePropertyName("targetFolderPath"u8);
                 writer.WriteStringValue(TargetFolderPath);
