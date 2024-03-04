@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Array of private endpoint connections. </summary>
+        [WirePath("value")]
         public IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> Value { get; }
     }
 }

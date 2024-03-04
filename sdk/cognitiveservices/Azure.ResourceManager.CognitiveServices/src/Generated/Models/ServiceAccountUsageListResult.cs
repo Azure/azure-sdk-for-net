@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The link used to get the next page of Usages. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
         /// <summary> The list of usages for Cognitive Service account. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ServiceAccountUsage> Value { get; }
     }
 }

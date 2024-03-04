@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
+        [WirePath("defaultAction")]
         public CognitiveServicesNetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
+        [WirePath("ipRules")]
         public IList<CognitiveServicesIPRule> IPRules { get; }
         /// <summary> The list of virtual network rules. </summary>
+        [WirePath("virtualNetworkRules")]
         public IList<CognitiveServicesVirtualNetworkRule> VirtualNetworkRules { get; }
     }
 }
