@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (!(IotHubs is ChangeTrackingList<DeviceUpdateIotHubSettings> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IotHubs))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 writer.WriteEndArray();
             }
-            if (EnableDiagnostics.HasValue)
+            if (Optional.IsDefined(EnableDiagnostics))
             {
                 writer.WritePropertyName("enableDiagnostics"u8);
                 writer.WriteBooleanValue(EnableDiagnostics.Value);
             }
-            if (DiagnosticStorageProperties != null)
+            if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
                 writer.WriteObjectValue(DiagnosticStorageProperties);

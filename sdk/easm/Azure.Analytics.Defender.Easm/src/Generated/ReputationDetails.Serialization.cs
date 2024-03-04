@@ -27,42 +27,42 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (ListName != null)
+            if (Optional.IsDefined(ListName))
             {
                 writer.WritePropertyName("listName"u8);
                 writer.WriteStringValue(ListName);
             }
-            if (ThreatType != null)
+            if (Optional.IsDefined(ThreatType))
             {
                 writer.WritePropertyName("threatType"u8);
                 writer.WriteStringValue(ThreatType);
             }
-            if (Trusted.HasValue)
+            if (Optional.IsDefined(Trusted))
             {
                 writer.WritePropertyName("trusted"u8);
                 writer.WriteBooleanValue(Trusted.Value);
             }
-            if (Cidr != null)
+            if (Optional.IsDefined(Cidr))
             {
                 writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (ListUpdatedAt.HasValue)
+            if (Optional.IsDefined(ListUpdatedAt))
             {
                 writer.WritePropertyName("listUpdatedAt"u8);
                 writer.WriteStringValue(ListUpdatedAt.Value, "O");
             }
-            if (Recent.HasValue)
+            if (Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);

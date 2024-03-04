@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (WhoisId.HasValue)
+            if (Optional.IsDefined(WhoisId))
             {
                 writer.WritePropertyName("whoisId"u8);
                 writer.WriteNumberValue(WhoisId.Value);
             }
-            if (!(RegistrarIanaIds is ChangeTrackingList<ObservedInteger> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarIanaIds))
             {
                 writer.WritePropertyName("registrarIanaIds"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantContacts is ChangeTrackingList<ObservedString> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantContacts))
             {
                 writer.WritePropertyName("registrantContacts"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantOrgs is ChangeTrackingList<ObservedString> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantOrgs))
             {
                 writer.WritePropertyName("registrantOrgs"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminContacts is ChangeTrackingList<ObservedString> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminContacts))
             {
                 writer.WritePropertyName("adminContacts"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalContacts is ChangeTrackingList<ObservedString> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalContacts))
             {
                 writer.WritePropertyName("technicalContacts"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlexaInfos is ChangeTrackingList<AlexaInfo> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AlexaInfos))
             {
                 writer.WritePropertyName("alexaInfos"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(NameServers is ChangeTrackingList<ObservedString> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(NameServers))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(MailServers is ChangeTrackingList<ObservedString> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(MailServers))
             {
                 writer.WritePropertyName("mailServers"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(WhoisServers is ChangeTrackingList<ObservedString> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(WhoisServers))
             {
                 writer.WritePropertyName("whoisServers"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(DomainStatuses is ChangeTrackingList<ObservedString> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(DomainStatuses))
             {
                 writer.WritePropertyName("domainStatuses"u8);
                 writer.WriteStartArray();
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrarCreatedAt is ChangeTrackingList<ObservedLong> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarCreatedAt))
             {
                 writer.WritePropertyName("registrarCreatedAt"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrarUpdatedAt is ChangeTrackingList<ObservedLong> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarUpdatedAt))
             {
                 writer.WritePropertyName("registrarUpdatedAt"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrarExpiresAt is ChangeTrackingList<ObservedLong> collection11 && collection11.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarExpiresAt))
             {
                 writer.WritePropertyName("registrarExpiresAt"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SoaRecords is ChangeTrackingList<SoaRecord> collection12 && collection12.IsUndefined))
+            if (Optional.IsCollectionDefined(SoaRecords))
             {
                 writer.WritePropertyName("soaRecords"u8);
                 writer.WriteStartArray();
@@ -177,12 +177,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (DetailedFromWhoisAt.HasValue)
+            if (Optional.IsDefined(DetailedFromWhoisAt))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
                 writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
             }
-            if (!(RegistrarNames is ChangeTrackingList<ObservedString> collection13 && collection13.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrarNames))
             {
                 writer.WritePropertyName("registrarNames"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<SourceDetails> collection14 && collection14.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -202,22 +202,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (!(ParkedDomain is ChangeTrackingList<ObservedBoolean> collection15 && collection15.IsUndefined))
+            if (Optional.IsCollectionDefined(ParkedDomain))
             {
                 writer.WritePropertyName("parkedDomain"u8);
                 writer.WriteStartArray();
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantNames is ChangeTrackingList<ObservedString> collection16 && collection16.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantNames))
             {
                 writer.WritePropertyName("registrantNames"u8);
                 writer.WriteStartArray();
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminNames is ChangeTrackingList<ObservedString> collection17 && collection17.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminNames))
             {
                 writer.WritePropertyName("adminNames"u8);
                 writer.WriteStartArray();
@@ -247,7 +247,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalNames is ChangeTrackingList<ObservedString> collection18 && collection18.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalNames))
             {
                 writer.WritePropertyName("technicalNames"u8);
                 writer.WriteStartArray();
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminOrgs is ChangeTrackingList<ObservedString> collection19 && collection19.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminOrgs))
             {
                 writer.WritePropertyName("adminOrgs"u8);
                 writer.WriteStartArray();
@@ -267,7 +267,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalOrgs is ChangeTrackingList<ObservedString> collection20 && collection20.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalOrgs))
             {
                 writer.WritePropertyName("technicalOrgs"u8);
                 writer.WriteStartArray();
@@ -277,7 +277,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistrantPhones is ChangeTrackingList<ObservedString> collection21 && collection21.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrantPhones))
             {
                 writer.WritePropertyName("registrantPhones"u8);
                 writer.WriteStartArray();
@@ -287,7 +287,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdminPhones is ChangeTrackingList<ObservedString> collection22 && collection22.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminPhones))
             {
                 writer.WritePropertyName("adminPhones"u8);
                 writer.WriteStartArray();
@@ -297,7 +297,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(TechnicalPhones is ChangeTrackingList<ObservedString> collection23 && collection23.IsUndefined))
+            if (Optional.IsCollectionDefined(TechnicalPhones))
             {
                 writer.WritePropertyName("technicalPhones"u8);
                 writer.WriteStartArray();

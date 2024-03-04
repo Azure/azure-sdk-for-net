@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (!(MatchConditions is ChangeTrackingList<RulesEngineMatchCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
                 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("matchConditions");
                 }
             }
-            if (MatchProcessingBehavior.HasValue)
+            if (Optional.IsDefined(MatchProcessingBehavior))
             {
                 if (MatchProcessingBehavior != null)
                 {

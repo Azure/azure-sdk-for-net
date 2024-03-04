@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (DocumentationUri != null)
+            if (Optional.IsDefined(DocumentationUri))
             {
                 writer.WritePropertyName("documentationUrl"u8);
                 writer.WriteStringValue(DocumentationUri.AbsoluteUri);
             }
-            if (DataSchemaUri != null)
+            if (Optional.IsDefined(DataSchemaUri))
             {
                 writer.WritePropertyName("dataSchemaUrl"u8);
                 writer.WriteStringValue(DataSchemaUri.AbsoluteUri);
