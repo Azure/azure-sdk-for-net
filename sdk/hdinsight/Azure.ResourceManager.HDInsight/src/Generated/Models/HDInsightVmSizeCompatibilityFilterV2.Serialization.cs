@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (FilterMode.HasValue)
+            if (Optional.IsDefined(FilterMode))
             {
                 writer.WritePropertyName("filterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
             }
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClusterFlavors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterFlavors))
             {
                 writer.WritePropertyName("clusterFlavors"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NodeTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeTypes))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClusterVersions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterVersions))
             {
                 writer.WritePropertyName("clusterVersions"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(OSType is ChangeTrackingList<HDInsightOSType> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmSizes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(VmSizes))
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EspApplied != null)
+            if (Optional.IsDefined(EspApplied))
             {
                 writer.WritePropertyName("espApplied"u8);
                 writer.WriteStringValue(EspApplied);
             }
-            if (IsComputeIsolationSupported != null)
+            if (Optional.IsDefined(IsComputeIsolationSupported))
             {
                 writer.WritePropertyName("computeIsolationSupported"u8);
                 writer.WriteStringValue(IsComputeIsolationSupported);

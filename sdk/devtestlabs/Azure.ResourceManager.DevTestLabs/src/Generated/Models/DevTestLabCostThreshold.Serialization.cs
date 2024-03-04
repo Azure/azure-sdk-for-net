@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ThresholdId != null)
+            if (Optional.IsDefined(ThresholdId))
             {
                 writer.WritePropertyName("thresholdId"u8);
                 writer.WriteStringValue(ThresholdId);
             }
-            if (PercentageThreshold != null)
+            if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
                 writer.WriteObjectValue(PercentageThreshold);
             }
-            if (DisplayOnChart.HasValue)
+            if (Optional.IsDefined(DisplayOnChart))
             {
                 writer.WritePropertyName("displayOnChart"u8);
                 writer.WriteStringValue(DisplayOnChart.Value.ToString());
             }
-            if (SendNotificationWhenExceeded.HasValue)
+            if (Optional.IsDefined(SendNotificationWhenExceeded))
             {
                 writer.WritePropertyName("sendNotificationWhenExceeded"u8);
                 writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToString());
             }
-            if (NotificationSent != null)
+            if (Optional.IsDefined(NotificationSent))
             {
                 writer.WritePropertyName("notificationSent"u8);
                 writer.WriteStringValue(NotificationSent);

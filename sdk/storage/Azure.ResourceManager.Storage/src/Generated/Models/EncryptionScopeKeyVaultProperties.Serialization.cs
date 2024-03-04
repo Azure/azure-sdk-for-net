@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (options.Format != "W" && CurrentVersionedKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
             {
                 writer.WritePropertyName("currentVersionedKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentVersionedKeyIdentifier);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkToNetworkInterconnectId != null)
+            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
             {
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
-            if (OptionBProperties != null)
+            if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (OptionAProperties != null)
+            if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);

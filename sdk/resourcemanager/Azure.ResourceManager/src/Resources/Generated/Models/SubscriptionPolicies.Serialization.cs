@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocationPlacementId != null)
+            if (options.Format != "W" && Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            if (options.Format != "W" && QuotaId != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaId))
             {
                 writer.WritePropertyName("quotaId"u8);
                 writer.WriteStringValue(QuotaId);
             }
-            if (options.Format != "W" && SpendingLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpendingLimit))
             {
                 writer.WritePropertyName("spendingLimit"u8);
                 writer.WriteStringValue(SpendingLimit.Value.ToSerialString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (ClusterTotalStorageInMB.HasValue)
+            if (Optional.IsDefined(ClusterTotalStorageInMB))
             {
                 writer.WritePropertyName("clusterTotalStorageMb"u8);
                 writer.WriteNumberValue(ClusterTotalStorageInMB.Value);
             }
-            if (ClusterFreeStorageInMB.HasValue)
+            if (Optional.IsDefined(ClusterFreeStorageInMB))
             {
                 writer.WritePropertyName("clusterFreeStorageMb"u8);
                 writer.WriteNumberValue(ClusterFreeStorageInMB.Value);

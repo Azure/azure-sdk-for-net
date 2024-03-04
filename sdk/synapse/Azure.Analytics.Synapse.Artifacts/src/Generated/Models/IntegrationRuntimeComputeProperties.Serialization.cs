@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,32 +20,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (NodeSize != null)
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (NumberOfNodes.HasValue)
+            if (Optional.IsDefined(NumberOfNodes))
             {
                 writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
-            if (MaxParallelExecutionsPerNode.HasValue)
+            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
             {
                 writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
-            if (DataFlowProperties != null)
+            if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (VNetProperties != null)
+            if (Optional.IsDefined(VNetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VNetProperties);

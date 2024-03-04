@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (StorageContainerId != null)
+            if (Optional.IsDefined(StorageContainerId))
             {
                 writer.WritePropertyName("storageContainerId"u8);
                 writer.WriteStringValue(StorageContainerId);
             }
-            if (IsDynamic.HasValue)
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);

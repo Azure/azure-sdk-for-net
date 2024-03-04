@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,12 +19,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("videoName"u8);
             writer.WriteStringValue(VideoName);
-            if (VideoCreationProperties != null)
+            if (Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
                 writer.WriteObjectValue(VideoCreationProperties);
             }
-            if (VideoPublishingOptions != null)
+            if (Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
                 writer.WriteObjectValue(VideoPublishingOptions);

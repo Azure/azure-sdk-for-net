@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            if (KnowledgeGraphLastUpdateDate.HasValue)
+            if (Optional.IsDefined(KnowledgeGraphLastUpdateDate))
             {
                 writer.WritePropertyName("knowledgeGraphLastUpdateDate"u8);
                 writer.WriteStringValue(KnowledgeGraphLastUpdateDate.Value, "D");

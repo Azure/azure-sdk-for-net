@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DomainOwnershipIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(DomainOwnershipIdentifier))
             {
                 writer.WritePropertyName("domainOwnershipIdentifier"u8);
                 writer.WriteStringValue(DomainOwnershipIdentifier);

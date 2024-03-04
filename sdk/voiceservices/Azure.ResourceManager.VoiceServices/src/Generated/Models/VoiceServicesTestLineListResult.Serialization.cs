@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);

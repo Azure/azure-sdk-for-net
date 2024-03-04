@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (InstallGpuDrivers.HasValue)
+            if (Optional.IsDefined(InstallGpuDrivers))
             {
                 writer.WritePropertyName("installGpuDrivers"u8);
                 writer.WriteStringValue(InstallGpuDrivers.Value.ToSerialString());

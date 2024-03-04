@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +48,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StackName != null)
+            if (Optional.IsDefined(StackName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(StackName);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Dependency != null)
+            if (Optional.IsDefined(Dependency))
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (!(MajorVersions is ChangeTrackingList<StackMajorVersion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MajorVersions))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Frameworks is ChangeTrackingList<ApplicationStack> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Frameworks))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IsDeprecated is ChangeTrackingList<ApplicationStack> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();

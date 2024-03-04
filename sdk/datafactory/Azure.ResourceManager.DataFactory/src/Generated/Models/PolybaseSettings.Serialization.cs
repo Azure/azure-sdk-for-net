@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (RejectType.HasValue)
+            if (Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (RejectValue != null)
+            if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
                 JsonSerializer.Serialize(writer, RejectValue);
             }
-            if (RejectSampleValue != null)
+            if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 JsonSerializer.Serialize(writer, RejectSampleValue);
             }
-            if (UseTypeDefault != null)
+            if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 JsonSerializer.Serialize(writer, UseTypeDefault);

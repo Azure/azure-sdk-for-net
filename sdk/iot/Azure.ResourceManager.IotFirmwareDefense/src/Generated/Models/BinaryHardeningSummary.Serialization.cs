@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (TotalFiles.HasValue)
+            if (Optional.IsDefined(TotalFiles))
             {
                 writer.WritePropertyName("totalFiles"u8);
                 writer.WriteNumberValue(TotalFiles.Value);
             }
-            if (NXPercentage.HasValue)
+            if (Optional.IsDefined(NXPercentage))
             {
                 if (NXPercentage != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("nx");
                 }
             }
-            if (PiePercentage.HasValue)
+            if (Optional.IsDefined(PiePercentage))
             {
                 if (PiePercentage != null)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("pie");
                 }
             }
-            if (RelroPercentage.HasValue)
+            if (Optional.IsDefined(RelroPercentage))
             {
                 if (RelroPercentage != null)
                 {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("relro");
                 }
             }
-            if (CanaryPercentage.HasValue)
+            if (Optional.IsDefined(CanaryPercentage))
             {
                 if (CanaryPercentage != null)
                 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("canary");
                 }
             }
-            if (StrippedPercentage.HasValue)
+            if (Optional.IsDefined(StrippedPercentage))
             {
                 if (StrippedPercentage != null)
                 {

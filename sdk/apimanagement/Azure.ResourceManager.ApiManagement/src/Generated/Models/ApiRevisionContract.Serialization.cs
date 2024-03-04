@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ApiId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (options.Format != "W" && ApiRevision != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && PrivateUriString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateUriString))
             {
                 writer.WritePropertyName("privateUrl"u8);
                 writer.WriteStringValue(PrivateUriString);
             }
-            if (options.Format != "W" && IsOnline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (options.Format != "W" && IsCurrent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);

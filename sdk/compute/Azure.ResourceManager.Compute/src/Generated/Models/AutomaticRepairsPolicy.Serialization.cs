@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (GracePeriod != null)
+            if (Optional.IsDefined(GracePeriod))
             {
                 writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod);
             }
-            if (RepairAction.HasValue)
+            if (Optional.IsDefined(RepairAction))
             {
                 writer.WritePropertyName("repairAction"u8);
                 writer.WriteStringValue(RepairAction.Value.ToString());

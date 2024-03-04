@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);

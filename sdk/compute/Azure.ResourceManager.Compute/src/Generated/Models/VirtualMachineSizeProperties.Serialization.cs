@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (VCpusAvailable.HasValue)
+            if (Optional.IsDefined(VCpusAvailable))
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
                 writer.WriteNumberValue(VCpusAvailable.Value);
             }
-            if (VCpusPerCore.HasValue)
+            if (Optional.IsDefined(VCpusPerCore))
             {
                 writer.WritePropertyName("vCPUsPerCore"u8);
                 writer.WriteNumberValue(VCpusPerCore.Value);

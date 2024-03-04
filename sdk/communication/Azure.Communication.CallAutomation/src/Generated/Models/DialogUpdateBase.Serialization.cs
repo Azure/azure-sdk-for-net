@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (!(Context is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartObject();

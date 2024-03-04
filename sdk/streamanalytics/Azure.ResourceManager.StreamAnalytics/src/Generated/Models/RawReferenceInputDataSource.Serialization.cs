@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
 #if NET6_0_OR_GREATER
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
 #endif
             }
-            if (PayloadUri != null)
+            if (Optional.IsDefined(PayloadUri))
             {
                 writer.WritePropertyName("payloadUri"u8);
                 writer.WriteStringValue(PayloadUri.AbsoluteUri);

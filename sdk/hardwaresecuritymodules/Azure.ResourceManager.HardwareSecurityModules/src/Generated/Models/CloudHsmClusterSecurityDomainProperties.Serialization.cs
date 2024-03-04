@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (FipsState.HasValue)
+            if (Optional.IsDefined(FipsState))
             {
                 writer.WritePropertyName("fipsState"u8);
                 writer.WriteNumberValue(FipsState.Value);
             }
-            if (ActivationStatus != null)
+            if (Optional.IsDefined(ActivationStatus))
             {
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus);

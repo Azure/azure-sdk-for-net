@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClusterPoolVersionValue != null)
+            if (Optional.IsDefined(ClusterPoolVersionValue))
             {
                 writer.WritePropertyName("clusterPoolVersion"u8);
                 writer.WriteStringValue(ClusterPoolVersionValue);
             }
-            if (AksVersion != null)
+            if (Optional.IsDefined(AksVersion))
             {
                 writer.WritePropertyName("aksVersion"u8);
                 writer.WriteStringValue(AksVersion);
             }
-            if (IsPreview.HasValue)
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);

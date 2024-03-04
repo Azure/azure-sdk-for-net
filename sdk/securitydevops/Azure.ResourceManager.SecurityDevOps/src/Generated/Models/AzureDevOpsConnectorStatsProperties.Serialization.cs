@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OrgsCount.HasValue)
+            if (Optional.IsDefined(OrgsCount))
             {
                 writer.WritePropertyName("orgsCount"u8);
                 writer.WriteNumberValue(OrgsCount.Value);
             }
-            if (ProjectsCount.HasValue)
+            if (Optional.IsDefined(ProjectsCount))
             {
                 writer.WritePropertyName("projectsCount"u8);
                 writer.WriteNumberValue(ProjectsCount.Value);
             }
-            if (ReposCount.HasValue)
+            if (Optional.IsDefined(ReposCount))
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);

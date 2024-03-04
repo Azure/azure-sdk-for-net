@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Qumulo;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
 
             writer.WriteStartObject();
-            if (MarketplaceSubscriptionId != null)
+            if (Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStringValue(OfferId);
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
-            if (options.Format != "W" && MarketplaceSubscriptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());

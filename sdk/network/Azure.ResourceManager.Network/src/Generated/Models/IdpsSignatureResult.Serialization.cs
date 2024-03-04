@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (SignatureId.HasValue)
+            if (Optional.IsDefined(SignatureId))
             {
                 writer.WritePropertyName("signatureId"u8);
                 writer.WriteNumberValue(SignatureId.Value);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteNumberValue((int)Mode.Value);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue((int)Severity.Value);
             }
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteNumberValue((int)Direction.Value);
             }
-            if (Group != null)
+            if (Optional.IsDefined(Group))
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteStringValue(Group);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (!(SourcePorts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePorts))
             {
                 writer.WritePropertyName("sourcePorts"u8);
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPorts is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdated != null)
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated);
             }
-            if (InheritedFromParentPolicy.HasValue)
+            if (Optional.IsDefined(InheritedFromParentPolicy))
             {
                 writer.WritePropertyName("inheritedFromParentPolicy"u8);
                 writer.WriteBooleanValue(InheritedFromParentPolicy.Value);

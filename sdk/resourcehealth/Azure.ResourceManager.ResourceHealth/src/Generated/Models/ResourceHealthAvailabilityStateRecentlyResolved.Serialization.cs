@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (UnavailableOccuredOn.HasValue)
+            if (Optional.IsDefined(UnavailableOccuredOn))
             {
                 writer.WritePropertyName("unavailableOccuredTime"u8);
                 writer.WriteStringValue(UnavailableOccuredOn.Value, "O");
             }
-            if (ResolvedOn.HasValue)
+            if (Optional.IsDefined(ResolvedOn))
             {
                 writer.WritePropertyName("resolvedTime"u8);
                 writer.WriteStringValue(ResolvedOn.Value, "O");
             }
-            if (UnavailableSummary != null)
+            if (Optional.IsDefined(UnavailableSummary))
             {
                 writer.WritePropertyName("unavailableSummary"u8);
                 writer.WriteStringValue(UnavailableSummary);

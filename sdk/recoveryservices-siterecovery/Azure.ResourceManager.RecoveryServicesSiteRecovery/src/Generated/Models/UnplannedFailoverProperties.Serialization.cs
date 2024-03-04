@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FailoverDirection != null)
+            if (Optional.IsDefined(FailoverDirection))
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (SourceSiteOperations != null)
+            if (Optional.IsDefined(SourceSiteOperations))
             {
                 writer.WritePropertyName("sourceSiteOperations"u8);
                 writer.WriteStringValue(SourceSiteOperations);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

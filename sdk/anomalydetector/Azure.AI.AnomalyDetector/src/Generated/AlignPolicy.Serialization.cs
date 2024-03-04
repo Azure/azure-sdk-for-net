@@ -27,17 +27,17 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (AlignMode.HasValue)
+            if (Optional.IsDefined(AlignMode))
             {
                 writer.WritePropertyName("alignMode"u8);
                 writer.WriteStringValue(AlignMode.Value.ToString());
             }
-            if (FillNAMethod.HasValue)
+            if (Optional.IsDefined(FillNAMethod))
             {
                 writer.WritePropertyName("fillNAMethod"u8);
                 writer.WriteStringValue(FillNAMethod.Value.ToString());
             }
-            if (PaddingValue.HasValue)
+            if (Optional.IsDefined(PaddingValue))
             {
                 writer.WritePropertyName("paddingValue"u8);
                 writer.WriteNumberValue(PaddingValue.Value);

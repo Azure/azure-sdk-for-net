@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(ExceptionRules is ChangeTrackingList<ExceptionRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExceptionRules))
             {
                 writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (MessageCount.HasValue)
+            if (Optional.IsDefined(MessageCount))
             {
                 writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Recurrence != null)
+            if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Business != null)
+            if (Optional.IsDefined(Business))
             {
                 writer.WritePropertyName("business"u8);
                 writer.WriteStringValue(Business);
             }
-            if (EmployeesNumber != null)
+            if (Optional.IsDefined(EmployeesNumber))
             {
                 writer.WritePropertyName("employeesNumber"u8);
                 writer.WriteStringValue(EmployeesNumber);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);

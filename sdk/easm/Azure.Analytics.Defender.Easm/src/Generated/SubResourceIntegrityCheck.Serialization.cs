@@ -27,47 +27,47 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Violation.HasValue)
+            if (Optional.IsDefined(Violation))
             {
                 writer.WritePropertyName("violation"u8);
                 writer.WriteBooleanValue(Violation.Value);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (CausePageUrl != null)
+            if (Optional.IsDefined(CausePageUrl))
             {
                 writer.WritePropertyName("causePageUrl"u8);
                 writer.WriteStringValue(CausePageUrl);
             }
-            if (CrawlGuid != null)
+            if (Optional.IsDefined(CrawlGuid))
             {
                 writer.WritePropertyName("crawlGuid"u8);
                 writer.WriteStringValue(CrawlGuid);
             }
-            if (PageGuid != null)
+            if (Optional.IsDefined(PageGuid))
             {
                 writer.WritePropertyName("pageGuid"u8);
                 writer.WriteStringValue(PageGuid);
             }
-            if (ResourceGuid != null)
+            if (Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (ExpectedHash != null)
+            if (Optional.IsDefined(ExpectedHash))
             {
                 writer.WritePropertyName("expectedHash"u8);
                 writer.WriteStringValue(ExpectedHash);

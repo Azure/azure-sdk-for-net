@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AcsKubeConfig != null)
+            if (options.Format != "W" && Optional.IsDefined(AcsKubeConfig))
             {
                 writer.WritePropertyName("acsKubeConfig"u8);
                 writer.WriteStringValue(AcsKubeConfig);
             }
-            if (options.Format != "W" && ServicePrincipalConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
                 writer.WriteObjectValue(ServicePrincipalConfiguration);
             }
-            if (options.Format != "W" && ImagePullSecretName != null)
+            if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
             {
                 writer.WritePropertyName("imagePullSecretName"u8);
                 writer.WriteStringValue(ImagePullSecretName);

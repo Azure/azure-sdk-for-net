@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (InstallMethod != null)
+            if (Optional.IsDefined(InstallMethod))
             {
                 writer.WritePropertyName("installMethod"u8);
                 writer.WriteObjectValue(InstallMethod);
             }
-            if (LogsAgent != null)
+            if (Optional.IsDefined(LogsAgent))
             {
                 writer.WritePropertyName("logsAgent"u8);
                 writer.WriteObjectValue(LogsAgent);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (SourceVmResourceId != null)
+            if (Optional.IsDefined(SourceVmResourceId))
             {
                 writer.WritePropertyName("sourceVirtualMachineResourceId"u8);
                 writer.WriteStringValue(SourceVmResourceId);
             }
-            if (DestinationVmName != null)
+            if (Optional.IsDefined(DestinationVmName))
             {
                 writer.WritePropertyName("destinationVirtualMachineName"u8);
                 writer.WriteStringValue(DestinationVmName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServiceClassificationResults is ChangeTrackingList<ServiceClassificationAnswer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceClassificationResults))
             {
                 writer.WritePropertyName("serviceClassificationResults"u8);
                 writer.WriteStartArray();

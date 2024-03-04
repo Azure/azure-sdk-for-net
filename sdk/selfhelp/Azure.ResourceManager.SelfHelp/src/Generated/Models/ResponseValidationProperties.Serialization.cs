@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Regex != null)
+            if (Optional.IsDefined(Regex))
             {
                 writer.WritePropertyName("regex"u8);
                 writer.WriteStringValue(Regex);
             }
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (ValidationErrorMessage != null)
+            if (Optional.IsDefined(ValidationErrorMessage))
             {
                 writer.WritePropertyName("validationErrorMessage"u8);
                 writer.WriteStringValue(ValidationErrorMessage);
             }
-            if (MaxLength.HasValue)
+            if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);

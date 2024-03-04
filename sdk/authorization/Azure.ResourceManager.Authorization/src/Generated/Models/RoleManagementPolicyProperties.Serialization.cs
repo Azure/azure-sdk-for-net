@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStartObject();
-            if (ScopeId != null)
+            if (Optional.IsDefined(ScopeId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ScopeId);
             }
-            if (ScopeDisplayName != null)
+            if (Optional.IsDefined(ScopeDisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(ScopeDisplayName);
             }
-            if (ScopeType.HasValue)
+            if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());

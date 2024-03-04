@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -20,17 +21,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (InternalExternalLink != null)
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (!(Administrators is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Administrators))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();

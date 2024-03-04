@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Directory != null)
+            if (Optional.IsDefined(Directory))
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
             }
             writer.WritePropertyName("repository"u8);
             writer.WriteStringValue(Repository);
-            if (Revision != null)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);

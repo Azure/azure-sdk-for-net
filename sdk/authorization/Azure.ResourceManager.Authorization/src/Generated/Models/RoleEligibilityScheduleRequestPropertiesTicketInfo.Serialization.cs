@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (TicketNumber != null)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteStringValue(TicketNumber);
             }
-            if (TicketSystem != null)
+            if (Optional.IsDefined(TicketSystem))
             {
                 writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);

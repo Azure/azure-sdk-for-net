@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && NginxVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(NginxVersion))
             {
                 writer.WritePropertyName("nginxVersion"u8);
                 writer.WriteStringValue(NginxVersion);
             }
-            if (ManagedResourceGroup != null)
+            if (Optional.IsDefined(ManagedResourceGroup))
             {
                 writer.WritePropertyName("managedResourceGroup"u8);
                 writer.WriteStringValue(ManagedResourceGroup);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (EnableDiagnosticsSupport.HasValue)
+            if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Logging != null)
+            if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
-            if (ScalingProperties != null)
+            if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties);
             }
-            if (UserProfile != null)
+            if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);

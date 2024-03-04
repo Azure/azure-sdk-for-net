@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ComputeRuntime != null)
+            if (Optional.IsDefined(ComputeRuntime))
             {
                 writer.WritePropertyName("computeRuntime"u8);
                 writer.WriteObjectValue(ComputeRuntime);
             }
-            if (OfflineStoreConnectionName != null)
+            if (Optional.IsDefined(OfflineStoreConnectionName))
             {
                 writer.WritePropertyName("offlineStoreConnectionName"u8);
                 writer.WriteStringValue(OfflineStoreConnectionName);
             }
-            if (OnlineStoreConnectionName != null)
+            if (Optional.IsDefined(OnlineStoreConnectionName))
             {
                 writer.WritePropertyName("onlineStoreConnectionName"u8);
                 writer.WriteStringValue(OnlineStoreConnectionName);

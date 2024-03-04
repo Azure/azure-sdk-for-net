@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStartObject();
             writer.WritePropertyName("issueSummary"u8);
             writer.WriteStringValue(IssueSummary);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);

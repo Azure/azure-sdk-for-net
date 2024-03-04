@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (MetricLabelsAllowlist != null)
+            if (Optional.IsDefined(MetricLabelsAllowlist))
             {
                 writer.WritePropertyName("metricLabelsAllowlist"u8);
                 writer.WriteStringValue(MetricLabelsAllowlist);
             }
-            if (MetricAnnotationsAllowList != null)
+            if (Optional.IsDefined(MetricAnnotationsAllowList))
             {
                 writer.WritePropertyName("metricAnnotationsAllowList"u8);
                 writer.WriteStringValue(MetricAnnotationsAllowList);

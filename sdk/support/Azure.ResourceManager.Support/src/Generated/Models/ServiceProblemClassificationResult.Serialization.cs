@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -26,44 +27,44 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProblemId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProblemId))
             {
                 writer.WritePropertyName("problemId"u8);
                 writer.WriteStringValue(ProblemId);
             }
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (options.Format != "W" && ProblemClassificationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProblemClassificationId))
             {
                 writer.WritePropertyName("problemClassificationId"u8);
                 writer.WriteStringValue(ProblemClassificationId);
             }
             writer.WritePropertyName("relatedService"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RelatedServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(RelatedServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(RelatedServiceId);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<ResourceType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();

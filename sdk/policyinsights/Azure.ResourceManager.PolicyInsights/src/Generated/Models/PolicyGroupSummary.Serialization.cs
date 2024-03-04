@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyGroupName != null)
+            if (Optional.IsDefined(PolicyGroupName))
             {
                 writer.WritePropertyName("policyGroupName"u8);
                 writer.WriteStringValue(PolicyGroupName);
             }
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);

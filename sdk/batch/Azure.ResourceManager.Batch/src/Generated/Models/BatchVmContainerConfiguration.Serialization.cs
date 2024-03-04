@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerType.ToString());
-            if (!(ContainerImageNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerImageNames))
             {
                 writer.WritePropertyName("containerImageNames"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContainerRegistries is ChangeTrackingList<BatchVmContainerRegistry> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerRegistries))
             {
                 writer.WritePropertyName("containerRegistries"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);

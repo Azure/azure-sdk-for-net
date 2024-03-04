@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -44,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,27 +75,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && KeyEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyEntityId))
             {
                 writer.WritePropertyName("keyEntityId"u8);
                 writer.WriteStringValue(KeyEntityId);
             }
-            if (options.Format != "W" && ValueData != null)
+            if (options.Format != "W" && Optional.IsDefined(ValueData))
             {
                 writer.WritePropertyName("valueData"u8);
                 writer.WriteStringValue(ValueData);
             }
-            if (options.Format != "W" && ValueName != null)
+            if (options.Format != "W" && Optional.IsDefined(ValueName))
             {
                 writer.WritePropertyName("valueName"u8);
                 writer.WriteStringValue(ValueName);
             }
-            if (options.Format != "W" && ValueType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValueType))
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());

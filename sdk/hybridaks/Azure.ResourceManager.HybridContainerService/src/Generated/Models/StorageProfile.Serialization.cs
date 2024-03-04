@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (SmbCsiDriver != null)
+            if (Optional.IsDefined(SmbCsiDriver))
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
                 writer.WriteObjectValue(SmbCsiDriver);
             }
-            if (NfsCsiDriver != null)
+            if (Optional.IsDefined(NfsCsiDriver))
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
                 writer.WriteObjectValue(NfsCsiDriver);
