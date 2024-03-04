@@ -47,6 +47,14 @@ Below, you will find sections explaining these shared concepts in more detail.
 `ClientPipelineOptions` allows overriding default client values for things like the network timeout used when sending a request or the maximum number of retries to send when a request fails.
 
 ```C# Snippet:ClientModelConfigurationReadme
+MapsClientOptions options = new()
+{
+    NetworkTimeout = TimeSpan.FromSeconds(120),
+};
+
+string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+ApiKeyCredential credential = new(key);
+MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
 ```
 
 For more information on client configuration, see [Client configuration samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/Configuration.md)
@@ -62,6 +70,30 @@ _Service clients_ have methods that are used to call cloud services to invoke se
 **Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return a `ClientResult` holding only the raw HTTP response details.  These methods also take an optional `RequestOptions` value that allows the client pipeline and the request to be configured for the duration of the call.
 
 ```C# Snippet:ClientResultTReadme
+// create a client
+string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+ApiKeyCredential credential = new(key);
+MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
+
+// call a service method, which returns ClientResult<T>
+IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
+
+// ClientResult<T> has two members:
+//
+// (1) A Value property to access the strongly-typed output
+IPAddressCountryPair value = result.Value;
+Console.WriteLine($"Country is {value.CountryRegion.IsoCode}.");
+
+// (2) A GetRawResponse method for accessing the details of the HTTP response
+PipelineResponse response = result.GetRawResponse();
+
+Console.WriteLine($"Response status code: '{response.Status}'.");
+Console.WriteLine("Response headers:");
+foreach (KeyValuePair<string, string> header in response.Headers)
+{
+    Console.WriteLine($"Name: '{header.Key}', Value: '{header.Value}'.");
+}
 ```
 
 For more information on client service methods, see [Client service method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md)
@@ -77,6 +109,17 @@ For more information on client service methods, see [Client service method sampl
 When a service call fails, `System.ClientModel`-based clients throw a `ClientResultException`.  The exception exposes the HTTP status code and the details of the service response if available.
 
 ```C# Snippet:ClientResultExceptionReadme
+try
+{
+    IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+    ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
+}
+// handle exception with status code 404
+catch (ClientResultException e) when (e.Status == 404)
+{
+    // handle not found error
+    Console.Error.WriteLine($"Error: Response failed with status code: '{e.Status}'");
+}
 ```
 
 ### Customizing HTTP requests
@@ -84,6 +127,17 @@ When a service call fails, `System.ClientModel`-based clients throw a `ClientRes
 `System.ClientModel`-based clients expose low-level _protocol methods_ that allow callers to customize the details of HTTP requests.  Protocol methods take an optional `RequestOptions` value that allows callers to add a header to the request, or to add a policy to the client pipeline that can modify the request in any way before sending it to the service.  `RequestOptions` also allows passing a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
+// Create RequestOptions instance
+RequestOptions options = new();
+
+// Set CancellationToken
+options.CancellationToken = cancellationToken;
+
+// Add a header to the request
+options.AddHeader("CustomHeader", "CustomHeaderValue");
+
+// Call protocol method to pass RequestOptions
+ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
 ```
 
 For more information on customizing request, see [Protocol method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods)
@@ -103,10 +157,10 @@ Example reading a model from json
 
 ```C# Snippet:Readme_Read_Simple
 string json = @"{
-  ""x"": 1,
-  ""y"": 2,
-  ""z"": 3
-}";
+      ""x"": 1,
+      ""y"": 2,
+      ""z"": 3
+    }";
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json));
 ```
 
