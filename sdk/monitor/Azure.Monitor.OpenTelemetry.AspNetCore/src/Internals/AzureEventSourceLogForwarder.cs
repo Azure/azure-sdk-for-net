@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Azure;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals
 {
-    internal sealed class AzureEventSourceLogForwarder : IHostedService
+    internal sealed class AzureEventSourceLogForwarder : IHostedService, IDisposable
     {
-        internal static readonly AzureEventSourceLogForwarder Noop = new AzureEventSourceLogForwarder();
+        internal static readonly AzureEventSourceLogForwarder Noop = new AzureEventSourceLogForwarder(null);
         private readonly ILoggerFactory _loggerFactory;
 
         private readonly ConcurrentDictionary<string, ILogger> _loggers = new ConcurrentDictionary<string, ILogger>();
@@ -21,12 +21,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         private readonly Func<EventSourceEvent, Exception, string> _formatMessage = FormatMessage;
 
         private AzureEventSourceListener _listener;
-
-        private AzureEventSourceLogForwarder()
-        {
-            _loggerFactory = null;
-            _listener = null;
-        }
 
         public AzureEventSourceLogForwarder(ILoggerFactory loggerFactory)
         {
@@ -86,31 +80,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             return Task.CompletedTask;
         }
 
-        private readonly struct EventSourceEvent : IReadOnlyList<KeyValuePair<string, object>>
+        public void Dispose()
         {
-            public EventWrittenEventArgs EventData { get; }
-
-            public EventSourceEvent(EventWrittenEventArgs eventData)
-            {
-                EventData = eventData;
-            }
-
-            public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-            {
-                for (int i = 0; i < Count; i++)
-                {
-                    yield return new KeyValuePair<string, object>(EventData.PayloadNames[i], EventData.Payload[i]);
-                }
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-
-            public int Count => EventData.PayloadNames.Count;
-
-            public KeyValuePair<string, object> this[int index] => new KeyValuePair<string, object>(EventData.PayloadNames[index], EventData.Payload[index]);
+            _listener?.Dispose();
         }
     }
 }

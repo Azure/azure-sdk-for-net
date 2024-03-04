@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
