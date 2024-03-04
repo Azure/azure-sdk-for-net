@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("certificateUrl"u8);
             writer.WriteStringValue(CertificateUri.AbsoluteUri);
-            if (options.Format != "W" && Provisioning != null)
+            if (options.Format != "W" && Optional.IsDefined(Provisioning))
             {
                 writer.WritePropertyName("provisioning"u8);
                 writer.WriteObjectValue(Provisioning);

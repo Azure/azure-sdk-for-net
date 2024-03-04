@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -15,21 +16,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("ns"u8);
                 writer.WriteStringValue(Namespace);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (DataPointType.HasValue)
+            if (Optional.IsDefined(DataPointType))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(DataPointType.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 if (Count != null)
                 {
@@ -41,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("count");
                 }
             }
-            if (Min.HasValue)
+            if (Optional.IsDefined(Min))
             {
                 if (Min != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("min");
                 }
             }
-            if (Max.HasValue)
+            if (Optional.IsDefined(Max))
             {
                 if (Max != null)
                 {
@@ -65,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("max");
                 }
             }
-            if (StdDev.HasValue)
+            if (Optional.IsDefined(StdDev))
             {
                 if (StdDev != null)
                 {

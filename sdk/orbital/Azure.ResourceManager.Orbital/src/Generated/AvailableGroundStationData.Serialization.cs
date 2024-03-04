@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Orbital
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (ProviderName != null)
+            if (Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (LongitudeDegrees.HasValue)
+            if (Optional.IsDefined(LongitudeDegrees))
             {
                 writer.WritePropertyName("longitudeDegrees"u8);
                 writer.WriteNumberValue(LongitudeDegrees.Value);
             }
-            if (LatitudeDegrees.HasValue)
+            if (Optional.IsDefined(LatitudeDegrees))
             {
                 writer.WritePropertyName("latitudeDegrees"u8);
                 writer.WriteNumberValue(LatitudeDegrees.Value);
             }
-            if (AltitudeMeters.HasValue)
+            if (Optional.IsDefined(AltitudeMeters))
             {
                 writer.WritePropertyName("altitudeMeters"u8);
                 writer.WriteNumberValue(AltitudeMeters.Value);
             }
-            if (ReleaseMode.HasValue)
+            if (Optional.IsDefined(ReleaseMode))
             {
                 writer.WritePropertyName("releaseMode"u8);
                 writer.WriteStringValue(ReleaseMode.Value.ToString());

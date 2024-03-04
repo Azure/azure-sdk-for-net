@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(QuotaId);
             writer.WritePropertyName("effect"u8);
             writer.WriteStringValue(Effect.ToString());
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();

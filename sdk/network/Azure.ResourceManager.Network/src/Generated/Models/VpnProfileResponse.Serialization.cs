@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ProfileUri != null)
+            if (Optional.IsDefined(ProfileUri))
             {
                 writer.WritePropertyName("profileUrl"u8);
                 writer.WriteStringValue(ProfileUri.AbsoluteUri);

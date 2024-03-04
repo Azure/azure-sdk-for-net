@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ReplicationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationId))
             {
                 writer.WritePropertyName("replicationId"u8);
                 writer.WriteStringValue(ReplicationId);
             }
-            if (EndpointType.HasValue)
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (ReplicationSchedule.HasValue)
+            if (Optional.IsDefined(ReplicationSchedule))
             {
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
-            if (RemotePath != null)
+            if (Optional.IsDefined(RemotePath))
             {
                 writer.WritePropertyName("remotePath"u8);
                 writer.WriteObjectValue(RemotePath);
             }
-            if (RemoteVolumeRegion != null)
+            if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);

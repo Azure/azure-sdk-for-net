@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (StorageToNetworkProximity.HasValue)
+            if (Optional.IsDefined(StorageToNetworkProximity))
             {
                 writer.WritePropertyName("storageToNetworkProximity"u8);
                 writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
             }
-            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();
