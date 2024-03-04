@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CloudServiceName != null)
+            if (Optional.IsDefined(CloudServiceName))
             {
                 writer.WritePropertyName("cloudServiceName"u8);
                 writer.WriteStringValue(CloudServiceName);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (RunbookId != null)
+            if (Optional.IsDefined(RunbookId))
             {
                 writer.WritePropertyName("runbookId"u8);
                 writer.WriteStringValue(RunbookId);
             }
-            if (RunbookName != null)
+            if (Optional.IsDefined(RunbookName))
             {
                 writer.WritePropertyName("runbookName"u8);
                 writer.WriteStringValue(RunbookName);
             }
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (JobOutput != null)
+            if (Optional.IsDefined(JobOutput))
             {
                 writer.WritePropertyName("jobOutput"u8);
                 writer.WriteStringValue(JobOutput);
             }
-            if (IsPrimarySideScript.HasValue)
+            if (Optional.IsDefined(IsPrimarySideScript))
             {
                 writer.WritePropertyName("isPrimarySideScript"u8);
                 writer.WriteBooleanValue(IsPrimarySideScript.Value);

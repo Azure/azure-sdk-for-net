@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Grounding != null)
+            if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
                 writer.WriteObjectValue(Grounding);
             }
-            if (Ocr != null)
+            if (Optional.IsDefined(Ocr))
             {
                 writer.WritePropertyName("ocr"u8);
                 writer.WriteObjectValue(Ocr);

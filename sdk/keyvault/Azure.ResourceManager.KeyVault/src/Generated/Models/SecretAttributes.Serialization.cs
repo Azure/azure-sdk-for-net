@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (NotBefore.HasValue)
+            if (Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
-            if (Expires.HasValue)
+            if (Optional.IsDefined(Expires))
             {
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(Created.Value, "U");
             }
-            if (options.Format != "W" && Updated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Updated))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(Updated.Value, "U");

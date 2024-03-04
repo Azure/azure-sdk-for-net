@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (CiemDiscovery != null)
+            if (Optional.IsDefined(CiemDiscovery))
             {
                 writer.WritePropertyName("ciemDiscovery"u8);
                 writer.WriteObjectValue(CiemDiscovery);
             }
-            if (CiemOidc != null)
+            if (Optional.IsDefined(CiemOidc))
             {
                 writer.WritePropertyName("ciemOidc"u8);
                 writer.WriteObjectValue(CiemOidc);

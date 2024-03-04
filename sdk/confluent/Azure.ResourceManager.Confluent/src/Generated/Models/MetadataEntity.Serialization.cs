@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (Self != null)
+            if (Optional.IsDefined(Self))
             {
                 writer.WritePropertyName("self"u8);
                 writer.WriteStringValue(Self);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resource_name"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (CreatedAt != null)
+            if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("created_at"u8);
                 writer.WriteStringValue(CreatedAt);
             }
-            if (UpdatedAt != null)
+            if (Optional.IsDefined(UpdatedAt))
             {
                 writer.WritePropertyName("updated_at"u8);
                 writer.WriteStringValue(UpdatedAt);
             }
-            if (DeletedAt != null)
+            if (Optional.IsDefined(DeletedAt))
             {
                 writer.WritePropertyName("deleted_at"u8);
                 writer.WriteStringValue(DeletedAt);

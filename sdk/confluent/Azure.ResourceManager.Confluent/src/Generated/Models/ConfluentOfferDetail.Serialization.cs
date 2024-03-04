@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteStringValue(PlanName);
             writer.WritePropertyName("termUnit"u8);
             writer.WriteStringValue(TermUnit);
-            if (TermId != null)
+            if (Optional.IsDefined(TermId))
             {
                 writer.WritePropertyName("termId"u8);
                 writer.WriteStringValue(TermId);
             }
-            if (PrivateOfferId != null)
+            if (Optional.IsDefined(PrivateOfferId))
             {
                 writer.WritePropertyName("privateOfferId"u8);
                 writer.WriteStringValue(PrivateOfferId);
             }
-            if (!(PrivateOfferIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateOfferIds))
             {
                 writer.WritePropertyName("privateOfferIds"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

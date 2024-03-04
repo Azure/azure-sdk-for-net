@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,69 +49,69 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && IsDeleted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("deleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletedTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && RemainingRetentionDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RemainingRetentionDays))
             {
                 writer.WritePropertyName("remainingRetentionDays"u8);
                 writer.WriteNumberValue(RemainingRetentionDays.Value);
             }
-            if (DefaultEncryptionScope != null)
+            if (Optional.IsDefined(DefaultEncryptionScope))
             {
                 writer.WritePropertyName("defaultEncryptionScope"u8);
                 writer.WriteStringValue(DefaultEncryptionScope);
             }
-            if (PreventEncryptionScopeOverride.HasValue)
+            if (Optional.IsDefined(PreventEncryptionScopeOverride))
             {
                 writer.WritePropertyName("denyEncryptionScopeOverride"u8);
                 writer.WriteBooleanValue(PreventEncryptionScopeOverride.Value);
             }
-            if (PublicAccess.HasValue)
+            if (Optional.IsDefined(PublicAccess))
             {
                 writer.WritePropertyName("publicAccess"u8);
                 writer.WriteStringValue(PublicAccess.Value.ToSerialString());
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && LeaseStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeaseStatus))
             {
                 writer.WritePropertyName("leaseStatus"u8);
                 writer.WriteStringValue(LeaseStatus.Value.ToString());
             }
-            if (options.Format != "W" && LeaseState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeaseState))
             {
                 writer.WritePropertyName("leaseState"u8);
                 writer.WriteStringValue(LeaseState.Value.ToString());
             }
-            if (options.Format != "W" && LeaseDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeaseDuration))
             {
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteStringValue(LeaseDuration.Value.ToString());
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -122,37 +122,37 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && ImmutabilityPolicy != null)
+            if (options.Format != "W" && Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
                 writer.WriteObjectValue(ImmutabilityPolicy);
             }
-            if (options.Format != "W" && LegalHold != null)
+            if (options.Format != "W" && Optional.IsDefined(LegalHold))
             {
                 writer.WritePropertyName("legalHold"u8);
                 writer.WriteObjectValue(LegalHold);
             }
-            if (options.Format != "W" && HasLegalHold.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
             }
-            if (options.Format != "W" && HasImmutabilityPolicy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasImmutabilityPolicy))
             {
                 writer.WritePropertyName("hasImmutabilityPolicy"u8);
                 writer.WriteBooleanValue(HasImmutabilityPolicy.Value);
             }
-            if (ImmutableStorageWithVersioning != null)
+            if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
-            if (EnableNfsV3RootSquash.HasValue)
+            if (Optional.IsDefined(EnableNfsV3RootSquash))
             {
                 writer.WritePropertyName("enableNfsV3RootSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3RootSquash.Value);
             }
-            if (EnableNfsV3AllSquash.HasValue)
+            if (Optional.IsDefined(EnableNfsV3AllSquash))
             {
                 writer.WritePropertyName("enableNfsV3AllSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3AllSquash.Value);

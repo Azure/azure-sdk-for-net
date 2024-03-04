@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(AdxEndpointUri.AbsoluteUri);
             writer.WritePropertyName("adxDatabaseName"u8);
             writer.WriteStringValue(AdxDatabaseName);
-            if (AdxTableName != null)
+            if (Optional.IsDefined(AdxTableName))
             {
                 if (AdxTableName != null)
                 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTableName");
                 }
             }
-            if (AdxTwinLifecycleEventsTableName != null)
+            if (Optional.IsDefined(AdxTwinLifecycleEventsTableName))
             {
                 if (AdxTwinLifecycleEventsTableName != null)
                 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("adxTwinLifecycleEventsTableName");
                 }
             }
-            if (AdxRelationshipLifecycleEventsTableName != null)
+            if (Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
             {
                 if (AdxRelationshipLifecycleEventsTableName != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStringValue(EventHubEntityPath);
             writer.WritePropertyName("eventHubNamespaceResourceId"u8);
             writer.WriteStringValue(EventHubNamespaceResourceId);
-            if (EventHubConsumerGroup != null)
+            if (Optional.IsDefined(EventHubConsumerGroup))
             {
                 if (EventHubConsumerGroup != null)
                 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("eventHubConsumerGroup");
                 }
             }
-            if (RecordPropertyAndItemRemovals.HasValue)
+            if (Optional.IsDefined(RecordPropertyAndItemRemovals))
             {
                 if (RecordPropertyAndItemRemovals != null)
                 {
@@ -100,12 +101,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {

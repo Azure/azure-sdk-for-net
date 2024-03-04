@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorityUri != null)
+            if (Optional.IsDefined(AuthorityUri))
             {
                 if (AuthorityUri != null)
                 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 if (ResourceUri != null)
                 {

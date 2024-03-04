@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (TotalCertificates.HasValue)
+            if (Optional.IsDefined(TotalCertificates))
             {
                 writer.WritePropertyName("totalCertificates"u8);
                 writer.WriteNumberValue(TotalCertificates.Value);
             }
-            if (PairedKeys.HasValue)
+            if (Optional.IsDefined(PairedKeys))
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Expired.HasValue)
+            if (Optional.IsDefined(Expired))
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteNumberValue(Expired.Value);
             }
-            if (ExpiringSoon.HasValue)
+            if (Optional.IsDefined(ExpiringSoon))
             {
                 writer.WritePropertyName("expiringSoon"u8);
                 writer.WriteNumberValue(ExpiringSoon.Value);
             }
-            if (WeakSignature.HasValue)
+            if (Optional.IsDefined(WeakSignature))
             {
                 writer.WritePropertyName("weakSignature"u8);
                 writer.WriteNumberValue(WeakSignature.Value);
             }
-            if (SelfSigned.HasValue)
+            if (Optional.IsDefined(SelfSigned))
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteNumberValue(SelfSigned.Value);
             }
-            if (ShortKeySize.HasValue)
+            if (Optional.IsDefined(ShortKeySize))
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);

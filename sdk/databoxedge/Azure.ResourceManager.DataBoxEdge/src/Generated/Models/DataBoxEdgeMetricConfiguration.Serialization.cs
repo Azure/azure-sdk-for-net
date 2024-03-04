@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (MdmAccount != null)
+            if (Optional.IsDefined(MdmAccount))
             {
                 writer.WritePropertyName("mdmAccount"u8);
                 writer.WriteStringValue(MdmAccount);
             }
-            if (MetricNameSpace != null)
+            if (Optional.IsDefined(MetricNameSpace))
             {
                 writer.WritePropertyName("metricNameSpace"u8);
                 writer.WriteStringValue(MetricNameSpace);

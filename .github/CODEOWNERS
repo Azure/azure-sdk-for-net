@@ -472,11 +472,11 @@
 # ServiceLabel: %Digital Twins
 # ServiceOwners:                                                   @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
 
-# PRLabel: %TimeSeriesInsights
-/sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
+# PRLabel: %Defender EASM
+/sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
 
-# ServiceLabel: %TimeSeriesInsights
-# ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft
+# ServiceLabel: %Defender EASM
+# ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/                                                    @Kishp01 @ahamad-MS @jfggdl @JoshLove-msft
@@ -872,11 +872,14 @@
 /sdk/tables/                                                       @christothes
 
 # ServiceLabel: %Tables
-# AzureSdkOwners: @christothes
+# AzureSdkOwners:                                                  @christothes
 # ServiceOwners:                                                   @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
 
-# ServiceLabel: %TimeseriesInsights
-# ServiceOwners:                                                   @Shipra1Mishra
+# PRLabel: %TimeSeriesInsights
+/sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
+
+# ServiceLabel: %TimeSeriesInsights
+# ServiceOwners:                                                   @yeskarthik @rasidhan @dmdenmsft @Shipra1Mishra
 
 # PRLabel: %VideoAnalyzer
 /sdk/videoanalyzer/                                                @giakas

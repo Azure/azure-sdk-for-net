@@ -37,17 +37,17 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DistributionPolicyId != null)
+            if (Optional.IsDefined(DistributionPolicyId))
             {
                 writer.WritePropertyName("distributionPolicyId"u8);
                 writer.WriteStringValue(DistributionPolicyId);
             }
-            if (!(_labels is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (ExceptionPolicyId != null)
+            if (Optional.IsDefined(ExceptionPolicyId))
             {
                 writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);

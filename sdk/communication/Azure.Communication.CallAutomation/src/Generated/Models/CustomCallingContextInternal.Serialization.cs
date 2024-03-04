@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(VoipHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VoipHeaders))
             {
                 writer.WritePropertyName("voipHeaders"u8);
                 writer.WriteStartObject();
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndObject();
             }
-            if (!(SipHeaders is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SipHeaders))
             {
                 writer.WritePropertyName("sipHeaders"u8);
                 writer.WriteStartObject();

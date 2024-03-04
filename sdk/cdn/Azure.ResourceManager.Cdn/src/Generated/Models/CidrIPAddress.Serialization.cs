@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (BaseIPAddress != null)
+            if (Optional.IsDefined(BaseIPAddress))
             {
                 writer.WritePropertyName("baseIpAddress"u8);
                 writer.WriteStringValue(BaseIPAddress);
             }
-            if (PrefixLength.HasValue)
+            if (Optional.IsDefined(PrefixLength))
             {
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteNumberValue(PrefixLength.Value);

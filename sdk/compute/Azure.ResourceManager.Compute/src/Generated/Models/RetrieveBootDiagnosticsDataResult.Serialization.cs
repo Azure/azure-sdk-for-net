@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ConsoleScreenshotBlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ConsoleScreenshotBlobUri))
             {
                 writer.WritePropertyName("consoleScreenshotBlobUri"u8);
                 writer.WriteStringValue(ConsoleScreenshotBlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && SerialConsoleLogBlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SerialConsoleLogBlobUri))
             {
                 writer.WritePropertyName("serialConsoleLogBlobUri"u8);
                 writer.WriteStringValue(SerialConsoleLogBlobUri.AbsoluteUri);

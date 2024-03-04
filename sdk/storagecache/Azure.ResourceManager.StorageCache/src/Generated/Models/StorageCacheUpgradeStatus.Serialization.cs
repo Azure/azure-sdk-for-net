@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentFirmwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentFirmwareVersion))
             {
                 writer.WritePropertyName("currentFirmwareVersion"u8);
                 writer.WriteStringValue(CurrentFirmwareVersion);
             }
-            if (options.Format != "W" && FirmwareUpdateStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FirmwareUpdateStatus))
             {
                 writer.WritePropertyName("firmwareUpdateStatus"u8);
                 writer.WriteStringValue(FirmwareUpdateStatus.Value.ToString());
             }
-            if (options.Format != "W" && FirmwareUpdateDeadline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FirmwareUpdateDeadline))
             {
                 writer.WritePropertyName("firmwareUpdateDeadline"u8);
                 writer.WriteStringValue(FirmwareUpdateDeadline.Value, "O");
             }
-            if (options.Format != "W" && LastFirmwareUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastFirmwareUpdate))
             {
                 writer.WritePropertyName("lastFirmwareUpdate"u8);
                 writer.WriteStringValue(LastFirmwareUpdate.Value, "O");
             }
-            if (options.Format != "W" && PendingFirmwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(PendingFirmwareVersion))
             {
                 writer.WritePropertyName("pendingFirmwareVersion"u8);
                 writer.WriteStringValue(PendingFirmwareVersion);

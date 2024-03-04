@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -23,37 +24,37 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Debug != null)
+            if (Optional.IsDefined(Debug))
             {
                 writer.WritePropertyName("debug"u8);
                 writer.WriteStringValue(Debug);
             }
-            if (CalibrationConfiguration != null)
+            if (Optional.IsDefined(CalibrationConfiguration))
             {
                 writer.WritePropertyName("calibrationConfiguration"u8);
                 writer.WriteStringValue(CalibrationConfiguration);
             }
-            if (CameraConfiguration != null)
+            if (Optional.IsDefined(CameraConfiguration))
             {
                 writer.WritePropertyName("cameraConfiguration"u8);
                 writer.WriteStringValue(CameraConfiguration);
             }
-            if (CameraCalibratorNodeConfiguration != null)
+            if (Optional.IsDefined(CameraCalibratorNodeConfiguration))
             {
                 writer.WritePropertyName("cameraCalibratorNodeConfiguration"u8);
                 writer.WriteStringValue(CameraCalibratorNodeConfiguration);
             }
-            if (DetectorNodeConfiguration != null)
+            if (Optional.IsDefined(DetectorNodeConfiguration))
             {
                 writer.WritePropertyName("detectorNodeConfiguration"u8);
                 writer.WriteStringValue(DetectorNodeConfiguration);
             }
-            if (TrackerNodeConfiguration != null)
+            if (Optional.IsDefined(TrackerNodeConfiguration))
             {
                 writer.WritePropertyName("trackerNodeConfiguration"u8);
                 writer.WriteStringValue(TrackerNodeConfiguration);
             }
-            if (EnableFaceMaskClassifier != null)
+            if (Optional.IsDefined(EnableFaceMaskClassifier))
             {
                 writer.WritePropertyName("enableFaceMaskClassifier"u8);
                 writer.WriteStringValue(EnableFaceMaskClassifier);

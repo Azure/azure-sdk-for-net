@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ShareName != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && ShareType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShareType))
             {
                 writer.WritePropertyName("shareType"u8);
                 writer.WriteStringValue(ShareType.Value.ToSerialString());
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Password != null)
+            if (options.Format != "W" && Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && !(SupportedAccessProtocols is ChangeTrackingList<DataBoxAccessProtocol> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccessProtocols))
             {
                 writer.WritePropertyName("supportedAccessProtocols"u8);
                 writer.WriteStartArray();

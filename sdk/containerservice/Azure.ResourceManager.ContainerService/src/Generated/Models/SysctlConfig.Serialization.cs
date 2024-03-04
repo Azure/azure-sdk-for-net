@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,142 +27,142 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (NetCoreSomaxconn.HasValue)
+            if (Optional.IsDefined(NetCoreSomaxconn))
             {
                 writer.WritePropertyName("netCoreSomaxconn"u8);
                 writer.WriteNumberValue(NetCoreSomaxconn.Value);
             }
-            if (NetCoreNetdevMaxBacklog.HasValue)
+            if (Optional.IsDefined(NetCoreNetdevMaxBacklog))
             {
                 writer.WritePropertyName("netCoreNetdevMaxBacklog"u8);
                 writer.WriteNumberValue(NetCoreNetdevMaxBacklog.Value);
             }
-            if (NetCoreRmemDefault.HasValue)
+            if (Optional.IsDefined(NetCoreRmemDefault))
             {
                 writer.WritePropertyName("netCoreRmemDefault"u8);
                 writer.WriteNumberValue(NetCoreRmemDefault.Value);
             }
-            if (NetCoreRmemMax.HasValue)
+            if (Optional.IsDefined(NetCoreRmemMax))
             {
                 writer.WritePropertyName("netCoreRmemMax"u8);
                 writer.WriteNumberValue(NetCoreRmemMax.Value);
             }
-            if (NetCoreWmemDefault.HasValue)
+            if (Optional.IsDefined(NetCoreWmemDefault))
             {
                 writer.WritePropertyName("netCoreWmemDefault"u8);
                 writer.WriteNumberValue(NetCoreWmemDefault.Value);
             }
-            if (NetCoreWmemMax.HasValue)
+            if (Optional.IsDefined(NetCoreWmemMax))
             {
                 writer.WritePropertyName("netCoreWmemMax"u8);
                 writer.WriteNumberValue(NetCoreWmemMax.Value);
             }
-            if (NetCoreOptmemMax.HasValue)
+            if (Optional.IsDefined(NetCoreOptmemMax))
             {
                 writer.WritePropertyName("netCoreOptmemMax"u8);
                 writer.WriteNumberValue(NetCoreOptmemMax.Value);
             }
-            if (NetIPv4TcpMaxSynBacklog.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpMaxSynBacklog))
             {
                 writer.WritePropertyName("netIpv4TcpMaxSynBacklog"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxSynBacklog.Value);
             }
-            if (NetIPv4TcpMaxTwBuckets.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpMaxTwBuckets))
             {
                 writer.WritePropertyName("netIpv4TcpMaxTwBuckets"u8);
                 writer.WriteNumberValue(NetIPv4TcpMaxTwBuckets.Value);
             }
-            if (NetIPv4TcpFinTimeout.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpFinTimeout))
             {
                 writer.WritePropertyName("netIpv4TcpFinTimeout"u8);
                 writer.WriteNumberValue(NetIPv4TcpFinTimeout.Value);
             }
-            if (NetIPv4TcpKeepaliveTime.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveTime))
             {
                 writer.WritePropertyName("netIpv4TcpKeepaliveTime"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveTime.Value);
             }
-            if (NetIPv4TcpKeepaliveProbes.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveProbes))
             {
                 writer.WritePropertyName("netIpv4TcpKeepaliveProbes"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveProbes.Value);
             }
-            if (NetIPv4TcpKeepaliveIntvl.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpKeepaliveIntvl))
             {
                 writer.WritePropertyName("netIpv4TcpkeepaliveIntvl"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveIntvl.Value);
             }
-            if (NetIPv4TcpTwReuse.HasValue)
+            if (Optional.IsDefined(NetIPv4TcpTwReuse))
             {
                 writer.WritePropertyName("netIpv4TcpTwReuse"u8);
                 writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
             }
-            if (NetIPv4IPLocalPortRange != null)
+            if (Optional.IsDefined(NetIPv4IPLocalPortRange))
             {
                 writer.WritePropertyName("netIpv4IpLocalPortRange"u8);
                 writer.WriteStringValue(NetIPv4IPLocalPortRange);
             }
-            if (NetIPv4NeighDefaultGcThresh1.HasValue)
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh1))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh1"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh1.Value);
             }
-            if (NetIPv4NeighDefaultGcThresh2.HasValue)
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh2))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh2"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh2.Value);
             }
-            if (NetIPv4NeighDefaultGcThresh3.HasValue)
+            if (Optional.IsDefined(NetIPv4NeighDefaultGcThresh3))
             {
                 writer.WritePropertyName("netIpv4NeighDefaultGcThresh3"u8);
                 writer.WriteNumberValue(NetIPv4NeighDefaultGcThresh3.Value);
             }
-            if (NetNetfilterNfConntrackMax.HasValue)
+            if (Optional.IsDefined(NetNetfilterNfConntrackMax))
             {
                 writer.WritePropertyName("netNetfilterNfConntrackMax"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackMax.Value);
             }
-            if (NetNetfilterNfConntrackBuckets.HasValue)
+            if (Optional.IsDefined(NetNetfilterNfConntrackBuckets))
             {
                 writer.WritePropertyName("netNetfilterNfConntrackBuckets"u8);
                 writer.WriteNumberValue(NetNetfilterNfConntrackBuckets.Value);
             }
-            if (FsInotifyMaxUserWatches.HasValue)
+            if (Optional.IsDefined(FsInotifyMaxUserWatches))
             {
                 writer.WritePropertyName("fsInotifyMaxUserWatches"u8);
                 writer.WriteNumberValue(FsInotifyMaxUserWatches.Value);
             }
-            if (FsFileMax.HasValue)
+            if (Optional.IsDefined(FsFileMax))
             {
                 writer.WritePropertyName("fsFileMax"u8);
                 writer.WriteNumberValue(FsFileMax.Value);
             }
-            if (FsAioMaxNr.HasValue)
+            if (Optional.IsDefined(FsAioMaxNr))
             {
                 writer.WritePropertyName("fsAioMaxNr"u8);
                 writer.WriteNumberValue(FsAioMaxNr.Value);
             }
-            if (FsNrOpen.HasValue)
+            if (Optional.IsDefined(FsNrOpen))
             {
                 writer.WritePropertyName("fsNrOpen"u8);
                 writer.WriteNumberValue(FsNrOpen.Value);
             }
-            if (KernelThreadsMax.HasValue)
+            if (Optional.IsDefined(KernelThreadsMax))
             {
                 writer.WritePropertyName("kernelThreadsMax"u8);
                 writer.WriteNumberValue(KernelThreadsMax.Value);
             }
-            if (VmMaxMapCount.HasValue)
+            if (Optional.IsDefined(VmMaxMapCount))
             {
                 writer.WritePropertyName("vmMaxMapCount"u8);
                 writer.WriteNumberValue(VmMaxMapCount.Value);
             }
-            if (VmSwappiness.HasValue)
+            if (Optional.IsDefined(VmSwappiness))
             {
                 writer.WritePropertyName("vmSwappiness"u8);
                 writer.WriteNumberValue(VmSwappiness.Value);
             }
-            if (VmVfsCachePressure.HasValue)
+            if (Optional.IsDefined(VmVfsCachePressure))
             {
                 writer.WritePropertyName("vmVfsCachePressure"u8);
                 writer.WriteNumberValue(VmVfsCachePressure.Value);

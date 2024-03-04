@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RegistrationCode != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationCode))
             {
                 writer.WritePropertyName("registrationCode"u8);
                 writer.WriteStringValue(RegistrationCode);
             }
-            if (OpenAccess.HasValue)
+            if (Optional.IsDefined(OpenAccess))
             {
                 writer.WritePropertyName("openAccess"u8);
                 writer.WriteStringValue(OpenAccess.Value.ToSerialString());

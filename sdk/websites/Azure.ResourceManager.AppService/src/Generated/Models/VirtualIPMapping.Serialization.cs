@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualIP != null)
+            if (Optional.IsDefined(VirtualIP))
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (InternalHttpPort.HasValue)
+            if (Optional.IsDefined(InternalHttpPort))
             {
                 writer.WritePropertyName("internalHttpPort"u8);
                 writer.WriteNumberValue(InternalHttpPort.Value);
             }
-            if (InternalHttpsPort.HasValue)
+            if (Optional.IsDefined(InternalHttpsPort))
             {
                 writer.WritePropertyName("internalHttpsPort"u8);
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
-            if (IsInUse.HasValue)
+            if (Optional.IsDefined(IsInUse))
             {
                 writer.WritePropertyName("inUse"u8);
                 writer.WriteBooleanValue(IsInUse.Value);
             }
-            if (ServiceName != null)
+            if (Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);

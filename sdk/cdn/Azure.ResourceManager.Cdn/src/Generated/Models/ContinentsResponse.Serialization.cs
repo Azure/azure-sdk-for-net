@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(Continents is ChangeTrackingList<ContinentsResponseContinentsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Continents))
             {
                 writer.WritePropertyName("continents"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CountryOrRegions is ChangeTrackingList<ContinentsResponseCountryOrRegionsItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CountryOrRegions))
             {
                 writer.WritePropertyName("countryOrRegions"u8);
                 writer.WriteStartArray();

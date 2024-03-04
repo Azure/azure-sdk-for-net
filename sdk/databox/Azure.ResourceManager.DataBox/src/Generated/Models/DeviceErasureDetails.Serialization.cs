@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DeviceErasureStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeviceErasureStatus))
             {
                 writer.WritePropertyName("deviceErasureStatus"u8);
                 writer.WriteStringValue(DeviceErasureStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && ErasureOrDestructionCertificateSasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ErasureOrDestructionCertificateSasKey))
             {
                 writer.WritePropertyName("erasureOrDestructionCertificateSasKey"u8);
                 writer.WriteStringValue(ErasureOrDestructionCertificateSasKey);

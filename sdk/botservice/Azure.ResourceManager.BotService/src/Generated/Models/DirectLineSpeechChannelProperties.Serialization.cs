@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (CognitiveServiceResourceId != null)
+            if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (CognitiveServiceRegion != null)
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (CognitiveServiceSubscriptionKey != null)
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -55,22 +56,22 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CustomVoiceDeploymentId != null)
+            if (Optional.IsDefined(CustomVoiceDeploymentId))
             {
                 writer.WritePropertyName("customVoiceDeploymentId"u8);
                 writer.WriteStringValue(CustomVoiceDeploymentId);
             }
-            if (CustomSpeechModelId != null)
+            if (Optional.IsDefined(CustomSpeechModelId))
             {
                 writer.WritePropertyName("customSpeechModelId"u8);
                 writer.WriteStringValue(CustomSpeechModelId);
             }
-            if (IsDefaultBotForCogSvcAccount.HasValue)
+            if (Optional.IsDefined(IsDefaultBotForCogSvcAccount))
             {
                 writer.WritePropertyName("isDefaultBotForCogSvcAccount"u8);
                 writer.WriteBooleanValue(IsDefaultBotForCogSvcAccount.Value);

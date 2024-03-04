@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityId != null)
+            if (Optional.IsDefined(IdentityId))
             {
                 writer.WritePropertyName("identityId"u8);
                 writer.WriteStringValue(IdentityId);
             }
-            if (CredentialsType.HasValue)
+            if (Optional.IsDefined(CredentialsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CredentialsType.Value.ToString());

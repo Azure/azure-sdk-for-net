@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TokenType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TokenType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
-            if (options.Format != "W" && Attributes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStringValue(Attributes.Value.ToString());

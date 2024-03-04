@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,34 +27,34 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (MembershipType.HasValue)
+            if (Optional.IsDefined(MembershipType))
             {
                 writer.WritePropertyName("membershipType"u8);
                 writer.WriteStringValue(MembershipType.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetType.ToString());
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ElasticPoolName != null)
+            if (Optional.IsDefined(ElasticPoolName))
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (ShardMapName != null)
+            if (Optional.IsDefined(ShardMapName))
             {
                 writer.WritePropertyName("shardMapName"u8);
                 writer.WriteStringValue(ShardMapName);
             }
-            if (RefreshCredential != null)
+            if (Optional.IsDefined(RefreshCredential))
             {
                 writer.WritePropertyName("refreshCredential"u8);
                 writer.WriteStringValue(RefreshCredential);

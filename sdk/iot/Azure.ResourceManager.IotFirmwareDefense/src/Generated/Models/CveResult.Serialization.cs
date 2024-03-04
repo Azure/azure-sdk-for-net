@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -42,14 +43,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CveId != null)
+            if (Optional.IsDefined(CveId))
             {
                 if (CveId != null)
                 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cveId");
                 }
             }
-            if (Component != null)
+            if (Optional.IsDefined(Component))
             {
                 if (Component != null)
                 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("component");
                 }
             }
-            if (Severity != null)
+            if (Optional.IsDefined(Severity))
             {
                 if (Severity != null)
                 {
@@ -85,12 +86,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("severity");
                 }
             }
-            if (NamePropertiesName != null)
+            if (Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (CvssScore != null)
+            if (Optional.IsDefined(CvssScore))
             {
                 if (CvssScore != null)
                 {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssScore");
                 }
             }
-            if (CvssVersion != null)
+            if (Optional.IsDefined(CvssVersion))
             {
                 if (CvssVersion != null)
                 {
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssVersion");
                 }
             }
-            if (CvssV2Score != null)
+            if (Optional.IsDefined(CvssV2Score))
             {
                 if (CvssV2Score != null)
                 {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssV2Score");
                 }
             }
-            if (CvssV3Score != null)
+            if (Optional.IsDefined(CvssV3Score))
             {
                 if (CvssV3Score != null)
                 {
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cvssV3Score");
                 }
             }
-            if (options.Format != "W" && !(Links is ChangeTrackingList<CveLink> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
