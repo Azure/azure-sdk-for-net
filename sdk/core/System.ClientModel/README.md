@@ -42,9 +42,8 @@ Below, you will find sections explaining these shared concepts in more detail.
 
 ### Configuring service clients
 
-`System.ClientModel`-based clients provide a constructor that takes a service endpoint and a credential used to authenticate with the service.  They also provide a constructor overload that takes an endpoint, a credential, and an instance of `ClientPipelineOptions` that can be used to configure the pipeline the client uses to send and receive HTTP requests and responses.
-
-`ClientPipelineOptions` allows overriding default client values for things like the network timeout used when sending a request or the maximum number of retries to send when a request fails.
+`System.ClientModel`-based clients, or **service clients**, provide a constructor that takes a service endpoint and a credential used to authenticate with the service.  They also provide a constructor overload that takes an endpoint, a credential, and an instance of `ClientPipelineOptions`.
+Passing `ClientPipelineOptions` when a client is created will configure the pipeline that the client uses to send and receive HTTP requests and responses.  Client pipeline options can be used to override default values such as the network timeout used to send or retry a request.
 
 ```C# Snippet:ClientModelConfigurationReadme
 MapsClientOptions options = new()
@@ -61,13 +60,15 @@ For more information on client configuration, see [Client configuration samples]
 
 ### Accessing HTTP response details
 
-_Service clients_ have methods that are used to call cloud services to invoke service operations. These methods on a client are called _service methods_.
+Service clients have methods that are used to call cloud services to invoke service operations. These methods on a client are called **service methods**.
 
 `System.ClientModel`-based clients expose two types of service methods: _convenience methods_ and _protocol methods_.
 
 **Convenience methods** provide a convenient way to invoke a service operation.  They are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response can be obtained from the return value.
 
 **Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return a `ClientResult` holding only the raw HTTP response details.  These methods also take an optional `RequestOptions` value that allows the client pipeline and the request to be configured for the duration of the call.
+
+The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
 
 ```C# Snippet:ClientResultTReadme
 // create a client
@@ -96,17 +97,11 @@ foreach (KeyValuePair<string, string> header in response.Headers)
 }
 ```
 
-For more information on client service methods, see [Client service method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md)
-
-// TODO: move the below to the detailed sample file
-
-**Convenience methods** are service methods that take a strongly-typed model representing schematized data needed to communicate with the service as input, and return a strongly-typed model representing the payload from the service response as output. Having strongly-typed models that represent service concepts provides a layer of convenience over working with the raw payload format. This is because these models unify the client user experience when cloud services differ in payload formats.  That is, a client-user can learn the patterns for strongly-typed models that `System.ClientModel`-based clients provide, and use them together without having to reason about whether a cloud service represents resources using, for example, JSON or XML formats.
-
-**Protocol methods** are service methods that provide very little convenience over the raw HTTP APIs a cloud service exposes. They represent request and response message bodies using types that are very thin layers over raw JSON/binary/other formats. Users of client protocol methods must reference a service's API documentation directly, rather than relying on the client to provide developer conveniences via strongly-typing service schemas.
+For more information on client service methods, see [Client service method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md).
 
 ### Handling exceptions that result from failed requests
 
-When a service call fails, `System.ClientModel`-based clients throw a `ClientResultException`.  The exception exposes the HTTP status code and the details of the service response if available.
+When a service call fails, service clients throw a `ClientResultException`.  The exception exposes the HTTP status code and the details of the service response if available.
 
 ```C# Snippet:ClientResultExceptionReadme
 try
@@ -124,7 +119,7 @@ catch (ClientResultException e) when (e.Status == 404)
 
 ### Customizing HTTP requests
 
-`System.ClientModel`-based clients expose low-level _protocol methods_ that allow callers to customize the details of HTTP requests.  Protocol methods take an optional `RequestOptions` value that allows callers to add a header to the request, or to add a policy to the client pipeline that can modify the request in any way before sending it to the service.  `RequestOptions` also allows passing a `CancellationToken` to the method.
+Service clients expose low-level _protocol methods_ that allow callers to customize the details of HTTP requests.  Protocol methods take an optional `RequestOptions` value that allows callers to add a header to the request, or to add a policy to the client pipeline that can modify the request in any way before sending it to the service.  `RequestOptions` also allows passing a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
 // Create RequestOptions instance
@@ -140,20 +135,20 @@ options.AddHeader("CustomHeader", "CustomHeaderValue");
 ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
 ```
 
-For more information on customizing request, see [Protocol method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods)
+For more information on customizing requests, see [Protocol method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods)
 
 ### Read and write persistable models
 
-As a library author you can implement `IPersistableModel<T>` or `IJsonModel<T>` which will give library users the ability to read and write your models.
+Client library authors can implement the `IPersistableModel<T>` or `IJsonModel<T>` interfaces on strongly-typed model implementations.  If they do, end-users of service clients can then read and write those models in cases where they need to persist them to a backing store.
 
-Example writing an instance of a model.
+The example below shows how to write a persistable model to `BinaryData`.
 
 ```C# Snippet:Readme_Write_Simple
 InputModel model = new InputModel();
 BinaryData data = ModelReaderWriter.Write(model);
 ```
 
-Example reading a model from json
+The example below shows how to read JSON to create a strongly-typed model instance.
 
 ```C# Snippet:Readme_Read_Simple
 string json = @"{
@@ -167,6 +162,8 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 ## Troubleshooting
 
 You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a client's service method.
+
+For more information on client service method errors, see [Handling exceptions that result from failed requests](#handling-exceptions-that-result-from-failed-requests).
 
 ## Next steps
 
