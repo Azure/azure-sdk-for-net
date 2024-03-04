@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,22 +16,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BitRateLimit.HasValue)
+            if (Optional.IsDefined(BitRateLimit))
             {
                 writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
-            if (EncodingInterval.HasValue)
+            if (Optional.IsDefined(EncodingInterval))
             {
                 writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
-            if (FrameRateLimit.HasValue)
+            if (Optional.IsDefined(FrameRateLimit))
             {
                 writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
-            if (GuaranteedFrameRate.HasValue)
+            if (Optional.IsDefined(GuaranteedFrameRate))
             {
                 writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);

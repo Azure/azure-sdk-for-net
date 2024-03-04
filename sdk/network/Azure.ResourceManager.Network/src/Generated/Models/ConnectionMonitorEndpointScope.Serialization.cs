@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Include is ChangeTrackingList<ConnectionMonitorEndpointScopeItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Exclude is ChangeTrackingList<ConnectionMonitorEndpointScopeItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteStartArray();

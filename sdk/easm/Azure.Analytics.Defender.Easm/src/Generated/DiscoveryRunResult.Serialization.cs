@@ -27,37 +27,37 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (SubmittedDate.HasValue)
+            if (Optional.IsDefined(SubmittedDate))
             {
                 writer.WritePropertyName("submittedDate"u8);
                 writer.WriteStringValue(SubmittedDate.Value, "O");
             }
-            if (StartedDate.HasValue)
+            if (Optional.IsDefined(StartedDate))
             {
                 writer.WritePropertyName("startedDate"u8);
                 writer.WriteStringValue(StartedDate.Value, "O");
             }
-            if (CompletedDate.HasValue)
+            if (Optional.IsDefined(CompletedDate))
             {
                 writer.WritePropertyName("completedDate"u8);
                 writer.WriteStringValue(CompletedDate.Value, "O");
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (TotalAssetsFoundCount.HasValue)
+            if (Optional.IsDefined(TotalAssetsFoundCount))
             {
                 writer.WritePropertyName("totalAssetsFoundCount"u8);
                 writer.WriteNumberValue(TotalAssetsFoundCount.Value);
             }
-            if (!(Seeds is ChangeTrackingList<DiscoverySource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Seeds))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Excludes is ChangeTrackingList<DiscoverySource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Excludes))
             {
                 writer.WritePropertyName("excludes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Names is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();

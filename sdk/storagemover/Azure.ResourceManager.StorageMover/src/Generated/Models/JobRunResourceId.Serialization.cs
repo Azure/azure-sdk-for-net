@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobRunResourceIdValue != null)
+            if (options.Format != "W" && Optional.IsDefined(JobRunResourceIdValue))
             {
                 writer.WritePropertyName("jobRunResourceId"u8);
                 writer.WriteStringValue(JobRunResourceIdValue);

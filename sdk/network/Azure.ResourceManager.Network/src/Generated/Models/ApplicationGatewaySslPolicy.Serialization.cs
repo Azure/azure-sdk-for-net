@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(DisabledSslProtocols is ChangeTrackingList<ApplicationGatewaySslProtocol> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisabledSslProtocols))
             {
                 writer.WritePropertyName("disabledSslProtocols"u8);
                 writer.WriteStartArray();
@@ -36,17 +37,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyType.HasValue)
+            if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (PolicyName.HasValue)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName.Value.ToString());
             }
-            if (!(CipherSuites is ChangeTrackingList<ApplicationGatewaySslCipherSuite> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CipherSuites))
             {
                 writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MinProtocolVersion.HasValue)
+            if (Optional.IsDefined(MinProtocolVersion))
             {
                 writer.WritePropertyName("minProtocolVersion"u8);
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());

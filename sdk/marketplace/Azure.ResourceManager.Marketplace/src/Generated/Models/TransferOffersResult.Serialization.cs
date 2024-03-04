@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (!(Succeeded is ChangeTrackingList<PrivateStoreCollectionDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Succeeded))
             {
                 writer.WritePropertyName("succeeded"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Failed is ChangeTrackingList<PrivateStoreCollectionDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Failed))
             {
                 writer.WritePropertyName("failed"u8);
                 writer.WriteStartArray();

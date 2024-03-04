@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (PageGuid != null)
+            if (Optional.IsDefined(PageGuid))
             {
                 writer.WritePropertyName("pageGuid"u8);
                 writer.WriteStringValue(PageGuid);
             }
-            if (CrawlStateGuid != null)
+            if (Optional.IsDefined(CrawlStateGuid))
             {
                 writer.WritePropertyName("crawlStateGuid"u8);
                 writer.WriteStringValue(CrawlStateGuid);
             }
-            if (LoadDate.HasValue)
+            if (Optional.IsDefined(LoadDate))
             {
                 writer.WritePropertyName("loadDate"u8);
                 writer.WriteStringValue(LoadDate.Value, "O");
             }
-            if (Recent.HasValue)
+            if (Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);

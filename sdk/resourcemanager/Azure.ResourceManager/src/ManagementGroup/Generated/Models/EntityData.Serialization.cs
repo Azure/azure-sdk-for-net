@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -43,14 +44,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 if (TenantId != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("tenantId");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -74,12 +75,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 JsonSerializer.Serialize(writer, Parent);
             }
-            if (Permissions.HasValue)
+            if (Optional.IsDefined(Permissions))
             {
                 if (Permissions != null)
                 {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("permissions");
                 }
             }
-            if (InheritedPermissions.HasValue)
+            if (Optional.IsDefined(InheritedPermissions))
             {
                 if (InheritedPermissions != null)
                 {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("inheritedPermissions");
                 }
             }
-            if (NumberOfDescendants.HasValue)
+            if (Optional.IsDefined(NumberOfDescendants))
             {
                 if (NumberOfDescendants != null)
                 {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfDescendants");
                 }
             }
-            if (NumberOfChildren.HasValue)
+            if (Optional.IsDefined(NumberOfChildren))
             {
                 if (NumberOfChildren != null)
                 {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfChildren");
                 }
             }
-            if (NumberOfChildGroups.HasValue)
+            if (Optional.IsDefined(NumberOfChildGroups))
             {
                 if (NumberOfChildGroups != null)
                 {
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("numberOfChildGroups");
                 }
             }
-            if (!(ParentDisplayNameChain is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ParentDisplayNameChain))
             {
                 if (ParentDisplayNameChain != null)
                 {
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("parentDisplayNameChain");
                 }
             }
-            if (!(ParentNameChain is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ParentNameChain))
             {
                 if (ParentNameChain != null)
                 {

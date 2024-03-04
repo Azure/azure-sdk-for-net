@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SelectedStorageClassName != null)
+            if (Optional.IsDefined(SelectedStorageClassName))
             {
                 writer.WritePropertyName("selectedStorageClassName"u8);
                 writer.WriteStringValue(SelectedStorageClassName);
             }
-            if (Provisioner != null)
+            if (Optional.IsDefined(Provisioner))
             {
                 writer.WritePropertyName("provisioner"u8);
                 writer.WriteStringValue(Provisioner);

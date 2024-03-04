@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (VulnerabilityProfile != null)
+            if (Optional.IsDefined(VulnerabilityProfile))
             {
                 writer.WritePropertyName("vulnerabilityProfile"u8);
                 writer.WriteStringValue(VulnerabilityProfile);
             }
-            if (AntiSpywareProfile != null)
+            if (Optional.IsDefined(AntiSpywareProfile))
             {
                 writer.WritePropertyName("antiSpywareProfile"u8);
                 writer.WriteStringValue(AntiSpywareProfile);
             }
-            if (AntiVirusProfile != null)
+            if (Optional.IsDefined(AntiVirusProfile))
             {
                 writer.WritePropertyName("antiVirusProfile"u8);
                 writer.WriteStringValue(AntiVirusProfile);
             }
-            if (UrlFilteringProfile != null)
+            if (Optional.IsDefined(UrlFilteringProfile))
             {
                 writer.WritePropertyName("urlFilteringProfile"u8);
                 writer.WriteStringValue(UrlFilteringProfile);
             }
-            if (FileBlockingProfile != null)
+            if (Optional.IsDefined(FileBlockingProfile))
             {
                 writer.WritePropertyName("fileBlockingProfile"u8);
                 writer.WriteStringValue(FileBlockingProfile);
             }
-            if (DnsSubscription != null)
+            if (Optional.IsDefined(DnsSubscription))
             {
                 writer.WritePropertyName("dnsSubscription"u8);
                 writer.WriteStringValue(DnsSubscription);
             }
-            if (OutboundUnTrustCertificate != null)
+            if (Optional.IsDefined(OutboundUnTrustCertificate))
             {
                 writer.WritePropertyName("outboundUnTrustCertificate"u8);
                 writer.WriteStringValue(OutboundUnTrustCertificate);
             }
-            if (OutboundTrustCertificate != null)
+            if (Optional.IsDefined(OutboundTrustCertificate))
             {
                 writer.WritePropertyName("outboundTrustCertificate"u8);
                 writer.WriteStringValue(OutboundTrustCertificate);

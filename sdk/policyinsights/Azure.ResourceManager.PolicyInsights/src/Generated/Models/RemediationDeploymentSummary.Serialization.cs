@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDeployments))
             {
                 writer.WritePropertyName("totalDeployments"u8);
                 writer.WriteNumberValue(TotalDeployments.Value);
             }
-            if (options.Format != "W" && SuccessfulDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfulDeployments))
             {
                 writer.WritePropertyName("successfulDeployments"u8);
                 writer.WriteNumberValue(SuccessfulDeployments.Value);
             }
-            if (options.Format != "W" && FailedDeployments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedDeployments))
             {
                 writer.WritePropertyName("failedDeployments"u8);
                 writer.WriteNumberValue(FailedDeployments.Value);

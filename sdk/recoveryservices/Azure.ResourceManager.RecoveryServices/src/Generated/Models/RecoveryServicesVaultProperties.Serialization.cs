@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (UpgradeDetails != null)
+            if (Optional.IsDefined(UpgradeDetails))
             {
                 writer.WritePropertyName("upgradeDetails"u8);
                 writer.WriteObjectValue(UpgradeDetails);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -46,62 +47,62 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PrivateEndpointStateForBackup.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStateForBackup))
             {
                 writer.WritePropertyName("privateEndpointStateForBackup"u8);
                 writer.WriteStringValue(PrivateEndpointStateForBackup.Value.ToString());
             }
-            if (options.Format != "W" && PrivateEndpointStateForSiteRecovery.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStateForSiteRecovery))
             {
                 writer.WritePropertyName("privateEndpointStateForSiteRecovery"u8);
                 writer.WriteStringValue(PrivateEndpointStateForSiteRecovery.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (MoveDetails != null)
+            if (Optional.IsDefined(MoveDetails))
             {
                 writer.WritePropertyName("moveDetails"u8);
                 writer.WriteObjectValue(MoveDetails);
             }
-            if (options.Format != "W" && MoveState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
                 writer.WritePropertyName("moveState"u8);
                 writer.WriteStringValue(MoveState.Value.ToString());
             }
-            if (options.Format != "W" && BackupStorageVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageVersion))
             {
                 writer.WritePropertyName("backupStorageVersion"u8);
                 writer.WriteStringValue(BackupStorageVersion.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (MonitoringSettings != null)
+            if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (RestoreSettings != null)
+            if (Optional.IsDefined(RestoreSettings))
             {
                 writer.WritePropertyName("restoreSettings"u8);
                 writer.WriteObjectValue(RestoreSettings);
             }
-            if (RedundancySettings != null)
+            if (Optional.IsDefined(RedundancySettings))
             {
                 writer.WritePropertyName("redundancySettings"u8);
                 writer.WriteObjectValue(RedundancySettings);
             }
-            if (SecuritySettings != null)
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (options.Format != "W" && SecureScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
                 writer.WritePropertyName("secureScore"u8);
                 writer.WriteStringValue(SecureScore.Value.ToString());

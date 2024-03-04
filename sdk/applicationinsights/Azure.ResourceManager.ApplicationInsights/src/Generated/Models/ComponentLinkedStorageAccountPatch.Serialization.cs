@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LinkedStorageAccount != null)
+            if (Optional.IsDefined(LinkedStorageAccount))
             {
                 writer.WritePropertyName("linkedStorageAccount"u8);
                 writer.WriteStringValue(LinkedStorageAccount);

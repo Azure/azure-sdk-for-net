@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPGroups is ChangeTrackingList<MatchConfigurationIPGroupProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPGroups))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VlanGroups is ChangeTrackingList<VlanGroupProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VlanGroups))
             {
                 writer.WritePropertyName("vlanGroups"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PortGroups is ChangeTrackingList<PortGroupProperties> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PortGroups))
             {
                 writer.WritePropertyName("portGroups"u8);
                 writer.WriteStartArray();

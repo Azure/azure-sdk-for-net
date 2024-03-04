@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceResourceId != null)
+            if (Optional.IsDefined(ServiceResourceId))
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (SparkEnabled.HasValue)
+            if (Optional.IsDefined(SparkEnabled))
             {
                 writer.WritePropertyName("sparkEnabled"u8);
                 writer.WriteBooleanValue(SparkEnabled.Value);
             }
-            if (SparkStatus.HasValue)
+            if (Optional.IsDefined(SparkStatus))
             {
                 writer.WritePropertyName("sparkStatus"u8);
                 writer.WriteStringValue(SparkStatus.Value.ToString());
             }
-            if (SubresourceTarget != null)
+            if (Optional.IsDefined(SubresourceTarget))
             {
                 writer.WritePropertyName("subresourceTarget"u8);
                 writer.WriteStringValue(SubresourceTarget);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<ResourceItem> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ComplianceReport is ChangeTrackingList<ComplianceReportItem> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceReport))
             {
                 writer.WritePropertyName("complianceReport"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CompliancePdfReport != null)
+            if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
                 writer.WriteObjectValue(CompliancePdfReport);
             }
-            if (options.Format != "W" && ComplianceDetailedPdfReport != null)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
                 writer.WriteObjectValue(ComplianceDetailedPdfReport);

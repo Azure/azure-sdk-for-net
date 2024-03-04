@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TimestampString != null)
+            if (options.Format != "W" && Optional.IsDefined(TimestampString))
             {
                 writer.WritePropertyName("timestampString"u8);
                 writer.WriteStringValue(TimestampString);
             }
-            if (options.Format != "W" && EventTypeString != null)
+            if (options.Format != "W" && Optional.IsDefined(EventTypeString))
             {
                 writer.WritePropertyName("eventTypeString"u8);
                 writer.WriteStringValue(EventTypeString);
             }
-            if (options.Format != "W" && EventText != null)
+            if (options.Format != "W" && Optional.IsDefined(EventText))
             {
                 writer.WritePropertyName("eventText"u8);
                 writer.WriteStringValue(EventText);

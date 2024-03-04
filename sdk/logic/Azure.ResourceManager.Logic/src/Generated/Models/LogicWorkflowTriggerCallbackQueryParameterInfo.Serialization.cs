@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("api-version"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Sp != null)
+            if (Optional.IsDefined(Sp))
             {
                 writer.WritePropertyName("sp"u8);
                 writer.WriteStringValue(Sp);
             }
-            if (Sv != null)
+            if (Optional.IsDefined(Sv))
             {
                 writer.WritePropertyName("sv"u8);
                 writer.WriteStringValue(Sv);
             }
-            if (Sig != null)
+            if (Optional.IsDefined(Sig))
             {
                 writer.WritePropertyName("sig"u8);
                 writer.WriteStringValue(Sig);
             }
-            if (Se != null)
+            if (Optional.IsDefined(Se))
             {
                 writer.WritePropertyName("se"u8);
                 writer.WriteStringValue(Se);
