@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBFailoverPolicy> array = new List<CosmosDBFailoverPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBFailoverPolicy.DeserializeCosmosDBFailoverPolicy(item, options));
+                        array.Add(CosmosDBFailoverPolicy.DeserializeCosmosDBFailoverPolicy(item));
                     }
                     failoverPolicies = array;
                     continue;

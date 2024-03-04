@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis.Models
                             {
                                 continue;
                             }
-                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value, options);
+                            redisConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("redisVersion"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Redis.Models
                             {
                                 continue;
                             }
-                            sku = RedisSku.DeserializeRedisSku(property0.Value, options);
+                            sku = RedisSku.DeserializeRedisSku(property0.Value);
                             continue;
                         }
                     }

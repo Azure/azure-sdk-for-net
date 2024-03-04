@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of physical partitions and their properties. </summary>
+        [WirePath("physicalPartitionStorageInfoCollection")]
         public IReadOnlyList<PhysicalPartitionStorageInfo> PhysicalPartitionStorageInfoCollectionValue { get; }
     }
 }

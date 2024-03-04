@@ -53,10 +53,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the container name. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
         /// <summary> Gets or sets the remote account name. </summary>
+        [WirePath("remoteAccountName")]
         public string RemoteAccountName { get; set; }
     }
 }

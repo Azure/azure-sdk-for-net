@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("targetDetails"u8))
                 {
-                    targetDetails = PostgreSqlFlexibleServerBackupStoreDetails.DeserializePostgreSqlFlexibleServerBackupStoreDetails(property.Value, options);
+                    targetDetails = PostgreSqlFlexibleServerBackupStoreDetails.DeserializePostgreSqlFlexibleServerBackupStoreDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("backupSettings"u8))
                 {
-                    backupSettings = PostgreSqlFlexibleServerBackupSettings.DeserializePostgreSqlFlexibleServerBackupSettings(property.Value, options);
+                    backupSettings = PostgreSqlFlexibleServerBackupSettings.DeserializePostgreSqlFlexibleServerBackupSettings(property.Value);
                     continue;
                 }
                 if (options.Format != "W")

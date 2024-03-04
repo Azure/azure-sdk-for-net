@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
+            return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
         }
 
         internal static UnknownServerPropertiesForCreate DeserializeUnknownServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value, options);
+                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
+                        return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");

@@ -91,10 +91,12 @@ namespace Azure.ResourceManager.Search.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("apiKeyOnly")]
         public BinaryData ApiKeyOnly { get; set; }
         /// <summary> Indicates that either the API key or an access token from Azure Active Directory can be used for authentication. </summary>
         internal DataPlaneAadOrApiKeyAuthOption AadOrApiKey { get; set; }
         /// <summary> Describes what response the data plane API of a Search service would send for requests that failed authentication. </summary>
+        [WirePath("aadOrApiKey.aadAuthFailureMode")]
         public SearchAadAuthFailureMode? AadAuthFailureMode
         {
             get => AadOrApiKey is null ? default : AadOrApiKey.AadAuthFailureMode;

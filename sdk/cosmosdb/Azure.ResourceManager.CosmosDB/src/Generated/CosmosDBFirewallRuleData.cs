@@ -93,10 +93,13 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The provisioning state of the firewall rule. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.startIpAddress")]
         public string StartIPAddress { get; set; }
         /// <summary> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.endIpAddress")]
         public string EndIPAddress { get; set; }
     }
 }

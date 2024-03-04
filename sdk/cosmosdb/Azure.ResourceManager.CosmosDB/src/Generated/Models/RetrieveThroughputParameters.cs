@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a resource throughput. </summary>
         internal RetrieveThroughputPropertiesResource Resource { get; set; }
         /// <summary> Array of PhysicalPartitionId objects. </summary>
+        [WirePath("properties.resource.physicalPartitionIds")]
         public IList<WritableSubResource> ResourcePhysicalPartitionIds
         {
             get => Resource is null ? default : Resource.PhysicalPartitionIds;
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

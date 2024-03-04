@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            restoreParameters = MongoClusterRestoreParameters.DeserializeMongoClusterRestoreParameters(property0.Value, options);
+                            restoreParameters = MongoClusterRestoreParameters.DeserializeMongoClusterRestoreParameters(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("administratorLogin"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<NodeGroupSpec> array = new List<NodeGroupSpec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item, options));
+                                array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item));
                             }
                             nodeGroupSpecs = array;
                             continue;

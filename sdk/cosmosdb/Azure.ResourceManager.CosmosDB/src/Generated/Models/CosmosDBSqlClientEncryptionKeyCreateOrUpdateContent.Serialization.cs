@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"u8))
                         {
-                            resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(property0.Value, options);
+                            resource = CosmosDBSqlClientEncryptionKeyResourceInfo.DeserializeCosmosDBSqlClientEncryptionKeyResourceInfo(property0.Value);
                             continue;
                         }
                     }

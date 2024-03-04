@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> The operation type of this container event. </summary>
+        [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
         /// <summary> The when this container event happened. </summary>
+        [WirePath("eventTimestamp")]
         public string EventTimestamp { get; }
         /// <summary> The name of this SQL container. </summary>
+        [WirePath("ownerId")]
         public string ContainerName { get; }
         /// <summary> The resource ID of this SQL container. </summary>
+        [WirePath("ownerResourceId")]
         public string ContainerId { get; }
         /// <summary> Cosmos DB SQL container resource object. </summary>
+        [WirePath("container")]
         public RestorableSqlContainerPropertiesResourceContainer Container { get; }
     }
 }

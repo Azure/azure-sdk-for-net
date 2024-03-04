@@ -79,12 +79,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table. </summary>
+        [WirePath("id")]
         public string TableName { get; set; }
         /// <summary> Time to live of the Cosmos DB Cassandra table. </summary>
+        [WirePath("defaultTtl")]
         public int? DefaultTtl { get; set; }
         /// <summary> Schema of the Cosmos DB Cassandra table. </summary>
+        [WirePath("schema")]
         public CassandraSchema Schema { get; set; }
         /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
         public int? AnalyticalStorageTtl { get; set; }
     }
 }

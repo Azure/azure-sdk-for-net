@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The database name the role is applied. </summary>
+        [WirePath("db")]
         public string DBName { get; set; }
         /// <summary> The collection name the role is applied. </summary>
+        [WirePath("collection")]
         public string Collection { get; set; }
     }
 }

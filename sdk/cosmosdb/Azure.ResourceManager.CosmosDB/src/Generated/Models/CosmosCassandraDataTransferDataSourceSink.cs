@@ -53,10 +53,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the keyspace name. </summary>
+        [WirePath("keyspaceName")]
         public string KeyspaceName { get; set; }
         /// <summary> Gets or sets the table name. </summary>
+        [WirePath("tableName")]
         public string TableName { get; set; }
         /// <summary> Gets or sets the remote account name. </summary>
+        [WirePath("remoteAccountName")]
         public string RemoteAccountName { get; set; }
     }
 }

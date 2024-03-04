@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </summary>
+        [WirePath("restoreSource")]
         public string RestoreSource { get; set; }
         /// <summary> Time to which the account has to be restored (ISO-8601 format). </summary>
+        [WirePath("restoreTimestampInUtc")]
         public DateTimeOffset? RestoreTimestampInUtc { get; set; }
     }
 }

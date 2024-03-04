@@ -70,12 +70,16 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The group ID of the private link resource. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> The list of required members of the private link resource. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The list of required DNS zone names of the private link resource. </summary>
+        [WirePath("requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
         /// <summary> The list of resources that are onboarded to private link service, that are supported by Azure Cognitive Search. </summary>
+        [WirePath("shareablePrivateLinkResourceTypes")]
         public IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; }
     }
 }

@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraColumn> array = new List<CassandraColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraColumn.DeserializeCassandraColumn(item, options));
+                        array.Add(CassandraColumn.DeserializeCassandraColumn(item));
                     }
                     columns = array;
                     continue;
@@ -124,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraPartitionKey> array = new List<CassandraPartitionKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item, options));
+                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item));
                     }
                     partitionKeys = array;
                     continue;
@@ -138,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterKey> array = new List<CassandraClusterKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item, options));
+                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item));
                     }
                     clusterKeys = array;
                     continue;
@@ -152,6 +155,129 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraSchema(Optional.ToList(columns), Optional.ToList(partitionKeys), Optional.ToList(clusterKeys), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
+            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
+            {
+                if (Columns.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  columns: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Columns)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  columns: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(PartitionKeys) || hasPropertyOverride)
+            {
+                if (PartitionKeys.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  partitionKeys: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PartitionKeys)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  partitionKeys: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(ClusterKeys) || hasPropertyOverride)
+            {
+                if (ClusterKeys.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  clusterKeys: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ClusterKeys)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  clusterKeys: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<CassandraSchema>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +286,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{options.Format}' format.");
             }
@@ -176,6 +304,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraSchema(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{options.Format}' format.");
             }

@@ -8,9 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -129,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value, options);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionErrors"u8))
@@ -141,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraConnectionError> array = new List<CassandraConnectionError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item, options));
+                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item));
                     }
                     connectionErrors = array;
                     continue;
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraError> array = new List<CassandraError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraError.DeserializeCassandraError(item, options));
+                        array.Add(CassandraError.DeserializeCassandraError(item));
                     }
                     errors = array;
                     continue;
@@ -169,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterPublicStatusDataCentersItem> array = new List<CassandraClusterPublicStatusDataCentersItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item, options));
+                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item));
                     }
                     dataCenters = array;
                     continue;
@@ -183,6 +186,157 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(errors), Optional.ToList(dataCenters), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  eTag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReaperStatus), out propertyOverride);
+            if (Optional.IsDefined(ReaperStatus) || hasPropertyOverride)
+            {
+                builder.Append("  reaperStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ReaperStatus, options, 2, false, "  reaperStatus: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionErrors), out propertyOverride);
+            if (Optional.IsCollectionDefined(ConnectionErrors) || hasPropertyOverride)
+            {
+                if (ConnectionErrors.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  connectionErrors: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ConnectionErrors)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  connectionErrors: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
+            if (Optional.IsCollectionDefined(Errors) || hasPropertyOverride)
+            {
+                if (Errors.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  errors: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Errors)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  errors: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCenters), out propertyOverride);
+            if (Optional.IsCollectionDefined(DataCenters) || hasPropertyOverride)
+            {
+                if (DataCenters.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  dataCenters: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DataCenters)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  dataCenters: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<CassandraClusterPublicStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterPublicStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,6 +345,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support '{options.Format}' format.");
             }
@@ -207,6 +363,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraClusterPublicStatus(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support '{options.Format}' format.");
             }

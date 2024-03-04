@@ -86,14 +86,19 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
+        [WirePath("properties.linkedRedisCacheId")]
         public ResourceIdentifier LinkedRedisCacheId { get; }
         /// <summary> Location of the linked redis cache. </summary>
+        [WirePath("properties.linkedRedisCacheLocation")]
         public AzureLocation LinkedRedisCacheLocation { get; }
         /// <summary> Role of the linked server. </summary>
+        [WirePath("properties.serverRole")]
         public RedisLinkedServerRole ServerRole { get; }
         /// <summary> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </summary>
+        [WirePath("properties.geoReplicatedPrimaryHostName")]
         public string GeoReplicatedPrimaryHostName { get; }
         /// <summary> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </summary>
+        [WirePath("properties.primaryHostName")]
         public string PrimaryHostName { get; }
     }
 }

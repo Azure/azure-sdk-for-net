@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Describes how a search service should enforce having one or more non customer encrypted resources. </summary>
+        [WirePath("enforcement")]
         public SearchEncryptionWithCmkEnforcement? Enforcement { get; set; }
         /// <summary> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and 'Enforcement' is 'enabled' then the service will be marked as 'nonCompliant'. </summary>
+        [WirePath("encryptionComplianceStatus")]
         public SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get; }
     }
 }

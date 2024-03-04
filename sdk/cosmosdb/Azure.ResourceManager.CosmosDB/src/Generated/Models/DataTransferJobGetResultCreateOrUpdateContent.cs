@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Data Transfer Create Job Properties. </summary>
+        [WirePath("properties")]
         public DataTransferJobProperties Properties { get; set; }
     }
 }

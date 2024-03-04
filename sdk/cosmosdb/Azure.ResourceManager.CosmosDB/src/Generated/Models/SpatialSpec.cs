@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> List of path's spatial type. </summary>
+        [WirePath("types")]
         public IList<CosmosDBSpatialType> Types { get; }
     }
 }
