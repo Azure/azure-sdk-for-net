@@ -15,17 +15,17 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InterToneTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(InterToneTimeoutInSeconds))
             {
                 writer.WritePropertyName("interToneTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InterToneTimeoutInSeconds.Value);
             }
-            if (MaxTonesToCollect.HasValue)
+            if (Optional.IsDefined(MaxTonesToCollect))
             {
                 writer.WritePropertyName("maxTonesToCollect"u8);
                 writer.WriteNumberValue(MaxTonesToCollect.Value);
             }
-            if (!(StopTones is ChangeTrackingList<DtmfTone> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StopTones))
             {
                 writer.WritePropertyName("stopTones"u8);
                 writer.WriteStartArray();

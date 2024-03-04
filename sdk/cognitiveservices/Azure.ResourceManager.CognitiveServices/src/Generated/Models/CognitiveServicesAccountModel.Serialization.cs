@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (BaseModel != null)
+            if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
                 writer.WriteObjectValue(BaseModel);
             }
-            if (IsDefaultVersion.HasValue)
+            if (Optional.IsDefined(IsDefaultVersion))
             {
                 writer.WritePropertyName("isDefaultVersion"u8);
                 writer.WriteBooleanValue(IsDefaultVersion.Value);
             }
-            if (!(Skus is ChangeTrackingList<CognitiveServicesModelSku> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Skus))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -47,12 +48,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaxCapacity.HasValue)
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
-            if (!(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(FinetuneCapabilities is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(FinetuneCapabilities))
             {
                 writer.WritePropertyName("finetuneCapabilities"u8);
                 writer.WriteStartObject();
@@ -74,42 +75,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Deprecation != null)
+            if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
                 writer.WriteObjectValue(Deprecation);
             }
-            if (LifecycleStatus.HasValue)
+            if (Optional.IsDefined(LifecycleStatus))
             {
                 writer.WritePropertyName("lifecycleStatus"u8);
                 writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && CallRateLimit != null)
+            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit);
