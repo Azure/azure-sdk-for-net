@@ -811,10 +811,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StopHoldMusicAsync(_stopHoldMusicOptions)
-                },
-                new Func<CallMedia, Task<Response>>?[]
-                {
                    callMedia => callMedia.HoldAsync(_holdOptions)
                 },
                 new Func<CallMedia, Task<Response>>?[]
@@ -836,10 +832,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Response>?[]
                 {
                    callMedia => callMedia.StartHoldMusic(_startHoldMusicOptions)
-                },
-                new Func<CallMedia, Response>?[]
-                {
-                   callMedia => callMedia.StopHoldMusic(_stopHoldMusicOptions)
                 },
                 new Func<CallMedia, Response>?[]
                 {
