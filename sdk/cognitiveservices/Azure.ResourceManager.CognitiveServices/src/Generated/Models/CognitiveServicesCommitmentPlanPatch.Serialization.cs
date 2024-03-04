@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

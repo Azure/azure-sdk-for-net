@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
+        [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The group id from the provider of resource the shared private link resource is for. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
+        [WirePath("requestMessage")]
         public string RequestMessage { get; set; }
         /// <summary> Optional. Can be used to specify the Azure Resource Manager location of the resource to which a shared private link is to be created. This is only required for those resources whose DNS configuration are regional (such as Azure Kubernetes Service). </summary>
+        [WirePath("resourceRegion")]
         public AzureLocation? ResourceRegion { get; set; }
         /// <summary> Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected. </summary>
+        [WirePath("status")]
         public SharedSearchServicePrivateLinkResourceStatus? Status { get; set; }
         /// <summary> The provisioning state of the shared private link resource. Can be Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
+        [WirePath("provisioningState")]
         public SharedSearchServicePrivateLinkResourceProvisioningState? ProvisioningState { get; set; }
     }
 }

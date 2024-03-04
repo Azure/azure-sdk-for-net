@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Describes the properties of a supported private link resource for the Azure Cognitive Search service. </summary>
+        [WirePath("properties")]
         public SearchPrivateLinkResourceProperties Properties { get; }
     }
 }

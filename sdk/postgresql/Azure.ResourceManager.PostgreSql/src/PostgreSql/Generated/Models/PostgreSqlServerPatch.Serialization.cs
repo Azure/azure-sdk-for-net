@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    sku = PostgreSqlSku.DeserializePostgreSqlSku(property.Value, options);
+                    sku = PostgreSqlSku.DeserializePostgreSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                             {
                                 continue;
                             }
-                            storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property0.Value, options);
+                            storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("administratorLoginPassword"u8))

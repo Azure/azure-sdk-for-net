@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The resource provider type for the resource that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
+        [WirePath("type")]
         public string ShareablePrivateLinkResourcePropertiesType { get; }
         /// <summary> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> The description of the resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

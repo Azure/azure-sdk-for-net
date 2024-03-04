@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Status of the the private link service connection. Can be Pending, Approved, Rejected, or Disconnected. </summary>
+        [WirePath("status")]
         public SearchServicePrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The description for the private link service connection state. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A description of any extra actions that may be required. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
     }
 }

@@ -94,30 +94,39 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Job Name. </summary>
+        [WirePath("properties.jobName")]
         public string JobName { get; }
         /// <summary>
         /// Source DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </summary>
+        [WirePath("properties.source")]
         public DataTransferDataSourceSink Source { get; set; }
         /// <summary>
         /// Destination DataStore details
         /// Please note <see cref="DataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobDataTransferDataSourceSink"/>, <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
         /// </summary>
+        [WirePath("properties.destination")]
         public DataTransferDataSourceSink Destination { get; set; }
         /// <summary> Job Status. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> Processed Count. </summary>
+        [WirePath("properties.processedCount")]
         public long? ProcessedCount { get; }
         /// <summary> Total Count. </summary>
+        [WirePath("properties.totalCount")]
         public long? TotalCount { get; }
         /// <summary> Last Updated Time (ISO-8601 format). </summary>
+        [WirePath("properties.lastUpdatedUtcTime")]
         public DateTimeOffset? LastUpdatedUtcOn { get; }
         /// <summary> Worker count. </summary>
+        [WirePath("properties.workerCount")]
         public int? WorkerCount { get; set; }
         /// <summary> Error response for Faulted job. </summary>
+        [WirePath("properties.error")]
         public ErrorResponse Error { get; }
     }
 }

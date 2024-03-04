@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL storedProcedure. </summary>
+        [WirePath("id")]
         public string StoredProcedureName { get; set; }
         /// <summary> Body of the Stored Procedure. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
     }
 }

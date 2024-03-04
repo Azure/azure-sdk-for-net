@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -164,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
+                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
                     }
                     serverCertificates = array;
                     continue;
@@ -187,6 +190,223 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Optional.ToList(serverCertificates), Optional.ToNullable(connectionTimeoutInMs), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerHostname), out propertyOverride);
+            if (Optional.IsDefined(ServerHostname) || hasPropertyOverride)
+            {
+                builder.Append("  serverHostname: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServerHostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerHostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerHostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerPort), out propertyOverride);
+            if (Optional.IsDefined(ServerPort) || hasPropertyOverride)
+            {
+                builder.Append("  serverPort: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ServerPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserDistinguishedName), out propertyOverride);
+            if (Optional.IsDefined(ServiceUserDistinguishedName) || hasPropertyOverride)
+            {
+                builder.Append("  serviceUserDistinguishedName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceUserDistinguishedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceUserDistinguishedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceUserDistinguishedName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserPassword), out propertyOverride);
+            if (Optional.IsDefined(ServiceUserPassword) || hasPropertyOverride)
+            {
+                builder.Append("  serviceUserPassword: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceUserPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceUserPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceUserPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchBaseDistinguishedName), out propertyOverride);
+            if (Optional.IsDefined(SearchBaseDistinguishedName) || hasPropertyOverride)
+            {
+                builder.Append("  searchBaseDistinguishedName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SearchBaseDistinguishedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchBaseDistinguishedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchBaseDistinguishedName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchFilterTemplate), out propertyOverride);
+            if (Optional.IsDefined(SearchFilterTemplate) || hasPropertyOverride)
+            {
+                builder.Append("  searchFilterTemplate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SearchFilterTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SearchFilterTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SearchFilterTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificates), out propertyOverride);
+            if (Optional.IsCollectionDefined(ServerCertificates) || hasPropertyOverride)
+            {
+                if (ServerCertificates.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  serverCertificates: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ServerCertificates)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  serverCertificates: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionTimeoutInMs), out propertyOverride);
+            if (Optional.IsDefined(ConnectionTimeoutInMs) || hasPropertyOverride)
+            {
+                builder.Append("  connectionTimeoutInMs: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ConnectionTimeoutInMs.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -195,6 +415,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{options.Format}' format.");
             }
@@ -211,6 +433,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{options.Format}' format.");
             }

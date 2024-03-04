@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
+        [WirePath("physicalPartitionIds")]
         public IList<WritableSubResource> PhysicalPartitionIds { get; }
     }
 }

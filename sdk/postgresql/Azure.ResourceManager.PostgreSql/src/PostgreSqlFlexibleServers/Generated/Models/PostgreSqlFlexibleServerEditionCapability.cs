@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Server edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Default sku name for the server edition. </summary>
+        [WirePath("defaultSkuName")]
         public string DefaultSkuName { get; }
         /// <summary> The list of editions supported by this server edition. </summary>
+        [WirePath("supportedStorageEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
         /// <summary> List of supported server SKUs. </summary>
+        [WirePath("supportedServerSkus")]
         public IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> SupportedServerSkus { get; }
     }
 }

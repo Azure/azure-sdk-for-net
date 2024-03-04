@@ -45,8 +45,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the container name. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
         /// <summary> Gets or sets the endpoint uri. </summary>
+        [WirePath("endpointUrl")]
         public Uri EndpointUri { get; set; }
     }
 }

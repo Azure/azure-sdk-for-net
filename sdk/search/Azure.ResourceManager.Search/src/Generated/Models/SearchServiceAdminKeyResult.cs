@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> The primary admin API key of the search service. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
         /// <summary> The secondary admin API key of the search service. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
     }
 }

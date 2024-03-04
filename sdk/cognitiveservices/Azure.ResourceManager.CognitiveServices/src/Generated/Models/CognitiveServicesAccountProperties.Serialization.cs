@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -285,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuCapability> array = new List<CognitiveServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item, options));
+                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item));
                     }
                     capabilities = array;
                     continue;
@@ -310,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value, options);
+                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customSubDomainName"u8))
@@ -324,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value, options);
+                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))
@@ -333,7 +336,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value, options);
+                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("userOwnedStorage"u8))
@@ -345,7 +348,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountUserOwnedStorage> array = new List<ServiceAccountUserOwnedStorage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item, options));
+                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item));
                     }
                     userOwnedStorage = array;
                     continue;
@@ -359,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesPrivateEndpointConnectionData> array = new List<CognitiveServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item, options));
+                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -379,7 +382,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value, options);
+                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dateCreated"u8))
@@ -397,7 +400,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dynamicThrottlingEnabled"u8))
@@ -415,7 +418,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value, options);
+                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restrictOutboundNetworkAccess"u8))
@@ -493,7 +496,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value, options);
+                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("commitmentPlanAssociations"u8))
@@ -505,7 +508,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CommitmentPlanAssociation> array = new List<CommitmentPlanAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item, options));
+                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item));
                     }
                     commitmentPlanAssociations = array;
                     continue;
@@ -516,7 +519,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value, options);
+                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value);
                     continue;
                 }
                 if (options.Format != "W")
@@ -526,6 +529,570 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations), abusePenalty.Value, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
+            if (Optional.IsDefined(Endpoint) || hasPropertyOverride)
+            {
+                builder.Append("  endpoint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Endpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Endpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Endpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(Capabilities) || hasPropertyOverride)
+            {
+                if (Capabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  capabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Capabilities)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  capabilities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMigrated), out propertyOverride);
+            if (Optional.IsDefined(IsMigrated) || hasPropertyOverride)
+            {
+                builder.Append("  isMigrated: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsMigrated.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationToken), out propertyOverride);
+            if (Optional.IsDefined(MigrationToken) || hasPropertyOverride)
+            {
+                builder.Append("  migrationToken: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MigrationToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MigrationToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MigrationToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuChangeInfo), out propertyOverride);
+            if (Optional.IsDefined(SkuChangeInfo) || hasPropertyOverride)
+            {
+                builder.Append("  skuChangeInfo: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, SkuChangeInfo, options, 2, false, "  skuChangeInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomSubDomainName), out propertyOverride);
+            if (Optional.IsDefined(CustomSubDomainName) || hasPropertyOverride)
+            {
+                builder.Append("  customSubDomainName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CustomSubDomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomSubDomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomSubDomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkAcls), out propertyOverride);
+            if (Optional.IsDefined(NetworkAcls) || hasPropertyOverride)
+            {
+                builder.Append("  networkAcls: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, NetworkAcls, options, 2, false, "  networkAcls: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Encryption), out propertyOverride);
+            if (Optional.IsDefined(Encryption) || hasPropertyOverride)
+            {
+                builder.Append("  encryption: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Encryption, options, 2, false, "  encryption: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserOwnedStorage), out propertyOverride);
+            if (Optional.IsCollectionDefined(UserOwnedStorage) || hasPropertyOverride)
+            {
+                if (UserOwnedStorage.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  userOwnedStorage: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in UserOwnedStorage)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  userOwnedStorage: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections) || hasPropertyOverride)
+            {
+                if (PrivateEndpointConnections.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  privateEndpointConnections: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            {
+                builder.Append("  publicNetworkAccess: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiProperties), out propertyOverride);
+            if (Optional.IsDefined(ApiProperties) || hasPropertyOverride)
+            {
+                builder.Append("  apiProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ApiProperties, options, 2, false, "  apiProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            {
+                builder.Append("  dateCreated: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallRateLimit), out propertyOverride);
+            if (Optional.IsDefined(CallRateLimit) || hasPropertyOverride)
+            {
+                builder.Append("  callRateLimit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, CallRateLimit, options, 2, false, "  callRateLimit: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableDynamicThrottling), out propertyOverride);
+            if (Optional.IsDefined(EnableDynamicThrottling) || hasPropertyOverride)
+            {
+                builder.Append("  dynamicThrottlingEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = EnableDynamicThrottling.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaLimit), out propertyOverride);
+            if (Optional.IsDefined(QuotaLimit) || hasPropertyOverride)
+            {
+                builder.Append("  quotaLimit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, QuotaLimit, options, 2, false, "  quotaLimit: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictOutboundNetworkAccess), out propertyOverride);
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess) || hasPropertyOverride)
+            {
+                builder.Append("  restrictOutboundNetworkAccess: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = RestrictOutboundNetworkAccess.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedFqdnList), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedFqdnList) || hasPropertyOverride)
+            {
+                if (AllowedFqdnList.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedFqdnList: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedFqdnList)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableLocalAuth), out propertyOverride);
+            if (Optional.IsDefined(DisableLocalAuth) || hasPropertyOverride)
+            {
+                builder.Append("  disableLocalAuth: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = DisableLocalAuth.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoints), out propertyOverride);
+            if (Optional.IsCollectionDefined(Endpoints) || hasPropertyOverride)
+            {
+                if (Endpoints.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  endpoints: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Endpoints)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Restore), out propertyOverride);
+            if (Optional.IsDefined(Restore) || hasPropertyOverride)
+            {
+                builder.Append("  restore: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = Restore.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeletedOn), out propertyOverride);
+            if (Optional.IsDefined(DeletedOn) || hasPropertyOverride)
+            {
+                builder.Append("  deletionDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledPurgeDate), out propertyOverride);
+            if (Optional.IsDefined(ScheduledPurgeDate) || hasPropertyOverride)
+            {
+                builder.Append("  scheduledPurgeDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ScheduledPurgeDate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScheduledPurgeDate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScheduledPurgeDate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (Optional.IsDefined(Locations) || hasPropertyOverride)
+            {
+                builder.Append("  locations: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Locations, options, 2, false, "  locations: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanAssociations), out propertyOverride);
+            if (Optional.IsCollectionDefined(CommitmentPlanAssociations) || hasPropertyOverride)
+            {
+                if (CommitmentPlanAssociations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  commitmentPlanAssociations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in CommitmentPlanAssociations)
+                        {
+                            AppendChildObject(builder, item, options, 4, true, "  commitmentPlanAssociations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbusePenalty), out propertyOverride);
+            if (Optional.IsDefined(AbusePenalty) || hasPropertyOverride)
+            {
+                builder.Append("  abusePenalty: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, AbusePenalty, options, 2, false, "  abusePenalty: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
+        BinaryData IPersistableModel<CognitiveServicesAccountProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{options.Format}' format.");
+            }
         }
 
         CognitiveServicesAccountProperties IPersistableModel<CognitiveServicesAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -539,6 +1106,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCognitiveServicesAccountProperties(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{options.Format}' format.");
             }

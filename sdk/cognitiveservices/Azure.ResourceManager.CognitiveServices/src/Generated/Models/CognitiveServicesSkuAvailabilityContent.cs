@@ -87,10 +87,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The SKU of the resource. </summary>
+        [WirePath("skus")]
         public IList<string> Skus { get; }
         /// <summary> The Kind of the resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The Type of the resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }
