@@ -53,29 +53,33 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
         internal AzureChatExtensionsMessageContext()
         {
-            Messages = new ChangeTrackingList<ChatResponseMessage>();
+            Citations = new ChangeTrackingList<AzureChatExtensionDataSourceResponseCitation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
-        /// <param name="messages">
-        ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
+        /// <param name="citations">
+        ///   The contextual information associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </param>
+        /// <param name="intent"> The detected intent from the chat history, used to pass to the next turn to carry over the context. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureChatExtensionsMessageContext(IReadOnlyList<ChatResponseMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureChatExtensionsMessageContext(IReadOnlyList<AzureChatExtensionDataSourceResponseCitation> citations, string intent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Messages = messages;
+            Citations = citations;
+            Intent = intent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
+        ///   The contextual information associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </summary>
-        public IReadOnlyList<ChatResponseMessage> Messages { get; }
+        public IReadOnlyList<AzureChatExtensionDataSourceResponseCitation> Citations { get; }
+        /// <summary> The detected intent from the chat history, used to pass to the next turn to carry over the context. </summary>
+        public string Intent { get; }
     }
 }
