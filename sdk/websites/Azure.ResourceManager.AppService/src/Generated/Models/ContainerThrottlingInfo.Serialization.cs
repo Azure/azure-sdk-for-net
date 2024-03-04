@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Periods.HasValue)
+            if (Optional.IsDefined(Periods))
             {
                 writer.WritePropertyName("periods"u8);
                 writer.WriteNumberValue(Periods.Value);
             }
-            if (ThrottledPeriods.HasValue)
+            if (Optional.IsDefined(ThrottledPeriods))
             {
                 writer.WritePropertyName("throttledPeriods"u8);
                 writer.WriteNumberValue(ThrottledPeriods.Value);
             }
-            if (ThrottledTime.HasValue)
+            if (Optional.IsDefined(ThrottledTime))
             {
                 writer.WritePropertyName("throttledTime"u8);
                 writer.WriteNumberValue(ThrottledTime.Value);

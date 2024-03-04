@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (CpuUsage != null)
+            if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteObjectValue(CpuUsage);
             }
-            if (SystemCpuUsage.HasValue)
+            if (Optional.IsDefined(SystemCpuUsage))
             {
                 writer.WritePropertyName("systemCpuUsage"u8);
                 writer.WriteNumberValue(SystemCpuUsage.Value);
             }
-            if (OnlineCpuCount.HasValue)
+            if (Optional.IsDefined(OnlineCpuCount))
             {
                 writer.WritePropertyName("onlineCpuCount"u8);
                 writer.WriteNumberValue(OnlineCpuCount.Value);
             }
-            if (ThrottlingData != null)
+            if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
                 writer.WriteObjectValue(ThrottlingData);

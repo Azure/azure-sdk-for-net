@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && FileUri != null)
+            if (options.Format != "W" && Optional.IsDefined(FileUri))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(FileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && WebUri != null)
+            if (options.Format != "W" && Optional.IsDefined(WebUri))
             {
                 writer.WritePropertyName("web"u8);
                 writer.WriteStringValue(WebUri.AbsoluteUri);
             }
-            if (options.Format != "W" && DfsUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DfsUri))
             {
                 writer.WritePropertyName("dfs"u8);
                 writer.WriteStringValue(DfsUri.AbsoluteUri);
