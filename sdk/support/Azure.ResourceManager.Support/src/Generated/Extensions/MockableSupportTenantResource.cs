@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Mocking
         private ClientDiagnostics LookUpResourceIdClientDiagnostics => _lookUpResourceIdClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LookUpResourceIdRestOperations LookUpResourceIdRestClient => _lookUpResourceIdRestClient ??= new LookUpResourceIdRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

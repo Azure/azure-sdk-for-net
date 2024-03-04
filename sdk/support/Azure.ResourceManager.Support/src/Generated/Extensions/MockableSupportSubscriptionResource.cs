@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Mocking
         private ClientDiagnostics SubscriptionSupportTicketSupportTicketsClientDiagnostics => _subscriptionSupportTicketSupportTicketsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
         private SupportTicketsRestOperations SubscriptionSupportTicketSupportTicketsRestClient => _subscriptionSupportTicketSupportTicketsRestClient ??= new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SubscriptionSupportTicketResource.ResourceType));
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

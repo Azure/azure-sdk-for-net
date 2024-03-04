@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Support
         private readonly SupportTicketData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Support/supportTickets";
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionSupportTicketResource"/> class for mocking. </summary>
         protected SubscriptionSupportTicketResource()

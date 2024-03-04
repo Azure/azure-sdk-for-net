@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="metadata"> String-to-string dictionary for additional metadata. </param>
         /// <param name="parentProblemClassification"> Reference to the parent problem classification which has same structure as problem classification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled, IReadOnlyDictionary<string, string> metadata, ProblemClassificationData parentProblemClassification, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled, IReadOnlyDictionary<string, string> metadata, ProblemClassificationData parentProblemClassification, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             SecondaryConsentEnabled = secondaryConsentEnabled;

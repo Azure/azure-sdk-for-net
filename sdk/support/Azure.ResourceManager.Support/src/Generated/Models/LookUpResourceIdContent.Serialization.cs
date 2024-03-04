@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (ResourceType.HasValue)
+            if (AzureSupportResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value.ToString());
+                writer.WriteStringValue(AzureSupportResourceType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support.Models
                 return null;
             }
             string identifier = default;
-            ResourceType? type = default;
+            AzureSupportResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    type = new AzureSupportResourceType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

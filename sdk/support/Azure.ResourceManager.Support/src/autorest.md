@@ -90,6 +90,7 @@ rename-mapping:
   UploadFile: UploadFileContent
   LookUpResourceIdResponse: LookUpResourceIdResult
   ServiceClassificationRequest: ServiceClassificationContent
+  ResourceType: AzureSupportResourceType
 
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability

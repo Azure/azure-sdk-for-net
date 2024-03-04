@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Support
         private readonly SupportAzureServiceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Support/services";
+        public static readonly ResourceType ResourceType = "Microsoft.Support/services";
 
         /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceResource"/> class for mocking. </summary>
         protected SupportAzureServiceResource()

@@ -12,7 +12,6 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
-using ResourceType = Azure.ResourceManager.Support.Models.ResourceType;
 
 namespace Azure.ResourceManager.Support.Samples
 {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Support.Samples
             LookUpResourceIdContent content = new LookUpResourceIdContent()
             {
                 Identifier = "1234668596",
-                ResourceType = ResourceType.MicrosoftSupportSupportTickets,
+                AzureSupportResourceType = AzureSupportResourceType.MicrosoftSupportSupportTickets,
             };
             LookUpResourceIdResult result = await tenantResource.PostLookUpResourceIdAsync(content);
 

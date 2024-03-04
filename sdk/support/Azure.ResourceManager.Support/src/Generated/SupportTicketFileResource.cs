@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         private readonly SupportFileDetailData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
+        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
 
         /// <summary> Initializes a new instance of the <see cref="SupportTicketFileResource"/> class for mocking. </summary>
         protected SupportTicketFileResource()

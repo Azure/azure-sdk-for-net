@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Support
             }
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             string displayName = default;
             IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Support
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
