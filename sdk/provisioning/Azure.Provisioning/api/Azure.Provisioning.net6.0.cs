@@ -213,6 +213,13 @@ namespace Azure.Provisioning.KeyVaults
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
 }
+namespace Azure.Provisioning.PostGreSql
+{
+    public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>
+    {
+        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.PostgreSql.Models.PostgreSqlSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
+    }
+}
 namespace Azure.Provisioning.Redis
 {
     public partial class RedisCache : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisData>
@@ -220,11 +227,11 @@ namespace Azure.Provisioning.Redis
         public RedisCache(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Redis.Models.RedisSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "redis", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Redis.RedisData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
-        public Azure.Provisioning.Redis.RedisCacheConnectionString GetConnectionString(Azure.Provisioning.Parameter password) { throw null; }
+        public Azure.Provisioning.Redis.RedisCacheConnectionString GetConnectionString() { throw null; }
     }
     public partial class RedisCacheConnectionString : Azure.Provisioning.ConnectionString
     {
-        public RedisCacheConnectionString(Azure.Provisioning.Redis.RedisCache cache, Azure.Provisioning.Parameter password) : base (default(string)) { }
+        public RedisCacheConnectionString(Azure.Provisioning.Redis.RedisCache cache) : base (default(string)) { }
     }
 }
 namespace Azure.Provisioning.ResourceManager

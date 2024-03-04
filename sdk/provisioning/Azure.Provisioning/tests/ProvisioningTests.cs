@@ -212,9 +212,8 @@ namespace Azure.Provisioning.Tests
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
-            var primaryKey = cache.AddOutput(data => data.AccessKeys.PrimaryKey, "primaryKey");
             _ = infrastructure.AddKeyVault();
-            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(new Parameter(primaryKey)));
+            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString());
 
             infrastructure.Build(GetOutputPath());
 
