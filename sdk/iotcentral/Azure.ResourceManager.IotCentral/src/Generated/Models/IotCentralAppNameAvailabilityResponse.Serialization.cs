@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsNameAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (options.Format != "W" && IotCentralAppNameUnavailableReason != null)
+            if (options.Format != "W" && Optional.IsDefined(IotCentralAppNameUnavailableReason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(IotCentralAppNameUnavailableReason);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

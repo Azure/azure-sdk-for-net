@@ -50,11 +50,40 @@ namespace Azure.AI.OpenAI.Tests
             ImageGenerationData firstImageLocation = imageGenerations.Data[0];
             Assert.That(firstImageLocation, Is.Not.Null);
             Assert.That(firstImageLocation.Url, Is.Not.Null.Or.Empty);
+
+            // ContentFilterResults and PromptFilterResults are currently Azure Only
+            if (serviceTarget == Service.Azure)
+            {
+                foreach (ImageGenerationData data in imageGenerations.Data)
+                {
+                    Assert.That(data.ContentFilterResults, Is.Not.Null.Or.Empty);
+
+                    Assert.That(data.ContentFilterResults.Hate.Filtered, Is.False);
+                    Assert.That(data.ContentFilterResults.Sexual.Filtered, Is.False);
+                    Assert.That(data.ContentFilterResults.Violence.Filtered, Is.False);
+                    Assert.That(data.ContentFilterResults.SelfHarm.Filtered, Is.False);
+
+                    Assert.That(data.ContentFilterResults.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.That(data.ContentFilterResults.Sexual.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.That(data.ContentFilterResults.Violence.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.That(data.ContentFilterResults.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+
+                    Assert.That(data.PromptFilterResults, Is.Not.Null.Or.Empty);
+
+                    Assert.That(data.PromptFilterResults.Hate.Filtered, Is.False);
+                    Assert.That(data.PromptFilterResults.Sexual.Filtered, Is.False);
+                    Assert.That(data.PromptFilterResults.Violence.Filtered, Is.False);
+                    Assert.That(data.PromptFilterResults.SelfHarm.Filtered, Is.False);
+
+                    Assert.That(data.PromptFilterResults.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.That(data.PromptFilterResults.Sexual.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.That(data.PromptFilterResults.Violence.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                    Assert.That(data.PromptFilterResults.SelfHarm.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+                }
+            }
         }
 
         [RecordedTest]
-        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_09_01_Preview, false)]
-        [TestCase(Service.Azure, OpenAIClientOptions.ServiceVersion.V2023_12_01_Preview, false)]
         [TestCase(Service.NonAzure)]
         public async Task DallE2LegacySupport(
             Service serviceTarget,

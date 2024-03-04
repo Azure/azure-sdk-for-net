@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteNumberValue(FrontendPortRangeStart);
             writer.WritePropertyName("frontendPortRangeEnd"u8);
             writer.WriteNumberValue(FrontendPortRangeEnd);
-            if (!(NetworkSecurityGroupRules is ChangeTrackingList<BatchNetworkSecurityGroupRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityGroupRules))
             {
                 writer.WritePropertyName("networkSecurityGroupRules"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (MessageTitle != null)
+            if (Optional.IsDefined(MessageTitle))
             {
                 writer.WritePropertyName("messageTitle"u8);
                 writer.WriteStringValue(MessageTitle);
             }
-            if (MessageBody != null)
+            if (Optional.IsDefined(MessageBody))
             {
                 writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);

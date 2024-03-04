@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (BandwidthInMbps.HasValue)
+            if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
-            if (options.Format != "W" && ProvisionedBandwidthInMbps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedBandwidthInMbps))
             {
                 writer.WritePropertyName("provisionedBandwidthInMbps"u8);
                 writer.WriteNumberValue(ProvisionedBandwidthInMbps.Value);
             }
-            if (SessionAddressProvider.HasValue)
+            if (Optional.IsDefined(SessionAddressProvider))
             {
                 writer.WritePropertyName("sessionAddressProvider"u8);
                 writer.WriteStringValue(SessionAddressProvider.Value.ToString());
             }
-            if (UseForPeeringService.HasValue)
+            if (Optional.IsDefined(UseForPeeringService))
             {
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (options.Format != "W" && MicrosoftTrackingId != null)
+            if (options.Format != "W" && Optional.IsDefined(MicrosoftTrackingId))
             {
                 writer.WritePropertyName("microsoftTrackingId"u8);
                 writer.WriteStringValue(MicrosoftTrackingId);
             }
-            if (PeeringDBFacilityId.HasValue)
+            if (Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (options.Format != "W" && ConnectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (BgpSession != null)
+            if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
                 writer.WriteObjectValue(BgpSession);
             }
-            if (ConnectionIdentifier != null)
+            if (Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

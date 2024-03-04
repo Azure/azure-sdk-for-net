@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (IsManagerEmailNotificationDisabled.HasValue)
+            if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableManagerEmailNotification"u8);
                 writer.WriteBooleanValue(IsManagerEmailNotificationDisabled.Value);
             }
-            if (IsOwnerEmailNotificationDisabled.HasValue)
+            if (Optional.IsDefined(IsOwnerEmailNotificationDisabled))
             {
                 writer.WritePropertyName("disableOwnerEmailNotification"u8);
                 writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);

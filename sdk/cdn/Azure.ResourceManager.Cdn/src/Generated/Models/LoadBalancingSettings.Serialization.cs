@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (SampleSize.HasValue)
+            if (Optional.IsDefined(SampleSize))
             {
                 writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
-            if (SuccessfulSamplesRequired.HasValue)
+            if (Optional.IsDefined(SuccessfulSamplesRequired))
             {
                 writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
-            if (AdditionalLatencyInMilliseconds.HasValue)
+            if (Optional.IsDefined(AdditionalLatencyInMilliseconds))
             {
                 writer.WritePropertyName("additionalLatencyInMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyInMilliseconds.Value);

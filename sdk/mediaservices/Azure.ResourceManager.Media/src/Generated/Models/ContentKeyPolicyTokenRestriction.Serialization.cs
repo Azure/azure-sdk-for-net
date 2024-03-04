@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 writer.WriteNull("primaryVerificationKey");
             }
-            if (!(AlternateVerificationKeys is ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateVerificationKeys))
             {
                 writer.WritePropertyName("alternateVerificationKeys"u8);
                 writer.WriteStartArray();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredClaims is ChangeTrackingList<ContentKeyPolicyTokenClaim> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredClaims))
             {
                 writer.WritePropertyName("requiredClaims"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("restrictionTokenType"u8);
             writer.WriteStringValue(RestrictionTokenType.ToString());
-            if (OpenIdConnectDiscoveryDocument != null)
+            if (Optional.IsDefined(OpenIdConnectDiscoveryDocument))
             {
                 writer.WritePropertyName("openIdConnectDiscoveryDocument"u8);
                 writer.WriteStringValue(OpenIdConnectDiscoveryDocument);

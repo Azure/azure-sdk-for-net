@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,17 +22,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (CurrentConnection != null)
+            if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
             }
-            if (ResultLimit.HasValue)
+            if (Optional.IsDefined(ResultLimit))
             {
                 writer.WritePropertyName("resultLimit"u8);
                 writer.WriteNumberValue(ResultLimit.Value);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);

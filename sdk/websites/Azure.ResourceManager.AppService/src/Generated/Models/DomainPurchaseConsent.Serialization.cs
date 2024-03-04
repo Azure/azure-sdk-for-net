@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (!(AgreementKeys is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AgreementKeys))
             {
                 writer.WritePropertyName("agreementKeys"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AgreedBy != null)
+            if (Optional.IsDefined(AgreedBy))
             {
                 writer.WritePropertyName("agreedBy"u8);
                 writer.WriteStringValue(AgreedBy);
             }
-            if (AgreedOn.HasValue)
+            if (Optional.IsDefined(AgreedOn))
             {
                 writer.WritePropertyName("agreedAt"u8);
                 writer.WriteStringValue(AgreedOn.Value, "O");

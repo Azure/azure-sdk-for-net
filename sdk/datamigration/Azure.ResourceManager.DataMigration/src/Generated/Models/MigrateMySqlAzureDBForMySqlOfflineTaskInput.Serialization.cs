@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -37,17 +38,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (MakeSourceServerReadOnly.HasValue)
+            if (Optional.IsDefined(MakeSourceServerReadOnly))
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
             }
-            if (StartedOn.HasValue)
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (!(OptionalAgentSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OptionalAgentSettings))
             {
                 writer.WritePropertyName("optionalAgentSettings"u8);
                 writer.WriteStartObject();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);

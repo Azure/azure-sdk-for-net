@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SourceIPAddress);
             writer.WritePropertyName("destinationIPAddress"u8);
             writer.WriteStringValue(DestinationIPAddress);
-            if (TargetNicResourceId != null)
+            if (Optional.IsDefined(TargetNicResourceId))
             {
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Permission.HasValue)
+            if (Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<SharingProfileGroup> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CommunityGalleryInfo != null)
+            if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
                 writer.WriteObjectValue(CommunityGalleryInfo);

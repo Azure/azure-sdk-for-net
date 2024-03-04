@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("query");
             }
-            if (QuerySubscriptions != null && !(QuerySubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (QuerySubscriptions != null && Optional.IsCollectionDefined(QuerySubscriptions))
             {
                 writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();

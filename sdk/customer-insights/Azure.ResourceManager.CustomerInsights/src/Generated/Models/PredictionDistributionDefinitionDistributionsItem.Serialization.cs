@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ScoreThreshold.HasValue)
+            if (Optional.IsDefined(ScoreThreshold))
             {
                 writer.WritePropertyName("scoreThreshold"u8);
                 writer.WriteNumberValue(ScoreThreshold.Value);
             }
-            if (Positives.HasValue)
+            if (Optional.IsDefined(Positives))
             {
                 writer.WritePropertyName("positives"u8);
                 writer.WriteNumberValue(Positives.Value);
             }
-            if (Negatives.HasValue)
+            if (Optional.IsDefined(Negatives))
             {
                 writer.WritePropertyName("negatives"u8);
                 writer.WriteNumberValue(Negatives.Value);
             }
-            if (PositivesAboveThreshold.HasValue)
+            if (Optional.IsDefined(PositivesAboveThreshold))
             {
                 writer.WritePropertyName("positivesAboveThreshold"u8);
                 writer.WriteNumberValue(PositivesAboveThreshold.Value);
             }
-            if (NegativesAboveThreshold.HasValue)
+            if (Optional.IsDefined(NegativesAboveThreshold))
             {
                 writer.WritePropertyName("negativesAboveThreshold"u8);
                 writer.WriteNumberValue(NegativesAboveThreshold.Value);

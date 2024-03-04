@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ImageState.HasValue)
+            if (Optional.IsDefined(ImageState))
             {
                 writer.WritePropertyName("imageState"u8);
                 writer.WriteStringValue(ImageState.Value.ToString());
             }
-            if (ScheduledDeprecationOn.HasValue)
+            if (Optional.IsDefined(ScheduledDeprecationOn))
             {
                 writer.WritePropertyName("scheduledDeprecationTime"u8);
                 writer.WriteStringValue(ScheduledDeprecationOn.Value, "O");
             }
-            if (AlternativeOption != null)
+            if (Optional.IsDefined(AlternativeOption))
             {
                 writer.WritePropertyName("alternativeOption"u8);
                 writer.WriteObjectValue(AlternativeOption);

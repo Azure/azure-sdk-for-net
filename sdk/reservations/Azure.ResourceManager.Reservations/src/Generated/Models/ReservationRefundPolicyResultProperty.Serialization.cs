@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (ConsumedRefundsTotal != null)
+            if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
                 writer.WriteObjectValue(ConsumedRefundsTotal);
             }
-            if (MaxRefundLimit != null)
+            if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
                 writer.WriteObjectValue(MaxRefundLimit);
             }
-            if (!(PolicyErrors is ChangeTrackingList<ReservationRefundPolicyError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyErrors))
             {
                 writer.WritePropertyName("policyErrors"u8);
                 writer.WriteStartArray();

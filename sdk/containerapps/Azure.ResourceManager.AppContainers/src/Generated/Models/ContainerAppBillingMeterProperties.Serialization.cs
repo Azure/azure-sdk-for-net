@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (WorkloadProfileCategory != null)
+            if (Optional.IsDefined(WorkloadProfileCategory))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(WorkloadProfileCategory);
             }
-            if (MeterType != null)
+            if (Optional.IsDefined(MeterType))
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

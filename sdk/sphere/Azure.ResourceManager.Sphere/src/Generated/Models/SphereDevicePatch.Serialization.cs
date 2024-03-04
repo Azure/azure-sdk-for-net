@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeviceGroupId != null)
+            if (Optional.IsDefined(DeviceGroupId))
             {
                 writer.WritePropertyName("deviceGroupId"u8);
                 writer.WriteStringValue(DeviceGroupId);

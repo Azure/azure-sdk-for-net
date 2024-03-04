@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualPath != null)
+            if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (PhysicalPath != null)
+            if (Optional.IsDefined(PhysicalPath))
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (IsPreloadEnabled.HasValue)
+            if (Optional.IsDefined(IsPreloadEnabled))
             {
                 writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
-            if (!(VirtualDirectories is ChangeTrackingList<VirtualDirectory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualDirectories))
             {
                 writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();

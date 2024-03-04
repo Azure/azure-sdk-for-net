@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (IncidentId.HasValue)
+            if (Optional.IsDefined(IncidentId))
             {
                 writer.WritePropertyName("incidentId"u8);
                 writer.WriteStringValue(IncidentId.Value);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (RelationName != null)
+            if (Optional.IsDefined(RelationName))
             {
                 writer.WritePropertyName("relationName"u8);
                 writer.WriteStringValue(RelationName);

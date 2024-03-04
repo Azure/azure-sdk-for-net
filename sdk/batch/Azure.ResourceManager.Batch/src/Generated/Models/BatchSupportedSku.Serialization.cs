@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && FamilyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FamilyName))
             {
                 writer.WritePropertyName("familyName"u8);
                 writer.WriteStringValue(FamilyName);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<BatchSkuCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && BatchSupportEndOfLife.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BatchSupportEndOfLife))
             {
                 writer.WritePropertyName("batchSupportEndOfLife"u8);
                 writer.WriteStringValue(BatchSupportEndOfLife.Value, "O");

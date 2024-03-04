@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (options.Format != "W" && CurrentKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentKeyIdentifier))
             {
                 writer.WritePropertyName("currentKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentKeyIdentifier);

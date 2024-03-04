@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdditionalUsageQuota.HasValue)
+            if (Optional.IsDefined(AdditionalUsageQuota))
             {
                 writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Backup != null)
+            if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
-            if (Replication != null)
+            if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (VolumeRelocation != null)
+            if (Optional.IsDefined(VolumeRelocation))
             {
                 writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);

@@ -28,99 +28,99 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PeeringType.HasValue)
+            if (Optional.IsDefined(PeeringType))
             {
                 writer.WritePropertyName("peeringType"u8);
                 writer.WriteStringValue(PeeringType.Value.ToString());
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && AzureASN.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureASN))
             {
                 writer.WritePropertyName("azureASN"u8);
                 writer.WriteNumberValue(AzureASN.Value);
             }
-            if (PeerASN.HasValue)
+            if (Optional.IsDefined(PeerASN))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerASN.Value);
             }
-            if (PrimaryPeerAddressPrefix != null)
+            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("primaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(PrimaryPeerAddressPrefix);
             }
-            if (SecondaryPeerAddressPrefix != null)
+            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("secondaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
-            if (options.Format != "W" && PrimaryAzurePort != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAzurePort))
             {
                 writer.WritePropertyName("primaryAzurePort"u8);
                 writer.WriteStringValue(PrimaryAzurePort);
             }
-            if (options.Format != "W" && SecondaryAzurePort != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAzurePort))
             {
                 writer.WritePropertyName("secondaryAzurePort"u8);
                 writer.WriteStringValue(SecondaryAzurePort);
             }
-            if (SharedKey != null)
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (VlanId.HasValue)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (MicrosoftPeeringConfig != null)
+            if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (GatewayManagerETag != null)
+            if (Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
                 writer.WriteStringValue(GatewayManagerETag);
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (IPv6PeeringConfig != null)
+            if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
                 writer.WriteObjectValue(IPv6PeeringConfig);

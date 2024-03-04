@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
@@ -17,17 +18,17 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry);
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (FeatureType != null)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);

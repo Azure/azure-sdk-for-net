@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(AdditionalCopyOptions is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
                 writer.WritePropertyName("additionalCopyOptions"u8);
                 writer.WriteStartObject();
@@ -35,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(AdditionalFormatOptions is ChangeTrackingDictionary<string, object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalFormatOptions))
             {
                 writer.WritePropertyName("additionalFormatOptions"u8);
                 writer.WriteStartObject();

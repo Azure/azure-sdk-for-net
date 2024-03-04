@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (RegistryInfo != null)
+            if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
                 writer.WriteObjectValue(RegistryInfo);
             }
-            if (AzureCredentials != null)
+            if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
                 writer.WriteObjectValue(AzureCredentials);
             }
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (GitHubPersonalAccessToken != null)
+            if (Optional.IsDefined(GitHubPersonalAccessToken))
             {
                 writer.WritePropertyName("githubPersonalAccessToken"u8);
                 writer.WriteStringValue(GitHubPersonalAccessToken);
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (PublishType != null)
+            if (Optional.IsDefined(PublishType))
             {
                 writer.WritePropertyName("publishType"u8);
                 writer.WriteStringValue(PublishType);
             }
-            if (OS != null)
+            if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS);
             }
-            if (RuntimeStack != null)
+            if (Optional.IsDefined(RuntimeStack))
             {
                 writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);

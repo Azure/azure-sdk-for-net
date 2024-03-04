@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DataSegment != null)
+            if (Optional.IsDefined(DataSegment))
             {
                 if (DataSegment != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataSegment");
                 }
             }
-            if (!(FeatureDataTypeOverride is ChangeTrackingDictionary<string, MonitoringFeatureDataType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
                 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featureDataTypeOverride");
                 }
             }
-            if (Features != null)
+            if (Optional.IsDefined(Features))
             {
                 if (Features != null)
                 {
@@ -79,12 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(ProductionData);
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData);
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {

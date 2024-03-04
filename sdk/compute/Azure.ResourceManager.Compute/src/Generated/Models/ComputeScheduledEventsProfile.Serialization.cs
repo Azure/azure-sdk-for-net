@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (TerminateNotificationProfile != null)
+            if (Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
-            if (OSImageNotificationProfile != null)
+            if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
                 writer.WriteObjectValue(OSImageNotificationProfile);

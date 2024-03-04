@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DefinitionType.HasValue)
+            if (Optional.IsDefined(DefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
             }
-            if (ReadOnly.HasValue)
+            if (Optional.IsDefined(ReadOnly))
             {
                 if (ReadOnly != null)
                 {
@@ -43,17 +44,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readOnly");
                 }
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Consistency != null)
+            if (Optional.IsDefined(Consistency))
             {
                 if (Consistency != null)
                 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("consistency");
                 }
             }
-            if (Bind != null)
+            if (Optional.IsDefined(Bind))
             {
                 if (Bind != null)
                 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("bind");
                 }
             }
-            if (Volume != null)
+            if (Optional.IsDefined(Volume))
             {
                 if (Volume != null)
                 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("volume");
                 }
             }
-            if (Tmpfs != null)
+            if (Optional.IsDefined(Tmpfs))
             {
                 if (Tmpfs != null)
                 {

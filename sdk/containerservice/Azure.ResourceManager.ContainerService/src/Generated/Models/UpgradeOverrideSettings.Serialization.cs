@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (ForceUpgrade.HasValue)
+            if (Optional.IsDefined(ForceUpgrade))
             {
                 writer.WritePropertyName("forceUpgrade"u8);
                 writer.WriteBooleanValue(ForceUpgrade.Value);
             }
-            if (Until.HasValue)
+            if (Optional.IsDefined(Until))
             {
                 writer.WritePropertyName("until"u8);
                 writer.WriteStringValue(Until.Value, "O");

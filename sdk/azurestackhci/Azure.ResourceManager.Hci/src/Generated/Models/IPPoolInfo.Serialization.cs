@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Used != null)
+            if (options.Format != "W" && Optional.IsDefined(Used))
             {
                 writer.WritePropertyName("used"u8);
                 writer.WriteStringValue(Used);
             }
-            if (options.Format != "W" && Available != null)
+            if (options.Format != "W" && Optional.IsDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStringValue(Available);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(VaultName);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);

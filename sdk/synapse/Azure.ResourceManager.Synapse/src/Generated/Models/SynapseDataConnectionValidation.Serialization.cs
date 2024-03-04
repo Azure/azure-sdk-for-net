@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (DataConnectionName != null)
+            if (Optional.IsDefined(DataConnectionName))
             {
                 writer.WritePropertyName("dataConnectionName"u8);
                 writer.WriteStringValue(DataConnectionName);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);

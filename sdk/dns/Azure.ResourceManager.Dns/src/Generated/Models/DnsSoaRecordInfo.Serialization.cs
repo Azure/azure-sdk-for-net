@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (SerialNumber.HasValue)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (RefreshTimeInSeconds.HasValue)
+            if (Optional.IsDefined(RefreshTimeInSeconds))
             {
                 writer.WritePropertyName("refreshTime"u8);
                 writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
-            if (RetryTimeInSeconds.HasValue)
+            if (Optional.IsDefined(RetryTimeInSeconds))
             {
                 writer.WritePropertyName("retryTime"u8);
                 writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
-            if (ExpireTimeInSeconds.HasValue)
+            if (Optional.IsDefined(ExpireTimeInSeconds))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
-            if (MinimumTtlInSeconds.HasValue)
+            if (Optional.IsDefined(MinimumTtlInSeconds))
             {
                 writer.WritePropertyName("minimumTTL"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
