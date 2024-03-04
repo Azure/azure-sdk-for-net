@@ -213,13 +213,6 @@ namespace Azure.Provisioning.KeyVaults
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
 }
-namespace Azure.Provisioning.PostGreSql
-{
-    public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>
-    {
-        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.PostgreSql.Models.PostgreSqlSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
-    }
-}
 namespace Azure.Provisioning.Redis
 {
     public partial class RedisCache : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisData>
