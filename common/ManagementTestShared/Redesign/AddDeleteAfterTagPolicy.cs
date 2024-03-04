@@ -10,6 +10,8 @@ using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
+#nullable disable
+
 namespace Azure.ResourceManager.TestFramework
 {
     public class AddDeleteAfterTagPolicy : HttpPipelineSynchronousPolicy
