@@ -80,8 +80,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IList<string>> assetTypes = default;
-            Optional<SearchFacetItem> facet = default;
+            IList<string> assetTypes = default;
+            SearchFacetItem facet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    facet = SearchFacetItem.DeserializeSearchFacetItem(property.Value);
+                    facet = SearchFacetItem.DeserializeSearchFacetItem(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchTaxonomySetting(Optional.ToList(assetTypes), facet.Value, serializedAdditionalRawData);
+            return new SearchTaxonomySetting(assetTypes ?? new ChangeTrackingList<string>(), facet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchTaxonomySetting>.Write(ModelReaderWriterOptions options)

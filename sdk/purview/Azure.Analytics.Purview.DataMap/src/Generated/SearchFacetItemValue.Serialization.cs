@@ -75,8 +75,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> value = default;
+            int? count = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchFacetItemValue(Optional.ToNullable(count), value.Value, serializedAdditionalRawData);
+            return new SearchFacetItemValue(count, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchFacetItemValue>.Write(ModelReaderWriterOptions options)

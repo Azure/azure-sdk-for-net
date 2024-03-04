@@ -155,21 +155,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> guid = default;
-            Optional<IList<AtlasClassification>> classifications = default;
-            Optional<string> longDescription = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
-            Optional<string> shortDescription = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<AtlasGlossaryHeader> anchor = default;
-            Optional<IList<AtlasRelatedCategoryHeader>> childrenCategories = default;
-            Optional<AtlasRelatedCategoryHeader> parentCategory = default;
-            Optional<IList<AtlasRelatedTermHeader>> terms = default;
+            string guid = default;
+            IList<AtlasClassification> classifications = default;
+            string longDescription = default;
+            string name = default;
+            string qualifiedName = default;
+            string shortDescription = default;
+            string lastModifiedTS = default;
+            long? createTime = default;
+            string createdBy = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            AtlasGlossaryHeader anchor = default;
+            IList<AtlasRelatedCategoryHeader> childrenCategories = default;
+            AtlasRelatedCategoryHeader parentCategory = default;
+            IList<AtlasRelatedTermHeader> terms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasClassification> array = new List<AtlasClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item));
+                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(property.Value);
+                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("childrenCategories"u8))
@@ -264,7 +264,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item));
+                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, options));
                     }
                     childrenCategories = array;
                     continue;
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    parentCategory = AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(property.Value);
+                    parentCategory = AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terms"u8))
@@ -287,7 +287,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     terms = array;
                     continue;
@@ -298,7 +298,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasGlossaryCategory(guid.Value, Optional.ToList(classifications), longDescription.Value, name.Value, qualifiedName.Value, shortDescription.Value, lastModifiedTS.Value, Optional.ToNullable(createTime), createdBy.Value, Optional.ToNullable(updateTime), updatedBy.Value, anchor.Value, Optional.ToList(childrenCategories), parentCategory.Value, Optional.ToList(terms), serializedAdditionalRawData);
+            return new AtlasGlossaryCategory(
+                guid,
+                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                anchor,
+                childrenCategories ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                parentCategory,
+                terms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasGlossaryCategory>.Write(ModelReaderWriterOptions options)

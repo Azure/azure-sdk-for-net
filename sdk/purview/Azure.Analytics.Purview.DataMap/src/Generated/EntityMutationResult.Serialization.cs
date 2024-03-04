@@ -107,9 +107,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> guidAssignments = default;
-            Optional<IReadOnlyDictionary<string, IList<AtlasEntityHeader>>> mutatedEntities = default;
-            Optional<IReadOnlyList<AtlasEntityHeader>> partialUpdatedEntities = default;
+            IReadOnlyDictionary<string, string> guidAssignments = default;
+            IReadOnlyDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = default;
+            IReadOnlyList<AtlasEntityHeader> partialUpdatedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Purview.DataMap
                             List<AtlasEntityHeader> array = new List<AtlasEntityHeader>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AtlasEntityHeader.DeserializeAtlasEntityHeader(item));
+                                array.Add(AtlasEntityHeader.DeserializeAtlasEntityHeader(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -163,7 +163,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasEntityHeader> array = new List<AtlasEntityHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasEntityHeader.DeserializeAtlasEntityHeader(item));
+                        array.Add(AtlasEntityHeader.DeserializeAtlasEntityHeader(item, options));
                     }
                     partialUpdatedEntities = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityMutationResult(Optional.ToDictionary(guidAssignments), Optional.ToDictionary(mutatedEntities), Optional.ToList(partialUpdatedEntities), serializedAdditionalRawData);
+            return new EntityMutationResult(guidAssignments ?? new ChangeTrackingDictionary<string, string>(), mutatedEntities ?? new ChangeTrackingDictionary<string, IList<AtlasEntityHeader>>(), partialUpdatedEntities ?? new ChangeTrackingList<AtlasEntityHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EntityMutationResult>.Write(ModelReaderWriterOptions options)

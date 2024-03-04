@@ -123,13 +123,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<string> typeName = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<string> entityGuid = default;
-            Optional<EntityStatus> entityStatus = default;
-            Optional<bool> removePropagationsOnEntityDelete = default;
-            Optional<IList<TimeBoundary>> validityPeriods = default;
+            IDictionary<string, BinaryData> attributes = default;
+            string typeName = default;
+            string lastModifiedTS = default;
+            string entityGuid = default;
+            EntityStatus? entityStatus = default;
+            bool? removePropagationsOnEntityDelete = default;
+            IList<TimeBoundary> validityPeriods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<TimeBoundary> array = new List<TimeBoundary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeBoundary.DeserializeTimeBoundary(item));
+                        array.Add(TimeBoundary.DeserializeTimeBoundary(item, options));
                     }
                     validityPeriods = array;
                     continue;
@@ -208,7 +208,15 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasClassification(Optional.ToDictionary(attributes), typeName.Value, lastModifiedTS.Value, entityGuid.Value, Optional.ToNullable(entityStatus), Optional.ToNullable(removePropagationsOnEntityDelete), Optional.ToList(validityPeriods), serializedAdditionalRawData);
+            return new AtlasClassification(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                entityGuid,
+                entityStatus,
+                removePropagationsOnEntityDelete,
+                validityPeriods ?? new ChangeTrackingList<TimeBoundary>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasClassification>.Write(ModelReaderWriterOptions options)

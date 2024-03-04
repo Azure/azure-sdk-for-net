@@ -76,7 +76,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, AtlasEntityHeader>> guidHeaderMap = default;
+            IDictionary<string, AtlasEntityHeader> guidHeaderMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Purview.DataMap
                     Dictionary<string, AtlasEntityHeader> dictionary = new Dictionary<string, AtlasEntityHeader>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(property0.Value));
+                        dictionary.Add(property0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(property0.Value, options));
                     }
                     guidHeaderMap = dictionary;
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasEntityHeaders(Optional.ToDictionary(guidHeaderMap), serializedAdditionalRawData);
+            return new AtlasEntityHeaders(guidHeaderMap ?? new ChangeTrackingDictionary<string, AtlasEntityHeader>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasEntityHeaders>.Write(ModelReaderWriterOptions options)

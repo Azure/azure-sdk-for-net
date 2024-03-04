@@ -168,18 +168,18 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<string> typeName = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<IList<string>> classificationNames = default;
-            Optional<IList<AtlasClassification>> classifications = default;
-            Optional<string> displayText = default;
-            Optional<string> guid = default;
-            Optional<bool> isIncomplete = default;
-            Optional<IList<string>> labels = default;
-            Optional<IList<string>> meaningNames = default;
-            Optional<IList<AtlasTermAssignmentHeader>> meanings = default;
-            Optional<EntityStatus> status = default;
+            IDictionary<string, BinaryData> attributes = default;
+            string typeName = default;
+            string lastModifiedTS = default;
+            IList<string> classificationNames = default;
+            IList<AtlasClassification> classifications = default;
+            string displayText = default;
+            string guid = default;
+            bool? isIncomplete = default;
+            IList<string> labels = default;
+            IList<string> meaningNames = default;
+            IList<AtlasTermAssignmentHeader> meanings = default;
+            EntityStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasClassification> array = new List<AtlasClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item));
+                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
@@ -299,7 +299,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasTermAssignmentHeader> array = new List<AtlasTermAssignmentHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasTermAssignmentHeader.DeserializeAtlasTermAssignmentHeader(item));
+                        array.Add(AtlasTermAssignmentHeader.DeserializeAtlasTermAssignmentHeader(item, options));
                     }
                     meanings = array;
                     continue;
@@ -319,7 +319,20 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasEntityHeader(Optional.ToDictionary(attributes), typeName.Value, lastModifiedTS.Value, Optional.ToList(classificationNames), Optional.ToList(classifications), displayText.Value, guid.Value, Optional.ToNullable(isIncomplete), Optional.ToList(labels), Optional.ToList(meaningNames), Optional.ToList(meanings), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new AtlasEntityHeader(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                classificationNames ?? new ChangeTrackingList<string>(),
+                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                displayText,
+                guid,
+                isIncomplete,
+                labels ?? new ChangeTrackingList<string>(),
+                meaningNames ?? new ChangeTrackingList<string>(),
+                meanings ?? new ChangeTrackingList<AtlasTermAssignmentHeader>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasEntityHeader>.Write(ModelReaderWriterOptions options)

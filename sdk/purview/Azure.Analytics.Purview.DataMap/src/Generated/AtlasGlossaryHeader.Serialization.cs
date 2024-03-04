@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> displayText = default;
-            Optional<string> glossaryGuid = default;
-            Optional<string> relationGuid = default;
+            string displayText = default;
+            string glossaryGuid = default;
+            string relationGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasGlossaryHeader(displayText.Value, glossaryGuid.Value, relationGuid.Value, serializedAdditionalRawData);
+            return new AtlasGlossaryHeader(displayText, glossaryGuid, relationGuid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasGlossaryHeader>.Write(ModelReaderWriterOptions options)

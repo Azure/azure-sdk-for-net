@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> childEntityId = default;
-            Optional<string> relationshipId = default;
-            Optional<string> parentEntityId = default;
+            string childEntityId = default;
+            string relationshipId = default;
+            string parentEntityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParentRelation(childEntityId.Value, relationshipId.Value, parentEntityId.Value, serializedAdditionalRawData);
+            return new ParentRelation(childEntityId, relationshipId, parentEntityId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParentRelation>.Write(ModelReaderWriterOptions options)

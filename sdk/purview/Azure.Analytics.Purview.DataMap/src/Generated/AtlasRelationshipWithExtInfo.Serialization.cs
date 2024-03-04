@@ -81,8 +81,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, AtlasEntityHeader>> referredEntities = default;
-            Optional<AtlasRelationship> relationship = default;
+            IReadOnlyDictionary<string, AtlasEntityHeader> referredEntities = default;
+            AtlasRelationship relationship = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Purview.DataMap
                     Dictionary<string, AtlasEntityHeader> dictionary = new Dictionary<string, AtlasEntityHeader>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(property0.Value));
+                        dictionary.Add(property0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(property0.Value, options));
                     }
                     referredEntities = dictionary;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    relationship = AtlasRelationship.DeserializeAtlasRelationship(property.Value);
+                    relationship = AtlasRelationship.DeserializeAtlasRelationship(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelationshipWithExtInfo(Optional.ToDictionary(referredEntities), relationship.Value, serializedAdditionalRawData);
+            return new AtlasRelationshipWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntityHeader>(), relationship, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelationshipWithExtInfo>.Write(ModelReaderWriterOptions options)

@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> glossaryName = default;
-            Optional<string> guid = default;
+            string name = default;
+            string glossaryName = default;
+            string guid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TermSearchResultValue(name.Value, glossaryName.Value, guid.Value, serializedAdditionalRawData);
+            return new TermSearchResultValue(name, glossaryName, guid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TermSearchResultValue>.Write(ModelReaderWriterOptions options)

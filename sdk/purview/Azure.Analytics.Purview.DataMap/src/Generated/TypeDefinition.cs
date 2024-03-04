@@ -60,7 +60,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetBusinessMetadataByIdAsync(guid, context).ConfigureAwait(false);
@@ -75,7 +82,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataById(string,CancellationToken)']/*" />
         public virtual Response<AtlasBusinessMetadataDef> GetBusinessMetadataById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetBusinessMetadataById(guid, context);
@@ -106,7 +120,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetBusinessMetadataByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataById");
             scope.Start();
@@ -146,7 +167,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataById(string,RequestContext)']/*" />
         public virtual Response GetBusinessMetadataById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataById");
             scope.Start();
@@ -170,7 +198,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetBusinessMetadataByNameAsync(name, context).ConfigureAwait(false);
@@ -185,7 +220,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasBusinessMetadataDef> GetBusinessMetadataByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetBusinessMetadataByName(name, context);
@@ -216,7 +258,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetBusinessMetadataByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataByName");
             scope.Start();
@@ -256,7 +305,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByName(string,RequestContext)']/*" />
         public virtual Response GetBusinessMetadataByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataByName");
             scope.Start();
@@ -280,7 +336,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetClassificationByIdAsync(guid, context).ConfigureAwait(false);
@@ -295,7 +358,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationById(string,CancellationToken)']/*" />
         public virtual Response<AtlasClassificationDef> GetClassificationById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetClassificationById(guid, context);
@@ -326,7 +396,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationById");
             scope.Start();
@@ -366,7 +443,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationById(string,RequestContext)']/*" />
         public virtual Response GetClassificationById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationById");
             scope.Start();
@@ -390,7 +474,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetClassificationByNameAsync(name, context).ConfigureAwait(false);
@@ -405,7 +496,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasClassificationDef> GetClassificationByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetClassificationByName(name, context);
@@ -436,7 +534,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationByName");
             scope.Start();
@@ -476,7 +581,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByName(string,RequestContext)']/*" />
         public virtual Response GetClassificationByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationByName");
             scope.Start();
@@ -500,7 +612,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityDef>> GetEntityByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEntityByIdAsync(guid, context).ConfigureAwait(false);
@@ -515,7 +634,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityById(string,CancellationToken)']/*" />
         public virtual Response<AtlasEntityDef> GetEntityById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEntityById(guid, context);
@@ -546,7 +672,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityById");
             scope.Start();
@@ -586,7 +719,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityById(string,RequestContext)']/*" />
         public virtual Response GetEntityById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityById");
             scope.Start();
@@ -610,7 +750,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityDef>> GetEntityByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEntityByNameAsync(name, context).ConfigureAwait(false);
@@ -625,7 +772,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasEntityDef> GetEntityByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEntityByName(name, context);
@@ -656,7 +810,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityByName");
             scope.Start();
@@ -696,7 +857,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByName(string,RequestContext)']/*" />
         public virtual Response GetEntityByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityByName");
             scope.Start();
@@ -720,7 +888,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEnumDef>> GetEnumByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEnumByIdAsync(guid, context).ConfigureAwait(false);
@@ -735,7 +910,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumById(string,CancellationToken)']/*" />
         public virtual Response<AtlasEnumDef> GetEnumById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEnumById(guid, context);
@@ -766,7 +948,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnumByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumById");
             scope.Start();
@@ -806,7 +995,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumById(string,RequestContext)']/*" />
         public virtual Response GetEnumById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumById");
             scope.Start();
@@ -830,7 +1026,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEnumDef>> GetEnumByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEnumByNameAsync(name, context).ConfigureAwait(false);
@@ -845,7 +1048,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasEnumDef> GetEnumByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEnumByName(name, context);
@@ -876,7 +1086,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnumByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumByName");
             scope.Start();
@@ -916,7 +1133,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByName(string,RequestContext)']/*" />
         public virtual Response GetEnumByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumByName");
             scope.Start();
@@ -940,7 +1164,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelationshipByIdAsync(guid, context).ConfigureAwait(false);
@@ -955,7 +1186,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipById(string,CancellationToken)']/*" />
         public virtual Response<AtlasRelationshipDef> GetRelationshipById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelationshipById(guid, context);
@@ -986,7 +1224,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipById");
             scope.Start();
@@ -1026,7 +1271,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipById(string,RequestContext)']/*" />
         public virtual Response GetRelationshipById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipById");
             scope.Start();
@@ -1050,7 +1302,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelationshipByNameAsync(name, context).ConfigureAwait(false);
@@ -1065,7 +1324,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasRelationshipDef> GetRelationshipByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelationshipByName(name, context);
@@ -1096,7 +1362,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipByName");
             scope.Start();
@@ -1136,7 +1409,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByName(string,RequestContext)']/*" />
         public virtual Response GetRelationshipByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipByName");
             scope.Start();
@@ -1160,7 +1440,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasStructDef>> GetStructByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetStructByIdAsync(guid, context).ConfigureAwait(false);
@@ -1175,7 +1462,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructById(string,CancellationToken)']/*" />
         public virtual Response<AtlasStructDef> GetStructById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetStructById(guid, context);
@@ -1206,7 +1500,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetStructByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructById");
             scope.Start();
@@ -1246,7 +1547,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructById(string,RequestContext)']/*" />
         public virtual Response GetStructById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructById");
             scope.Start();
@@ -1270,7 +1578,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasStructDef>> GetStructByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetStructByNameAsync(name, context).ConfigureAwait(false);
@@ -1285,7 +1600,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasStructDef> GetStructByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetStructByName(name, context);
@@ -1316,7 +1638,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetStructByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructByName");
             scope.Start();
@@ -1356,7 +1685,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByName(string,RequestContext)']/*" />
         public virtual Response GetStructByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructByName");
             scope.Start();
@@ -1380,7 +1716,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypeDef>> GetByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetByIdAsync(guid, context).ConfigureAwait(false);
@@ -1395,7 +1738,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetById(string,CancellationToken)']/*" />
         public virtual Response<AtlasTypeDef> GetById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetById(guid, context);
@@ -1426,7 +1776,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetById");
             scope.Start();
@@ -1466,7 +1823,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetById(string,RequestContext)']/*" />
         public virtual Response GetById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetById");
             scope.Start();
@@ -1490,7 +1854,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypeDef>> GetByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetByNameAsync(name, context).ConfigureAwait(false);
@@ -1505,7 +1876,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasTypeDef> GetByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetByName(name, context);
@@ -1536,7 +1914,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetByName");
             scope.Start();
@@ -1576,7 +1961,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByName(string,RequestContext)']/*" />
         public virtual Response GetByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetByName");
             scope.Start();
@@ -1612,7 +2004,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.Delete");
             scope.Start();
@@ -1648,7 +2047,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.Delete");
             scope.Start();
@@ -1789,7 +2195,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(AtlasTypesDef,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            if (atlasTypesDef == null)
+            {
+                throw new ArgumentNullException(nameof(atlasTypesDef));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
@@ -1808,7 +2217,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(AtlasTypesDef,CancellationToken)']/*" />
         public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            if (atlasTypesDef == null)
+            {
+                throw new ArgumentNullException(nameof(atlasTypesDef));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
@@ -1841,7 +2253,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BatchCreateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchCreate");
             scope.Start();
@@ -1882,7 +2297,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(RequestContent,RequestContext)']/*" />
         public virtual Response BatchCreate(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchCreate");
             scope.Start();
@@ -1908,7 +2326,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(AtlasTypesDef,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            if (atlasTypesDef == null)
+            {
+                throw new ArgumentNullException(nameof(atlasTypesDef));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
@@ -1926,7 +2347,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(AtlasTypesDef,CancellationToken)']/*" />
         public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            if (atlasTypesDef == null)
+            {
+                throw new ArgumentNullException(nameof(atlasTypesDef));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
@@ -1958,7 +2382,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BatchUpdateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchUpdate");
             scope.Start();
@@ -1998,7 +2425,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(RequestContent,RequestContext)']/*" />
         public virtual Response BatchUpdate(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchUpdate");
             scope.Start();
@@ -2021,7 +2451,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(AtlasTypesDef,CancellationToken)']/*" />
         public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            if (atlasTypesDef == null)
+            {
+                throw new ArgumentNullException(nameof(atlasTypesDef));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
@@ -2036,7 +2469,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(AtlasTypesDef,CancellationToken)']/*" />
         public virtual Response BatchDelete(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            if (atlasTypesDef == null)
+            {
+                throw new ArgumentNullException(nameof(atlasTypesDef));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
@@ -2067,7 +2503,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BatchDeleteAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchDelete");
             scope.Start();
@@ -2106,7 +2545,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(RequestContent,RequestContext)']/*" />
         public virtual Response BatchDelete(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchDelete");
             scope.Start();
@@ -2260,7 +2702,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermTemplateByIdAsync(guid, context).ConfigureAwait(false);
@@ -2275,7 +2724,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateById(string,CancellationToken)']/*" />
         public virtual Response<TermTemplateDef> GetTermTemplateById(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTermTemplateById(guid, context);
@@ -2306,7 +2762,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermTemplateByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateById");
             scope.Start();
@@ -2346,7 +2809,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateById(string,RequestContext)']/*" />
         public virtual Response GetTermTemplateById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateById");
             scope.Start();
@@ -2370,7 +2840,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermTemplateByNameAsync(name, context).ConfigureAwait(false);
@@ -2385,7 +2862,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByName(string,CancellationToken)']/*" />
         public virtual Response<TermTemplateDef> GetTermTemplateByName(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTermTemplateByName(name, context);
@@ -2416,7 +2900,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermTemplateByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateByName");
             scope.Start();
@@ -2456,7 +2947,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByName(string,RequestContext)']/*" />
         public virtual Response GetTermTemplateByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateByName");
             scope.Start();

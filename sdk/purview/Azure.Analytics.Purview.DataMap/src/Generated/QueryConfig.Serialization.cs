@@ -129,13 +129,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> keywords = default;
-            Optional<int> limit = default;
-            Optional<string> continuationToken = default;
-            Optional<IList<BinaryData>> orderby = default;
-            Optional<BinaryData> filter = default;
-            Optional<IList<SearchFacetItem>> facets = default;
-            Optional<SearchTaxonomySetting> taxonomySetting = default;
+            string keywords = default;
+            int? limit = default;
+            string continuationToken = default;
+            IList<BinaryData> orderby = default;
+            BinaryData filter = default;
+            IList<SearchFacetItem> facets = default;
+            SearchTaxonomySetting taxonomySetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItem> array = new List<SearchFacetItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItem.DeserializeSearchFacetItem(item));
+                        array.Add(SearchFacetItem.DeserializeSearchFacetItem(item, options));
                     }
                     facets = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    taxonomySetting = SearchTaxonomySetting.DeserializeSearchTaxonomySetting(property.Value);
+                    taxonomySetting = SearchTaxonomySetting.DeserializeSearchTaxonomySetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,7 +218,15 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryConfig(keywords.Value, Optional.ToNullable(limit), continuationToken.Value, Optional.ToList(orderby), filter.Value, Optional.ToList(facets), taxonomySetting.Value, serializedAdditionalRawData);
+            return new QueryConfig(
+                keywords,
+                limit,
+                continuationToken,
+                orderby ?? new ChangeTrackingList<BinaryData>(),
+                filter,
+                facets ?? new ChangeTrackingList<SearchFacetItem>(),
+                taxonomySetting,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryConfig>.Write(ModelReaderWriterOptions options)

@@ -87,9 +87,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> keywords = default;
-            Optional<int> limit = default;
-            Optional<BinaryData> filter = default;
+            string keywords = default;
+            int? limit = default;
+            BinaryData filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoCompleteConfig(keywords.Value, Optional.ToNullable(limit), filter.Value, serializedAdditionalRawData);
+            return new AutoCompleteConfig(keywords, limit, filter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoCompleteConfig>.Write(ModelReaderWriterOptions options)

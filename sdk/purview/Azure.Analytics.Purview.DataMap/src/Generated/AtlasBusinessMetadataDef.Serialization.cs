@@ -151,21 +151,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<TypeCategory> category = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<AtlasDateFormat> dateFormatter = default;
-            Optional<string> description = default;
-            Optional<string> guid = default;
-            Optional<string> name = default;
-            Optional<IDictionary<string, string>> options0 = default;
-            Optional<string> serviceType = default;
-            Optional<string> typeVersion = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<long> version = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<IList<AtlasAttributeDef>> attributeDefs = default;
+            TypeCategory? category = default;
+            long? createTime = default;
+            string createdBy = default;
+            AtlasDateFormat dateFormatter = default;
+            string description = default;
+            string guid = default;
+            string name = default;
+            IDictionary<string, string> options0 = default;
+            string serviceType = default;
+            string typeVersion = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            long? version = default;
+            string lastModifiedTS = default;
+            IList<AtlasAttributeDef> attributeDefs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value);
+                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -278,7 +278,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasAttributeDef> array = new List<AtlasAttributeDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasAttributeDef.DeserializeAtlasAttributeDef(item));
+                        array.Add(AtlasAttributeDef.DeserializeAtlasAttributeDef(item, options));
                     }
                     attributeDefs = array;
                     continue;
@@ -289,7 +289,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasBusinessMetadataDef(Optional.ToNullable(category), Optional.ToNullable(createTime), createdBy.Value, dateFormatter.Value, description.Value, guid.Value, name.Value, Optional.ToDictionary(options0), serviceType.Value, typeVersion.Value, Optional.ToNullable(updateTime), updatedBy.Value, Optional.ToNullable(version), lastModifiedTS.Value, Optional.ToList(attributeDefs), serializedAdditionalRawData);
+            return new AtlasBusinessMetadataDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options0 ?? new ChangeTrackingDictionary<string, string>(),
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs ?? new ChangeTrackingList<AtlasAttributeDef>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasBusinessMetadataDef>.Write(ModelReaderWriterOptions options)

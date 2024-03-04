@@ -95,12 +95,12 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<CardinalityValue> cardinality = default;
-            Optional<string> description = default;
-            Optional<bool> isContainer = default;
-            Optional<bool> isLegacyAttribute = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            CardinalityValue? cardinality = default;
+            string description = default;
+            bool? isContainer = default;
+            bool? isLegacyAttribute = default;
+            string name = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelationshipEndDef(Optional.ToNullable(cardinality), description.Value, Optional.ToNullable(isContainer), Optional.ToNullable(isLegacyAttribute), name.Value, type.Value, serializedAdditionalRawData);
+            return new AtlasRelationshipEndDef(
+                cardinality,
+                description,
+                isContainer,
+                isLegacyAttribute,
+                name,
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelationshipEndDef>.Write(ModelReaderWriterOptions options)

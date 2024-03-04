@@ -75,8 +75,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<SearchSortOrder> count = default;
-            Optional<SearchSortOrder> value = default;
+            SearchSortOrder? count = default;
+            SearchSortOrder? value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchFacetSort(Optional.ToNullable(count), Optional.ToNullable(value), serializedAdditionalRawData);
+            return new SearchFacetSort(count, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchFacetSort>.Write(ModelReaderWriterOptions options)

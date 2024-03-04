@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
+            string endTime = default;
+            string startTime = default;
+            string timeZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TimeBoundary(endTime.Value, startTime.Value, timeZone.Value, serializedAdditionalRawData);
+            return new TimeBoundary(endTime, startTime, timeZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeBoundary>.Write(ModelReaderWriterOptions options)

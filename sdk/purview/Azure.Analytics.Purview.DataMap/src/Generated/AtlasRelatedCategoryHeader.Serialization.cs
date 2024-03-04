@@ -90,11 +90,11 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> categoryGuid = default;
-            Optional<string> description = default;
-            Optional<string> displayText = default;
-            Optional<string> parentCategoryGuid = default;
-            Optional<string> relationGuid = default;
+            string categoryGuid = default;
+            string description = default;
+            string displayText = default;
+            string parentCategoryGuid = default;
+            string relationGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelatedCategoryHeader(categoryGuid.Value, description.Value, displayText.Value, parentCategoryGuid.Value, relationGuid.Value, serializedAdditionalRawData);
+            return new AtlasRelatedCategoryHeader(
+                categoryGuid,
+                description,
+                displayText,
+                parentCategoryGuid,
+                relationGuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelatedCategoryHeader>.Write(ModelReaderWriterOptions options)

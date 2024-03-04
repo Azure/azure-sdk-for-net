@@ -407,43 +407,43 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> guid = default;
-            Optional<IList<AtlasClassification>> classifications = default;
-            Optional<string> longDescription = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
-            Optional<string> shortDescription = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<string> abbreviation = default;
-            Optional<IList<BinaryData>> templateName = default;
-            Optional<AtlasGlossaryHeader> anchor = default;
-            Optional<IList<AtlasRelatedTermHeader>> antonyms = default;
-            Optional<TermStatus> status = default;
-            Optional<string> nickName = default;
-            Optional<IList<PurviewObjectId>> hierarchyInfo = default;
-            Optional<IList<ResourceLink>> resources = default;
-            Optional<IDictionary<string, IList<ContactInfo>>> contacts = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> attributes = default;
-            Optional<IList<AtlasRelatedObjectId>> assignedEntities = default;
-            Optional<IList<AtlasTermCategorizationHeader>> categories = default;
-            Optional<IList<AtlasRelatedTermHeader>> classifies = default;
-            Optional<IList<string>> examples = default;
-            Optional<IList<AtlasRelatedTermHeader>> isA = default;
-            Optional<IList<AtlasRelatedTermHeader>> preferredTerms = default;
-            Optional<IList<AtlasRelatedTermHeader>> preferredToTerms = default;
-            Optional<IList<AtlasRelatedTermHeader>> replacedBy = default;
-            Optional<IList<AtlasRelatedTermHeader>> replacementTerms = default;
-            Optional<IList<AtlasRelatedTermHeader>> seeAlso = default;
-            Optional<IList<AtlasRelatedTermHeader>> synonyms = default;
-            Optional<IList<AtlasRelatedTermHeader>> translatedTerms = default;
-            Optional<IList<AtlasRelatedTermHeader>> translationTerms = default;
-            Optional<string> usage = default;
-            Optional<IList<AtlasRelatedTermHeader>> validValues = default;
-            Optional<IList<AtlasRelatedTermHeader>> validValuesFor = default;
+            string guid = default;
+            IList<AtlasClassification> classifications = default;
+            string longDescription = default;
+            string name = default;
+            string qualifiedName = default;
+            string shortDescription = default;
+            string lastModifiedTS = default;
+            long? createTime = default;
+            string createdBy = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            string abbreviation = default;
+            IList<BinaryData> templateName = default;
+            AtlasGlossaryHeader anchor = default;
+            IList<AtlasRelatedTermHeader> antonyms = default;
+            TermStatus? status = default;
+            string nickName = default;
+            IList<PurviewObjectId> hierarchyInfo = default;
+            IList<ResourceLink> resources = default;
+            IDictionary<string, IList<ContactInfo>> contacts = default;
+            IDictionary<string, IDictionary<string, BinaryData>> attributes = default;
+            IList<AtlasRelatedObjectId> assignedEntities = default;
+            IList<AtlasTermCategorizationHeader> categories = default;
+            IList<AtlasRelatedTermHeader> classifies = default;
+            IList<string> examples = default;
+            IList<AtlasRelatedTermHeader> isA = default;
+            IList<AtlasRelatedTermHeader> preferredTerms = default;
+            IList<AtlasRelatedTermHeader> preferredToTerms = default;
+            IList<AtlasRelatedTermHeader> replacedBy = default;
+            IList<AtlasRelatedTermHeader> replacementTerms = default;
+            IList<AtlasRelatedTermHeader> seeAlso = default;
+            IList<AtlasRelatedTermHeader> synonyms = default;
+            IList<AtlasRelatedTermHeader> translatedTerms = default;
+            IList<AtlasRelatedTermHeader> translationTerms = default;
+            string usage = default;
+            IList<AtlasRelatedTermHeader> validValues = default;
+            IList<AtlasRelatedTermHeader> validValuesFor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -462,7 +462,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasClassification> array = new List<AtlasClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item));
+                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
@@ -552,7 +552,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(property.Value);
+                    anchor = AtlasGlossaryHeader.DeserializeAtlasGlossaryHeader(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("antonyms"u8))
@@ -564,7 +564,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     antonyms = array;
                     continue;
@@ -592,7 +592,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<PurviewObjectId> array = new List<PurviewObjectId>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewObjectId.DeserializePurviewObjectId(item));
+                        array.Add(PurviewObjectId.DeserializePurviewObjectId(item, options));
                     }
                     hierarchyInfo = array;
                     continue;
@@ -606,7 +606,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<ResourceLink> array = new List<ResourceLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceLink.DeserializeResourceLink(item));
+                        array.Add(ResourceLink.DeserializeResourceLink(item, options));
                     }
                     resources = array;
                     continue;
@@ -629,7 +629,7 @@ namespace Azure.Analytics.Purview.DataMap
                             List<ContactInfo> array = new List<ContactInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContactInfo.DeserializeContactInfo(item));
+                                array.Add(ContactInfo.DeserializeContactInfo(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -679,7 +679,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedObjectId> array = new List<AtlasRelatedObjectId>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item));
+                        array.Add(AtlasRelatedObjectId.DeserializeAtlasRelatedObjectId(item, options));
                     }
                     assignedEntities = array;
                     continue;
@@ -693,7 +693,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasTermCategorizationHeader> array = new List<AtlasTermCategorizationHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasTermCategorizationHeader.DeserializeAtlasTermCategorizationHeader(item));
+                        array.Add(AtlasTermCategorizationHeader.DeserializeAtlasTermCategorizationHeader(item, options));
                     }
                     categories = array;
                     continue;
@@ -707,7 +707,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     classifies = array;
                     continue;
@@ -735,7 +735,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     isA = array;
                     continue;
@@ -749,7 +749,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     preferredTerms = array;
                     continue;
@@ -763,7 +763,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     preferredToTerms = array;
                     continue;
@@ -777,7 +777,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     replacedBy = array;
                     continue;
@@ -791,7 +791,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     replacementTerms = array;
                     continue;
@@ -805,7 +805,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     seeAlso = array;
                     continue;
@@ -819,7 +819,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     synonyms = array;
                     continue;
@@ -833,7 +833,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     translatedTerms = array;
                     continue;
@@ -847,7 +847,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     translationTerms = array;
                     continue;
@@ -866,7 +866,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     validValues = array;
                     continue;
@@ -880,7 +880,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     validValuesFor = array;
                     continue;
@@ -891,7 +891,45 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasGlossaryTerm(guid.Value, Optional.ToList(classifications), longDescription.Value, name.Value, qualifiedName.Value, shortDescription.Value, lastModifiedTS.Value, Optional.ToNullable(createTime), createdBy.Value, Optional.ToNullable(updateTime), updatedBy.Value, abbreviation.Value, Optional.ToList(templateName), anchor.Value, Optional.ToList(antonyms), Optional.ToNullable(status), nickName.Value, Optional.ToList(hierarchyInfo), Optional.ToList(resources), Optional.ToDictionary(contacts), Optional.ToDictionary(attributes), Optional.ToList(assignedEntities), Optional.ToList(categories), Optional.ToList(classifies), Optional.ToList(examples), Optional.ToList(isA), Optional.ToList(preferredTerms), Optional.ToList(preferredToTerms), Optional.ToList(replacedBy), Optional.ToList(replacementTerms), Optional.ToList(seeAlso), Optional.ToList(synonyms), Optional.ToList(translatedTerms), Optional.ToList(translationTerms), usage.Value, Optional.ToList(validValues), Optional.ToList(validValuesFor), serializedAdditionalRawData);
+            return new AtlasGlossaryTerm(
+                guid,
+                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                abbreviation,
+                templateName ?? new ChangeTrackingList<BinaryData>(),
+                anchor,
+                antonyms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                status,
+                nickName,
+                hierarchyInfo ?? new ChangeTrackingList<PurviewObjectId>(),
+                resources ?? new ChangeTrackingList<ResourceLink>(),
+                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                attributes ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                assignedEntities ?? new ChangeTrackingList<AtlasRelatedObjectId>(),
+                categories ?? new ChangeTrackingList<AtlasTermCategorizationHeader>(),
+                classifies ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                examples ?? new ChangeTrackingList<string>(),
+                isA ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredTerms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                preferredToTerms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacedBy ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                replacementTerms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                seeAlso ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                synonyms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translatedTerms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                translationTerms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                validValues ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                validValuesFor ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasGlossaryTerm>.Write(ModelReaderWriterOptions options)

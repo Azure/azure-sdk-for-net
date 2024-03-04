@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<string> facet = default;
-            Optional<SearchFacetSort> sort = default;
+            int? count = default;
+            string facet = default;
+            SearchFacetSort sort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    sort = SearchFacetSort.DeserializeSearchFacetSort(property.Value);
+                    sort = SearchFacetSort.DeserializeSearchFacetSort(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchFacetItem(Optional.ToNullable(count), facet.Value, sort.Value, serializedAdditionalRawData);
+            return new SearchFacetItem(count, facet, sort, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchFacetItem>.Write(ModelReaderWriterOptions options)

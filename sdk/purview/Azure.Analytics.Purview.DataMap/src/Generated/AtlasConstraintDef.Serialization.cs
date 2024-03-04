@@ -93,8 +93,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> @params = default;
-            Optional<string> type = default;
+            IDictionary<string, BinaryData> @params = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasConstraintDef(Optional.ToDictionary(@params), type.Value, serializedAdditionalRawData);
+            return new AtlasConstraintDef(@params ?? new ChangeTrackingDictionary<string, BinaryData>(), type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasConstraintDef>.Write(ModelReaderWriterOptions options)

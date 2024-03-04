@@ -85,10 +85,10 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> childObjectName = default;
-            Optional<ImportStatus> importStatus = default;
-            Optional<string> parentObjectName = default;
-            Optional<string> remarks = default;
+            string childObjectName = default;
+            ImportStatus? importStatus = default;
+            string parentObjectName = default;
+            string remarks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportInfo(childObjectName.Value, Optional.ToNullable(importStatus), parentObjectName.Value, remarks.Value, serializedAdditionalRawData);
+            return new ImportInfo(childObjectName, importStatus, parentObjectName, remarks, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportInfo>.Write(ModelReaderWriterOptions options)

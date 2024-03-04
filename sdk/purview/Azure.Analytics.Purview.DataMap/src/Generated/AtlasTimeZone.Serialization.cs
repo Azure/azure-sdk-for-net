@@ -100,12 +100,12 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<int> dstSavings = default;
-            Optional<string> id = default;
-            Optional<IList<string>> availableIds = default;
-            Optional<AtlasTimeZone> @default = default;
-            Optional<string> displayName = default;
-            Optional<int> rawOffset = default;
+            int? dstSavings = default;
+            string id = default;
+            IList<string> availableIds = default;
+            AtlasTimeZone @default = default;
+            string displayName = default;
+            int? rawOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    @default = DeserializeAtlasTimeZone(property.Value);
+                    @default = DeserializeAtlasTimeZone(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -167,7 +167,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasTimeZone(Optional.ToNullable(dstSavings), id.Value, Optional.ToList(availableIds), @default.Value, displayName.Value, Optional.ToNullable(rawOffset), serializedAdditionalRawData);
+            return new AtlasTimeZone(
+                dstSavings,
+                id,
+                availableIds ?? new ChangeTrackingList<string>(),
+                @default,
+                displayName,
+                rawOffset,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasTimeZone>.Write(ModelReaderWriterOptions options)

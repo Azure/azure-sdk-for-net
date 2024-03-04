@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutoCompleteResultValue>> value = default;
+            IReadOnlyList<AutoCompleteResultValue> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AutoCompleteResultValue> array = new List<AutoCompleteResultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoCompleteResultValue.DeserializeAutoCompleteResultValue(item));
+                        array.Add(AutoCompleteResultValue.DeserializeAutoCompleteResultValue(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoCompleteResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutoCompleteResult(value ?? new ChangeTrackingList<AutoCompleteResultValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoCompleteResult>.Write(ModelReaderWriterOptions options)

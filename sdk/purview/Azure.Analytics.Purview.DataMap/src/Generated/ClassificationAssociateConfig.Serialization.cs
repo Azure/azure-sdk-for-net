@@ -80,8 +80,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<AtlasClassification> classification = default;
-            Optional<IList<string>> entityGuids = default;
+            AtlasClassification classification = default;
+            IList<string> entityGuids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    classification = AtlasClassification.DeserializeAtlasClassification(property.Value);
+                    classification = AtlasClassification.DeserializeAtlasClassification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("entityGuids"u8))
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassificationAssociateConfig(classification.Value, Optional.ToList(entityGuids), serializedAdditionalRawData);
+            return new ClassificationAssociateConfig(classification, entityGuids ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassificationAssociateConfig>.Write(ModelReaderWriterOptions options)

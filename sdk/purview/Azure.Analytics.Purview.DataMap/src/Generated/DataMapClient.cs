@@ -47,8 +47,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DataMapClient(Uri endpoint, TokenCredential credential, DataMapClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new DataMapClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -78,7 +84,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Discovery GetDiscoveryClient(string apiVersion = "2023-09-01")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Discovery(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
@@ -88,7 +97,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
         public virtual Lineage GetLineageClient(string apiVersion = "2023-09-01")
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
 
             return new Lineage(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }

@@ -52,7 +52,30 @@ namespace Azure.Analytics.Purview.DataMap
             relationshipAttributes ??= new Dictionary<string, BinaryData>();
             contacts ??= new Dictionary<string, IList<ContactInfo>>();
 
-            return new AtlasEntity(attributes, typeName, lastModifiedTS, businessAttributes, classifications?.ToList(), createTime, createdBy, customAttributes, guid, homeId, collectionId, isIncomplete, labels?.ToList(), meanings?.ToList(), provenanceType, proxy, relationshipAttributes, status, updateTime, updatedBy, version, contacts, serializedAdditionalRawData: null);
+            return new AtlasEntity(
+                attributes,
+                typeName,
+                lastModifiedTS,
+                businessAttributes,
+                classifications?.ToList(),
+                createTime,
+                createdBy,
+                customAttributes,
+                guid,
+                homeId,
+                collectionId,
+                isIncomplete,
+                labels?.ToList(),
+                meanings?.ToList(),
+                provenanceType,
+                proxy,
+                relationshipAttributes,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                contacts,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.EntityMutationResult"/>. </summary>
@@ -81,7 +104,14 @@ namespace Azure.Analytics.Purview.DataMap
         {
             list ??= new List<BinaryData>();
 
-            return new AtlasClassifications(list?.ToList(), pageSize, sortBy, sortType, startIndex, totalCount, serializedAdditionalRawData: null);
+            return new AtlasClassifications(
+                list?.ToList(),
+                pageSize,
+                sortBy,
+                sortType,
+                startIndex,
+                totalCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.BulkImportResult"/>. </summary>
@@ -134,7 +164,25 @@ namespace Azure.Analytics.Purview.DataMap
             categoryInfo ??= new Dictionary<string, AtlasGlossaryCategory>();
             termInfo ??= new Dictionary<string, AtlasGlossaryTerm>();
 
-            return new AtlasGlossaryExtInfo(guid, classifications?.ToList(), longDescription, name, qualifiedName, shortDescription, lastModifiedTS, createTime, createdBy, updateTime, updatedBy, categories?.ToList(), language, terms?.ToList(), usage, categoryInfo, termInfo, serializedAdditionalRawData: null);
+            return new AtlasGlossaryExtInfo(
+                guid,
+                classifications?.ToList(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories?.ToList(),
+                language,
+                terms?.ToList(),
+                usage,
+                categoryInfo,
+                termInfo,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.QueryResult"/>. </summary>
@@ -155,7 +203,13 @@ namespace Azure.Analytics.Purview.DataMap
         {
             value ??= new List<SearchResultValue>();
 
-            return new QueryResult(searchCount, searchCountApproximate, continuationToken, searchFacets, value?.ToList(), serializedAdditionalRawData: null);
+            return new QueryResult(
+                searchCount,
+                searchCountApproximate,
+                continuationToken,
+                searchFacets,
+                value?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.SearchFacetResultValue"/>. </summary>
@@ -183,7 +237,18 @@ namespace Azure.Analytics.Purview.DataMap
             termStatus ??= new List<SearchFacetItemValue>();
             termTemplate ??= new List<SearchFacetItemValue>();
 
-            return new SearchFacetResultValue(entityType?.ToList(), assetType?.ToList(), classification?.ToList(), term?.ToList(), contactId?.ToList(), contactType?.ToList(), label?.ToList(), glossaryType?.ToList(), termStatus?.ToList(), termTemplate?.ToList(), serializedAdditionalRawData: null);
+            return new SearchFacetResultValue(
+                entityType?.ToList(),
+                assetType?.ToList(),
+                classification?.ToList(),
+                term?.ToList(),
+                contactId?.ToList(),
+                contactType?.ToList(),
+                label?.ToList(),
+                glossaryType?.ToList(),
+                termStatus?.ToList(),
+                termTemplate?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.SearchFacetItemValue"/>. </summary>
@@ -242,7 +307,30 @@ namespace Azure.Analytics.Purview.DataMap
             assetType ??= new List<string>();
             termTemplate ??= new List<string>();
 
-            return new SearchResultValue(searchScore, searchHighlights, objectType, createTime, updateTime, id, name, qualifiedName, entityType, description, endorsement, owner, classification?.ToList(), label?.ToList(), term?.ToList(), contact?.ToList(), assetType?.ToList(), glossaryType, glossary, termStatus, termTemplate?.ToList(), longDescription, serializedAdditionalRawData: null);
+            return new SearchResultValue(
+                searchScore,
+                searchHighlights,
+                objectType,
+                createTime,
+                updateTime,
+                id,
+                name,
+                qualifiedName,
+                entityType,
+                description,
+                endorsement,
+                owner,
+                classification?.ToList(),
+                label?.ToList(),
+                term?.ToList(),
+                contact?.ToList(),
+                assetType?.ToList(),
+                glossaryType,
+                glossary,
+                termStatus,
+                termTemplate?.ToList(),
+                longDescription,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.SearchHighlights"/>. </summary>
@@ -260,7 +348,13 @@ namespace Azure.Analytics.Purview.DataMap
             description ??= new List<string>();
             entityType ??= new List<string>();
 
-            return new SearchHighlights(id?.ToList(), qualifiedName?.ToList(), name?.ToList(), description?.ToList(), entityType?.ToList(), serializedAdditionalRawData: null);
+            return new SearchHighlights(
+                id?.ToList(),
+                qualifiedName?.ToList(),
+                name?.ToList(),
+                description?.ToList(),
+                entityType?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.TermSearchResultValue"/>. </summary>
@@ -341,7 +435,30 @@ namespace Azure.Analytics.Purview.DataMap
             assetType ??= new List<string>();
             termTemplate ??= new List<string>();
 
-            return new SuggestResultValue(searchScore, searchText, objectType, createTime, updateTime, id, name, qualifiedName, entityType, description, endorsement, owner, classification?.ToList(), label?.ToList(), term?.ToList(), contact?.ToList(), assetType?.ToList(), glossaryType, glossary, termStatus, termTemplate?.ToList(), longDescription, serializedAdditionalRawData: null);
+            return new SuggestResultValue(
+                searchScore,
+                searchText,
+                objectType,
+                createTime,
+                updateTime,
+                id,
+                name,
+                qualifiedName,
+                entityType,
+                description,
+                endorsement,
+                owner,
+                classification?.ToList(),
+                label?.ToList(),
+                term?.ToList(),
+                contact?.ToList(),
+                assetType?.ToList(),
+                glossaryType,
+                glossary,
+                termStatus,
+                termTemplate?.ToList(),
+                longDescription,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.AutoCompleteResult"/>. </summary>
@@ -381,7 +498,17 @@ namespace Azure.Analytics.Purview.DataMap
             parentRelations ??= new List<ParentRelation>();
             relations ??= new List<LineageRelation>();
 
-            return new AtlasLineageInfo(baseEntityGuid, guidEntityMap, widthCounts, lineageDepth, lineageWidth, childrenCount, lineageDirection, parentRelations?.ToList(), relations?.ToList(), serializedAdditionalRawData: null);
+            return new AtlasLineageInfo(
+                baseEntityGuid,
+                guidEntityMap,
+                widthCounts,
+                lineageDepth,
+                lineageWidth,
+                childrenCount,
+                lineageDirection,
+                parentRelations?.ToList(),
+                relations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.ParentRelation"/>. </summary>
@@ -496,7 +623,33 @@ namespace Azure.Analytics.Purview.DataMap
             elementDefs ??= new List<AtlasEnumElementDef>();
             attributeDefs ??= new List<AtlasAttributeDef>();
 
-            return new AtlasTypeDef(category, createTime, createdBy, dateFormatter, description, guid, name, options, serviceType, typeVersion, updateTime, updatedBy, version, lastModifiedTS, entityTypes?.ToList(), subTypes?.ToList(), superTypes?.ToList(), relationshipAttributeDefs?.ToList(), defaultValue, elementDefs?.ToList(), endDef1, endDef2, relationshipCategory, relationshipLabel, attributeDefs?.ToList(), serializedAdditionalRawData: null);
+            return new AtlasTypeDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                entityTypes?.ToList(),
+                subTypes?.ToList(),
+                superTypes?.ToList(),
+                relationshipAttributeDefs?.ToList(),
+                defaultValue,
+                elementDefs?.ToList(),
+                endDef1,
+                endDef2,
+                relationshipCategory,
+                relationshipLabel,
+                attributeDefs?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMap.AtlasTypeDefHeader"/>. </summary>

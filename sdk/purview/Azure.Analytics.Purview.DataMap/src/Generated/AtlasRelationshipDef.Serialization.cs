@@ -171,25 +171,25 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<TypeCategory> category = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<AtlasDateFormat> dateFormatter = default;
-            Optional<string> description = default;
-            Optional<string> guid = default;
-            Optional<string> name = default;
-            Optional<IDictionary<string, string>> options0 = default;
-            Optional<string> serviceType = default;
-            Optional<string> typeVersion = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<long> version = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<IList<AtlasAttributeDef>> attributeDefs = default;
-            Optional<AtlasRelationshipEndDef> endDef1 = default;
-            Optional<AtlasRelationshipEndDef> endDef2 = default;
-            Optional<RelationshipCategory> relationshipCategory = default;
-            Optional<string> relationshipLabel = default;
+            TypeCategory? category = default;
+            long? createTime = default;
+            string createdBy = default;
+            AtlasDateFormat dateFormatter = default;
+            string description = default;
+            string guid = default;
+            string name = default;
+            IDictionary<string, string> options0 = default;
+            string serviceType = default;
+            string typeVersion = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            long? version = default;
+            string lastModifiedTS = default;
+            IList<AtlasAttributeDef> attributeDefs = default;
+            AtlasRelationshipEndDef endDef1 = default;
+            AtlasRelationshipEndDef endDef2 = default;
+            RelationshipCategory? relationshipCategory = default;
+            string relationshipLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value);
+                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasAttributeDef> array = new List<AtlasAttributeDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasAttributeDef.DeserializeAtlasAttributeDef(item));
+                        array.Add(AtlasAttributeDef.DeserializeAtlasAttributeDef(item, options));
                     }
                     attributeDefs = array;
                     continue;
@@ -313,7 +313,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    endDef1 = AtlasRelationshipEndDef.DeserializeAtlasRelationshipEndDef(property.Value);
+                    endDef1 = AtlasRelationshipEndDef.DeserializeAtlasRelationshipEndDef(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endDef2"u8))
@@ -322,7 +322,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    endDef2 = AtlasRelationshipEndDef.DeserializeAtlasRelationshipEndDef(property.Value);
+                    endDef2 = AtlasRelationshipEndDef.DeserializeAtlasRelationshipEndDef(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("relationshipCategory"u8))
@@ -345,7 +345,27 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelationshipDef(Optional.ToNullable(category), Optional.ToNullable(createTime), createdBy.Value, dateFormatter.Value, description.Value, guid.Value, name.Value, Optional.ToDictionary(options0), serviceType.Value, typeVersion.Value, Optional.ToNullable(updateTime), updatedBy.Value, Optional.ToNullable(version), lastModifiedTS.Value, Optional.ToList(attributeDefs), endDef1.Value, endDef2.Value, Optional.ToNullable(relationshipCategory), relationshipLabel.Value, serializedAdditionalRawData);
+            return new AtlasRelationshipDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options0 ?? new ChangeTrackingDictionary<string, string>(),
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs ?? new ChangeTrackingList<AtlasAttributeDef>(),
+                endDef1,
+                endDef2,
+                relationshipCategory,
+                relationshipLabel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelationshipDef>.Write(ModelReaderWriterOptions options)

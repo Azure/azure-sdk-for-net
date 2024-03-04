@@ -75,8 +75,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> url = default;
+            string displayName = default;
+            string url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceLink(displayName.Value, url.Value, serializedAdditionalRawData);
+            return new ResourceLink(displayName, url, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceLink>.Write(ModelReaderWriterOptions options)

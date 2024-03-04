@@ -135,13 +135,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IList<AtlasBusinessMetadataDef>> businessMetadataDefs = default;
-            Optional<IList<AtlasClassificationDef>> classificationDefs = default;
-            Optional<IList<AtlasEntityDef>> entityDefs = default;
-            Optional<IList<AtlasEnumDef>> enumDefs = default;
-            Optional<IList<AtlasRelationshipDef>> relationshipDefs = default;
-            Optional<IList<AtlasStructDef>> structDefs = default;
-            Optional<IList<TermTemplateDef>> termTemplateDefs = default;
+            IList<AtlasBusinessMetadataDef> businessMetadataDefs = default;
+            IList<AtlasClassificationDef> classificationDefs = default;
+            IList<AtlasEntityDef> entityDefs = default;
+            IList<AtlasEnumDef> enumDefs = default;
+            IList<AtlasRelationshipDef> relationshipDefs = default;
+            IList<AtlasStructDef> structDefs = default;
+            IList<TermTemplateDef> termTemplateDefs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasBusinessMetadataDef> array = new List<AtlasBusinessMetadataDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasBusinessMetadataDef.DeserializeAtlasBusinessMetadataDef(item));
+                        array.Add(AtlasBusinessMetadataDef.DeserializeAtlasBusinessMetadataDef(item, options));
                     }
                     businessMetadataDefs = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasClassificationDef> array = new List<AtlasClassificationDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassificationDef.DeserializeAtlasClassificationDef(item));
+                        array.Add(AtlasClassificationDef.DeserializeAtlasClassificationDef(item, options));
                     }
                     classificationDefs = array;
                     continue;
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasEntityDef> array = new List<AtlasEntityDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasEntityDef.DeserializeAtlasEntityDef(item));
+                        array.Add(AtlasEntityDef.DeserializeAtlasEntityDef(item, options));
                     }
                     entityDefs = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasEnumDef> array = new List<AtlasEnumDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasEnumDef.DeserializeAtlasEnumDef(item));
+                        array.Add(AtlasEnumDef.DeserializeAtlasEnumDef(item, options));
                     }
                     enumDefs = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelationshipDef> array = new List<AtlasRelationshipDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelationshipDef.DeserializeAtlasRelationshipDef(item));
+                        array.Add(AtlasRelationshipDef.DeserializeAtlasRelationshipDef(item, options));
                     }
                     relationshipDefs = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasStructDef> array = new List<AtlasStructDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasStructDef.DeserializeAtlasStructDef(item));
+                        array.Add(AtlasStructDef.DeserializeAtlasStructDef(item, options));
                     }
                     structDefs = array;
                     continue;
@@ -239,7 +239,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<TermTemplateDef> array = new List<TermTemplateDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TermTemplateDef.DeserializeTermTemplateDef(item));
+                        array.Add(TermTemplateDef.DeserializeTermTemplateDef(item, options));
                     }
                     termTemplateDefs = array;
                     continue;
@@ -250,7 +250,15 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasTypesDef(Optional.ToList(businessMetadataDefs), Optional.ToList(classificationDefs), Optional.ToList(entityDefs), Optional.ToList(enumDefs), Optional.ToList(relationshipDefs), Optional.ToList(structDefs), Optional.ToList(termTemplateDefs), serializedAdditionalRawData);
+            return new AtlasTypesDef(
+                businessMetadataDefs ?? new ChangeTrackingList<AtlasBusinessMetadataDef>(),
+                classificationDefs ?? new ChangeTrackingList<AtlasClassificationDef>(),
+                entityDefs ?? new ChangeTrackingList<AtlasEntityDef>(),
+                enumDefs ?? new ChangeTrackingList<AtlasEnumDef>(),
+                relationshipDefs ?? new ChangeTrackingList<AtlasRelationshipDef>(),
+                structDefs ?? new ChangeTrackingList<AtlasStructDef>(),
+                termTemplateDefs ?? new ChangeTrackingList<TermTemplateDef>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasTypesDef>.Write(ModelReaderWriterOptions options)

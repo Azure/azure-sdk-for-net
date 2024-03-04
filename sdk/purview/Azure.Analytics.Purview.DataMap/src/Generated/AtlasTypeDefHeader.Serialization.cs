@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<TypeCategory> category = default;
-            Optional<string> guid = default;
-            Optional<string> name = default;
+            TypeCategory? category = default;
+            string guid = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasTypeDefHeader(Optional.ToNullable(category), guid.Value, name.Value, serializedAdditionalRawData);
+            return new AtlasTypeDefHeader(category, guid, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasTypeDefHeader>.Write(ModelReaderWriterOptions options)

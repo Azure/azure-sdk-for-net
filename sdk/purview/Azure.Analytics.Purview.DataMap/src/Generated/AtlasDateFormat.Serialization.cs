@@ -115,15 +115,15 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IList<string>> availableLocales = default;
-            Optional<float> calendar = default;
-            Optional<AtlasDateFormat> dateInstance = default;
-            Optional<AtlasDateFormat> dateTimeInstance = default;
-            Optional<AtlasDateFormat> instance = default;
-            Optional<bool> lenient = default;
-            Optional<AtlasNumberFormat> numberFormat = default;
-            Optional<AtlasDateFormat> timeInstance = default;
-            Optional<AtlasTimeZone> timeZone = default;
+            IList<string> availableLocales = default;
+            float? calendar = default;
+            AtlasDateFormat dateInstance = default;
+            AtlasDateFormat dateTimeInstance = default;
+            AtlasDateFormat instance = default;
+            bool? lenient = default;
+            AtlasNumberFormat numberFormat = default;
+            AtlasDateFormat timeInstance = default;
+            AtlasTimeZone timeZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateInstance = DeserializeAtlasDateFormat(property.Value);
+                    dateInstance = DeserializeAtlasDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dateTimeInstance"u8))
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateTimeInstance = DeserializeAtlasDateFormat(property.Value);
+                    dateTimeInstance = DeserializeAtlasDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instance"u8))
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasDateFormat(property.Value);
+                    instance = DeserializeAtlasDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lenient"u8))
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    numberFormat = AtlasNumberFormat.DeserializeAtlasNumberFormat(property.Value);
+                    numberFormat = AtlasNumberFormat.DeserializeAtlasNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeInstance"u8))
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    timeInstance = DeserializeAtlasDateFormat(property.Value);
+                    timeInstance = DeserializeAtlasDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    timeZone = AtlasTimeZone.DeserializeAtlasTimeZone(property.Value);
+                    timeZone = AtlasTimeZone.DeserializeAtlasTimeZone(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,17 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasDateFormat(Optional.ToList(availableLocales), Optional.ToNullable(calendar), dateInstance.Value, dateTimeInstance.Value, instance.Value, Optional.ToNullable(lenient), numberFormat.Value, timeInstance.Value, timeZone.Value, serializedAdditionalRawData);
+            return new AtlasDateFormat(
+                availableLocales ?? new ChangeTrackingList<string>(),
+                calendar,
+                dateInstance,
+                dateTimeInstance,
+                instance,
+                lenient,
+                numberFormat,
+                timeInstance,
+                timeZone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasDateFormat>.Write(ModelReaderWriterOptions options)

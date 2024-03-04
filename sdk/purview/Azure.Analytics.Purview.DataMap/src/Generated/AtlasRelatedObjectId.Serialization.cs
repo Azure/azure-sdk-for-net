@@ -128,15 +128,15 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> guid = default;
-            Optional<string> typeName = default;
-            Optional<IDictionary<string, BinaryData>> uniqueAttributes = default;
-            Optional<string> displayText = default;
-            Optional<EntityStatus> entityStatus = default;
-            Optional<string> relationshipType = default;
-            Optional<AtlasStruct> relationshipAttributes = default;
-            Optional<Guid> relationshipGuid = default;
-            Optional<StatusAtlasRelationship> relationshipStatus = default;
+            string guid = default;
+            string typeName = default;
+            IDictionary<string, BinaryData> uniqueAttributes = default;
+            string displayText = default;
+            EntityStatus? entityStatus = default;
+            string relationshipType = default;
+            AtlasStruct relationshipAttributes = default;
+            Guid? relationshipGuid = default;
+            StatusAtlasRelationship? relationshipStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    relationshipAttributes = AtlasStruct.DeserializeAtlasStruct(property.Value);
+                    relationshipAttributes = AtlasStruct.DeserializeAtlasStruct(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("relationshipGuid"u8))
@@ -224,7 +224,17 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelatedObjectId(guid.Value, typeName.Value, Optional.ToDictionary(uniqueAttributes), displayText.Value, Optional.ToNullable(entityStatus), relationshipType.Value, relationshipAttributes.Value, Optional.ToNullable(relationshipGuid), Optional.ToNullable(relationshipStatus), serializedAdditionalRawData);
+            return new AtlasRelatedObjectId(
+                guid,
+                typeName,
+                uniqueAttributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                displayText,
+                entityStatus,
+                relationshipType,
+                relationshipAttributes,
+                relationshipGuid,
+                relationshipStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelatedObjectId>.Write(ModelReaderWriterOptions options)

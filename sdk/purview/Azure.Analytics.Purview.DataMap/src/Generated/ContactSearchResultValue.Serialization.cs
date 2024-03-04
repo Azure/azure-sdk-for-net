@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> info = default;
-            Optional<string> contactType = default;
+            string id = default;
+            string info = default;
+            string contactType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContactSearchResultValue(id.Value, info.Value, contactType.Value, serializedAdditionalRawData);
+            return new ContactSearchResultValue(id, info, contactType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContactSearchResultValue>.Write(ModelReaderWriterOptions options)

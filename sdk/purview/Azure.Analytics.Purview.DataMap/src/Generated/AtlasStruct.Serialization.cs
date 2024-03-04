@@ -98,9 +98,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<string> typeName = default;
-            Optional<string> lastModifiedTS = default;
+            IDictionary<string, BinaryData> attributes = default;
+            string typeName = default;
+            string lastModifiedTS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasStruct(Optional.ToDictionary(attributes), typeName.Value, lastModifiedTS.Value, serializedAdditionalRawData);
+            return new AtlasStruct(attributes ?? new ChangeTrackingDictionary<string, BinaryData>(), typeName, lastModifiedTS, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasStruct>.Write(ModelReaderWriterOptions options)

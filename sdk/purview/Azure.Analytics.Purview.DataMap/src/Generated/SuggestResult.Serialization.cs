@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyList<SuggestResultValue>> value = default;
+            IReadOnlyList<SuggestResultValue> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SuggestResultValue> array = new List<SuggestResultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuggestResultValue.DeserializeSuggestResultValue(item));
+                        array.Add(SuggestResultValue.DeserializeSuggestResultValue(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SuggestResult(value ?? new ChangeTrackingList<SuggestResultValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestResult>.Write(ModelReaderWriterOptions options)

@@ -86,8 +86,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, AtlasEntity>> referredEntities = default;
-            Optional<IList<AtlasEntity>> entities = default;
+            IDictionary<string, AtlasEntity> referredEntities = default;
+            IList<AtlasEntity> entities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.DataMap
                     Dictionary<string, AtlasEntity> dictionary = new Dictionary<string, AtlasEntity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AtlasEntity.DeserializeAtlasEntity(property0.Value));
+                        dictionary.Add(property0.Name, AtlasEntity.DeserializeAtlasEntity(property0.Value, options));
                     }
                     referredEntities = dictionary;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasEntity> array = new List<AtlasEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasEntity.DeserializeAtlasEntity(item));
+                        array.Add(AtlasEntity.DeserializeAtlasEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasEntitiesWithExtInfo(Optional.ToDictionary(referredEntities), Optional.ToList(entities), serializedAdditionalRawData);
+            return new AtlasEntitiesWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entities ?? new ChangeTrackingList<AtlasEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasEntitiesWithExtInfo>.Write(ModelReaderWriterOptions options)

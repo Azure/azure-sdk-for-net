@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<int> ordinal = default;
-            Optional<string> value = default;
+            string description = default;
+            int? ordinal = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasEnumElementDef(description.Value, Optional.ToNullable(ordinal), value.Value, serializedAdditionalRawData);
+            return new AtlasEnumElementDef(description, ordinal, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasEnumElementDef>.Write(ModelReaderWriterOptions options)

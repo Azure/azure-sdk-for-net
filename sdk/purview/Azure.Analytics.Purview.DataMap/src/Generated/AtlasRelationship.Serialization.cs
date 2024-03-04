@@ -158,21 +158,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<string> typeName = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<AtlasObjectId> end1 = default;
-            Optional<AtlasObjectId> end2 = default;
-            Optional<string> guid = default;
-            Optional<string> homeId = default;
-            Optional<string> label = default;
-            Optional<int> provenanceType = default;
-            Optional<StatusAtlasRelationship> status = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<long> version = default;
+            IDictionary<string, BinaryData> attributes = default;
+            string typeName = default;
+            string lastModifiedTS = default;
+            long? createTime = default;
+            string createdBy = default;
+            AtlasObjectId end1 = default;
+            AtlasObjectId end2 = default;
+            string guid = default;
+            string homeId = default;
+            string label = default;
+            int? provenanceType = default;
+            StatusAtlasRelationship? status = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            long? version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    end1 = AtlasObjectId.DeserializeAtlasObjectId(property.Value);
+                    end1 = AtlasObjectId.DeserializeAtlasObjectId(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("end2"u8))
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    end2 = AtlasObjectId.DeserializeAtlasObjectId(property.Value);
+                    end2 = AtlasObjectId.DeserializeAtlasObjectId(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("guid"u8))
@@ -302,7 +302,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelationship(Optional.ToDictionary(attributes), typeName.Value, lastModifiedTS.Value, Optional.ToNullable(createTime), createdBy.Value, end1.Value, end2.Value, guid.Value, homeId.Value, label.Value, Optional.ToNullable(provenanceType), Optional.ToNullable(status), Optional.ToNullable(updateTime), updatedBy.Value, Optional.ToNullable(version), serializedAdditionalRawData);
+            return new AtlasRelationship(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                end1,
+                end2,
+                guid,
+                homeId,
+                label,
+                provenanceType,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelationship>.Write(ModelReaderWriterOptions options)

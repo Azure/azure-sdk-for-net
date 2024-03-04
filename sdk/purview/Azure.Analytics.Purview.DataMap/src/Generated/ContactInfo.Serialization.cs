@@ -75,8 +75,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> info = default;
+            string id = default;
+            string info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContactInfo(id.Value, info.Value, serializedAdditionalRawData);
+            return new ContactInfo(id, info, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContactInfo>.Write(ModelReaderWriterOptions options)

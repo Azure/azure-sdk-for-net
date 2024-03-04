@@ -85,8 +85,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyList<ImportInfo>> failedImportInfoList = default;
-            Optional<IReadOnlyList<ImportInfo>> successImportInfoList = default;
+            IReadOnlyList<ImportInfo> failedImportInfoList = default;
+            IReadOnlyList<ImportInfo> successImportInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<ImportInfo> array = new List<ImportInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportInfo.DeserializeImportInfo(item));
+                        array.Add(ImportInfo.DeserializeImportInfo(item, options));
                     }
                     failedImportInfoList = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<ImportInfo> array = new List<ImportInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportInfo.DeserializeImportInfo(item));
+                        array.Add(ImportInfo.DeserializeImportInfo(item, options));
                     }
                     successImportInfoList = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BulkImportResult(Optional.ToList(failedImportInfoList), Optional.ToList(successImportInfoList), serializedAdditionalRawData);
+            return new BulkImportResult(failedImportInfoList ?? new ChangeTrackingList<ImportInfo>(), successImportInfoList ?? new ChangeTrackingList<ImportInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BulkImportResult>.Write(ModelReaderWriterOptions options)

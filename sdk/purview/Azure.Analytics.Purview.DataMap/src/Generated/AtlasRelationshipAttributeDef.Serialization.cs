@@ -151,21 +151,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<CardinalityValue> cardinality = default;
-            Optional<IList<AtlasConstraintDef>> constraints = default;
-            Optional<string> defaultValue = default;
-            Optional<string> description = default;
-            Optional<bool> includeInNotification = default;
-            Optional<bool> isIndexable = default;
-            Optional<bool> isOptional = default;
-            Optional<bool> isUnique = default;
-            Optional<string> name = default;
-            Optional<IDictionary<string, string>> options0 = default;
-            Optional<string> typeName = default;
-            Optional<int> valuesMaxCount = default;
-            Optional<int> valuesMinCount = default;
-            Optional<bool> isLegacyAttribute = default;
-            Optional<string> relationshipTypeName = default;
+            CardinalityValue? cardinality = default;
+            IList<AtlasConstraintDef> constraints = default;
+            string defaultValue = default;
+            string description = default;
+            bool? includeInNotification = default;
+            bool? isIndexable = default;
+            bool? isOptional = default;
+            bool? isUnique = default;
+            string name = default;
+            IDictionary<string, string> options0 = default;
+            string typeName = default;
+            int? valuesMaxCount = default;
+            int? valuesMinCount = default;
+            bool? isLegacyAttribute = default;
+            string relationshipTypeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasConstraintDef> array = new List<AtlasConstraintDef>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasConstraintDef.DeserializeAtlasConstraintDef(item));
+                        array.Add(AtlasConstraintDef.DeserializeAtlasConstraintDef(item, options));
                     }
                     constraints = array;
                     continue;
@@ -301,7 +301,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelationshipAttributeDef(Optional.ToNullable(cardinality), Optional.ToList(constraints), defaultValue.Value, description.Value, Optional.ToNullable(includeInNotification), Optional.ToNullable(isIndexable), Optional.ToNullable(isOptional), Optional.ToNullable(isUnique), name.Value, Optional.ToDictionary(options0), typeName.Value, Optional.ToNullable(valuesMaxCount), Optional.ToNullable(valuesMinCount), Optional.ToNullable(isLegacyAttribute), relationshipTypeName.Value, serializedAdditionalRawData);
+            return new AtlasRelationshipAttributeDef(
+                cardinality,
+                constraints ?? new ChangeTrackingList<AtlasConstraintDef>(),
+                defaultValue,
+                description,
+                includeInNotification,
+                isIndexable,
+                isOptional,
+                isUnique,
+                name,
+                options0 ?? new ChangeTrackingDictionary<string, string>(),
+                typeName,
+                valuesMaxCount,
+                valuesMinCount,
+                isLegacyAttribute,
+                relationshipTypeName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelationshipAttributeDef>.Write(ModelReaderWriterOptions options)

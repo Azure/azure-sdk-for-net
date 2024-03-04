@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
@@ -51,7 +50,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public BusinessMetadataOptions(BinaryData file)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
 
             File = file;
         }

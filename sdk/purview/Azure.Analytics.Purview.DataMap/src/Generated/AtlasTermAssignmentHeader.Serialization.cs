@@ -110,15 +110,15 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<int> confidence = default;
-            Optional<string> createdBy = default;
-            Optional<string> description = default;
-            Optional<string> displayText = default;
-            Optional<string> expression = default;
-            Optional<Guid> relationGuid = default;
-            Optional<AtlasTermAssignmentStatus> status = default;
-            Optional<string> steward = default;
-            Optional<Guid> termGuid = default;
+            int? confidence = default;
+            string createdBy = default;
+            string description = default;
+            string displayText = default;
+            string expression = default;
+            Guid? relationGuid = default;
+            AtlasTermAssignmentStatus? status = default;
+            string steward = default;
+            Guid? termGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,17 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasTermAssignmentHeader(Optional.ToNullable(confidence), createdBy.Value, description.Value, displayText.Value, expression.Value, Optional.ToNullable(relationGuid), Optional.ToNullable(status), steward.Value, Optional.ToNullable(termGuid), serializedAdditionalRawData);
+            return new AtlasTermAssignmentHeader(
+                confidence,
+                createdBy,
+                description,
+                displayText,
+                expression,
+                relationGuid,
+                status,
+                steward,
+                termGuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasTermAssignmentHeader>.Write(ModelReaderWriterOptions options)

@@ -165,16 +165,16 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyList<SearchFacetItemValue>> entityType = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> assetType = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> classification = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> term = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> contactId = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> contactType = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> label = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> glossaryType = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> termStatus = default;
-            Optional<IReadOnlyList<SearchFacetItemValue>> termTemplate = default;
+            IReadOnlyList<SearchFacetItemValue> entityType = default;
+            IReadOnlyList<SearchFacetItemValue> assetType = default;
+            IReadOnlyList<SearchFacetItemValue> classification = default;
+            IReadOnlyList<SearchFacetItemValue> term = default;
+            IReadOnlyList<SearchFacetItemValue> contactId = default;
+            IReadOnlyList<SearchFacetItemValue> contactType = default;
+            IReadOnlyList<SearchFacetItemValue> label = default;
+            IReadOnlyList<SearchFacetItemValue> glossaryType = default;
+            IReadOnlyList<SearchFacetItemValue> termStatus = default;
+            IReadOnlyList<SearchFacetItemValue> termTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     entityType = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     assetType = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     classification = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     term = array;
                     continue;
@@ -244,7 +244,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     contactId = array;
                     continue;
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     contactType = array;
                     continue;
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     label = array;
                     continue;
@@ -286,7 +286,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     glossaryType = array;
                     continue;
@@ -300,7 +300,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     termStatus = array;
                     continue;
@@ -314,7 +314,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<SearchFacetItemValue> array = new List<SearchFacetItemValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item));
+                        array.Add(SearchFacetItemValue.DeserializeSearchFacetItemValue(item, options));
                     }
                     termTemplate = array;
                     continue;
@@ -325,7 +325,18 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchFacetResultValue(Optional.ToList(entityType), Optional.ToList(assetType), Optional.ToList(classification), Optional.ToList(term), Optional.ToList(contactId), Optional.ToList(contactType), Optional.ToList(label), Optional.ToList(glossaryType), Optional.ToList(termStatus), Optional.ToList(termTemplate), serializedAdditionalRawData);
+            return new SearchFacetResultValue(
+                entityType ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                assetType ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                classification ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                term ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                contactId ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                contactType ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                label ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                glossaryType ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                termStatus ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                termTemplate ?? new ChangeTrackingList<SearchFacetItemValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchFacetResultValue>.Write(ModelReaderWriterOptions options)

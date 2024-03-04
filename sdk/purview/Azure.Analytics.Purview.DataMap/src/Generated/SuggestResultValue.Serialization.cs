@@ -29,12 +29,12 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteStartObject();
             if (Optional.IsDefined(SearchScore))
             {
-                writer.WritePropertyName("searchScore"u8);
+                writer.WritePropertyName("@search.score"u8);
                 writer.WriteNumberValue(SearchScore.Value);
             }
             if (Optional.IsDefined(SearchText))
             {
-                writer.WritePropertyName("searchText"u8);
+                writer.WritePropertyName("@search.text"u8);
                 writer.WriteStringValue(SearchText);
             }
             if (Optional.IsDefined(ObjectType))
@@ -205,33 +205,33 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<float> searchScore = default;
-            Optional<string> searchText = default;
-            Optional<string> objectType = default;
-            Optional<long> createTime = default;
-            Optional<long> updateTime = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
-            Optional<string> entityType = default;
-            Optional<string> description = default;
-            Optional<string> endorsement = default;
-            Optional<string> owner = default;
-            Optional<IReadOnlyList<string>> classification = default;
-            Optional<IReadOnlyList<string>> label = default;
-            Optional<IReadOnlyList<TermSearchResultValue>> term = default;
-            Optional<IReadOnlyList<ContactSearchResultValue>> contact = default;
-            Optional<IReadOnlyList<string>> assetType = default;
-            Optional<string> glossaryType = default;
-            Optional<string> glossary = default;
-            Optional<string> termStatus = default;
-            Optional<IReadOnlyList<string>> termTemplate = default;
-            Optional<string> longDescription = default;
+            float? searchScore = default;
+            string searchText = default;
+            string objectType = default;
+            long? createTime = default;
+            long? updateTime = default;
+            string id = default;
+            string name = default;
+            string qualifiedName = default;
+            string entityType = default;
+            string description = default;
+            string endorsement = default;
+            string owner = default;
+            IReadOnlyList<string> classification = default;
+            IReadOnlyList<string> label = default;
+            IReadOnlyList<TermSearchResultValue> term = default;
+            IReadOnlyList<ContactSearchResultValue> contact = default;
+            IReadOnlyList<string> assetType = default;
+            string glossaryType = default;
+            string glossary = default;
+            string termStatus = default;
+            IReadOnlyList<string> termTemplate = default;
+            string longDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("searchScore"u8))
+                if (property.NameEquals("@search.score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Purview.DataMap
                     searchScore = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("searchText"u8))
+                if (property.NameEquals("@search.text"u8))
                 {
                     searchText = property.Value.GetString();
                     continue;
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<TermSearchResultValue> array = new List<TermSearchResultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TermSearchResultValue.DeserializeTermSearchResultValue(item));
+                        array.Add(TermSearchResultValue.DeserializeTermSearchResultValue(item, options));
                     }
                     term = array;
                     continue;
@@ -354,7 +354,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<ContactSearchResultValue> array = new List<ContactSearchResultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContactSearchResultValue.DeserializeContactSearchResultValue(item));
+                        array.Add(ContactSearchResultValue.DeserializeContactSearchResultValue(item, options));
                     }
                     contact = array;
                     continue;
@@ -413,7 +413,30 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestResultValue(Optional.ToNullable(searchScore), searchText.Value, objectType.Value, Optional.ToNullable(createTime), Optional.ToNullable(updateTime), id.Value, name.Value, qualifiedName.Value, entityType.Value, description.Value, endorsement.Value, owner.Value, Optional.ToList(classification), Optional.ToList(label), Optional.ToList(term), Optional.ToList(contact), Optional.ToList(assetType), glossaryType.Value, glossary.Value, termStatus.Value, Optional.ToList(termTemplate), longDescription.Value, serializedAdditionalRawData);
+            return new SuggestResultValue(
+                searchScore,
+                searchText,
+                objectType,
+                createTime,
+                updateTime,
+                id,
+                name,
+                qualifiedName,
+                entityType,
+                description,
+                endorsement,
+                owner,
+                classification ?? new ChangeTrackingList<string>(),
+                label ?? new ChangeTrackingList<string>(),
+                term ?? new ChangeTrackingList<TermSearchResultValue>(),
+                contact ?? new ChangeTrackingList<ContactSearchResultValue>(),
+                assetType ?? new ChangeTrackingList<string>(),
+                glossaryType,
+                glossary,
+                termStatus,
+                termTemplate ?? new ChangeTrackingList<string>(),
+                longDescription,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestResultValue>.Write(ModelReaderWriterOptions options)

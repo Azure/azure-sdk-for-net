@@ -115,11 +115,11 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> id = default;
-            Optional<IReadOnlyList<string>> qualifiedName = default;
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<string>> description = default;
-            Optional<IReadOnlyList<string>> entityType = default;
+            IReadOnlyList<string> id = default;
+            IReadOnlyList<string> qualifiedName = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<string> description = default;
+            IReadOnlyList<string> entityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,13 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchHighlights(Optional.ToList(id), Optional.ToList(qualifiedName), Optional.ToList(name), Optional.ToList(description), Optional.ToList(entityType), serializedAdditionalRawData);
+            return new SearchHighlights(
+                id ?? new ChangeTrackingList<string>(),
+                qualifiedName ?? new ChangeTrackingList<string>(),
+                name ?? new ChangeTrackingList<string>(),
+                description ?? new ChangeTrackingList<string>(),
+                entityType ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchHighlights>.Write(ModelReaderWriterOptions options)

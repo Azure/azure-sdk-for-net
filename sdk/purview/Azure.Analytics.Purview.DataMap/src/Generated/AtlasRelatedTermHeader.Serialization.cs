@@ -100,13 +100,13 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> displayText = default;
-            Optional<string> expression = default;
-            Optional<string> relationGuid = default;
-            Optional<AtlasTermRelationshipStatus> status = default;
-            Optional<string> steward = default;
-            Optional<string> termGuid = default;
+            string description = default;
+            string displayText = default;
+            string expression = default;
+            string relationGuid = default;
+            AtlasTermRelationshipStatus? status = default;
+            string steward = default;
+            string termGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,15 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasRelatedTermHeader(description.Value, displayText.Value, expression.Value, relationGuid.Value, Optional.ToNullable(status), steward.Value, termGuid.Value, serializedAdditionalRawData);
+            return new AtlasRelatedTermHeader(
+                description,
+                displayText,
+                expression,
+                relationGuid,
+                status,
+                steward,
+                termGuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasRelatedTermHeader>.Write(ModelReaderWriterOptions options)

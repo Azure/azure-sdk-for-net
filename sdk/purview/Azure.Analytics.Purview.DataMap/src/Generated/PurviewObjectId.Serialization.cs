@@ -141,14 +141,14 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> guid = default;
-            Optional<string> typeName = default;
-            Optional<IDictionary<string, BinaryData>> uniqueAttributes = default;
-            Optional<string> name = default;
-            Optional<string> displayText = default;
-            Optional<string> itemPath = default;
-            Optional<string> resourceId = default;
-            Optional<IDictionary<string, BinaryData>> properties = default;
+            string guid = default;
+            string typeName = default;
+            IDictionary<string, BinaryData> uniqueAttributes = default;
+            string name = default;
+            string displayText = default;
+            string itemPath = default;
+            string resourceId = default;
+            IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,16 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewObjectId(guid.Value, typeName.Value, Optional.ToDictionary(uniqueAttributes), name.Value, displayText.Value, itemPath.Value, resourceId.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new PurviewObjectId(
+                guid,
+                typeName,
+                uniqueAttributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                name,
+                displayText,
+                itemPath,
+                resourceId,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewObjectId>.Write(ModelReaderWriterOptions options)

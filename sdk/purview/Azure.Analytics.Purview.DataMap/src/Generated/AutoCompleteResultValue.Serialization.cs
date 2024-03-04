@@ -75,8 +75,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<string> queryPlusText = default;
+            string text = default;
+            string queryPlusText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoCompleteResultValue(text.Value, queryPlusText.Value, serializedAdditionalRawData);
+            return new AutoCompleteResultValue(text, queryPlusText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoCompleteResultValue>.Write(ModelReaderWriterOptions options)

@@ -266,28 +266,28 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> attributes = default;
-            Optional<string> typeName = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<IDictionary<string, BinaryData>> businessAttributes = default;
-            Optional<IList<AtlasClassification>> classifications = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<IDictionary<string, string>> customAttributes = default;
-            Optional<string> guid = default;
-            Optional<string> homeId = default;
-            Optional<string> collectionId = default;
-            Optional<bool> isIncomplete = default;
-            Optional<IList<string>> labels = default;
-            Optional<IList<AtlasTermAssignmentHeader>> meanings = default;
-            Optional<int> provenanceType = default;
-            Optional<bool> proxy = default;
-            Optional<IDictionary<string, BinaryData>> relationshipAttributes = default;
-            Optional<EntityStatus> status = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<long> version = default;
-            Optional<IDictionary<string, IList<ContactInfo>>> contacts = default;
+            IDictionary<string, BinaryData> attributes = default;
+            string typeName = default;
+            string lastModifiedTS = default;
+            IDictionary<string, BinaryData> businessAttributes = default;
+            IList<AtlasClassification> classifications = default;
+            long? createTime = default;
+            string createdBy = default;
+            IDictionary<string, string> customAttributes = default;
+            string guid = default;
+            string homeId = default;
+            string collectionId = default;
+            bool? isIncomplete = default;
+            IList<string> labels = default;
+            IList<AtlasTermAssignmentHeader> meanings = default;
+            int? provenanceType = default;
+            bool? proxy = default;
+            IDictionary<string, BinaryData> relationshipAttributes = default;
+            EntityStatus? status = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            long? version = default;
+            IDictionary<string, IList<ContactInfo>> contacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -353,7 +353,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasClassification> array = new List<AtlasClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item));
+                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
@@ -433,7 +433,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasTermAssignmentHeader> array = new List<AtlasTermAssignmentHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasTermAssignmentHeader.DeserializeAtlasTermAssignmentHeader(item));
+                        array.Add(AtlasTermAssignmentHeader.DeserializeAtlasTermAssignmentHeader(item, options));
                     }
                     meanings = array;
                     continue;
@@ -527,7 +527,7 @@ namespace Azure.Analytics.Purview.DataMap
                             List<ContactInfo> array = new List<ContactInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContactInfo.DeserializeContactInfo(item));
+                                array.Add(ContactInfo.DeserializeContactInfo(item, options));
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -541,7 +541,30 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasEntity(Optional.ToDictionary(attributes), typeName.Value, lastModifiedTS.Value, Optional.ToDictionary(businessAttributes), Optional.ToList(classifications), Optional.ToNullable(createTime), createdBy.Value, Optional.ToDictionary(customAttributes), guid.Value, homeId.Value, collectionId.Value, Optional.ToNullable(isIncomplete), Optional.ToList(labels), Optional.ToList(meanings), Optional.ToNullable(provenanceType), Optional.ToNullable(proxy), Optional.ToDictionary(relationshipAttributes), Optional.ToNullable(status), Optional.ToNullable(updateTime), updatedBy.Value, Optional.ToNullable(version), Optional.ToDictionary(contacts), serializedAdditionalRawData);
+            return new AtlasEntity(
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                typeName,
+                lastModifiedTS,
+                businessAttributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                createTime,
+                createdBy,
+                customAttributes ?? new ChangeTrackingDictionary<string, string>(),
+                guid,
+                homeId,
+                collectionId,
+                isIncomplete,
+                labels ?? new ChangeTrackingList<string>(),
+                meanings ?? new ChangeTrackingList<AtlasTermAssignmentHeader>(),
+                provenanceType,
+                proxy,
+                relationshipAttributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                contacts ?? new ChangeTrackingDictionary<string, IList<ContactInfo>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasEntity>.Write(ModelReaderWriterOptions options)

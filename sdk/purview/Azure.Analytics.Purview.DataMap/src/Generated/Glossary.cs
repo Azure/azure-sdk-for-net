@@ -213,7 +213,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(AtlasGlossary,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary atlasGlossary, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            if (atlasGlossary == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossary));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
@@ -228,7 +231,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(AtlasGlossary,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> Create(AtlasGlossary atlasGlossary, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            if (atlasGlossary == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossary));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
@@ -259,7 +265,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.Create");
             scope.Start();
@@ -298,7 +307,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.Create");
             scope.Start();
@@ -321,7 +333,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoriesAsync(IEnumerable{AtlasGlossaryCategory},CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> CreateCategoriesAsync(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -344,7 +359,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategories(IEnumerable{AtlasGlossaryCategory},CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> CreateCategories(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -383,7 +401,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoriesAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateCategoriesAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
             scope.Start();
@@ -422,7 +443,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategories(RequestContent,RequestContext)']/*" />
         public virtual Response CreateCategories(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategories");
             scope.Start();
@@ -445,7 +469,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            if (atlasGlossaryCategory == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryCategory));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
@@ -460,7 +487,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            if (atlasGlossaryCategory == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryCategory));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
@@ -491,7 +521,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateCategoryAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
             scope.Start();
@@ -530,7 +563,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(RequestContent,RequestContext)']/*" />
         public virtual Response CreateCategory(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateCategory");
             scope.Start();
@@ -554,7 +590,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> GetCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoryAsync(categoryId, context).ConfigureAwait(false);
@@ -569,7 +612,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategory(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> GetCategory(string categoryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategory(categoryId, context);
@@ -600,7 +650,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCategoryAsync(string categoryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
             scope.Start();
@@ -640,7 +697,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategory(string,RequestContext)']/*" />
         public virtual Response GetCategory(string categoryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategory");
             scope.Start();
@@ -665,8 +729,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (atlasGlossaryCategory == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryCategory));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
@@ -683,8 +757,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory atlasGlossaryCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (atlasGlossaryCategory == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryCategory));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
@@ -717,8 +801,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
             scope.Start();
@@ -759,8 +853,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateCategory");
             scope.Start();
@@ -796,7 +900,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteCategoryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteCategoryAsync(string categoryId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
             scope.Start();
@@ -832,7 +943,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteCategory(string,RequestContext)']/*" />
         public virtual Response DeleteCategory(string categoryId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteCategory");
             scope.Start();
@@ -863,8 +981,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategoryAsync(string,IDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> PartialUpdateCategoryAsync(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -887,8 +1015,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategory(string,IDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> PartialUpdateCategory(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -922,8 +1060,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategoryAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateCategoryAsync(string categoryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
             scope.Start();
@@ -965,8 +1113,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategory(string,RequestContent,RequestContext)']/*" />
         public virtual Response PartialUpdateCategory(string categoryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateCategory");
             scope.Start();
@@ -996,7 +1154,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>> GetRelatedCategoriesAsync(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelatedCategoriesAsync(categoryId, limit, offset, sort, context).ConfigureAwait(false);
@@ -1037,7 +1202,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> GetRelatedCategories(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelatedCategories(categoryId, limit, offset, sort, context);
@@ -1092,7 +1264,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
             scope.Start();
@@ -1136,7 +1315,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetRelatedCategories(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedCategories");
             scope.Start();
@@ -1163,7 +1349,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetCategoryTermsAsync(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoryTermsAsync(categoryId, limit, offset, sort, context).ConfigureAwait(false);
@@ -1189,7 +1382,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetCategoryTerms(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategoryTerms(categoryId, limit, offset, sort, context);
@@ -1231,7 +1431,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
             scope.Start();
@@ -1274,7 +1481,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategoryTerms(string categoryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
+            if (categoryId == null)
+            {
+                throw new ArgumentNullException(nameof(categoryId));
+            }
+            if (categoryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(categoryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoryTerms");
             scope.Start();
@@ -1298,7 +1512,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            if (atlasGlossaryTerm == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryTerm));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
@@ -1314,7 +1531,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            if (atlasGlossaryTerm == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryTerm));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
@@ -1346,7 +1566,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> CreateTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
             scope.Start();
@@ -1386,7 +1609,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(RequestContent,bool?,RequestContext)']/*" />
         public virtual Response CreateTerm(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerm");
             scope.Start();
@@ -1410,7 +1636,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermAsync(termId, context).ConfigureAwait(false);
@@ -1425,7 +1658,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> GetTerm(string termId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTerm(termId, context);
@@ -1456,7 +1696,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermAsync(string termId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
             scope.Start();
@@ -1496,7 +1743,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,RequestContext)']/*" />
         public virtual Response GetTerm(string termId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerm");
             scope.Start();
@@ -1522,8 +1776,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (atlasGlossaryTerm == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryTerm));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
@@ -1541,8 +1805,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (atlasGlossaryTerm == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossaryTerm));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
@@ -1576,8 +1850,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> UpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
             scope.Start();
@@ -1619,8 +1903,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response UpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.UpdateTerm");
             scope.Start();
@@ -1656,7 +1950,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTermAsync(string termId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
             scope.Start();
@@ -1692,7 +1993,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTerm(string,RequestContext)']/*" />
         public virtual Response DeleteTerm(string termId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTerm");
             scope.Start();
@@ -1724,8 +2032,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTermAsync(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -1749,8 +2067,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTerm(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> PartialUpdateTerm(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -1785,8 +2113,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTermAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateTermAsync(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
             scope.Start();
@@ -1829,8 +2167,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTerm(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response PartialUpdateTerm(string termId, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdateTerm");
             scope.Start();
@@ -1854,7 +2202,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermsAsync(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> CreateTermsAsync(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -1878,7 +2229,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerms(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> CreateTerms(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -1918,7 +2272,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermsAsync(RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> CreateTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
             scope.Start();
@@ -1958,7 +2315,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerms(RequestContent,bool?,RequestContext)']/*" />
         public virtual Response CreateTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.CreateTerms");
             scope.Start();
@@ -1988,7 +2348,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedObjectId>>> GetEntitiesAssignedWithTermAsync(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEntitiesAssignedWithTermAsync(termId, limit, offset, sort, context).ConfigureAwait(false);
@@ -2017,7 +2384,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedObjectId>> GetEntitiesAssignedWithTerm(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEntitiesAssignedWithTerm(termId, limit, offset, sort, context);
@@ -2060,7 +2434,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -2104,7 +2485,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetEntitiesAssignedWithTerm(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -2136,8 +2524,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2161,8 +2559,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual Response AssignTermToEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2200,8 +2608,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
             scope.Start();
@@ -2247,8 +2665,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntities(string,RequestContent,RequestContext)']/*" />
         public virtual Response AssignTermToEntities(string termId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.AssignTermToEntities");
             scope.Start();
@@ -2273,8 +2701,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2291,8 +2729,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual Response DeleteTermAssignmentFromEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2325,8 +2773,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
             scope.Start();
@@ -2367,8 +2825,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,RequestContent,RequestContext)']/*" />
         public virtual Response DeleteTermAssignmentFromEntities(string termId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.DeleteTermAssignmentFromEntities");
             scope.Start();
@@ -2398,7 +2866,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>> GetRelatedTermsAsync(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelatedTermsAsync(termId, limit, offset, sort, context).ConfigureAwait(false);
@@ -2439,7 +2914,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> GetRelatedTerms(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelatedTerms(termId, limit, offset, sort, context);
@@ -2494,7 +2976,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelatedTermsAsync(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
             scope.Start();
@@ -2538,7 +3027,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetRelatedTerms(string termId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(termId, nameof(termId));
+            if (termId == null)
+            {
+                throw new ArgumentNullException(nameof(termId));
+            }
+            if (termId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(termId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetRelatedTerms");
             scope.Start();
@@ -2562,7 +3058,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossaryAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetGlossaryAsync(glossaryId, context).ConfigureAwait(false);
@@ -2577,7 +3080,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossary(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> GetGlossary(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetGlossary(glossaryId, context);
@@ -2608,7 +3118,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossaryAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetGlossaryAsync(string glossaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
             scope.Start();
@@ -2648,7 +3165,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossary(string,RequestContext)']/*" />
         public virtual Response GetGlossary(string glossaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetGlossary");
             scope.Start();
@@ -2674,8 +3198,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (atlasGlossary == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossary));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
@@ -2693,8 +3227,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,AtlasGlossary,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (atlasGlossary == null)
+            {
+                throw new ArgumentNullException(nameof(atlasGlossary));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
@@ -2728,8 +3272,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.Update");
             scope.Start();
@@ -2771,8 +3325,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response Update(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.Update");
             scope.Start();
@@ -2809,7 +3373,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string glossaryId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.Delete");
             scope.Start();
@@ -2846,7 +3417,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string glossaryId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.Delete");
             scope.Start();
@@ -2876,7 +3454,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> GetCategoriesAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoriesAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
@@ -2905,7 +3490,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategories(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> GetCategories(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategories(glossaryId, limit, offset, sort, context);
@@ -2948,7 +3540,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCategoriesAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
             scope.Start();
@@ -2992,7 +3591,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategories(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategories(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategories");
             scope.Start();
@@ -3022,7 +3628,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeadersAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedCategoryHeader>>> GetCategoriesHeadersAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCategoriesHeadersAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
@@ -3051,7 +3664,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeaders(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedCategoryHeader>> GetCategoriesHeaders(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCategoriesHeaders(glossaryId, limit, offset, sort, context);
@@ -3094,7 +3714,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCategoriesHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
             scope.Start();
@@ -3138,7 +3765,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeaders(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetCategoriesHeaders(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetCategoriesHeaders");
             scope.Start();
@@ -3171,7 +3805,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailedAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryExtInfo>> GetDetailedAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDetailedAsync(glossaryId, context).ConfigureAwait(false);
@@ -3195,7 +3836,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailed(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryExtInfo> GetDetailed(string glossaryId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDetailed(glossaryId, context);
@@ -3233,7 +3881,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailedAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetDetailedAsync(string glossaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
             scope.Start();
@@ -3280,7 +3935,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailed(string,RequestContext)']/*" />
         public virtual Response GetDetailed(string glossaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetDetailed");
             scope.Start();
@@ -3318,8 +3980,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateAsync(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> PartialUpdateAsync(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3349,8 +4021,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdate(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> PartialUpdate(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(body, nameof(body));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3391,8 +4073,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> PartialUpdateAsync(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
             scope.Start();
@@ -3441,8 +4133,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdate(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response PartialUpdate(string glossaryId, RequestContent content, bool? ignoreTermsAndCategories = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.PartialUpdate");
             scope.Start();
@@ -3472,7 +4174,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> GetTermsAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermsAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
@@ -3501,7 +4210,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerms(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> GetTerms(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTerms(glossaryId, limit, offset, sort, context);
@@ -3544,7 +4260,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermsAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermsAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
             scope.Start();
@@ -3588,7 +4311,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerms(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetTerms(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetTerms");
             scope.Start();
@@ -3618,7 +4348,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeadersAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetTermHeadersAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetTermHeadersAsync(glossaryId, limit, offset, sort, context).ConfigureAwait(false);
@@ -3647,7 +4384,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeaders(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetTermHeaders(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetTermHeaders(glossaryId, limit, offset, sort, context);
@@ -3690,7 +4434,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermHeadersAsync(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
             scope.Start();
@@ -3734,7 +4485,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeaders(string,int?,int?,string,RequestContext)']/*" />
         public virtual Response GetTermHeaders(string glossaryId, int? limit, int? offset, string sort, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
+            if (glossaryId == null)
+            {
+                throw new ArgumentNullException(nameof(glossaryId));
+            }
+            if (glossaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(glossaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Glossary.GetTermHeaders");
             scope.Start();

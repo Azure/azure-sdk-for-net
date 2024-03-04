@@ -78,7 +78,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo atlasEntityWithExtInfo, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
+            if (atlasEntityWithExtInfo == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntityWithExtInfo));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
@@ -112,7 +115,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo atlasEntityWithExtInfo, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
+            if (atlasEntityWithExtInfo == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntityWithExtInfo));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
@@ -157,7 +163,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,string,string,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, string businessAttributeUpdateBehavior = null, string collectionId = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
             scope.Start();
@@ -210,7 +219,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,string,string,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(RequestContent content, string businessAttributeUpdateBehavior = null, string collectionId = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
             scope.Start();
@@ -235,7 +247,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIdsAsync(IEnumerable{string},bool?,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntitiesWithExtInfo>> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetByIdsAsync(guid, minExtInfo, ignoreRelationships, context).ConfigureAwait(false);
@@ -251,7 +266,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIds(IEnumerable{string},bool?,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasEntitiesWithExtInfo> GetByIds(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetByIds(guid, minExtInfo, ignoreRelationships, context);
@@ -283,7 +301,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIdsAsync(IEnumerable{string},bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
             scope.Start();
@@ -324,7 +345,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIds(IEnumerable{string},bool?,bool?,RequestContext)']/*" />
         public virtual Response GetByIds(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
             scope.Start();
@@ -367,7 +391,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
+            if (atlasEntitiesWithExtInfo == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntitiesWithExtInfo));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
@@ -402,7 +429,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
+            if (atlasEntitiesWithExtInfo == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntitiesWithExtInfo));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
@@ -448,7 +478,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(RequestContent,string,string,RequestContext)']/*" />
         public virtual async Task<Response> BatchCreateOrUpdateAsync(RequestContent content, string collectionId = null, string businessAttributeUpdateBehavior = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
             scope.Start();
@@ -502,7 +535,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(RequestContent,string,string,RequestContext)']/*" />
         public virtual Response BatchCreateOrUpdate(RequestContent content, string collectionId = null, string businessAttributeUpdateBehavior = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
             scope.Start();
@@ -528,7 +564,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDeleteAsync(IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> BatchDeleteAsync(IEnumerable<string> guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchDeleteAsync(guid, context).ConfigureAwait(false);
@@ -545,7 +584,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDelete(IEnumerable{string},CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> BatchDelete(IEnumerable<string> guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchDelete(guid, context);
@@ -576,7 +618,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDeleteAsync(IEnumerable{string},RequestContext)']/*" />
         public virtual async Task<Response> BatchDeleteAsync(IEnumerable<string> guid, RequestContext context)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
             scope.Start();
@@ -616,7 +661,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDelete(IEnumerable{string},RequestContext)']/*" />
         public virtual Response BatchDelete(IEnumerable<string> guid, RequestContext context)
         {
-            Argument.AssertNotNull(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
             scope.Start();
@@ -639,7 +687,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)']/*" />
         public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
+            if (classificationAssociateConfig == null)
+            {
+                throw new ArgumentNullException(nameof(classificationAssociateConfig));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classificationAssociateConfig.ToRequestContent();
@@ -654,7 +705,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateConfig,CancellationToken)']/*" />
         public virtual Response AddClassification(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
+            if (classificationAssociateConfig == null)
+            {
+                throw new ArgumentNullException(nameof(classificationAssociateConfig));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classificationAssociateConfig.ToRequestContent();
@@ -685,7 +739,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
             scope.Start();
@@ -724,7 +781,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(RequestContent,RequestContext)']/*" />
         public virtual Response AddClassification(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
             scope.Start();
@@ -750,7 +810,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntityAsync(string,bool?,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityWithExtInfo>> GetEntityAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEntityAsync(guid, minExtInfo, ignoreRelationships, context).ConfigureAwait(false);
@@ -767,7 +834,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntity(string,bool?,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasEntityWithExtInfo> GetEntity(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEntity(guid, minExtInfo, ignoreRelationships, context);
@@ -800,7 +874,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntityAsync(string,bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
             scope.Start();
@@ -842,7 +923,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntity(string,bool?,bool?,RequestContext)']/*" />
         public virtual Response GetEntity(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
             scope.Start();
@@ -874,9 +962,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeByIdAsync(string,string,BinaryData,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> UpdateAttributeByIdAsync(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromObject(body);
@@ -900,9 +1001,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeById(string,string,BinaryData,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> UpdateAttributeById(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromObject(body);
@@ -940,9 +1054,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeByIdAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAttributeByIdAsync(string guid, string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
             scope.Start();
@@ -988,9 +1115,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeById(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAttributeById(string guid, string name, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
             scope.Start();
@@ -1014,7 +1154,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> DeleteAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DeleteAsync(guid, context).ConfigureAwait(false);
@@ -1029,7 +1176,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='Delete(string,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> Delete(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Delete(guid, context);
@@ -1060,7 +1214,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.Delete");
             scope.Start();
@@ -1100,7 +1261,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.Delete");
             scope.Start();
@@ -1125,8 +1293,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassification>> GetClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetClassificationAsync(guid, classificationName, context).ConfigureAwait(false);
@@ -1142,8 +1324,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassification(string,string,CancellationToken)']/*" />
         public virtual Response<AtlasClassification> GetClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetClassification(guid, classificationName, context);
@@ -1175,8 +1371,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
             scope.Start();
@@ -1217,8 +1427,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassification(string,string,RequestContext)']/*" />
         public virtual Response GetClassification(string guid, string classificationName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
             scope.Start();
@@ -1255,8 +1479,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassificationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> RemoveClassificationAsync(string guid, string classificationName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
             scope.Start();
@@ -1293,8 +1531,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassification(string,string,RequestContext)']/*" />
         public virtual Response RemoveClassification(string guid, string classificationName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
             scope.Start();
@@ -1318,7 +1570,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationsAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassifications>> GetClassificationsAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetClassificationsAsync(guid, context).ConfigureAwait(false);
@@ -1333,7 +1592,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassifications(string,CancellationToken)']/*" />
         public virtual Response<AtlasClassifications> GetClassifications(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetClassifications(guid, context);
@@ -1364,7 +1630,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
             scope.Start();
@@ -1404,7 +1677,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassifications(string,RequestContext)']/*" />
         public virtual Response GetClassifications(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
             scope.Start();
@@ -1429,8 +1709,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
         public virtual async Task<Response> AddClassificationsAsync(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -1447,8 +1737,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassifications(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
         public virtual Response AddClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -1481,8 +1781,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
             scope.Start();
@@ -1523,8 +1833,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassifications(string,RequestContent,RequestContext)']/*" />
         public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
             scope.Start();
@@ -1549,8 +1869,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
         public virtual async Task<Response> UpdateClassificationsAsync(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -1567,8 +1897,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassifications(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
         public virtual Response UpdateClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -1601,8 +1941,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
             scope.Start();
@@ -1643,8 +1993,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassifications(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
             scope.Start();
@@ -1689,7 +2049,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,bool?,bool?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityWithExtInfo>> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetByUniqueAttributeAsync(typeName, minExtInfo, ignoreRelationships, attribute, context).ConfigureAwait(false);
@@ -1725,7 +2092,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,bool?,bool?,string,CancellationToken)']/*" />
         public virtual Response<AtlasEntityWithExtInfo> GetByUniqueAttribute(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetByUniqueAttribute(typeName, minExtInfo, ignoreRelationships, attribute, context);
@@ -1775,7 +2149,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,bool?,bool?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
             scope.Start();
@@ -1834,7 +2215,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,bool?,bool?,string,RequestContext)']/*" />
         public virtual Response GetByUniqueAttribute(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
             scope.Start();
@@ -1883,8 +2271,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (atlasEntityWithExtInfo == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntityWithExtInfo));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
@@ -1925,8 +2323,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (atlasEntityWithExtInfo == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntityWithExtInfo));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
@@ -1978,8 +2386,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> UpdateByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
             scope.Start();
@@ -2039,8 +2457,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response UpdateByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
             scope.Start();
@@ -2081,7 +2509,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttributeAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> DeleteByUniqueAttributeAsync(string typeName, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DeleteByUniqueAttributeAsync(typeName, attribute, context).ConfigureAwait(false);
@@ -2113,7 +2548,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttribute(string,string,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> DeleteByUniqueAttribute(string typeName, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DeleteByUniqueAttribute(typeName, attribute, context);
@@ -2159,7 +2601,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttributeAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attribute, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
             scope.Start();
@@ -2214,7 +2663,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttribute(string,string,RequestContext)']/*" />
         public virtual Response DeleteByUniqueAttribute(string typeName, string attribute, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
             scope.Start();
@@ -2256,8 +2712,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassificationByUniqueAttributeAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
             scope.Start();
@@ -2299,8 +2769,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassificationByUniqueAttribute(string,string,string,RequestContext)']/*" />
         public virtual Response RemoveClassificationByUniqueAttribute(string typeName, string classificationName, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (classificationName == null)
+            {
+                throw new ArgumentNullException(nameof(classificationName));
+            }
+            if (classificationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
             scope.Start();
@@ -2329,8 +2813,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
         public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2351,8 +2845,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
         public virtual Response AddClassificationsByUniqueAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2389,8 +2893,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
             scope.Start();
@@ -2435,8 +2949,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
             scope.Start();
@@ -2465,8 +2989,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
         public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2487,8 +3021,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
         public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
@@ -2525,8 +3069,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
             scope.Start();
@@ -2571,8 +3125,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttribute(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
             scope.Start();
@@ -2595,7 +3159,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders atlasEntityHeaders, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
+            if (atlasEntityHeaders == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntityHeaders));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityHeaders.ToRequestContent();
@@ -2618,7 +3185,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(AtlasEntityHeaders,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders atlasEntityHeaders, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
+            if (atlasEntityHeaders == null)
+            {
+                throw new ArgumentNullException(nameof(atlasEntityHeaders));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityHeaders.ToRequestContent();
@@ -2657,7 +3227,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BatchSetClassificationsAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
             scope.Start();
@@ -2696,7 +3269,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(RequestContent,RequestContext)']/*" />
         public virtual Response BatchSetClassifications(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
             scope.Start();
@@ -2746,7 +3322,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntitiesWithExtInfo>> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchGetByUniqueAttributesAsync(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context).ConfigureAwait(false);
@@ -2787,7 +3370,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributes(string,bool?,bool?,string,CancellationToken)']/*" />
         public virtual Response<AtlasEntitiesWithExtInfo> BatchGetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchGetByUniqueAttributes(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
@@ -2842,7 +3432,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)']/*" />
         public virtual async Task<Response> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
             scope.Start();
@@ -2906,7 +3503,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributes(string,bool?,bool?,string,RequestContext)']/*" />
         public virtual Response BatchGetByUniqueAttributes(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
             scope.Start();
@@ -2930,7 +3534,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeaderAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityHeader>> GetHeaderAsync(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetHeaderAsync(guid, context).ConfigureAwait(false);
@@ -2945,7 +3556,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeader(string,CancellationToken)']/*" />
         public virtual Response<AtlasEntityHeader> GetHeader(string guid, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetHeader(guid, context);
@@ -2976,7 +3594,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeaderAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
             scope.Start();
@@ -3016,7 +3641,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeader(string,RequestContext)']/*" />
         public virtual Response GetHeader(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
             scope.Start();
@@ -3041,8 +3673,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)']/*" />
         public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3059,8 +3701,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)']/*" />
         public virtual Response RemoveBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3093,8 +3745,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
             scope.Start();
@@ -3135,8 +3797,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadata(string,RequestContent,RequestContext)']/*" />
         public virtual Response RemoveBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
             scope.Start();
@@ -3165,8 +3837,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)']/*" />
         public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3187,8 +3869,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)']/*" />
         public virtual Response AddOrUpdateBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3225,8 +3917,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAsync(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? overwrite = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
             scope.Start();
@@ -3271,8 +3973,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadata(string,RequestContent,bool?,RequestContext)']/*" />
         public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? overwrite = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
             scope.Start();
@@ -3298,9 +4010,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
         public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3318,9 +4047,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
         public virtual Response RemoveBusinessMetadataAttributes(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3354,9 +4100,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
             scope.Start();
@@ -3398,9 +4161,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributes(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response RemoveBusinessMetadataAttributes(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
             scope.Start();
@@ -3426,9 +4206,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
         public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3446,9 +4243,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
         public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(body, nameof(body));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
@@ -3482,9 +4296,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
             scope.Start();
@@ -3526,9 +4357,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributes(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
+            if (businessMetadataName == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataName));
+            }
+            if (businessMetadataName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(businessMetadataName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
             scope.Start();
@@ -3641,7 +4489,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)']/*" />
         public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(BusinessMetadataOptions businessMetadataOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
+            if (businessMetadataOptions == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataOptions));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = businessMetadataOptions.ToRequestContent();
@@ -3656,7 +4507,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)']/*" />
         public virtual Response<BulkImportResult> ImportBusinessMetadata(BusinessMetadataOptions businessMetadataOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
+            if (businessMetadataOptions == null)
+            {
+                throw new ArgumentNullException(nameof(businessMetadataOptions));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = businessMetadataOptions.ToRequestContent();
@@ -3687,7 +4541,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
             scope.Start();
@@ -3726,7 +4583,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,RequestContext)']/*" />
         public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
             scope.Start();
@@ -3751,10 +4611,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsAsync(string,IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response> RemoveLabelsAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = await RemoveLabelsAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3768,10 +4635,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabels(string,IEnumerable{string},CancellationToken)']/*" />
         public virtual Response RemoveLabels(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = RemoveLabels(guid, content, context);
             return response;
         }
@@ -3801,7 +4675,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
@@ -3842,7 +4723,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabels(string,RequestContent,RequestContext)']/*" />
         public virtual Response RemoveLabels(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
@@ -3867,10 +4755,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsAsync(string,IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response> SetLabelsAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = await SetLabelsAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3884,10 +4779,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabels(string,IEnumerable{string},CancellationToken)']/*" />
         public virtual Response SetLabels(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = SetLabels(guid, content, context);
             return response;
         }
@@ -3917,7 +4819,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
@@ -3958,7 +4867,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabels(string,RequestContent,RequestContext)']/*" />
         public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
@@ -3983,10 +4899,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelAsync(string,IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response> AddLabelAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = await AddLabelAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -4000,10 +4923,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabel(string,IEnumerable{string},CancellationToken)']/*" />
         public virtual Response AddLabel(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = AddLabel(guid, content, context);
             return response;
         }
@@ -4033,7 +4963,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
@@ -4074,7 +5011,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabel(string,RequestContent,RequestContext)']/*" />
         public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
@@ -4117,10 +5061,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
         public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = await RemoveLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -4152,10 +5103,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
         public virtual Response RemoveLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = RemoveLabelsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -4201,7 +5159,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
@@ -4258,7 +5223,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response RemoveLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
@@ -4303,10 +5275,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
         public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = await SetLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -4340,10 +5319,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
         public virtual Response SetLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = SetLabelsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -4391,7 +5377,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
@@ -4450,7 +5443,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
@@ -4495,10 +5495,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
         public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = await AddLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -4532,10 +5539,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
         public virtual Response AddLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
             Response response = AddLabelsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -4583,7 +5597,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
@@ -4642,7 +5663,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            if (typeName == null)
+            {
+                throw new ArgumentNullException(nameof(typeName));
+            }
+            if (typeName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
@@ -4666,8 +5694,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (moveEntitiesConfig == null)
+            {
+                throw new ArgumentNullException(nameof(moveEntitiesConfig));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = moveEntitiesConfig.ToRequestContent();
@@ -4683,8 +5717,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)']/*" />
         public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (moveEntitiesConfig == null)
+            {
+                throw new ArgumentNullException(nameof(moveEntitiesConfig));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = moveEntitiesConfig.ToRequestContent();
@@ -4716,8 +5756,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
             scope.Start();
@@ -4757,8 +5803,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,RequestContent,RequestContext)']/*" />
         public virtual Response MoveEntitiesToCollection(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (collectionId == null)
+            {
+                throw new ArgumentNullException(nameof(collectionId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
             scope.Start();
@@ -4808,7 +5860,7 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guid != null && Optional.IsCollectionDefined(guid))
+            if (guid != null && !(guid is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in guid)
                 {
@@ -4863,7 +5915,7 @@ namespace Azure.Analytics.Purview.DataMap
             uri.Reset(_endpoint);
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guid != null && Optional.IsCollectionDefined(guid))
+            if (guid != null && !(guid is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in guid)
                 {

@@ -155,21 +155,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> guid = default;
-            Optional<IList<AtlasClassification>> classifications = default;
-            Optional<string> longDescription = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
-            Optional<string> shortDescription = default;
-            Optional<string> lastModifiedTS = default;
-            Optional<long> createTime = default;
-            Optional<string> createdBy = default;
-            Optional<long> updateTime = default;
-            Optional<string> updatedBy = default;
-            Optional<IList<AtlasRelatedCategoryHeader>> categories = default;
-            Optional<string> language = default;
-            Optional<IList<AtlasRelatedTermHeader>> terms = default;
-            Optional<string> usage = default;
+            string guid = default;
+            IList<AtlasClassification> classifications = default;
+            string longDescription = default;
+            string name = default;
+            string qualifiedName = default;
+            string shortDescription = default;
+            string lastModifiedTS = default;
+            long? createTime = default;
+            string createdBy = default;
+            long? updateTime = default;
+            string updatedBy = default;
+            IList<AtlasRelatedCategoryHeader> categories = default;
+            string language = default;
+            IList<AtlasRelatedTermHeader> terms = default;
+            string usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasClassification> array = new List<AtlasClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasClassification.DeserializeAtlasClassification(item));
+                        array.Add(AtlasClassification.DeserializeAtlasClassification(item, options));
                     }
                     classifications = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedCategoryHeader> array = new List<AtlasRelatedCategoryHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item));
+                        array.Add(AtlasRelatedCategoryHeader.DeserializeAtlasRelatedCategoryHeader(item, options));
                     }
                     categories = array;
                     continue;
@@ -274,7 +274,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<AtlasRelatedTermHeader> array = new List<AtlasRelatedTermHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item));
+                        array.Add(AtlasRelatedTermHeader.DeserializeAtlasRelatedTermHeader(item, options));
                     }
                     terms = array;
                     continue;
@@ -290,7 +290,23 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasGlossary(guid.Value, Optional.ToList(classifications), longDescription.Value, name.Value, qualifiedName.Value, shortDescription.Value, lastModifiedTS.Value, Optional.ToNullable(createTime), createdBy.Value, Optional.ToNullable(updateTime), updatedBy.Value, Optional.ToList(categories), language.Value, Optional.ToList(terms), usage.Value, serializedAdditionalRawData);
+            return new AtlasGlossary(
+                guid,
+                classifications ?? new ChangeTrackingList<AtlasClassification>(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories ?? new ChangeTrackingList<AtlasRelatedCategoryHeader>(),
+                language,
+                terms ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
+                usage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasGlossary>.Write(ModelReaderWriterOptions options)

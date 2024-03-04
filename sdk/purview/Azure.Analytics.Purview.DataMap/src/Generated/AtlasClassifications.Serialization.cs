@@ -112,12 +112,12 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IReadOnlyList<BinaryData>> list = default;
-            Optional<int> pageSize = default;
-            Optional<string> sortBy = default;
-            Optional<AtlasSortType> sortType = default;
-            Optional<int> startIndex = default;
-            Optional<int> totalCount = default;
+            IReadOnlyList<BinaryData> list = default;
+            int? pageSize = default;
+            string sortBy = default;
+            AtlasSortType? sortType = default;
+            int? startIndex = default;
+            int? totalCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,14 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasClassifications(Optional.ToList(list), Optional.ToNullable(pageSize), sortBy.Value, Optional.ToNullable(sortType), Optional.ToNullable(startIndex), Optional.ToNullable(totalCount), serializedAdditionalRawData);
+            return new AtlasClassifications(
+                list ?? new ChangeTrackingList<BinaryData>(),
+                pageSize,
+                sortBy,
+                sortType,
+                startIndex,
+                totalCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasClassifications>.Write(ModelReaderWriterOptions options)

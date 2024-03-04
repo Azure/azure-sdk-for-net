@@ -155,15 +155,15 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> baseEntityGuid = default;
-            Optional<IReadOnlyDictionary<string, AtlasEntityHeader>> guidEntityMap = default;
-            Optional<IReadOnlyDictionary<string, IDictionary<string, BinaryData>>> widthCounts = default;
-            Optional<int> lineageDepth = default;
-            Optional<int> lineageWidth = default;
-            Optional<int> childrenCount = default;
-            Optional<LineageDirection> lineageDirection = default;
-            Optional<IReadOnlyList<ParentRelation>> parentRelations = default;
-            Optional<IReadOnlyList<LineageRelation>> relations = default;
+            string baseEntityGuid = default;
+            IReadOnlyDictionary<string, AtlasEntityHeader> guidEntityMap = default;
+            IReadOnlyDictionary<string, IDictionary<string, BinaryData>> widthCounts = default;
+            int? lineageDepth = default;
+            int? lineageWidth = default;
+            int? childrenCount = default;
+            LineageDirection? lineageDirection = default;
+            IReadOnlyList<ParentRelation> parentRelations = default;
+            IReadOnlyList<LineageRelation> relations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.DataMap
                     Dictionary<string, AtlasEntityHeader> dictionary = new Dictionary<string, AtlasEntityHeader>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(property0.Value));
+                        dictionary.Add(property0.Name, AtlasEntityHeader.DeserializeAtlasEntityHeader(property0.Value, options));
                     }
                     guidEntityMap = dictionary;
                     continue;
@@ -265,7 +265,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<ParentRelation> array = new List<ParentRelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParentRelation.DeserializeParentRelation(item));
+                        array.Add(ParentRelation.DeserializeParentRelation(item, options));
                     }
                     parentRelations = array;
                     continue;
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.DataMap
                     List<LineageRelation> array = new List<LineageRelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LineageRelation.DeserializeLineageRelation(item));
+                        array.Add(LineageRelation.DeserializeLineageRelation(item, options));
                     }
                     relations = array;
                     continue;
@@ -290,7 +290,17 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasLineageInfo(baseEntityGuid.Value, Optional.ToDictionary(guidEntityMap), Optional.ToDictionary(widthCounts), Optional.ToNullable(lineageDepth), Optional.ToNullable(lineageWidth), Optional.ToNullable(childrenCount), Optional.ToNullable(lineageDirection), Optional.ToList(parentRelations), Optional.ToList(relations), serializedAdditionalRawData);
+            return new AtlasLineageInfo(
+                baseEntityGuid,
+                guidEntityMap ?? new ChangeTrackingDictionary<string, AtlasEntityHeader>(),
+                widthCounts ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                lineageDepth,
+                lineageWidth,
+                childrenCount,
+                lineageDirection,
+                parentRelations ?? new ChangeTrackingList<ParentRelation>(),
+                relations ?? new ChangeTrackingList<LineageRelation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasLineageInfo>.Write(ModelReaderWriterOptions options)

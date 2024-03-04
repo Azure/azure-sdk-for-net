@@ -140,20 +140,20 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<IList<string>> availableLocales = default;
-            Optional<string> currency = default;
-            Optional<AtlasNumberFormat> currencyInstance = default;
-            Optional<bool> groupingUsed = default;
-            Optional<AtlasNumberFormat> instance = default;
-            Optional<AtlasNumberFormat> integerInstance = default;
-            Optional<int> maximumFractionDigits = default;
-            Optional<int> maximumIntegerDigits = default;
-            Optional<int> minimumFractionDigits = default;
-            Optional<int> minimumIntegerDigits = default;
-            Optional<AtlasNumberFormat> numberInstance = default;
-            Optional<bool> parseIntegerOnly = default;
-            Optional<AtlasNumberFormat> percentInstance = default;
-            Optional<RoundingMode> roundingMode = default;
+            IList<string> availableLocales = default;
+            string currency = default;
+            AtlasNumberFormat currencyInstance = default;
+            bool? groupingUsed = default;
+            AtlasNumberFormat instance = default;
+            AtlasNumberFormat integerInstance = default;
+            int? maximumFractionDigits = default;
+            int? maximumIntegerDigits = default;
+            int? minimumFractionDigits = default;
+            int? minimumIntegerDigits = default;
+            AtlasNumberFormat numberInstance = default;
+            bool? parseIntegerOnly = default;
+            AtlasNumberFormat percentInstance = default;
+            RoundingMode? roundingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    currencyInstance = DeserializeAtlasNumberFormat(property.Value);
+                    currencyInstance = DeserializeAtlasNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("groupingUsed"u8))
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasNumberFormat(property.Value);
+                    instance = DeserializeAtlasNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("integerInstance"u8))
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    integerInstance = DeserializeAtlasNumberFormat(property.Value);
+                    integerInstance = DeserializeAtlasNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumFractionDigits"u8))
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    numberInstance = DeserializeAtlasNumberFormat(property.Value);
+                    numberInstance = DeserializeAtlasNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parseIntegerOnly"u8))
@@ -273,7 +273,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    percentInstance = DeserializeAtlasNumberFormat(property.Value);
+                    percentInstance = DeserializeAtlasNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("roundingMode"u8))
@@ -291,7 +291,22 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AtlasNumberFormat(Optional.ToList(availableLocales), currency.Value, currencyInstance.Value, Optional.ToNullable(groupingUsed), instance.Value, integerInstance.Value, Optional.ToNullable(maximumFractionDigits), Optional.ToNullable(maximumIntegerDigits), Optional.ToNullable(minimumFractionDigits), Optional.ToNullable(minimumIntegerDigits), numberInstance.Value, Optional.ToNullable(parseIntegerOnly), percentInstance.Value, Optional.ToNullable(roundingMode), serializedAdditionalRawData);
+            return new AtlasNumberFormat(
+                availableLocales ?? new ChangeTrackingList<string>(),
+                currency,
+                currencyInstance,
+                groupingUsed,
+                instance,
+                integerInstance,
+                maximumFractionDigits,
+                maximumIntegerDigits,
+                minimumFractionDigits,
+                minimumIntegerDigits,
+                numberInstance,
+                parseIntegerOnly,
+                percentInstance,
+                roundingMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AtlasNumberFormat>.Write(ModelReaderWriterOptions options)

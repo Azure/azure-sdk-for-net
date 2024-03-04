@@ -80,9 +80,9 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Optional<string> fromEntityId = default;
-            Optional<string> relationshipId = default;
-            Optional<string> toEntityId = default;
+            string fromEntityId = default;
+            string relationshipId = default;
+            string toEntityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LineageRelation(fromEntityId.Value, relationshipId.Value, toEntityId.Value, serializedAdditionalRawData);
+            return new LineageRelation(fromEntityId, relationshipId, toEntityId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LineageRelation>.Write(ModelReaderWriterOptions options)
