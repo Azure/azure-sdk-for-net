@@ -100,11 +100,11 @@ public class ConfigurationSamples
     {
         #region Snippet:ConfigurationCustomHttpClient
 
-        using HttpClient client = new();
+        using HttpClient httpClient = new();
 
         MapsClientOptions options = new()
         {
-            Transport = new HttpClientPipelineTransport(client)
+            Transport = new HttpClientPipelineTransport(httpClient)
         };
 
         #endregion
