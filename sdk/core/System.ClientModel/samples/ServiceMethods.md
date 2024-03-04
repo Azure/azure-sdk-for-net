@@ -18,25 +18,28 @@ The following sample illustrates how to call a convenience method and access bot
 
 ```C# Snippet:ClientResultTReadme
 // create a client
-var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+ApiKeyCredential credential = new(key);
+MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-// call a service method, which returns Response<T>
-Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
+// call a service method, which returns ClientResult<T>
+IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
-// Response<T> has two main accessors.
-// Value property for accessing the deserialized result of the call
-KeyVaultSecret secret = response.Value;
+// ClientResult<T> has two members:
+//
+// (1) A Value property to access the strongly-typed output
+IPAddressCountryPair value = result.Value;
+Console.WriteLine($"Country is {value.CountryRegion.IsoCode}.");
 
-// .. and GetRawResponse method for accessing all the details of the HTTP response
-Response http = response.GetRawResponse();
+// (2) A GetRawResponse method for accessing the details of the HTTP response
+PipelineResponse response = result.GetRawResponse();
 
-// for example, you can access HTTP status
-int status = http.Status;
-
-// or the headers
-foreach (HttpHeader header in http.Headers)
+Console.WriteLine($"Response status code: '{response.Status}'.");
+Console.WriteLine("Response headers:");
+foreach (KeyValuePair<string, string> header in response.Headers)
 {
-    Console.WriteLine($"{header.Name} {header.Value}");
+    Console.WriteLine($"Name: '{header.Key}', Value: '{header.Value}'.");
 }
 ```
 
@@ -47,124 +50,45 @@ In contrast to convenience methods, **protocol methods** are service methods tha
 The following sample illustrates how to call a protocol method, including creating the request payload, accessing the details of the HTTP response.
 
 ```C# Snippet:ServiceMethodsProtocolMethod
+// Create a BinaryData instance from a JSON string literal
+BinaryData input = BinaryData.FromString("""   
+    {
+        "countryRegion": {
+            "isoCode": "US"
+        },
+    }
+    """);
+
+// Call the protocol method
+ClientResult result = await client.AddCountryCodeAsync(BinaryContent.Create(input));
+
+// Obtain the output response content from the returned ClientResult
+BinaryData output = result.GetRawResponse().Content;
+
+using JsonDocument outputAsJson = JsonDocument.Parse(output.ToString());
+string isoCode = outputAsJson.RootElement
+    .GetProperty("countryRegion")
+    .GetProperty("isoCode")
+    .GetString();
+
+Console.WriteLine($"Code for added country is '{isoCode}'.");
 ```
 
-### Protocol method concepts
+Protocol methods take an optional `RequestOptions` value that allows callers to add a header to the request, or to add a policy to the client pipeline that can modify the request in any way before sending it to the service.  `RequestOptions` also allows passing a `CancellationToken` to the method.
 
-To compare the convenience and protocol method approaches, let's look more closely at a `System.ClientModel`-based client implementation of a [Geolocation](https://learn.microsoft.com/rest/api/maps/geolocation/get-ip-to-location?view=rest-maps-2023-06-01&tabs=HTTP) service operation.
+```C# Snippet:RequestOptionsReadme
+// Create RequestOptions instance
+RequestOptions options = new();
 
-The [IpAddressToLocation]() operation result is Pets are represented in the message body as a JSON object:
+// Set CancellationToken
+options.CancellationToken = cancellationToken;
 
-```json
-{
-    "name": "snoopy",
-    "species": "beagle"
-}
+// Add a header to the request
+options.AddHeader("CustomHeader", "CustomHeaderValue");
+
+// Call protocol method to pass RequestOptions
+ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
 ```
-
-An API using model types could be:
-
-```csharp
-// This is an example model class
-public class Pet
-{
-    string Name { get; }
-    string Species { get; }
-}
-
-Response<Pet> GetPet(string dogName);
-Response SetPet(Pet dog);
-```
-
-While the protocol methods version would be:
-
-```csharp
-// Request: "id" in the context path, like "/pets/{id}"
-// Response: {
-//      "name": "snoopy",
-//      "species": "beagle"
-// }
-Response GetPet(string id, RequestContext context = null)
-// Request: {
-//      "name": "snoopy",
-//      "species": "beagle"
-// }
-// Response: {
-//      "name": "snoopy",
-//      "species": "beagle"
-// }
-Response SetPet(RequestContent requestBody, RequestContext context = null);
-```
-
-**[Note]**: This document is a general quickstart in using SDK Clients that expose '**protocol methods**'.
-
-## Usage
-
-The basic structure of calling protocol methods remains the same as that of convenience methods:
-
-1. [Initialize Your Client](#1-initialize-your-client "Initialize Your Client")
-
-2. [Create and Send a request](#2-create-and-send-a-request "Create and Send a Request")
-
-3. [Handle the Response](#3-handle-the-response "Handle the Response")
-
-### 1. Initialize Your Client
-
-The first step in interacting with a service via protocol methods is to create a client instance.
-
-```csharp
-using System;
-using Azure.Pets;
-using Azure.Core;
-using Azure.Identity;
-
-const string endpoint = "http://localhost:3000";
-var credential = new AzureKeyCredential(/*SERVICE-API-KEY*/);
-var client = new PetStoreClient(new Uri(endpoint), credential, new PetStoreClientOptions());
-```
-
-### 2. Create and Send a Request
-
-Protocol methods need a JSON object of the shape required by the schema of the service.
-
-See the specific service documentation for details, but as an example:
-
-```csharp
-// anonymous class is serialized by System.Text.Json using runtime reflection
-var data = new {
-    name = "snoopy",
-    species = "beagle"
-};
-/*
-{
-    "name": "snoopy",
-    "species": "beagle"
-}
-*/
-client.SetPet(RequestContent.Create(data));
-```
-
-### 3. Handle the Response
-
-Protocol methods all return a `Response` object that contains information returned from the service request.
-
-The most important field on Response contains the REST content returned from the service:
-
-```C# Snippet:GetPetAsync
-Response response = await client.GetPetAsync("snoopy", new RequestContext());
-
-var doc = JsonDocument.Parse(response.Content.ToMemory());
-var name = doc.RootElement.GetProperty("name").GetString();
-```
-
-JSON properties can also be accessed using a dynamic layer.
-
-```C# Snippet:AzureCoreGetDynamicJsonProperty
-Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson();
-string name = widget.name;
-```
-
 
 ## Handling exceptions
 
@@ -173,12 +97,13 @@ When a service call fails, service clients throw a `ClientResultException`.  The
 ```C# Snippet:ClientResultExceptionReadme
 try
 {
-    KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
+    IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+    ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 }
 // handle exception with status code 404
-catch (RequestFailedException e) when (e.Status == 404)
+catch (ClientResultException e) when (e.Status == 404)
 {
     // handle not found error
-    Console.WriteLine("ErrorCode " + e.ErrorCode);
+    Console.Error.WriteLine($"Error: Response failed with status code: '{e.Status}'");
 }
 ```

@@ -101,6 +101,25 @@ public class MapsClient
         return ClientResult.FromResponse(response);
     }
 
+    public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent content, RequestOptions? options = null)
+    {
+        // Fake method used to illlustrate creating input content in ClientModel samples.
+        // No such operation exists on the Azure Maps service, and this operation implementation
+        // will not succeed against a live service.
+
+        if (content is null) throw new ArgumentNullException(nameof(content));
+
+        options ??= new RequestOptions();
+
+        using PipelineMessage message = CreateGetLocationRequest(string.Empty, options);
+
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        return ClientResult.FromResponse(response);
+    }
+
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();

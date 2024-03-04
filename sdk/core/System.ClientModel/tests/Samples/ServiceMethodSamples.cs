@@ -4,9 +4,11 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Maps;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
@@ -95,6 +97,53 @@ public class ServiceMethodSamples
             // Call protocol method to pass RequestOptions
             ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
             #endregion
+        }
+        catch (ClientResultException e)
+        {
+            Assert.Fail($"Error: Response status code: '{e.Status}'");
+        }
+    }
+
+    [Test]
+    public async Task ServiceMethodsProtocolMethod()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        ApiKeyCredential credential = new ApiKeyCredential(key);
+
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        // Dummy CancellationToken
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        try
+        {
+#nullable disable
+            #region Snippet:ServiceMethodsProtocolMethod
+
+            // Create a BinaryData instance from a JSON string literal
+            BinaryData input = BinaryData.FromString("""   
+                {
+                    "countryRegion": {
+                        "isoCode": "US"
+                    },
+                }
+                """);
+
+            // Call the protocol method
+            ClientResult result = await client.AddCountryCodeAsync(BinaryContent.Create(input));
+
+            // Obtain the output response content from the returned ClientResult
+            BinaryData output = result.GetRawResponse().Content;
+
+            using JsonDocument outputAsJson = JsonDocument.Parse(output.ToString());
+            string isoCode = outputAsJson.RootElement
+                .GetProperty("countryRegion")
+                .GetProperty("isoCode")
+                .GetString();
+
+            Console.WriteLine($"Code for added country is '{isoCode}'.");
+            #endregion
+#nullable enable
         }
         catch (ClientResultException e)
         {
