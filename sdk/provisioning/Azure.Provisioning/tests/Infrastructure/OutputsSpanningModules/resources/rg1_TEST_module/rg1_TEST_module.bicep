@@ -80,3 +80,4 @@ resource keyVaultAddAccessPolicy_W0akO7TQ8 'Microsoft.KeyVault/vaults/accessPoli
 
 output STORAGE_PRINCIPAL_ID string = webSite_dOTaZfna6.identity.principalId
 output LOCATION string = webSite_dOTaZfna6.location
+output vaultUri string = keyVault_aUw0nRbmu.properties.vaultUri
