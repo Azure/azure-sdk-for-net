@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,8 @@ public class MultipartContent : IDisposable
     private const string CrLf = "\r\n";
     private readonly List<MultipartContentSubpart> _subparts = new();
     private readonly string _boundary;
+    private long _size = 0;
+    private bool _couldComputeSize = true;
 
     /// <summary>
     /// The boundary string for the multipart content, which is used to separate the body parts.
@@ -62,7 +65,7 @@ public class MultipartContent : IDisposable
     /// <summary>
     /// Returns the content of the <see cref="MultipartContent"/> as a <see cref="BinaryContent"/>.
     /// </summary>
-    public BinaryContent ToBinaryContent() => new MultipartBinaryContent(_subparts, _boundary);
+    public BinaryContent ToBinaryContent() => new MultipartBinaryContent(_subparts, _boundary, _couldComputeSize, _size);
 
     /// <summary>
     /// Adds a new <see cref="BinaryContent"/> instance to the collection of <see cref="BinaryContent"/> objects that get
@@ -88,6 +91,21 @@ public class MultipartContent : IDisposable
         {
             throw new ArgumentNullException(nameof(headers));
         }
+
+        // If this fails for one subpart no need to keep calculating it.
+        if (_couldComputeSize)
+        {
+            var couldGetPartLength = content.TryComputeLength(out long length);
+            _couldComputeSize = _couldComputeSize && couldGetPartLength;
+            _size += length;
+
+            var headerSize = headers.Sum(h => h.Key.Length + h.Value.Length + 4); // 4 = crlf + ": "
+            _size += headerSize;
+
+            _size += _boundary.Length + 4; // 4 = crlf + "--"
+        }
+
+        var subpart = new MultipartContentSubpart(content, headers);
 
         _subparts.Add(new MultipartContentSubpart(content, headers));
     }
@@ -217,18 +235,22 @@ public class MultipartContent : IDisposable
     {
         private readonly List<MultipartContentSubpart> _subParts;
         private string _boundary;
+        private long _size;
+        private bool _couldComputeSize;
 
-        public MultipartBinaryContent(List<MultipartContentSubpart> subParts, string boundary)
+        public MultipartBinaryContent(List<MultipartContentSubpart> subParts, string boundary, bool couldComputeSize, long size)
         {
             _subParts = subParts;
             _boundary = boundary;
+            _couldComputeSize = couldComputeSize;
         }
 
         public override void Dispose() { }
 
         public override bool TryComputeLength(out long length)
         {
-            throw new NotImplementedException();
+            length = _size + 2 + 6 + _boundary.Length; // 2 = crlf after headers; 6 = crlf + "--" *2 for footer boundary
+            return _couldComputeSize;
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
