@@ -59,8 +59,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.DataMap/samples).
-
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
