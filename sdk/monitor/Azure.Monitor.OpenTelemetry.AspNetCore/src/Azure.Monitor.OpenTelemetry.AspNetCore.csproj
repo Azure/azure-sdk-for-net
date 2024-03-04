@@ -30,10 +30,11 @@
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj" />-->
   </ItemGroup>
-  
-  <!-- Shared source from Exporter -->
+
+  <!-- Shared sources -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)\EventSourceEventFormatting.cs" />
   </ItemGroup>
-  
+
 </Project>

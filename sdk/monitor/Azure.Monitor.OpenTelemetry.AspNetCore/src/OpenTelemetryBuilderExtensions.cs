@@ -184,6 +184,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
+            builder.Services.AddHostedService(sp =>
+            {
+                Type logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
+
+                if (logForwarderType == null || sp.GetService(logForwarderType) == null)
+                {
+                    var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                    return new AzureEventSourceLogForwarder(loggerFactory);
+                }
+
+                return AzureEventSourceLogForwarder.Noop;
+            });
+
             return builder;
         }
 
