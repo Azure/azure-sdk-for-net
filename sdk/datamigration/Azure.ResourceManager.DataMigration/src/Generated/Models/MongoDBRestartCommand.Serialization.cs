@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MongoDBCommandInput> input = default;
+            MongoDBCommandInput input = default;
             CommandType commandType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<CommandState> state = default;
+            CommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBRestartCommand(commandType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), serializedAdditionalRawData, input.Value);
+            return new MongoDBRestartCommand(commandType, errors ?? new ChangeTrackingList<ODataError>(), state, serializedAdditionalRawData, input);
         }
 
         BinaryData IPersistableModel<MongoDBRestartCommand>.Write(ModelReaderWriterOptions options)

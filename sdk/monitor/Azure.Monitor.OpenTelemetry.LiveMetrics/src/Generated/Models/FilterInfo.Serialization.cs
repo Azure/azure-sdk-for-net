@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
-            Optional<FilterInfoPredicate> predicate = default;
-            Optional<string> comparand = default;
+            string fieldName = default;
+            FilterInfoPredicate? predicate = default;
+            string comparand = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("FieldName"u8))
@@ -43,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new FilterInfo(fieldName.Value, Optional.ToNullable(predicate), comparand.Value);
+            return new FilterInfo(fieldName, predicate, comparand);
         }
     }
 }

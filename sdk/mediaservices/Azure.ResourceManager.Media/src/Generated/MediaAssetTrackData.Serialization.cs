@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MediaAssetTrackBase> track = default;
-            Optional<MediaServicesProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MediaAssetTrackBase track = default;
+            MediaServicesProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                track.Value,
-                Optional.ToNullable(provisioningState),
+                systemData,
+                track,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

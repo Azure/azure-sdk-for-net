@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> field = default;
+            string field = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SuppressionAlertsScopeElement(field.Value, additionalProperties);
+            return new SuppressionAlertsScopeElement(field, additionalProperties);
         }
 
         BinaryData IPersistableModel<SuppressionAlertsScopeElement>.Write(ModelReaderWriterOptions options)

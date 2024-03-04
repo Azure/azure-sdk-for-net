@@ -49,11 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             LinkConnection properties = default;
-            Optional<string> description = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionResource(id.Value, name.Value, type.Value, properties, description.Value);
+            return new LinkConnectionResource(id, name, type, properties, description);
         }
 
         internal partial class LinkConnectionResourceConverter : JsonConverter<LinkConnectionResource>

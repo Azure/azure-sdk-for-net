@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> osType = default;
-            Optional<string> version = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string osType = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevTestLabGalleryImageReference(
-                offer.Value,
-                publisher.Value,
-                sku.Value,
-                osType.Value,
-                version.Value,
+                offer,
+                publisher,
+                sku,
+                osType,
+                version,
                 serializedAdditionalRawData);
         }
 

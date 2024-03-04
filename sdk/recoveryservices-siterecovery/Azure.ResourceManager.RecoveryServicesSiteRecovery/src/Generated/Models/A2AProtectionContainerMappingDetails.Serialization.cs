@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<ResourceIdentifier> automationAccountArmId = default;
-            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
-            Optional<string> scheduleName = default;
-            Optional<string> jobScheduleName = default;
+            SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = default;
+            ResourceIdentifier automationAccountArmId = default;
+            AutomationAccountAuthenticationType? automationAccountAuthenticationType = default;
+            string scheduleName = default;
+            string jobScheduleName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AProtectionContainerMappingDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(agentAutoUpdateStatus),
-                automationAccountArmId.Value,
-                Optional.ToNullable(automationAccountAuthenticationType),
-                scheduleName.Value,
-                jobScheduleName.Value);
+                agentAutoUpdateStatus,
+                automationAccountArmId,
+                automationAccountAuthenticationType,
+                scheduleName,
+                jobScheduleName);
         }
 
         BinaryData IPersistableModel<A2AProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)

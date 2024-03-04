@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncodingComplexity> complexity = default;
-            Optional<InterleaveOutput> interleaveOutput = default;
-            Optional<float> keyFrameIntervalInSeconds = default;
-            Optional<int> maxBitrateBps = default;
-            Optional<int> maxHeight = default;
-            Optional<int> maxLayers = default;
-            Optional<int> minBitrateBps = default;
-            Optional<int> minHeight = default;
+            EncodingComplexity? complexity = default;
+            InterleaveOutput? interleaveOutput = default;
+            float? keyFrameIntervalInSeconds = default;
+            int? maxBitrateBps = default;
+            int? maxHeight = default;
+            int? maxLayers = default;
+            int? minBitrateBps = default;
+            int? minHeight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,14 +195,14 @@ namespace Azure.ResourceManager.Media.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EncoderPresetConfigurations(
-                Optional.ToNullable(complexity),
-                Optional.ToNullable(interleaveOutput),
-                Optional.ToNullable(keyFrameIntervalInSeconds),
-                Optional.ToNullable(maxBitrateBps),
-                Optional.ToNullable(maxHeight),
-                Optional.ToNullable(maxLayers),
-                Optional.ToNullable(minBitrateBps),
-                Optional.ToNullable(minHeight),
+                complexity,
+                interleaveOutput,
+                keyFrameIntervalInSeconds,
+                maxBitrateBps,
+                maxHeight,
+                maxLayers,
+                minBitrateBps,
+                minHeight,
                 serializedAdditionalRawData);
         }
 

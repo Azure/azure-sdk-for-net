@@ -142,9 +142,9 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string model = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> instructions = default;
+            string name = default;
+            string description = default;
+            string instructions = default;
             IList<ToolDefinition> tools = default;
             IList<string> fileIds = default;
             IDictionary<string, string> metadata = default;
@@ -237,9 +237,9 @@ namespace Azure.AI.OpenAI.Assistants
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AssistantCreationOptions(
                 model,
-                name.Value,
-                description.Value,
-                instructions.Value,
+                name,
+                description,
+                instructions,
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 fileIds ?? new ChangeTrackingList<string>(),
                 metadata ?? new ChangeTrackingDictionary<string, string>(),

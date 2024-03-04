@@ -158,19 +158,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<bool> issueDetected = default;
-            Optional<DetectorDefinition> detectorDefinition = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            bool? issueDetected = default;
+            DetectorDefinition detectorDefinition = default;
             IList<DiagnosticMetricSet> metrics = default;
             IList<DetectorAbnormalTimePeriod> abnormalTimePeriods = default;
             IList<IList<AppServiceNameValuePair>> data = default;
-            Optional<DetectorMetadata> responseMetaData = default;
+            DetectorMetadata responseMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,16 +325,16 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(issueDetected),
-                detectorDefinition.Value,
+                systemData,
+                startTime,
+                endTime,
+                issueDetected,
+                detectorDefinition,
                 metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
                 abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(),
                 data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
-                responseMetaData.Value,
-                kind.Value,
+                responseMetaData,
+                kind,
                 serializedAdditionalRawData);
         }
 

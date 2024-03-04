@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Confluent
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ConfluentProvisionState> provisioningState = default;
-            Optional<Guid> organizationId = default;
-            Optional<Uri> ssoUrl = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            ConfluentProvisionState? provisioningState = default;
+            Guid? organizationId = default;
+            Uri ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.Confluent
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(createdTime),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(organizationId),
-                ssoUrl.Value,
+                createdTime,
+                provisioningState,
+                organizationId,
+                ssoUrl,
                 offerDetail,
                 userDetail,
                 serializedAdditionalRawData);

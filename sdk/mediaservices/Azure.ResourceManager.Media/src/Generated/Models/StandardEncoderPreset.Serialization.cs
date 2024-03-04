@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IDictionary<string, string> experimentalOptions = default;
-            Optional<FilteringOperations> filters = default;
+            FilteringOperations filters = default;
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Media.Models
                 odataType,
                 serializedAdditionalRawData,
                 experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
-                filters.Value,
+                filters,
                 codecs,
                 formats);
         }

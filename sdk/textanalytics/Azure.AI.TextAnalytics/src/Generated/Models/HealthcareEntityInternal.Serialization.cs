@@ -63,12 +63,12 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             HealthcareEntityCategory category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
-            Optional<HealthcareEntityAssertion> assertion = default;
-            Optional<string> name = default;
+            HealthcareEntityAssertion assertion = default;
+            string name = default;
             IList<EntityDataSource> links = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -134,12 +134,12 @@ namespace Azure.AI.TextAnalytics.Models
             return new HealthcareEntityInternal(
                 text,
                 category,
-                subcategory.Value,
+                subcategory,
                 offset,
                 length,
                 confidenceScore,
-                assertion.Value,
-                name.Value,
+                assertion,
+                name,
                 links ?? new ChangeTrackingList<EntityDataSource>());
         }
     }

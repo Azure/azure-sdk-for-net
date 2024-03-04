@@ -70,14 +70,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> filePattern = default;
-            Optional<object> nestingSeparator = default;
-            Optional<object> encodingName = default;
-            Optional<object> jsonNodeReference = default;
-            Optional<object> jsonPathDefinition = default;
+            object filePattern = default;
+            object nestingSeparator = default;
+            object encodingName = default;
+            object jsonNodeReference = default;
+            object jsonPathDefinition = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -155,14 +155,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new JsonFormat(
                 type,
-                serializer.Value,
-                deserializer.Value,
+                serializer,
+                deserializer,
                 additionalProperties,
-                filePattern.Value,
-                nestingSeparator.Value,
-                encodingName.Value,
-                jsonNodeReference.Value,
-                jsonPathDefinition.Value);
+                filePattern,
+                nestingSeparator,
+                encodingName,
+                jsonNodeReference,
+                jsonPathDefinition);
         }
 
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>

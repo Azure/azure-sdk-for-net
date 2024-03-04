@@ -236,35 +236,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            Optional<WritableSubResource> virtualMachine = default;
-            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Optional<PrivateEndpointData> privateEndpoint = default;
+            WritableSubResource virtualMachine = default;
+            NetworkSecurityGroupData networkSecurityGroup = default;
+            PrivateEndpointData privateEndpoint = default;
             IList<NetworkInterfaceIPConfigurationData> ipConfigurations = default;
             IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations = default;
-            Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
-            Optional<string> macAddress = default;
-            Optional<bool> primary = default;
-            Optional<bool> vnetEncryptionSupported = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableIPForwarding = default;
+            NetworkInterfaceDnsSettings dnsSettings = default;
+            string macAddress = default;
+            bool? primary = default;
+            bool? vnetEncryptionSupported = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableIPForwarding = default;
             IReadOnlyList<string> hostedWorkloads = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> workloadType = default;
-            Optional<NetworkInterfaceNicType> nicType = default;
-            Optional<PrivateLinkServiceData> privateLinkService = default;
-            Optional<NetworkInterfaceMigrationPhase> migrationPhase = default;
-            Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            WritableSubResource dscpConfiguration = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            string workloadType = default;
+            NetworkInterfaceNicType? nicType = default;
+            PrivateLinkServiceData privateLinkService = default;
+            NetworkInterfaceMigrationPhase? migrationPhase = default;
+            NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -557,36 +557,36 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkInterfaceData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 extendedLocation,
-                Optional.ToNullable(etag),
+                etag,
                 virtualMachine,
-                networkSecurityGroup.Value,
-                privateEndpoint.Value,
+                networkSecurityGroup,
+                privateEndpoint,
                 ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
                 tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
-                dnsSettings.Value,
-                macAddress.Value,
-                Optional.ToNullable(primary),
-                Optional.ToNullable(vnetEncryptionSupported),
-                Optional.ToNullable(enableAcceleratedNetworking),
-                Optional.ToNullable(disableTcpStateTracking),
-                Optional.ToNullable(enableIPForwarding),
+                dnsSettings,
+                macAddress,
+                primary,
+                vnetEncryptionSupported,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableIPForwarding,
                 hostedWorkloads ?? new ChangeTrackingList<string>(),
                 dscpConfiguration,
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
-                workloadType.Value,
-                Optional.ToNullable(nicType),
-                privateLinkService.Value,
-                Optional.ToNullable(migrationPhase),
-                Optional.ToNullable(auxiliaryMode),
-                Optional.ToNullable(auxiliarySku));
+                resourceGuid,
+                provisioningState,
+                workloadType,
+                nicType,
+                privateLinkService,
+                migrationPhase,
+                auxiliaryMode,
+                auxiliarySku);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> targetVersion = default;
+            string targetVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionTargetProperties(targetVersion.Value, serializedAdditionalRawData);
+            return new ExtensionTargetProperties(targetVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionTargetProperties>.Write(ModelReaderWriterOptions options)

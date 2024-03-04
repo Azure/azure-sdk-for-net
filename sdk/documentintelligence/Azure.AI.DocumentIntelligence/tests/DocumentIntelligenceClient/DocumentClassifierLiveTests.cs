@@ -37,6 +37,26 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
+        public async Task ClassifyDocumentWithBase64Source()
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
+
+            var content = new ClassifyDocumentContent()
+            {
+                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040)
+            };
+
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+
+            Assert.That(operation.HasCompleted);
+            Assert.That(operation.HasValue);
+
+            ValidateIrs1040ClassifierResult(operation.Value, disposableClassifier.ClassifierId);
+        }
+
+        [RecordedTest]
         public async Task ClassifyDocumentCanParseBlankPage()
         {
             var client = CreateDocumentIntelligenceClient();
@@ -119,7 +139,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             Assert.That(analyzeResult.ContentFormat, Is.EqualTo(ContentFormat.Text));
 
-            Assert.That(analyzeResult.Pages.Count, Is.EqualTo(4));
+            Assert.That(analyzeResult.Pages.Count, Is.EqualTo(2));
 
             foreach (var page in analyzeResult.Pages)
             {
@@ -132,7 +152,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var document = analyzeResult.Documents.Single();
 
             Assert.That(document.DocType, Is.EqualTo("IRS-1040-A"));
-            Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
+            Assert.That(document.BoundingRegions.Count, Is.EqualTo(2));
         }
 
         private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)

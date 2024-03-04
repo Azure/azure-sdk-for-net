@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> locPrf = default;
-            Optional<int> weight = default;
-            Optional<string> path = default;
+            string network = default;
+            string nextHop = default;
+            string locPrf = default;
+            int? weight = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressRouteCircuitRoutesTable(
-                network.Value,
-                nextHop.Value,
-                locPrf.Value,
-                Optional.ToNullable(weight),
-                path.Value,
+                network,
+                nextHop,
+                locPrf,
+                weight,
+                path,
                 serializedAdditionalRawData);
         }
 

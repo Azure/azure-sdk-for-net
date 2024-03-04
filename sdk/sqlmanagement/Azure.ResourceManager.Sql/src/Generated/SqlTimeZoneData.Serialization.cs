@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> timeZoneId = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string timeZoneId = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                timeZoneId.Value,
-                displayName.Value,
+                systemData,
+                timeZoneId,
+                displayName,
                 serializedAdditionalRawData);
         }
 

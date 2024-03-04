@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> scheduledDateTime = default;
+            DateTimeOffset? scheduledDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobDeliveryInfo(Optional.ToNullable(scheduledDateTime), serializedAdditionalRawData);
+            return new JobDeliveryInfo(scheduledDateTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobDeliveryInfo>.Write(ModelReaderWriterOptions options)

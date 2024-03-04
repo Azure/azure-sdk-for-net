@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             IReadOnlyList<GalleryImageData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImagesListResult(value ?? new ChangeTrackingList<GalleryImageData>(), nextLink.Value, serializedAdditionalRawData);
+            return new GalleryImagesListResult(value ?? new ChangeTrackingList<GalleryImageData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImagesListResult>.Write(ModelReaderWriterOptions options)

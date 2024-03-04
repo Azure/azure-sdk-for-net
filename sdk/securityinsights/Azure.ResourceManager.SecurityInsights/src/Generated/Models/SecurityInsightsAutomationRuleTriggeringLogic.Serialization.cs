@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             bool isEnabled = default;
-            Optional<DateTimeOffset> expirationTimeUtc = default;
+            DateTimeOffset? expirationTimeUtc = default;
             TriggersOn triggersOn = default;
             TriggersWhen triggersWhen = default;
             IList<SecurityInsightsAutomationRuleCondition> conditions = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsAutomationRuleTriggeringLogic(
                 isEnabled,
-                Optional.ToNullable(expirationTimeUtc),
+                expirationTimeUtc,
                 triggersOn,
                 triggersWhen,
                 conditions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>(),

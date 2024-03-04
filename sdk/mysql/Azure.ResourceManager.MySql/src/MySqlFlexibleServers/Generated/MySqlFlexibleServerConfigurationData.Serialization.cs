@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> currentValue = default;
-            Optional<string> description = default;
-            Optional<string> documentationLink = default;
-            Optional<string> defaultValue = default;
-            Optional<string> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<MySqlFlexibleServerConfigurationSource> source = default;
-            Optional<MySqlFlexibleServerConfigReadOnlyState> isReadOnly = default;
-            Optional<MySqlFlexibleServerConfigPendingRestartState> isConfigPendingRestart = default;
-            Optional<MySqlFlexibleServerConfigDynamicState> isDynamicConfig = default;
+            SystemData systemData = default;
+            string value = default;
+            string currentValue = default;
+            string description = default;
+            string documentationLink = default;
+            string defaultValue = default;
+            string dataType = default;
+            string allowedValues = default;
+            MySqlFlexibleServerConfigurationSource? source = default;
+            MySqlFlexibleServerConfigReadOnlyState? isReadOnly = default;
+            MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = default;
+            MySqlFlexibleServerConfigDynamicState? isDynamicConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,18 +280,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 id,
                 name,
                 type,
-                systemData.Value,
-                value.Value,
-                currentValue.Value,
-                description.Value,
-                documentationLink.Value,
-                defaultValue.Value,
-                dataType.Value,
-                allowedValues.Value,
-                Optional.ToNullable(source),
-                Optional.ToNullable(isReadOnly),
-                Optional.ToNullable(isConfigPendingRestart),
-                Optional.ToNullable(isDynamicConfig),
+                systemData,
+                value,
+                currentValue,
+                description,
+                documentationLink,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                isReadOnly,
+                isConfigPendingRestart,
+                isDynamicConfig,
                 serializedAdditionalRawData);
         }
 

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> category = default;
+            string category = default;
             IReadOnlyList<OutboundEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolOutboundEnvironment(category.Value, endpoints ?? new ChangeTrackingList<OutboundEndpointDependency>(), serializedAdditionalRawData);
+            return new StoragePoolOutboundEnvironment(category, endpoints ?? new ChangeTrackingList<OutboundEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolOutboundEnvironment>.Write(ModelReaderWriterOptions options)

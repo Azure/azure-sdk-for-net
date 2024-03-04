@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lastAvailableBackupDate = default;
+            SystemData systemData = default;
+            string lastAvailableBackupDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                lastAvailableBackupDate.Value,
+                systemData,
+                lastAvailableBackupDate,
                 serializedAdditionalRawData);
         }
 

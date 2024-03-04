@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<StreamingEndpointCapacity> capacity = default;
-            Optional<StreamingEndpointSku> sku = default;
+            ResourceType? resourceType = default;
+            StreamingEndpointCapacity capacity = default;
+            StreamingEndpointSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointSkuInfo(Optional.ToNullable(resourceType), capacity.Value, sku.Value, serializedAdditionalRawData);
+            return new StreamingEndpointSkuInfo(resourceType, capacity, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointSkuInfo>.Write(ModelReaderWriterOptions options)

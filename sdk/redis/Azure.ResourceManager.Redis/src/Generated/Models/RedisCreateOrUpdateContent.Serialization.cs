@@ -168,20 +168,20 @@ namespace Azure.ResourceManager.Redis.Models
             IList<string> zones = default;
             AzureLocation location = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<RedisCommonConfiguration> redisConfiguration = default;
-            Optional<string> redisVersion = default;
-            Optional<bool> enableNonSslPort = default;
-            Optional<int> replicasPerMaster = default;
-            Optional<int> replicasPerPrimary = default;
+            ManagedServiceIdentity identity = default;
+            RedisCommonConfiguration redisConfiguration = default;
+            string redisVersion = default;
+            bool? enableNonSslPort = default;
+            int? replicasPerMaster = default;
+            int? replicasPerPrimary = default;
             IDictionary<string, string> tenantSettings = default;
-            Optional<int> shardCount = default;
-            Optional<RedisTlsVersion> minimumTlsVersion = default;
-            Optional<RedisPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<UpdateChannel> updateChannel = default;
+            int? shardCount = default;
+            RedisTlsVersion? minimumTlsVersion = default;
+            RedisPublicNetworkAccess? publicNetworkAccess = default;
+            UpdateChannel? updateChannel = default;
             RedisSku sku = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<IPAddress> staticIP = default;
+            ResourceIdentifier subnetId = default;
+            IPAddress staticIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -365,19 +365,19 @@ namespace Azure.ResourceManager.Redis.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                redisConfiguration.Value,
-                redisVersion.Value,
-                Optional.ToNullable(enableNonSslPort),
-                Optional.ToNullable(replicasPerMaster),
-                Optional.ToNullable(replicasPerPrimary),
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
                 tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(shardCount),
-                Optional.ToNullable(minimumTlsVersion),
-                Optional.ToNullable(publicNetworkAccess),
-                Optional.ToNullable(updateChannel),
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
                 sku,
-                subnetId.Value,
-                staticIP.Value,
+                subnetId,
+                staticIP,
                 serializedAdditionalRawData);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             IReadOnlyList<AuthorizationPolicyResourceFormatData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationPolicyListResult(value ?? new ChangeTrackingList<AuthorizationPolicyResourceFormatData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AuthorizationPolicyListResult(value ?? new ChangeTrackingList<AuthorizationPolicyResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationPolicyListResult>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> assignedTo = default;
-            Optional<Guid> objectId = default;
-            Optional<string> userPrincipalName = default;
-            Optional<SecurityInsightsIncidentOwnerType> ownerType = default;
+            string email = default;
+            string assignedTo = default;
+            Guid? objectId = default;
+            string userPrincipalName = default;
+            SecurityInsightsIncidentOwnerType? ownerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsIncidentOwnerInfo(
-                email.Value,
-                assignedTo.Value,
-                Optional.ToNullable(objectId),
-                userPrincipalName.Value,
-                Optional.ToNullable(ownerType),
+                email,
+                assignedTo,
+                objectId,
+                userPrincipalName,
+                ownerType,
                 serializedAdditionalRawData);
         }
 

@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AvsManagementCluster> managementCluster = default;
-            Optional<InternetConnectivityState> internet = default;
+            ManagedServiceIdentity identity = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
             IList<SingleSignOnIdentitySource> identitySources = default;
-            Optional<PrivateCloudAvailabilityProperties> availability = default;
-            Optional<CustomerManagedEncryption> encryption = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Avs.Models
             return new AvsPrivateCloudPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                managementCluster.Value,
-                Optional.ToNullable(internet),
+                managementCluster,
+                internet,
                 identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
-                availability.Value,
-                encryption.Value,
+                availability,
+                encryption,
                 extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

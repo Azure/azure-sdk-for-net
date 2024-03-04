@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             string nicId = default;
             string label = default;
-            Optional<string> networkName = default;
+            string networkName = default;
             string targetNetworkId = default;
             string testNetworkId = default;
             VmNicSelection selectionTypeForFailover = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciNicInput(
                 nicId,
                 label,
-                networkName.Value,
+                networkName,
                 targetNetworkId,
                 testNetworkId,
                 selectionTypeForFailover,

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<AbusePenaltyAction> action = default;
-            Optional<float> rateLimitPercentage = default;
-            Optional<DateTimeOffset> expiration = default;
+            AbusePenaltyAction? action = default;
+            float? rateLimitPercentage = default;
+            DateTimeOffset? expiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration), serializedAdditionalRawData);
+            return new AbusePenalty(action, rateLimitPercentage, expiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AbusePenalty>.Write(ModelReaderWriterOptions options)

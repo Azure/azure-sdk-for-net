@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> linkedServiceName = default;
-            Optional<DataFactoryElement<string>> path = default;
+            DataFactoryElement<string> path = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RedirectIncompatibleRowSettings(linkedServiceName, path.Value, additionalProperties);
+            return new RedirectIncompatibleRowSettings(linkedServiceName, path, additionalProperties);
         }
 
         BinaryData IPersistableModel<RedirectIncompatibleRowSettings>.Write(ModelReaderWriterOptions options)

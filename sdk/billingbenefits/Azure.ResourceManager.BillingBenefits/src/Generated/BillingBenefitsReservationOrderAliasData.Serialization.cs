@@ -162,24 +162,24 @@ namespace Azure.ResourceManager.BillingBenefits
                 return null;
             }
             BillingBenefitsSku sku = default;
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> reservationOrderId = default;
-            Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Optional<int> quantity = default;
-            Optional<bool> renew = default;
-            Optional<BillingBenefitsReservedResourceType> reservedResourceType = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
-            Optional<ReservationOrderAliasResponsePropertiesReservedResourceProperties> reservedResourceProperties = default;
+            SystemData systemData = default;
+            string displayName = default;
+            ResourceIdentifier reservationOrderId = default;
+            BillingBenefitsProvisioningState? provisioningState = default;
+            ResourceIdentifier billingScopeId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            BillingBenefitsAppliedScopeType? appliedScopeType = default;
+            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
+            int? quantity = default;
+            bool? renew = default;
+            BillingBenefitsReservedResourceType? reservedResourceType = default;
+            DateTimeOffset? reviewDateTime = default;
+            ReservationOrderAliasResponsePropertiesReservedResourceProperties reservedResourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -357,22 +357,22 @@ namespace Azure.ResourceManager.BillingBenefits
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 sku,
-                Optional.ToNullable(location),
-                displayName.Value,
-                reservationOrderId.Value,
-                Optional.ToNullable(provisioningState),
-                billingScopeId.Value,
-                Optional.ToNullable(term),
-                Optional.ToNullable(billingPlan),
-                Optional.ToNullable(appliedScopeType),
-                appliedScopeProperties.Value,
-                Optional.ToNullable(quantity),
-                Optional.ToNullable(renew),
-                Optional.ToNullable(reservedResourceType),
-                Optional.ToNullable(reviewDateTime),
-                reservedResourceProperties.Value,
+                location,
+                displayName,
+                reservationOrderId,
+                provisioningState,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                quantity,
+                renew,
+                reservedResourceType,
+                reviewDateTime,
+                reservedResourceProperties,
                 serializedAdditionalRawData);
         }
 

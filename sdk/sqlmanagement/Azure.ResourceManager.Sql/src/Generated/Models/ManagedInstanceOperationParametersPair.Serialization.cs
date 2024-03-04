@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<UpsertManagedServerOperationParameters> currentParameters = default;
-            Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
+            UpsertManagedServerOperationParameters currentParameters = default;
+            UpsertManagedServerOperationParameters requestedParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceOperationParametersPair(currentParameters.Value, requestedParameters.Value, serializedAdditionalRawData);
+            return new ManagedInstanceOperationParametersPair(currentParameters, requestedParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceOperationParametersPair>.Write(ModelReaderWriterOptions options)

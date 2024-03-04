@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<NetworkCloudAgentConfiguration> agentOptions = default;
-            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
+            NetworkCloudAgentConfiguration agentOptions = default;
+            AttachedNetworkConfiguration attachedNetworkConfiguration = default;
             IList<string> availabilityZones = default;
             long count = default;
             IList<KubernetesLabel> labels = default;
             NetworkCloudAgentPoolMode mode = default;
             string name = default;
             IList<KubernetesLabel> taints = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,16 +242,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InitialAgentPoolConfiguration(
-                administratorConfiguration.Value,
-                agentOptions.Value,
-                attachedNetworkConfiguration.Value,
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 count,
                 labels ?? new ChangeTrackingList<KubernetesLabel>(),
                 mode,
                 name,
                 taints ?? new ChangeTrackingList<KubernetesLabel>(),
-                upgradeSettings.Value,
+                upgradeSettings,
                 vmSkuName,
                 serializedAdditionalRawData);
         }

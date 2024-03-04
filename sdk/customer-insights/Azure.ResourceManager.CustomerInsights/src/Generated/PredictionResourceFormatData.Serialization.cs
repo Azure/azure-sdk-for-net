@@ -209,24 +209,24 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, string> description = default;
             IDictionary<string, string> displayName = default;
             IList<string> involvedInteractionTypes = default;
             IList<string> involvedKpiTypes = default;
             IList<string> involvedRelationships = default;
-            Optional<string> negativeOutcomeExpression = default;
-            Optional<string> positiveOutcomeExpression = default;
-            Optional<string> primaryProfileType = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> predictionName = default;
-            Optional<string> scopeExpression = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> autoAnalyze = default;
-            Optional<PredictionMappings> mappings = default;
-            Optional<string> scoreLabel = default;
+            string negativeOutcomeExpression = default;
+            string positiveOutcomeExpression = default;
+            string primaryProfileType = default;
+            ProvisioningState? provisioningState = default;
+            string predictionName = default;
+            string scopeExpression = default;
+            Guid? tenantId = default;
+            bool? autoAnalyze = default;
+            PredictionMappings mappings = default;
+            string scoreLabel = default;
             IList<PredictionGradesItem> grades = default;
-            Optional<PredictionSystemGeneratedEntities> systemGeneratedEntities = default;
+            PredictionSystemGeneratedEntities systemGeneratedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -436,24 +436,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 description ?? new ChangeTrackingDictionary<string, string>(),
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 involvedInteractionTypes ?? new ChangeTrackingList<string>(),
                 involvedKpiTypes ?? new ChangeTrackingList<string>(),
                 involvedRelationships ?? new ChangeTrackingList<string>(),
-                negativeOutcomeExpression.Value,
-                positiveOutcomeExpression.Value,
-                primaryProfileType.Value,
-                Optional.ToNullable(provisioningState),
-                predictionName.Value,
-                scopeExpression.Value,
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(autoAnalyze),
-                mappings.Value,
-                scoreLabel.Value,
+                negativeOutcomeExpression,
+                positiveOutcomeExpression,
+                primaryProfileType,
+                provisioningState,
+                predictionName,
+                scopeExpression,
+                tenantId,
+                autoAnalyze,
+                mappings,
+                scoreLabel,
                 grades ?? new ChangeTrackingList<PredictionGradesItem>(),
-                systemGeneratedEntities.Value,
+                systemGeneratedEntities,
                 serializedAdditionalRawData);
         }
 

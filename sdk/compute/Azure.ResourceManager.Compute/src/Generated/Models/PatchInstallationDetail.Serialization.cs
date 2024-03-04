@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> patchId = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> kbId = default;
+            string patchId = default;
+            string name = default;
+            string version = default;
+            string kbId = default;
             IReadOnlyList<string> classifications = default;
-            Optional<PatchInstallationState> installationState = default;
+            PatchInstallationState? installationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PatchInstallationDetail(
-                patchId.Value,
-                name.Value,
-                version.Value,
-                kbId.Value,
+                patchId,
+                name,
+                version,
+                kbId,
                 classifications ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(installationState),
+                installationState,
                 serializedAdditionalRawData);
         }
 

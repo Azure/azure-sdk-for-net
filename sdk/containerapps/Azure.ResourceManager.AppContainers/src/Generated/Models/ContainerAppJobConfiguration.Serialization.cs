@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<ContainerAppWritableSecret> secrets = default;
             ContainerAppJobTriggerType triggerType = default;
             int replicaTimeout = default;
-            Optional<int> replicaRetryLimit = default;
-            Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
-            Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
-            Optional<EventTriggerConfiguration> eventTriggerConfig = default;
+            int? replicaRetryLimit = default;
+            JobConfigurationManualTriggerConfig manualTriggerConfig = default;
+            JobConfigurationScheduleTriggerConfig scheduleTriggerConfig = default;
+            EventTriggerConfiguration eventTriggerConfig = default;
             IList<ContainerAppRegistryCredentials> registries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
                 triggerType,
                 replicaTimeout,
-                Optional.ToNullable(replicaRetryLimit),
-                manualTriggerConfig.Value,
-                scheduleTriggerConfig.Value,
-                eventTriggerConfig.Value,
+                replicaRetryLimit,
+                manualTriggerConfig,
+                scheduleTriggerConfig,
+                eventTriggerConfig,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
                 serializedAdditionalRawData);
         }

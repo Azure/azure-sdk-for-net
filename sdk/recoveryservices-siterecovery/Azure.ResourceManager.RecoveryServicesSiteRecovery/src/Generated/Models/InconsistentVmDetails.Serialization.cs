@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmName = default;
-            Optional<string> cloudName = default;
+            string vmName = default;
+            string cloudName = default;
             IReadOnlyList<string> details = default;
             IReadOnlyList<string> errorIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InconsistentVmDetails(vmName.Value, cloudName.Value, details ?? new ChangeTrackingList<string>(), errorIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new InconsistentVmDetails(vmName, cloudName, details ?? new ChangeTrackingList<string>(), errorIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InconsistentVmDetails>.Write(ModelReaderWriterOptions options)

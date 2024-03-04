@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningIdAssetReference> componentId = default;
-            Optional<string> description = default;
+            MachineLearningIdAssetReference componentId = default;
+            string description = default;
             IDictionary<string, string> settings = default;
             IDictionary<string, string> tags = default;
             BatchDeploymentConfigurationType deploymentConfigurationType = default;
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new BatchPipelineComponentDeploymentConfiguration(
                 deploymentConfigurationType,
                 serializedAdditionalRawData,
-                componentId.Value,
-                description.Value,
+                componentId,
+                description,
                 settings ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }

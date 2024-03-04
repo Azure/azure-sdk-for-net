@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> codeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ClusterEnvironment> environment = default;
+            SystemData systemData = default;
+            string codeVersion = default;
+            DateTimeOffset? supportExpiryUtc = default;
+            ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                codeVersion.Value,
-                Optional.ToNullable(supportExpiryUtc),
-                Optional.ToNullable(environment),
+                systemData,
+                codeVersion,
+                supportExpiryUtc,
+                environment,
                 serializedAdditionalRawData);
         }
 

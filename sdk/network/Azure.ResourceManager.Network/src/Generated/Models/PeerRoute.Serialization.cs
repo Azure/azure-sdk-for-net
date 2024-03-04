@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> sourcePeer = default;
-            Optional<string> origin = default;
-            Optional<string> asPath = default;
-            Optional<int> weight = default;
+            string localAddress = default;
+            string network = default;
+            string nextHop = default;
+            string sourcePeer = default;
+            string origin = default;
+            string asPath = default;
+            int? weight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PeerRoute(
-                localAddress.Value,
-                network.Value,
-                nextHop.Value,
-                sourcePeer.Value,
-                origin.Value,
-                asPath.Value,
-                Optional.ToNullable(weight),
+                localAddress,
+                network,
+                nextHop,
+                sourcePeer,
+                origin,
+                asPath,
+                weight,
                 serializedAdditionalRawData);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             IReadOnlyList<MySqlFlexibleServerFirewallRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerFirewallRuleListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerFirewallRuleListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>.Write(ModelReaderWriterOptions options)

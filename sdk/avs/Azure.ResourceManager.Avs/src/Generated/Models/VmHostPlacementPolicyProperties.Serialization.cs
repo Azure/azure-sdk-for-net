@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
-            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
-            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
+            AzureHybridBenefitType? azureHybridBenefitType = default;
             PlacementPolicyType type = default;
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            PlacementPolicyState? state = default;
+            string displayName = default;
+            PlacementPolicyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,15 +211,15 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmHostPlacementPolicyProperties(
                 type,
-                Optional.ToNullable(state),
-                displayName.Value,
-                Optional.ToNullable(provisioningState),
+                state,
+                displayName,
+                provisioningState,
                 serializedAdditionalRawData,
                 vmMembers,
                 hostMembers,
                 affinityType,
-                Optional.ToNullable(affinityStrength),
-                Optional.ToNullable(azureHybridBenefitType));
+                affinityStrength,
+                azureHybridBenefitType);
         }
 
         BinaryData IPersistableModel<VmHostPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
-            Optional<DateTimeOffset> billingStartDate = default;
-            Optional<DateTimeOffset> enrollmentDate = default;
-            Optional<DateTimeOffset> disenrollmentDate = default;
+            string name = default;
+            LicenseProfileSubscriptionStatus? subscriptionStatus = default;
+            DateTimeOffset? billingStartDate = default;
+            DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? disenrollmentDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HybridComputeProductFeature(
-                name.Value,
-                Optional.ToNullable(subscriptionStatus),
-                Optional.ToNullable(billingStartDate),
-                Optional.ToNullable(enrollmentDate),
-                Optional.ToNullable(disenrollmentDate),
+                name,
+                subscriptionStatus,
+                billingStartDate,
+                enrollmentDate,
+                disenrollmentDate,
                 serializedAdditionalRawData);
         }
 

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string id = default;
-            Optional<string> accessToken = default;
+            string accessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FacebookPage(id, accessToken.Value, serializedAdditionalRawData);
+            return new FacebookPage(id, accessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FacebookPage>.Write(ModelReaderWriterOptions options)

@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> internalId = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> discoveryStatus = default;
-            Optional<Guid> processServerId = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> infrastructureId = default;
-            Optional<string> port = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> fabricArmResourceName = default;
+            string friendlyName = default;
+            string internalId = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string discoveryStatus = default;
+            Guid? processServerId = default;
+            IPAddress ipAddress = default;
+            string infrastructureId = default;
+            string port = default;
+            string runAsAccountId = default;
+            string fabricArmResourceName = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,16 +223,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryVCenterProperties(
-                friendlyName.Value,
-                internalId.Value,
-                Optional.ToNullable(lastHeartbeat),
-                discoveryStatus.Value,
-                Optional.ToNullable(processServerId),
-                ipAddress.Value,
-                infrastructureId.Value,
-                port.Value,
-                runAsAccountId.Value,
-                fabricArmResourceName.Value,
+                friendlyName,
+                internalId,
+                lastHeartbeat,
+                discoveryStatus,
+                processServerId,
+                ipAddress,
+                infrastructureId,
+                port,
+                runAsAccountId,
+                fabricArmResourceName,
                 healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
                 serializedAdditionalRawData);
         }

@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<DataRefreshType> refreshType = default;
-            Optional<TimeSpan> refreshRate = default;
-            Optional<string> fullSnapshotQuery = default;
-            Optional<string> deltaSnapshotQuery = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            string server = default;
+            string database = default;
+            string user = default;
+            string password = default;
+            DataRefreshType? refreshType = default;
+            TimeSpan? refreshRate = default;
+            string fullSnapshotQuery = default;
+            string deltaSnapshotQuery = default;
+            StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,15 +211,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new SqlReferenceInputDataSource(
                 type,
                 serializedAdditionalRawData,
-                server.Value,
-                database.Value,
-                user.Value,
-                password.Value,
-                Optional.ToNullable(refreshType),
-                Optional.ToNullable(refreshRate),
-                fullSnapshotQuery.Value,
-                deltaSnapshotQuery.Value,
-                Optional.ToNullable(authenticationMode));
+                server,
+                database,
+                user,
+                password,
+                refreshType,
+                refreshRate,
+                fullSnapshotQuery,
+                deltaSnapshotQuery,
+                authenticationMode);
         }
 
         BinaryData IPersistableModel<SqlReferenceInputDataSource>.Write(ModelReaderWriterOptions options)

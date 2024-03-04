@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<SubResource> collectorPolicies = default;
-            Optional<SubResource> virtualHub = default;
-            Optional<CollectorProvisioningState> provisioningState = default;
+            SubResource virtualHub = default;
+            CollectorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,13 +249,13 @@ namespace Azure.ResourceManager.NetworkFunction
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
+                etag,
                 collectorPolicies ?? new ChangeTrackingList<SubResource>(),
                 virtualHub,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

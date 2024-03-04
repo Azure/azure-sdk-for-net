@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationRefundPolicyResultProperty> properties = default;
+            ReservationRefundPolicyResultProperty properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RefundPolicyResult(properties.Value, serializedAdditionalRawData);
+            return new RefundPolicyResult(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RefundPolicyResult>.Write(ModelReaderWriterOptions options)

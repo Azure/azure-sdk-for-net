@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IReadOnlyList<IntegrationAccountMapData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountMapListResult(value ?? new ChangeTrackingList<IntegrationAccountMapData>(), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountMapListResult(value ?? new ChangeTrackingList<IntegrationAccountMapData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountMapListResult>.Write(ModelReaderWriterOptions options)

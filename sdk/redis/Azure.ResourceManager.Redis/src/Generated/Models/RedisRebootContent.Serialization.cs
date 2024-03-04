@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<RedisRebootType> rebootType = default;
-            Optional<int> shardId = default;
+            RedisRebootType? rebootType = default;
+            int? shardId = default;
             IList<int> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisRebootContent(Optional.ToNullable(rebootType), Optional.ToNullable(shardId), ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
+            return new RedisRebootContent(rebootType, shardId, ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisRebootContent>.Write(ModelReaderWriterOptions options)

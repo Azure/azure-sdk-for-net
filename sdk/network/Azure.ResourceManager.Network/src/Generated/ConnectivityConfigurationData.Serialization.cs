@@ -145,19 +145,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
+            SystemData systemData = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
             IList<ConnectivityHub> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
+            GlobalMeshSupportFlag? isGlobal = default;
             IList<ConnectivityGroupItem> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,16 +295,16 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                Optional.ToNullable(connectivityTopology),
+                systemData,
+                description,
+                connectivityTopology,
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
-                Optional.ToNullable(isGlobal),
+                isGlobal,
                 appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(deleteExistingPeering),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(etag),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                etag,
                 serializedAdditionalRawData);
         }
 

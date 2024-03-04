@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 return null;
             }
             IReadOnlyList<ApiCenterServiceData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCenterServiceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ApiCenterServiceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCenterServiceListResult>.Write(ModelReaderWriterOptions options)

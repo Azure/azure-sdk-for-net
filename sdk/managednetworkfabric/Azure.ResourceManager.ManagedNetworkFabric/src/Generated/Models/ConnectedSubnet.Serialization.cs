@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string prefix = default;
-            Optional<string> annotation = default;
+            string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedSubnet(annotation.Value, serializedAdditionalRawData, prefix);
+            return new ConnectedSubnet(annotation, serializedAdditionalRawData, prefix);
         }
 
         BinaryData IPersistableModel<ConnectedSubnet>.Write(ModelReaderWriterOptions options)

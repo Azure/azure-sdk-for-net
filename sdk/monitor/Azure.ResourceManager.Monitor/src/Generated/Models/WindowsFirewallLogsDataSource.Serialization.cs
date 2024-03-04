@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<string> streams = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsFirewallLogsDataSource(streams, name.Value, serializedAdditionalRawData);
+            return new WindowsFirewallLogsDataSource(streams, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsFirewallLogsDataSource>.Write(ModelReaderWriterOptions options)

@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> schemaName = default;
-            Optional<LinkTableRequestTargetDistributionOptions> distributionOptions = default;
-            Optional<LinkTableRequestTargetStructureOptions> structureOptions = default;
+            string tableName = default;
+            string schemaName = default;
+            LinkTableRequestTargetDistributionOptions distributionOptions = default;
+            LinkTableRequestTargetStructureOptions structureOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequestTarget(tableName.Value, schemaName.Value, distributionOptions.Value, structureOptions.Value);
+            return new LinkTableRequestTarget(tableName, schemaName, distributionOptions, structureOptions);
         }
 
         internal partial class LinkTableRequestTargetConverter : JsonConverter<LinkTableRequestTarget>

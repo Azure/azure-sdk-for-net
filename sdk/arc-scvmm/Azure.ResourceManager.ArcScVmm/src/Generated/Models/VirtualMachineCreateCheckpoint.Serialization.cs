@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineCreateCheckpoint(name.Value, description.Value, serializedAdditionalRawData);
+            return new VirtualMachineCreateCheckpoint(name, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineCreateCheckpoint>.Write(ModelReaderWriterOptions options)

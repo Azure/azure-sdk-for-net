@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.ManagementGroups
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<ManagementGroupInfo> details = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            ManagementGroupInfo details = default;
             IReadOnlyList<ManagementGroupChildInfo> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.ManagementGroups
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(tenantId),
-                displayName.Value,
-                details.Value,
+                systemData,
+                tenantId,
+                displayName,
+                details,
                 children ?? new ChangeTrackingList<ManagementGroupChildInfo>(),
                 serializedAdditionalRawData);
         }

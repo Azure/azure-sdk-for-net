@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
+            string domainName = default;
+            string description = default;
             IReadOnlyList<BatchEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountEndpointDependency(domainName.Value, description.Value, endpointDetails ?? new ChangeTrackingList<BatchEndpointDetail>(), serializedAdditionalRawData);
+            return new BatchAccountEndpointDependency(domainName, description, endpointDetails ?? new ChangeTrackingList<BatchEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountEndpointDependency>.Write(ModelReaderWriterOptions options)

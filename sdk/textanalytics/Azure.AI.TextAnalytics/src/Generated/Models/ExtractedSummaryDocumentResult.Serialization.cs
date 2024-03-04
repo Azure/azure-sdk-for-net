@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<ExtractedSummarySentence> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentences"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ExtractedSummaryDocumentResult(id, warnings, Optional.ToNullable(statistics), sentences);
+            return new ExtractedSummaryDocumentResult(id, warnings, statistics, sentences);
         }
     }
 }

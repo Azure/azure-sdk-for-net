@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
-            Optional<string> domainName = default;
+            IntegrationServiceEnvironmentNetworkEndPointAccessibilityState? accessibility = default;
+            string domainName = default;
             IReadOnlyList<string> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentNetworkEndpoint(Optional.ToNullable(accessibility), domainName.Value, ports ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentNetworkEndpoint(accessibility, domainName, ports ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkEndpoint>.Write(ModelReaderWriterOptions options)

@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.Grafana
             {
                 return null;
             }
-            Optional<ManagedGrafanaSku> sku = default;
-            Optional<ManagedGrafanaProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedGrafanaSku sku = default;
+            ManagedGrafanaProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,11 +209,11 @@ namespace Azure.ResourceManager.Grafana
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku.Value,
-                properties.Value,
+                sku,
+                properties,
                 identity,
                 serializedAdditionalRawData);
         }

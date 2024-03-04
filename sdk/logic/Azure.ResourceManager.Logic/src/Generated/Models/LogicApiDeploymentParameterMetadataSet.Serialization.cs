@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
-            Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
+            LogicApiDeploymentParameterMetadata packageContentLink = default;
+            LogicApiDeploymentParameterMetadata redisCacheConnectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiDeploymentParameterMetadataSet(packageContentLink.Value, redisCacheConnectionString.Value, serializedAdditionalRawData);
+            return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiDeploymentParameterMetadataSet>.Write(ModelReaderWriterOptions options)

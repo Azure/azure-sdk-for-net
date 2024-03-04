@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<double> currentValue = default;
-            Optional<double> limit = default;
-            Optional<string> unit = default;
+            SystemData systemData = default;
+            string displayName = default;
+            double? currentValue = default;
+            double? limit = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                unit.Value,
+                systemData,
+                displayName,
+                currentValue,
+                limit,
+                unit,
                 serializedAdditionalRawData);
         }
 

@@ -154,23 +154,23 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
+            SqlSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
-            Optional<SyncConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Optional<ResourceIdentifier> syncDatabaseId = default;
-            Optional<string> hubDatabaseUserName = default;
-            Optional<string> hubDatabasePassword = default;
-            Optional<SyncGroupState> syncState = default;
-            Optional<SyncGroupSchema> schema = default;
-            Optional<bool> enableConflictLogging = default;
-            Optional<int> conflictLoggingRetentionInDays = default;
-            Optional<bool> usePrivateLinkConnection = default;
-            Optional<string> privateEndpointName = default;
+            SystemData systemData = default;
+            int? interval = default;
+            DateTimeOffset? lastSyncTime = default;
+            SyncConflictResolutionPolicy? conflictResolutionPolicy = default;
+            ResourceIdentifier syncDatabaseId = default;
+            string hubDatabaseUserName = default;
+            string hubDatabasePassword = default;
+            SyncGroupState? syncState = default;
+            SyncGroupSchema schema = default;
+            bool? enableConflictLogging = default;
+            int? conflictLoggingRetentionInDays = default;
+            bool? usePrivateLinkConnection = default;
+            string privateEndpointName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -326,20 +326,20 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
-                sku.Value,
-                Optional.ToNullable(interval),
-                Optional.ToNullable(lastSyncTime),
-                Optional.ToNullable(conflictResolutionPolicy),
-                syncDatabaseId.Value,
-                hubDatabaseUserName.Value,
-                hubDatabasePassword.Value,
-                Optional.ToNullable(syncState),
-                schema.Value,
-                Optional.ToNullable(enableConflictLogging),
-                Optional.ToNullable(conflictLoggingRetentionInDays),
-                Optional.ToNullable(usePrivateLinkConnection),
-                privateEndpointName.Value,
+                systemData,
+                sku,
+                interval,
+                lastSyncTime,
+                conflictResolutionPolicy,
+                syncDatabaseId,
+                hubDatabaseUserName,
+                hubDatabasePassword,
+                syncState,
+                schema,
+                enableConflictLogging,
+                conflictLoggingRetentionInDays,
+                usePrivateLinkConnection,
+                privateEndpointName,
                 serializedAdditionalRawData);
         }
 

@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> linkedRedisCacheId = default;
-            Optional<AzureLocation> linkedRedisCacheLocation = default;
-            Optional<RedisLinkedServerRole> serverRole = default;
-            Optional<string> geoReplicatedPrimaryHostName = default;
-            Optional<string> primaryHostName = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier linkedRedisCacheId = default;
+            AzureLocation? linkedRedisCacheLocation = default;
+            RedisLinkedServerRole? serverRole = default;
+            string geoReplicatedPrimaryHostName = default;
+            string primaryHostName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
-                linkedRedisCacheId.Value,
-                Optional.ToNullable(linkedRedisCacheLocation),
-                Optional.ToNullable(serverRole),
-                geoReplicatedPrimaryHostName.Value,
-                primaryHostName.Value,
-                provisioningState.Value,
+                systemData,
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

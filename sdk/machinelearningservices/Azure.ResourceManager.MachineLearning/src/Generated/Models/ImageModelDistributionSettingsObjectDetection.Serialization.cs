@@ -556,47 +556,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> boxDetectionsPerImage = default;
-            Optional<string> boxScoreThreshold = default;
-            Optional<string> imageSize = default;
-            Optional<string> maxSize = default;
-            Optional<string> minSize = default;
-            Optional<string> modelSize = default;
-            Optional<string> multiScale = default;
-            Optional<string> nmsIouThreshold = default;
-            Optional<string> tileGridSize = default;
-            Optional<string> tileOverlapRatio = default;
-            Optional<string> tilePredictionsNmsThreshold = default;
-            Optional<string> validationIouThreshold = default;
-            Optional<string> validationMetricType = default;
-            Optional<string> amsGradient = default;
-            Optional<string> augmentations = default;
-            Optional<string> beta1 = default;
-            Optional<string> beta2 = default;
-            Optional<string> distributed = default;
-            Optional<string> earlyStopping = default;
-            Optional<string> earlyStoppingDelay = default;
-            Optional<string> earlyStoppingPatience = default;
-            Optional<string> enableOnnxNormalization = default;
-            Optional<string> evaluationFrequency = default;
-            Optional<string> gradientAccumulationStep = default;
-            Optional<string> layersToFreeze = default;
-            Optional<string> learningRate = default;
-            Optional<string> learningRateScheduler = default;
-            Optional<string> modelName = default;
-            Optional<string> momentum = default;
-            Optional<string> nesterov = default;
-            Optional<string> numberOfEpochs = default;
-            Optional<string> numberOfWorkers = default;
-            Optional<string> optimizer = default;
-            Optional<string> randomSeed = default;
-            Optional<string> stepLRGamma = default;
-            Optional<string> stepLRStepSize = default;
-            Optional<string> trainingBatchSize = default;
-            Optional<string> validationBatchSize = default;
-            Optional<string> warmupCosineLRCycles = default;
-            Optional<string> warmupCosineLRWarmupEpochs = default;
-            Optional<string> weightDecay = default;
+            string boxDetectionsPerImage = default;
+            string boxScoreThreshold = default;
+            string imageSize = default;
+            string maxSize = default;
+            string minSize = default;
+            string modelSize = default;
+            string multiScale = default;
+            string nmsIouThreshold = default;
+            string tileGridSize = default;
+            string tileOverlapRatio = default;
+            string tilePredictionsNmsThreshold = default;
+            string validationIouThreshold = default;
+            string validationMetricType = default;
+            string amsGradient = default;
+            string augmentations = default;
+            string beta1 = default;
+            string beta2 = default;
+            string distributed = default;
+            string earlyStopping = default;
+            string earlyStoppingDelay = default;
+            string earlyStoppingPatience = default;
+            string enableOnnxNormalization = default;
+            string evaluationFrequency = default;
+            string gradientAccumulationStep = default;
+            string layersToFreeze = default;
+            string learningRate = default;
+            string learningRateScheduler = default;
+            string modelName = default;
+            string momentum = default;
+            string nesterov = default;
+            string numberOfEpochs = default;
+            string numberOfWorkers = default;
+            string optimizer = default;
+            string randomSeed = default;
+            string stepLRGamma = default;
+            string stepLRStepSize = default;
+            string trainingBatchSize = default;
+            string validationBatchSize = default;
+            string warmupCosineLRCycles = default;
+            string warmupCosineLRWarmupEpochs = default;
+            string weightDecay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1018,48 +1018,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ImageModelDistributionSettingsObjectDetection(
-                amsGradient.Value,
-                augmentations.Value,
-                beta1.Value,
-                beta2.Value,
-                distributed.Value,
-                earlyStopping.Value,
-                earlyStoppingDelay.Value,
-                earlyStoppingPatience.Value,
-                enableOnnxNormalization.Value,
-                evaluationFrequency.Value,
-                gradientAccumulationStep.Value,
-                layersToFreeze.Value,
-                learningRate.Value,
-                learningRateScheduler.Value,
-                modelName.Value,
-                momentum.Value,
-                nesterov.Value,
-                numberOfEpochs.Value,
-                numberOfWorkers.Value,
-                optimizer.Value,
-                randomSeed.Value,
-                stepLRGamma.Value,
-                stepLRStepSize.Value,
-                trainingBatchSize.Value,
-                validationBatchSize.Value,
-                warmupCosineLRCycles.Value,
-                warmupCosineLRWarmupEpochs.Value,
-                weightDecay.Value,
+                amsGradient,
+                augmentations,
+                beta1,
+                beta2,
+                distributed,
+                earlyStopping,
+                earlyStoppingDelay,
+                earlyStoppingPatience,
+                enableOnnxNormalization,
+                evaluationFrequency,
+                gradientAccumulationStep,
+                layersToFreeze,
+                learningRate,
+                learningRateScheduler,
+                modelName,
+                momentum,
+                nesterov,
+                numberOfEpochs,
+                numberOfWorkers,
+                optimizer,
+                randomSeed,
+                stepLRGamma,
+                stepLRStepSize,
+                trainingBatchSize,
+                validationBatchSize,
+                warmupCosineLRCycles,
+                warmupCosineLRWarmupEpochs,
+                weightDecay,
                 serializedAdditionalRawData,
-                boxDetectionsPerImage.Value,
-                boxScoreThreshold.Value,
-                imageSize.Value,
-                maxSize.Value,
-                minSize.Value,
-                modelSize.Value,
-                multiScale.Value,
-                nmsIouThreshold.Value,
-                tileGridSize.Value,
-                tileOverlapRatio.Value,
-                tilePredictionsNmsThreshold.Value,
-                validationIouThreshold.Value,
-                validationMetricType.Value);
+                boxDetectionsPerImage,
+                boxScoreThreshold,
+                imageSize,
+                maxSize,
+                minSize,
+                modelSize,
+                multiScale,
+                nmsIouThreshold,
+                tileGridSize,
+                tileOverlapRatio,
+                tilePredictionsNmsThreshold,
+                validationIouThreshold,
+                validationMetricType);
         }
 
         BinaryData IPersistableModel<ImageModelDistributionSettingsObjectDetection>.Write(ModelReaderWriterOptions options)

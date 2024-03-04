@@ -178,19 +178,19 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> packageUrl = default;
-            Optional<string> configuration = default;
-            Optional<Uri> configurationUrl = default;
-            Optional<bool> startCloudService = default;
-            Optional<bool> allowModelOverride = default;
-            Optional<CloudServiceUpgradeMode> upgradeMode = default;
-            Optional<CloudServiceRoleProfile> roleProfile = default;
-            Optional<CloudServiceOSProfile> osProfile = default;
-            Optional<CloudServiceNetworkProfile> networkProfile = default;
-            Optional<CloudServiceExtensionProfile> extensionProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<string> uniqueId = default;
+            SystemData systemData = default;
+            Uri packageUrl = default;
+            string configuration = default;
+            Uri configurationUrl = default;
+            bool? startCloudService = default;
+            bool? allowModelOverride = default;
+            CloudServiceUpgradeMode? upgradeMode = default;
+            CloudServiceRoleProfile roleProfile = default;
+            CloudServiceOSProfile osProfile = default;
+            CloudServiceNetworkProfile networkProfile = default;
+            CloudServiceExtensionProfile extensionProfile = default;
+            string provisioningState = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -370,22 +370,22 @@ namespace Azure.ResourceManager.Compute
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 zones ?? new ChangeTrackingList<string>(),
-                packageUrl.Value,
-                configuration.Value,
-                configurationUrl.Value,
-                Optional.ToNullable(startCloudService),
-                Optional.ToNullable(allowModelOverride),
-                Optional.ToNullable(upgradeMode),
-                roleProfile.Value,
-                osProfile.Value,
-                networkProfile.Value,
-                extensionProfile.Value,
-                provisioningState.Value,
-                uniqueId.Value,
+                packageUrl,
+                configuration,
+                configurationUrl,
+                startCloudService,
+                allowModelOverride,
+                upgradeMode,
+                roleProfile,
+                osProfile,
+                networkProfile,
+                extensionProfile,
+                provisioningState,
+                uniqueId,
                 serializedAdditionalRawData);
         }
 

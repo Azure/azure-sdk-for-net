@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> mtu = default;
+            int? mtu = default;
             IReadOnlyList<IPAddress> utilityAddresses = default;
             IList<IPAddress> dnsServers = default;
-            Optional<string> dnsSearchDomain = default;
-            Optional<string> ntpServer = default;
+            string dnsSearchDomain = default;
+            string ntpServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageCacheNetworkSettings(
-                Optional.ToNullable(mtu),
+                mtu,
                 utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
                 dnsServers ?? new ChangeTrackingList<IPAddress>(),
-                dnsSearchDomain.Value,
-                ntpServer.Value,
+                dnsSearchDomain,
+                ntpServer,
                 serializedAdditionalRawData);
         }
 

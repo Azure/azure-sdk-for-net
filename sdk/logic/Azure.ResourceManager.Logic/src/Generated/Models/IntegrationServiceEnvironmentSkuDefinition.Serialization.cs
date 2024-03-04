@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<IntegrationServiceEnvironmentSkuDefinitionSku> sku = default;
-            Optional<IntegrationServiceEnvironmentSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            IntegrationServiceEnvironmentSkuDefinitionSku sku = default;
+            IntegrationServiceEnvironmentSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSkuDefinition(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSkuDefinition(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSkuDefinition>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkAccess> access = default;
-            Optional<string> ruleName = default;
+            NetworkAccess? access = default;
+            string ruleName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerificationIPFlowResult(Optional.ToNullable(access), ruleName.Value, serializedAdditionalRawData);
+            return new VerificationIPFlowResult(access, ruleName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerificationIPFlowResult>.Write(ModelReaderWriterOptions options)

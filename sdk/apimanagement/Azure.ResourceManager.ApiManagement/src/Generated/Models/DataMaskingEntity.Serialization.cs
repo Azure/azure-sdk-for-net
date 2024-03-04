@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<DataMaskingMode> mode = default;
+            string value = default;
+            DataMaskingMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMaskingEntity(value.Value, Optional.ToNullable(mode), serializedAdditionalRawData);
+            return new DataMaskingEntity(value, mode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMaskingEntity>.Write(ModelReaderWriterOptions options)

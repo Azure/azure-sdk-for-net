@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> triggerRunId = default;
-            Optional<string> triggerName = default;
-            Optional<string> triggerType = default;
-            Optional<DateTimeOffset> triggerRunTimestamp = default;
-            Optional<DataFactoryTriggerRunStatus> status = default;
-            Optional<string> message = default;
+            string triggerRunId = default;
+            string triggerName = default;
+            string triggerType = default;
+            DateTimeOffset? triggerRunTimestamp = default;
+            DataFactoryTriggerRunStatus? status = default;
+            string message = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> triggeredPipelines = default;
             IReadOnlyDictionary<string, string> runDimension = default;
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryTriggerRun(
-                triggerRunId.Value,
-                triggerName.Value,
-                triggerType.Value,
-                Optional.ToNullable(triggerRunTimestamp),
-                Optional.ToNullable(status),
-                message.Value,
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
                 runDimension ?? new ChangeTrackingDictionary<string, string>(),

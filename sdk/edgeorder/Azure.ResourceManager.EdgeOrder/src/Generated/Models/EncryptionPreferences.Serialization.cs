@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<DoubleEncryptionStatus> doubleEncryptionStatus = default;
+            DoubleEncryptionStatus? doubleEncryptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionPreferences(Optional.ToNullable(doubleEncryptionStatus), serializedAdditionalRawData);
+            return new EncryptionPreferences(doubleEncryptionStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionPreferences>.Write(ModelReaderWriterOptions options)

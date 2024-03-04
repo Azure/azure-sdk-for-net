@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityCenterPricingTier> pricingTier = default;
-            Optional<string> subPlan = default;
-            Optional<TimeSpan> freeTrialRemainingTime = default;
-            Optional<DateTimeOffset> enablementTime = default;
-            Optional<bool> deprecated = default;
+            SystemData systemData = default;
+            SecurityCenterPricingTier? pricingTier = default;
+            string subPlan = default;
+            TimeSpan? freeTrialRemainingTime = default;
+            DateTimeOffset? enablementTime = default;
+            bool? deprecated = default;
             IReadOnlyList<string> replacedBy = default;
             IList<PlanExtension> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(pricingTier),
-                subPlan.Value,
-                Optional.ToNullable(freeTrialRemainingTime),
-                Optional.ToNullable(enablementTime),
-                Optional.ToNullable(deprecated),
+                systemData,
+                pricingTier,
+                subPlan,
+                freeTrialRemainingTime,
+                enablementTime,
+                deprecated,
                 replacedBy ?? new ChangeTrackingList<string>(),
                 extensions ?? new ChangeTrackingList<PlanExtension>(),
                 serializedAdditionalRawData);

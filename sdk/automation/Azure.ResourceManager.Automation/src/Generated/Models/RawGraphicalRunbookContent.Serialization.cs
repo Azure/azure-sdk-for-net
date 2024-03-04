@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> schemaVersion = default;
-            Optional<string> runbookDefinition = default;
-            Optional<GraphRunbookType> runbookType = default;
+            string schemaVersion = default;
+            string runbookDefinition = default;
+            GraphRunbookType? runbookType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RawGraphicalRunbookContent(schemaVersion.Value, runbookDefinition.Value, Optional.ToNullable(runbookType), serializedAdditionalRawData);
+            return new RawGraphicalRunbookContent(schemaVersion, runbookDefinition, runbookType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RawGraphicalRunbookContent>.Write(ModelReaderWriterOptions options)

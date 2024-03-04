@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> totalFileCount = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? totalFileCount = default;
             IReadOnlyList<FilesNotTieringError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringFilesNotTiering(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalFileCount), errors ?? new ChangeTrackingList<FilesNotTieringError>(), serializedAdditionalRawData);
+            return new CloudTieringFilesNotTiering(lastUpdatedTimestamp, totalFileCount, errors ?? new ChangeTrackingList<FilesNotTieringError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringFilesNotTiering>.Write(ModelReaderWriterOptions options)

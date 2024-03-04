@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfigurationData> destinationNetworkInterfaceIPConfiguration = default;
-            Optional<FrontendIPConfigurationData> destinationLoadBalancerFrontEndIPConfiguration = default;
-            Optional<int> destinationPort = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration = default;
+            FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration = default;
+            int? destinationPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -289,19 +289,19 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualNetworkTapData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                Optional.ToNullable(location),
+                id,
+                name,
+                type,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 networkInterfaceTapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
-                destinationNetworkInterfaceIPConfiguration.Value,
-                destinationLoadBalancerFrontEndIPConfiguration.Value,
-                Optional.ToNullable(destinationPort));
+                resourceGuid,
+                provisioningState,
+                destinationNetworkInterfaceIPConfiguration,
+                destinationLoadBalancerFrontEndIPConfiguration,
+                destinationPort);
         }
 
         BinaryData IPersistableModel<VirtualNetworkTapData>.Write(ModelReaderWriterOptions options)

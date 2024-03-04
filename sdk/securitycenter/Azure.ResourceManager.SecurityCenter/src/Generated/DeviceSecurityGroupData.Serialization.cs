@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ThresholdCustomAlertRule> thresholdRules = default;
             IList<TimeWindowCustomAlertRule> timeWindowRules = default;
             IList<AllowlistCustomAlertRule> allowlistRules = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>(),
                 timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>(),
                 allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>(),

@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> message = default;
-            Optional<bool> failed = default;
+            SystemData systemData = default;
+            string message = default;
+            bool? failed = default;
             IList<VirtualNetworkValidationTestFailure> failedTests = default;
             IList<VirtualNetworkValidationTestFailure> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                message.Value,
-                Optional.ToNullable(failed),
+                systemData,
+                message,
+                failed,
                 failedTests ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
                 warnings ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
-                kind.Value,
+                kind,
                 serializedAdditionalRawData);
         }
 

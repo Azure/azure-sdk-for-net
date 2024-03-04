@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier primaryFabricId = default;
             ResourceIdentifier recoveryFabricId = default;
-            Optional<FailoverDeploymentModel> failoverDeploymentModel = default;
+            FailoverDeploymentModel? failoverDeploymentModel = default;
             IList<SiteRecoveryPlanGroup> groups = default;
             IList<RecoveryPlanProviderSpecificContent> providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryCreateRecoveryPlanProperties(
                 primaryFabricId,
                 recoveryFabricId,
-                Optional.ToNullable(failoverDeploymentModel),
+                failoverDeploymentModel,
                 groups,
                 providerSpecificContent ?? new ChangeTrackingList<RecoveryPlanProviderSpecificContent>(),
                 serializedAdditionalRawData);

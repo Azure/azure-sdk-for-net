@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> virtualPath = default;
-            Optional<string> physicalPath = default;
-            Optional<bool> preloadEnabled = default;
+            string virtualPath = default;
+            string physicalPath = default;
+            bool? preloadEnabled = default;
             IList<VirtualDirectory> virtualDirectories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), serializedAdditionalRawData);
+            return new VirtualApplication(virtualPath, physicalPath, preloadEnabled, virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplication>.Write(ModelReaderWriterOptions options)

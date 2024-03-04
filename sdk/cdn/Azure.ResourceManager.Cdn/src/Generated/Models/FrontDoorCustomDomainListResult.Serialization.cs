@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             IReadOnlyList<FrontDoorCustomDomainData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainListResult(value ?? new ChangeTrackingList<FrontDoorCustomDomainData>(), nextLink.Value, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainListResult(value ?? new ChangeTrackingList<FrontDoorCustomDomainData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainListResult>.Write(ModelReaderWriterOptions options)

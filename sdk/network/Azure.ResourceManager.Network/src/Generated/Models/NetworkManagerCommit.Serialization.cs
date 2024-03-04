@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> commitId = default;
+            string commitId = default;
             IList<string> targetLocations = default;
             IList<string> configurationIds = default;
             NetworkConfigurationDeploymentType commitType = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerCommit(commitId.Value, targetLocations, configurationIds ?? new ChangeTrackingList<string>(), commitType, serializedAdditionalRawData);
+            return new NetworkManagerCommit(commitId, targetLocations, configurationIds ?? new ChangeTrackingList<string>(), commitType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerCommit>.Write(ModelReaderWriterOptions options)

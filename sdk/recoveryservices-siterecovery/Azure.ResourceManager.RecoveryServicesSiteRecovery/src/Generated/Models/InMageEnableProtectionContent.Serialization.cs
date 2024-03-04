@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmFriendlyName = default;
+            string vmFriendlyName = default;
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
+            string runAsAccountId = default;
             string multiVmGroupId = default;
             string multiVmGroupName = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
             IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageEnableProtectionContent(
                 instanceType,
                 serializedAdditionalRawData,
-                vmFriendlyName.Value,
+                vmFriendlyName,
                 masterTargetId,
                 processServerId,
                 retentionDrive,
-                runAsAccountId.Value,
+                runAsAccountId,
                 multiVmGroupId,
                 multiVmGroupName,
-                datastoreName.Value,
-                diskExclusionContent.Value,
+                datastoreName,
+                diskExclusionContent,
                 disksToInclude ?? new ChangeTrackingList<string>());
         }
 

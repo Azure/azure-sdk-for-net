@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string sourcePropertyName = default;
             string targetPropertyName = default;
-            Optional<LinkType> linkType = default;
+            LinkType? linkType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TypePropertiesMapping(sourcePropertyName, targetPropertyName, Optional.ToNullable(linkType), serializedAdditionalRawData);
+            return new TypePropertiesMapping(sourcePropertyName, targetPropertyName, linkType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TypePropertiesMapping>.Write(ModelReaderWriterOptions options)

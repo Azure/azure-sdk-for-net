@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 return null;
             }
             IReadOnlyList<ScVmmAvailabilitySetData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilitySetListResult(value ?? new ChangeTrackingList<ScVmmAvailabilitySetData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AvailabilitySetListResult(value ?? new ChangeTrackingList<ScVmmAvailabilitySetData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilitySetListResult>.Write(ModelReaderWriterOptions options)

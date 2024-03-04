@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> sku = default;
-            Optional<long> diskSizeGB = default;
-            Optional<bool> enableHa = default;
+            string sku = default;
+            long? diskSizeGB = default;
+            bool? enableHa = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeGroupProperties(sku.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(enableHa), serializedAdditionalRawData);
+            return new NodeGroupProperties(sku, diskSizeGB, enableHa, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeGroupProperties>.Write(ModelReaderWriterOptions options)

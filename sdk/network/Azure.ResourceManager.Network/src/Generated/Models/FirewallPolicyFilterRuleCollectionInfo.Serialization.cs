@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FirewallPolicyFilterRuleCollectionAction> action = default;
+            FirewallPolicyFilterRuleCollectionAction action = default;
             IList<FirewallPolicyRule> rules = default;
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
-            Optional<string> name = default;
-            Optional<int> priority = default;
+            string name = default;
+            int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FirewallPolicyFilterRuleCollectionInfo(
                 ruleCollectionType,
-                name.Value,
-                Optional.ToNullable(priority),
+                name,
+                priority,
                 serializedAdditionalRawData,
-                action.Value,
+                action,
                 rules ?? new ChangeTrackingList<FirewallPolicyRule>());
         }
 

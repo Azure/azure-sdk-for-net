@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> ipConfigName = default;
-            Optional<bool> isPrimary = default;
-            Optional<bool> isSeletedForFailover = default;
-            Optional<string> recoverySubnetName = default;
-            Optional<IPAddress> recoveryStaticIPAddress = default;
-            Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
+            string ipConfigName = default;
+            bool? isPrimary = default;
+            bool? isSeletedForFailover = default;
+            string recoverySubnetName = default;
+            IPAddress recoveryStaticIPAddress = default;
+            ResourceIdentifier recoveryPublicIPAddressId = default;
             IList<string> recoveryLBBackendAddressPoolIds = default;
-            Optional<string> tfoSubnetName = default;
-            Optional<IPAddress> tfoStaticIPAddress = default;
-            Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
+            string tfoSubnetName = default;
+            IPAddress tfoStaticIPAddress = default;
+            ResourceIdentifier tfoPublicIPAddressId = default;
             IList<string> tfoLBBackendAddressPoolIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -249,16 +249,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HyperVFailoverIPConfigDetails(
-                ipConfigName.Value,
-                Optional.ToNullable(isPrimary),
-                Optional.ToNullable(isSeletedForFailover),
-                recoverySubnetName.Value,
-                recoveryStaticIPAddress.Value,
-                recoveryPublicIPAddressId.Value,
+                ipConfigName,
+                isPrimary,
+                isSeletedForFailover,
+                recoverySubnetName,
+                recoveryStaticIPAddress,
+                recoveryPublicIPAddressId,
                 recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
-                tfoSubnetName.Value,
-                tfoStaticIPAddress.Value,
-                tfoPublicIPAddressId.Value,
+                tfoSubnetName,
+                tfoStaticIPAddress,
+                tfoPublicIPAddressId,
                 tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

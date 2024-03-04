@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxUserAssignedIdentity(resourceId.Value, serializedAdditionalRawData);
+            return new DataBoxUserAssignedIdentity(resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxUserAssignedIdentity>.Write(ModelReaderWriterOptions options)

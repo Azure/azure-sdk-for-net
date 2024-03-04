@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> time = default;
-            Optional<int> snapshotId = default;
+            SystemData systemData = default;
+            DateTimeOffset? time = default;
+            int? snapshotId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(time),
-                Optional.ToNullable(snapshotId),
-                kind.Value,
+                systemData,
+                time,
+                snapshotId,
+                kind,
                 serializedAdditionalRawData);
         }
 

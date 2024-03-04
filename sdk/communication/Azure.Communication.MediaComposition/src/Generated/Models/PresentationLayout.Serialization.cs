@@ -59,11 +59,11 @@ namespace Azure.Communication.MediaComposition
             }
             string presenterId = default;
             IList<string> audienceIds = default;
-            Optional<AudiencePosition> audiencePosition = default;
+            AudiencePosition? audiencePosition = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("presenterId"u8))
@@ -121,12 +121,12 @@ namespace Azure.Communication.MediaComposition
             }
             return new PresentationLayout(
                 kind,
-                resolution.Value,
-                placeholderImageUri.Value,
-                Optional.ToNullable(scalingMode),
+                resolution,
+                placeholderImageUri,
+                scalingMode,
                 presenterId,
                 audienceIds,
-                Optional.ToNullable(audiencePosition));
+                audiencePosition);
         }
     }
 }

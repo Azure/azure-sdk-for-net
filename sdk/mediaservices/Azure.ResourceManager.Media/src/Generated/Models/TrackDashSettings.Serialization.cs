@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> role = default;
+            string role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrackDashSettings(role.Value, serializedAdditionalRawData);
+            return new TrackDashSettings(role, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrackDashSettings>.Write(ModelReaderWriterOptions options)

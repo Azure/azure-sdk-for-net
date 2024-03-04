@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<RestorePointGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointGroupListResult(value ?? new ChangeTrackingList<RestorePointGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new RestorePointGroupListResult(value ?? new ChangeTrackingList<RestorePointGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointGroupListResult>.Write(ModelReaderWriterOptions options)

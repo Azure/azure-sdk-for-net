@@ -241,34 +241,34 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<BareMetalMachineCordonStatus> cordonStatus = default;
-            Optional<BareMetalMachineDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<HardwareInventory> hardwareInventory = default;
-            Optional<HardwareValidationStatus> hardwareValidationStatus = default;
+            ResourceIdentifier clusterId = default;
+            BareMetalMachineCordonStatus? cordonStatus = default;
+            BareMetalMachineDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            HardwareInventory hardwareInventory = default;
+            HardwareValidationStatus hardwareValidationStatus = default;
             IReadOnlyList<string> hybridAksClustersAssociatedIds = default;
-            Optional<string> kubernetesNodeName = default;
-            Optional<string> kubernetesVersion = default;
+            string kubernetesNodeName = default;
+            string kubernetesVersion = default;
             string machineDetails = default;
             string machineName = default;
             string machineSkuId = default;
-            Optional<IPAddress> oamIPv4Address = default;
-            Optional<string> oamIPv6Address = default;
-            Optional<string> osImage = default;
-            Optional<BareMetalMachinePowerState> powerState = default;
-            Optional<BareMetalMachineProvisioningState> provisioningState = default;
+            IPAddress oamIPv4Address = default;
+            string oamIPv6Address = default;
+            string osImage = default;
+            BareMetalMachinePowerState? powerState = default;
+            BareMetalMachineProvisioningState? provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
-            Optional<BareMetalMachineReadyState> readyState = default;
+            BareMetalMachineReadyState? readyState = default;
             string serialNumber = default;
-            Optional<string> serviceTag = default;
+            string serviceTag = default;
             IReadOnlyList<string> virtualMachinesAssociatedIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
@@ -563,28 +563,28 @@ namespace Azure.ResourceManager.NetworkCloud
                 bmcCredentials,
                 bmcMacAddress,
                 bootMacAddress,
-                clusterId.Value,
-                Optional.ToNullable(cordonStatus),
-                Optional.ToNullable(detailedStatus),
-                detailedStatusMessage.Value,
-                hardwareInventory.Value,
-                hardwareValidationStatus.Value,
+                clusterId,
+                cordonStatus,
+                detailedStatus,
+                detailedStatusMessage,
+                hardwareInventory,
+                hardwareValidationStatus,
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>(),
-                kubernetesNodeName.Value,
-                kubernetesVersion.Value,
+                kubernetesNodeName,
+                kubernetesVersion,
                 machineDetails,
                 machineName,
                 machineSkuId,
-                oamIPv4Address.Value,
-                oamIPv6Address.Value,
-                osImage.Value,
-                Optional.ToNullable(powerState),
-                Optional.ToNullable(provisioningState),
+                oamIPv4Address,
+                oamIPv6Address,
+                osImage,
+                powerState,
+                provisioningState,
                 rackId,
                 rackSlot,
-                Optional.ToNullable(readyState),
+                readyState,
                 serialNumber,
-                serviceTag.Value,
+                serviceTag,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

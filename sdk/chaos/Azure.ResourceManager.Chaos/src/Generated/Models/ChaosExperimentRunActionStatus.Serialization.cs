@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> actionName = default;
-            Optional<string> actionId = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            string actionName = default;
+            string actionId = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ChaosExperimentRunActionStatus(
-                actionName.Value,
-                actionId.Value,
-                status.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                actionName,
+                actionId,
+                status,
+                startTime,
+                endTime,
                 targets ?? new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>(),
                 serializedAdditionalRawData);
         }

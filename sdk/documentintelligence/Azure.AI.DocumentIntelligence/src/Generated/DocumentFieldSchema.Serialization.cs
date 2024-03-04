@@ -94,9 +94,9 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> description = default;
-            Optional<string> example = default;
-            Optional<DocumentFieldSchema> items = default;
+            string description = default;
+            string example = default;
+            DocumentFieldSchema items = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,9 +148,9 @@ namespace Azure.AI.DocumentIntelligence
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DocumentFieldSchema(
                 type,
-                description.Value,
-                example.Value,
-                items.Value,
+                description,
+                example,
+                items,
                 properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(),
                 serializedAdditionalRawData);
         }

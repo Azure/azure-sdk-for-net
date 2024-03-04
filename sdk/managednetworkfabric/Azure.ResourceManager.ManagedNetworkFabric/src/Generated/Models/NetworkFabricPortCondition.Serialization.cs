@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkFabricPortType> portType = default;
+            NetworkFabricPortType? portType = default;
             Layer4Protocol layer4Protocol = default;
             IList<string> ports = default;
             IList<string> portGroupNames = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricPortCondition(Optional.ToNullable(portType), layer4Protocol, ports ?? new ChangeTrackingList<string>(), portGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkFabricPortCondition(portType, layer4Protocol, ports ?? new ChangeTrackingList<string>(), portGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricPortCondition>.Write(ModelReaderWriterOptions options)

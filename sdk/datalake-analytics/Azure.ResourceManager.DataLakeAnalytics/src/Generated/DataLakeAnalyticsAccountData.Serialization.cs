@@ -285,19 +285,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> accountId = default;
-            Optional<DataLakeAnalyticsAccountStatus> provisioningState = default;
-            Optional<DataLakeAnalyticsAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> endpoint = default;
-            Optional<string> defaultDataLakeStoreAccount = default;
+            SystemData systemData = default;
+            Guid? accountId = default;
+            DataLakeAnalyticsAccountStatus? provisioningState = default;
+            DataLakeAnalyticsAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string endpoint = default;
+            string defaultDataLakeStoreAccount = default;
             IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts = default;
             IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts = default;
             IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts = default;
@@ -305,21 +305,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores = default;
             IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules = default;
             IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules = default;
-            Optional<DataLakeAnalyticsFirewallState> firewallState = default;
-            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
-            Optional<DataLakeAnalyticsCommitmentTierType> currentTier = default;
-            Optional<int> maxJobCount = default;
-            Optional<int> maxActiveJobCountPerUser = default;
-            Optional<int> maxQueuedJobCountPerUser = default;
-            Optional<int> maxJobRunningTimeInMin = default;
-            Optional<int> systemMaxJobCount = default;
-            Optional<int> maxDegreeOfParallelism = default;
-            Optional<int> systemMaxDegreeOfParallelism = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
-            Optional<int> queryStoreRetention = default;
-            Optional<DebugDataAccessLevel> debugDataAccessLevel = default;
+            DataLakeAnalyticsFirewallState? firewallState = default;
+            DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            DataLakeAnalyticsCommitmentTierType? newTier = default;
+            DataLakeAnalyticsCommitmentTierType? currentTier = default;
+            int? maxJobCount = default;
+            int? maxActiveJobCountPerUser = default;
+            int? maxQueuedJobCountPerUser = default;
+            int? maxJobRunningTimeInMin = default;
+            int? systemMaxJobCount = default;
+            int? maxDegreeOfParallelism = default;
+            int? systemMaxDegreeOfParallelism = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
+            int? queryStoreRetention = default;
+            DebugDataAccessLevel? debugDataAccessLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -681,14 +681,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(accountId),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(state),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastModifiedTime),
-                endpoint.Value,
-                defaultDataLakeStoreAccount.Value,
+                systemData,
+                accountId,
+                provisioningState,
+                state,
+                creationTime,
+                lastModifiedTime,
+                endpoint,
+                defaultDataLakeStoreAccount,
                 dataLakeStoreAccounts ?? new ChangeTrackingList<DataLakeStoreAccountInformationData>(),
                 publicDataLakeStoreAccounts ?? new ChangeTrackingList<DataLakeStoreAccountInformationData>(),
                 storageAccounts ?? new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>(),
@@ -696,22 +696,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 hiveMetastores ?? new ChangeTrackingList<DataLakeAnalyticsHiveMetastore>(),
                 virtualNetworkRules ?? new ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule>(),
                 firewallRules ?? new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>(),
-                Optional.ToNullable(firewallState),
-                Optional.ToNullable(firewallAllowAzureIPs),
-                Optional.ToNullable(newTier),
-                Optional.ToNullable(currentTier),
-                Optional.ToNullable(maxJobCount),
-                Optional.ToNullable(maxActiveJobCountPerUser),
-                Optional.ToNullable(maxQueuedJobCountPerUser),
-                Optional.ToNullable(maxJobRunningTimeInMin),
-                Optional.ToNullable(systemMaxJobCount),
-                Optional.ToNullable(maxDegreeOfParallelism),
-                Optional.ToNullable(systemMaxDegreeOfParallelism),
-                Optional.ToNullable(maxDegreeOfParallelismPerJob),
-                Optional.ToNullable(minPriorityPerJob),
-                Optional.ToNullable(queryStoreRetention),
-                Optional.ToNullable(debugDataAccessLevel),
-                Optional.ToNullable(location),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                currentTier,
+                maxJobCount,
+                maxActiveJobCountPerUser,
+                maxQueuedJobCountPerUser,
+                maxJobRunningTimeInMin,
+                systemMaxJobCount,
+                maxDegreeOfParallelism,
+                systemMaxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
+                debugDataAccessLevel,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

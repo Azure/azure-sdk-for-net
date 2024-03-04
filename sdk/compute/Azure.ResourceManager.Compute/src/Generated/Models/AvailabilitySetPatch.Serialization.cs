@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
+            ComputeSku sku = default;
             IDictionary<string, string> tags = default;
-            Optional<int> platformUpdateDomainCount = default;
-            Optional<int> platformFaultDomainCount = default;
+            int? platformUpdateDomainCount = default;
+            int? platformFaultDomainCount = default;
             IList<WritableSubResource> virtualMachines = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
+            WritableSubResource proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Compute.Models
             return new AvailabilitySetPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                sku.Value,
-                Optional.ToNullable(platformUpdateDomainCount),
-                Optional.ToNullable(platformFaultDomainCount),
+                sku,
+                platformUpdateDomainCount,
+                platformFaultDomainCount,
                 virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
                 proximityPlacementGroup,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>());

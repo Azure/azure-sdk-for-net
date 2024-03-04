@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 return null;
             }
             IList<AnalysisIPv4FirewallRule> firewallRules = default;
-            Optional<bool> enablePowerBIService = default;
+            bool? enablePowerBIService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisIPv4FirewallSettings(firewallRules ?? new ChangeTrackingList<AnalysisIPv4FirewallRule>(), Optional.ToNullable(enablePowerBIService), serializedAdditionalRawData);
+            return new AnalysisIPv4FirewallSettings(firewallRules ?? new ChangeTrackingList<AnalysisIPv4FirewallRule>(), enablePowerBIService, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisIPv4FirewallSettings>.Write(ModelReaderWriterOptions options)

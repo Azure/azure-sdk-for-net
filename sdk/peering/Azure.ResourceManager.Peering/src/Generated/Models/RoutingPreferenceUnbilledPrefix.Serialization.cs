@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<AzureLocation> azureRegion = default;
-            Optional<int> peerAsn = default;
+            string prefix = default;
+            AzureLocation? azureRegion = default;
+            int? peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingPreferenceUnbilledPrefix(prefix.Value, Optional.ToNullable(azureRegion), Optional.ToNullable(peerAsn), serializedAdditionalRawData);
+            return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingPreferenceUnbilledPrefix>.Write(ModelReaderWriterOptions options)

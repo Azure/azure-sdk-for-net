@@ -44,10 +44,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> poolName = default;
-            Optional<string> databaseName = default;
-            Optional<string> type = default;
+            string name = default;
+            string poolName = default;
+            string databaseName = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptContentCurrentConnection(name.Value, poolName.Value, databaseName.Value, type.Value);
+            return new KqlScriptContentCurrentConnection(name, poolName, databaseName, type);
         }
     }
 }

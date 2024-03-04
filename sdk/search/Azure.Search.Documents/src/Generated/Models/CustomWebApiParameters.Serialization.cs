@@ -76,12 +76,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
+            Uri uri = default;
             IDictionary<string, string> httpHeaders = default;
-            Optional<string> httpMethod = default;
-            Optional<TimeSpan> timeout = default;
-            Optional<string> authResourceId = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            string httpMethod = default;
+            TimeSpan? timeout = default;
+            string authResourceId = default;
+            SearchIndexerDataIdentity authIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -143,12 +143,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CustomWebApiParameters(
-                uri.Value,
+                uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                httpMethod.Value,
-                Optional.ToNullable(timeout),
-                authResourceId.Value,
-                authIdentity.Value);
+                httpMethod,
+                timeout,
+                authResourceId,
+                authIdentity);
         }
     }
 }

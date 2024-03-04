@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppServiceOperationStatus> migrationOperationStatus = default;
-            Optional<string> operationId = default;
-            Optional<bool> localMySqlEnabled = default;
+            SystemData systemData = default;
+            AppServiceOperationStatus? migrationOperationStatus = default;
+            string operationId = default;
+            bool? localMySqlEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.AppService
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(migrationOperationStatus),
-                operationId.Value,
-                Optional.ToNullable(localMySqlEnabled),
-                kind.Value,
+                systemData,
+                migrationOperationStatus,
+                operationId,
+                localMySqlEnabled,
+                kind,
                 serializedAdditionalRawData);
         }
 

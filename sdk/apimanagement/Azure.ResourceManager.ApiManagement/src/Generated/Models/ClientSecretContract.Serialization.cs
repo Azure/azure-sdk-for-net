@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientSecret = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientSecretContract(clientSecret.Value, serializedAdditionalRawData);
+            return new ClientSecretContract(clientSecret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientSecretContract>.Write(ModelReaderWriterOptions options)

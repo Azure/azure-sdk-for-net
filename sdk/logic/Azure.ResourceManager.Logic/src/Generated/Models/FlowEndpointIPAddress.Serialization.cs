@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> address = default;
+            string address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowEndpointIPAddress(address.Value, serializedAdditionalRawData);
+            return new FlowEndpointIPAddress(address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowEndpointIPAddress>.Write(ModelReaderWriterOptions options)

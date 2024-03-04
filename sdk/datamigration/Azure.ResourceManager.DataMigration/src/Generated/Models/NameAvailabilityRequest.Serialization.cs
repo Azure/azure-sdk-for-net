@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string name = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NameAvailabilityRequest(name.Value, type.Value, serializedAdditionalRawData);
+            return new NameAvailabilityRequest(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NameAvailabilityRequest>.Write(ModelReaderWriterOptions options)

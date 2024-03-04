@@ -155,24 +155,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> apiId = default;
-            Optional<string> operationId = default;
-            Optional<string> productId = default;
-            Optional<string> userId = default;
-            Optional<RequestMethod> method = default;
-            Optional<Uri> uri = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> backendResponseCode = default;
-            Optional<int> responseCode = default;
-            Optional<int> responseSize = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> cache = default;
-            Optional<double> apiTime = default;
-            Optional<double> serviceTime = default;
-            Optional<string> apiRegion = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<string> requestId = default;
-            Optional<int> requestSize = default;
+            string apiId = default;
+            string operationId = default;
+            string productId = default;
+            string userId = default;
+            RequestMethod? method = default;
+            Uri uri = default;
+            IPAddress ipAddress = default;
+            string backendResponseCode = default;
+            int? responseCode = default;
+            int? responseSize = default;
+            DateTimeOffset? timestamp = default;
+            string cache = default;
+            double? apiTime = default;
+            double? serviceTime = default;
+            string apiRegion = default;
+            ResourceIdentifier subscriptionId = default;
+            string requestId = default;
+            int? requestSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,24 +314,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RequestReportRecordContract(
-                apiId.Value,
-                operationId.Value,
-                productId.Value,
-                userId.Value,
-                Optional.ToNullable(method),
-                uri.Value,
-                ipAddress.Value,
-                backendResponseCode.Value,
-                Optional.ToNullable(responseCode),
-                Optional.ToNullable(responseSize),
-                Optional.ToNullable(timestamp),
-                cache.Value,
-                Optional.ToNullable(apiTime),
-                Optional.ToNullable(serviceTime),
-                apiRegion.Value,
-                subscriptionId.Value,
-                requestId.Value,
-                Optional.ToNullable(requestSize),
+                apiId,
+                operationId,
+                productId,
+                userId,
+                method,
+                uri,
+                ipAddress,
+                backendResponseCode,
+                responseCode,
+                responseSize,
+                timestamp,
+                cache,
+                apiTime,
+                serviceTime,
+                apiRegion,
+                subscriptionId,
+                requestId,
+                requestSize,
                 serializedAdditionalRawData);
         }
 

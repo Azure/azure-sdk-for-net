@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> imageName = default;
-            Optional<bool> sysPrep = default;
+            string imageName = default;
+            bool? sysPrep = default;
             DevTestLabCustomImageOSType osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImageVhd(imageName.Value, Optional.ToNullable(sysPrep), osType, serializedAdditionalRawData);
+            return new DevTestLabCustomImageVhd(imageName, sysPrep, osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImageVhd>.Write(ModelReaderWriterOptions options)

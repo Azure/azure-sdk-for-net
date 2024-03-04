@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> value = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
+            string name = default;
+            int? value = default;
+            MaxSizeCapability includedMaxSize = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes = default;
-            Optional<bool> instancePoolSupported = default;
-            Optional<bool> standaloneSupported = default;
+            bool? instancePoolSupported = default;
+            bool? standaloneSupported = default;
             IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,15 +222,15 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedInstanceVcoresCapability(
-                name.Value,
-                Optional.ToNullable(value),
-                includedMaxSize.Value,
+                name,
+                value,
+                includedMaxSize,
                 supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
-                Optional.ToNullable(instancePoolSupported),
-                Optional.ToNullable(standaloneSupported),
+                instancePoolSupported,
+                standaloneSupported,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>(),
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData);
         }
 

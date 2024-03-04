@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> dataFlowName = default;
-            Optional<string> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> nodeCount = default;
-            Optional<string> integrationRuntimeName = default;
-            Optional<Guid> sessionId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> timeToLiveInMinutes = default;
-            Optional<DateTimeOffset> lastActivityTime = default;
+            string dataFlowName = default;
+            string computeType = default;
+            int? coreCount = default;
+            int? nodeCount = default;
+            string integrationRuntimeName = default;
+            Guid? sessionId = default;
+            DateTimeOffset? startTime = default;
+            int? timeToLiveInMinutes = default;
+            DateTimeOffset? lastActivityTime = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,15 +192,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DataFlowDebugSessionInfo(
-                dataFlowName.Value,
-                computeType.Value,
-                Optional.ToNullable(coreCount),
-                Optional.ToNullable(nodeCount),
-                integrationRuntimeName.Value,
-                Optional.ToNullable(sessionId),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(timeToLiveInMinutes),
-                Optional.ToNullable(lastActivityTime),
+                dataFlowName,
+                computeType,
+                coreCount,
+                nodeCount,
+                integrationRuntimeName,
+                sessionId,
+                startTime,
+                timeToLiveInMinutes,
+                lastActivityTime,
                 additionalProperties);
         }
 

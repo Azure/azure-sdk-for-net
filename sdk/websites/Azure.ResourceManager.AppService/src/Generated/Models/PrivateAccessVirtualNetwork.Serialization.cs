@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            string name = default;
+            int? key = default;
+            ResourceIdentifier resourceId = default;
             IList<PrivateAccessSubnet> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateAccessVirtualNetwork(name.Value, Optional.ToNullable(key), resourceId.Value, subnets ?? new ChangeTrackingList<PrivateAccessSubnet>(), serializedAdditionalRawData);
+            return new PrivateAccessVirtualNetwork(name, key, resourceId, subnets ?? new ChangeTrackingList<PrivateAccessSubnet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateAccessVirtualNetwork>.Write(ModelReaderWriterOptions options)

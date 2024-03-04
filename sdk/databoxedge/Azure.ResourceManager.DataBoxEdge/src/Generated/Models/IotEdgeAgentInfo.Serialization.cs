@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             string imageName = default;
             string tag = default;
-            Optional<ImageRepositoryCredential> imageRepository = default;
+            ImageRepositoryCredential imageRepository = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotEdgeAgentInfo(imageName, tag, imageRepository.Value, serializedAdditionalRawData);
+            return new IotEdgeAgentInfo(imageName, tag, imageRepository, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotEdgeAgentInfo>.Write(ModelReaderWriterOptions options)

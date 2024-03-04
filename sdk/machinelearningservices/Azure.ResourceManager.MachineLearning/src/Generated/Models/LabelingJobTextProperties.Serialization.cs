@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<TextAnnotationType> annotationType = default;
+            TextAnnotationType? annotationType = default;
             MediaType mediaType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelingJobTextProperties(mediaType, serializedAdditionalRawData, Optional.ToNullable(annotationType));
+            return new LabelingJobTextProperties(mediaType, serializedAdditionalRawData, annotationType);
         }
 
         BinaryData IPersistableModel<LabelingJobTextProperties>.Write(ModelReaderWriterOptions options)

@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> keySize = default;
-            Optional<int> delayExistingRevokeInHours = default;
-            Optional<string> csr = default;
-            Optional<bool> isPrivateKeyExternal = default;
+            SystemData systemData = default;
+            int? keySize = default;
+            int? delayExistingRevokeInHours = default;
+            string csr = default;
+            bool? isPrivateKeyExternal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(keySize),
-                Optional.ToNullable(delayExistingRevokeInHours),
-                csr.Value,
-                Optional.ToNullable(isPrivateKeyExternal),
-                kind.Value,
+                systemData,
+                keySize,
+                delayExistingRevokeInHours,
+                csr,
+                isPrivateKeyExternal,
+                kind,
                 serializedAdditionalRawData);
         }
 

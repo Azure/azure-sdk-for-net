@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,9 +20,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> invokedByType = default;
+            string name = default;
+            string id = default;
+            string invokedByType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PipelineRunInvokedBy(name.Value, id.Value, invokedByType.Value);
+            return new PipelineRunInvokedBy(name, id, invokedByType);
         }
 
         internal partial class PipelineRunInvokedByConverter : JsonConverter<PipelineRunInvokedBy>

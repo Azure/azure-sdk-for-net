@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
+            RegionStorageToNetworkProximity? storageToNetworkProximity = default;
             IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
+            return new NetAppRegionInfo(storageToNetworkProximity, availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppRegionInfo>.Write(ModelReaderWriterOptions options)

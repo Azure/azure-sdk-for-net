@@ -200,28 +200,28 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ExpressRoutePeeringType> peeringType = default;
-            Optional<ExpressRoutePeeringState> state = default;
-            Optional<int> azureASN = default;
-            Optional<long> peerASN = default;
-            Optional<string> primaryPeerAddressPrefix = default;
-            Optional<string> secondaryPeerAddressPrefix = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<string> sharedKey = default;
-            Optional<int> vlanId = default;
-            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Optional<ExpressRouteCircuitStats> stats = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerETag = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<WritableSubResource> routeFilter = default;
-            Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
-            Optional<SubResource> expressRouteConnection = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ExpressRoutePeeringType? peeringType = default;
+            ExpressRoutePeeringState? state = default;
+            int? azureASN = default;
+            long? peerASN = default;
+            string primaryPeerAddressPrefix = default;
+            string secondaryPeerAddressPrefix = default;
+            string primaryAzurePort = default;
+            string secondaryAzurePort = default;
+            string sharedKey = default;
+            int? vlanId = default;
+            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
+            ExpressRouteCircuitStats stats = default;
+            NetworkProvisioningState? provisioningState = default;
+            string gatewayManagerETag = default;
+            string lastModifiedBy = default;
+            WritableSubResource routeFilter = default;
+            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
+            SubResource expressRouteConnection = default;
             IList<ExpressRouteCircuitConnectionData> connections = default;
             IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -441,28 +441,28 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ExpressRouteCircuitPeeringData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(peeringType),
-                Optional.ToNullable(state),
-                Optional.ToNullable(azureASN),
-                Optional.ToNullable(peerASN),
-                primaryPeerAddressPrefix.Value,
-                secondaryPeerAddressPrefix.Value,
-                primaryAzurePort.Value,
-                secondaryAzurePort.Value,
-                sharedKey.Value,
-                Optional.ToNullable(vlanId),
-                microsoftPeeringConfig.Value,
-                stats.Value,
-                Optional.ToNullable(provisioningState),
-                gatewayManagerETag.Value,
-                lastModifiedBy.Value,
+                etag,
+                peeringType,
+                state,
+                azureASN,
+                peerASN,
+                primaryPeerAddressPrefix,
+                secondaryPeerAddressPrefix,
+                primaryAzurePort,
+                secondaryAzurePort,
+                sharedKey,
+                vlanId,
+                microsoftPeeringConfig,
+                stats,
+                provisioningState,
+                gatewayManagerETag,
+                lastModifiedBy,
                 routeFilter,
-                ipv6PeeringConfig.Value,
+                ipv6PeeringConfig,
                 expressRouteConnection,
                 connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(),
                 peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>());

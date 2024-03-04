@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> clusterExtensionId = default;
-            Optional<string> extensionType = default;
+            SystemData systemData = default;
+            ResourceIdentifier clusterExtensionId = default;
+            string extensionType = default;
             IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                clusterExtensionId.Value,
-                extensionType.Value,
+                systemData,
+                clusterExtensionId,
+                extensionType,
                 typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>(),
                 serializedAdditionalRawData);
         }

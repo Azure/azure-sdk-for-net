@@ -116,17 +116,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             string streetAddress1 = default;
-            Optional<string> streetAddress2 = default;
-            Optional<string> streetAddress3 = default;
-            Optional<string> city = default;
-            Optional<string> stateOrProvince = default;
+            string streetAddress2 = default;
+            string streetAddress3 = default;
+            string city = default;
+            string stateOrProvince = default;
             string country = default;
             string postalCode = default;
-            Optional<string> zipExtendedCode = default;
-            Optional<string> companyName = default;
-            Optional<DataBoxShippingAddressType> addressType = default;
-            Optional<bool> skipAddressValidation = default;
-            Optional<string> taxIdentificationNumber = default;
+            string zipExtendedCode = default;
+            string companyName = default;
+            DataBoxShippingAddressType? addressType = default;
+            bool? skipAddressValidation = default;
+            string taxIdentificationNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,17 +207,17 @@ namespace Azure.ResourceManager.DataBox.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataBoxShippingAddress(
                 streetAddress1,
-                streetAddress2.Value,
-                streetAddress3.Value,
-                city.Value,
-                stateOrProvince.Value,
+                streetAddress2,
+                streetAddress3,
+                city,
+                stateOrProvince,
                 country,
                 postalCode,
-                zipExtendedCode.Value,
-                companyName.Value,
-                Optional.ToNullable(addressType),
-                Optional.ToNullable(skipAddressValidation),
-                taxIdentificationNumber.Value,
+                zipExtendedCode,
+                companyName,
+                addressType,
+                skipAddressValidation,
+                taxIdentificationNumber,
                 serializedAdditionalRawData);
         }
 

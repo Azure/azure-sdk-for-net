@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> status = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmAsyncOperation(status.Value, serializedAdditionalRawData);
+            return new ArmAsyncOperation(status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmAsyncOperation>.Write(ModelReaderWriterOptions options)

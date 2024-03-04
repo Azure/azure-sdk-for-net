@@ -165,24 +165,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
+            SystemData systemData = default;
+            string uuid = default;
             string fqdn = default;
-            Optional<int> port = default;
-            Optional<string> version = default;
-            Optional<string> instanceUuid = default;
-            Optional<string> connectionStatus = default;
-            Optional<string> customResourceName = default;
-            Optional<VICredential> credentials = default;
+            int? port = default;
+            string version = default;
+            string instanceUuid = default;
+            string connectionStatus = default;
+            string customResourceName = default;
+            VICredential credentials = default;
             IReadOnlyList<VMwareResourceStatus> statuses = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -337,21 +337,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 extendedLocation,
-                kind.Value,
-                uuid.Value,
+                kind,
+                uuid,
                 fqdn,
-                Optional.ToNullable(port),
-                version.Value,
-                instanceUuid.Value,
-                connectionStatus.Value,
-                customResourceName.Value,
-                credentials.Value,
+                port,
+                version,
+                instanceUuid,
+                connectionStatus,
+                customResourceName,
+                credentials,
                 statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

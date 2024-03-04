@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceHealthStatus> resourceHealthStatus = default;
+            ResourceHealthStatus? resourceHealthStatus = default;
             IList<ResourceHealthDetails> resourceHealthDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceHealthDetails(Optional.ToNullable(resourceHealthStatus), resourceHealthDetails ?? new ChangeTrackingList<ResourceHealthDetails>(), serializedAdditionalRawData);
+            return new KpiResourceHealthDetails(resourceHealthStatus, resourceHealthDetails ?? new ChangeTrackingList<ResourceHealthDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceHealthDetails>.Write(ModelReaderWriterOptions options)

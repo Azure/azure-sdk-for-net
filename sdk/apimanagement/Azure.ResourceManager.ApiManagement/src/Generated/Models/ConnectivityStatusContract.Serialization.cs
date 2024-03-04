@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string name = default;
             ConnectivityStatusType status = default;
-            Optional<string> error = default;
+            string error = default;
             DateTimeOffset lastUpdated = default;
             DateTimeOffset lastStatusChange = default;
             string resourceType = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ConnectivityStatusContract(
                 name,
                 status,
-                error.Value,
+                error,
                 lastUpdated,
                 lastStatusChange,
                 resourceType,

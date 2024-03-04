@@ -108,17 +108,17 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<DocumentModelDetails> result = default;
+            DocumentModelDetails result = default;
             string operationId = default;
             OperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             OperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<DocumentIntelligenceError> error = default;
+            DocumentIntelligenceError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,16 +208,16 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentModelCopyToOperationDetails(
                 operationId,
                 status,
-                Optional.ToNullable(percentCompleted),
+                percentCompleted,
                 createdDateTime,
                 lastUpdatedDateTime,
                 kind,
                 resourceLocation,
-                apiVersion.Value,
+                apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                error.Value,
+                error,
                 serializedAdditionalRawData,
-                result.Value);
+                result);
         }
 
         BinaryData IPersistableModel<DocumentModelCopyToOperationDetails>.Write(ModelReaderWriterOptions options)
