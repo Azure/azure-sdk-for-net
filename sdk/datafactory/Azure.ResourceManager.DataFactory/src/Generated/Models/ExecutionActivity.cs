@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        internal ExecutionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal ExecutionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Policy = policy;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Activity policy. </summary>
         public PipelineActivityPolicy Policy { get; set; }
     }

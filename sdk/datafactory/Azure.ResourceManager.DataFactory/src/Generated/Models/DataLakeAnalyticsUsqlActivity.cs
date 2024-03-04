@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
-        public DataLakeAnalyticsUsqlActivity(string name, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService) : base(name)
+        public DataLakeAnalyticsUsqlActivity(string name, DataFactoryElement<string> scriptPath, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference scriptLinkedService) : base(name)
         {
             if (name == null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for U-SQL job request. </param>
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
-        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, DataFactoryElement<int> degreeOfParallelism, DataFactoryElement<int> priority, IDictionary<string, BinaryData> parameters, DataFactoryElement<string> runtimeVersion, DataFactoryElement<string> compilationMode) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptPath, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference scriptLinkedService, DataFactoryElement<int> degreeOfParallelism, DataFactoryElement<int> priority, IDictionary<string, BinaryData> parameters, DataFactoryElement<string> runtimeVersion, DataFactoryElement<string> compilationMode) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
-        public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
         public DataFactoryElement<int> DegreeOfParallelism { get; set; }
         /// <summary> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </summary>

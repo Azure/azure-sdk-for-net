@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> command = default;
-            DataFactoryLinkedServiceReference resourceLinkedService = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference resourceLinkedService = default;
             DataFactoryElement<string> folderPath = default;
             CustomActivityReferenceObject referenceObjects = default;
             IDictionary<string, BinaryData> extendedProperties = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            resourceLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            resourceLinkedService = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("folderPath"u8))

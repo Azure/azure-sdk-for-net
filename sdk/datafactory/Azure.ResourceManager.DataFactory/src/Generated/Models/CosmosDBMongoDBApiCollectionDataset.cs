@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
-        public CosmosDBMongoDBApiCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base(linkedServiceName)
+        public CosmosDBMongoDBApiCollectionDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
-        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "CosmosDbMongoDbApiCollection";

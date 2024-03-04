@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName)
+        public LogLocationSettings(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogLocationSettings(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Log storage linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Path { get; set; }
     }

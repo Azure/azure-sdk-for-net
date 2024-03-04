@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal UnknownDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DatasetType = datasetType ?? "Unknown";
         }

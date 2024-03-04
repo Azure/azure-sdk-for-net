@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="CustomActivityReferenceObject"/>. </summary>
         public CustomActivityReferenceObject()
         {
-            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            LinkedServices = new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
             Datasets = new ChangeTrackingList<DatasetReference>();
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServices"> Linked service references. </param>
         /// <param name="datasets"> Dataset references. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomActivityReferenceObject(IList<DataFactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomActivityReferenceObject(IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkedServices = linkedServices;
             Datasets = datasets;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Linked service references. </summary>
-        public IList<DataFactoryLinkedServiceReference> LinkedServices { get; }
+        public IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary> Dataset references. </summary>
         public IList<DatasetReference> Datasets { get; }
     }

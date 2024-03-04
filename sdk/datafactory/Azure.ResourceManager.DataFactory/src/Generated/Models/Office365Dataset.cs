@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="tableName"/> is null. </exception>
-        public Office365Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
+        public Office365Dataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
-        internal Office365Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal Office365Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> predicate) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Predicate = predicate;

@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> clusterSize = default;
             DataFactoryElement<string> timeToLive = default;
             DataFactoryElement<string> version = default;
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> hostSubscriptionId = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactorySecretBaseDefinition servicePrincipalKey = default;
@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecretBaseDefinition clusterPassword = default;
             DataFactoryElement<string> clusterSshUserName = default;
             DataFactorySecretBaseDefinition clusterSshPassword = default;
-            IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames = default;
-            DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
+            IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> additionalLinkedServiceNames = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
             DataFactoryElement<string> clusterType = default;
             DataFactoryElement<string> sparkVersion = default;
             BinaryData coreConfiguration = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hostSubscriptionId"u8))
@@ -557,10 +557,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                            List<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> array = new List<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(item.GetRawText()));
                             }
                             additionalLinkedServiceNames = array;
                             continue;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hcatalogLinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            hcatalogLinkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterType"u8))
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 clusterPassword,
                 clusterSshUserName,
                 clusterSshPassword,
-                additionalLinkedServiceNames ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                additionalLinkedServiceNames ?? new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(),
                 hcatalogLinkedServiceName,
                 clusterType,
                 sparkVersion,

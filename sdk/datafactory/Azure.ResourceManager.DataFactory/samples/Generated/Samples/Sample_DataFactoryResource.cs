@@ -656,7 +656,7 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"DelimitedT
                 },
                 Datasets =
 {
-new DataFactoryDatasetDebugInfo(new DelimitedTextDataset(new DataFactoryLinkedServiceReference("LinkedServiceReference","linkedService5"))
+new DataFactoryDatasetDebugInfo(new DelimitedTextDataset(new Core.Expressions.DataFactory.DataFactoryLinkedServiceReference("LinkedServiceReference","linkedService5"))
 {
 DataLocation = new AzureBlobStorageLocation()
 {

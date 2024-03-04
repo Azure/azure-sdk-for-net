@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public AmazonS3Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> bucketName) : base(linkedServiceName)
+        public AmazonS3Dataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> bucketName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
-        internal AmazonS3Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> key, DataFactoryElement<string> prefix, DataFactoryElement<string> version, DataFactoryElement<string> modifiedDatetimeStart, DataFactoryElement<string> modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonS3Dataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> bucketName, DataFactoryElement<string> key, DataFactoryElement<string> prefix, DataFactoryElement<string> version, DataFactoryElement<string> modifiedDatetimeStart, DataFactoryElement<string> modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             BucketName = bucketName;
             Key = key;

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> entryFilePath = default;
             IList<BinaryData> arguments = default;
             HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
-            DataFactoryLinkedServiceReference sparkJobLinkedService = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference sparkJobLinkedService = default;
             string className = default;
             DataFactoryElement<string> proxyUser = default;
             IDictionary<string, BinaryData> sparkConfig = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sparkJobLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            sparkJobLinkedService = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("className"u8))

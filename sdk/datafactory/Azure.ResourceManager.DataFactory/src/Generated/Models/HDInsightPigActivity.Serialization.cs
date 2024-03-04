@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
-            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
+            IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> storageLinkedServices = default;
             DataFactoryElement<IList<string>> arguments = default;
             HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
             DataFactoryElement<string> scriptPath = default;
-            DataFactoryLinkedServiceReference scriptLinkedService = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference scriptLinkedService = default;
             IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                            List<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> array = new List<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(item.GetRawText()));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            scriptLinkedService = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defines"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 linkedServiceName,
                 policy,
-                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                storageLinkedServices ?? new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(),
                 arguments,
                 getDebugInfo,
                 scriptPath,

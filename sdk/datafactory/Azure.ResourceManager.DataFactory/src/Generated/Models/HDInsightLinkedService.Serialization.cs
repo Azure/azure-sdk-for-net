@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> clusterUri = default;
             DataFactoryElement<string> userName = default;
             DataFactorySecretBaseDefinition password = default;
-            DataFactoryLinkedServiceReference linkedServiceName = default;
-            DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
             string encryptedCredential = default;
             DataFactoryElement<bool> isEspEnabled = default;
             DataFactoryElement<string> fileSystem = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hcatalogLinkedServiceName"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            hcatalogLinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            hcatalogLinkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

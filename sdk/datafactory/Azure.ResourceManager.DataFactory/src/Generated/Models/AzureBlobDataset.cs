@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureBlobDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureBlobDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AzureBlobDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
-        internal AzureBlobDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> folderPath, DataFactoryElement<string> tableRootLocation, DataFactoryElement<string> fileName, DataFactoryElement<string> modifiedDatetimeStart, DataFactoryElement<string> modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureBlobDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> folderPath, DataFactoryElement<string> tableRootLocation, DataFactoryElement<string> fileName, DataFactoryElement<string> modifiedDatetimeStart, DataFactoryElement<string> modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;

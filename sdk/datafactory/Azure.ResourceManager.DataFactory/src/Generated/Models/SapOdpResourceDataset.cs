@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/>, <paramref name="context"/> or <paramref name="objectName"/> is null. </exception>
-        public SapOdpResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : base(linkedServiceName)
+        public SapOdpResourceDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
-        internal SapOdpResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOdpResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Context = context;
             ObjectName = objectName;

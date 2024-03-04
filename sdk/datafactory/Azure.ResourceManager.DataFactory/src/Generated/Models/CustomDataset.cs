@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="CustomDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public CustomDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public CustomDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="typeProperties"> Custom dataset properties. </param>
-        internal CustomDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CustomDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
             DatasetType = datasetType ?? "CustomDataset";

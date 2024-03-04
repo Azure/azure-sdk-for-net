@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
-        internal CustomActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> command, DataFactoryLinkedServiceReference resourceLinkedService, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> command, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference resourceLinkedService, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Command { get; set; }
         /// <summary> Resource linked service reference. </summary>
-        public DataFactoryLinkedServiceReference ResourceLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference ResourceLinkedService { get; set; }
         /// <summary> Folder path for resource files Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> Reference objects. </summary>

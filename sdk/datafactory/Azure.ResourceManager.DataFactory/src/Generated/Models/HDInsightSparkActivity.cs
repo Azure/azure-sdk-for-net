@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="className"> The application's Java/Spark main class. </param>
         /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal HDInsightSparkActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryLinkedServiceReference sparkJobLinkedService, string className, DataFactoryElement<string> proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightSparkActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference sparkJobLinkedService, string className, DataFactoryElement<string> proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
-        public DataFactoryLinkedServiceReference SparkJobLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference SparkJobLinkedService { get; set; }
         /// <summary> The application's Java/Spark main class. </summary>
         public string ClassName { get; set; }
         /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>

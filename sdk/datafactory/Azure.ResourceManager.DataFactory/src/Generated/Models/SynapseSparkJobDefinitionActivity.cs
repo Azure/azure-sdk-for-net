@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="configurationType"> The type of the spark config. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal SynapseSparkJobDefinitionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<BinaryData> arguments, DataFactoryElement<string> file, DataFactoryElement<bool> scanFolder, DataFactoryElement<string> className, IList<BinaryData> files, IList<BinaryData> pythonCodeReference, IList<BinaryData> filesV2, BigDataPoolParametrizationReference targetBigDataPool, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, DataFactorySparkConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SynapseSparkJobDefinitionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<BinaryData> arguments, DataFactoryElement<string> file, DataFactoryElement<bool> scanFolder, DataFactoryElement<string> className, IList<BinaryData> files, IList<BinaryData> pythonCodeReference, IList<BinaryData> filesV2, BigDataPoolParametrizationReference targetBigDataPool, DataFactoryElement<string> executorSize, BinaryData conf, DataFactoryElement<string> driverSize, DataFactoryElement<int> numExecutors, DataFactorySparkConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
             Arguments = arguments;

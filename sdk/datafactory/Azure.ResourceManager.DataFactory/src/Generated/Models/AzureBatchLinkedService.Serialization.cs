@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecretBaseDefinition accessKey = default;
             DataFactoryElement<string> batchUri = default;
             DataFactoryElement<string> poolName = default;
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

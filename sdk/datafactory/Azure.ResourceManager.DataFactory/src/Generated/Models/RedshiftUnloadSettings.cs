@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
         /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public RedshiftUnloadSettings(DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName)
+        public RedshiftUnloadSettings(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName)
         {
             if (s3LinkedServiceName == null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
         /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedshiftUnloadSettings(DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedshiftUnloadSettings(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </summary>
-        public DataFactoryLinkedServiceReference S3LinkedServiceName { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference S3LinkedServiceName { get; set; }
         /// <summary> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BucketName { get; set; }
     }

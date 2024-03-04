@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collectionName"> The table name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
-        public MongoDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base(linkedServiceName)
+        public MongoDBCollectionDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="collectionName"> The table name of the MongoDB database. Type: string (or Expression with resultType string). </param>
-        internal MongoDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             CollectionName = collectionName;
             DatasetType = datasetType ?? "MongoDbCollection";

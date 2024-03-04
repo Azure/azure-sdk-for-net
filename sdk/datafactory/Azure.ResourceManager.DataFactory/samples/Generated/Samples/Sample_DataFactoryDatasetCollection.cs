@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string datasetName = "exampleDataset";
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference("LinkedServiceReference", "exampleLinkedService"))
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new Core.Expressions.DataFactory.DataFactoryLinkedServiceReference("LinkedServiceReference", "exampleLinkedService"))
             {
                 FolderPath = DataFactoryElement<string>.FromExpression("@dataset().MyFolderPath"),
                 FileName = DataFactoryElement<string>.FromExpression("@dataset().MyFileName"),
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string datasetName = "exampleDataset";
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference("LinkedServiceReference", "exampleLinkedService"))
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new Core.Expressions.DataFactory.DataFactoryLinkedServiceReference("LinkedServiceReference", "exampleLinkedService"))
             {
                 FolderPath = DataFactoryElement<string>.FromExpression("@dataset().MyFolderPath"),
                 FileName = DataFactoryElement<string>.FromExpression("@dataset().MyFileName"),

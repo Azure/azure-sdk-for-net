@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedService = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService = default;
             string linkedServiceType = default;
             MapperConnectionType type = default;
             bool? isInlineDataset = default;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedService = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceType"u8))

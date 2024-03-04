@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName)
+        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName)
         {
             if (accountName == null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountName, DataFactorySecretBaseDefinition accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountName, DataFactorySecretBaseDefinition accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             AccessKey = accessKey;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PoolName { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>

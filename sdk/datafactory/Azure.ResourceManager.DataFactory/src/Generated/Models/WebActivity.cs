@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Uri = uri;
             Headers = new ChangeTrackingDictionary<string, DataFactoryElement<string>>();
             Datasets = new ChangeTrackingList<DatasetReference>();
-            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            LinkedServices = new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
             ActivityType = "WebActivity";
         }
 
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        internal WebActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, WebActivityMethod method, DataFactoryElement<string> uri, IDictionary<string, DataFactoryElement<string>> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, DataFactoryElement<string> httpRequestTimeout, bool? turnOffAsync, IList<DatasetReference> datasets, IList<DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, WebActivityMethod method, DataFactoryElement<string> uri, IDictionary<string, DataFactoryElement<string>> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, DataFactoryElement<string> httpRequestTimeout, bool? turnOffAsync, IList<DatasetReference> datasets, IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> List of datasets passed to web endpoint. </summary>
         public IList<DatasetReference> Datasets { get; }
         /// <summary> List of linked services passed to web endpoint. </summary>
-        public IList<DataFactoryLinkedServiceReference> LinkedServices { get; }
+        public IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
     }

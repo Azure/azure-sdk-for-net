@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="RestResourceDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public RestResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public RestResourceDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. </param>
         /// <param name="paginationRules"> The pagination rules to compose next page requests. </param>
-        internal RestResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> relativeUri, DataFactoryElement<string> requestMethod, DataFactoryElement<string> requestBody, IDictionary<string, BinaryData> additionalHeaders, IDictionary<string, BinaryData> paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal RestResourceDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> relativeUri, DataFactoryElement<string> requestMethod, DataFactoryElement<string> requestBody, IDictionary<string, BinaryData> additionalHeaders, IDictionary<string, BinaryData> paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUri = relativeUri;
             RequestMethod = requestMethod;

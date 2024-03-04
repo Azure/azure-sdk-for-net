@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> path = default;
             DataFactoryElement<bool> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("path"u8))

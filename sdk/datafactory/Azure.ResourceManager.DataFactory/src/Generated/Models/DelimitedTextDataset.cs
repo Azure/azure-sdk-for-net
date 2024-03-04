@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DelimitedTextDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public DelimitedTextDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public DelimitedTextDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DataFactoryElement<string> columnDelimiter, DataFactoryElement<string> rowDelimiter, DataFactoryElement<string> encodingName, DataFactoryElement<string> compressionCodec, DataFactoryElement<string> compressionLevel, DataFactoryElement<string> quoteChar, DataFactoryElement<string> escapeChar, DataFactoryElement<bool> firstRowAsHeader, DataFactoryElement<string> nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DataFactoryElement<string> columnDelimiter, DataFactoryElement<string> rowDelimiter, DataFactoryElement<string> encodingName, DataFactoryElement<string> compressionCodec, DataFactoryElement<string> compressionLevel, DataFactoryElement<string> quoteChar, DataFactoryElement<string> escapeChar, DataFactoryElement<bool> firstRowAsHeader, DataFactoryElement<string> nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DataLocation = dataLocation;
             ColumnDelimiter = columnDelimiter;

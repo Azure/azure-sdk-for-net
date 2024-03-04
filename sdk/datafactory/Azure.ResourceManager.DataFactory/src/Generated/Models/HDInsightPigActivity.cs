@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
             Defines = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightPig";
         }
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="defines"> Allows user to specify defines for Pig job request. </param>
-        internal HDInsightPigActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, DataFactoryElement<IList<string>> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightPigActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> storageLinkedServices, DataFactoryElement<IList<string>> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
+        public IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
         public DataFactoryElement<IList<string>> Arguments { get; set; }
         /// <summary> Debug info option. </summary>
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
-        public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// Allows user to specify defines for Pig job request.
         /// <para>

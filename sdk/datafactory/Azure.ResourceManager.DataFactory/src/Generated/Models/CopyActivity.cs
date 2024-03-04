@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="preserve"> Preserve rules. </param>
         /// <param name="validateDataConsistency"> Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipErrorFile"> Specify the fault tolerance for data consistency. </param>
-        internal CopyActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopyActivitySource source, CopySink sink, BinaryData translator, DataFactoryElement<bool> enableStaging, StagingSettings stagingSettings, DataFactoryElement<int> parallelCopies, DataFactoryElement<int> dataIntegrationUnits, DataFactoryElement<bool> enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, DataFactoryLogSettings logSettings, IList<BinaryData> preserveRules, IList<BinaryData> preserve, DataFactoryElement<bool> validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CopyActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopyActivitySource source, CopySink sink, BinaryData translator, DataFactoryElement<bool> enableStaging, StagingSettings stagingSettings, DataFactoryElement<int> parallelCopies, DataFactoryElement<int> dataIntegrationUnits, DataFactoryElement<bool> enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, DataFactoryLogSettings logSettings, IList<BinaryData> preserveRules, IList<BinaryData> preserve, DataFactoryElement<bool> validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Inputs = inputs;
             Outputs = outputs;

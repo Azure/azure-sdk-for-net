@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
-        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService)
+        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService)
         {
             if (folderPath == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
-        internal DataFactoryBlobTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal DataFactoryBlobTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The max number of parallel files to handle when it is triggered. </summary>
         public int MaxConcurrency { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedService { get; set; }
     }
 }

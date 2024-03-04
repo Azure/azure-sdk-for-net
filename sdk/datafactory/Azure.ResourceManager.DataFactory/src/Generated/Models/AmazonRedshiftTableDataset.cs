@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AmazonRedshiftTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AmazonRedshiftTableDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
         /// <param name="table"> The Amazon Redshift table name. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The Amazon Redshift schema name. Type: string (or Expression with resultType string). </param>
-        internal AmazonRedshiftTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> table, DataFactoryElement<string> schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonRedshiftTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> table, DataFactoryElement<string> schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;

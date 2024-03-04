@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             Defines = new ChangeTrackingDictionary<string, BinaryData>();
             Variables = new ChangeTrackingDictionary<string, BinaryData>();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="defines"> Allows user to specify defines for Hive job request. </param>
         /// <param name="variables"> User specified arguments under hivevar namespace. </param>
         /// <param name="queryTimeout"> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </param>
-        internal HDInsightHiveActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> variables, int? queryTimeout) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightHiveActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> variables, int? queryTimeout) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
+        public IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
         /// <para>
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
-        public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// Allows user to specify defines for Hive job request.
         /// <para>

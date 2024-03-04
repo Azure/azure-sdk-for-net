@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference s3LinkedServiceName = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference s3LinkedServiceName = default;
             DataFactoryElement<string> bucketName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("s3LinkedServiceName"u8))
                 {
-                    s3LinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    s3LinkedServiceName = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("bucketName"u8))

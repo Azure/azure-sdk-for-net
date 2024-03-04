@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
-        public SapOpenHubTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> openHubDestinationName) : base(linkedServiceName)
+        public SapOpenHubTableDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> openHubDestinationName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
-        internal SapOpenHubTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> openHubDestinationName, DataFactoryElement<bool> excludeLastRequest, DataFactoryElement<int> baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOpenHubTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> openHubDestinationName, DataFactoryElement<bool> excludeLastRequest, DataFactoryElement<int> baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             OpenHubDestinationName = openHubDestinationName;
             ExcludeLastRequest = excludeLastRequest;

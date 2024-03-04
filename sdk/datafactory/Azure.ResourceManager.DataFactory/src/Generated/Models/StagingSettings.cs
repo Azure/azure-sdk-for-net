@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="StagingSettings"/>. </summary>
         /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public StagingSettings(DataFactoryLinkedServiceReference linkedServiceName)
+        public StagingSettings(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
         /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StagingSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, DataFactoryElement<bool> enableCompression, IDictionary<string, BinaryData> additionalProperties)
+        internal StagingSettings(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, DataFactoryElement<bool> enableCompression, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Staging linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Path { get; set; }
         /// <summary> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>

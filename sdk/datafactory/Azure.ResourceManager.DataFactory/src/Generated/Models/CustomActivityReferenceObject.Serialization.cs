@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IList<DataFactoryLinkedServiceReference> linkedServices = default;
+            IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> linkedServices = default;
             IList<DatasetReference> datasets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    List<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> array = new List<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                        array.Add(JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(item.GetRawText()));
                     }
                     linkedServices = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>(), serializedAdditionalRawData);
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomActivityReferenceObject>.Write(ModelReaderWriterOptions options)

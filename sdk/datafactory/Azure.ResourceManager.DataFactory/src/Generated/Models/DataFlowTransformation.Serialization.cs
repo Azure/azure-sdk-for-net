@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string description = default;
             DatasetReference dataset = default;
-            DataFactoryLinkedServiceReference linkedService = default;
+            Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService = default;
             DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedService = JsonSerializer.Deserialize<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))

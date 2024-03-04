@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scriptBlockExecutionTimeout"> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="scripts"> Array of script blocks. Type: array. </param>
         /// <param name="logSettings"> Log settings of script activity. </param>
-        internal DataFactoryScriptActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypeLogSettings logSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DataFactoryScriptActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> scriptBlockExecutionTimeout, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypeLogSettings logSettings) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptBlockExecutionTimeout = scriptBlockExecutionTimeout;
             Scripts = scripts;

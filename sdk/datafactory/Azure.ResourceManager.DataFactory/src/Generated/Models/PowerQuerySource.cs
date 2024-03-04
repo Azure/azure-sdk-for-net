@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
         /// <param name="script"> source script. </param>
-        internal PowerQuerySource(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryLinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData, schemaLinkedService)
+        internal PowerQuerySource(string name, string description, DatasetReference dataset, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData, schemaLinkedService)
         {
             Script = script;
         }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new ArgumentNullException(nameof(jarFilePath));
             }
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             ClassName = className;
             JarFilePath = jarFilePath;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
-        internal HDInsightMapReduceActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, DataFactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightMapReduceActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
+        public IList<Core.Expressions.DataFactory.DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
         /// <para>
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> JarFilePath { get; set; }
         /// <summary> Jar linked service reference. </summary>
-        public DataFactoryLinkedServiceReference JarLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference JarLinkedService { get; set; }
         /// <summary>
         /// Jar libs.
         /// <para>

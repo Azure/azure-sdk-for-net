@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public GoogleBigQueryObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public GoogleBigQueryObjectDataset(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> This property will be retired. Please consider using database + table properties instead. </param>
         /// <param name="table"> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
         /// <param name="dataset"> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
-        internal GoogleBigQueryObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, DataFactoryElement<string> table, DataFactoryElement<string> dataset) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal GoogleBigQueryObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, DataFactoryElement<string> table, DataFactoryElement<string> dataset) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;

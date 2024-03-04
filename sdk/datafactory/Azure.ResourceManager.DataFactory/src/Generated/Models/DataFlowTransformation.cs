@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFlowTransformation(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataFlowTransformation(string name, string description, DatasetReference dataset, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary> Linked service reference. </summary>
-        public DataFactoryLinkedServiceReference LinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary> Flowlet Reference. </summary>
         public DataFlowReference Flowlet { get; set; }
     }

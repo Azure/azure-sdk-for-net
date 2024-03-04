@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData)
+        internal DataFlowSource(string name, string description, DatasetReference dataset, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData)
         {
             SchemaLinkedService = schemaLinkedService;
         }
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Schema linked service reference. </summary>
-        public DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
+        public Core.Expressions.DataFactory.DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }
