@@ -271,12 +271,12 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 If you want to exclude specific instruments from being collected in your application's telemetry, such as metrics from the distro or custom metrics, use the following code snippet. 
 
 ```C#
-builder.Services.ConfigureOpenTelemetryMeterProvider(
-    (sp, builder) => builder.AddView((instrument) =>
+builder.Services.ConfigureOpenTelemetryMeterProvider(b =>
+    b.AddView((instrument) =>
     {
-        if (instrument.Name == "http.client.request.duration")
+        if (instrument.Name == "http.server.request.duration")
         {
-            return MetricStreamConfiguration.Drop;
+            return null;
         }
 
         return null;
