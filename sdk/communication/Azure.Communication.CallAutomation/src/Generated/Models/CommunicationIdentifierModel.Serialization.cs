@@ -41,7 +41,7 @@ namespace Azure.Communication
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);
             }
-            if (MicrosoftTeamsApp != null)
+            if (CallAutomation.Optional.IsDefined(MicrosoftTeamsApp))
             {
                 writer.WritePropertyName("microsoftTeamsApp"u8);
                 writer.WriteObjectValue(MicrosoftTeamsApp);

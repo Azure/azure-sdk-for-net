@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (PlaySourceInfo != null)
+            if (Optional.IsDefined(PlaySourceInfo))
             {
                 writer.WritePropertyName("playSourceInfo"u8);
                 writer.WriteObjectValue(PlaySourceInfo);
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (OperationCallbackUri != null)
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
