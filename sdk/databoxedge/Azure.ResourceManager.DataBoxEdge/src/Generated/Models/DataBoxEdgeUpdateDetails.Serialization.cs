@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (UpdateTitle != null)
+            if (Optional.IsDefined(UpdateTitle))
             {
                 writer.WritePropertyName("updateTitle"u8);
                 writer.WriteStringValue(UpdateTitle);
             }
-            if (UpdateSizeInBytes.HasValue)
+            if (Optional.IsDefined(UpdateSizeInBytes))
             {
                 writer.WritePropertyName("updateSize"u8);
                 writer.WriteNumberValue(UpdateSizeInBytes.Value);
             }
-            if (UpdateType.HasValue)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (TargetVersion != null)
+            if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
                 writer.WriteStringValue(TargetVersion);
             }
-            if (FriendlyVersionNumber != null)
+            if (Optional.IsDefined(FriendlyVersionNumber))
             {
                 writer.WritePropertyName("friendlyVersionNumber"u8);
                 writer.WriteStringValue(FriendlyVersionNumber);
             }
-            if (EstimatedInstallTimeInMins.HasValue)
+            if (Optional.IsDefined(EstimatedInstallTimeInMins))
             {
                 writer.WritePropertyName("estimatedInstallTimeInMins"u8);
                 writer.WriteNumberValue(EstimatedInstallTimeInMins.Value);
             }
-            if (RebootBehavior.HasValue)
+            if (Optional.IsDefined(RebootBehavior))
             {
                 writer.WritePropertyName("rebootBehavior"u8);
                 writer.WriteStringValue(RebootBehavior.Value.ToString());
             }
-            if (InstallationImpact.HasValue)
+            if (Optional.IsDefined(InstallationImpact))
             {
                 writer.WritePropertyName("installationImpact"u8);
                 writer.WriteStringValue(InstallationImpact.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

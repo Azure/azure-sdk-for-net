@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Exceptiontype != null)
+            if (Optional.IsDefined(Exceptiontype))
             {
                 writer.WritePropertyName("exceptiontype"u8);
                 writer.WriteStringValue(Exceptiontype);
             }
-            if (Errordetail != null)
+            if (Optional.IsDefined(Errordetail))
             {
                 writer.WritePropertyName("errordetail"u8);
                 writer.WriteStringValue(Errordetail);

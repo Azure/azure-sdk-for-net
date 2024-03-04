@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AzureQueue != null)
+            if (Optional.IsDefined(AzureQueue))
             {
                 writer.WritePropertyName("azureQueue"u8);
                 writer.WriteObjectValue(AzureQueue);
             }
-            if (Custom != null)
+            if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteObjectValue(Custom);
             }
-            if (Http != null)
+            if (Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
                 writer.WriteObjectValue(Http);
             }
-            if (Tcp != null)
+            if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteObjectValue(Tcp);

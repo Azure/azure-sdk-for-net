@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (NumberOfCores.HasValue)
+            if (Optional.IsDefined(NumberOfCores))
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (OSDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(OSDiskSizeInMB))
             {
                 writer.WritePropertyName("osDiskSizeInMB"u8);
                 writer.WriteNumberValue(OSDiskSizeInMB.Value);
             }
-            if (ResourceDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(ResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("resourceDiskSizeInMB"u8);
                 writer.WriteNumberValue(ResourceDiskSizeInMB.Value);
             }
-            if (MemoryInMB.HasValue)
+            if (Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMB"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (MaxDataDiskCount.HasValue)
+            if (Optional.IsDefined(MaxDataDiskCount))
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("customerResolutionCode"u8);
             writer.WriteStringValue(CustomerResolutionCode.ToSerialString());
-            if (!(SerialNumberCustomerResolutionMap is ChangeTrackingDictionary<string, CustomerResolutionCode> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SerialNumberCustomerResolutionMap))
             {
                 writer.WritePropertyName("serialNumberCustomerResolutionMap"u8);
                 writer.WriteStartObject();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SourceRegion.HasValue)
+            if (Optional.IsDefined(SourceRegion))
             {
                 writer.WritePropertyName("sourceRegion"u8);
                 writer.WriteStringValue(SourceRegion.Value);
             }
-            if (SourceBackupInstanceId != null)
+            if (Optional.IsDefined(SourceBackupInstanceId))
             {
                 writer.WritePropertyName("sourceBackupInstanceId"u8);
                 writer.WriteStringValue(SourceBackupInstanceId);

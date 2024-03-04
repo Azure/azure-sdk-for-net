@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,24 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (LinkedServiceType != null)
+            if (Optional.IsDefined(LinkedServiceType))
             {
                 writer.WritePropertyName("linkedServiceType"u8);
                 writer.WriteStringValue(LinkedServiceType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (IsInlineDataset.HasValue)
+            if (Optional.IsDefined(IsInlineDataset))
             {
                 writer.WritePropertyName("isInlineDataset"u8);
                 writer.WriteBooleanValue(IsInlineDataset.Value);
             }
-            if (!(CommonDslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CommonDslConnectorProperties))
             {
                 writer.WritePropertyName("commonDslConnectorProperties"u8);
                 writer.WriteStartArray();

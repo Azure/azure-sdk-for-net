@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (SourceRepository != null)
+            if (Optional.IsDefined(SourceRepository))
             {
                 writer.WritePropertyName("sourceRepository"u8);
                 writer.WriteObjectValue(SourceRepository);
             }
-            if (!(SourceTriggerEvents is ChangeTrackingList<ContainerRegistrySourceTriggerEvent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceTriggerEvents))
             {
                 writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
