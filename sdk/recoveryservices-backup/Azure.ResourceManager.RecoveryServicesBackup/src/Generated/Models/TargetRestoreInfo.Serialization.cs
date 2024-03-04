@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (OverwriteOption.HasValue)
+            if (Optional.IsDefined(OverwriteOption))
             {
                 writer.WritePropertyName("overwriteOption"u8);
                 writer.WriteStringValue(OverwriteOption.Value.ToString());
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (TargetDirectoryForFileRestore != null)
+            if (Optional.IsDefined(TargetDirectoryForFileRestore))
             {
                 writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);

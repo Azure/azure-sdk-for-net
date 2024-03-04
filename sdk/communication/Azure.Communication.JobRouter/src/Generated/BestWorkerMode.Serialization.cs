@@ -27,12 +27,12 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (ScoringRule != null)
+            if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
                 writer.WriteObjectValue(ScoringRule);
             }
-            if (ScoringRuleOptions != null)
+            if (Optional.IsDefined(ScoringRuleOptions))
             {
                 writer.WritePropertyName("scoringRuleOptions"u8);
                 writer.WriteObjectValue(ScoringRuleOptions);
@@ -41,7 +41,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
             writer.WriteNumberValue(MaxConcurrentOffers);
-            if (BypassSelectors.HasValue)
+            if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);

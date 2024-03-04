@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (SetPasswordLink != null)
+            if (Optional.IsDefined(SetPasswordLink))
             {
                 writer.WritePropertyName("setPasswordLink"u8);
                 writer.WriteStringValue(SetPasswordLink);

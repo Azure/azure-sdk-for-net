@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("polarization"u8);
             writer.WriteStringValue(Polarization.ToString());
-            if (options.Format != "W" && !(Authorizations is ChangeTrackingList<AuthorizedGroundStation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();

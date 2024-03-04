@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (StorageModelType.HasValue)
+            if (Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (StorageTypeState.HasValue)
+            if (Optional.IsDefined(StorageTypeState))
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (EnhancedSecurityState.HasValue)
+            if (Optional.IsDefined(EnhancedSecurityState))
             {
                 writer.WritePropertyName("enhancedSecurityState"u8);
                 writer.WriteStringValue(EnhancedSecurityState.Value.ToString());
             }
-            if (SoftDeleteFeatureState.HasValue)
+            if (Optional.IsDefined(SoftDeleteFeatureState))
             {
                 writer.WritePropertyName("softDeleteFeatureState"u8);
                 writer.WriteStringValue(SoftDeleteFeatureState.Value.ToString());
             }
-            if (SoftDeleteRetentionPeriodInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsSoftDeleteFeatureStateEditable.HasValue)
+            if (Optional.IsDefined(IsSoftDeleteFeatureStateEditable))
             {
                 writer.WritePropertyName("isSoftDeleteFeatureStateEditable"u8);
                 writer.WriteBooleanValue(IsSoftDeleteFeatureStateEditable.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (SapSid != null)
+            if (Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
             }
-            if (SapHostname != null)
+            if (Optional.IsDefined(SapHostname))
             {
                 writer.WritePropertyName("sapHostname"u8);
                 writer.WriteStringValue(SapHostname);
             }
-            if (SapInstanceNr != null)
+            if (Optional.IsDefined(SapInstanceNr))
             {
                 writer.WritePropertyName("sapInstanceNr"u8);
                 writer.WriteStringValue(SapInstanceNr);
             }
-            if (!(SapHostFileEntries is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SapHostFileEntries))
             {
                 writer.WritePropertyName("sapHostFileEntries"u8);
                 writer.WriteStartArray();
@@ -51,37 +52,37 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SapUsername != null)
+            if (Optional.IsDefined(SapUsername))
             {
                 writer.WritePropertyName("sapUsername"u8);
                 writer.WriteStringValue(SapUsername);
             }
-            if (SapPassword != null)
+            if (Optional.IsDefined(SapPassword))
             {
                 writer.WritePropertyName("sapPassword"u8);
                 writer.WriteStringValue(SapPassword);
             }
-            if (SapPasswordUri != null)
+            if (Optional.IsDefined(SapPasswordUri))
             {
                 writer.WritePropertyName("sapPasswordUri"u8);
                 writer.WriteStringValue(SapPasswordUri.AbsoluteUri);
             }
-            if (SapClientId != null)
+            if (Optional.IsDefined(SapClientId))
             {
                 writer.WritePropertyName("sapClientId"u8);
                 writer.WriteStringValue(SapClientId);
             }
-            if (SapPortNumber != null)
+            if (Optional.IsDefined(SapPortNumber))
             {
                 writer.WritePropertyName("sapPortNumber"u8);
                 writer.WriteStringValue(SapPortNumber);
             }
-            if (SslCertificateUri != null)
+            if (Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (SslPreference.HasValue)
+            if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());

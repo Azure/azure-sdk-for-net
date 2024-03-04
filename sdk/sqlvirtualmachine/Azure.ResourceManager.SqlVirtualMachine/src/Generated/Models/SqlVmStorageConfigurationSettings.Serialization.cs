@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (SqlDataSettings != null)
+            if (Optional.IsDefined(SqlDataSettings))
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
                 writer.WriteObjectValue(SqlDataSettings);
             }
-            if (SqlLogSettings != null)
+            if (Optional.IsDefined(SqlLogSettings))
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
                 writer.WriteObjectValue(SqlLogSettings);
             }
-            if (SqlTempDBSettings != null)
+            if (Optional.IsDefined(SqlTempDBSettings))
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
                 writer.WriteObjectValue(SqlTempDBSettings);
             }
-            if (IsSqlSystemDBOnDataDisk.HasValue)
+            if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
             {
                 writer.WritePropertyName("sqlSystemDbOnDataDisk"u8);
                 writer.WriteBooleanValue(IsSqlSystemDBOnDataDisk.Value);
             }
-            if (DiskConfigurationType.HasValue)
+            if (Optional.IsDefined(DiskConfigurationType))
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
             }
-            if (StorageWorkloadType.HasValue)
+            if (Optional.IsDefined(StorageWorkloadType))
             {
                 writer.WritePropertyName("storageWorkloadType"u8);
                 writer.WriteStringValue(StorageWorkloadType.Value.ToString());

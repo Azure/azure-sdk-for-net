@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(ManagedRuleSets is ChangeTrackingList<WafPolicyManagedRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedRuleSets))
             {
                 writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();

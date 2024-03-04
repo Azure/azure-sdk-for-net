@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName.Value.ToString());
             }
-            if (options.Format != "W" && JobProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(JobProgress))
             {
                 writer.WritePropertyName("jobProgress"u8);
                 writer.WriteStringValue(JobProgress);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (MocGroup != null)
+            if (Optional.IsDefined(MocGroup))
             {
                 writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
-            if (MocLocation != null)
+            if (Optional.IsDefined(MocLocation))
             {
                 writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
-            if (MocVnetName != null)
+            if (Optional.IsDefined(MocVnetName))
             {
                 writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);

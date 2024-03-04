@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStringValue(Action.ToSerialString());
             writer.WritePropertyName("ipMask"u8);
             writer.WriteStringValue(IPMask);
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target.Value.ToSerialString());

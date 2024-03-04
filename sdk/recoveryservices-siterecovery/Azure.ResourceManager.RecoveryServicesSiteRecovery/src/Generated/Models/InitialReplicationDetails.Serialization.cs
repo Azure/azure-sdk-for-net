@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (InitialReplicationType != null)
+            if (Optional.IsDefined(InitialReplicationType))
             {
                 writer.WritePropertyName("initialReplicationType"u8);
                 writer.WriteStringValue(InitialReplicationType);
             }
-            if (InitialReplicationProgressPercentage != null)
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
             {
                 writer.WritePropertyName("initialReplicationProgressPercentage"u8);
                 writer.WriteStringValue(InitialReplicationProgressPercentage);

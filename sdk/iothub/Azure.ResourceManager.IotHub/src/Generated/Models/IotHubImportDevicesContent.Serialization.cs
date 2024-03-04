@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -30,32 +31,32 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(InputBlobContainerUri.AbsoluteUri);
             writer.WritePropertyName("outputBlobContainerUri"u8);
             writer.WriteStringValue(OutputBlobContainerUri.AbsoluteUri);
-            if (InputBlobName != null)
+            if (Optional.IsDefined(InputBlobName))
             {
                 writer.WritePropertyName("inputBlobName"u8);
                 writer.WriteStringValue(InputBlobName);
             }
-            if (OutputBlobName != null)
+            if (Optional.IsDefined(OutputBlobName))
             {
                 writer.WritePropertyName("outputBlobName"u8);
                 writer.WriteStringValue(OutputBlobName);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (IncludeConfigurations.HasValue)
+            if (Optional.IsDefined(IncludeConfigurations))
             {
                 writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
-            if (ConfigurationsBlobName != null)
+            if (Optional.IsDefined(ConfigurationsBlobName))
             {
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);

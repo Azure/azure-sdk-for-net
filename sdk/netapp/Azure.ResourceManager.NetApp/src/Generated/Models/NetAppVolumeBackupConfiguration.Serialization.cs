@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (BackupPolicyId != null)
+            if (Optional.IsDefined(BackupPolicyId))
             {
                 writer.WritePropertyName("backupPolicyId"u8);
                 writer.WriteStringValue(BackupPolicyId);
             }
-            if (IsPolicyEnforced.HasValue)
+            if (Optional.IsDefined(IsPolicyEnforced))
             {
                 writer.WritePropertyName("policyEnforced"u8);
                 writer.WriteBooleanValue(IsPolicyEnforced.Value);
             }
-            if (IsBackupEnabled.HasValue)
+            if (Optional.IsDefined(IsBackupEnabled))
             {
                 writer.WritePropertyName("backupEnabled"u8);
                 writer.WriteBooleanValue(IsBackupEnabled.Value);
             }
-            if (BackupVaultId != null)
+            if (Optional.IsDefined(BackupVaultId))
             {
                 writer.WritePropertyName("backupVaultId"u8);
                 writer.WriteStringValue(BackupVaultId);

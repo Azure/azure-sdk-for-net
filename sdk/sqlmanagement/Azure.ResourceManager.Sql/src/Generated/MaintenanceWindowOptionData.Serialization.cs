@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(MaintenanceWindowCycles is ChangeTrackingList<MaintenanceWindowTimeRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
             {
                 writer.WritePropertyName("maintenanceWindowCycles"u8);
                 writer.WriteStartArray();
@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (MinDurationInMinutes.HasValue)
+            if (Optional.IsDefined(MinDurationInMinutes))
             {
                 writer.WritePropertyName("minDurationInMinutes"u8);
                 writer.WriteNumberValue(MinDurationInMinutes.Value);
             }
-            if (DefaultDurationInMinutes.HasValue)
+            if (Optional.IsDefined(DefaultDurationInMinutes))
             {
                 writer.WritePropertyName("defaultDurationInMinutes"u8);
                 writer.WriteNumberValue(DefaultDurationInMinutes.Value);
             }
-            if (MinCycles.HasValue)
+            if (Optional.IsDefined(MinCycles))
             {
                 writer.WritePropertyName("minCycles"u8);
                 writer.WriteNumberValue(MinCycles.Value);
             }
-            if (TimeGranularityInMinutes.HasValue)
+            if (Optional.IsDefined(TimeGranularityInMinutes))
             {
                 writer.WritePropertyName("timeGranularityInMinutes"u8);
                 writer.WriteNumberValue(TimeGranularityInMinutes.Value);
             }
-            if (AllowMultipleMaintenanceWindowsPerCycle.HasValue)
+            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
             {
                 writer.WritePropertyName("allowMultipleMaintenanceWindowsPerCycle"u8);
                 writer.WriteBooleanValue(AllowMultipleMaintenanceWindowsPerCycle.Value);

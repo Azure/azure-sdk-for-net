@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ProjectNumber != null)
+            if (Optional.IsDefined(ProjectNumber))
             {
                 writer.WritePropertyName("projectNumber"u8);
                 writer.WriteStringValue(ProjectNumber);
             }
-            if (ProjectId != null)
+            if (Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (options.Format != "W" && WorkloadIdentityPoolId != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadIdentityPoolId))
             {
                 writer.WritePropertyName("workloadIdentityPoolId"u8);
                 writer.WriteStringValue(WorkloadIdentityPoolId);
             }
-            if (options.Format != "W" && ProjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (IsDryRun.HasValue)
+            if (Optional.IsDefined(IsDryRun))
             {
                 writer.WritePropertyName("isDryRun"u8);
                 writer.WriteBooleanValue(IsDryRun.Value);

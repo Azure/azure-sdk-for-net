@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MixedReality;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.MixedReality.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nameAvailable"u8);
             writer.WriteBooleanValue(IsNameAvailable);
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

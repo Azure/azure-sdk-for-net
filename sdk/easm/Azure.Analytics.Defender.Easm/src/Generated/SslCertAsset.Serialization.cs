@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Sha1 != null)
+            if (Optional.IsDefined(Sha1))
             {
                 writer.WritePropertyName("sha1"u8);
                 writer.WriteStringValue(Sha1);
             }
-            if (!(SubjectCommonNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectCommonNames))
             {
                 writer.WritePropertyName("subjectCommonNames"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Organizations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Organizations))
             {
                 writer.WritePropertyName("organizations"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(OrganizationalUnits is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(OrganizationalUnits))
             {
                 writer.WritePropertyName("organizationalUnits"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerCommonNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerCommonNames))
             {
                 writer.WritePropertyName("issuerCommonNames"u8);
                 writer.WriteStartArray();
@@ -72,22 +72,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (SigAlgName != null)
+            if (Optional.IsDefined(SigAlgName))
             {
                 writer.WritePropertyName("sigAlgName"u8);
                 writer.WriteStringValue(SigAlgName);
             }
-            if (InvalidAfter.HasValue)
+            if (Optional.IsDefined(InvalidAfter))
             {
                 writer.WritePropertyName("invalidAfter"u8);
                 writer.WriteStringValue(InvalidAfter.Value, "O");
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (!(SubjectAlternativeNames is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerAlternativeNames is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerAlternativeNames))
             {
                 writer.WritePropertyName("issuerAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<SourceDetails> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -117,37 +117,37 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (InvalidBefore.HasValue)
+            if (Optional.IsDefined(InvalidBefore))
             {
                 writer.WritePropertyName("invalidBefore"u8);
                 writer.WriteStringValue(InvalidBefore.Value, "O");
             }
-            if (KeySize.HasValue)
+            if (Optional.IsDefined(KeySize))
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (KeyAlgorithm != null)
+            if (Optional.IsDefined(KeyAlgorithm))
             {
                 writer.WritePropertyName("keyAlgorithm"u8);
                 writer.WriteStringValue(KeyAlgorithm);
             }
-            if (!(SubjectLocality is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectLocality))
             {
                 writer.WritePropertyName("subjectLocality"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SubjectState is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectState))
             {
                 writer.WritePropertyName("subjectState"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SubjectCountry is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectCountry))
             {
                 writer.WritePropertyName("subjectCountry"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerLocality is ChangeTrackingList<string> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerLocality))
             {
                 writer.WritePropertyName("issuerLocality"u8);
                 writer.WriteStartArray();
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerState is ChangeTrackingList<string> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerState))
             {
                 writer.WritePropertyName("issuerState"u8);
                 writer.WriteStartArray();
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerCountry is ChangeTrackingList<string> collection11 && collection11.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerCountry))
             {
                 writer.WritePropertyName("issuerCountry"u8);
                 writer.WriteStartArray();
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SubjectOrganizations is ChangeTrackingList<string> collection12 && collection12.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectOrganizations))
             {
                 writer.WritePropertyName("subjectOrganizations"u8);
                 writer.WriteStartArray();
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SubjectOrganizationalUnits is ChangeTrackingList<string> collection13 && collection13.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectOrganizationalUnits))
             {
                 writer.WritePropertyName("subjectOrganizationalUnits"u8);
                 writer.WriteStartArray();
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerOrganizations is ChangeTrackingList<string> collection14 && collection14.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerOrganizations))
             {
                 writer.WritePropertyName("issuerOrganizations"u8);
                 writer.WriteStartArray();
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IssuerOrganizationalUnits is ChangeTrackingList<string> collection15 && collection15.IsUndefined))
+            if (Optional.IsCollectionDefined(IssuerOrganizationalUnits))
             {
                 writer.WritePropertyName("issuerOrganizationalUnits"u8);
                 writer.WriteStartArray();
@@ -247,32 +247,32 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (CertificateAuthority.HasValue)
+            if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteBooleanValue(CertificateAuthority.Value);
             }
-            if (SelfSigned.HasValue)
+            if (Optional.IsDefined(SelfSigned))
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteBooleanValue(SelfSigned.Value);
             }
-            if (SigAlgOid != null)
+            if (Optional.IsDefined(SigAlgOid))
             {
                 writer.WritePropertyName("sigAlgOid"u8);
                 writer.WriteStringValue(SigAlgOid);
             }
-            if (Recent.HasValue)
+            if (Optional.IsDefined(Recent))
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (ValidationType.HasValue)
+            if (Optional.IsDefined(ValidationType))
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());

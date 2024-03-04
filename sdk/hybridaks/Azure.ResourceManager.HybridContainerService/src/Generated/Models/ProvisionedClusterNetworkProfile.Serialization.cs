@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (LoadBalancerProfile != null)
+            if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
-            if (NetworkPolicy.HasValue)
+            if (Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
-            if (PodCidr != null)
+            if (Optional.IsDefined(PodCidr))
             {
                 writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);

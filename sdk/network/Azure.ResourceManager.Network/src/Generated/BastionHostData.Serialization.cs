@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(IPConfigurations is ChangeTrackingList<BastionHostIPConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -92,57 +92,57 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (DnsName != null)
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (VirtualNetwork != null)
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ScaleUnits.HasValue)
+            if (Optional.IsDefined(ScaleUnits))
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (DisableCopyPaste.HasValue)
+            if (Optional.IsDefined(DisableCopyPaste))
             {
                 writer.WritePropertyName("disableCopyPaste"u8);
                 writer.WriteBooleanValue(DisableCopyPaste.Value);
             }
-            if (EnableFileCopy.HasValue)
+            if (Optional.IsDefined(EnableFileCopy))
             {
                 writer.WritePropertyName("enableFileCopy"u8);
                 writer.WriteBooleanValue(EnableFileCopy.Value);
             }
-            if (EnableIPConnect.HasValue)
+            if (Optional.IsDefined(EnableIPConnect))
             {
                 writer.WritePropertyName("enableIpConnect"u8);
                 writer.WriteBooleanValue(EnableIPConnect.Value);
             }
-            if (EnableShareableLink.HasValue)
+            if (Optional.IsDefined(EnableShareableLink))
             {
                 writer.WritePropertyName("enableShareableLink"u8);
                 writer.WriteBooleanValue(EnableShareableLink.Value);
             }
-            if (EnableTunneling.HasValue)
+            if (Optional.IsDefined(EnableTunneling))
             {
                 writer.WritePropertyName("enableTunneling"u8);
                 writer.WriteBooleanValue(EnableTunneling.Value);
             }
-            if (EnableKerberos.HasValue)
+            if (Optional.IsDefined(EnableKerberos))
             {
                 writer.WritePropertyName("enableKerberos"u8);
                 writer.WriteBooleanValue(EnableKerberos.Value);

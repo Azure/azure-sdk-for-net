@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(KeyspaceName);
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
-            if (RemoteAccountName != null)
+            if (Optional.IsDefined(RemoteAccountName))
             {
                 writer.WritePropertyName("remoteAccountName"u8);
                 writer.WriteStringValue(RemoteAccountName);

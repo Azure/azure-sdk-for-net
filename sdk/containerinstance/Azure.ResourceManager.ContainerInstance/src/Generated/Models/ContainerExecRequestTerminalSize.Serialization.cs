@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Rows.HasValue)
+            if (Optional.IsDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteNumberValue(Rows.Value);
             }
-            if (Cols.HasValue)
+            if (Optional.IsDefined(Cols))
             {
                 writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);

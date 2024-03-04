@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (MinimumCount.HasValue)
+            if (Optional.IsDefined(MinimumCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumCount.Value);
             }
-            if (MaximumCount.HasValue)
+            if (Optional.IsDefined(MaximumCount))
             {
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumCount.Value);
             }
-            if (CurrentCount.HasValue)
+            if (Optional.IsDefined(CurrentCount))
             {
                 writer.WritePropertyName("currentCount"u8);
                 writer.WriteNumberValue(CurrentCount.Value);

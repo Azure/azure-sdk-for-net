@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (StacksetName != null)
+            if (Optional.IsDefined(StacksetName))
             {
                 writer.WritePropertyName("stacksetName"u8);
                 writer.WriteStringValue(StacksetName);
             }
-            if (!(ExcludedAccountIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedAccountIds))
             {
                 writer.WritePropertyName("excludedAccountIds"u8);
                 writer.WriteStartArray();

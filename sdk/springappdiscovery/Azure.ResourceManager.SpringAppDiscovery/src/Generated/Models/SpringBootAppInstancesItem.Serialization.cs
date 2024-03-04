@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("machineArmId"u8);
             writer.WriteStringValue(MachineArmId);
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (JvmMemoryInMB.HasValue)
+            if (Optional.IsDefined(JvmMemoryInMB))
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);

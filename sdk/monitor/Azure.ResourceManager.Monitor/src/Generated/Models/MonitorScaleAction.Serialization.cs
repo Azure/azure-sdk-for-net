@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScaleType.ToSerialString());
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

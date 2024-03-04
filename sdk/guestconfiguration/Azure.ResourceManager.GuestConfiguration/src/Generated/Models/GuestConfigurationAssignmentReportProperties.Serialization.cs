@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && ReportId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId.Value);
             }
-            if (Assignment != null)
+            if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
                 writer.WriteObjectValue(Assignment);
             }
-            if (Vm != null)
+            if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 if (Details != null)
                 {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("details");
                 }
             }
-            if (options.Format != "W" && VmssResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmssResourceId))
             {
                 writer.WritePropertyName("vmssResourceId"u8);
                 writer.WriteStringValue(VmssResourceId);

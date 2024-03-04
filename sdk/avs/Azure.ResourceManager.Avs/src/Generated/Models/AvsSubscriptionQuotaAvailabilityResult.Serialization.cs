@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(HostsRemaining is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HostsRemaining))
             {
                 writer.WritePropertyName("hostsRemaining"u8);
                 writer.WriteStartObject();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && QuotaEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QuotaEnabled))
             {
                 writer.WritePropertyName("quotaEnabled"u8);
                 writer.WriteStringValue(QuotaEnabled.Value.ToString());

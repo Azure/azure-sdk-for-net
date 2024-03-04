@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MachineName != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && PolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && PolicyFriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyFriendlyName))
             {
                 writer.WritePropertyName("policyFriendlyName"u8);
                 writer.WriteStringValue(PolicyFriendlyName);
             }
-            if (options.Format != "W" && RecoveryServicesProviderId != null)
+            if (options.Format != "W" && Optional.IsDefined(RecoveryServicesProviderId))
             {
                 writer.WritePropertyName("recoveryServicesProviderId"u8);
                 writer.WriteStringValue(RecoveryServicesProviderId);
             }
-            if (options.Format != "W" && ReplicationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
                 writer.WriteStringValue(ReplicationStatus);
             }
-            if (options.Format != "W" && MigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());
             }
-            if (options.Format != "W" && MigrationStateDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationStateDescription))
             {
                 writer.WritePropertyName("migrationStateDescription"u8);
                 writer.WriteStringValue(MigrationStateDescription);
             }
-            if (options.Format != "W" && LastTestMigrationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastTestMigrationOn))
             {
                 writer.WritePropertyName("lastTestMigrationTime"u8);
                 writer.WriteStringValue(LastTestMigrationOn.Value, "O");
             }
-            if (options.Format != "W" && LastTestMigrationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LastTestMigrationStatus))
             {
                 writer.WritePropertyName("lastTestMigrationStatus"u8);
                 writer.WriteStringValue(LastTestMigrationStatus);
             }
-            if (options.Format != "W" && LastMigrationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastMigrationOn))
             {
                 writer.WritePropertyName("lastMigrationTime"u8);
                 writer.WriteStringValue(LastMigrationOn.Value, "O");
             }
-            if (options.Format != "W" && LastMigrationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LastMigrationStatus))
             {
                 writer.WritePropertyName("lastMigrationStatus"u8);
                 writer.WriteStringValue(LastMigrationStatus);
             }
-            if (options.Format != "W" && TestMigrateState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TestMigrateState))
             {
                 writer.WritePropertyName("testMigrateState"u8);
                 writer.WriteStringValue(TestMigrateState.Value.ToString());
             }
-            if (options.Format != "W" && TestMigrateStateDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(TestMigrateStateDescription))
             {
                 writer.WritePropertyName("testMigrateStateDescription"u8);
                 writer.WriteStringValue(TestMigrateStateDescription);
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AllowedOperations is ChangeTrackingList<MigrationItemOperation> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedOperations))
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
@@ -116,12 +117,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CurrentJob != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
                 writer.WriteObjectValue(CurrentJob);
             }
-            if (options.Format != "W" && !(CriticalJobHistory is ChangeTrackingList<CriticalJobHistoryDetails> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CriticalJobHistory))
             {
                 writer.WritePropertyName("criticalJobHistory"u8);
                 writer.WriteStartArray();
@@ -131,12 +132,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EventCorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(EventCorrelationId))
             {
                 writer.WritePropertyName("eventCorrelationId"u8);
                 writer.WriteStringValue(EventCorrelationId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

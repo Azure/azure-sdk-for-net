@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CweId != null)
+            if (Optional.IsDefined(CweId))
             {
                 writer.WritePropertyName("cweId"u8);
                 writer.WriteStringValue(CweId);
             }
-            if (CvssScore.HasValue)
+            if (Optional.IsDefined(CvssScore))
             {
                 writer.WritePropertyName("cvssScore"u8);
                 writer.WriteNumberValue(CvssScore.Value);
             }
-            if (Cvss3Summary != null)
+            if (Optional.IsDefined(Cvss3Summary))
             {
                 writer.WritePropertyName("cvss3Summary"u8);
                 writer.WriteObjectValue(Cvss3Summary);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (IsPrivileged.HasValue)
+            if (Optional.IsDefined(IsPrivileged))
             {
                 writer.WritePropertyName("privileged"u8);
                 writer.WriteBooleanValue(IsPrivileged.Value);
             }
-            if (AllowPrivilegeEscalation.HasValue)
+            if (Optional.IsDefined(AllowPrivilegeEscalation))
             {
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (RunAsGroup.HasValue)
+            if (Optional.IsDefined(RunAsGroup))
             {
                 writer.WritePropertyName("runAsGroup"u8);
                 writer.WriteNumberValue(RunAsGroup.Value);
             }
-            if (RunAsUser.HasValue)
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteNumberValue(RunAsUser.Value);
             }
-            if (SeccompProfile != null)
+            if (Optional.IsDefined(SeccompProfile))
             {
                 writer.WritePropertyName("seccompProfile"u8);
                 writer.WriteStringValue(SeccompProfile);

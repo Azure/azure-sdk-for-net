@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (DestinationPath != null)
+            if (Optional.IsDefined(DestinationPath))
             {
                 writer.WritePropertyName("destinationPath"u8);
                 writer.WriteStringValue(DestinationPath);
