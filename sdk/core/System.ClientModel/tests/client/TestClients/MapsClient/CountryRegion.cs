@@ -25,7 +25,7 @@ public class CountryRegion : IJsonModel<CountryRegion>
 
         string? isoCode = default;
 
-        foreach (var property in element.EnumerateObject())
+        foreach (JsonProperty property in element.EnumerateObject())
         {
             if (property.NameEquals("isoCode"u8))
             {
@@ -47,13 +47,13 @@ public class CountryRegion : IJsonModel<CountryRegion>
 
     public CountryRegion Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
-        using var document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         return FromJson(document.RootElement);
     }
 
     public CountryRegion Create(BinaryData data, ModelReaderWriterOptions options)
     {
-        using var document = JsonDocument.Parse(data.ToString());
+        using JsonDocument document = JsonDocument.Parse(data.ToString());
         return FromJson(document.RootElement);
     }
 

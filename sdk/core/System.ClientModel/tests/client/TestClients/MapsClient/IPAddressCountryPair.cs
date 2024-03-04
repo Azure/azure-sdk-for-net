@@ -30,7 +30,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
         CountryRegion? countryRegion = default;
         IPAddress? ipAddress = default;
 
-        foreach (var property in element.EnumerateObject())
+        foreach (JsonProperty property in element.EnumerateObject())
         {
             if (property.NameEquals("countryRegion"u8))
             {
@@ -70,7 +70,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 
     internal static IPAddressCountryPair FromResponse(PipelineResponse response)
     {
-        using var document = JsonDocument.Parse(response.Content);
+        using JsonDocument document = JsonDocument.Parse(response.Content);
         return FromJson(document.RootElement);
     }
 
@@ -79,13 +79,13 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 
     public IPAddressCountryPair Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
-        using var document = JsonDocument.ParseValue(ref reader);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
         return FromJson(document.RootElement);
     }
 
     public IPAddressCountryPair Create(BinaryData data, ModelReaderWriterOptions options)
     {
-        using var document = JsonDocument.Parse(data.ToString());
+        using JsonDocument document = JsonDocument.Parse(data.ToString());
         return FromJson(document.RootElement);
     }
 
