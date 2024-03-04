@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FluidRelay;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityType.HasValue)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
-            if (UserAssignedIdentityResourceId != null)
+            if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
                 writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);

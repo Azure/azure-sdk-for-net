@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (AadAuthFailureMode.HasValue)
+            if (Optional.IsDefined(AadAuthFailureMode))
             {
                 writer.WritePropertyName("aadAuthFailureMode"u8);
                 writer.WriteStringValue(AadAuthFailureMode.Value.ToSerialString());

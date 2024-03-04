@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(UserDefinedRouteResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserDefinedRouteResults))
             {
                 writer.WritePropertyName("userDefinedRouteResults"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetworkSecurityRuleResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityRuleResults))
             {
                 writer.WritePropertyName("networkSecurityRuleResults"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceLockResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceLockResults))
             {
                 writer.WritePropertyName("resourceLockResults"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DnsResolutionResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResolutionResults))
             {
                 writer.WritePropertyName("dnsResolutionResults"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageAccountResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccountResults))
             {
                 writer.WritePropertyName("storageAccountResults"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeyVaultResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyVaultResults))
             {
                 writer.WritePropertyName("keyVaultResults"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContainerRegistryResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerRegistryResults))
             {
                 writer.WritePropertyName("containerRegistryResults"u8);
                 writer.WriteStartArray();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationInsightsResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationInsightsResults))
             {
                 writer.WritePropertyName("applicationInsightsResults"u8);
                 writer.WriteStartArray();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(OtherResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(OtherResults))
             {
                 writer.WritePropertyName("otherResults"u8);
                 writer.WriteStartArray();

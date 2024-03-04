@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (!(AssetSummaries is ChangeTrackingList<ReportBillableAssetSnapshotResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssetSummaries))
             {
                 writer.WritePropertyName("assetSummaries"u8);
                 writer.WriteStartArray();

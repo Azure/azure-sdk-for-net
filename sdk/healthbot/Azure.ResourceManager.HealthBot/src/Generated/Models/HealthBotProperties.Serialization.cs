@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthBot;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && BotManagementPortalLink != null)
+            if (options.Format != "W" && Optional.IsDefined(BotManagementPortalLink))
             {
                 writer.WritePropertyName("botManagementPortalLink"u8);
                 writer.WriteStringValue(BotManagementPortalLink.AbsoluteUri);
             }
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);

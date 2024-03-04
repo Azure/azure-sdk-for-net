@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateDnsZoneSuffix != null)
+            if (Optional.IsDefined(PrivateDnsZoneSuffix))
             {
                 writer.WritePropertyName("privateDnsZoneSuffix"u8);
                 writer.WriteStringValue(PrivateDnsZoneSuffix);

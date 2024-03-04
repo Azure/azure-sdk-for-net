@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEntire.HasValue)
+            if (Optional.IsDefined(IsEntire))
             {
                 writer.WritePropertyName("isEntire"u8);
                 writer.WriteBooleanValue(IsEntire.Value);
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();

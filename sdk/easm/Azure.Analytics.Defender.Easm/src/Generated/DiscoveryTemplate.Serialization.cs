@@ -32,42 +32,42 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Industry != null)
+            if (Optional.IsDefined(Industry))
             {
                 writer.WritePropertyName("industry"u8);
                 writer.WriteStringValue(Industry);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (CountryCode != null)
+            if (Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (StateCode != null)
+            if (Optional.IsDefined(StateCode))
             {
                 writer.WritePropertyName("stateCode"u8);
                 writer.WriteStringValue(StateCode);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (!(Seeds is ChangeTrackingList<DiscoverySource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Seeds))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Names is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();

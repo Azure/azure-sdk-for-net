@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GitHub != null)
+            if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (AdoGit != null)
+            if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (AlertType.HasValue)
+            if (Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlertType.Value.ToString());
             }
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Criteria.HasValue)
+            if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStringValue(Criteria.Value.ToString());

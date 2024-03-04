@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName"u8);
             writer.WriteStringValue(SourceFieldName);
-            if (TargetFieldName != null)
+            if (Optional.IsDefined(TargetFieldName))
             {
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (MappingFunction != null)
+            if (Optional.IsDefined(MappingFunction))
             {
                 if (MappingFunction != null)
                 {

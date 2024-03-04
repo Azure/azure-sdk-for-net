@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (TimeToLive.HasValue)
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (NumberOfPipelineNodes.HasValue)
+            if (Optional.IsDefined(NumberOfPipelineNodes))
             {
                 writer.WritePropertyName("numberOfPipelineNodes"u8);
                 writer.WriteNumberValue(NumberOfPipelineNodes.Value);
             }
-            if (NumberOfExternalNodes.HasValue)
+            if (Optional.IsDefined(NumberOfExternalNodes))
             {
                 writer.WritePropertyName("numberOfExternalNodes"u8);
                 writer.WriteNumberValue(NumberOfExternalNodes.Value);

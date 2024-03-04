@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LabSubnetName != null)
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (UseInVmCreationPermission.HasValue)
+            if (Optional.IsDefined(UseInVmCreationPermission))
             {
                 writer.WritePropertyName("useInVmCreationPermission"u8);
                 writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
             }
-            if (UsePublicIPAddressPermission.HasValue)
+            if (Optional.IsDefined(UsePublicIPAddressPermission))
             {
                 writer.WritePropertyName("usePublicIpAddressPermission"u8);
                 writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
             }
-            if (SharedPublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
             }
-            if (VirtualNetworkPoolName != null)
+            if (Optional.IsDefined(VirtualNetworkPoolName))
             {
                 writer.WritePropertyName("virtualNetworkPoolName"u8);
                 writer.WriteStringValue(VirtualNetworkPoolName);

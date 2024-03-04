@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (SchemaVersion != null)
+            if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
-            if (RunbookDefinition != null)
+            if (Optional.IsDefined(RunbookDefinition))
             {
                 writer.WritePropertyName("runbookDefinition"u8);
                 writer.WriteStringValue(RunbookDefinition);
             }
-            if (RunbookType.HasValue)
+            if (Optional.IsDefined(RunbookType))
             {
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());

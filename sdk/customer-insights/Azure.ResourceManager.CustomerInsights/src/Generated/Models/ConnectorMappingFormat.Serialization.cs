@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -28,27 +29,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("formatType"u8);
             writer.WriteStringValue(FormatType.ToString());
-            if (ColumnDelimiter != null)
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteStringValue(ColumnDelimiter);
             }
-            if (AcceptLanguage != null)
+            if (Optional.IsDefined(AcceptLanguage))
             {
                 writer.WritePropertyName("acceptLanguage"u8);
                 writer.WriteStringValue(AcceptLanguage);
             }
-            if (QuoteCharacter != null)
+            if (Optional.IsDefined(QuoteCharacter))
             {
                 writer.WritePropertyName("quoteCharacter"u8);
                 writer.WriteStringValue(QuoteCharacter);
             }
-            if (QuoteEscapeCharacter != null)
+            if (Optional.IsDefined(QuoteEscapeCharacter))
             {
                 writer.WritePropertyName("quoteEscapeCharacter"u8);
                 writer.WriteStringValue(QuoteEscapeCharacter);
             }
-            if (ArraySeparator != null)
+            if (Optional.IsDefined(ArraySeparator))
             {
                 writer.WritePropertyName("arraySeparator"u8);
                 writer.WriteStringValue(ArraySeparator);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);

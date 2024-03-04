@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Features is ChangeTrackingDictionary<string, bool> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartObject();

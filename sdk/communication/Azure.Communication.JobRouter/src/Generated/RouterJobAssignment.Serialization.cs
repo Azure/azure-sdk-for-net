@@ -32,19 +32,19 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("assignmentId"u8);
                 writer.WriteStringValue(AssignmentId);
             }
-            if (WorkerId != null)
+            if (Optional.IsDefined(WorkerId))
             {
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
             writer.WritePropertyName("assignedAt"u8);
             writer.WriteStringValue(AssignedAt, "O");
-            if (CompletedAt.HasValue)
+            if (Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (ClosedAt.HasValue)
+            if (Optional.IsDefined(ClosedAt))
             {
                 writer.WritePropertyName("closedAt"u8);
                 writer.WriteStringValue(ClosedAt.Value, "O");

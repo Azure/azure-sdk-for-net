@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (MinMatchingValue != null)
+            if (Optional.IsDefined(MinMatchingValue))
             {
                 writer.WritePropertyName("minMatchingValue"u8);
                 writer.WriteStringValue(MinMatchingValue);
             }
-            if (MaxMatchingValue != null)
+            if (Optional.IsDefined(MaxMatchingValue))
             {
                 writer.WritePropertyName("maxMatchingValue"u8);
                 writer.WriteStringValue(MaxMatchingValue);

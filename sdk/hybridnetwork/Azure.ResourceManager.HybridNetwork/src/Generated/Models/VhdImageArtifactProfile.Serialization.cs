@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (VhdName != null)
+            if (Optional.IsDefined(VhdName))
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);
             }
-            if (VhdVersion != null)
+            if (Optional.IsDefined(VhdVersion))
             {
                 writer.WritePropertyName("vhdVersion"u8);
                 writer.WriteStringValue(VhdVersion);

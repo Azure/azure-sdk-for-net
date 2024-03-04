@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (OptInHeaders.HasValue)
+            if (Optional.IsDefined(OptInHeaders))
             {
                 writer.WritePropertyName("optInHeaders"u8);
                 writer.WriteStringValue(OptInHeaders.Value.ToString());

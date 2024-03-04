@@ -27,32 +27,32 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Metric != null)
+            if (Optional.IsDefined(Metric))
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (LabelName != null)
+            if (Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (UpdatedAt.HasValue)
+            if (Optional.IsDefined(UpdatedAt))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedAt.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Assets != null)
+            if (Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
                 writer.WriteObjectValue(Assets);

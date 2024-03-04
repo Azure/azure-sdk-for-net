@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Trigger != null)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
             }
-            if (TriggerHint != null)
+            if (Optional.IsDefined(TriggerHint))
             {
                 writer.WritePropertyName("triggerHint"u8);
                 writer.WriteStringValue(TriggerHint);
             }
-            if (IsPageable.HasValue)
+            if (Optional.IsDefined(IsPageable))
             {
                 writer.WritePropertyName("pageable"u8);
                 writer.WriteBooleanValue(IsPageable.Value);
             }
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteObjectValue(Annotation);
             }
-            if (Api != null)
+            if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
                 writer.WriteObjectValue(Api);
             }
-            if (InputsDefinition != null)
+            if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
                 writer.WriteObjectValue(InputsDefinition);
             }
-            if (!(ResponsesDefinition is ChangeTrackingDictionary<string, SwaggerSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
                 writer.WritePropertyName("responsesDefinition"u8);
                 writer.WriteStartObject();
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
-            if (IsWebhook.HasValue)
+            if (Optional.IsDefined(IsWebhook))
             {
                 writer.WritePropertyName("isWebhook"u8);
                 writer.WriteBooleanValue(IsWebhook.Value);
             }
-            if (IsNotification.HasValue)
+            if (Optional.IsDefined(IsNotification))
             {
                 writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);

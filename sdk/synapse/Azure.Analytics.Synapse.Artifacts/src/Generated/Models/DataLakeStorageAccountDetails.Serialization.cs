@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -18,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountUrl != null)
+            if (Optional.IsDefined(AccountUrl))
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUrl);
             }
-            if (Filesystem != null)
+            if (Optional.IsDefined(Filesystem))
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (AgentAutoUpdateStatus.HasValue)
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
                 writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
             }
-            if (AutomationAccountArmId != null)
+            if (Optional.IsDefined(AutomationAccountArmId))
             {
                 writer.WritePropertyName("automationAccountArmId"u8);
                 writer.WriteStringValue(AutomationAccountArmId);
             }
-            if (AutomationAccountAuthenticationType.HasValue)
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
                 writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());

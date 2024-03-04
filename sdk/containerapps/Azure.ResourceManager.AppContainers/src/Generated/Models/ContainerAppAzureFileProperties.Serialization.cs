@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (AccessMode.HasValue)
+            if (Optional.IsDefined(AccessMode))
             {
                 writer.WritePropertyName("accessMode"u8);
                 writer.WriteStringValue(AccessMode.Value.ToString());
             }
-            if (ShareName != null)
+            if (Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);

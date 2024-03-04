@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (UpgradeReplicaSetCheckTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
-            if (ForceRestart.HasValue)
+            if (Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (RollingUpgradeMonitoringPolicy != null)
+            if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (ApplicationHealthPolicy != null)
+            if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
-            if (UpgradeMode.HasValue)
+            if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (RecreateApplication.HasValue)
+            if (Optional.IsDefined(RecreateApplication))
             {
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);

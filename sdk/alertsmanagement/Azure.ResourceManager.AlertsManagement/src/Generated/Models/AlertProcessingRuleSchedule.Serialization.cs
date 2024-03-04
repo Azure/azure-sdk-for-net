@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (EffectiveFrom.HasValue)
+            if (Optional.IsDefined(EffectiveFrom))
             {
                 writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
-            if (EffectiveUntil.HasValue)
+            if (Optional.IsDefined(EffectiveUntil))
             {
                 writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (!(Recurrences is ChangeTrackingList<AlertProcessingRuleRecurrence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recurrences))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();

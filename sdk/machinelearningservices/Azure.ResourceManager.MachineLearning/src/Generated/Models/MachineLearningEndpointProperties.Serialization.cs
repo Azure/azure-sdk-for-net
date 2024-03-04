@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Keys != null)
+            if (Optional.IsDefined(Keys))
             {
                 if (Keys != null)
                 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && ScoringUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
             {
                 if (ScoringUri != null)
                 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scoringUri");
                 }
             }
-            if (options.Format != "W" && SwaggerUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
             {
                 if (SwaggerUri != null)
                 {

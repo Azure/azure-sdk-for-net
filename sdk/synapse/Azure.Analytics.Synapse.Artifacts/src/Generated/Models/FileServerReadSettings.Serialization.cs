@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,59 +20,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteObjectValue(Recursive);
             }
-            if (WildcardFolderPath != null)
+            if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 writer.WriteObjectValue(WildcardFolderPath);
             }
-            if (WildcardFileName != null)
+            if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 writer.WriteObjectValue(WildcardFileName);
             }
-            if (FileListPath != null)
+            if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
                 writer.WriteObjectValue(FileListPath);
             }
-            if (EnablePartitionDiscovery != null)
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteObjectValue(EnablePartitionDiscovery);
             }
-            if (PartitionRootPath != null)
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
-            if (DeleteFilesAfterCompletion != null)
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
-            if (ModifiedDatetimeStart != null)
+            if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 writer.WriteObjectValue(ModifiedDatetimeStart);
             }
-            if (ModifiedDatetimeEnd != null)
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 writer.WriteObjectValue(ModifiedDatetimeEnd);
             }
-            if (FileFilter != null)
+            if (Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
                 writer.WriteObjectValue(FileFilter);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);

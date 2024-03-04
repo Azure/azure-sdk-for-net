@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -36,32 +37,32 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SshProfile != null)
+            if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);
             }
-            if (AutoscaleProfile != null)
+            if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (AuthorizationProfile != null)
+            if (Optional.IsDefined(AuthorizationProfile))
             {
                 writer.WritePropertyName("authorizationProfile"u8);
                 writer.WriteObjectValue(AuthorizationProfile);
             }
-            if (LogAnalyticsProfile != null)
+            if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
                 writer.WriteObjectValue(LogAnalyticsProfile);
             }
-            if (PrometheusProfile != null)
+            if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();

@@ -8,6 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Storage.Files.Shares.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SMB");
-            if (Multichannel != null)
+            if (Optional.IsDefined(Multichannel))
             {
                 writer.WriteObjectValue(Multichannel, "Multichannel");
             }

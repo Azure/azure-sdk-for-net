@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ZoneDetails is ChangeTrackingList<KustoResourceSkuZoneDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();

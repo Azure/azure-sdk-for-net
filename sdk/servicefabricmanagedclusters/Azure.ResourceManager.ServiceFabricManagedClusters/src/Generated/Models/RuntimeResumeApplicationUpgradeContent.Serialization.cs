@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (UpgradeDomainName != null)
+            if (Optional.IsDefined(UpgradeDomainName))
             {
                 writer.WritePropertyName("upgradeDomainName"u8);
                 writer.WriteStringValue(UpgradeDomainName);

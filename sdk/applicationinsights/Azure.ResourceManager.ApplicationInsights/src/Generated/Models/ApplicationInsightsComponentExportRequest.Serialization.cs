@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (RecordTypes != null)
+            if (Optional.IsDefined(RecordTypes))
             {
                 writer.WritePropertyName("RecordTypes"u8);
                 writer.WriteStringValue(RecordTypes);
             }
-            if (DestinationType != null)
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("DestinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (DestinationAddress != null)
+            if (Optional.IsDefined(DestinationAddress))
             {
                 writer.WritePropertyName("DestinationAddress"u8);
                 writer.WriteStringValue(DestinationAddress);
             }
-            if (IsEnabled != null)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("IsEnabled"u8);
                 writer.WriteStringValue(IsEnabled);
             }
-            if (NotificationQueueEnabled != null)
+            if (Optional.IsDefined(NotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
                 writer.WriteStringValue(NotificationQueueEnabled);
             }
-            if (NotificationQueueUri != null)
+            if (Optional.IsDefined(NotificationQueueUri))
             {
                 writer.WritePropertyName("NotificationQueueUri"u8);
                 writer.WriteStringValue(NotificationQueueUri.AbsoluteUri);
             }
-            if (DestinationStorageSubscriptionId != null)
+            if (Optional.IsDefined(DestinationStorageSubscriptionId))
             {
                 writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
                 writer.WriteStringValue(DestinationStorageSubscriptionId);
             }
-            if (DestinationStorageLocationId != null)
+            if (Optional.IsDefined(DestinationStorageLocationId))
             {
                 writer.WritePropertyName("DestinationStorageLocationId"u8);
                 writer.WriteStringValue(DestinationStorageLocationId);
             }
-            if (DestinationAccountId != null)
+            if (Optional.IsDefined(DestinationAccountId))
             {
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);

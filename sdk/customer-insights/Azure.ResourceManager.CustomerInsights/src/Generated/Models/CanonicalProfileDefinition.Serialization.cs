@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (CanonicalProfileId.HasValue)
+            if (Optional.IsDefined(CanonicalProfileId))
             {
                 writer.WritePropertyName("canonicalProfileId"u8);
                 writer.WriteNumberValue(CanonicalProfileId.Value);
             }
-            if (!(Properties is ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -28,32 +29,32 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetSubscriptionId != null)
+            if (Optional.IsDefined(TargetSubscriptionId))
             {
                 writer.WritePropertyName("targetSubscriptionId"u8);
                 writer.WriteStringValue(TargetSubscriptionId);
             }
-            if (TargetResourceGroup != null)
+            if (Optional.IsDefined(TargetResourceGroup))
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
-            if (TargetServerResourceId != null)
+            if (Optional.IsDefined(TargetServerResourceId))
             {
                 writer.WritePropertyName("targetServerResourceId"u8);
                 writer.WriteStringValue(TargetServerResourceId);
             }
-            if (TargetServerFullyQualifiedDomainName != null)
+            if (Optional.IsDefined(TargetServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("targetServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetServerFullyQualifiedDomainName);
             }
-            if (TargetDatabaseName != null)
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (TargetBackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(TargetBackupStorageRedundancy))
             {
                 writer.WritePropertyName("targetBackupStorageRedundancy"u8);
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());

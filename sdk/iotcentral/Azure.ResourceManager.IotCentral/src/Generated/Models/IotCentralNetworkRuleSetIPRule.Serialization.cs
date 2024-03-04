@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (FilterName != null)
+            if (Optional.IsDefined(FilterName))
             {
                 writer.WritePropertyName("filterName"u8);
                 writer.WriteStringValue(FilterName);
             }
-            if (IPMask != null)
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            if (QueryObjectCounts.HasValue)
+            if (Optional.IsDefined(QueryObjectCounts))
             {
                 writer.WritePropertyName("queryObjectCounts"u8);
                 writer.WriteBooleanValue(QueryObjectCounts.Value);

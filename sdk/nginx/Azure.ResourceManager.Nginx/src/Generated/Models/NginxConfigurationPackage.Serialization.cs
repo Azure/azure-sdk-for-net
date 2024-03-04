@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
-            if (!(ProtectedFiles is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedFiles))
             {
                 writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
             }
 
             writer.WriteStartObject();
-            if (Preference.HasValue)
+            if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
                 writer.WriteNumberValue(Preference.Value);
             }
-            if (Exchange != null)
+            if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -15,14 +16,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("DocumentType"u8);
             writer.WriteStringValue(DocumentType.ToString());
-            if (!(DocumentStreamIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
                 writer.WriteStartArray();
@@ -32,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Properties is ChangeTrackingList<KeyValuePairString> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStartArray();

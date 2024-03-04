@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (CassandraProcessStatus != null)
+            if (Optional.IsDefined(CassandraProcessStatus))
             {
                 writer.WritePropertyName("cassandraProcessStatus"u8);
                 writer.WriteStringValue(CassandraProcessStatus);
             }
-            if (Load != null)
+            if (Optional.IsDefined(Load))
             {
                 writer.WritePropertyName("load"u8);
                 writer.WriteStringValue(Load);
             }
-            if (!(Tokens is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tokens))
             {
                 writer.WritePropertyName("tokens"u8);
                 writer.WriteStartArray();
@@ -61,62 +62,62 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (HostId.HasValue)
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostID"u8);
                 writer.WriteStringValue(HostId.Value);
             }
-            if (Rack != null)
+            if (Optional.IsDefined(Rack))
             {
                 writer.WritePropertyName("rack"u8);
                 writer.WriteStringValue(Rack);
             }
-            if (Timestamp != null)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp);
             }
-            if (DiskUsedKB.HasValue)
+            if (Optional.IsDefined(DiskUsedKB))
             {
                 writer.WritePropertyName("diskUsedKB"u8);
                 writer.WriteNumberValue(DiskUsedKB.Value);
             }
-            if (DiskFreeKB.HasValue)
+            if (Optional.IsDefined(DiskFreeKB))
             {
                 writer.WritePropertyName("diskFreeKB"u8);
                 writer.WriteNumberValue(DiskFreeKB.Value);
             }
-            if (MemoryUsedKB.HasValue)
+            if (Optional.IsDefined(MemoryUsedKB))
             {
                 writer.WritePropertyName("memoryUsedKB"u8);
                 writer.WriteNumberValue(MemoryUsedKB.Value);
             }
-            if (MemoryBuffersAndCachedKB.HasValue)
+            if (Optional.IsDefined(MemoryBuffersAndCachedKB))
             {
                 writer.WritePropertyName("memoryBuffersAndCachedKB"u8);
                 writer.WriteNumberValue(MemoryBuffersAndCachedKB.Value);
             }
-            if (MemoryFreeKB.HasValue)
+            if (Optional.IsDefined(MemoryFreeKB))
             {
                 writer.WritePropertyName("memoryFreeKB"u8);
                 writer.WriteNumberValue(MemoryFreeKB.Value);
             }
-            if (MemoryTotalKB.HasValue)
+            if (Optional.IsDefined(MemoryTotalKB))
             {
                 writer.WritePropertyName("memoryTotalKB"u8);
                 writer.WriteNumberValue(MemoryTotalKB.Value);
             }
-            if (CpuUsage.HasValue)
+            if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteNumberValue(CpuUsage.Value);
             }
-            if (IsLatestModel.HasValue)
+            if (Optional.IsDefined(IsLatestModel))
             {
                 writer.WritePropertyName("isLatestModel"u8);
                 writer.WriteBooleanValue(IsLatestModel.Value);

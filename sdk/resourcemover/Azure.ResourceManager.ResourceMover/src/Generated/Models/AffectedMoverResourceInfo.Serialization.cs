@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && SourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (options.Format != "W" && !(MoverResources is ChangeTrackingList<AffectedMoverResourceInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(MoverResources))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();

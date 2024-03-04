@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToSerialString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (TargetRef != null)
+            if (Optional.IsDefined(TargetRef))
             {
                 writer.WritePropertyName("targetRef"u8);
                 writer.WriteStringValue(TargetRef);

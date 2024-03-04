@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("vmProfile"u8);
             writer.WriteStringValue(VmProfile);
-            if (options.Format != "W" && MemoryInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryInBytes))
             {
                 writer.WritePropertyName("memoryInBytes"u8);
                 writer.WriteNumberValue(MemoryInBytes.Value);
             }
-            if (options.Format != "W" && ProcessorCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessorCount))
             {
                 writer.WritePropertyName("processorCount"u8);
                 writer.WriteNumberValue(ProcessorCount.Value);

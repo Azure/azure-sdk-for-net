@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TieringMode.HasValue)
+            if (Optional.IsDefined(TieringMode))
             {
                 writer.WritePropertyName("tieringMode"u8);
                 writer.WriteStringValue(TieringMode.Value.ToString());
             }
-            if (DurationValue.HasValue)
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(DurationValue.Value);
             }
-            if (DurationType.HasValue)
+            if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
