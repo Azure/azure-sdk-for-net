@@ -36,7 +36,6 @@ namespace Azure.Developer.DevCenter.Tests
                     return new DevCenterTestUserCredential(
                         GetVariable("CLIENT_ID"),
                         GetVariable("CLIENT_SECRET"),
-                        GetVariable("STATIC_TEST_USER_ID"),
                         GetVariable("DEFAULT_TEST_USER_SECRET"),
                         GetVariable("DEFAULT_TEST_USER_NAME"),
                         GetVariable("DEFAULT_DEVCENTER_SCOPE"),

@@ -22,16 +22,14 @@ namespace Azure.Developer.DevCenter.Tests
         private readonly Uri _authority;
         private readonly string _clientId;
         private readonly string _clientSecret;
-        private readonly string _userId;
         private readonly string _userSecret;
         private readonly string _userName;
         private readonly string[] _dataplaneScopes;
 
-        public DevCenterTestUserCredential(string clientId, string clientSecret, string userId, string userSecret, string userName, string dataplaneScope, string authorityHost, string tenantId)
+        public DevCenterTestUserCredential(string clientId, string clientSecret, string userSecret, string userName, string dataplaneScope, string authorityHost, string tenantId)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
-            _userId = userId;
             _userSecret = userSecret;
             _userName = userName;
             _authority = new(Path.Combine(authorityHost, tenantId));
@@ -49,7 +47,7 @@ namespace Azure.Developer.DevCenter.Tests
                                               .WithAuthority(_authority)
                                               .Build();
 
-            AuthenticationResult result1 = await app.AcquireTokenByUsernamePassword(new string[] { $"api://{_clientId}/devCenterSdkTest", $"api://{_clientId}/fidalgotest" }, _userName, _userSecret).ExecuteAsync();
+            AuthenticationResult result1 = await app.AcquireTokenByUsernamePassword(new string[] { $"api://{_clientId}/fidalgotest" }, _userName, _userSecret).ExecuteAsync();
 
             IConfidentialClientApplication app2 = ConfidentialClientApplicationBuilder.Create(_clientId)
                                           .WithAuthority(_authority)
