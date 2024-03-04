@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="current"> The current quota value. </param>
         /// <param name="default"> The default quota value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, int? current, int? @default, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Current = current;
             Default = @default;
