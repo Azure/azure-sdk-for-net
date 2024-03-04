@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceManager.Models.SystemData> systemData = default;
-            Optional<string> solutionId = default;
-            Optional<string> solutionType = default;
-            Optional<string> description = default;
-            Optional<IList<IList<string>>> requiredParameterSets = default;
-            Optional<IList<SolutionMetadataProperties>> solutions = default;
+            SystemData systemData = default;
+            string solutionId = default;
+            string solutionType = default;
+            string description = default;
+            IList<IList<string>> requiredParameterSets = default;
+            IList<SolutionMetadataProperties> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -173,7 +173,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Optional.ToList(requiredParameterSets),  Optional.ToList(solutions));
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                solutionId,
+                solutionType,
+                description,
+                requiredParameterSets ?? new ChangeTrackingList<IList<string>>(),
+                solutions ?? new ChangeTrackingList<SolutionMetadataProperties>());
         }
     }
 }
