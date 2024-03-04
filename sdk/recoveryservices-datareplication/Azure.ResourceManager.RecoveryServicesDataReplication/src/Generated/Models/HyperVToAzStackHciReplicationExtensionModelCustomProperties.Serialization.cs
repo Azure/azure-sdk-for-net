@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -28,74 +29,74 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("hyperVFabricArmId"u8);
             writer.WriteStringValue(HyperVFabricArmId);
-            if (options.Format != "W" && HyperVSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(HyperVSiteId))
             {
                 writer.WritePropertyName("hyperVSiteId"u8);
                 writer.WriteStringValue(HyperVSiteId);
             }
             writer.WritePropertyName("azStackHciFabricArmId"u8);
             writer.WriteStringValue(AzStackHciFabricArmId);
-            if (options.Format != "W" && AzStackHciSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(AzStackHciSiteId))
             {
                 writer.WritePropertyName("azStackHciSiteId"u8);
                 writer.WriteStringValue(AzStackHciSiteId);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (StorageAccountSasSecretName != null)
+            if (Optional.IsDefined(StorageAccountSasSecretName))
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (options.Format != "W" && AsrServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AsrServiceUri))
             {
                 writer.WritePropertyName("asrServiceUri"u8);
                 writer.WriteStringValue(AsrServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && RcmServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(RcmServiceUri))
             {
                 writer.WritePropertyName("rcmServiceUri"u8);
                 writer.WriteStringValue(RcmServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && GatewayServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayServiceUri))
             {
                 writer.WritePropertyName("gatewayServiceUri"u8);
                 writer.WriteStringValue(GatewayServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && SourceGatewayServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceGatewayServiceId))
             {
                 writer.WritePropertyName("sourceGatewayServiceId"u8);
                 writer.WriteStringValue(SourceGatewayServiceId);
             }
-            if (options.Format != "W" && TargetGatewayServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetGatewayServiceId))
             {
                 writer.WritePropertyName("targetGatewayServiceId"u8);
                 writer.WriteStringValue(TargetGatewayServiceId);
             }
-            if (options.Format != "W" && SourceStorageContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceStorageContainerName))
             {
                 writer.WritePropertyName("sourceStorageContainerName"u8);
                 writer.WriteStringValue(SourceStorageContainerName);
             }
-            if (options.Format != "W" && TargetStorageContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetStorageContainerName))
             {
                 writer.WritePropertyName("targetStorageContainerName"u8);
                 writer.WriteStringValue(TargetStorageContainerName);
             }
-            if (options.Format != "W" && ResourceLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);

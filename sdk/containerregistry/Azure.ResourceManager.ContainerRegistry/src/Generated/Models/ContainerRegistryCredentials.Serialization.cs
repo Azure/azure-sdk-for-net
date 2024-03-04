@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (SourceRegistry != null)
+            if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
                 writer.WriteObjectValue(SourceRegistry);
             }
-            if (!(CustomRegistries is ChangeTrackingDictionary<string, CustomRegistryCredentials> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomRegistries))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartObject();

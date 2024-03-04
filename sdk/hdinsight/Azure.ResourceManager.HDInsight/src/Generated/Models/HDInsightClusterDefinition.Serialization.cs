@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Blueprint != null)
+            if (Optional.IsDefined(Blueprint))
             {
                 writer.WritePropertyName("blueprint"u8);
                 writer.WriteStringValue(Blueprint);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(ComponentVersion is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ComponentVersion))
             {
                 writer.WritePropertyName("componentVersion"u8);
                 writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Configurations != null)
+            if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
 #if NET6_0_OR_GREATER

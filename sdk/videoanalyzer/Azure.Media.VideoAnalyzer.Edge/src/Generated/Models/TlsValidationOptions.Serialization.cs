@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -15,12 +16,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IgnoreHostname != null)
+            if (Optional.IsDefined(IgnoreHostname))
             {
                 writer.WritePropertyName("ignoreHostname"u8);
                 writer.WriteStringValue(IgnoreHostname);
             }
-            if (IgnoreSignature != null)
+            if (Optional.IsDefined(IgnoreSignature))
             {
                 writer.WritePropertyName("ignoreSignature"u8);
                 writer.WriteStringValue(IgnoreSignature);

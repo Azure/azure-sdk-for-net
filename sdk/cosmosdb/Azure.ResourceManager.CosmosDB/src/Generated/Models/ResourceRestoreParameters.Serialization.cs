@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (RestoreSource != null)
+            if (Optional.IsDefined(RestoreSource))
             {
                 writer.WritePropertyName("restoreSource"u8);
                 writer.WriteStringValue(RestoreSource);
             }
-            if (RestoreTimestampInUtc.HasValue)
+            if (Optional.IsDefined(RestoreTimestampInUtc))
             {
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");

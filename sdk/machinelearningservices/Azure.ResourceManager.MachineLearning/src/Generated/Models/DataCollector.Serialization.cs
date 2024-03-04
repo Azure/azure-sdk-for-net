@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (RequestLogging != null)
+            if (Optional.IsDefined(RequestLogging))
             {
                 if (RequestLogging != null)
                 {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestLogging");
                 }
             }
-            if (RollingRate.HasValue)
+            if (Optional.IsDefined(RollingRate))
             {
                 writer.WritePropertyName("rollingRate"u8);
                 writer.WriteStringValue(RollingRate.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (RecommendedConfiguration != null)
+            if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
                 writer.WriteObjectValue(RecommendedConfiguration);
             }
-            if (!(SupportedConfigurations is ChangeTrackingList<SupportedConfigurationsDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
                 writer.WritePropertyName("supportedConfigurations"u8);
                 writer.WriteStartArray();

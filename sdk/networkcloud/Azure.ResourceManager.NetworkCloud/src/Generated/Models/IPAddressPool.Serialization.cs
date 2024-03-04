@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -33,14 +34,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (AutoAssign.HasValue)
+            if (Optional.IsDefined(AutoAssign))
             {
                 writer.WritePropertyName("autoAssign"u8);
                 writer.WriteStringValue(AutoAssign.Value.ToString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (OnlyUseHostIPs.HasValue)
+            if (Optional.IsDefined(OnlyUseHostIPs))
             {
                 writer.WritePropertyName("onlyUseHostIps"u8);
                 writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());

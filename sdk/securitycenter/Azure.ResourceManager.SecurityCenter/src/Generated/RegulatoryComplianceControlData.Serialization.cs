@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && PassedAssessments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PassedAssessments))
             {
                 writer.WritePropertyName("passedAssessments"u8);
                 writer.WriteNumberValue(PassedAssessments.Value);
             }
-            if (options.Format != "W" && FailedAssessments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedAssessments))
             {
                 writer.WritePropertyName("failedAssessments"u8);
                 writer.WriteNumberValue(FailedAssessments.Value);
             }
-            if (options.Format != "W" && SkippedAssessments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkippedAssessments))
             {
                 writer.WritePropertyName("skippedAssessments"u8);
                 writer.WriteNumberValue(SkippedAssessments.Value);

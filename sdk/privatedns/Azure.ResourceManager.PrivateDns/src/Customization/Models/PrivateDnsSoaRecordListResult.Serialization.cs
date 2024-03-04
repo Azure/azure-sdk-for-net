@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateDnsSoaRecordData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PrivateDnsSoaRecordData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsSoaRecordListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateDnsSoaRecordListResult(value ?? new ChangeTrackingList<PrivateDnsSoaRecordData>(), nextLink, serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<PrivateDnsSoaRecordListResult>.Write(ModelReaderWriterOptions options)
         {

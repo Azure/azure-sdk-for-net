@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (PollingIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(PollingIntervalInSeconds))
             {
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteNumberValue(PollingIntervalInSeconds.Value);
             }
-            if (MinExecutions.HasValue)
+            if (Optional.IsDefined(MinExecutions))
             {
                 writer.WritePropertyName("minExecutions"u8);
                 writer.WriteNumberValue(MinExecutions.Value);
             }
-            if (MaxExecutions.HasValue)
+            if (Optional.IsDefined(MaxExecutions))
             {
                 writer.WritePropertyName("maxExecutions"u8);
                 writer.WriteNumberValue(MaxExecutions.Value);
             }
-            if (!(Rules is ChangeTrackingList<ContainerAppJobScaleRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

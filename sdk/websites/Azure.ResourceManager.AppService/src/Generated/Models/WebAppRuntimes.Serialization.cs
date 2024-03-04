@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LinuxRuntimeSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
                 writer.WriteObjectValue(LinuxRuntimeSettings);
             }
-            if (options.Format != "W" && WindowsRuntimeSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
                 writer.WriteObjectValue(WindowsRuntimeSettings);
             }
-            if (options.Format != "W" && LinuxContainerSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
                 writer.WriteObjectValue(LinuxContainerSettings);
             }
-            if (options.Format != "W" && WindowsContainerSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
                 writer.WriteObjectValue(WindowsContainerSettings);

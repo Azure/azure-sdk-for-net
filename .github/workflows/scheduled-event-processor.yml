@@ -15,7 +15,8 @@ on:
     # Lock closed issues, every 6 hours at 05:30 AM, 11:30 AM, 05:30 PM and 11:30 PM - LockClosedIssues
     - cron: '30 5,11,17,23 * * *'
     # Enforce max life of issues, every Monday at 10:00 AM - EnforceMaxLifeOfIssues
-    - cron: '0 10 * * MON'
+    # Note: GitHub uses UTC, to run at 10am PST, the cron task needs to be 6pm (1800 hours) UTC
+    - cron: '0 18 * * MON'
 # This removes all unnecessary permissions, the ones needed will be set below.
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions: {}
@@ -130,9 +131,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enforce Max Life of Issues Scheduled Event
-        if: github.event.schedule == '0 10 * * MON'
+        if: github.event.schedule == '0 18 * * MON'
         run: |
-          echo $GITHUB_PAYLOAD > payload.json
+          cat > payload.json << 'EOF'
+          ${{ toJson(github.event) }}
+          EOF
           github-event-processor ${{ github.event_name }} payload.json EnforceMaxLifeOfIssues
         shell: bash
         env:

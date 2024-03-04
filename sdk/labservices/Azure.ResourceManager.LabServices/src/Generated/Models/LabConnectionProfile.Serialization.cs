@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (WebSshAccess.HasValue)
+            if (Optional.IsDefined(WebSshAccess))
             {
                 writer.WritePropertyName("webSshAccess"u8);
                 writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
             }
-            if (WebRdpAccess.HasValue)
+            if (Optional.IsDefined(WebRdpAccess))
             {
                 writer.WritePropertyName("webRdpAccess"u8);
                 writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
             }
-            if (ClientSshAccess.HasValue)
+            if (Optional.IsDefined(ClientSshAccess))
             {
                 writer.WritePropertyName("clientSshAccess"u8);
                 writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
             }
-            if (ClientRdpAccess.HasValue)
+            if (Optional.IsDefined(ClientRdpAccess))
             {
                 writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());

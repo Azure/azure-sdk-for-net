@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AppliedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedScopes))
             {
                 writer.WritePropertyName("appliedScopes"u8);
                 writer.WriteStartArray();
@@ -36,27 +37,27 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && OnDemandRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OnDemandRate))
             {
                 writer.WritePropertyName("onDemandRate"u8);
                 writer.WriteNumberValue(OnDemandRate.Value);
             }
-            if (options.Format != "W" && Product != null)
+            if (options.Format != "W" && Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (options.Format != "W" && Region != null)
+            if (options.Format != "W" && Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && ReservationRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReservationRate))
             {
                 writer.WritePropertyName("reservationRate"u8);
                 writer.WriteNumberValue(ReservationRate.Value);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);

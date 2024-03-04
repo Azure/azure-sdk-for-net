@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
-            if (Architecture.HasValue)
+            if (Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Variant.HasValue)
+            if (Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());

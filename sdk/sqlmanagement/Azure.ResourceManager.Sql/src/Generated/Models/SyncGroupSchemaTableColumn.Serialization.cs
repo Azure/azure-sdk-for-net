@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (QuotedName != null)
+            if (Optional.IsDefined(QuotedName))
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
             }
-            if (DataSize != null)
+            if (Optional.IsDefined(DataSize))
             {
                 writer.WritePropertyName("dataSize"u8);
                 writer.WriteStringValue(DataSize);
             }
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);

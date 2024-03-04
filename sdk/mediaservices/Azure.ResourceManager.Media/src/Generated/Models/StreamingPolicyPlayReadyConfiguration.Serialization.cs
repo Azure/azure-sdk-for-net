@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (CustomLicenseAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            if (PlayReadyCustomAttributes != null)
+            if (Optional.IsDefined(PlayReadyCustomAttributes))
             {
                 writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);

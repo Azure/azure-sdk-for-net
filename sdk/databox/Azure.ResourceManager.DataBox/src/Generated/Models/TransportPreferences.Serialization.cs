@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("preferredShipmentType"u8);
             writer.WriteStringValue(PreferredShipmentType.ToSerialString());
-            if (options.Format != "W" && IsUpdated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsUpdated))
             {
                 writer.WritePropertyName("isUpdated"u8);
                 writer.WriteBooleanValue(IsUpdated.Value);

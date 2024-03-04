@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PartnerRegistrationImmutableId.HasValue)
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (EndpointServiceContext != null)
+            if (Optional.IsDefined(EndpointServiceContext))
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (ExpirationTimeIfNotActivatedUtc.HasValue)
+            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ActivationState.HasValue)
+            if (Optional.IsDefined(ActivationState))
             {
                 writer.WritePropertyName("activationState"u8);
                 writer.WriteStringValue(ActivationState.Value.ToString());
             }
-            if (EndpointBaseUri != null)
+            if (Optional.IsDefined(EndpointBaseUri))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (MessageForActivation != null)
+            if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);

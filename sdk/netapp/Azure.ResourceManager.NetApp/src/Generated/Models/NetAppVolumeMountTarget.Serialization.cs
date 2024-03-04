@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -27,19 +28,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MountTargetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MountTargetId))
             {
                 writer.WritePropertyName("mountTargetId"u8);
                 writer.WriteStringValue(MountTargetId.Value);
             }
             writer.WritePropertyName("fileSystemId"u8);
             writer.WriteStringValue(FileSystemId);
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (SmbServerFqdn != null)
+            if (Optional.IsDefined(SmbServerFqdn))
             {
                 writer.WritePropertyName("smbServerFqdn"u8);
                 writer.WriteStringValue(SmbServerFqdn);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Workspace != null)
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (WorkspaceType.HasValue)
+            if (Optional.IsDefined(WorkspaceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceType.Value.ToString());
             }
-            if (!(DataTypes is ChangeTrackingList<AdditionalWorkspaceDataType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SourceCollectionRid != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceCollectionRid))
             {
                 writer.WritePropertyName("sourceCollectionRid"u8);
                 writer.WriteStringValue(SourceCollectionRid);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,61 +27,61 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (FileNameFormat != null)
+            if (Optional.IsDefined(FileNameFormat))
             {
                 writer.WritePropertyName("fileNameFormat"u8);
                 writer.WriteStringValue(FileNameFormat);
             }
-            if (BatchFrequencyInSeconds.HasValue)
+            if (Optional.IsDefined(BatchFrequencyInSeconds))
             {
                 writer.WritePropertyName("batchFrequencyInSeconds"u8);
                 writer.WriteNumberValue(BatchFrequencyInSeconds.Value);
             }
-            if (MaxChunkSizeInBytes.HasValue)
+            if (Optional.IsDefined(MaxChunkSizeInBytes))
             {
                 writer.WritePropertyName("maxChunkSizeInBytes"u8);
                 writer.WriteNumberValue(MaxChunkSizeInBytes.Value);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());

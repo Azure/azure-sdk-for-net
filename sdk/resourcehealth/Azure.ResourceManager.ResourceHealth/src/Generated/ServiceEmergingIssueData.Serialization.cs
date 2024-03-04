@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RefreshedOn.HasValue)
+            if (Optional.IsDefined(RefreshedOn))
             {
                 writer.WritePropertyName("refreshTimestamp"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
-            if (!(StatusBanners is ChangeTrackingList<EmergingIssueBannerType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusBanners))
             {
                 writer.WritePropertyName("statusBanners"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
                 writer.WriteEndArray();
             }
-            if (!(StatusActiveEvents is ChangeTrackingList<EmergingIssueActiveEventType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusActiveEvents))
             {
                 writer.WritePropertyName("statusActiveEvents"u8);
                 writer.WriteStartArray();

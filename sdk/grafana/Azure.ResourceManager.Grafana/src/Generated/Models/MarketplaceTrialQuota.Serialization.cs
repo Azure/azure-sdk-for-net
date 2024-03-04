@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (AvailablePromotion.HasValue)
+            if (Optional.IsDefined(AvailablePromotion))
             {
                 writer.WritePropertyName("availablePromotion"u8);
                 writer.WriteStringValue(AvailablePromotion.Value.ToString());
             }
-            if (GrafanaResourceId != null)
+            if (Optional.IsDefined(GrafanaResourceId))
             {
                 writer.WritePropertyName("grafanaResourceId"u8);
                 writer.WriteStringValue(GrafanaResourceId);
             }
-            if (TrialStartOn.HasValue)
+            if (Optional.IsDefined(TrialStartOn))
             {
                 writer.WritePropertyName("trialStartAt"u8);
                 writer.WriteStringValue(TrialStartOn.Value, "O");
             }
-            if (TrialEndOn.HasValue)
+            if (Optional.IsDefined(TrialEndOn))
             {
                 writer.WritePropertyName("trialEndAt"u8);
                 writer.WriteStringValue(TrialEndOn.Value, "O");

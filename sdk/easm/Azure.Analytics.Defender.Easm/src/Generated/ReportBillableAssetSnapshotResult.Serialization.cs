@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Date.HasValue)
+            if (Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "D");
             }
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (!(AssetBreakdown is ChangeTrackingList<ReportBillableAssetBreakdown> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssetBreakdown))
             {
                 writer.WritePropertyName("assetBreakdown"u8);
                 writer.WriteStartArray();

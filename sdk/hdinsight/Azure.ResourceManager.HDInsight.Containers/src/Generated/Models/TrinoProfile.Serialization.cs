@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (CatalogOptions != null)
+            if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (Coordinator != null)
+            if (Optional.IsDefined(Coordinator))
             {
                 writer.WritePropertyName("coordinator"u8);
                 writer.WriteObjectValue(Coordinator);
             }
-            if (UserPluginsSpec != null)
+            if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);
             }
-            if (UserTelemetrySpec != null)
+            if (Optional.IsDefined(UserTelemetrySpec))
             {
                 writer.WritePropertyName("userTelemetrySpec"u8);
                 writer.WriteObjectValue(UserTelemetrySpec);
             }
-            if (Worker != null)
+            if (Optional.IsDefined(Worker))
             {
                 writer.WritePropertyName("worker"u8);
                 writer.WriteObjectValue(Worker);

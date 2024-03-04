@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Communication.Messages;
 using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
@@ -27,7 +28,7 @@ namespace Azure.Communication.Messages.Models.Channels
             }
 
             writer.WriteStartObject();
-            if (!(Header is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartArray();
@@ -37,7 +38,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (!(Body is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStartArray();
@@ -47,7 +48,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (!(Footer is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Footer))
             {
                 writer.WritePropertyName("footer"u8);
                 writer.WriteStartArray();
@@ -57,7 +58,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (!(Buttons is ChangeTrackingList<WhatsAppMessageTemplateBindingsButton> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Buttons))
             {
                 writer.WritePropertyName("buttons"u8);
                 writer.WriteStartArray();

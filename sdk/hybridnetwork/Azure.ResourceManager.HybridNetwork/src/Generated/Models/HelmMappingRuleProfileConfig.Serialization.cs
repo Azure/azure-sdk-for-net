@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (InstallOptions != null)
+            if (Optional.IsDefined(InstallOptions))
             {
                 writer.WritePropertyName("installOptions"u8);
                 writer.WriteObjectValue(InstallOptions);
             }
-            if (UpgradeOptions != null)
+            if (Optional.IsDefined(UpgradeOptions))
             {
                 writer.WritePropertyName("upgradeOptions"u8);
                 writer.WriteObjectValue(UpgradeOptions);

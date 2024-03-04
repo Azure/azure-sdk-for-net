@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (MaxPercentUnhealthyServices.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,104 +48,104 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MessageCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessageCount))
             {
                 writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && AccessedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccessedOn))
             {
                 writer.WritePropertyName("accessedAt"u8);
                 writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && CountDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
                 writer.WriteObjectValue(CountDetails);
             }
-            if (LockDuration.HasValue)
+            if (Optional.IsDefined(LockDuration))
             {
                 writer.WritePropertyName("lockDuration"u8);
                 writer.WriteStringValue(LockDuration.Value, "P");
             }
-            if (RequiresSession.HasValue)
+            if (Optional.IsDefined(RequiresSession))
             {
                 writer.WritePropertyName("requiresSession"u8);
                 writer.WriteBooleanValue(RequiresSession.Value);
             }
-            if (DefaultMessageTimeToLive.HasValue)
+            if (Optional.IsDefined(DefaultMessageTimeToLive))
             {
                 writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
-            if (DeadLetteringOnFilterEvaluationExceptions.HasValue)
+            if (Optional.IsDefined(DeadLetteringOnFilterEvaluationExceptions))
             {
                 writer.WritePropertyName("deadLetteringOnFilterEvaluationExceptions"u8);
                 writer.WriteBooleanValue(DeadLetteringOnFilterEvaluationExceptions.Value);
             }
-            if (DeadLetteringOnMessageExpiration.HasValue)
+            if (Optional.IsDefined(DeadLetteringOnMessageExpiration))
             {
                 writer.WritePropertyName("deadLetteringOnMessageExpiration"u8);
                 writer.WriteBooleanValue(DeadLetteringOnMessageExpiration.Value);
             }
-            if (DuplicateDetectionHistoryTimeWindow.HasValue)
+            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
             {
                 writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
-            if (MaxDeliveryCount.HasValue)
+            if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (EnableBatchedOperations.HasValue)
+            if (Optional.IsDefined(EnableBatchedOperations))
             {
                 writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
-            if (AutoDeleteOnIdle.HasValue)
+            if (Optional.IsDefined(AutoDeleteOnIdle))
             {
                 writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
-            if (ForwardTo != null)
+            if (Optional.IsDefined(ForwardTo))
             {
                 writer.WritePropertyName("forwardTo"u8);
                 writer.WriteStringValue(ForwardTo);
             }
-            if (ForwardDeadLetteredMessagesTo != null)
+            if (Optional.IsDefined(ForwardDeadLetteredMessagesTo))
             {
                 writer.WritePropertyName("forwardDeadLetteredMessagesTo"u8);
                 writer.WriteStringValue(ForwardDeadLetteredMessagesTo);
             }
-            if (IsClientAffine.HasValue)
+            if (Optional.IsDefined(IsClientAffine))
             {
                 writer.WritePropertyName("isClientAffine"u8);
                 writer.WriteBooleanValue(IsClientAffine.Value);
             }
-            if (ClientAffineProperties != null)
+            if (Optional.IsDefined(ClientAffineProperties))
             {
                 writer.WritePropertyName("clientAffineProperties"u8);
                 writer.WriteObjectValue(ClientAffineProperties);

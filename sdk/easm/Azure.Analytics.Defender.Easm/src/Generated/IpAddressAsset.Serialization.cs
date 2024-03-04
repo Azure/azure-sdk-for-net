@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (IpAddress != null)
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IpAddress);
             }
-            if (!(Asns is ChangeTrackingList<ObservedLong> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Asns))
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Reputations is ChangeTrackingList<ReputationDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Reputations))
             {
                 writer.WritePropertyName("reputations"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(WebComponents is ChangeTrackingList<WebComponent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(WebComponents))
             {
                 writer.WritePropertyName("webComponents"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetRanges is ChangeTrackingList<ObservedString> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NetRanges))
             {
                 writer.WritePropertyName("netRanges"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<ObservedHeader> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Attributes is ChangeTrackingList<AttributeDetails> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Cookies is ChangeTrackingList<CookieDetails> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Cookies))
             {
                 writer.WritePropertyName("cookies"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SslCerts is ChangeTrackingList<SslCertAsset> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(SslCerts))
             {
                 writer.WritePropertyName("sslCerts"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Services is ChangeTrackingList<AssetService> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(IpBlocks is ChangeTrackingList<IpBlock> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(IpBlocks))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<SourceDetails> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -142,22 +142,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (!(Banners is ChangeTrackingList<BannerDetails> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(Banners))
             {
                 writer.WritePropertyName("banners"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(ScanMetadata is ChangeTrackingList<ScanMetadata> collection11 && collection11.IsUndefined))
+            if (Optional.IsCollectionDefined(ScanMetadata))
             {
                 writer.WritePropertyName("scanMetadata"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(NsRecord is ChangeTrackingList<ObservedBoolean> collection12 && collection12.IsUndefined))
+            if (Optional.IsCollectionDefined(NsRecord))
             {
                 writer.WritePropertyName("nsRecord"u8);
                 writer.WriteStartArray();
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(MxRecord is ChangeTrackingList<ObservedBoolean> collection13 && collection13.IsUndefined))
+            if (Optional.IsCollectionDefined(MxRecord))
             {
                 writer.WritePropertyName("mxRecord"u8);
                 writer.WriteStartArray();
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Location is ChangeTrackingList<ObservedLocation> collection14 && collection14.IsUndefined))
+            if (Optional.IsCollectionDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Hosts is ChangeTrackingList<ObservedString> collection15 && collection15.IsUndefined))
+            if (Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Nxdomain is ChangeTrackingList<ObservedBoolean> collection16 && collection16.IsUndefined))
+            if (Optional.IsCollectionDefined(Nxdomain))
             {
                 writer.WritePropertyName("nxdomain"u8);
                 writer.WriteStartArray();
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(SslServerConfig is ChangeTrackingList<SslServerConfig> collection17 && collection17.IsUndefined))
+            if (Optional.IsCollectionDefined(SslServerConfig))
             {
                 writer.WritePropertyName("sslServerConfig"u8);
                 writer.WriteStartArray();
@@ -237,12 +237,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Ipv4.HasValue)
+            if (Optional.IsDefined(Ipv4))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteBooleanValue(Ipv4.Value);
             }
-            if (Ipv6.HasValue)
+            if (Optional.IsDefined(Ipv6))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteBooleanValue(Ipv6.Value);

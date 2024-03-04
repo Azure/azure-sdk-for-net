@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (External.HasValue)
+            if (Optional.IsDefined(External))
             {
                 writer.WritePropertyName("external"u8);
                 writer.WriteBooleanValue(External.Value);
             }
-            if (TargetPort.HasValue)
+            if (Optional.IsDefined(TargetPort))
             {
                 writer.WritePropertyName("targetPort"u8);
                 writer.WriteNumberValue(TargetPort.Value);
             }
-            if (ExposedPort.HasValue)
+            if (Optional.IsDefined(ExposedPort))
             {
                 writer.WritePropertyName("exposedPort"u8);
                 writer.WriteNumberValue(ExposedPort.Value);
             }
-            if (Transport.HasValue)
+            if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
             }
-            if (!(Traffic is ChangeTrackingList<ContainerAppRevisionTrafficWeight> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Traffic))
             {
                 writer.WritePropertyName("traffic"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomDomains is ChangeTrackingList<ContainerAppCustomDomain> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllowInsecure.HasValue)
+            if (Optional.IsDefined(AllowInsecure))
             {
                 writer.WritePropertyName("allowInsecure"u8);
                 writer.WriteBooleanValue(AllowInsecure.Value);
             }
-            if (!(IPSecurityRestrictions is ChangeTrackingList<ContainerAppIPSecurityRestrictionRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
                 writer.WritePropertyName("ipSecurityRestrictions"u8);
                 writer.WriteStartArray();
@@ -86,17 +87,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (StickySessions != null)
+            if (Optional.IsDefined(StickySessions))
             {
                 writer.WritePropertyName("stickySessions"u8);
                 writer.WriteObjectValue(StickySessions);
             }
-            if (ClientCertificateMode.HasValue)
+            if (Optional.IsDefined(ClientCertificateMode))
             {
                 writer.WritePropertyName("clientCertificateMode"u8);
                 writer.WriteStringValue(ClientCertificateMode.Value.ToString());
             }
-            if (CorsPolicy != null)
+            if (Optional.IsDefined(CorsPolicy))
             {
                 writer.WritePropertyName("corsPolicy"u8);
                 writer.WriteObjectValue(CorsPolicy);

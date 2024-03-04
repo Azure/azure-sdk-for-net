@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (IsNegateCondition.HasValue)
+            if (Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Transforms is ChangeTrackingList<WebApplicationRuleMatchTransformType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();

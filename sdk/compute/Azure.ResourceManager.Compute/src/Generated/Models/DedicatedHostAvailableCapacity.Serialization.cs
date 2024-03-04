@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllocatableVms is ChangeTrackingList<DedicatedHostAllocatableVm> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllocatableVms))
             {
                 writer.WritePropertyName("allocatableVMs"u8);
                 writer.WriteStartArray();

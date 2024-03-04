@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (!(PolicyErrors is ChangeTrackingList<ExchangePolicyError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyErrors))
             {
                 if (PolicyErrors != null)
                 {

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (ReleaseNamespace != null)
+            if (Optional.IsDefined(ReleaseNamespace))
             {
                 writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);

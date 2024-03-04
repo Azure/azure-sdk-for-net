@@ -28,49 +28,49 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (SessionAffinityEnabledState.HasValue)
+            if (Optional.IsDefined(SessionAffinityEnabledState))
             {
                 writer.WritePropertyName("sessionAffinityEnabledState"u8);
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
-            if (SessionAffinityTtlInSeconds.HasValue)
+            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {
                 writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
                 writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
-            if (WebApplicationFirewallPolicyLink != null)
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && CustomHttpsProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
             {
                 if (CustomHttpsProvisioningState != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor
                     writer.WriteNull("customHttpsProvisioningState");
                 }
             }
-            if (options.Format != "W" && CustomHttpsProvisioningSubstate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningSubstate))
             {
                 if (CustomHttpsProvisioningSubstate != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
                     writer.WriteNull("customHttpsProvisioningSubstate");
                 }
             }
-            if (options.Format != "W" && CustomHttpsConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsConfiguration))
             {
                 if (CustomHttpsConfiguration != null)
                 {

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (FrontEndIPConfiguration != null)
+            if (Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
                 writer.WriteObjectValue(FrontEndIPConfiguration);
             }
-            if (NetworkInterfaceConfiguration != null)
+            if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
                 writer.WriteObjectValue(NetworkInterfaceConfiguration);

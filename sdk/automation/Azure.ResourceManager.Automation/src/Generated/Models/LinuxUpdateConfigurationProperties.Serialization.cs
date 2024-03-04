@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (IncludedPackageClassifications.HasValue)
+            if (Optional.IsDefined(IncludedPackageClassifications))
             {
                 writer.WritePropertyName("includedPackageClassifications"u8);
                 writer.WriteStringValue(IncludedPackageClassifications.Value.ToString());
             }
-            if (!(ExcludedPackageNameMasks is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPackageNameMasks))
             {
                 writer.WritePropertyName("excludedPackageNameMasks"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedPackageNameMasks is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedPackageNameMasks))
             {
                 writer.WritePropertyName("includedPackageNameMasks"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RebootSetting != null)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
