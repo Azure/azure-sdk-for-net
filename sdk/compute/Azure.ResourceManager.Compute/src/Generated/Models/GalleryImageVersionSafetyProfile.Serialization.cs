@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsReportedForPolicyViolation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsReportedForPolicyViolation))
             {
                 writer.WritePropertyName("reportedForPolicyViolation"u8);
                 writer.WriteBooleanValue(IsReportedForPolicyViolation.Value);
             }
-            if (options.Format != "W" && !(PolicyViolations is ChangeTrackingList<GalleryImageVersionPolicyViolation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PolicyViolations))
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllowDeletionOfReplicatedLocations.HasValue)
+            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);

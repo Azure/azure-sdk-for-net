@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataDisksToAttach is ChangeTrackingList<DataDisksToAttach> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisksToAttach))
             {
                 writer.WritePropertyName("dataDisksToAttach"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataDisksToDetach is ChangeTrackingList<DataDisksToDetach> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisksToDetach))
             {
                 writer.WritePropertyName("dataDisksToDetach"u8);
                 writer.WriteStartArray();
