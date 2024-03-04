@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             DynatraceMonitoringStatus? monitoringStatus = default;
             DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default;
