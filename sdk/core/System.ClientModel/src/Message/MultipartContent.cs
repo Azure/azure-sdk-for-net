@@ -18,10 +18,15 @@ namespace System.ClientModel.Primitives;
 public class MultipartContent : IDisposable
 {
     private const string CrLf = "\r\n";
+    private const string ColonSpace = ": ";
+    private const string DashDash = "--";
+
+    private protected static readonly byte[] _crLfBytes = Encoding.UTF8.GetBytes(CrLf);
+    private protected static readonly byte[] _colonSpaceBytes = Encoding.UTF8.GetBytes(ColonSpace);
+    private protected static readonly byte[] _dashDashBytes = Encoding.UTF8.GetBytes(DashDash);
+
     private readonly List<MultipartContentSubpart> _subparts = new();
     private readonly string _boundary;
-    private long _size = 0;
-    private bool _couldComputeSize = true;
 
     /// <summary>
     /// The boundary string for the multipart content, which is used to separate the body parts.
@@ -43,8 +48,7 @@ public class MultipartContent : IDisposable
     {
         ValidateBoundary(boundary);
 
-        // see https://www.ietf.org/rfc/rfc1521.txt page 29.
-        _boundary = boundary.Contains(':') ? $"\"{boundary}\"" : boundary;
+        _boundary = boundary;
     }
 
     /// <summary>
@@ -65,7 +69,7 @@ public class MultipartContent : IDisposable
     /// <summary>
     /// Returns the content of the <see cref="MultipartContent"/> as a <see cref="BinaryContent"/>.
     /// </summary>
-    public BinaryContent ToBinaryContent() => new MultipartBinaryContent(_subparts, _boundary, _couldComputeSize, _size);
+    public BinaryContent ToBinaryContent() => new MultipartBinaryContent(_subparts, _boundary);
 
     /// <summary>
     /// Adds a new <see cref="BinaryContent"/> instance to the collection of <see cref="BinaryContent"/> objects that get
@@ -90,19 +94,6 @@ public class MultipartContent : IDisposable
         if (headers == null)
         {
             throw new ArgumentNullException(nameof(headers));
-        }
-
-        // If this fails for one subpart no need to keep calculating it.
-        if (_couldComputeSize)
-        {
-            var couldGetPartLength = content.TryComputeLength(out long length);
-            _couldComputeSize = _couldComputeSize && couldGetPartLength;
-            _size += length;
-
-            var headerSize = headers.Sum(h => h.Key.Length + h.Value.Length + 4); // 4 = crlf + ": "
-            _size += headerSize;
-
-            _size += _boundary.Length + 4; // 4 = crlf + "--"
         }
 
         var subpart = new MultipartContentSubpart(content, headers);
@@ -180,19 +171,18 @@ public class MultipartContent : IDisposable
         public void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             // Write headers on a new line
-            byte[] crlf = Encoding.UTF8.GetBytes(CrLf);
-            stream.Write(crlf, 0, crlf.Length);
+            stream.Write(_crLfBytes, 0, _crLfBytes.Length);
 
             // Write the headers to stream
             foreach (var header in Headers)
             {
-                string headerString = $"{header.Key}: {header.Value}{CrLf}";
+                string headerString = $"{header.Key}{ColonSpace}{header.Value}{CrLf}";
                 byte[] headerBytes = Encoding.UTF8.GetBytes(headerString);
                 stream.Write(headerBytes, 0, headerBytes.Length);
             }
 
             // Add another line
-            stream.Write(crlf, 0, crlf.Length);
+            stream.Write(_crLfBytes, 0, _crLfBytes.Length);
 
             // Write the content to stream
             Content.WriteTo(stream, cancellationToken);
@@ -206,19 +196,18 @@ public class MultipartContent : IDisposable
         public async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             // Write headers on a new line
-            byte[] crlf = Encoding.UTF8.GetBytes(CrLf);
-            await stream.WriteAsync(crlf, 0, crlf.Length, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(_crLfBytes, 0, _crLfBytes.Length, cancellationToken).ConfigureAwait(false);
 
             // Write the headers to stream
             foreach (var header in Headers)
             {
-                string headerString = $"{header.Key}: {header.Value}{CrLf}";
+                string headerString = $"{header.Key}{ColonSpace}{header.Value}{CrLf}";
                 byte[] headerBytes = Encoding.UTF8.GetBytes(headerString);
                 await stream.WriteAsync(headerBytes, 0, headerBytes.Length, cancellationToken).ConfigureAwait(false);
             }
 
             // Add another line
-            await stream.WriteAsync(crlf, 0, crlf.Length, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(_crLfBytes, 0, _crLfBytes.Length, cancellationToken).ConfigureAwait(false);
 
             // Write the content to stream
             await Content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
@@ -235,22 +224,45 @@ public class MultipartContent : IDisposable
     {
         private readonly List<MultipartContentSubpart> _subParts;
         private string _boundary;
-        private long _size;
-        private bool _couldComputeSize;
 
-        public MultipartBinaryContent(List<MultipartContentSubpart> subParts, string boundary, bool couldComputeSize, long size)
+        public MultipartBinaryContent(List<MultipartContentSubpart> subParts, string boundary)
         {
             _subParts = subParts;
             _boundary = boundary;
-            _couldComputeSize = couldComputeSize;
         }
 
         public override void Dispose() { }
 
         public override bool TryComputeLength(out long length)
         {
-            length = _size + 2 + 6 + _boundary.Length; // 2 = crlf after headers; 6 = crlf + "--" *2 for footer boundary
-            return _couldComputeSize;
+            var boundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}").Length;
+
+            // Footer boundary
+            long multipartLength = 0;
+            multipartLength += (boundaryBytes + _dashDashBytes.Length);
+
+            // Subparts
+            foreach (var part in _subParts)
+            {
+                long partLength = 0;
+                var couldComputeLength = part.Content.TryComputeLength(out partLength);
+                if (!couldComputeLength)
+                {
+                    // exit if we fail at any point
+                    length = 0;
+                    return false;
+                }
+
+                partLength += boundaryBytes;
+                partLength += _crLfBytes.Length; // before headers
+                partLength += part.Headers.Sum(h => Encoding.UTF8.GetBytes(h.Key).Length + _colonSpaceBytes.Length + Encoding.UTF8.GetBytes(h.Value).Length + _crLfBytes.Length);
+                partLength += _crLfBytes.Length; // after headers
+
+                multipartLength += partLength;
+            }
+
+            length = multipartLength;
+            return true;
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
