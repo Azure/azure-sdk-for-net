@@ -28,7 +28,7 @@ The `System.ClientModel` package provides an `ApiKeyCredential` type for authent
 
 ## Key concepts
 
-The main concepts used by types in `System.ClientModel` include:
+The main concepts in `System.ClientModel` include:
 
 - Configuring service clients (`ClientPipelineOptions`).
 - Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).

@@ -1,151 +1,110 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Net;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
+using Maps;
 using NUnit.Framework;
 
-namespace Azure.Core.Samples
+namespace System.ClientModel.Tests.Samples;
+
+public class ConfigurationSamples
 {
-    public class ConfigurationSamples
+    [Test]
+    public void ClientModelConfigurationReadme()
     {
-        [Test]
-        public void ConfigurationHelloWorld()
+        #region Snippet:ClientModelConfigurationReadme
+
+        MapsClientOptions options = new()
         {
-            #region Snippet:ConfigurationHelloWorld
+            NetworkTimeout = TimeSpan.FromSeconds(120),
+        };
 
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                Retry =
-                {
-                    Delay = TimeSpan.FromSeconds(2),
-                    MaxRetries = 10,
-                    Mode = RetryMode.Fixed
-                },
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = true,
-                    ApplicationId = "myApplicationId"
-                }
-            };
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        ApiKeyCredential credential = new(key);
+        MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
 
-            SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential(), options);
-            #endregion
+        #endregion
+    }
+
+    [Test]
+    public void ConfigurationCustomizeRetries()
+    {
+        #region Snippet:ConfigurationCustomizeRetries
+
+        MapsClientOptions options = new()
+        {
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 5),
+        };
+
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        ApiKeyCredential credential = new(key);
+        MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
+
+        #endregion
+    }
+
+    [Test]
+    public void ConfigurationAddPolicies()
+    {
+        #region Snippet:ConfigurationAddPerCallPolicy
+        MapsClientOptions options = new();
+        options.AddPolicy(new StopwatchPolicy(), PipelinePosition.PerCall);
+        #endregion
+
+        #region Snippet:ConfigurationAddPerTryPolicy
+        options.AddPolicy(new StopwatchPolicy(), PipelinePosition.PerTry);
+        #endregion
+
+        #region Snippet:ConfigurationAddBeforeTransportPolicy
+        options.AddPolicy(new StopwatchPolicy(), PipelinePosition.BeforeTransport);
+        #endregion
+    }
+
+    #region Snippet:ConfigurationCustomPolicy
+    public class StopwatchPolicy : PipelinePolicy
+    {
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        {
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
+
+            await ProcessNextAsync(message, pipeline, currentIndex);
+
+            stopwatch.Stop();
+
+            Console.WriteLine($"Request to {message.Request.Uri} took {stopwatch.Elapsed}");
         }
 
-        [Test]
-        public void RetryOptions()
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
-            #region Snippet:RetryOptions
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
 
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                Retry =
-                {
-                    Delay = TimeSpan.FromSeconds(2),
-                    MaxRetries = 10,
-                    Mode = RetryMode.Fixed
-                }
-            };
+            ProcessNext(message, pipeline, currentIndex);
 
-            #endregion
+            stopwatch.Stop();
+
+            Console.WriteLine($"Request to {message.Request.Uri} took {stopwatch.Elapsed}");
         }
+    }
+    #endregion
 
-        [Test]
-        public void SettingHttpClient()
+    [Test]
+    public void ConfigurationCustomHttpClient()
+    {
+        #region Snippet:ConfigurationCustomHttpClient
+
+        using HttpClient client = new();
+
+        MapsClientOptions options = new()
         {
-            #region Snippet:SettingHttpClient
+            Transport = new HttpClientPipelineTransport(client)
+        };
 
-            using HttpClient client = new HttpClient();
-
-            SecretClientOptions options = new SecretClientOptions
-            {
-                Transport = new HttpClientTransport(client)
-            };
-
-            #endregion
-        }
-
-        [Test]
-        public void HttpClientProxyConfiguration()
-        {
-            #region Snippet:HttpClientProxyConfiguration
-
-            using HttpClientHandler handler = new HttpClientHandler()
-            {
-                Proxy = new WebProxy(new Uri("http://example.com"))
-            };
-
-            SecretClientOptions options = new SecretClientOptions
-            {
-                Transport = new HttpClientTransport(handler)
-            };
-
-            #endregion
-        }
-
-        [Test]
-        public void SetPollyRetryPolicy()
-        {
-            #region Snippet:SetPollyRetryPolicy
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                RetryPolicy = new PollyPolicy()
-            };
-            #endregion
-        }
-
-        [Test]
-        public void SetGlobalTimeoutRetryPolicy()
-        {
-            #region Snippet:SetGlobalTimeoutRetryPolicy
-
-            var delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(2));
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                RetryPolicy = new GlobalTimeoutRetryPolicy(maxRetries: 4, delayStrategy: delay, timeout: TimeSpan.FromSeconds(30))
-            };
-            #endregion
-        }
-
-        [Test]
-        public void CustomizedDelayStrategy()
-        {
-            #region Snippet:CustomizedDelay
-            SecretClientOptions options = new SecretClientOptions()
-            {
-                RetryPolicy = new RetryPolicy(delayStrategy: new SequentialDelayStrategy())
-            };
-            #endregion
-        }
-
-        #region Snippet:SequentialDelayStrategy
-        public class SequentialDelayStrategy : DelayStrategy
-        {
-            private static readonly TimeSpan[] PollingSequence = new TimeSpan[]
-            {
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(2),
-                TimeSpan.FromSeconds(4),
-                TimeSpan.FromSeconds(8),
-                TimeSpan.FromSeconds(16),
-                TimeSpan.FromSeconds(32)
-            };
-            private static readonly TimeSpan MaxDelay = PollingSequence[PollingSequence.Length - 1];
-
-            protected override TimeSpan GetNextDelayCore(Response response, int retryNumber)
-            {
-                int index = retryNumber - 1;
-                return index >= PollingSequence.Length ? MaxDelay : PollingSequence[index];
-            }
-        }
         #endregion
     }
 }
