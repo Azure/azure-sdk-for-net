@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ContentMatch != null)
+            if (Optional.IsDefined(ContentMatch))
             {
                 writer.WritePropertyName("ContentMatch"u8);
                 writer.WriteStringValue(ContentMatch);
             }
-            if (IgnoreCase.HasValue)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("IgnoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (PassIfTextFound.HasValue)
+            if (Optional.IsDefined(PassIfTextFound))
             {
                 writer.WritePropertyName("PassIfTextFound"u8);
                 writer.WriteBooleanValue(PassIfTextFound.Value);

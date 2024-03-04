@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(EligibleAuthorizations is ChangeTrackingList<ManagedServicesEligibleAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EligibleAuthorizations))
             {
                 writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
@@ -48,29 +49,29 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RegistrationDefinitionName != null)
+            if (Optional.IsDefined(RegistrationDefinitionName))
             {
                 writer.WritePropertyName("registrationDefinitionName"u8);
                 writer.WriteStringValue(RegistrationDefinitionName);
             }
             writer.WritePropertyName("managedByTenantId"u8);
             writer.WriteStringValue(ManagedByTenantId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ManageeTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManageeTenantId))
             {
                 writer.WritePropertyName("manageeTenantId"u8);
                 writer.WriteStringValue(ManageeTenantId.Value);
             }
-            if (options.Format != "W" && ManageeTenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(ManageeTenantName))
             {
                 writer.WritePropertyName("manageeTenantName"u8);
                 writer.WriteStringValue(ManageeTenantName);
             }
-            if (options.Format != "W" && ManagedByTenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedByTenantName))
             {
                 writer.WritePropertyName("managedByTenantName"u8);
                 writer.WriteStringValue(ManagedByTenantName);

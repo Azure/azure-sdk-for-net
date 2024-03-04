@@ -31,22 +31,22 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Content.HasValue)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (FrequencyOffset.HasValue)
+            if (Optional.IsDefined(FrequencyOffset))
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);

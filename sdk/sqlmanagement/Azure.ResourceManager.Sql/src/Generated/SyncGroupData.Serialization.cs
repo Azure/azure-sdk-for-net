@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -48,69 +48,69 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (options.Format != "W" && LastSyncOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
             }
-            if (ConflictResolutionPolicy.HasValue)
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteStringValue(ConflictResolutionPolicy.Value.ToString());
             }
-            if (SyncDatabaseId != null)
+            if (Optional.IsDefined(SyncDatabaseId))
             {
                 writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
-            if (HubDatabaseUserName != null)
+            if (Optional.IsDefined(HubDatabaseUserName))
             {
                 writer.WritePropertyName("hubDatabaseUserName"u8);
                 writer.WriteStringValue(HubDatabaseUserName);
             }
-            if (HubDatabasePassword != null)
+            if (Optional.IsDefined(HubDatabasePassword))
             {
                 writer.WritePropertyName("hubDatabasePassword"u8);
                 writer.WriteStringValue(HubDatabasePassword);
             }
-            if (options.Format != "W" && SyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (IsConflictLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
             {
                 writer.WritePropertyName("enableConflictLogging"u8);
                 writer.WriteBooleanValue(IsConflictLoggingEnabled.Value);
             }
-            if (ConflictLoggingRetentionInDays.HasValue)
+            if (Optional.IsDefined(ConflictLoggingRetentionInDays))
             {
                 writer.WritePropertyName("conflictLoggingRetentionInDays"u8);
                 writer.WriteNumberValue(ConflictLoggingRetentionInDays.Value);
             }
-            if (UsePrivateLinkConnection.HasValue)
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
-            if (options.Format != "W" && PrivateEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointName))
             {
                 writer.WritePropertyName("privateEndpointName"u8);
                 writer.WriteStringValue(PrivateEndpointName);

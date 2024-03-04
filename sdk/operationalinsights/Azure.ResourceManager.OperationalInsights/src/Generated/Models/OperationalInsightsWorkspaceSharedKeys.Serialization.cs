@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PrimarySharedKey != null)
+            if (Optional.IsDefined(PrimarySharedKey))
             {
                 writer.WritePropertyName("primarySharedKey"u8);
                 writer.WriteStringValue(PrimarySharedKey);
             }
-            if (SecondarySharedKey != null)
+            if (Optional.IsDefined(SecondarySharedKey))
             {
                 writer.WritePropertyName("secondarySharedKey"u8);
                 writer.WriteStringValue(SecondarySharedKey);

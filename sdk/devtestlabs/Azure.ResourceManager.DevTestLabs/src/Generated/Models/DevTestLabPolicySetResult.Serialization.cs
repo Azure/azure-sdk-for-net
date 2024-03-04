@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (HasError.HasValue)
+            if (Optional.IsDefined(HasError))
             {
                 writer.WritePropertyName("hasError"u8);
                 writer.WriteBooleanValue(HasError.Value);
             }
-            if (!(PolicyViolations is ChangeTrackingList<DevTestLabPolicyViolation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyViolations))
             {
                 writer.WritePropertyName("policyViolations"u8);
                 writer.WriteStartArray();

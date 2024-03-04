@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("fadeColor"u8);
             writer.WriteStringValue(FadeColor);
-            if (Start != null)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);

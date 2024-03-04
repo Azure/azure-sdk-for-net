@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (!(ConnectionDetailsList is ChangeTrackingList<ControllerConnectionDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetailsList))
             {
                 writer.WritePropertyName("connectionDetailsList"u8);
                 writer.WriteStartArray();

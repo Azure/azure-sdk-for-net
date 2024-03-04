@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceCodeListDirectoryVersion != null)
+            if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
             {
                 writer.WritePropertyName("serviceCodeListDirectoryVersion"u8);
                 writer.WriteStringValue(ServiceCodeListDirectoryVersion);
             }
-            if (CharacterEncoding != null)
+            if (Optional.IsDefined(CharacterEncoding))
             {
                 writer.WritePropertyName("characterEncoding"u8);
                 writer.WriteStringValue(CharacterEncoding);

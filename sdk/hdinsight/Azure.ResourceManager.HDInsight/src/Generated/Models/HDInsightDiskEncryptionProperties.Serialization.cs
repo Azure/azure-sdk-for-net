@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (VaultUri != null)
+            if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (EncryptionAlgorithm.HasValue)
+            if (Optional.IsDefined(EncryptionAlgorithm))
             {
                 if (EncryptionAlgorithm != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("encryptionAlgorithm");
                 }
             }
-            if (MsiResourceId != null)
+            if (Optional.IsDefined(MsiResourceId))
             {
                 if (MsiResourceId != null)
                 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("msiResourceId");
                 }
             }
-            if (IsEncryptionAtHostEnabled.HasValue)
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (QueryParameters != null)
+            if (Optional.IsDefined(QueryParameters))
             {
                 if (QueryParameters != null)
                 {

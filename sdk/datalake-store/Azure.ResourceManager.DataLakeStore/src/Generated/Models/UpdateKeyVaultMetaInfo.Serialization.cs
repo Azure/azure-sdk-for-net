@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionKeyVersion != null)
+            if (Optional.IsDefined(EncryptionKeyVersion))
             {
                 writer.WritePropertyName("encryptionKeyVersion"u8);
                 writer.WriteStringValue(EncryptionKeyVersion);

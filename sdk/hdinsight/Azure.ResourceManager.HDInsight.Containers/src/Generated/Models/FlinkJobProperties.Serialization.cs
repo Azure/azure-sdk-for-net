@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,37 +29,37 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jobName"u8);
             writer.WriteStringValue(JobName);
-            if (JobJarDirectory != null)
+            if (Optional.IsDefined(JobJarDirectory))
             {
                 writer.WritePropertyName("jobJarDirectory"u8);
                 writer.WriteStringValue(JobJarDirectory);
             }
-            if (JarName != null)
+            if (Optional.IsDefined(JarName))
             {
                 writer.WritePropertyName("jarName"u8);
                 writer.WriteStringValue(JarName);
             }
-            if (EntryClass != null)
+            if (Optional.IsDefined(EntryClass))
             {
                 writer.WritePropertyName("entryClass"u8);
                 writer.WriteStringValue(EntryClass);
             }
-            if (Args != null)
+            if (Optional.IsDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
-            if (SavePointName != null)
+            if (Optional.IsDefined(SavePointName))
             {
                 writer.WritePropertyName("savePointName"u8);
                 writer.WriteStringValue(SavePointName);
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (!(FlinkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FlinkConfiguration))
             {
                 writer.WritePropertyName("flinkConfiguration"u8);
                 writer.WriteStartObject();
@@ -69,27 +70,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && JobId != null)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && JobOutput != null)
+            if (options.Format != "W" && Optional.IsDefined(JobOutput))
             {
                 writer.WritePropertyName("jobOutput"u8);
                 writer.WriteStringValue(JobOutput);
             }
-            if (options.Format != "W" && ActionResult != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionResult))
             {
                 writer.WritePropertyName("actionResult"u8);
                 writer.WriteStringValue(ActionResult);
             }
-            if (options.Format != "W" && LastSavePoint != null)
+            if (options.Format != "W" && Optional.IsDefined(LastSavePoint))
             {
                 writer.WritePropertyName("lastSavePoint"u8);
                 writer.WriteStringValue(LastSavePoint);

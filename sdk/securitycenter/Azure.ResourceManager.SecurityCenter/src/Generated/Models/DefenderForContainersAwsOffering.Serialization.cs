@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,69 +27,69 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (KubernetesService != null)
+            if (Optional.IsDefined(KubernetesService))
             {
                 writer.WritePropertyName("kubernetesService"u8);
                 writer.WriteObjectValue(KubernetesService);
             }
-            if (KubernetesScubaReader != null)
+            if (Optional.IsDefined(KubernetesScubaReader))
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
                 writer.WriteObjectValue(KubernetesScubaReader);
             }
-            if (CloudWatchToKinesis != null)
+            if (Optional.IsDefined(CloudWatchToKinesis))
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
                 writer.WriteObjectValue(CloudWatchToKinesis);
             }
-            if (KinesisToS3 != null)
+            if (Optional.IsDefined(KinesisToS3))
             {
                 writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3);
             }
-            if (ContainerVulnerabilityAssessment != null)
+            if (Optional.IsDefined(ContainerVulnerabilityAssessment))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessment);
             }
-            if (ContainerVulnerabilityAssessmentTask != null)
+            if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
             }
-            if (IsContainerVulnerabilityAssessmentEnabled.HasValue)
+            if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
             {
                 writer.WritePropertyName("enableContainerVulnerabilityAssessment"u8);
                 writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
             }
-            if (IsAutoProvisioningEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("autoProvisioning"u8);
                 writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
             }
-            if (KubeAuditRetentionTime.HasValue)
+            if (Optional.IsDefined(KubeAuditRetentionTime))
             {
                 writer.WritePropertyName("kubeAuditRetentionTime"u8);
                 writer.WriteNumberValue(KubeAuditRetentionTime.Value);
             }
-            if (ScubaExternalId != null)
+            if (Optional.IsDefined(ScubaExternalId))
             {
                 writer.WritePropertyName("scubaExternalId"u8);
                 writer.WriteStringValue(ScubaExternalId);
             }
-            if (MdcContainersImageAssessment != null)
+            if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (MdcContainersAgentlessDiscoveryK8S != null)
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

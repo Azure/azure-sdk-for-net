@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (IsInternal.HasValue)
+            if (Optional.IsDefined(IsInternal))
             {
                 writer.WritePropertyName("internal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
-            if (InfrastructureSubnetId != null)
+            if (Optional.IsDefined(InfrastructureSubnetId))
             {
                 writer.WritePropertyName("infrastructureSubnetId"u8);
                 writer.WriteStringValue(InfrastructureSubnetId);
             }
-            if (DockerBridgeCidr != null)
+            if (Optional.IsDefined(DockerBridgeCidr))
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
-            if (PlatformReservedCidr != null)
+            if (Optional.IsDefined(PlatformReservedCidr))
             {
                 writer.WritePropertyName("platformReservedCidr"u8);
                 writer.WriteStringValue(PlatformReservedCidr);
             }
-            if (PlatformReservedDnsIP != null)
+            if (Optional.IsDefined(PlatformReservedDnsIP))
             {
                 writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);

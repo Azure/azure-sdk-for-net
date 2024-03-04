@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             writer.WriteStartObject();
-            if (ToolCallId != null)
+            if (Optional.IsDefined(ToolCallId))
             {
                 writer.WritePropertyName("tool_call_id"u8);
                 writer.WriteStringValue(ToolCallId);
             }
-            if (Output != null)
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStringValue(Output);

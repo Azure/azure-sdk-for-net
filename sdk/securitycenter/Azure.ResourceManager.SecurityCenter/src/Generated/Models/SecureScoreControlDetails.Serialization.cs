@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -42,56 +43,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && HealthyResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthyResourceCount))
             {
                 writer.WritePropertyName("healthyResourceCount"u8);
                 writer.WriteNumberValue(HealthyResourceCount.Value);
             }
-            if (options.Format != "W" && UnhealthyResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyResourceCount))
             {
                 writer.WritePropertyName("unhealthyResourceCount"u8);
                 writer.WriteNumberValue(UnhealthyResourceCount.Value);
             }
-            if (options.Format != "W" && NotApplicableResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotApplicableResourceCount))
             {
                 writer.WritePropertyName("notApplicableResourceCount"u8);
                 writer.WriteNumberValue(NotApplicableResourceCount.Value);
             }
-            if (options.Format != "W" && Weight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
             writer.WritePropertyName("score"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Max.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (options.Format != "W" && Current.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(Current.Value);
             }
-            if (options.Format != "W" && Percentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);

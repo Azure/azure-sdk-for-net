@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("hugepagesCount"u8);
             writer.WriteNumberValue(HugepagesCount);
-            if (HugepagesSize.HasValue)
+            if (Optional.IsDefined(HugepagesSize))
             {
                 writer.WritePropertyName("hugepagesSize"u8);
                 writer.WriteStringValue(HugepagesSize.Value.ToString());

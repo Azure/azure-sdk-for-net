@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
-            if (Sd != null)
+            if (Optional.IsDefined(Sd))
             {
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (LanguageExtensionName.HasValue)
+            if (Optional.IsDefined(LanguageExtensionName))
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
-            if (LanguageExtensionImageName.HasValue)
+            if (Optional.IsDefined(LanguageExtensionImageName))
             {
                 writer.WritePropertyName("languageExtensionImageName"u8);
                 writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
             }
-            if (LanguageExtensionCustomImageName != null)
+            if (Optional.IsDefined(LanguageExtensionCustomImageName))
             {
                 writer.WritePropertyName("languageExtensionCustomImageName"u8);
                 writer.WriteStringValue(LanguageExtensionCustomImageName);

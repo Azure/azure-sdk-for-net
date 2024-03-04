@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("multiFactorAuthProvider"u8);
             writer.WriteStringValue(MultiFactorAuthProvider.ToString());
-            if (MaximumActivationDuration.HasValue)
+            if (Optional.IsDefined(MaximumActivationDuration))
             {
                 writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
-            if (!(ManagedByTenantApprovers is ChangeTrackingList<ManagedServicesEligibleApprover> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
             {
                 writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();

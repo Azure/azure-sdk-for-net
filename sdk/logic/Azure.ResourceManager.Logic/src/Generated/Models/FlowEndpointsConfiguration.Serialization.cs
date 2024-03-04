@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Workflow != null)
+            if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
-            if (Connector != null)
+            if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);

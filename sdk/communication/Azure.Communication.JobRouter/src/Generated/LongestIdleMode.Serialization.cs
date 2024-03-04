@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
             writer.WriteNumberValue(MaxConcurrentOffers);
-            if (BypassSelectors.HasValue)
+            if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);

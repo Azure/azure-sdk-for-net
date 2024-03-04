@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (!(PhysicalPartitionThroughputInfo is ChangeTrackingList<PhysicalPartitionThroughputInfoResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
             {
                 writer.WritePropertyName("physicalPartitionThroughputInfo"u8);
                 writer.WriteStartArray();

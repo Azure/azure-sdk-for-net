@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -17,33 +18,33 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Logging != null)
+            if (Optional.IsDefined(Logging))
             {
                 writer.WriteObjectValue(Logging, "Logging");
             }
-            if (HourMetrics != null)
+            if (Optional.IsDefined(HourMetrics))
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (MinuteMetrics != null)
+            if (Optional.IsDefined(MinuteMetrics))
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (DefaultServiceVersion != null)
+            if (Optional.IsDefined(DefaultServiceVersion))
             {
                 writer.WriteStartElement("DefaultServiceVersion");
                 writer.WriteValue(DefaultServiceVersion);
                 writer.WriteEndElement();
             }
-            if (DeleteRetentionPolicy != null)
+            if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WriteObjectValue(DeleteRetentionPolicy, "DeleteRetentionPolicy");
             }
-            if (StaticWebsite != null)
+            if (Optional.IsDefined(StaticWebsite))
             {
                 writer.WriteObjectValue(StaticWebsite, "StaticWebsite");
             }
-            if (!(Cors is ChangeTrackingList<BlobCorsRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

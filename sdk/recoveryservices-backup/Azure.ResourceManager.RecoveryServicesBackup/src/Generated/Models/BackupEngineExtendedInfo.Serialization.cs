@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            if (ProtectedServersCount.HasValue)
+            if (Optional.IsDefined(ProtectedServersCount))
             {
                 writer.WritePropertyName("protectedServersCount"u8);
                 writer.WriteNumberValue(ProtectedServersCount.Value);
             }
-            if (DiskCount.HasValue)
+            if (Optional.IsDefined(DiskCount))
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (UsedDiskSpace.HasValue)
+            if (Optional.IsDefined(UsedDiskSpace))
             {
                 writer.WritePropertyName("usedDiskSpace"u8);
                 writer.WriteNumberValue(UsedDiskSpace.Value);
             }
-            if (AvailableDiskSpace.HasValue)
+            if (Optional.IsDefined(AvailableDiskSpace))
             {
                 writer.WritePropertyName("availableDiskSpace"u8);
                 writer.WriteNumberValue(AvailableDiskSpace.Value);
             }
-            if (RefreshedOn.HasValue)
+            if (Optional.IsDefined(RefreshedOn))
             {
                 writer.WritePropertyName("refreshedAt"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
-            if (AzureProtectedInstances.HasValue)
+            if (Optional.IsDefined(AzureProtectedInstances))
             {
                 writer.WritePropertyName("azureProtectedInstances"u8);
                 writer.WriteNumberValue(AzureProtectedInstances.Value);

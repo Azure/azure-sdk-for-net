@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("playSourceInfo"u8);
                 writer.WriteObjectValue(PlaySourceInfo);
             }
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

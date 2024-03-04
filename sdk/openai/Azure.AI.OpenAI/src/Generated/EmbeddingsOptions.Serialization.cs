@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);

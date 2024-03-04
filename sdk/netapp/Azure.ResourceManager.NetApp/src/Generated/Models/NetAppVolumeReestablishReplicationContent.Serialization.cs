@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (SourceVolumeId != null)
+            if (Optional.IsDefined(SourceVolumeId))
             {
                 writer.WritePropertyName("sourceVolumeId"u8);
                 writer.WriteStringValue(SourceVolumeId);

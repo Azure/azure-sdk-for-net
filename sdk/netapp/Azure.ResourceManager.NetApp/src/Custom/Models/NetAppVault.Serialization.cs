@@ -8,6 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<Azure.ResourceManager.Models.SystemData> systemData = default;
-            Optional<string> vaultName = default;
+            SystemData systemData = default;
+            string vaultName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVault(id, name, type, systemData.Value, vaultName.Value, serializedAdditionalRawData);
+            return new NetAppVault(id, name, type, systemData, vaultName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVault>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (IsUsCoreMissingDataEnabled.HasValue)
+            if (Optional.IsDefined(IsUsCoreMissingDataEnabled))
             {
                 writer.WritePropertyName("usCoreMissingData"u8);
                 writer.WriteBooleanValue(IsUsCoreMissingDataEnabled.Value);

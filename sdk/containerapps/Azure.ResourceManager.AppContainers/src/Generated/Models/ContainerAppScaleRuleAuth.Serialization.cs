@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (SecretRef != null)
+            if (Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
-            if (TriggerParameter != null)
+            if (Optional.IsDefined(TriggerParameter))
             {
                 writer.WritePropertyName("triggerParameter"u8);
                 writer.WriteStringValue(TriggerParameter);

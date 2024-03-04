@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -22,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (ModelName != null)
+            if (Optional.IsDefined(ModelName))
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);

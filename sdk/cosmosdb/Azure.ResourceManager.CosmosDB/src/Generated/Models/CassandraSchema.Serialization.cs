@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (!(Columns is ChangeTrackingList<CassandraColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PartitionKeys is ChangeTrackingList<CassandraPartitionKey> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PartitionKeys))
             {
                 writer.WritePropertyName("partitionKeys"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClusterKeys is ChangeTrackingList<CassandraClusterKey> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterKeys))
             {
                 writer.WritePropertyName("clusterKeys"u8);
                 writer.WriteStartArray();
