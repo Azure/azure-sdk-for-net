@@ -18,8 +18,8 @@ resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: 'kv-TEST'
+resource keyVault_nM2Vqwgtg 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   tags: {
     'key': 'value'
@@ -34,8 +34,8 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_CRoMbemLF
+resource keyVaultAddAccessPolicy_7ChrYtGGE 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_nM2Vqwgtg
   name: 'add'
   properties: {
     accessPolicies: [
@@ -53,24 +53,24 @@ resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_nMDmVNMVq 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_CRoMbemLF
+resource keyVaultSecret_EG4xNeA1a 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_nM2Vqwgtg
   name: 'sqlAdminPassword'
   properties: {
     value: sqlAdminPassword
   }
 }
 
-resource keyVaultSecret_PrlUnEuAz 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_CRoMbemLF
+resource keyVaultSecret_ynz4glpCA 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_nM2Vqwgtg
   name: 'appUserPassword'
   properties: {
     value: appUserPassword
   }
 }
 
-resource keyVaultSecret_NP8ELZpgb 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_CRoMbemLF
+resource keyVaultSecret_YQnCy7jra 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_nM2Vqwgtg
   name: 'connectionString'
   properties: {
     value: 'Server=${sqlServer_dQT7Agxxb.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_xPxoW7iwr.name}; User=appUser; Password=${appUserPassword}'
@@ -240,6 +240,6 @@ resource applicationSettingsResource_Pfdqa0OdT 'Microsoft.Web/sites/config@2021-
   }
 }
 
-output vaultUri string = keyVault_CRoMbemLF.properties.vaultUri
+output vaultUri string = keyVault_nM2Vqwgtg.properties.vaultUri
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
 output sqlServerName string = sqlServer_dQT7Agxxb.properties.fullyQualifiedDomainName

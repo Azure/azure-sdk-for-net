@@ -23,8 +23,8 @@ resource appServicePlan_PxkuWnuWL 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource keyVault_zomsD2kWf 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: 'kv-TEST'
+resource keyVault_GLHqcGjrx 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: location
   tags: {
     'key': 'value'
@@ -39,8 +39,8 @@ resource keyVault_zomsD2kWf 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_P5xc7PJ0z 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_zomsD2kWf
+resource keyVaultAddAccessPolicy_7TZqao49e 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_GLHqcGjrx
   name: 'add'
   location: location
   properties: {
@@ -59,8 +59,8 @@ resource keyVaultAddAccessPolicy_P5xc7PJ0z 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_i5d2MB0md 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_zomsD2kWf
+resource keyVaultSecret_oru652GQm 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_GLHqcGjrx
   name: 'sqlAdminPassword'
   location: location
   properties: {
@@ -68,8 +68,8 @@ resource keyVaultSecret_i5d2MB0md 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_LNzTHfBsZ 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_zomsD2kWf
+resource keyVaultSecret_Y0cNQsqRD 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_GLHqcGjrx
   name: 'appUserPassword'
   location: location
   properties: {
@@ -77,8 +77,8 @@ resource keyVaultSecret_LNzTHfBsZ 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_67mSbXkng 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_zomsD2kWf
+resource keyVaultSecret_zxjawLUWb 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_GLHqcGjrx
   name: 'connectionString'
   location: location
   properties: {
@@ -250,6 +250,6 @@ resource applicationSettingsResource_EFVSysO15 'Microsoft.Web/sites/config@2021-
   }
 }
 
-output vaultUri string = keyVault_zomsD2kWf.properties.vaultUri
+output vaultUri string = keyVault_GLHqcGjrx.properties.vaultUri
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_IGuzwfciS.identity.principalId
 output sqlServerName string = sqlServer_9wIHMU1zj.properties.fullyQualifiedDomainName

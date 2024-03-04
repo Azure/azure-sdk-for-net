@@ -33,6 +33,11 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition StorageTableDataContributor { get; } = new RoleDefinition("0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3");
 
+        /// <summary>
+        /// Key Vault administrator role.
+        /// </summary>
+        public static RoleDefinition KeyVaultAdministrator { get; } = new RoleDefinition("00482a5a-887f-4fb3-b363-3b7fe8e74483");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 

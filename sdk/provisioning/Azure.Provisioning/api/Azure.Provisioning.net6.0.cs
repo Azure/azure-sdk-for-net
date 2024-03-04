@@ -93,6 +93,7 @@ namespace Azure.Provisioning
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         protected virtual string GetBicepName(Azure.Provisioning.Resource resource) { throw null; }
+        protected string GetGloballyUniqueName(string resourceName) { throw null; }
         protected virtual bool NeedsParent() { throw null; }
         protected virtual bool NeedsScope() { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -173,6 +174,7 @@ namespace Azure.Provisioning.Authorization
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RoleDefinition(string value) { throw null; }
+        public static Azure.Provisioning.Authorization.RoleDefinition KeyVaultAdministrator { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageBlobDataContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageQueueDataContributor { get { throw null; } }
         public static Azure.Provisioning.Authorization.RoleDefinition StorageTableDataContributor { get { throw null; } }
@@ -192,6 +194,7 @@ namespace Azure.Provisioning.KeyVaults
         public KeyVault(Azure.Provisioning.IConstruct scope, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "kv", string version = "2023-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultData>)) { }
         public void AddAccessPolicy(Azure.Provisioning.Output output) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
     public static partial class KeyVaultExtensions
     {

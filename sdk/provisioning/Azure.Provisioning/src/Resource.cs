@@ -6,16 +6,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ResourceManager;
-using Azure.Provisioning.Resources;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Authorization.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.Provisioning
 {
@@ -140,6 +135,13 @@ namespace Azure.Provisioning
 
             return stringBuilder.ToString(0, Math.Min(stringBuilder.Length, 24));
         }
+
+        /// <summary>
+        /// Gets a globally unique name for the resource.
+        /// </summary>
+        /// <param name="resourceName">The specified name when constructing the resource.</param>
+        protected string GetGloballyUniqueName(string resourceName)
+            => $"toLower(take(concat('{resourceName}', uniqueString(resourceGroup().id)), 24))";
 
         /// <summary>
         /// Finds the parent resource in the scope.

@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Tests
                 isSecure: true);
 
             keyVault.AddAccessPolicy(frontEndPrincipalId);
+            keyVault.AddOutput(data => data.Properties.VaultUri, "vaultUri");
 
             WebSiteConfigLogs logs = new WebSiteConfigLogs(this, "logs", frontEnd);
         }
