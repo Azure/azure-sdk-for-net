@@ -113,7 +113,7 @@ public class MapsClient
 
         using PipelineMessage message = CreateGetLocationRequest(string.Empty, options);
 
-        _pipeline.Send(message);
+        await _pipeline.SendAsync(message).ConfigureAwait(false);
 
         PipelineResponse response = message.Response!;
 
