@@ -451,14 +451,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <param name="content"> Look up resource id request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<LookUpResourceIdResult>> PostLookUpResourceIdAsync(LookUpResourceIdContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LookUpResourceIdResult>> LookUpResourceIdAsync(LookUpResourceIdContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = LookUpResourceIdClientDiagnostics.CreateScope("MockableSupportTenantResource.PostLookUpResourceId");
+            using var scope = LookUpResourceIdClientDiagnostics.CreateScope("MockableSupportTenantResource.LookUpResourceId");
             scope.Start();
             try
             {
@@ -492,14 +492,14 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <param name="content"> Look up resource id request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<LookUpResourceIdResult> PostLookUpResourceId(LookUpResourceIdContent content, CancellationToken cancellationToken = default)
+        public virtual Response<LookUpResourceIdResult> LookUpResourceId(LookUpResourceIdContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = LookUpResourceIdClientDiagnostics.CreateScope("MockableSupportTenantResource.PostLookUpResourceId");
+            using var scope = LookUpResourceIdClientDiagnostics.CreateScope("MockableSupportTenantResource.LookUpResourceId");
             scope.Start();
             try
             {

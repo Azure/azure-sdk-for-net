@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.Support.Models
 
         /// <summary> Initializes a new instance of <see cref="LookUpResourceIdContent"/>. </summary>
         /// <param name="identifier"> The System generated Id that is unique. Use supportTicketId property for Microsoft.Support/supportTickets resource type. </param>
-        /// <param name="azureSupportResourceType"> The type of resource. </param>
+        /// <param name="resourceType"> The type of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LookUpResourceIdContent(string identifier, AzureSupportResourceType? azureSupportResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LookUpResourceIdContent(string identifier, SupportResourceTypeName? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identifier = identifier;
-            AzureSupportResourceType = azureSupportResourceType;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The System generated Id that is unique. Use supportTicketId property for Microsoft.Support/supportTickets resource type. </summary>
         public string Identifier { get; set; }
         /// <summary> The type of resource. </summary>
-        public AzureSupportResourceType? AzureSupportResourceType { get; set; }
+        public SupportResourceTypeName? ResourceType { get; set; }
     }
 }

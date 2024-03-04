@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class ProblemClassificationsClassificationOutput : IUtf8JsonSerializable, IJsonModel<ProblemClassificationsClassificationOutput>
+    public partial class ProblemClassificationResult : IUtf8JsonSerializable, IJsonModel<ProblemClassificationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProblemClassificationsClassificationOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProblemClassificationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ProblemClassificationsClassificationOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProblemClassificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationsClassificationOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProblemClassificationResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteEndObject();
         }
 
-        ProblemClassificationsClassificationOutput IJsonModel<ProblemClassificationsClassificationOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProblemClassificationResult IJsonModel<ProblemClassificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProblemClassificationsClassificationOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProblemClassificationResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProblemClassificationsClassificationOutput(document.RootElement, options);
+            return DeserializeProblemClassificationResult(document.RootElement, options);
         }
 
-        internal static ProblemClassificationsClassificationOutput DeserializeProblemClassificationsClassificationOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProblemClassificationResult DeserializeProblemClassificationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -99,38 +99,38 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationsClassificationOutput(problemClassificationResults ?? new ChangeTrackingList<ProblemClassificationsClassificationResult>(), serializedAdditionalRawData);
+            return new ProblemClassificationResult(problemClassificationResults ?? new ChangeTrackingList<ProblemClassificationsClassificationResult>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProblemClassificationsClassificationOutput>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProblemClassificationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationsClassificationOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProblemClassificationResult)} does not support '{options.Format}' format.");
             }
         }
 
-        ProblemClassificationsClassificationOutput IPersistableModel<ProblemClassificationsClassificationOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProblemClassificationResult IPersistableModel<ProblemClassificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationsClassificationOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProblemClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProblemClassificationsClassificationOutput(document.RootElement, options);
+                        return DeserializeProblemClassificationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProblemClassificationsClassificationOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProblemClassificationResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProblemClassificationsClassificationOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProblemClassificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

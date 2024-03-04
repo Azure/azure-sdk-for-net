@@ -90,9 +90,15 @@ rename-mapping:
   UploadFile: UploadFileContent
   LookUpResourceIdResponse: LookUpResourceIdResult
   ServiceClassificationRequest: ServiceClassificationContent
-  ResourceType: AzureSupportResourceType
+  ResourceType: SupportResourceTypeName
+  LookUpResourceIdRequest.type: ResourceType
+  ProblemClassificationsClassificationInput: ProblemClassificationContent
+  ProblemClassificationsClassificationOutput: ProblemClassificationResult
 
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability
   SupportTickets_CheckNameAvailability: CheckSupportTicketNameAvailability
+  LookUpResourceId_Post: LookUpResourceId
+  ProblemClassificationsNoSubscription_classifyProblems: ClassifyProblemClassification
+  ProblemClassifications_classifyProblems: ClassifyProblemClassification
 ```

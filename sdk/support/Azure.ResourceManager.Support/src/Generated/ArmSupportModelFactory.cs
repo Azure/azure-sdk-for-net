@@ -87,23 +87,23 @@ namespace Azure.ResourceManager.Support.Models
             return new ClassificationService(serviceId, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationsClassificationInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
-        /// <returns> A new <see cref="Models.ProblemClassificationsClassificationInput"/> instance for mocking. </returns>
-        public static ProblemClassificationsClassificationInput ProblemClassificationsClassificationInput(string issueSummary = null, ResourceIdentifier resourceId = null)
+        /// <returns> A new <see cref="Models.ProblemClassificationContent"/> instance for mocking. </returns>
+        public static ProblemClassificationContent ProblemClassificationContent(string issueSummary = null, ResourceIdentifier resourceId = null)
         {
-            return new ProblemClassificationsClassificationInput(issueSummary, resourceId, serializedAdditionalRawData: null);
+            return new ProblemClassificationContent(issueSummary, resourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationsClassificationOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationResult"/>. </summary>
         /// <param name="problemClassificationResults"> Set of problem classification objects classified. </param>
-        /// <returns> A new <see cref="Models.ProblemClassificationsClassificationOutput"/> instance for mocking. </returns>
-        public static ProblemClassificationsClassificationOutput ProblemClassificationsClassificationOutput(IEnumerable<ProblemClassificationsClassificationResult> problemClassificationResults = null)
+        /// <returns> A new <see cref="Models.ProblemClassificationResult"/> instance for mocking. </returns>
+        public static ProblemClassificationResult ProblemClassificationResult(IEnumerable<ProblemClassificationsClassificationResult> problemClassificationResults = null)
         {
             problemClassificationResults ??= new List<ProblemClassificationsClassificationResult>();
 
-            return new ProblemClassificationsClassificationOutput(problemClassificationResults?.ToList(), serializedAdditionalRawData: null);
+            return new ProblemClassificationResult(problemClassificationResults?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProblemClassificationsClassificationResult"/>. </summary>

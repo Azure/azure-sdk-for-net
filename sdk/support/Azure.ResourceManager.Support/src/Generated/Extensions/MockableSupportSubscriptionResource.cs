@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </list>
         /// </summary>
         /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="input"/> is null. </exception>
-        public virtual async Task<Response<ProblemClassificationsClassificationOutput>> ClassifyProblemsProblemClassificationAsync(string problemServiceName, ProblemClassificationsClassificationInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ProblemClassificationResult>> ClassifyProblemClassificationAsync(string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (problemServiceName == null)
             {
@@ -308,16 +308,16 @@ namespace Azure.ResourceManager.Support.Mocking
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
             }
-            if (input == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblemsProblemClassification");
+            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblemClassification");
             scope.Start();
             try
             {
-                var response = await ProblemClassificationRestClient.ClassifyProblemsAsync(Id.SubscriptionId, problemServiceName, input, cancellationToken).ConfigureAwait(false);
+                var response = await ProblemClassificationRestClient.ClassifyProblemsAsync(Id.SubscriptionId, problemServiceName, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </list>
         /// </summary>
         /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="input"/> is null. </exception>
-        public virtual Response<ProblemClassificationsClassificationOutput> ClassifyProblemsProblemClassification(string problemServiceName, ProblemClassificationsClassificationInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<ProblemClassificationResult> ClassifyProblemClassification(string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (problemServiceName == null)
             {
@@ -363,16 +363,16 @@ namespace Azure.ResourceManager.Support.Mocking
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
             }
-            if (input == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblemsProblemClassification");
+            using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyProblemClassification");
             scope.Start();
             try
             {
-                var response = ProblemClassificationRestClient.ClassifyProblems(Id.SubscriptionId, problemServiceName, input, cancellationToken);
+                var response = ProblemClassificationRestClient.ClassifyProblems(Id.SubscriptionId, problemServiceName, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

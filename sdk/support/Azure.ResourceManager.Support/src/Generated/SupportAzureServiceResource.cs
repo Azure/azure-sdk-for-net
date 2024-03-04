@@ -259,21 +259,21 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual async Task<Response<ProblemClassificationsClassificationOutput>> ClassifyProblemsProblemClassificationsNoSubscriptionAsync(ProblemClassificationsClassificationInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ProblemClassificationResult>> ClassifyProblemClassificationAsync(ProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (input == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyProblemsProblemClassificationsNoSubscription");
+            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyProblemClassification");
             scope.Start();
             try
             {
-                var response = await _problemClassificationsNoSubscriptionRestClient.ClassifyProblemsAsync(Id.Name, input, cancellationToken).ConfigureAwait(false);
+                var response = await _problemClassificationsNoSubscriptionRestClient.ClassifyProblemsAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -300,21 +300,21 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual Response<ProblemClassificationsClassificationOutput> ClassifyProblemsProblemClassificationsNoSubscription(ProblemClassificationsClassificationInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ProblemClassificationResult> ClassifyProblemClassification(ProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (input == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyProblemsProblemClassificationsNoSubscription");
+            using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyProblemClassification");
             scope.Start();
             try
             {
-                var response = _problemClassificationsNoSubscriptionRestClient.ClassifyProblems(Id.Name, input, cancellationToken);
+                var response = _problemClassificationsNoSubscriptionRestClient.ClassifyProblems(Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

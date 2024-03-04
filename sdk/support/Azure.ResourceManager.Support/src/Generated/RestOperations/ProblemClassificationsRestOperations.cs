@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateClassifyProblemsRequest(string subscriptionId, string problemServiceName, ProblemClassificationsClassificationInput input)
+        internal HttpMessage CreateClassifyProblemsRequest(string subscriptionId, string problemServiceName, ProblemClassificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Support
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Support
         /// <summary> Classify the right problem classifications (categories) available for a specific Azure service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="problemServiceName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProblemClassificationsClassificationOutput>> ClassifyProblemsAsync(string subscriptionId, string problemServiceName, ProblemClassificationsClassificationInput input, CancellationToken cancellationToken = default)
+        public async Task<Response<ProblemClassificationResult>> ClassifyProblemsAsync(string subscriptionId, string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.Support
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
             }
-            if (input == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, input);
+            using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ProblemClassificationsClassificationOutput value = default;
+                        ProblemClassificationResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProblemClassificationsClassificationOutput.DeserializeProblemClassificationsClassificationOutput(document.RootElement);
+                        value = ProblemClassificationResult.DeserializeProblemClassificationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Support
         /// <summary> Classify the right problem classifications (categories) available for a specific Azure service. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="problemServiceName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProblemClassificationsClassificationOutput> ClassifyProblems(string subscriptionId, string problemServiceName, ProblemClassificationsClassificationInput input, CancellationToken cancellationToken = default)
+        public Response<ProblemClassificationResult> ClassifyProblems(string subscriptionId, string problemServiceName, ProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.Support
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
             }
-            if (input == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, input);
+            using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ProblemClassificationsClassificationOutput value = default;
+                        ProblemClassificationResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProblemClassificationsClassificationOutput.DeserializeProblemClassificationsClassificationOutput(document.RootElement);
+                        value = ProblemClassificationResult.DeserializeProblemClassificationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

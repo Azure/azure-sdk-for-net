@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Support.Samples
         // Classify list of problemClassifications for a specified Azure service for a subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ClassifyProblemsProblemClassification_ClassifyListOfProblemClassificationsForASpecifiedAzureServiceForASubscription()
+        public async Task ClassifyProblemClassification_ClassifyListOfProblemClassificationsForASpecifiedAzureServiceForASubscription()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/ClassifyProblemClassificationsForSubscription.json
             // this example is just showing the usage of "ProblemClassifications_classifyProblems" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Support.Samples
 
             // invoke the operation
             string problemServiceName = "serviceId1";
-            ProblemClassificationsClassificationInput input = new ProblemClassificationsClassificationInput("Can not connect to Windows VM")
+            ProblemClassificationContent content = new ProblemClassificationContent("Can not connect to Windows VM")
             {
                 ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/virtualMachines/vmname"),
             };
-            ProblemClassificationsClassificationOutput result = await subscriptionResource.ClassifyProblemsProblemClassificationAsync(problemServiceName, input);
+            ProblemClassificationResult result = await subscriptionResource.ClassifyProblemClassificationAsync(problemServiceName, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

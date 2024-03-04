@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Output of the problem classification Classification API. </summary>
-    public partial class ProblemClassificationsClassificationOutput
+    /// <summary> Input to problem classification Classification API. </summary>
+    public partial class ProblemClassificationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +46,38 @@ namespace Azure.ResourceManager.Support.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsClassificationOutput"/>. </summary>
-        internal ProblemClassificationsClassificationOutput()
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationContent"/>. </summary>
+        /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="issueSummary"/> is null. </exception>
+        public ProblemClassificationContent(string issueSummary)
         {
-            ProblemClassificationResults = new ChangeTrackingList<ProblemClassificationsClassificationResult>();
+            if (issueSummary == null)
+            {
+                throw new ArgumentNullException(nameof(issueSummary));
+            }
+
+            IssueSummary = issueSummary;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsClassificationOutput"/>. </summary>
-        /// <param name="problemClassificationResults"> Set of problem classification objects classified. </param>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationContent"/>. </summary>
+        /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
+        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProblemClassificationsClassificationOutput(IReadOnlyList<ProblemClassificationsClassificationResult> problemClassificationResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProblemClassificationContent(string issueSummary, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ProblemClassificationResults = problemClassificationResults;
+            IssueSummary = issueSummary;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set of problem classification objects classified. </summary>
-        public IReadOnlyList<ProblemClassificationsClassificationResult> ProblemClassificationResults { get; }
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationContent"/> for deserialization. </summary>
+        internal ProblemClassificationContent()
+        {
+        }
+
+        /// <summary> Natural language description of the customer’s issue. </summary>
+        public string IssueSummary { get; }
+        /// <summary> ARM resource Id of the resource that is having the issue. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

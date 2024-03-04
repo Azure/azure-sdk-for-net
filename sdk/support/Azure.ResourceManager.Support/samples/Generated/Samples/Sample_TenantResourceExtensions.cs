@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Support.Samples
         // Look up resource id of support resource type
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PostLookUpResourceId_LookUpResourceIdOfSupportResourceType()
+        public async Task LookUpResourceId_LookUpResourceIdOfSupportResourceType()
         {
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/LookUpResourceId.json
             // this example is just showing the usage of "LookUpResourceId_Post" operation, for the dependent resources, they will have to be created separately.
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Support.Samples
             LookUpResourceIdContent content = new LookUpResourceIdContent()
             {
                 Identifier = "1234668596",
-                AzureSupportResourceType = AzureSupportResourceType.MicrosoftSupportSupportTickets,
+                ResourceType = SupportResourceTypeName.MicrosoftSupportSupportTickets,
             };
-            LookUpResourceIdResult result = await tenantResource.PostLookUpResourceIdAsync(content);
+            LookUpResourceIdResult result = await tenantResource.LookUpResourceIdAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

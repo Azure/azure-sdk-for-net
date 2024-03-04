@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task ClassifyProblems()
         {
-            var problemClassificationContent = new ProblemClassificationsClassificationInput(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
-            var problemClassificationOutput = await DefaultSubscription.ClassifyProblemsProblemClassificationAsync(_serviceId, problemClassificationContent);
+            var problemClassificationContent = new ProblemClassificationContent(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
+            var problemClassificationOutput = await DefaultSubscription.ClassifyProblemClassificationAsync(_serviceId, problemClassificationContent);
             this.ValidateProblemClassification(problemClassificationOutput.Value.ProblemClassificationResults.FirstOrDefault());
         }
 
