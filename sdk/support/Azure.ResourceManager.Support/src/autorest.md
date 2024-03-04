@@ -88,6 +88,8 @@ rename-mapping:
   Consent: AdvancedDiagnosticConsent
   MessageProperties: ChatTranscriptMessageProperties
   UploadFile: UploadFileContent
+  LookUpResourceIdResponse: LookUpResourceIdResult
+  ServiceClassificationRequest: ServiceClassificationContent
 
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability
