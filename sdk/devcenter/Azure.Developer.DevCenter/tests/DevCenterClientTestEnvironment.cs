@@ -40,7 +40,8 @@ namespace Azure.Developer.DevCenter.Tests
                         GetVariable("DEFAULT_TEST_USER_SECRET"),
                         GetVariable("DEFAULT_TEST_USER_NAME"),
                         GetVariable("DEFAULT_DEVCENTER_SCOPE"),
-                        new Uri(GetVariable("AZURE_AUTHORITY_HOST") + GetVariable("TENANT_ID")));
+                        GetVariable("AZURE_AUTHORITY_HOST"),
+                        GetVariable("TENANT_ID"));
                 }
 
                 return _credential;

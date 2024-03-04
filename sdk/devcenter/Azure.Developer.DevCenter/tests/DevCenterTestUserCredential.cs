@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Security;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -27,14 +27,14 @@ namespace Azure.Developer.DevCenter.Tests
         private readonly string _userName;
         private readonly string[] _dataplaneScopes;
 
-        public DevCenterTestUserCredential(string clientId, string clientSecret, string userId, string userSecret, string userName, string dataplaneScope, Uri authority)
+        public DevCenterTestUserCredential(string clientId, string clientSecret, string userId, string userSecret, string userName, string dataplaneScope, string authorityHost, string tenantId)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userId = userId;
             _userSecret = userSecret;
             _userName = userName;
-            _authority = authority;
+            _authority = new(Path.Combine(authorityHost, tenantId));
             _dataplaneScopes = new string[] { dataplaneScope };
         }
 
