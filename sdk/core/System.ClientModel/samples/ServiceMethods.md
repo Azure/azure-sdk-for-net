@@ -2,13 +2,13 @@
 
 ## Introduction
 
-`System.ClientModel`-based clients , or **service clients**, provide an interface to cloud services by translating library calls to HTTP requests.
+`System.ClientModel`-based clients, or **service clients**, provide an interface to cloud services by translating library calls to HTTP requests.
 
 In service clients, there are two ways to expose the schematized body in the request or response, known as the **message body**:
 
-- Most service clients expose methods that take strongly-typed models as parameters, C# classes which map to the message body of the REST call.  These methods are called **convenience methods**.
+- **Convenience methods** take strongly-typed models as parameters.  These models are C# classes which map to the message body of the REST call.
 
-- However, some clients expose methods that mirror the message body directly. Those methods are called here **protocol methods**, as they provide more direct access to the HTTP API protocol used by the service.
+- **Protocol method** take primitive types as parameters and their `BinaryContent` input parameters mirror the message body directly. Protocol methods provide more direct access to the HTTP API protocol used by the service.
 
 ## Convenience methods
 
@@ -17,12 +17,12 @@ In service clients, there are two ways to expose the schematized body in the req
 The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
 
 ```C# Snippet:ClientResultTReadme
-// create a client
+// Create a client
 string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
 ApiKeyCredential credential = new(key);
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-// call a service method, which returns ClientResult<T>
+// Call a service method, which returns ClientResult<T>
 IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
@@ -47,7 +47,7 @@ foreach (KeyValuePair<string, string> header in response.Headers)
 
 In contrast to convenience methods, **protocol methods** are service methods that provide very little convenience over the raw HTTP APIs a cloud service exposes. They represent request and response message bodies using types that are very thin layers over raw JSON/binary/other formats. Users of client protocol methods must reference a service's API documentation directly, rather than relying on the client to provide developer conveniences via strongly-typing service schemas.
 
-The following sample illustrates how to call a protocol method, including creating the request payload, accessing the details of the HTTP response.
+The following sample illustrates how to call a protocol method, including creating the request payload and accessing the details of the HTTP response.
 
 ```C# Snippet:ServiceMethodsProtocolMethod
 // Create a BinaryData instance from a JSON string literal
@@ -100,10 +100,10 @@ try
     IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
     ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 }
-// handle exception with status code 404
+// Handle exception with status code 404
 catch (ClientResultException e) when (e.Status == 404)
 {
-    // handle not found error
+    // Handle not found error
     Console.Error.WriteLine($"Error: Response failed with status code: '{e.Status}'");
 }
 ```

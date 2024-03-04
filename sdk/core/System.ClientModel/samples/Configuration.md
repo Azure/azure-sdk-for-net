@@ -4,7 +4,7 @@
 
 To modify the retry policy, create a new instance of `ClientRetryPolicy` and set it on the `ClientPipelineOptions` passed to the client constructor.
 
-By default, clients are setup to retry 3 times using an exponential retry strategy with an initial delay of 0.8 sec, and a max delay of 1 minute.
+By default, clients will retry a request three times using an exponential retry strategy with an initial delay of 0.8 seconds and a maximum delay of one minute.
 
 ```C# Snippet:ConfigurationCustomizeRetries
 MapsClientOptions options = new()
@@ -19,24 +19,24 @@ MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, opti
 
 ## Add a custom policy to the pipeline
 
-Azure SDKs provides a way to add policies to the pipeline at three positions:
+Azure SDKs provides a way to add policies to the pipeline at three positions, `PerCall`, `PerTry`, and `BeforeTranspor`.
 
-- per-call policies are run once per request
+- `PerCall` policies run once per request
 
 ```C# Snippet:ConfigurationAddPerCallPolicy
 MapsClientOptions options = new();
 options.AddPolicy(new StopwatchPolicy(), PipelinePosition.PerCall);
 ```
 
-- per-try policies are run each time the request is tried
+- `PerTry` policies run each time a request is tried
 
 ```C# Snippet:ConfigurationAddPerTryPolicy
 options.AddPolicy(new StopwatchPolicy(), PipelinePosition.PerTry);
 ```
 
-- before-transport policies are run after other policies and before the request is sent
+- `BeforeTransport` policies run after all other policies in the pipeline and before the request is sent by the transport.
 
-Adding policies at this position should be done with care since changes made to the request by a before-transport policy will not be visible to any logging policies that come before it in the  pipeline.
+Adding policies at the `BeforeTransport` position should be done with care since changes made to the request by a before-transport policy will not be visible to any logging policies that come before it in the  pipeline.
 
 ```C# Snippet:ConfigurationAddBeforeTransportPolicy
 options.AddPolicy(new StopwatchPolicy(), PipelinePosition.BeforeTransport);
@@ -44,7 +44,7 @@ options.AddPolicy(new StopwatchPolicy(), PipelinePosition.BeforeTransport);
 
 ## Implement a custom policy
 
-To implement a policy create a class deriving from `HttpPipelinePolicy` and overide `ProcessAsync` and `Process` methods. Request can be accessed via `message.Request`. Response is accessible via `message.Response` but only after `ProcessNextAsync`/`ProcessNext` was called.
+To implement a policy create a class that derives from `PipelinePolicy` and overide its `ProcessAsync` and `Process` methods. The request can be accessed via `message.Request`. The response is accessible via `message.Response`, but will have a value only after `ProcessNextAsync`/`ProcessNext` has been called.
 
 ```C# Snippet:ConfigurationCustomPolicy
 public class StopwatchPolicy : PipelinePolicy
@@ -77,7 +77,7 @@ public class StopwatchPolicy : PipelinePolicy
 
 ## Provide a custom HttpClient instance
 
-In some cases, users may want to provide a custom instance of the `HttpClient` used by a client's transport to send and receive HTTP messages.  To provide a custom `HttpClient`, create a new instance of `HttpClientPipelineTransport` and create the custom `HttpClient` instance to its constructor.
+In some cases, users may want to provide a custom instance of the `HttpClient` used by a client's transport to send and receive HTTP messages.  To provide a custom `HttpClient`, create a new instance of `HttpClientPipelineTransport` and pass the custom `HttpClient` instance to its constructor.
 
 ```C# Snippet:ConfigurationCustomHttpClient
 using HttpClient client = new();

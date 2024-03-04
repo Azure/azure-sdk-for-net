@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Maps;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
@@ -16,15 +15,16 @@ namespace System.ClientModel.Tests.Samples;
 public class ServiceMethodSamples
 {
     [Test]
+    [Ignore("Used for README")]
     public async Task ClientResultTReadme()
     {
         #region Snippet:ClientResultTReadme
-        // create a client
+        // Create a client
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
         ApiKeyCredential credential = new(key);
         MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-        // call a service method, which returns ClientResult<T>
+        // Call a service method, which returns ClientResult<T>
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
@@ -47,9 +47,10 @@ public class ServiceMethodSamples
     }
 
     [Test]
+    [Ignore("Used for README")]
     public async Task ClientResultExceptionReadme()
     {
-        // create a client
+        // Create a client
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
         ApiKeyCredential credential = new(key);
         MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
@@ -60,16 +61,17 @@ public class ServiceMethodSamples
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
             ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
         }
-        // handle exception with status code 404
+        // Handle exception with status code 404
         catch (ClientResultException e) when (e.Status == 404)
         {
-            // handle not found error
+            // Handle not found error
             Console.Error.WriteLine($"Error: Response failed with status code: '{e.Status}'");
         }
         #endregion
     }
 
     [Test]
+    [Ignore("Used for README")]
     public async Task RequestOptionsReadme()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -105,6 +107,7 @@ public class ServiceMethodSamples
     }
 
     [Test]
+    [Ignore("Used for README")]
     public async Task ServiceMethodsProtocolMethod()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;

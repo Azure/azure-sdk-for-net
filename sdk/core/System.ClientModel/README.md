@@ -60,9 +60,7 @@ For more information on client configuration, see [Client configuration samples]
 
 ### Accessing HTTP response details
 
-Service clients have methods that are used to call cloud services to invoke service operations. These methods on a client are called **service methods**.
-
-`System.ClientModel`-based clients expose two types of service methods: _convenience methods_ and _protocol methods_.
+Service clients have methods that are used to call cloud services to invoke service operations. These methods on a client are called **service methods**. Service clients expose two types of service methods: _convenience methods_ and _protocol methods_.
 
 **Convenience methods** provide a convenient way to invoke a service operation.  They are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response can be obtained from the return value.
 
@@ -71,12 +69,12 @@ Service clients have methods that are used to call cloud services to invoke serv
 The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
 
 ```C# Snippet:ClientResultTReadme
-// create a client
+// Create a client
 string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
 ApiKeyCredential credential = new(key);
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-// call a service method, which returns ClientResult<T>
+// Call a service method, which returns ClientResult<T>
 IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
@@ -109,10 +107,10 @@ try
     IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
     ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 }
-// handle exception with status code 404
+// Handle exception with status code 404
 catch (ClientResultException e) when (e.Status == 404)
 {
-    // handle not found error
+    // Handle not found error
     Console.Error.WriteLine($"Error: Response failed with status code: '{e.Status}'");
 }
 ```
@@ -161,7 +159,7 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 
 ## Troubleshooting
 
-You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a client's service method.
+You can troubleshoot service clients by inspecting the result of any `ClientResultException` thrown from a client's service method.
 
 For more information on client service method errors, see [Handling exceptions that result from failed requests](#handling-exceptions-that-result-from-failed-requests).
 

@@ -429,6 +429,7 @@ begin {
         "return-to-workplace",
         "sql-server-2008",
         "surface-duo",
+        "system-clientmodel",
         "sway",
         "vs-app-center",
         "vs-code",

@@ -14,6 +14,7 @@ namespace System.ClientModel.Tests.Samples;
 public class ConfigurationSamples
 {
     [Test]
+    [Ignore("Used for README")]
     public void ClientModelConfigurationReadme()
     {
         #region Snippet:ClientModelConfigurationReadme
@@ -31,6 +32,7 @@ public class ConfigurationSamples
     }
 
     [Test]
+    [Ignore("Used for README")]
     public void ConfigurationCustomizeRetries()
     {
         #region Snippet:ConfigurationCustomizeRetries
