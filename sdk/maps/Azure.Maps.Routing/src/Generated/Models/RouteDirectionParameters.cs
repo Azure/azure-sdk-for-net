@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
