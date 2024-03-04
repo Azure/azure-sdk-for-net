@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (options.Format != "W" && Duration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());

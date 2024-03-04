@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MaxThroughput.HasValue)
+            if (Optional.IsDefined(MaxThroughput))
             {
                 writer.WritePropertyName("maxThroughput"u8);
                 writer.WriteNumberValue(MaxThroughput.Value);

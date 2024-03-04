@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
             }
-            if (PrivateEndpointIPAddress != null)
+            if (Optional.IsDefined(PrivateEndpointIPAddress))
             {
                 writer.WritePropertyName("privateEndpointIpAddress"u8);
                 writer.WriteStringValue(PrivateEndpointIPAddress);

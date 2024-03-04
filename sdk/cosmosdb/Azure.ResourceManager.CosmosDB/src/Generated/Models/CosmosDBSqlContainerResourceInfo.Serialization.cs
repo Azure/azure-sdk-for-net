@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);
             }
-            if (!(ComputedProperties is ChangeTrackingList<ComputedProperty> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ComputedProperties))
             {
                 writer.WritePropertyName("computedProperties"u8);
                 writer.WriteStartArray();

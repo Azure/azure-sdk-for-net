@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Command != null)
+            if (Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command);
             }
-            if (CommandId != null)
+            if (Optional.IsDefined(CommandId))
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            if (Arguments != null)
+            if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
 #if NET6_0_OR_GREATER
@@ -48,37 +49,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
 #endif
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (IsAdmin.HasValue)
+            if (Optional.IsDefined(IsAdmin))
             {
                 writer.WritePropertyName("isAdmin"u8);
                 writer.WriteBooleanValue(IsAdmin.Value);
             }
-            if (CassandraStopStart.HasValue)
+            if (Optional.IsDefined(CassandraStopStart))
             {
                 writer.WritePropertyName("cassandraStopStart"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (ReadWrite.HasValue)
+            if (Optional.IsDefined(ReadWrite))
             {
                 writer.WritePropertyName("readWrite"u8);
                 writer.WriteBooleanValue(ReadWrite.Value);
             }
-            if (Result != null)
+            if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (OutputFile != null)
+            if (Optional.IsDefined(OutputFile))
             {
                 writer.WritePropertyName("outputFile"u8);
                 writer.WriteStringValue(OutputFile);

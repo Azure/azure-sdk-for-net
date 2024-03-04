@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (AccountResourceIdentifier != null)
+            if (Optional.IsDefined(AccountResourceIdentifier))
             {
                 writer.WritePropertyName("accountResourceIdentifier"u8);
                 writer.WriteStringValue(AccountResourceIdentifier);
             }
-            if (AccountLocation != null)
+            if (Optional.IsDefined(AccountLocation))
             {
                 writer.WritePropertyName("accountLocation"u8);
                 writer.WriteStringValue(AccountLocation);
             }
-            if (options.Format != "W" && AccountInstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountInstanceId))
             {
                 writer.WritePropertyName("accountInstanceId"u8);
                 writer.WriteStringValue(AccountInstanceId);
