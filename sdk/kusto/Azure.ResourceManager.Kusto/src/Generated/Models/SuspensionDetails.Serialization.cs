@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (SuspensionStartOn.HasValue)
+            if (Optional.IsDefined(SuspensionStartOn))
             {
                 writer.WritePropertyName("suspensionStartDate"u8);
                 writer.WriteStringValue(SuspensionStartOn.Value, "O");

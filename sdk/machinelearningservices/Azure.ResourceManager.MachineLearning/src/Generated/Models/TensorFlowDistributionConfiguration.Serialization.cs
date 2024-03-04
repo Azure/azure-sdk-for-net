@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ParameterServerCount.HasValue)
+            if (Optional.IsDefined(ParameterServerCount))
             {
                 writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
-            if (WorkerCount.HasValue)
+            if (Optional.IsDefined(WorkerCount))
             {
                 if (WorkerCount != null)
                 {

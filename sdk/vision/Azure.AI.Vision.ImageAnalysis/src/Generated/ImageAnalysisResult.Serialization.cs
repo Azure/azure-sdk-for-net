@@ -27,12 +27,12 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
 
             writer.WriteStartObject();
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("captionResult"u8);
                 writer.WriteObjectValue(Caption);
             }
-            if (DenseCaptions != null)
+            if (Optional.IsDefined(DenseCaptions))
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
                 writer.WriteObjectValue(DenseCaptions);
@@ -41,27 +41,27 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteObjectValue(Metadata);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            if (Objects != null)
+            if (Optional.IsDefined(Objects))
             {
                 writer.WritePropertyName("objectsResult"u8);
                 writer.WriteObjectValue(Objects);
             }
-            if (People != null)
+            if (Optional.IsDefined(People))
             {
                 writer.WritePropertyName("peopleResult"u8);
                 writer.WriteObjectValue(People);
             }
-            if (Read != null)
+            if (Optional.IsDefined(Read))
             {
                 writer.WritePropertyName("readResult"u8);
                 writer.WriteObjectValue(Read);
             }
-            if (SmartCrops != null)
+            if (Optional.IsDefined(SmartCrops))
             {
                 writer.WritePropertyName("smartCropsResult"u8);
                 writer.WriteObjectValue(SmartCrops);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tagsResult"u8);
                 writer.WriteObjectValue(Tags);

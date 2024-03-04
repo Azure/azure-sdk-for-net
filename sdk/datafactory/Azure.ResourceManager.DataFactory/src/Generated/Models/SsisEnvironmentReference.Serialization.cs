@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (EnvironmentFolderName != null)
+            if (Optional.IsDefined(EnvironmentFolderName))
             {
                 writer.WritePropertyName("environmentFolderName"u8);
                 writer.WriteStringValue(EnvironmentFolderName);
             }
-            if (EnvironmentName != null)
+            if (Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName);
             }
-            if (ReferenceType != null)
+            if (Optional.IsDefined(ReferenceType))
             {
                 writer.WritePropertyName("referenceType"u8);
                 writer.WriteStringValue(ReferenceType);

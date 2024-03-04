@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterName != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterName))
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && MeterCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && MeterSubCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && MeterLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterLocation))
             {
                 writer.WritePropertyName("meterLocation"u8);
                 writer.WriteStringValue(MeterLocation);
             }
-            if (options.Format != "W" && TotalIncludedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalIncludedQuantity))
             {
                 writer.WritePropertyName("totalIncludedQuantity"u8);
                 writer.WriteNumberValue(TotalIncludedQuantity.Value);
             }
-            if (options.Format != "W" && PretaxStandardRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PretaxStandardRate))
             {
                 writer.WritePropertyName("pretaxStandardRate"u8);
                 writer.WriteNumberValue(PretaxStandardRate.Value);
             }
-            if (options.Format != "W" && ServiceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (options.Format != "W" && ServiceTier != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier);

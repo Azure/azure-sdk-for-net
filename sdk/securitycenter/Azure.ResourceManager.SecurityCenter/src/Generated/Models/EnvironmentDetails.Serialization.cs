@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (NativeResourceId != null)
+            if (Optional.IsDefined(NativeResourceId))
             {
                 writer.WritePropertyName("nativeResourceId"u8);
                 writer.WriteStringValue(NativeResourceId);
             }
-            if (EnvironmentHierarchyId != null)
+            if (Optional.IsDefined(EnvironmentHierarchyId))
             {
                 writer.WritePropertyName("environmentHierarchyId"u8);
                 writer.WriteStringValue(EnvironmentHierarchyId);
             }
-            if (OrganizationalHierarchyId != null)
+            if (Optional.IsDefined(OrganizationalHierarchyId))
             {
                 writer.WritePropertyName("organizationalHierarchyId"u8);
                 writer.WriteStringValue(OrganizationalHierarchyId);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

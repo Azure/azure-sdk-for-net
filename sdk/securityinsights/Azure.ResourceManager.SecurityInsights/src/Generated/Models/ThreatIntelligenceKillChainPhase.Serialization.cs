@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (KillChainName != null)
+            if (Optional.IsDefined(KillChainName))
             {
                 writer.WritePropertyName("killChainName"u8);
                 writer.WriteStringValue(KillChainName);
             }
-            if (PhaseName != null)
+            if (Optional.IsDefined(PhaseName))
             {
                 writer.WritePropertyName("phaseName"u8);
                 writer.WriteStringValue(PhaseName);

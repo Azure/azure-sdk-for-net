@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ShouldValidateCertificateChain.HasValue)
+            if (Optional.IsDefined(ShouldValidateCertificateChain))
             {
                 writer.WritePropertyName("validateCertificateChain"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (ShouldValidateCertificateName.HasValue)
+            if (Optional.IsDefined(ShouldValidateCertificateName))
             {
                 writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);

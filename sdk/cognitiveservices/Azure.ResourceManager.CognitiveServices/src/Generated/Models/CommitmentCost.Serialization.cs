@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (CommitmentMeterId != null)
+            if (Optional.IsDefined(CommitmentMeterId))
             {
                 writer.WritePropertyName("commitmentMeterId"u8);
                 writer.WriteStringValue(CommitmentMeterId);
             }
-            if (OverageMeterId != null)
+            if (Optional.IsDefined(OverageMeterId))
             {
                 writer.WritePropertyName("overageMeterId"u8);
                 writer.WriteStringValue(OverageMeterId);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (StatusDescription != null)
+            if (Optional.IsDefined(StatusDescription))
             {
                 writer.WritePropertyName("statusDescription"u8);
                 writer.WriteStringValue(StatusDescription);
             }
-            if (options.Format != "W" && !(Conditions is ChangeTrackingList<OutstandingCondition> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();

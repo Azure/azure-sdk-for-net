@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress.ToString());
             }
-            if (IsWorkloadProtected.HasValue)
+            if (Optional.IsDefined(IsWorkloadProtected))
             {
                 writer.WritePropertyName("isWorkloadProtected"u8);
                 writer.WriteStringValue(IsWorkloadProtected.Value.ToString());
             }
-            if (DdosProtectionPlanId != null)
+            if (Optional.IsDefined(DdosProtectionPlanId))
             {
                 writer.WritePropertyName("ddosProtectionPlanId"u8);
                 writer.WriteStringValue(DdosProtectionPlanId);

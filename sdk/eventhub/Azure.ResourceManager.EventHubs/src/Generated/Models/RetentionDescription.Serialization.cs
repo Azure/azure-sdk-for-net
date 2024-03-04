@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (CleanupPolicy.HasValue)
+            if (Optional.IsDefined(CleanupPolicy))
             {
                 writer.WritePropertyName("cleanupPolicy"u8);
                 writer.WriteStringValue(CleanupPolicy.Value.ToString());
             }
-            if (RetentionTimeInHours.HasValue)
+            if (Optional.IsDefined(RetentionTimeInHours))
             {
                 writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
-            if (TombstoneRetentionTimeInHours.HasValue)
+            if (Optional.IsDefined(TombstoneRetentionTimeInHours))
             {
                 writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
                 writer.WriteNumberValue(TombstoneRetentionTimeInHours.Value);

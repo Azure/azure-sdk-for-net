@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PublisherType.HasValue)
+            if (Optional.IsDefined(PublisherType))
             {
                 writer.WritePropertyName("publisherType"u8);
                 writer.WriteStringValue(PublisherType.Value.ToString());
             }
-            if (InputSchema.HasValue)
+            if (Optional.IsDefined(InputSchema))
             {
                 writer.WritePropertyName("inputSchema"u8);
                 writer.WriteStringValue(InputSchema.Value.ToString());
             }
-            if (EventRetentionInDays.HasValue)
+            if (Optional.IsDefined(EventRetentionInDays))
             {
                 writer.WritePropertyName("eventRetentionInDays"u8);
                 writer.WriteNumberValue(EventRetentionInDays.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (!(StopSellNotifications is ChangeTrackingList<StopSellNotifications> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StopSellNotifications))
             {
                 writer.WritePropertyName("stopSellNotifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NewNotifications is ChangeTrackingList<NewPlanNotification> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NewNotifications))
             {
                 writer.WritePropertyName("newNotifications"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApprovalRequests is ChangeTrackingList<RequestApprovalsDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ApprovalRequests))
             {
                 writer.WritePropertyName("approvalRequests"u8);
                 writer.WriteStartArray();

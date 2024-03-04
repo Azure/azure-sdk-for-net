@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (!(Locations is ChangeTrackingList<AppServiceGeoRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HostingEnvironments is ChangeTrackingList<AppServiceEnvironmentProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HostingEnvironments))
             {
                 writer.WritePropertyName("hostingEnvironments"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HostingEnvironmentDeploymentInfos is ChangeTrackingList<HostingEnvironmentDeploymentInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
             {
                 writer.WritePropertyName("hostingEnvironmentDeploymentInfos"u8);
                 writer.WriteStartArray();

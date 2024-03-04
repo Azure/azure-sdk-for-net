@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (ActionUri != null)
+            if (Optional.IsDefined(ActionUri))
             {
                 writer.WritePropertyName("actionUrl"u8);
                 writer.WriteStringValue(ActionUri.AbsoluteUri);
             }
-            if (ActionUriComment != null)
+            if (Optional.IsDefined(ActionUriComment))
             {
                 writer.WritePropertyName("_ActionUrl.Comment"u8);
                 writer.WriteStringValue(ActionUriComment);
             }
-            if (ActionUriText != null)
+            if (Optional.IsDefined(ActionUriText))
             {
                 writer.WritePropertyName("actionUrlText"u8);
                 writer.WriteStringValue(ActionUriText);

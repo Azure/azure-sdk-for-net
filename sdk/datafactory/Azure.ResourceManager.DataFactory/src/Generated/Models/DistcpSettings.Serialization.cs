@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             JsonSerializer.Serialize(writer, TempScriptPath);
-            if (DistcpOptions != null)
+            if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 JsonSerializer.Serialize(writer, DistcpOptions);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (LastTransitionOn.HasValue)
+            if (Optional.IsDefined(LastTransitionOn))
             {
                 writer.WritePropertyName("lastTransitionTime"u8);
                 writer.WriteStringValue(LastTransitionOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ObjectStatusConditionDefinitionType != null)
+            if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectStatusConditionDefinitionType);

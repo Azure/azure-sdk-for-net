@@ -15,17 +15,17 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (GroupCallId != null)
+            if (Optional.IsDefined(GroupCallId))
             {
                 writer.WritePropertyName("groupCallId"u8);
                 writer.WriteStringValue(GroupCallId);
             }
-            if (ServerCallId != null)
+            if (Optional.IsDefined(ServerCallId))
             {
                 writer.WritePropertyName("serverCallId"u8);
                 writer.WriteStringValue(ServerCallId);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
