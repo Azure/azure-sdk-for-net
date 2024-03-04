@@ -19,9 +19,11 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -213,6 +215,28 @@ namespace Azure.Provisioning.Tests
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
             var primaryKey = cache.AddOutput(data => data.AccessKeys.PrimaryKey, "primaryKey");
+            _ = infrastructure.AddKeyVault();
+            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(new Parameter(primaryKey)));
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task PostgreSql()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var server = new PostgreSqlFlexibleServer(
+                infrastructure,
+                adminLogin: new Parameter("adminLogin", "SQL Server administrator login"),
+                adminPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true),
+                highAvailability: new PostgreSqlFlexibleServerHighAvailability { Mode = "haMode" },
+                backup: new PostgreSqlFlexibleServerBackupProperties
+                {
+                    BackupRetentionDays = 7,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
+                });
             _ = infrastructure.AddKeyVault();
             _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(new Parameter(primaryKey)));
 
