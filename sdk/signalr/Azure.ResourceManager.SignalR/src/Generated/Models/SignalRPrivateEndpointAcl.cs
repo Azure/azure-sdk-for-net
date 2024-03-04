@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Name of the private endpoint connection. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }
