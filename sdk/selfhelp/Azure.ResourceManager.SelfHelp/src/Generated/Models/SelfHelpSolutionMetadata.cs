@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="solutions"> List of metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Solutions = solutions;
             _serializedAdditionalRawData = serializedAdditionalRawData;

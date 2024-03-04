@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticData"/> instance for mocking. </returns>
-        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> insights = null, DateTimeOffset? acceptedOn = null, SelfHelpProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
+        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> insights = null, DateTimeOffset? acceptedOn = null, SelfHelpProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
         {
             globalParameters ??= new Dictionary<string, string>();
             insights ??= new List<SelfHelpDiagnosticInvocation>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="solutions"> List of metadata. </param>
         /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
-        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
         {
             solutions ??= new List<SolutionMetadataProperties>();
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Solution result. </param>
         /// <returns> A new <see cref="SelfHelp.SolutionResourceData"/> instance for mocking. </returns>
-        public static SolutionResourceData SolutionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SolutionResourceProperties properties = null)
+        public static SolutionResourceData SolutionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, SolutionResourceProperties properties = null)
         {
             return new SolutionResourceData(
                 id,
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
         /// <returns> A new <see cref="SelfHelp.TroubleshooterResourceData"/> instance for mocking. </returns>
-        public static TroubleshooterResourceData TroubleshooterResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<SelfHelpStep> steps = null)
+        public static TroubleshooterResourceData TroubleshooterResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<SelfHelpStep> steps = null)
         {
             parameters ??= new Dictionary<string, string>();
             steps ??= new List<SelfHelpStep>();

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string solutionId = default;
             IDictionary<string, string> parameters = default;
             TroubleshooterProvisioningState? provisioningState = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SelfHelp
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
             Insights = insights;

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             Parameters = parameters;
