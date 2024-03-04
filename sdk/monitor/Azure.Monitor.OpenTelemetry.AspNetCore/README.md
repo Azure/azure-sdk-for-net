@@ -274,8 +274,7 @@ If you want to exclude specific instruments from being collected in your applica
 builder.Services.ConfigureOpenTelemetryMeterProvider(
     (sp, builder) => builder.AddView((instrument) =>
     {
-        if (instrument.Meter.Name == "OpenTelemetry.Instrumentation.AspNetCore" &&
-            instrument.Name == "http.client.open_connections")
+        if (instrument.Name == "http.client.request.duration")
         {
             return MetricStreamConfiguration.Drop;
         }
