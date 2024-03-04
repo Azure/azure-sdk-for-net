@@ -56,10 +56,6 @@ namespace Azure.Search.Documents.Indexes.Models
         [CodeGenMember("EdmSingle")]
         public static SearchFieldDataType Single { get; } = new SearchFieldDataType(SingleValue);
 
-        /// <summary>Indicates that a field contains a half-precision floating point number. This is only valid when used with Collection(Edm.Half).</summary>
-        [CodeGenMember("EdmHalf")]
-        public static SearchFieldDataType Half { get; } = new SearchFieldDataType(HalfValue);
-
         /// <summary>
         /// Gets a <see cref="SearchFieldDataType"/> representing a collection of <paramref name="type"/>.
         /// </summary>
