@@ -224,6 +224,53 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
+        /// Query a Log Analytics workspace with a query that includes a bronze table asynchronously.
+        /// </summary>
+        /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
+        public virtual async Task<Response<LogsQueryResult>> QueryWorkspaceWithBronzeTableAsync(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryWorkspace)}");
+            scope.Start();
+            try
+            {
+                return await ExecuteAsync(workspaceId, query, timeRange, options, async: true, isWorkspace: true, cancellationToken, isSearchJob: true).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary>
+        /// Query a Log Analytics workspace with a query that includes a bronze table
+        /// </summary>
+        /// <param name="workspaceId">The workspace ID to include in the query (<c>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</c>).</param>
+        /// <param name="query">The Kusto query to fetch the logs.</param>
+        /// <param name="timeRange">The time period for which the logs should be looked up.</param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The <see cref="LogsQueryResult"/> with the query results.</returns>
+        public virtual Response<LogsQueryResult> QueryWorkspaceWithBronzeTable(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryWorkspace)}");
+            scope.Start();
+            try
+            {
+                return ExecuteAsync(workspaceId, query, timeRange, options, async: false, isWorkspace: true, cancellationToken, isSearchJob: true).EnsureCompleted();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Submits the batch query. Use the <see cref="LogsBatchQuery"/> to compose a batch query.
         /// <example snippet="Snippet:BatchQuery">
         /// <code language="csharp">
@@ -465,6 +512,32 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource with bronze table.
+        /// </summary>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual Response<LogsQueryResult> QueryResourceWithBronzeTable(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
+                return ExecuteAsync(resource, query, timeRange, options, async: false, isWorkspace: false, cancellationToken, isSearchJob:true).EnsureCompleted();
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Returns all the Azure Monitor logs matching the given query for an Azure resource.
         /// <example snippet="Snippet:QueryResource">
         /// <code language="csharp">
@@ -508,6 +581,31 @@ namespace Azure.Monitor.Query
                 // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
                 string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
                 return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+        /// <summary>
+        /// Returns all the Azure Monitor logs matching the given query for an Azure resource with bronze table asynchronously.
+        /// </summary>
+        /// <param name="resourceId"> The Azure resource ID where the query should be executed. </param>
+        /// <param name="query"> The Kusto query to fetch the logs. </param>
+        /// <param name="timeRange"> The time period for which the logs should be looked up. </param>
+        /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <returns>The logs matching the query.</returns>
+        public virtual async Task<Response<LogsQueryResult>> QueryResourceWithBronzeTableAsync(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(QueryResource)}");
+            scope.Start();
+            try
+            {
+                // Call Parse to validate resourceId, then trim preceding / as generated code cannot handle it: https://github.com/Azure/autorest.csharp/issues/3322
+                string resource = ResourceIdentifier.Parse(resourceId).ToString().TrimStart('/');
+                return await ExecuteAsync(resource, query, timeRange, options, async: true, isWorkspace: false, cancellationToken, isSearchJob: true).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -742,7 +840,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        private async Task<Response<LogsQueryResult>> ExecuteAsync(string id, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, bool isWorkspace, CancellationToken cancellationToken = default)
+        private async Task<Response<LogsQueryResult>> ExecuteAsync(string id, string query, QueryTimeRange timeRange, LogsQueryOptions options, bool async, bool isWorkspace, CancellationToken cancellationToken = default, bool isSearchJob = false)
         {
             if (id == null)
             {
@@ -751,8 +849,8 @@ namespace Azure.Monitor.Query
 
             QueryBody queryBody = CreateQueryBody(query, timeRange, options, out string prefer);
 
-            using var message = isWorkspace ? _queryClient.CreateExecuteRequest(id, queryBody, prefer)
-                : _queryClient.CreateResourceExecuteRequest(new ResourceIdentifier(id), queryBody, prefer);
+            using var message = isWorkspace ? _queryClient.CreateExecuteRequest(id, queryBody, prefer, isSearchJob)
+                : _queryClient.CreateResourceExecuteRequest(new ResourceIdentifier(id), queryBody, prefer, isSearchJob);
 
             if (options?.ServerTimeout != null)
             {

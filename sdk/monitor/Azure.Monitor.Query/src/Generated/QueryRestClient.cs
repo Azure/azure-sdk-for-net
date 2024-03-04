@@ -123,8 +123,8 @@ namespace Azure.Monitor.Query
                     throw new RequestFailedException(message.Response);
             }
         }
-
-        internal HttpMessage CreateExecuteRequest(string workspaceId, QueryBody body, string prefer)
+ 
+        internal HttpMessage CreateExecuteRequest(string workspaceId, QueryBody body, string prefer, bool isSearchJob = false)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,7 +133,12 @@ namespace Azure.Monitor.Query
             uri.Reset(_endpoint);
             uri.AppendPath("/workspaces/", false);
             uri.AppendPath(workspaceId, true);
-            uri.AppendPath("/query", false);
+            uri.AppendPath(isSearchJob ? "/search" : "/query", false);
+            if (isSearchJob && body.Timespan != null)
+            {
+                uri.AppendQuery("timespan", body.Timespan, true);
+                body.Timespan = null;
+            }
             request.Uri = uri;
             if (prefer != null)
             {
@@ -303,7 +308,7 @@ namespace Azure.Monitor.Query
             }
         }
 
-        internal HttpMessage CreateResourceExecuteRequest(ResourceIdentifier resourceId, QueryBody body, string prefer)
+        internal HttpMessage CreateResourceExecuteRequest(ResourceIdentifier resourceId, QueryBody body, string prefer, bool isSearchJob = false)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -312,7 +317,12 @@ namespace Azure.Monitor.Query
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
-            uri.AppendPath("/query", false);
+            uri.AppendPath(isSearchJob ? "/search" : "/query", false);
+            if (isSearchJob && body.Timespan != null)
+            {
+                uri.AppendQuery("timespan", body.Timespan, true);
+                body.Timespan = null;
+            }
             request.Uri = uri;
             if (prefer != null)
             {
