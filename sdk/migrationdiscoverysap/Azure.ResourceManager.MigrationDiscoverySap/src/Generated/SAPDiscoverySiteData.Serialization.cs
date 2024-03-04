@@ -15,19 +15,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
-    public partial class SAPInstanceData : IUtf8JsonSerializable, IJsonModel<SAPInstanceData>
+    public partial class SAPDiscoverySiteData : IUtf8JsonSerializable, IJsonModel<SAPDiscoverySiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SAPInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SAPDiscoverySiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<SAPInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SAPDiscoverySiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SAPInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SAPDiscoverySiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SAPInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SAPDiscoverySiteData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (ExtendedLocation != null)
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation);
+            }
             if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
@@ -63,25 +68,15 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SystemSid != null)
+            if (MasterSiteId != null)
             {
-                writer.WritePropertyName("systemSid"u8);
-                writer.WriteStringValue(SystemSid);
+                writer.WritePropertyName("masterSiteId"u8);
+                writer.WriteStringValue(MasterSiteId);
             }
-            if (options.Format != "W" && Environment.HasValue)
+            if (MigrateProjectId != null)
             {
-                writer.WritePropertyName("environment"u8);
-                writer.WriteStringValue(Environment.Value.ToString());
-            }
-            if (options.Format != "W" && LandscapeSid != null)
-            {
-                writer.WritePropertyName("landscapeSid"u8);
-                writer.WriteStringValue(LandscapeSid);
-            }
-            if (options.Format != "W" && Application != null)
-            {
-                writer.WritePropertyName("application"u8);
-                writer.WriteStringValue(Application);
+                writer.WritePropertyName("migrateProjectId"u8);
+                writer.WriteStringValue(MigrateProjectId);
             }
             if (options.Format != "W" && ProvisioningState.HasValue)
             {
@@ -112,19 +107,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             writer.WriteEndObject();
         }
 
-        SAPInstanceData IJsonModel<SAPInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SAPDiscoverySiteData IJsonModel<SAPDiscoverySiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SAPInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SAPDiscoverySiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SAPInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SAPDiscoverySiteData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSAPInstanceData(document.RootElement, options);
+            return DeserializeSAPDiscoverySiteData(document.RootElement, options);
         }
 
-        internal static SAPInstanceData DeserializeSAPInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SAPDiscoverySiteData DeserializeSAPDiscoverySiteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -132,22 +127,30 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 return null;
             }
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> systemSid = default;
-            Optional<SapInstanceEnvironment> environment = default;
-            Optional<string> landscapeSid = default;
-            Optional<string> application = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SAPMigrateError> errors = default;
+            SystemData systemData = default;
+            string masterSiteId = default;
+            string migrateProjectId = default;
+            ProvisioningState? provisioningState = default;
+            SAPMigrateError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("extendedLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -200,28 +203,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("systemSid"u8))
+                        if (property0.NameEquals("masterSiteId"u8))
                         {
-                            systemSid = property0.Value.GetString();
+                            masterSiteId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("environment"u8))
+                        if (property0.NameEquals("migrateProjectId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            environment = new SapInstanceEnvironment(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("landscapeSid"u8))
-                        {
-                            landscapeSid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("application"u8))
-                        {
-                            application = property0.Value.GetString();
+                            migrateProjectId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -251,51 +240,50 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SAPInstanceData(
+            return new SAPDiscoverySiteData(
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                systemSid.Value,
-                Optional.ToNullable(environment),
-                landscapeSid.Value,
-                application.Value,
-                Optional.ToNullable(provisioningState),
-                errors.Value,
+                extendedLocation,
+                masterSiteId,
+                migrateProjectId,
+                provisioningState,
+                errors,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SAPInstanceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SAPDiscoverySiteData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SAPInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SAPDiscoverySiteData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SAPInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SAPDiscoverySiteData)} does not support '{options.Format}' format.");
             }
         }
 
-        SAPInstanceData IPersistableModel<SAPInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SAPDiscoverySiteData IPersistableModel<SAPDiscoverySiteData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SAPInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SAPDiscoverySiteData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSAPInstanceData(document.RootElement, options);
+                        return DeserializeSAPDiscoverySiteData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SAPInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SAPDiscoverySiteData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SAPInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SAPDiscoverySiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

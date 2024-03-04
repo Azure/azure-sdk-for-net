@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> recommendation = default;
+            string code = default;
+            string message = default;
+            string recommendation = default;
             IReadOnlyList<SapDiscoveryErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiscoveryErrorDetail(code.Value, message.Value, recommendation.Value, details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>(), serializedAdditionalRawData);
+            return new SapDiscoveryErrorDetail(code, message, recommendation, details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiscoveryErrorDetail>.Write(ModelReaderWriterOptions options)

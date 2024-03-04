@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverName = default;
-            Optional<SapInstanceType> sapInstanceType = default;
-            Optional<string> instanceSid = default;
-            Optional<string> sapProduct = default;
-            Optional<string> sapProductVersion = default;
-            Optional<Models.OperatingSystem> operatingSystem = default;
-            Optional<ConfigurationDetail> configurationData = default;
-            Optional<PerformanceDetail> performanceData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SAPMigrateError> errors = default;
+            SystemData systemData = default;
+            string serverName = default;
+            SapInstanceType? sapInstanceType = default;
+            string instanceSid = default;
+            string sapProduct = default;
+            string sapProductVersion = default;
+            Models.OperatingSystem? operatingSystem = default;
+            ConfigurationDetail configurationData = default;
+            PerformanceDetail performanceData = default;
+            ProvisioningState? provisioningState = default;
+            SAPMigrateError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,17 +277,17 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 id,
                 name,
                 type,
-                systemData.Value,
-                serverName.Value,
-                Optional.ToNullable(sapInstanceType),
-                instanceSid.Value,
-                sapProduct.Value,
-                sapProductVersion.Value,
-                Optional.ToNullable(operatingSystem),
-                configurationData.Value,
-                performanceData.Value,
-                Optional.ToNullable(provisioningState),
-                errors.Value,
+                systemData,
+                serverName,
+                sapInstanceType,
+                instanceSid,
+                sapProduct,
+                sapProductVersion,
+                operatingSystem,
+                configurationData,
+                performanceData,
+                provisioningState,
+                errors,
                 serializedAdditionalRawData);
         }
 

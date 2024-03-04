@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            Optional<int> saps = default;
-            Optional<int> cpu = default;
-            Optional<string> cpuType = default;
-            Optional<int> cpuInMhz = default;
-            Optional<int> ram = default;
-            Optional<string> hardwareManufacturer = default;
-            Optional<string> model = default;
-            Optional<int> totalDiskSizeGB = default;
-            Optional<int> totalDiskIops = default;
-            Optional<DatabaseType> databaseType = default;
-            Optional<int> targetHanaRamSizeGB = default;
+            int? saps = default;
+            int? cpu = default;
+            string cpuType = default;
+            int? cpuInMhz = default;
+            int? ram = default;
+            string hardwareManufacturer = default;
+            string model = default;
+            int? totalDiskSizeGB = default;
+            int? totalDiskIops = default;
+            DatabaseType? databaseType = default;
+            int? targetHanaRamSizeGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,17 +228,17 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConfigurationDetail(
-                Optional.ToNullable(saps),
-                Optional.ToNullable(cpu),
-                cpuType.Value,
-                Optional.ToNullable(cpuInMhz),
-                Optional.ToNullable(ram),
-                hardwareManufacturer.Value,
-                model.Value,
-                Optional.ToNullable(totalDiskSizeGB),
-                Optional.ToNullable(totalDiskIops),
-                Optional.ToNullable(databaseType),
-                Optional.ToNullable(targetHanaRamSizeGB),
+                saps,
+                cpu,
+                cpuType,
+                cpuInMhz,
+                ram,
+                hardwareManufacturer,
+                model,
+                totalDiskSizeGB,
+                totalDiskIops,
+                databaseType,
+                targetHanaRamSizeGB,
                 serializedAdditionalRawData);
         }
 

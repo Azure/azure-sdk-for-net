@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            Optional<int> maxCpuLoad = default;
-            Optional<int> totalSourceDbSizeGB = default;
+            int? maxCpuLoad = default;
+            int? totalSourceDbSizeGB = default;
             DataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExcelPerformanceDetail(dataSource, serializedAdditionalRawData, Optional.ToNullable(maxCpuLoad), Optional.ToNullable(totalSourceDbSizeGB));
+            return new ExcelPerformanceDetail(dataSource, serializedAdditionalRawData, maxCpuLoad, totalSourceDbSizeGB);
         }
 
         BinaryData IPersistableModel<ExcelPerformanceDetail>.Write(ModelReaderWriterOptions options)

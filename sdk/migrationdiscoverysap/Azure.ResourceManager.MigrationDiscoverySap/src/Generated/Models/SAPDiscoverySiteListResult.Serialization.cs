@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 return null;
             }
             IReadOnlyList<SAPDiscoverySiteData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SAPDiscoverySiteListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new SAPDiscoverySiteListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SAPDiscoverySiteListResult>.Write(ModelReaderWriterOptions options)

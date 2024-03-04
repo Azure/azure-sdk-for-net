@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            Optional<ServerInstanceProperties> properties = default;
+            ServerInstanceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerInstancePatch(properties.Value, serializedAdditionalRawData);
+            return new ServerInstancePatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerInstancePatch>.Write(ModelReaderWriterOptions options)
