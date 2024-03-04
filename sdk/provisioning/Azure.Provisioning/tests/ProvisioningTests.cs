@@ -64,8 +64,10 @@ namespace Azure.Provisioning.Tests
                 "SERVICE_API_IDENTITY_PRINCIPAL_ID",
                 isSecure: true);
 
-            infra.AddKeyVault()
-                .AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId
+            var kv = infra.AddKeyVault();
+            kv.AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId
+            kv.AssignRole(RoleDefinition.KeyVaultAdministrator, Guid.Empty);
+            kv.AddOutput(data => data.Properties.VaultUri, "vaultUri");
 
             KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, "sqlAdminPassword");
             Assert.False(sqlAdminSecret.Properties.Name.EndsWith(infra.EnvironmentName));

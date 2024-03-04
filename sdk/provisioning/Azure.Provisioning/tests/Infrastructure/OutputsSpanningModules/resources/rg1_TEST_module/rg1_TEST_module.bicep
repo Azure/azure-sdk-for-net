@@ -45,8 +45,8 @@ resource applicationSettingsResource_lzuRUWkeF 'Microsoft.Web/sites/config@2021-
   name: 'appsettings'
 }
 
-resource keyVault_BRsYQF4qT 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: 'kv-TEST'
+resource keyVault_aUw0nRbmu 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   properties: {
     tenantId: tenant().tenantId
@@ -59,8 +59,8 @@ resource keyVault_BRsYQF4qT 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_hv5Kg38J7 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_BRsYQF4qT
+resource keyVaultAddAccessPolicy_W0akO7TQ8 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_aUw0nRbmu
   name: 'add'
   properties: {
     accessPolicies: [
@@ -80,4 +80,4 @@ resource keyVaultAddAccessPolicy_hv5Kg38J7 'Microsoft.KeyVault/vaults/accessPoli
 
 output STORAGE_PRINCIPAL_ID string = webSite_dOTaZfna6.identity.principalId
 output LOCATION string = webSite_dOTaZfna6.location
-output vaultUri string = keyVault_BRsYQF4qT.properties.vaultUri
+output vaultUri string = keyVault_aUw0nRbmu.properties.vaultUri

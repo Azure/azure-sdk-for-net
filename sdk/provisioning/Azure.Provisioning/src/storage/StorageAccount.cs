@@ -50,9 +50,6 @@ namespace Azure.Provisioning.Storage
         }
 
         /// <inheritdoc/>
-        protected override string GetAzureName(IConstruct scope, string resourceName)
-        {
-            return $"toLower(take(concat('{resourceName}', uniqueString(resourceGroup().id)), 24))";
-        }
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }

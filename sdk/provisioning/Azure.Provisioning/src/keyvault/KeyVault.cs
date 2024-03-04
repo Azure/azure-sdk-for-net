@@ -45,7 +45,8 @@ namespace Azure.Provisioning.KeyVaults
                     } : default,
                     enableRbacAuthorization: true)))
         {
-            AddOutput(kv => kv.Properties.VaultUri, "vaultUri");
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
+
             if (scope.Root.Properties.TenantId == Guid.Empty)
             {
                 AssignProperty(kv => kv.Properties.TenantId, Tenant.TenantIdExpression);
@@ -71,5 +72,8 @@ namespace Azure.Provisioning.KeyVaults
             }
             return result;
         }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }
