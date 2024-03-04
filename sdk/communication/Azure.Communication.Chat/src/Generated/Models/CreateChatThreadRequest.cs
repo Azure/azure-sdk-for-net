@@ -42,5 +42,11 @@ namespace Azure.Communication.Chat
         public IList<ChatParticipantInternal> Participants { get; }
         /// <summary> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </summary>
         public IDictionary<string, string> Metadata { get; }
+        /// <summary>
+        /// Data retention policy for auto deletion.
+        /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThreadCreationDateRetentionPolicy"/>.
+        /// </summary>
+        public ChatRetentionPolicy RetentionPolicy { get; set; }
     }
 }
