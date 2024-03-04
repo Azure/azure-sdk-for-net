@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -42,14 +43,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -61,17 +62,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (ComponentName != null)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (License != null)
+            if (Optional.IsDefined(License))
             {
                 if (License != null)
                 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("license");
                 }
             }
-            if (!(FilePaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilePaths))
             {
                 writer.WritePropertyName("filePaths"u8);
                 writer.WriteStartArray();

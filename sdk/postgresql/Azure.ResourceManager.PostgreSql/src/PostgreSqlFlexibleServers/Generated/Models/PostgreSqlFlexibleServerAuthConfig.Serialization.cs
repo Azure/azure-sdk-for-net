@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveDirectoryAuth.HasValue)
+            if (Optional.IsDefined(ActiveDirectoryAuth))
             {
                 writer.WritePropertyName("activeDirectoryAuth"u8);
                 writer.WriteStringValue(ActiveDirectoryAuth.Value.ToString());
             }
-            if (PasswordAuth.HasValue)
+            if (Optional.IsDefined(PasswordAuth))
             {
                 writer.WritePropertyName("passwordAuth"u8);
                 writer.WriteStringValue(PasswordAuth.Value.ToString());
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

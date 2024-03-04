@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(SenderApplicationId);
             writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            if (FunctionalIdentifierCode != null)
+            if (Optional.IsDefined(FunctionalIdentifierCode))
             {
                 writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);

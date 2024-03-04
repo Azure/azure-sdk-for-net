@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceControlSyncJobStreamId != null)
+            if (Optional.IsDefined(SourceControlSyncJobStreamId))
             {
                 writer.WritePropertyName("sourceControlSyncJobStreamId"u8);
                 writer.WriteStringValue(SourceControlSyncJobStreamId);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && Time.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Time))
             {
                 if (Time != null)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("time");
                 }
             }
-            if (StreamType.HasValue)
+            if (Optional.IsDefined(StreamType))
             {
                 writer.WritePropertyName("streamType"u8);
                 writer.WriteStringValue(StreamType.Value.ToString());

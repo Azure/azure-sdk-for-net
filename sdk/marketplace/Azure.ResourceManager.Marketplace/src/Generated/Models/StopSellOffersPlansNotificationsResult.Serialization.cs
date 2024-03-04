@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OfferId != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && IsEntireInStopSell.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEntireInStopSell))
             {
                 writer.WritePropertyName("isEntire"u8);
                 writer.WriteBooleanValue(IsEntireInStopSell.Value);
             }
-            if (options.Format != "W" && MessageCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (options.Format != "W" && IconUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (options.Format != "W" && !(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -61,12 +62,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HasPublicContext.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasPublicContext))
             {
                 writer.WritePropertyName("publicContext"u8);
                 writer.WriteBooleanValue(HasPublicContext.Value);
             }
-            if (options.Format != "W" && !(SubscriptionsIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubscriptionsIds))
             {
                 writer.WritePropertyName("subscriptionsIds"u8);
                 writer.WriteStartArray();

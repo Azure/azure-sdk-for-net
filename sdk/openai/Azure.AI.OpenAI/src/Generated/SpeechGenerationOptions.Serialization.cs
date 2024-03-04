@@ -29,17 +29,17 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Input);
             writer.WritePropertyName("voice"u8);
             writer.WriteStringValue(Voice.ToString());
-            if (ResponseFormat.HasValue)
+            if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Speed.HasValue)
+            if (Optional.IsDefined(Speed))
             {
                 writer.WritePropertyName("speed"u8);
                 writer.WriteNumberValue(Speed.Value);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);

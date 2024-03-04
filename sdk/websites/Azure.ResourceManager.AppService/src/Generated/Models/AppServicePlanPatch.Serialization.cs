@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,119 +48,119 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WorkerTierName != null)
+            if (Optional.IsDefined(WorkerTierName))
             {
                 writer.WritePropertyName("workerTierName"u8);
                 writer.WriteStringValue(WorkerTierName);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && Subscription != null)
+            if (options.Format != "W" && Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteStringValue(Subscription);
             }
-            if (HostingEnvironmentProfile != null)
+            if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (options.Format != "W" && MaximumNumberOfWorkers.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
             {
                 writer.WritePropertyName("maximumNumberOfWorkers"u8);
                 writer.WriteNumberValue(MaximumNumberOfWorkers.Value);
             }
-            if (options.Format != "W" && GeoRegion != null)
+            if (options.Format != "W" && Optional.IsDefined(GeoRegion))
             {
                 writer.WritePropertyName("geoRegion"u8);
                 writer.WriteStringValue(GeoRegion);
             }
-            if (IsPerSiteScaling.HasValue)
+            if (Optional.IsDefined(IsPerSiteScaling))
             {
                 writer.WritePropertyName("perSiteScaling"u8);
                 writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (IsElasticScaleEnabled.HasValue)
+            if (Optional.IsDefined(IsElasticScaleEnabled))
             {
                 writer.WritePropertyName("elasticScaleEnabled"u8);
                 writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
-            if (MaximumElasticWorkerCount.HasValue)
+            if (Optional.IsDefined(MaximumElasticWorkerCount))
             {
                 writer.WritePropertyName("maximumElasticWorkerCount"u8);
                 writer.WriteNumberValue(MaximumElasticWorkerCount.Value);
             }
-            if (options.Format != "W" && NumberOfSites.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfSites))
             {
                 writer.WritePropertyName("numberOfSites"u8);
                 writer.WriteNumberValue(NumberOfSites.Value);
             }
-            if (IsSpot.HasValue)
+            if (Optional.IsDefined(IsSpot))
             {
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (SpotExpirationOn.HasValue)
+            if (Optional.IsDefined(SpotExpirationOn))
             {
                 writer.WritePropertyName("spotExpirationTime"u8);
                 writer.WriteStringValue(SpotExpirationOn.Value, "O");
             }
-            if (FreeOfferExpirationOn.HasValue)
+            if (Optional.IsDefined(FreeOfferExpirationOn))
             {
                 writer.WritePropertyName("freeOfferExpirationTime"u8);
                 writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (IsReserved.HasValue)
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (IsXenon.HasValue)
+            if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (IsHyperV.HasValue)
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV"u8);
                 writer.WriteBooleanValue(IsHyperV.Value);
             }
-            if (TargetWorkerCount.HasValue)
+            if (Optional.IsDefined(TargetWorkerCount))
             {
                 writer.WritePropertyName("targetWorkerCount"u8);
                 writer.WriteNumberValue(TargetWorkerCount.Value);
             }
-            if (TargetWorkerSizeId.HasValue)
+            if (Optional.IsDefined(TargetWorkerSizeId))
             {
                 writer.WritePropertyName("targetWorkerSizeId"u8);
                 writer.WriteNumberValue(TargetWorkerSizeId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (KubeEnvironmentProfile != null)
+            if (Optional.IsDefined(KubeEnvironmentProfile))
             {
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
                 writer.WriteObjectValue(KubeEnvironmentProfile);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);

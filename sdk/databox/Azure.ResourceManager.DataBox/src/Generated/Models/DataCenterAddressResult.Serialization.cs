@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DataCenterAzureLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAzureLocation))
             {
                 writer.WritePropertyName("dataCenterAzureLocation"u8);
                 writer.WriteStringValue(DataCenterAzureLocation.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EventSourceFriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(EventSourceFriendlyName))
             {
                 writer.WritePropertyName("eventSourceFriendlyName"u8);
                 writer.WriteStringValue(EventSourceFriendlyName);
             }
-            if (options.Format != "W" && ProtectedItemFriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectedItemFriendlyName))
             {
                 writer.WritePropertyName("protectedItemFriendlyName"u8);
                 writer.WriteStringValue(ProtectedItemFriendlyName);
             }
-            if (options.Format != "W" && SourceApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceApplianceName))
             {
                 writer.WritePropertyName("sourceApplianceName"u8);
                 writer.WriteStringValue(SourceApplianceName);
             }
-            if (options.Format != "W" && TargetApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetApplianceName))
             {
                 writer.WritePropertyName("targetApplianceName"u8);
                 writer.WriteStringValue(TargetApplianceName);
             }
-            if (options.Format != "W" && ServerType != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);

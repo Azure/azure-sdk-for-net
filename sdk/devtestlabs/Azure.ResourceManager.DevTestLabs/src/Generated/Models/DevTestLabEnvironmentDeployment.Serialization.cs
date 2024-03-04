@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ArmTemplateId != null)
+            if (Optional.IsDefined(ArmTemplateId))
             {
                 writer.WritePropertyName("armTemplateId"u8);
                 writer.WriteStringValue(ArmTemplateId);
             }
-            if (!(Parameters is ChangeTrackingList<DevTestLabArmTemplateParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

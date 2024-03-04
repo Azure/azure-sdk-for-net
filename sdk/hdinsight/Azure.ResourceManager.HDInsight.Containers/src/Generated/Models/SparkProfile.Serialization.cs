@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultStorageUriString != null)
+            if (Optional.IsDefined(DefaultStorageUriString))
             {
                 writer.WritePropertyName("defaultStorageUrl"u8);
                 writer.WriteStringValue(DefaultStorageUriString);
             }
-            if (MetastoreSpec != null)
+            if (Optional.IsDefined(MetastoreSpec))
             {
                 writer.WritePropertyName("metastoreSpec"u8);
                 writer.WriteObjectValue(MetastoreSpec);
             }
-            if (UserPluginsSpec != null)
+            if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
                 writer.WriteObjectValue(UserPluginsSpec);

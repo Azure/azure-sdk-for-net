@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (PeeringServiceLocation != null)
+            if (Optional.IsDefined(PeeringServiceLocation))
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (PeeringServiceProvider != null)
+            if (Optional.IsDefined(PeeringServiceProvider))
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);

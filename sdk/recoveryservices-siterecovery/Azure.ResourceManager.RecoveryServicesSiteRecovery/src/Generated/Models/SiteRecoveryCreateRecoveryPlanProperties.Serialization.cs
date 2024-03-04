@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(PrimaryFabricId);
             writer.WritePropertyName("recoveryFabricId"u8);
             writer.WriteStringValue(RecoveryFabricId);
-            if (FailoverDeploymentModel.HasValue)
+            if (Optional.IsDefined(FailoverDeploymentModel))
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel.Value.ToString());
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(ProviderSpecificContent is ChangeTrackingList<RecoveryPlanProviderSpecificContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificContent))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();

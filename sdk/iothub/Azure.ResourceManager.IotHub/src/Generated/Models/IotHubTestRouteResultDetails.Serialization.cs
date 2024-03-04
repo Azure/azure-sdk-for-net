@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(CompilationErrors is ChangeTrackingList<RouteCompilationError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CompilationErrors))
             {
                 writer.WritePropertyName("compilationErrors"u8);
                 writer.WriteStartArray();

@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(Functions is ChangeTrackingList<FunctionDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -42,42 +42,42 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionCall != null)
+            if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
-            if (MaxTokens.HasValue)
+            if (Optional.IsDefined(MaxTokens))
             {
                 writer.WritePropertyName("max_tokens"u8);
                 writer.WriteNumberValue(MaxTokens.Value);
             }
-            if (Temperature.HasValue)
+            if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (NucleusSamplingFactor.HasValue)
+            if (Optional.IsDefined(NucleusSamplingFactor))
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            if (!(TokenSelectionBiases is ChangeTrackingDictionary<int, int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 SerializeTokenSelectionBiases(writer);
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (ChoiceCount.HasValue)
+            if (Optional.IsDefined(ChoiceCount))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ChoiceCount.Value);
             }
-            if (!(StopSequences is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(StopSequences))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
@@ -87,27 +87,27 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (PresencePenalty.HasValue)
+            if (Optional.IsDefined(PresencePenalty))
             {
                 writer.WritePropertyName("presence_penalty"u8);
                 writer.WriteNumberValue(PresencePenalty.Value);
             }
-            if (FrequencyPenalty.HasValue)
+            if (Optional.IsDefined(FrequencyPenalty))
             {
                 writer.WritePropertyName("frequency_penalty"u8);
                 writer.WriteNumberValue(FrequencyPenalty.Value);
             }
-            if (InternalShouldStreamResponse.HasValue)
+            if (Optional.IsDefined(InternalShouldStreamResponse))
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (!(InternalAzureExtensionsDataSources is ChangeTrackingList<AzureChatExtensionConfiguration> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
             {
                 writer.WritePropertyName("data_sources"u8);
                 writer.WriteStartArray();
@@ -117,17 +117,17 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Enhancements != null)
+            if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
                 writer.WriteObjectValue(Enhancements);
             }
-            if (Seed.HasValue)
+            if (Optional.IsDefined(Seed))
             {
                 writer.WritePropertyName("seed"u8);
                 writer.WriteNumberValue(Seed.Value);
             }
-            if (EnableLogProbabilities.HasValue)
+            if (Optional.IsDefined(EnableLogProbabilities))
             {
                 if (EnableLogProbabilities != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("logprobs");
                 }
             }
-            if (LogProbabilitiesPerToken.HasValue)
+            if (Optional.IsDefined(LogProbabilitiesPerToken))
             {
                 if (LogProbabilitiesPerToken != null)
                 {
@@ -151,12 +151,12 @@ namespace Azure.AI.OpenAI
                     writer.WriteNull("top_logprobs");
                 }
             }
-            if (ResponseFormat != null)
+            if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteObjectValue(ResponseFormat);
             }
-            if (!(Tools is ChangeTrackingList<ChatCompletionsToolDefinition> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -166,7 +166,7 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (InternalSuppressedToolChoice != null)
+            if (Optional.IsDefined(InternalSuppressedToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
 #if NET6_0_OR_GREATER

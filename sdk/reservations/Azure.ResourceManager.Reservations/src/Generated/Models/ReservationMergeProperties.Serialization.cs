@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (MergeDestination != null)
+            if (Optional.IsDefined(MergeDestination))
             {
                 writer.WritePropertyName("mergeDestination"u8);
                 writer.WriteStringValue(MergeDestination);
             }
-            if (!(MergeSources is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MergeSources))
             {
                 writer.WritePropertyName("mergeSources"u8);
                 writer.WriteStartArray();

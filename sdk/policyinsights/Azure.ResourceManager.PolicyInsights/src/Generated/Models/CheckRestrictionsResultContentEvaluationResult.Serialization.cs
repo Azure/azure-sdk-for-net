@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (!(PolicyEvaluations is ChangeTrackingList<PolicyEvaluationResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyEvaluations))
             {
                 writer.WritePropertyName("policyEvaluations"u8);
                 writer.WriteStartArray();

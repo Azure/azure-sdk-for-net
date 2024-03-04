@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Token);
             writer.WritePropertyName("logprob"u8);
             writer.WriteNumberValue(LogProbability);
-            if (Utf8ByteValues != null && !(Utf8ByteValues is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Utf8ByteValues != null && Optional.IsCollectionDefined(Utf8ByteValues))
             {
                 writer.WritePropertyName("bytes"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("bytes");
             }
-            if (TopLogProbabilityEntries != null && !(TopLogProbabilityEntries is ChangeTrackingList<ChatTokenLogProbabilityInfo> collection0 && collection0.IsUndefined))
+            if (TopLogProbabilityEntries != null && Optional.IsCollectionDefined(TopLogProbabilityEntries))
             {
                 writer.WritePropertyName("top_logprobs"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVersion"u8);
             writer.WriteStringValue(KeyVersion);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);

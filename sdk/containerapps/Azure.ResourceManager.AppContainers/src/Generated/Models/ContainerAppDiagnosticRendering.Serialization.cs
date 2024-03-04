@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (DiagnosticRenderingType.HasValue)
+            if (Optional.IsDefined(DiagnosticRenderingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteNumberValue(DiagnosticRenderingType.Value);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsVisible.HasValue)
+            if (Optional.IsDefined(IsVisible))
             {
                 writer.WritePropertyName("isVisible"u8);
                 writer.WriteBooleanValue(IsVisible.Value);

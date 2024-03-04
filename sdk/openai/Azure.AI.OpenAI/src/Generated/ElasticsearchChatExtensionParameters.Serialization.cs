@@ -27,27 +27,27 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (DocumentCount.HasValue)
+            if (Optional.IsDefined(DocumentCount))
             {
                 writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (ShouldRestrictResultScope.HasValue)
+            if (Optional.IsDefined(ShouldRestrictResultScope))
             {
                 writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Strictness.HasValue)
+            if (Optional.IsDefined(Strictness))
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (RoleInformation != null)
+            if (Optional.IsDefined(RoleInformation))
             {
                 writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
@@ -56,17 +56,17 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
-            if (FieldMappingOptions != null)
+            if (Optional.IsDefined(FieldMappingOptions))
             {
                 writer.WritePropertyName("fields_mapping"u8);
                 writer.WriteObjectValue(FieldMappingOptions);
             }
-            if (QueryType.HasValue)
+            if (Optional.IsDefined(QueryType))
             {
                 writer.WritePropertyName("query_type"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
-            if (EmbeddingDependency != null)
+            if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embedding_dependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);

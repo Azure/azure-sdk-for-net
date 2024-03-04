@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
@@ -52,22 +52,22 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("finish_reason");
             }
-            if (FinishDetails != null)
+            if (Optional.IsDefined(FinishDetails))
             {
                 writer.WritePropertyName("finish_details"u8);
                 writer.WriteObjectValue(FinishDetails);
             }
-            if (InternalStreamingDeltaMessage != null)
+            if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteObjectValue(InternalStreamingDeltaMessage);
             }
-            if (ContentFilterResults != null)
+            if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
-            if (Enhancements != null)
+            if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
                 writer.WriteObjectValue(Enhancements);

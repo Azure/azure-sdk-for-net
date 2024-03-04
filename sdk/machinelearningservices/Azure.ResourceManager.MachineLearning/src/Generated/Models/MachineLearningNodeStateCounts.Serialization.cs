@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IdleNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IdleNodeCount))
             {
                 writer.WritePropertyName("idleNodeCount"u8);
                 writer.WriteNumberValue(IdleNodeCount.Value);
             }
-            if (options.Format != "W" && RunningNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RunningNodeCount))
             {
                 writer.WritePropertyName("runningNodeCount"u8);
                 writer.WriteNumberValue(RunningNodeCount.Value);
             }
-            if (options.Format != "W" && PreparingNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreparingNodeCount))
             {
                 writer.WritePropertyName("preparingNodeCount"u8);
                 writer.WriteNumberValue(PreparingNodeCount.Value);
             }
-            if (options.Format != "W" && UnusableNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnusableNodeCount))
             {
                 writer.WritePropertyName("unusableNodeCount"u8);
                 writer.WriteNumberValue(UnusableNodeCount.Value);
             }
-            if (options.Format != "W" && LeavingNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeavingNodeCount))
             {
                 writer.WritePropertyName("leavingNodeCount"u8);
                 writer.WriteNumberValue(LeavingNodeCount.Value);
             }
-            if (options.Format != "W" && PreemptedNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreemptedNodeCount))
             {
                 writer.WritePropertyName("preemptedNodeCount"u8);
                 writer.WriteNumberValue(PreemptedNodeCount.Value);

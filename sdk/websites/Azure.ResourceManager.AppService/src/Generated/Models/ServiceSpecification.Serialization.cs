@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (!(MetricSpecifications is ChangeTrackingList<MetricSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MetricSpecifications))
             {
                 writer.WritePropertyName("metricSpecifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LogSpecifications is ChangeTrackingList<LogSpecification> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LogSpecifications))
             {
                 writer.WritePropertyName("logSpecifications"u8);
                 writer.WriteStartArray();

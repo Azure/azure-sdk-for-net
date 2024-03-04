@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (ContainerRegistry != null)
+            if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteObjectValue(ContainerRegistry);
             }
-            if (ContainerService != null)
+            if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
                 writer.WriteObjectValue(ContainerService);
             }
-            if (AppInsights != null)
+            if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
                 writer.WriteObjectValue(AppInsights);
             }
-            if (ServiceAuthConfiguration != null)
+            if (Optional.IsDefined(ServiceAuthConfiguration))
             {
                 writer.WritePropertyName("serviceAuthConfiguration"u8);
                 writer.WriteObjectValue(ServiceAuthConfiguration);
             }
-            if (SslConfiguration != null)
+            if (Optional.IsDefined(SslConfiguration))
             {
                 writer.WritePropertyName("sslConfiguration"u8);
                 writer.WriteObjectValue(SslConfiguration);

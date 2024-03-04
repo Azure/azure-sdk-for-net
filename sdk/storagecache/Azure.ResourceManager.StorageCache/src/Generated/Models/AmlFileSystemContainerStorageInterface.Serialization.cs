@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PersistentVolumeClaim != null)
+            if (options.Format != "W" && Optional.IsDefined(PersistentVolumeClaim))
             {
                 writer.WritePropertyName("persistentVolumeClaim"u8);
                 writer.WriteStringValue(PersistentVolumeClaim);
             }
-            if (options.Format != "W" && PersistentVolume != null)
+            if (options.Format != "W" && Optional.IsDefined(PersistentVolume))
             {
                 writer.WritePropertyName("persistentVolume"u8);
                 writer.WriteStringValue(PersistentVolume);
             }
-            if (options.Format != "W" && StorageClass != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageClass))
             {
                 writer.WritePropertyName("storageClass"u8);
                 writer.WriteStringValue(StorageClass);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             writer.WriteStringValue(Family.ToString());
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);

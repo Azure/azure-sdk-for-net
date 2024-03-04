@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -15,12 +16,12 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TargetCondition != null)
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
-            if (!(CustomMetricQueries is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomMetricQueries))
             {
                 writer.WritePropertyName("customMetricQueries"u8);
                 writer.WriteStartObject();

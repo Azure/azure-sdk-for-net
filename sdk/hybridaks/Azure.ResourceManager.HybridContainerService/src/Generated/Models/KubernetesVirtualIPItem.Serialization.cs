@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (EndIP != null)
+            if (Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
-            if (StartIP != null)
+            if (Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);

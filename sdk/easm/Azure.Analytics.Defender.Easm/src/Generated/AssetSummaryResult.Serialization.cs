@@ -27,52 +27,52 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (UpdatedAt.HasValue)
+            if (Optional.IsDefined(UpdatedAt))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedAt.Value, "O");
             }
-            if (MetricCategory != null)
+            if (Optional.IsDefined(MetricCategory))
             {
                 writer.WritePropertyName("metricCategory"u8);
                 writer.WriteStringValue(MetricCategory);
             }
-            if (Metric != null)
+            if (Optional.IsDefined(Metric))
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (LabelName != null)
+            if (Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Link != null)
+            if (Optional.IsDefined(Link))
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
             }
-            if (!(Children is ChangeTrackingList<AssetSummaryResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();

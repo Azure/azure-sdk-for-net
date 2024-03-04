@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -32,17 +33,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(MessageVersion);
             writer.WritePropertyName("messageRelease"u8);
             writer.WriteStringValue(MessageRelease);
-            if (SenderApplicationId != null)
+            if (Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (SenderApplicationQualifier != null)
+            if (Optional.IsDefined(SenderApplicationQualifier))
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (AssociationAssignedCode != null)
+            if (Optional.IsDefined(AssociationAssignedCode))
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);

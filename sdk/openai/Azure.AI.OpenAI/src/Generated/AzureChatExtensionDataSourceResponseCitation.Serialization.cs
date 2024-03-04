@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Url != null)
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Filepath != null)
+            if (Optional.IsDefined(Filepath))
             {
                 writer.WritePropertyName("filepath"u8);
                 writer.WriteStringValue(Filepath);
             }
-            if (ChunkId != null)
+            if (Optional.IsDefined(ChunkId))
             {
                 writer.WritePropertyName("chunk_id"u8);
                 writer.WriteStringValue(ChunkId);

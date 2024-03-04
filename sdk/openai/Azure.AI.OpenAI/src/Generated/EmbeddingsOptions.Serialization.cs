@@ -27,12 +27,12 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -44,7 +44,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (InputType != null)
+            if (Optional.IsDefined(InputType))
             {
                 writer.WritePropertyName("input_type"u8);
                 writer.WriteStringValue(InputType);

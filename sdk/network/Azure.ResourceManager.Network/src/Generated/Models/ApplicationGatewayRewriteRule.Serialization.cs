@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (RuleSequence.HasValue)
+            if (Optional.IsDefined(RuleSequence))
             {
                 writer.WritePropertyName("ruleSequence"u8);
                 writer.WriteNumberValue(RuleSequence.Value);
             }
-            if (!(Conditions is ChangeTrackingList<ApplicationGatewayRewriteRuleCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ActionSet != null)
+            if (Optional.IsDefined(ActionSet))
             {
                 writer.WritePropertyName("actionSet"u8);
                 writer.WriteObjectValue(ActionSet);

@@ -18,27 +18,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
-            if (DimensionFilter != null)
+            if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteObjectValue(DimensionFilter);
             }
-            if (FeedbackType.HasValue)
+            if (Optional.IsDefined(FeedbackType))
             {
                 writer.WritePropertyName("feedbackType"u8);
                 writer.WriteStringValue(FeedbackType.Value.ToString());
             }
-            if (StartTime.HasValue)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (EndTime.HasValue)
+            if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            if (TimeMode.HasValue)
+            if (Optional.IsDefined(TimeMode))
             {
                 writer.WritePropertyName("timeMode"u8);
                 writer.WriteStringValue(TimeMode.Value.ToSerialString());

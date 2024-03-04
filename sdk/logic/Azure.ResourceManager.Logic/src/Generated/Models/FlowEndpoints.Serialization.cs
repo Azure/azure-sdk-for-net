@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(OutgoingIPAddresses is ChangeTrackingList<FlowEndpointIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutgoingIPAddresses))
             {
                 writer.WritePropertyName("outgoingIpAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AccessEndpointIPAddresses is ChangeTrackingList<FlowEndpointIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessEndpointIPAddresses))
             {
                 writer.WritePropertyName("accessEndpointIpAddresses"u8);
                 writer.WriteStartArray();

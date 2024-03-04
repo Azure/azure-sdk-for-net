@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryKekCertificatePfx != null)
+            if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (SecondaryKekCertificatePfx != null)
+            if (Optional.IsDefined(SecondaryKekCertificatePfx))
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (RecoveryPointType.HasValue)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType.Value.ToString());

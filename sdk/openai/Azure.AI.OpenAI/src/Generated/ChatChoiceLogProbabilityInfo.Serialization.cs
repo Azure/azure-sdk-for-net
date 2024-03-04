@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (TokenLogProbabilityResults != null && !(TokenLogProbabilityResults is ChangeTrackingList<ChatTokenLogProbabilityResult> collection && collection.IsUndefined))
+            if (TokenLogProbabilityResults != null && Optional.IsCollectionDefined(TokenLogProbabilityResults))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStartArray();

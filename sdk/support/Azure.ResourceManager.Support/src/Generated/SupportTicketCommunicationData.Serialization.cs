@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CommunicationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunicationType))
             {
                 writer.WritePropertyName("communicationType"u8);
                 writer.WriteStringValue(CommunicationType.Value.ToString());
             }
-            if (options.Format != "W" && CommunicationDirection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
             {
                 writer.WritePropertyName("communicationDirection"u8);
                 writer.WriteStringValue(CommunicationDirection.Value.ToString());
             }
-            if (Sender != null)
+            if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");

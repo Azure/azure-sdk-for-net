@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (ResultFormat.HasValue)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
-            if (AllowPartialScopes.HasValue)
+            if (Optional.IsDefined(AllowPartialScopes))
             {
                 writer.WritePropertyName("allowPartialScopes"u8);
                 writer.WriteBooleanValue(AllowPartialScopes.Value);
             }
-            if (AuthorizationScopeFilter.HasValue)
+            if (Optional.IsDefined(AuthorizationScopeFilter))
             {
                 writer.WritePropertyName("authorizationScopeFilter"u8);
                 writer.WriteStringValue(AuthorizationScopeFilter.Value.ToSerialString());

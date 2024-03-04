@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (IsSecret.HasValue)
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);

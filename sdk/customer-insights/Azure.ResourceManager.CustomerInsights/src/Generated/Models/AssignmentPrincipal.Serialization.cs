@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType);
-            if (!(PrincipalMetadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrincipalMetadata))
             {
                 writer.WritePropertyName("principalMetadata"u8);
                 writer.WriteStartObject();

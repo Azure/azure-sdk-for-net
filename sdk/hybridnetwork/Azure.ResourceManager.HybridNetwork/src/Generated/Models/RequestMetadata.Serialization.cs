@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStringValue(HttpMethod.ToString());
             writer.WritePropertyName("serializedBody"u8);
             writer.WriteStringValue(SerializedBody);
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

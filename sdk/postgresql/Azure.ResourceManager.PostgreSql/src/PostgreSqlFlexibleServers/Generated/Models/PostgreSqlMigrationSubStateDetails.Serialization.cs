@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentSubState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentSubState))
             {
                 writer.WritePropertyName("currentSubState"u8);
                 writer.WriteStringValue(CurrentSubState.Value.ToString());
