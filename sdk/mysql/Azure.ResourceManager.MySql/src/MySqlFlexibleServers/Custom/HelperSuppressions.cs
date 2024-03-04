@@ -4,3 +4,4 @@
 using Azure.Core;
 
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Optional")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ChangeTrackingList")]
