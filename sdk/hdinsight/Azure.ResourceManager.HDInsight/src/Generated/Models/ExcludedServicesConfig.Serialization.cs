@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (ExcludedServicesConfigId != null)
+            if (Optional.IsDefined(ExcludedServicesConfigId))
             {
                 writer.WritePropertyName("excludedServicesConfigId"u8);
                 writer.WriteStringValue(ExcludedServicesConfigId);
             }
-            if (ExcludedServicesList != null)
+            if (Optional.IsDefined(ExcludedServicesList))
             {
                 writer.WritePropertyName("excludedServicesList"u8);
                 writer.WriteStringValue(ExcludedServicesList);

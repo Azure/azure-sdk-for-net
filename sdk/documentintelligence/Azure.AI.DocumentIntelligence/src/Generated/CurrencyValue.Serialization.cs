@@ -29,12 +29,12 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("amount"u8);
             writer.WriteNumberValue(Amount);
-            if (CurrencySymbol != null)
+            if (Optional.IsDefined(CurrencySymbol))
             {
                 writer.WritePropertyName("currencySymbol"u8);
                 writer.WriteStringValue(CurrencySymbol);
             }
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);

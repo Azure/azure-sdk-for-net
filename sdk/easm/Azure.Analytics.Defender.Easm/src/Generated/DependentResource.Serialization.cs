@@ -27,62 +27,62 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Md5 != null)
+            if (Optional.IsDefined(Md5))
             {
                 writer.WritePropertyName("md5"u8);
                 writer.WriteStringValue(Md5);
             }
-            if (ResponseBodySize.HasValue)
+            if (Optional.IsDefined(ResponseBodySize))
             {
                 writer.WritePropertyName("responseBodySize"u8);
                 writer.WriteNumberValue(ResponseBodySize.Value);
             }
-            if (FirstSeen.HasValue)
+            if (Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (LastSeen.HasValue)
+            if (Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (FirstSeenCrawlGuid != null)
+            if (Optional.IsDefined(FirstSeenCrawlGuid))
             {
                 writer.WritePropertyName("firstSeenCrawlGuid"u8);
                 writer.WriteStringValue(FirstSeenCrawlGuid);
             }
-            if (FirstSeenPageGuid != null)
+            if (Optional.IsDefined(FirstSeenPageGuid))
             {
                 writer.WritePropertyName("firstSeenPageGuid"u8);
                 writer.WriteStringValue(FirstSeenPageGuid);
             }
-            if (FirstSeenResourceGuid != null)
+            if (Optional.IsDefined(FirstSeenResourceGuid))
             {
                 writer.WritePropertyName("firstSeenResourceGuid"u8);
                 writer.WriteStringValue(FirstSeenResourceGuid);
             }
-            if (LastSeenCrawlGuid != null)
+            if (Optional.IsDefined(LastSeenCrawlGuid))
             {
                 writer.WritePropertyName("lastSeenCrawlGuid"u8);
                 writer.WriteStringValue(LastSeenCrawlGuid);
             }
-            if (LastSeenPageGuid != null)
+            if (Optional.IsDefined(LastSeenPageGuid))
             {
                 writer.WritePropertyName("lastSeenPageGuid"u8);
                 writer.WriteStringValue(LastSeenPageGuid);
             }
-            if (LastSeenResourceGuid != null)
+            if (Optional.IsDefined(LastSeenResourceGuid))
             {
                 writer.WritePropertyName("lastSeenResourceGuid"u8);
                 writer.WriteStringValue(LastSeenResourceGuid);
             }
-            if (!(ResponseBodyMinhash is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponseBodyMinhash))
             {
                 writer.WritePropertyName("responseBodyMinhash"u8);
                 writer.WriteStartArray();
@@ -92,37 +92,37 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Sha256 != null)
+            if (Optional.IsDefined(Sha256))
             {
                 writer.WritePropertyName("sha256"u8);
                 writer.WriteStringValue(Sha256);
             }
-            if (Sha384 != null)
+            if (Optional.IsDefined(Sha384))
             {
                 writer.WritePropertyName("sha384"u8);
                 writer.WriteStringValue(Sha384);
             }
-            if (Sha512 != null)
+            if (Optional.IsDefined(Sha512))
             {
                 writer.WritePropertyName("sha512"u8);
                 writer.WriteStringValue(Sha512);
             }
-            if (Url != null)
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Cached.HasValue)
+            if (Optional.IsDefined(Cached))
             {
                 writer.WritePropertyName("cached"u8);
                 writer.WriteBooleanValue(Cached.Value);
             }
-            if (!(SriChecks is ChangeTrackingList<SubResourceIntegrityCheck> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SriChecks))
             {
                 writer.WritePropertyName("sriChecks"u8);
                 writer.WriteStartArray();
@@ -132,27 +132,27 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (LastObservedViolation.HasValue)
+            if (Optional.IsDefined(LastObservedViolation))
             {
                 writer.WritePropertyName("lastObservedViolation"u8);
                 writer.WriteStringValue(LastObservedViolation.Value, "O");
             }
-            if (LastObservedValidation.HasValue)
+            if (Optional.IsDefined(LastObservedValidation))
             {
                 writer.WritePropertyName("lastObservedValidation"u8);
                 writer.WriteStringValue(LastObservedValidation.Value, "O");
             }
-            if (LastObservedActualSriHash != null)
+            if (Optional.IsDefined(LastObservedActualSriHash))
             {
                 writer.WritePropertyName("lastObservedActualSriHash"u8);
                 writer.WriteStringValue(LastObservedActualSriHash);
             }
-            if (LastObservedExpectedSriHash != null)
+            if (Optional.IsDefined(LastObservedExpectedSriHash))
             {
                 writer.WritePropertyName("lastObservedExpectedSriHash"u8);
                 writer.WriteStringValue(LastObservedExpectedSriHash);

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(AccessModes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessModes))
             {
                 writer.WritePropertyName("accessModes"u8);
                 writer.WriteStartArray();
@@ -37,32 +38,32 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EndpointLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (DestinationPort.HasValue)
+            if (Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (options.Format != "W" && PublicPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublicPort))
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (SubDomainSuffix != null)
+            if (Optional.IsDefined(SubDomainSuffix))
             {
                 writer.WritePropertyName("subDomainSuffix"u8);
                 writer.WriteStringValue(SubDomainSuffix);
             }
-            if (DisableGatewayAuth.HasValue)
+            if (Optional.IsDefined(DisableGatewayAuth))
             {
                 writer.WritePropertyName("disableGatewayAuth"u8);
                 writer.WriteBooleanValue(DisableGatewayAuth.Value);

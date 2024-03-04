@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (options.Format != "W" && SecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (options.Format != "W" && AliasPrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AliasPrimaryConnectionString))
             {
                 writer.WritePropertyName("aliasPrimaryConnectionString"u8);
                 writer.WriteStringValue(AliasPrimaryConnectionString);
             }
-            if (options.Format != "W" && AliasSecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AliasSecondaryConnectionString))
             {
                 writer.WritePropertyName("aliasSecondaryConnectionString"u8);
                 writer.WriteStringValue(AliasSecondaryConnectionString);
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && KeyName != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
