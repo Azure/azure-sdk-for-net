@@ -4,6 +4,8 @@
 #if NET6_0_OR_GREATER
 using System;
 using System.Diagnostics.Tracing;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
@@ -18,89 +20,69 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
     public class AzureSdkLoggingTests
     {
-        [Fact]
-        public async Task LogForwarderIsAddedLevelEnabled()
+        [Theory]
+        [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
+        [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
+        [InlineData(LogLevel.Debug, null)]
+        public async Task DistroLogForwarderIsAdded(LogLevel eventLevel, string expectedMessage)
         {
             var builder = WebApplication.CreateBuilder();
-            builder.Logging.ClearProviders();
-            builder.Logging.AddFilter((name, level) =>
-            {
-                if (name != null && name.StartsWith("Azure"))
-                {
-                    return level >= LogLevel.Information;
-                }
-                return false;
-            });
-
-            MockTransport transport = new MockTransport(new MockResponse(200).SetContent("ok"));
-            builder.Services.AddOpenTelemetry().UseAzureMonitor(config =>
-            {
-                config.Transport = transport;
-                config.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-            });
+            var transport = new MockTransport(new MockResponse(200).SetContent("ok"));
+            SetUpOTelAndLogging(builder, transport, LogLevel.Information);
 
             using var app = builder.Build();
             await app.StartAsync();
 
             using TestEventSource source = new TestEventSource();
-            try
+            Assert.True(source.IsEnabled());
+            source.LogMessage("hello", eventLevel);
+            WaitForRequest(transport);
+            if (expectedMessage != null)
             {
-                Assert.True(source.IsEnabled());
-                source.LogTestInfoEvent("hello");
-
-                WaitForRequest(transport);
+                Assert.Single(transport.Requests);
+                await AssertContentContains(transport.Requests.Single(), expectedMessage, eventLevel);
             }
-            finally
+            else
             {
-                await app.StopAsync();
+                Assert.False(transport.Requests.Any());
             }
-
-            Assert.True(transport.Requests.Count > 0);
         }
 
-        [Fact]
-        public async Task PublicLogForwarderIsAdded()
+        [Theory]
+        [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
+        [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
+        [InlineData(LogLevel.Debug, null)]
+        public async Task PublicLogForwarderIsAdded(LogLevel eventLevel, string expectedMessage)
         {
             var builder = WebApplication.CreateBuilder();
-            builder.Logging.ClearProviders();
-            builder.Logging.AddFilter((name, level) =>
-            {
-                if (name != null && name.StartsWith("Azure"))
-                {
-                    return level >= LogLevel.Information;
-                }
-                return false;
-            });
+            var transport = new MockTransport(new MockResponse(200).SetContent("ok"));
+            SetUpOTelAndLogging(builder, transport, LogLevel.Information);
 
             builder.Services.TryAddSingleton<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
-            MockTransport transport = new MockTransport(new MockResponse(200).SetContent("ok"));
-            builder.Services.AddOpenTelemetry().UseAzureMonitor(config =>
-            {
-                config.Transport = transport;
-                config.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-            });
-
             using var app = builder.Build();
+
             Microsoft.Extensions.Azure.AzureEventSourceLogForwarder publicLogForwarder =
                 app.Services.GetRequiredService<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
+
             Assert.NotNull(publicLogForwarder);
             publicLogForwarder.Start();
+
             await app.StartAsync();
 
             using TestEventSource source = new TestEventSource();
-            try
-            {
-                Assert.True(source.IsEnabled());
-                source.LogTestInfoEvent("hello");
+            Assert.True(source.IsEnabled());
+            source.LogMessage("hello", eventLevel);
 
-                WaitForRequest(transport);
-            }
-            finally
+            WaitForRequest(transport);
+            if (expectedMessage != null)
             {
-                await app.StopAsync();
+                Assert.Single(transport.Requests);
+                await AssertContentContains(transport.Requests.Single(), expectedMessage, eventLevel);
             }
-
-            Assert.True(transport.Requests.Count > 0);
+            else
+            {
+                Assert.False(transport.Requests.Any());
+            }
         }
 
         private void WaitForRequest(MockTransport transport)
@@ -114,25 +96,85 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 timeout: TimeSpan.FromSeconds(10));
         }
 
+        private static async Task AssertContentContains(MockRequest request, string expectedMessage, LogLevel expectedLevel)
+        {
+            using var contentStream = new MemoryStream();
+            await request.Content.WriteToAsync(contentStream, default);
+            contentStream.Position = 0;
+            var content = BinaryData.FromStream(contentStream).ToString();
+            var jsonMessage = $"\"message\":\"{expectedMessage}\"";
+            var jsonLevel = $"\"severityLevel\":\"{expectedLevel}\"";
+            Assert.Contains(jsonMessage, content);
+            Assert.Contains(jsonLevel, content);
+
+            // also check that message appears just once
+            Assert.Equal(content.IndexOf(jsonMessage), content.LastIndexOf(jsonMessage));
+        }
+
+        private static void SetUpOTelAndLogging(WebApplicationBuilder builder, MockTransport transport, LogLevel enableLevel)
+        {
+            builder.Logging.ClearProviders();
+            builder.Logging.AddFilter((name, level) =>
+            {
+                if (name != null && name.StartsWith("Azure"))
+                {
+                    return level >= enableLevel;
+                }
+                return false;
+            });
+
+            builder.Services.AddOpenTelemetry().UseAzureMonitor(config =>
+            {
+                config.Transport = transport;
+                config.ConnectionString = $"InstrumentationKey={Guid.NewGuid()}";
+                config.EnableLiveMetrics = false;
+                config.Diagnostics.IsDistributedTracingEnabled = false;
+                config.Diagnostics.IsLoggingEnabled = false;
+            });
+        }
+
         internal class TestEventSource : AzureEventSource
         {
             private const string EventSourceName = "Azure-Test";
-            internal const int TestInfoEvent = 1;
-            internal const int TestTraceEvent = 2;
             public TestEventSource() : base(EventSourceName)
             {
             }
 
-            [Event(TestInfoEvent, Level = EventLevel.Informational, Message = "TestInfoEvent: = {0}")]
+            [Event(1, Level = EventLevel.Informational, Message = "TestInfoEvent: {0}")]
             public void LogTestInfoEvent(string message)
             {
-                WriteEvent(TestInfoEvent, message);
+                WriteEvent(1, message);
             }
 
-            [Event(TestTraceEvent, Level = EventLevel.Informational, Message = "TestTraceEvent: = {0}")]
-            public void LogTestTraceEvent(string message)
+            [Event(2, Level = EventLevel.Verbose, Message = "TestVerboseEvent: {0}")]
+            public void LogTestVerboseEvent(string message)
             {
-                WriteEvent(TestTraceEvent, message);
+                WriteEvent(2, message);
+            }
+
+            [Event(3, Level = EventLevel.Warning, Message = "TestWarningEvent: {0}")]
+            public void LogTestWarningEvent(string message)
+            {
+                WriteEvent(3, message);
+            }
+
+            public void LogMessage(string message, LogLevel level)
+            {
+                switch (level)
+                {
+                    case LogLevel.Warning:
+                        LogTestWarningEvent(message);
+                        break;
+                    case LogLevel.Information:
+                        LogTestInfoEvent(message);
+                        break;
+                    case LogLevel.Debug:
+                        LogTestVerboseEvent(message);
+                        break;
+                    default:
+                        Assert.Fail("Log level not supported");
+                        break;
+                }
             }
         }
     }

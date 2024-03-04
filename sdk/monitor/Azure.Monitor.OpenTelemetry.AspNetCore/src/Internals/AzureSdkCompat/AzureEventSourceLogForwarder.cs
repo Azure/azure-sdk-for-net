@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Azure;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
 {
     internal sealed class AzureEventSourceLogForwarder : IHostedService, IDisposable
     {
@@ -55,7 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals
                 case EventLevel.LogAlways:
                     return LogLevel.Information;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(level), level, null);
+                    AzureMonitorAspNetCoreEventSource.Log.MapLogLevelFailed(level);
+                    return LogLevel.None;
             }
         }
 

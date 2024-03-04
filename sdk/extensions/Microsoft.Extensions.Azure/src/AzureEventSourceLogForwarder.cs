@@ -47,6 +47,8 @@ namespace Microsoft.Extensions.Azure
                 return;
             }
 
+            // The same logic is used in the Azure.Monitor.OpenTelemetry.AspNetCore.
+            // If you make any changes here, please check if they are applicable there as well.
             var logger = _loggers.GetOrAdd(eventData.EventSource.Name, name => _loggerFactory.CreateLogger(ToLoggerName(name)));
             logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
         }

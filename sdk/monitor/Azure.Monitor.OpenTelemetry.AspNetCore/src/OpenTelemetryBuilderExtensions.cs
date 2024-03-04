@@ -4,7 +4,7 @@
 #nullable enable
 
 using System.Reflection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
@@ -185,17 +185,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
+            // Register Azure SDK log forwarder in the case it was not registered by the user application.
             builder.Services.AddHostedService(sp =>
             {
-                Type logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
+                var logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
 
-                if (logForwarderType == null || sp.GetService(logForwarderType) == null)
+                if (logForwarderType != null && sp.GetService(logForwarderType) != null)
                 {
-                    var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-                    return new AzureEventSourceLogForwarder(loggerFactory);
+                    AzureMonitorAspNetCoreEventSource.Log.LogForwarderIsAlreadyRegistered();
+                    return AzureEventSourceLogForwarder.Noop;
                 }
 
-                return AzureEventSourceLogForwarder.Noop;
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                return new AzureEventSourceLogForwarder(loggerFactory);
             });
 
             return builder;

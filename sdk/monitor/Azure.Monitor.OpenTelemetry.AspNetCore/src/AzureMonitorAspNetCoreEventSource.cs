@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -74,5 +73,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         [Event(5, Message = "Failed to Read environment variable {0}, exception: {1}", Level = EventLevel.Error)]
         public void GetEnvironmentVariableFailed(string envVarName, string exceptionMessage) => WriteEvent(5, envVarName, exceptionMessage);
+
+        [Event(6, Message = "Failed to map unknown EventSource log level {0}", Level = EventLevel.Warning)]
+        public void MapLogLevelFailed(EventLevel level)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                WriteEvent(6, level.ToString());
+            }
+        }
+
+        [Event(7, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
+        public void LogForwarderIsAlreadyRegistered() => WriteEvent(7);
     }
 }
