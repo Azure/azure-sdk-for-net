@@ -50,7 +50,7 @@ namespace Azure.Provisioning
             {
                 // We can't use the lambda overload because not all of the T's will inherit from TrackedResourceData
                 // TODO we may need to add a protected LocationSelector property in the future if there are exceptions to the rule
-                AssignParameter(Properties, "Location", new Parameter("location", null, defaultValue: $"{ResourceGroup.ResourceGroupFunction}.location", isExpression: true));
+                AssignProperty(Properties, "Location", new Parameter("location", null, defaultValue: $"{ResourceGroup.ResourceGroupFunction}.location", isExpression: true));
             }
         }
 
@@ -60,10 +60,10 @@ namespace Azure.Provisioning
         /// <param name="propertySelector"></param>
         /// <param name="parameter"></param>
         /// <exception cref="NotSupportedException"></exception>
-        public void AssignParameter(Expression<Func<T, object?>> propertySelector, Parameter parameter)
+        public void AssignProperty(Expression<Func<T, object?>> propertySelector, Parameter parameter)
         {
             (object instance, string name, string expression) = EvaluateLambda(propertySelector);
-            AssignParameter(instance, name, parameter);
+            AssignProperty(instance, name, parameter);
         }
 
         /// <summary>

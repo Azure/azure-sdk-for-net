@@ -90,7 +90,7 @@ namespace Azure.Provisioning.Tests
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
 
-            rg1.AssignParameter(r => r.Location, new Parameter("location"));
+            rg1.AssignProperty(r => r.Location, new Parameter("location"));
 
             var parameters = infra.GetParameters(recursive);
             var expected = recursive ? 1 : 1;
@@ -104,11 +104,11 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
-            rg1.AssignParameter(r => r.Location, new Parameter("location"));
+            rg1.AssignProperty(r => r.Location, new Parameter("location"));
 
             var childScope = infra.AddFrontEndWebSite();
             var rg2 = new ResourceGroup(childScope, "rg2");
-            rg2.AssignParameter(r => r.Location, new Parameter("location"));
+            rg2.AssignProperty(r => r.Location, new Parameter("location"));
 
             var expected = recursive ? 3 : 2;
             var parameters = infra.GetParameters(recursive);

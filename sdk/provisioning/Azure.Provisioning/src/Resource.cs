@@ -159,7 +159,7 @@ namespace Azure.Provisioning
         /// <param name="instance">The property instance.</param>
         /// <param name="propertyName">The property name.</param>
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
-        private protected void AssignParameter(object instance, string propertyName, Parameter parameter)
+        private protected void AssignProperty(object instance, string propertyName, Parameter parameter)
         {
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {

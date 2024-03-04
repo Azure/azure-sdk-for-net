@@ -31,7 +31,7 @@ namespace Azure.Provisioning.KeyVaults
                         })
                 }))
         {
-            AssignParameter(p => p.AccessPolicies[0].ObjectId, principalIdParameter);
+            AssignProperty(p => p.AccessPolicies[0].ObjectId, principalIdParameter);
         }
 
         private static string GetParamValue(Parameter principalIdParameter, IConstruct scope)

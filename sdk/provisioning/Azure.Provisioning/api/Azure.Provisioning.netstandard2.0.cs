@@ -10,6 +10,11 @@ namespace Azure.Provisioning
         public Configuration() { }
         public bool UseInteractiveMode { get { throw null; } set { } }
     }
+    public abstract partial class ConnectionString
+    {
+        protected ConnectionString(string value) { }
+        public string Value { get { throw null; } }
+    }
     public abstract partial class Construct : Azure.Provisioning.IConstruct
     {
         protected Construct(Azure.Provisioning.IConstruct? scope, string name, Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.ResourceGroup, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null, Azure.Provisioning.ResourceManager.ResourceGroup? resourceGroup = null) { }
@@ -105,7 +110,7 @@ namespace Azure.Provisioning
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, T> createProperties) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, object>)) { }
         public T Properties { get { throw null; } }
         public Azure.Provisioning.Output AddOutput(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false) { throw null; }
-        public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
+        public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
     }
 }
@@ -203,9 +208,23 @@ namespace Azure.Provisioning.KeyVaults
     }
     public partial class KeyVaultSecret : Azure.Provisioning.Resource<Azure.ResourceManager.KeyVault.KeyVaultSecretData>
     {
-        public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.ConnectionString connectionString, string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
+        public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ConnectionString connectionString, string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
         public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name = "kvs", string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+    }
+}
+namespace Azure.Provisioning.Redis
+{
+    public partial class RedisCache : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisData>
+    {
+        public RedisCache(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Redis.Models.RedisSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "redis", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Redis.RedisData>)) { }
+        protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        public Azure.Provisioning.Redis.RedisCacheConnectionString GetConnectionString(Azure.Provisioning.Parameter password) { throw null; }
+    }
+    public partial class RedisCacheConnectionString : Azure.Provisioning.ConnectionString
+    {
+        public RedisCacheConnectionString(Azure.Provisioning.Redis.RedisCache cache, Azure.Provisioning.Parameter password) : base (default(string)) { }
     }
 }
 namespace Azure.Provisioning.ResourceManager
@@ -244,16 +263,15 @@ namespace Azure.Provisioning.Resources
 }
 namespace Azure.Provisioning.Sql
 {
-    public partial class ConnectionString
-    {
-        public ConnectionString(Azure.Provisioning.Sql.SqlDatabase database, Azure.Provisioning.Parameter password, string userName) { }
-        public string Value { get { throw null; } }
-    }
     public partial class SqlDatabase : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlDatabaseData>
     {
         public SqlDatabase(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Sql.SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlDatabaseData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
-        public Azure.Provisioning.Sql.ConnectionString GetConnectionString(Azure.Provisioning.Parameter passwordSecret, string userName = "appUser") { throw null; }
+        public Azure.Provisioning.Sql.SqlDatabaseConnectionString GetConnectionString(Azure.Provisioning.Parameter passwordSecret, string userName = "appUser") { throw null; }
+    }
+    public partial class SqlDatabaseConnectionString : Azure.Provisioning.ConnectionString
+    {
+        public SqlDatabaseConnectionString(Azure.Provisioning.Sql.SqlDatabase database, Azure.Provisioning.Parameter password, string userName) : base (default(string)) { }
     }
     public partial class SqlFirewallRule : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlFirewallRuleData>
     {
