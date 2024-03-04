@@ -2,17 +2,21 @@
 
 ## Introduction
 
-_Service clients_ have methods that are used to call cloud services to invoke service operations. These methods on a client are called _service methods_.
+`System.ClientModel`-based clients , or **service clients**, provide an interface to cloud services by translating library calls to HTTP requests.
 
-`System.ClientModel`-based clients expose two types of service methods: _convenience methods_ and _protocol methods_.
+In service clients, there are two ways to expose the schematized body in the request or response, known as the **message body**:
 
-**Convenience methods** provide a convenient way to invoke a service operation.  They are service methods that take a strongly-typed model representing schematized data sent to the service as input, and return a strongly-typed model representing the payload from the service response as output. Having strongly-typed models that represent service concepts provides a layer of convenience over working with the raw payload format. This is because these models unify the client user experience when cloud services differ in payload formats.  That is, a client-user can learn the patterns for strongly-typed models that `System.ClientModel`-based clients provide, and use them together without having to reason about whether a cloud service represents resources using, for example, JSON or XML formats.
+- Most service clients expose methods that take strongly-typed models as parameters, C# classes which map to the message body of the REST call.  These methods are called **convenience methods**.
 
-**Protocol methods** are service methods that provide very little convenience over the raw HTTP APIs a cloud service exposes. They represent request and response message bodies using types that are very thin layers over raw JSON/binary/other formats. Users of client protocol methods must reference a service's API documentation directly, rather than relying on the client to provide developer conveniences via strongly-typing service schemas.
+- However, some clients expose methods that mirror the message body directly. Those methods are called here **protocol methods**, as they provide more direct access to the HTTP API protocol used by the service.
 
 ## Convenience methods
 
-```C# Snippet:ResponseTHelloWorld
+**Convenience methods** provide a convenient way to invoke a service operation.  They are service methods that take a strongly-typed model representing schematized data sent to the service as input, and return a strongly-typed model representing the payload from the service response as output. Having strongly-typed models that represent service concepts provides a layer of convenience over working with the raw payload format. This is because these models unify the client user experience when cloud services differ in payload formats.  That is, a client-user can learn the patterns for strongly-typed models that `System.ClientModel`-based clients provide, and use them together without having to reason about whether a cloud service represents resources using, for example, JSON or XML formats.
+
+The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
+
+```C# Snippet:ClientResultTReadme
 // create a client
 var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
@@ -36,45 +40,20 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
-## Accessing HTTP response well-known headers
-
-You can access well known response headers via properties of `ResponseHeaders` object:
-
-```C# Snippet:ResponseHeaders
-// call a service method, which returns Response<T>
-Response<KeyVaultSecret> response = await client.GetSecretAsync("SecretName");
-
-Response http = response.GetRawResponse();
-
-Console.WriteLine("ETag " + http.Headers.ETag);
-Console.WriteLine("Content-Length " + http.Headers.ContentLength);
-Console.WriteLine("Content-Type " + http.Headers.ContentType);
-```
-
-## Handling exceptions
-
-When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
-
-```C# Snippet:RequestFailedException
-try
-{
-    KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
-}
-// handle exception with status code 404
-catch (RequestFailedException e) when (e.Status == 404)
-{
-    // handle not found error
-    Console.WriteLine("ErrorCode " + e.ErrorCode);
-}
-```
-
 ## Protocol methods
 
-### Pet's Example
+In contrast to convenience methods, **protocol methods** are service methods that provide very little convenience over the raw HTTP APIs a cloud service exposes. They represent request and response message bodies using types that are very thin layers over raw JSON/binary/other formats. Users of client protocol methods must reference a service's API documentation directly, rather than relying on the client to provide developer conveniences via strongly-typing service schemas.
 
-To compare the two approaches, imagine a service that stores information about pets, with a pair of `GetPet`  and `SetPet` operations.
+The following sample illustrates how to call a protocol method, including creating the request payload, accessing the details of the HTTP response.
 
-Pets are represented in the message body as a JSON object:
+```C# Snippet:ServiceMethodsProtocolMethod
+```
+
+### Protocol method concepts
+
+To compare the convenience and protocol method approaches, let's look more closely at a `System.ClientModel`-based client implementation of a [Geolocation](https://learn.microsoft.com/rest/api/maps/geolocation/get-ip-to-location?view=rest-maps-2023-06-01&tabs=HTTP) service operation.
+
+The [IpAddressToLocation]() operation result is Pets are represented in the message body as a JSON object:
 
 ```json
 {
@@ -186,6 +165,20 @@ dynamic widget = response.Content.ToDynamicFromJson();
 string name = widget.name;
 ```
 
-## Configuration And Customization
 
-**Protocol methods** share the same configuration and customization as **convenience methods**. For details, see the [ReadMe](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md). You can find more samples [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/README.md).
+## Handling exceptions
+
+When a service call fails, service clients throw a `ClientResultException`.  The exception exposes the HTTP status code and the details of the service response if available.
+
+```C# Snippet:ClientResultExceptionReadme
+try
+{
+    KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
+}
+// handle exception with status code 404
+catch (RequestFailedException e) when (e.Status == 404)
+{
+    // handle not found error
+    Console.WriteLine("ErrorCode " + e.ErrorCode);
+}
+```
