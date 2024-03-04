@@ -23,7 +23,7 @@ steps:
     displayName: Set Failed Artifact Name
 
   - task: 1ES.PublishPipelineArtifact@1
-    condition: and(succeeded(), ${{ parameters.CustomCondition }})
+    condition: and(failedOrSucceeded(), ${{ parameters.CustomCondition }})
     displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
     inputs:
       artifact: '$(PublishArtifactName)'
