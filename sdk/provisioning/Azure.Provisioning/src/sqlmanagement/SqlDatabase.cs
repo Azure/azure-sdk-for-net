@@ -36,8 +36,8 @@ namespace Azure.Provisioning.Sql
         /// <param name="passwordSecret">The password.</param>
         /// <param name="userName">The user name.</param>
         /// <returns></returns>
-        public ConnectionString GetConnectionString(Parameter passwordSecret, string userName = "appUser")
-            => new ConnectionString(this, passwordSecret, userName);
+        public SqlDatabaseConnectionString GetConnectionString(Parameter passwordSecret, string userName = "appUser")
+            => new SqlDatabaseConnectionString(this, passwordSecret, userName);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

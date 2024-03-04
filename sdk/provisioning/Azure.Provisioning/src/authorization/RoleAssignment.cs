@@ -43,7 +43,7 @@ namespace Azure.Provisioning.Authorization
 
             if (principalId == null)
             {
-                AssignParameter(data => data.PrincipalId, new Parameter("principalId"));
+                AssignProperty(data => data.PrincipalId, new Parameter("principalId"));
             }
 
             AssignProperty(

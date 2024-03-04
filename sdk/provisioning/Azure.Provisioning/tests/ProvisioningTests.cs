@@ -19,6 +19,7 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.Redis;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
@@ -71,15 +72,15 @@ namespace Azure.Provisioning.Tests
 
             KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, "sqlAdminPassword");
             Assert.False(sqlAdminSecret.Properties.Name.EndsWith(infra.EnvironmentName));
-            sqlAdminSecret.AssignParameter(secret => secret.Properties.Value, sqlAdminPasswordParam);
+            sqlAdminSecret.AssignProperty(secret => secret.Properties.Value, sqlAdminPasswordParam);
 
             KeyVaultSecret appUserSecret = new KeyVaultSecret(infra, "appUserPassword");
             Assert.False(appUserSecret.Properties.Name.EndsWith(infra.EnvironmentName));
-            appUserSecret.AssignParameter(secret => secret.Properties.Value, appUserPasswordParam);
+            appUserSecret.AssignProperty(secret => secret.Properties.Value, appUserPasswordParam);
 
             SqlServer sqlServer = new SqlServer(infra, "sqlserver");
             sqlServer.AssignProperty(sql => sql.AdministratorLogin, "'sqladmin'");
-            sqlServer.AssignParameter(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
+            sqlServer.AssignProperty(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
             Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
 
             SqlDatabase sqlDatabase = new SqlDatabase(infra, sqlServer);
@@ -204,6 +205,20 @@ namespace Azure.Provisioning.Tests
                         adminObjectId = new { value = Guid.Empty.ToString() }
                     }),
                 interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task RedisCache()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var cache = new RedisCache(infrastructure);
+            var primaryKey = cache.AddOutput(data => data.AccessKeys.PrimaryKey, "primaryKey");
+            _ = infrastructure.AddKeyVault();
+            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(new Parameter(primaryKey)));
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
         }
 
         [RecordedTest]
@@ -379,7 +394,7 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var sa = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            sa.AssignParameter(d => d.Location, new Parameter("myLocationParam"));
+            sa.AssignProperty(d => d.Location, new Parameter("myLocationParam"));
 
             infra.Build(GetOutputPath());
 
@@ -403,14 +418,14 @@ namespace Azure.Provisioning.Tests
                 kind: StorageKind.BlobStorage,
                 sku: StorageSkuName.StandardLrs
             );
-            account1.AssignParameter(a => a.Location, overrideLocation);
+            account1.AssignProperty(a => a.Location, overrideLocation);
 
             var account2 = infra.AddStorageAccount(
                 name: "sa2",
                 kind: StorageKind.BlobStorage,
                 sku: StorageSkuName.PremiumLrs
             );
-            account2.AssignParameter(a => a.Location, overrideLocation);
+            account2.AssignProperty(a => a.Location, overrideLocation);
 
             infra.Build(GetOutputPath());
 
@@ -476,11 +491,11 @@ namespace Azure.Provisioning.Tests
             var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
 
             KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
-            keyVault.AssignParameter(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
+            keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
 
             WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
 
-            frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1));
+            frontEnd2.AssignProperty(data => data.Identity.PrincipalId, new Parameter(output1));
 
             var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
             infra.Build(GetOutputPath());

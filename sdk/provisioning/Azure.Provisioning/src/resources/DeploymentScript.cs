@@ -85,9 +85,9 @@ namespace Azure.Provisioning.Resources
                         ./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql
                         """))
         {
-            AssignParameter(data => data.EnvironmentVariables[0].SecureValue, appUserPasswordSecret);
-            AssignParameter(data => data.EnvironmentVariables[1].SecureValue, sqlAdminPasswordSecret);
-            AssignParameter(data => data.EnvironmentVariables[2].Value, databaseServerName);
+            AssignProperty(data => data.EnvironmentVariables[0].SecureValue, appUserPasswordSecret);
+            AssignProperty(data => data.EnvironmentVariables[1].SecureValue, sqlAdminPasswordSecret);
+            AssignProperty(data => data.EnvironmentVariables[2].Value, databaseServerName);
         }
 
         /// <inheritdoc/>

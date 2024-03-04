@@ -46,16 +46,16 @@ namespace Azure.Provisioning.Sql
             AssignProperty(data => data.Name, GetAzureName(scope, name));
             if (adminLogin != null)
             {
-                AssignParameter(data => data.AdministratorLogin, adminLogin.Value);
+                AssignProperty(data => data.AdministratorLogin, adminLogin.Value);
             }
             if (adminPassword != null)
             {
-                AssignParameter(data => data.AdministratorLoginPassword, adminPassword.Value);
+                AssignProperty(data => data.AdministratorLoginPassword, adminPassword.Value);
             }
             if (administrator != null)
             {
-                AssignParameter(data => data.Administrators.Login, administrator.Value.LoginName);
-                AssignParameter(data => data.Administrators.Sid, administrator.Value.ObjectId);
+                AssignProperty(data => data.Administrators.Login, administrator.Value.LoginName);
+                AssignProperty(data => data.Administrators.Sid, administrator.Value.ObjectId);
                 AssignProperty(data => data.Administrators.AdministratorType, "'ActiveDirectory'");
                 if (scope.Root.Properties.TenantId == Guid.Empty)
                 {
