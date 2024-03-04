@@ -109,10 +109,6 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var expected = $"\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{content.Boundary}--";
         var actual = Encoding.UTF8.GetString(stream.ToArray());
 
-        Console.WriteLine(actual);
-
-        Console.WriteLine(expected);
-
         Assert.AreEqual(expected, actual);
     }
 }

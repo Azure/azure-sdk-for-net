@@ -95,6 +95,13 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public partial class ContentDispositionValue
+    {
+        public ContentDispositionValue(string name, string? fileName = null) { }
+        public string? FileName { get { throw null; } }
+        public string Name { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
         public HttpClientPipelineTransport() { }
@@ -132,6 +139,17 @@ namespace System.ClientModel.Primitives
         public string Format { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.Primitives.ModelReaderWriterOptions Xml { get { throw null; } }
+    }
+    public partial class MultipartContent : System.IDisposable
+    {
+        public MultipartContent() { }
+        public MultipartContent(string boundary) { }
+        public string Boundary { get { throw null; } }
+        public void Add(System.ClientModel.BinaryContent content) { }
+        public void Add(System.ClientModel.BinaryContent content, System.Collections.Generic.Dictionary<string, string> headers) { }
+        public void Dispose() { }
+        public System.Net.Mime.ContentType GetContentType(System.Net.Mime.ContentType contentType) { throw null; }
+        public System.ClientModel.BinaryContent ToBinaryContent() { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
