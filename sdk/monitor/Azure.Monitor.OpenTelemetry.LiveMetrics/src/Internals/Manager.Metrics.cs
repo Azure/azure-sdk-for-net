@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal static bool? s_isAzureWebApp = null;
 
         private readonly int _processorCount = Environment.ProcessorCount;
+        private readonly Process _process = Process.GetCurrentProcess();
         private DateTimeOffset _cachedCollectedTime = DateTimeOffset.MinValue;
         private long _cachedCollectedValue = 0;
 
@@ -100,30 +101,28 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return dataPoint;
         }
 
-        /// <summary>
-        /// Collect metrics for the current process.
-        /// </summary>
         /// <remarks>
+        /// <para>
         /// For Memory:
         /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.privatememorysize64"/>.
         /// "The amount of memory, in bytes, allocated for the associated process that cannot be shared with other processes.".
-        ///
+        /// </para>
+        /// <para>
         /// For CPU:
         /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.totalprocessortime"/>.
         /// "A TimeSpan that indicates the amount of time that the associated process has spent utilizing the CPU. This value is the sum of the UserProcessorTime and the PrivilegedProcessorTime.".
+        /// </para>
         /// </remarks>
         public IEnumerable<Models.MetricPoint> CollectProcessMetrics()
         {
-            var process = Process.GetCurrentProcess();
-
             yield return new Models.MetricPoint
             {
                 Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = process.PrivateMemorySize64,
+                Value = _process.PrivateMemorySize64,
                 Weight = 1
             };
 
-            if (TryCalculateCPUCounter(process, out var processorValue))
+            if (TryCalculateCPUCounter(out var processorValue))
             {
                 yield return new Models.MetricPoint
                 {
@@ -176,12 +175,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// Calcualte the CPU usage as the diff between two ticks divided by the period of time, and then divided by the number of processors.
         /// <code>((change in ticks / period) / number of processors)</code>
         /// </summary>
-        private bool TryCalculateCPUCounter(Process process, out double normalizedValue)
+        private bool TryCalculateCPUCounter(out double normalizedValue)
         {
             var previousCollectedValue = _cachedCollectedValue;
             var previousCollectedTime = _cachedCollectedTime;
 
-            var recentCollectedValue = _cachedCollectedValue = process.TotalProcessorTime.Ticks;
+            var recentCollectedValue = _cachedCollectedValue = _process.TotalProcessorTime.Ticks;
             var recentCollectedTime = _cachedCollectedTime = DateTimeOffset.UtcNow;
 
             double calculatedValue;
