@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (InitializationVector != null)
+            if (Optional.IsDefined(InitializationVector))
             {
                 writer.WritePropertyName("initializationVector"u8);
                 writer.WriteStringValue(InitializationVector);
             }
-            if (AssetFileName != null)
+            if (Optional.IsDefined(AssetFileName))
             {
                 writer.WritePropertyName("assetFileName"u8);
                 writer.WriteStringValue(AssetFileName);

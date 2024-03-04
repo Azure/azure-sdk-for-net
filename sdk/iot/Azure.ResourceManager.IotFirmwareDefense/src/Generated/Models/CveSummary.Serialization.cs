@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Critical.HasValue)
+            if (Optional.IsDefined(Critical))
             {
                 if (Critical != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("critical");
                 }
             }
-            if (High.HasValue)
+            if (Optional.IsDefined(High))
             {
                 if (High != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("high");
                 }
             }
-            if (Medium.HasValue)
+            if (Optional.IsDefined(Medium))
             {
                 if (Medium != null)
                 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("medium");
                 }
             }
-            if (Low.HasValue)
+            if (Optional.IsDefined(Low))
             {
                 if (Low != null)
                 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("low");
                 }
             }
-            if (Unknown.HasValue)
+            if (Optional.IsDefined(Unknown))
             {
                 if (Unknown != null)
                 {
