@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Support.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            ServiceClassificationContent serviceClassificationRequest = new ServiceClassificationContent()
+            ServiceClassificationContent content = new ServiceClassificationContent()
             {
                 IssueSummary = "Can not connect to Windows VM",
                 ResourceId = new ResourceIdentifier("/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/resourceGroups/rgname/providers/Microsoft.Compute/virtualMachines/vmname"),
             };
-            ServiceClassificationOutput result = await subscriptionResource.ClassifyServicesServiceClassificationAsync(serviceClassificationRequest);
+            ServiceClassificationOutput result = await subscriptionResource.ClassifyServicesServiceClassificationAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

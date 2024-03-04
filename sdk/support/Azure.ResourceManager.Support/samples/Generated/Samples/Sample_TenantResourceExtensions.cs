@@ -12,6 +12,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
+using ResourceType = Azure.ResourceManager.Support.Models.ResourceType;
 
 namespace Azure.ResourceManager.Support.Samples
 {
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.Support.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            ServiceClassificationContent serviceClassificationRequest = new ServiceClassificationContent()
+            ServiceClassificationContent content = new ServiceClassificationContent()
             {
                 IssueSummary = "Can not connect to Windows VM",
                 ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgname/providers/Microsoft.Compute/virtualMachines/vmname"),
             };
-            ServiceClassificationOutput result = await tenantResource.ClassifyServicesServiceClassificationsNoSubscriptionAsync(serviceClassificationRequest);
+            ServiceClassificationOutput result = await tenantResource.ClassifyServicesServiceClassificationsNoSubscriptionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Support.Samples
             LookUpResourceIdContent content = new LookUpResourceIdContent()
             {
                 Identifier = "1234668596",
-                ResourceType = Models.ResourceType.MicrosoftSupportSupportTickets,
+                ResourceType = ResourceType.MicrosoftSupportSupportTickets,
             };
             LookUpResourceIdResult result = await tenantResource.PostLookUpResourceIdAsync(content);
 

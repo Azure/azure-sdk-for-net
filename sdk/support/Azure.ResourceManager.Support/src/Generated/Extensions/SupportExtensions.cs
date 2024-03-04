@@ -525,17 +525,17 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public static async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationAsync(this SubscriptionResource subscriptionResource, ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationAsync(this SubscriptionResource subscriptionResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionResource == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionResource));
             }
 
-            return await GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServicesServiceClassificationAsync(serviceClassificationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServicesServiceClassificationAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -560,17 +560,17 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public static Response<ServiceClassificationOutput> ClassifyServicesServiceClassification(this SubscriptionResource subscriptionResource, ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ServiceClassificationOutput> ClassifyServicesServiceClassification(this SubscriptionResource subscriptionResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionResource == null)
             {
                 throw new ArgumentNullException(nameof(subscriptionResource));
             }
 
-            return GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServicesServiceClassification(serviceClassificationRequest, cancellationToken);
+            return GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServicesServiceClassification(content, cancellationToken);
         }
 
         /// <summary>
@@ -1061,17 +1061,17 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public static async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationsNoSubscriptionAsync(this TenantResource tenantResource, ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationsNoSubscriptionAsync(this TenantResource tenantResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (tenantResource == null)
             {
                 throw new ArgumentNullException(nameof(tenantResource));
             }
 
-            return await GetMockableSupportTenantResource(tenantResource).ClassifyServicesServiceClassificationsNoSubscriptionAsync(serviceClassificationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportTenantResource(tenantResource).ClassifyServicesServiceClassificationsNoSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1096,17 +1096,17 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public static Response<ServiceClassificationOutput> ClassifyServicesServiceClassificationsNoSubscription(this TenantResource tenantResource, ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ServiceClassificationOutput> ClassifyServicesServiceClassificationsNoSubscription(this TenantResource tenantResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (tenantResource == null)
             {
                 throw new ArgumentNullException(nameof(tenantResource));
             }
 
-            return GetMockableSupportTenantResource(tenantResource).ClassifyServicesServiceClassificationsNoSubscription(serviceClassificationRequest, cancellationToken);
+            return GetMockableSupportTenantResource(tenantResource).ClassifyServicesServiceClassificationsNoSubscription(content, cancellationToken);
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateClassifyServicesRequest(ServiceClassificationContent serviceClassificationRequest)
+        internal HttpMessage CreateClassifyServicesRequest(ServiceClassificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,25 +49,25 @@ namespace Azure.ResourceManager.Support
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceClassificationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Classify the list of right Azure services. </summary>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public async Task<Response<ServiceClassificationOutput>> ClassifyServicesAsync(ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<ServiceClassificationOutput>> ClassifyServicesAsync(ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (serviceClassificationRequest == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(serviceClassificationRequest));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateClassifyServicesRequest(serviceClassificationRequest);
+            using var message = CreateClassifyServicesRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Classify the list of right Azure services. </summary>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public Response<ServiceClassificationOutput> ClassifyServices(ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<ServiceClassificationOutput> ClassifyServices(ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (serviceClassificationRequest == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(serviceClassificationRequest));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateClassifyServicesRequest(serviceClassificationRequest);
+            using var message = CreateClassifyServicesRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

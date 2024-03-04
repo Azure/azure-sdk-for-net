@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public virtual async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationAsync(ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationAsync(ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (serviceClassificationRequest == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(serviceClassificationRequest));
+                throw new ArgumentNullException(nameof(content));
             }
 
             using var scope = ServiceClassificationsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServicesServiceClassification");
             scope.Start();
             try
             {
-                var response = await ServiceClassificationsRestClient.ClassifyServicesAsync(Id.SubscriptionId, serviceClassificationRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ServiceClassificationsRestClient.ClassifyServicesAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -248,21 +248,21 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceClassificationRequest"/> is null. </exception>
-        public virtual Response<ServiceClassificationOutput> ClassifyServicesServiceClassification(ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ServiceClassificationOutput> ClassifyServicesServiceClassification(ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (serviceClassificationRequest == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(serviceClassificationRequest));
+                throw new ArgumentNullException(nameof(content));
             }
 
             using var scope = ServiceClassificationsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServicesServiceClassification");
             scope.Start();
             try
             {
-                var response = ServiceClassificationsRestClient.ClassifyServices(Id.SubscriptionId, serviceClassificationRequest, cancellationToken);
+                var response = ServiceClassificationsRestClient.ClassifyServices(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

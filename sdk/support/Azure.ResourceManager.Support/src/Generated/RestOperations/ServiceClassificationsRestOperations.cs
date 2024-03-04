@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateClassifyServicesRequest(string subscriptionId, ServiceClassificationContent serviceClassificationRequest)
+        internal HttpMessage CreateClassifyServicesRequest(string subscriptionId, ServiceClassificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,20 +51,20 @@ namespace Azure.ResourceManager.Support
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceClassificationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Classify the list of right Azure services. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="serviceClassificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceClassificationOutput>> ClassifyServicesAsync(string subscriptionId, ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceClassificationOutput>> ClassifyServicesAsync(string subscriptionId, ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Support
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
             }
-            if (serviceClassificationRequest == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(serviceClassificationRequest));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateClassifyServicesRequest(subscriptionId, serviceClassificationRequest);
+            using var message = CreateClassifyServicesRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Classify the list of right Azure services. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="serviceClassificationRequest"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="serviceClassificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceClassificationOutput> ClassifyServices(string subscriptionId, ServiceClassificationContent serviceClassificationRequest, CancellationToken cancellationToken = default)
+        public Response<ServiceClassificationOutput> ClassifyServices(string subscriptionId, ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Support
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
             }
-            if (serviceClassificationRequest == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(serviceClassificationRequest));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateClassifyServicesRequest(subscriptionId, serviceClassificationRequest);
+            using var message = CreateClassifyServicesRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

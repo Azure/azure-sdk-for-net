@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceClassificationRequest(document.RootElement, options);
+            return DeserializeServiceClassificationContent(document.RootElement, options);
         }
 
-        internal static ServiceClassificationContent DeserializeServiceClassificationRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceClassificationContent DeserializeServiceClassificationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServiceClassificationRequest(document.RootElement, options);
+                        return DeserializeServiceClassificationContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ServiceClassificationContent)} does not support '{options.Format}' format.");
