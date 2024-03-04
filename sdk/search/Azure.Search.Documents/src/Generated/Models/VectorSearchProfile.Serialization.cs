@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(AlgorithmConfigurationName);
-            if (Vectorizer != null)
+            if (Optional.IsDefined(Vectorizer))
             {
                 writer.WritePropertyName("vectorizer"u8);
                 writer.WriteStringValue(Vectorizer);
             }
-            if (CompressionConfigurationName != null)
+            if (Optional.IsDefined(CompressionConfigurationName))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(CompressionConfigurationName);

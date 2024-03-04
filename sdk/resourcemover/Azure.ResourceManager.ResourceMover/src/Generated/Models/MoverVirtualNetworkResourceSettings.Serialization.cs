@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (EnableDdosProtection.HasValue)
+            if (Optional.IsDefined(EnableDdosProtection))
             {
                 if (EnableDdosProtection != null)
                 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("enableDdosProtection");
                 }
             }
-            if (!(AddressSpace is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressSpace))
             {
                 if (AddressSpace != null)
                 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("addressSpace");
                 }
             }
-            if (!(DnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 if (DnsServers != null)
                 {
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("dnsServers");
                 }
             }
-            if (!(Subnets is ChangeTrackingList<SubnetResourceSettings> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 if (Subnets != null)
                 {
@@ -109,12 +110,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);

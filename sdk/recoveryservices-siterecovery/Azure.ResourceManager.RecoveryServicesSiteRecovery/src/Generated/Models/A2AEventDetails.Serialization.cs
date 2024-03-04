@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ProtectedItemName != null)
+            if (Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (FabricName != null)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (FabricLocation.HasValue)
+            if (Optional.IsDefined(FabricLocation))
             {
                 writer.WritePropertyName("fabricLocation"u8);
                 writer.WriteStringValue(FabricLocation.Value);
             }
-            if (RemoteFabricName != null)
+            if (Optional.IsDefined(RemoteFabricName))
             {
                 writer.WritePropertyName("remoteFabricName"u8);
                 writer.WriteStringValue(RemoteFabricName);
             }
-            if (RemoteFabricLocation.HasValue)
+            if (Optional.IsDefined(RemoteFabricLocation))
             {
                 writer.WritePropertyName("remoteFabricLocation"u8);
                 writer.WriteStringValue(RemoteFabricLocation.Value);
