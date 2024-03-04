@@ -43,69 +43,69 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (TotalRetentionInDays.HasValue)
+            if (Optional.IsDefined(TotalRetentionInDays))
             {
                 writer.WritePropertyName("totalRetentionInDays"u8);
                 writer.WriteNumberValue(TotalRetentionInDays.Value);
             }
-            if (options.Format != "W" && ArchiveRetentionInDays.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ArchiveRetentionInDays))
             {
                 writer.WritePropertyName("archiveRetentionInDays"u8);
                 writer.WriteNumberValue(ArchiveRetentionInDays.Value);
             }
-            if (SearchResults != null)
+            if (Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteObjectValue(SearchResults);
             }
-            if (RestoredLogs != null)
+            if (Optional.IsDefined(RestoredLogs))
             {
                 writer.WritePropertyName("restoredLogs"u8);
                 writer.WriteObjectValue(RestoredLogs);
             }
-            if (options.Format != "W" && ResultStatistics != null)
+            if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
             {
                 writer.WritePropertyName("resultStatistics"u8);
                 writer.WriteObjectValue(ResultStatistics);
             }
-            if (Plan.HasValue)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
             }
-            if (options.Format != "W" && LastPlanModifiedDate != null)
+            if (options.Format != "W" && Optional.IsDefined(LastPlanModifiedDate))
             {
                 writer.WritePropertyName("lastPlanModifiedDate"u8);
                 writer.WriteStringValue(LastPlanModifiedDate);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && IsRetentionInDaysAsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRetentionInDaysAsDefault))
             {
                 writer.WritePropertyName("retentionInDaysAsDefault"u8);
                 writer.WriteBooleanValue(IsRetentionInDaysAsDefault.Value);
             }
-            if (options.Format != "W" && IsTotalRetentionInDaysAsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsTotalRetentionInDaysAsDefault))
             {
                 writer.WritePropertyName("totalRetentionInDaysAsDefault"u8);
                 writer.WriteBooleanValue(IsTotalRetentionInDaysAsDefault.Value);

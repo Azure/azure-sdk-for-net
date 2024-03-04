@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (ActionGroupId != null)
+            if (Optional.IsDefined(ActionGroupId))
             {
                 writer.WritePropertyName("actionGroupId"u8);
                 writer.WriteStringValue(ActionGroupId);
             }
-            if (!(WebHookProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WebHookProperties))
             {
                 writer.WritePropertyName("webHookProperties"u8);
                 writer.WriteStartObject();

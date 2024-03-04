@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (NumberOfEvaluationPeriods.HasValue)
+            if (Optional.IsDefined(NumberOfEvaluationPeriods))
             {
                 writer.WritePropertyName("numberOfEvaluationPeriods"u8);
                 writer.WriteNumberValue(NumberOfEvaluationPeriods.Value);
             }
-            if (MinFailingPeriodsToAlert.HasValue)
+            if (Optional.IsDefined(MinFailingPeriodsToAlert))
             {
                 writer.WritePropertyName("minFailingPeriodsToAlert"u8);
                 writer.WriteNumberValue(MinFailingPeriodsToAlert.Value);

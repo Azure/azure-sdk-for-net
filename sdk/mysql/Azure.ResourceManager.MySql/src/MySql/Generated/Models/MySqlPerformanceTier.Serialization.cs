@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (MaxBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MaxBackupRetentionDays))
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
-            if (MinBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MinBackupRetentionDays))
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (MaxStorageInMB.HasValue)
+            if (Optional.IsDefined(MaxStorageInMB))
             {
                 writer.WritePropertyName("maxStorageMB"u8);
                 writer.WriteNumberValue(MaxStorageInMB.Value);
             }
-            if (MinLargeStorageInMB.HasValue)
+            if (Optional.IsDefined(MinLargeStorageInMB))
             {
                 writer.WritePropertyName("minLargeStorageMB"u8);
                 writer.WriteNumberValue(MinLargeStorageInMB.Value);
             }
-            if (MaxLargeStorageInMB.HasValue)
+            if (Optional.IsDefined(MaxLargeStorageInMB))
             {
                 writer.WritePropertyName("maxLargeStorageMB"u8);
                 writer.WriteNumberValue(MaxLargeStorageInMB.Value);
             }
-            if (MinStorageInMB.HasValue)
+            if (Optional.IsDefined(MinStorageInMB))
             {
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
             }
-            if (!(ServiceLevelObjectives is ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLevelObjectives))
             {
                 writer.WritePropertyName("serviceLevelObjectives"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -31,32 +32,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             JsonSerializer.Serialize(writer, DataNetwork);
             writer.WritePropertyName("sessionAmbr"u8);
             writer.WriteObjectValue(SessionAmbr);
-            if (FiveQi.HasValue)
+            if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
-            if (AllocationAndRetentionPriorityLevel.HasValue)
+            if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
                 writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
-            if (PreemptionCapability.HasValue)
+            if (Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
-            if (PreemptionVulnerability.HasValue)
+            if (Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
-            if (DefaultSessionType.HasValue)
+            if (Optional.IsDefined(DefaultSessionType))
             {
                 writer.WritePropertyName("defaultSessionType"u8);
                 writer.WriteStringValue(DefaultSessionType.Value.ToString());
             }
-            if (!(AdditionalAllowedSessionTypes is ChangeTrackingList<MobileNetworkPduSessionType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
             {
                 writer.WritePropertyName("additionalAllowedSessionTypes"u8);
                 writer.WriteStartArray();
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
-            if (MaximumNumberOfBufferedPackets.HasValue)
+            if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
             {
                 writer.WritePropertyName("maximumNumberOfBufferedPackets"u8);
                 writer.WriteNumberValue(MaximumNumberOfBufferedPackets.Value);

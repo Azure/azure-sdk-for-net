@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(SubscriptionStateOverrideActions is ChangeTrackingList<SubscriptionStateOverrideAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
                 writer.WritePropertyName("subscriptionStateOverrideActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SoftDeleteTtl.HasValue)
+            if (Optional.IsDefined(SoftDeleteTtl))
             {
                 writer.WritePropertyName("softDeleteTTL"u8);
                 writer.WriteStringValue(SoftDeleteTtl.Value, "P");

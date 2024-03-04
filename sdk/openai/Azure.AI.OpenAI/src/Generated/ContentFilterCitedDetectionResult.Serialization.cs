@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
             writer.WriteBooleanValue(Filtered);
             writer.WritePropertyName("detected"u8);
             writer.WriteBooleanValue(Detected);
-            if (Url != null)
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("URL"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);

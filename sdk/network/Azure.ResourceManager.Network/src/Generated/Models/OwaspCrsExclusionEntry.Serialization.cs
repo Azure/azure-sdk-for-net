@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SelectorMatchOperator.ToString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
-            if (!(ExclusionManagedRuleSets is ChangeTrackingList<ExclusionManagedRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExclusionManagedRuleSets))
             {
                 writer.WritePropertyName("exclusionManagedRuleSets"u8);
                 writer.WriteStartArray();
