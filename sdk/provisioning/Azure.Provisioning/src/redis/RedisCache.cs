@@ -40,8 +40,8 @@ namespace Azure.Provisioning.Redis
         /// <summary>
         /// Gets the connection string for the <see cref="RedisCache"/>.
         /// </summary>
-        public RedisCacheConnectionString GetConnectionString()
-            => new RedisCacheConnectionString(this);
+        public RedisCacheConnectionString GetConnectionString(bool useSecondary = false)
+            => new RedisCacheConnectionString(this, useSecondary);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

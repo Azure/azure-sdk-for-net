@@ -220,11 +220,11 @@ namespace Azure.Provisioning.Redis
         public RedisCache(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Redis.Models.RedisSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "redis", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Redis.RedisData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
-        public Azure.Provisioning.Redis.RedisCacheConnectionString GetConnectionString() { throw null; }
+        public Azure.Provisioning.Redis.RedisCacheConnectionString GetConnectionString(bool useSecondary = false) { throw null; }
     }
     public partial class RedisCacheConnectionString : Azure.Provisioning.ConnectionString
     {
-        public RedisCacheConnectionString(Azure.Provisioning.Redis.RedisCache cache) : base (default(string)) { }
+        internal RedisCacheConnectionString() : base (default(string)) { }
     }
 }
 namespace Azure.Provisioning.ResourceManager

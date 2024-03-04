@@ -221,6 +221,19 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task RedisCacheSecondaryConnectionString()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var cache = new RedisCache(infrastructure);
+            _ = infrastructure.AddKeyVault();
+            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(useSecondary: true));
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task WebSiteUsingL2()
         {
             var infra = new TestInfrastructure();
