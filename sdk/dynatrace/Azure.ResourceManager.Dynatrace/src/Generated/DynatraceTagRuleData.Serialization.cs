@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             DynatraceMonitorResourceLogRules logRules = default;
             DynatraceMonitorResourceMetricRules metricRules = default;
             DynatraceProvisioningState? provisioningState = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Dynatrace
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

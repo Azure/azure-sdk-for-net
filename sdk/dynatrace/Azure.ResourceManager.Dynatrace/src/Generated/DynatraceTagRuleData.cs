@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LogRules = logRules;
             MetricRules = metricRules;

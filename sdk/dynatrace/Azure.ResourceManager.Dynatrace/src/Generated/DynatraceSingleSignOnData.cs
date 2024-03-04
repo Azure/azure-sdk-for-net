@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DynatraceSingleSignOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceSingleSignOnState? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DynatraceSingleSignOnData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, DynatraceSingleSignOnState? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;

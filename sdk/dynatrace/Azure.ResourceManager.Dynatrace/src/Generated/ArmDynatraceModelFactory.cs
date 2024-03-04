@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="metricRulesFilteringTags"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceTagRuleData"/> instance for mocking. </returns>
-        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceMonitorResourceLogRules logRules = null, IEnumerable<DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags = null, DynatraceProvisioningState? provisioningState = null)
+        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DynatraceMonitorResourceLogRules logRules = null, IEnumerable<DynatraceMonitorResourceFilteringTag> metricRulesFilteringTags = null, DynatraceProvisioningState? provisioningState = null)
         {
             metricRulesFilteringTags ??= new List<DynatraceMonitorResourceFilteringTag>();
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Dynatrace.DynatraceSingleSignOnData"/> instance for mocking. </returns>
-        public static DynatraceSingleSignOnData DynatraceSingleSignOnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DynatraceSingleSignOnState? singleSignOnState = null, Guid? enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, DynatraceProvisioningState? provisioningState = null)
+        public static DynatraceSingleSignOnData DynatraceSingleSignOnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DynatraceSingleSignOnState? singleSignOnState = null, Guid? enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, DynatraceProvisioningState? provisioningState = null)
         {
             aadDomains ??= new List<string>();
 
