@@ -27,7 +27,16 @@ steps:
       # template to stay below the devops max.
       targetType: inline
       script: |
-        $req = Invoke-WebRequest "https://raw.githubusercontent.com/$(Build.Repository.Name)/main/eng/common/scripts/sparse-checkout.ps1"
+        $req = $null
+        $retries = 0
+            $url = "https://raw.githubusercontent.com/$(Build.Repository.Name)/$(Build.SourceVersion)/eng/common/scripts/sparse-checkout.ps1"
+        do {
+          try {
+            $req = Invoke-WebRequest $url
+          } catch {}
+          if (++$retries -gt 3) { throw "Exceeded retries downloading sparse checkout script from $url" } else { Start-Sleep 3 }
+        } until ( $req -and $req.StatusCode -eq 200 )
+
         $req.RawContent | Out-File $(Agent.TempDirectory)/sparse-checkout.ps1
         # Paths may be sourced as a yaml object literal OR a dynamically generated variable json string.
         # If the latter, convertToJson will wrap the 'string' in quotes, so remove them.
