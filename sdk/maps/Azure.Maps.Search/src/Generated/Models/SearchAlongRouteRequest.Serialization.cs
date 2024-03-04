@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Route != null)
+            if (Optional.IsDefined(Route))
             {
                 writer.WritePropertyName("route"u8);
                 writer.WriteObjectValue(Route);

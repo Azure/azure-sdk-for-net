@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            if (SenderApplicationId != null)
+            if (Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);

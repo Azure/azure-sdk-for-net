@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (MaxConcurrentTrials.HasValue)
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (MaxNodes.HasValue)
+            if (Optional.IsDefined(MaxNodes))
             {
                 writer.WritePropertyName("maxNodes"u8);
                 writer.WriteNumberValue(MaxNodes.Value);
             }
-            if (MaxTrials.HasValue)
+            if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (TrialTimeout.HasValue)
+            if (Optional.IsDefined(TrialTimeout))
             {
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");

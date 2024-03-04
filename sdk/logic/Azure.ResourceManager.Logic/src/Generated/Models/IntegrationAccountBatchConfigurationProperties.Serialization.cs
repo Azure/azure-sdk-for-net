@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(BatchGroupName);
             writer.WritePropertyName("releaseCriteria"u8);
             writer.WriteObjectValue(ReleaseCriteria);
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ChangedOn.HasValue)
+            if (Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER

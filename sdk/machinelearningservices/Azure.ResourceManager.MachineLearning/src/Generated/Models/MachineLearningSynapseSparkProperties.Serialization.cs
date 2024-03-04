@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AutoScaleProperties != null)
+            if (Optional.IsDefined(AutoScaleProperties))
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
                 writer.WriteObjectValue(AutoScaleProperties);
             }
-            if (AutoPauseProperties != null)
+            if (Optional.IsDefined(AutoPauseProperties))
             {
                 writer.WritePropertyName("autoPauseProperties"u8);
                 writer.WriteObjectValue(AutoPauseProperties);
             }
-            if (SparkVersion != null)
+            if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (NodeSize != null)
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (NodeSizeFamily != null)
+            if (Optional.IsDefined(NodeSizeFamily))
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (WorkspaceName != null)
+            if (Optional.IsDefined(WorkspaceName))
             {
                 writer.WritePropertyName("workspaceName"u8);
                 writer.WriteStringValue(WorkspaceName);
             }
-            if (PoolName != null)
+            if (Optional.IsDefined(PoolName))
             {
                 writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);

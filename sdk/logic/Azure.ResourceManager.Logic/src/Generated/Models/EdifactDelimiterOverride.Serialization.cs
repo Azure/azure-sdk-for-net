@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (MessageId != null)
+            if (Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (MessageVersion != null)
+            if (Optional.IsDefined(MessageVersion))
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (MessageRelease != null)
+            if (Optional.IsDefined(MessageRelease))
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
@@ -55,12 +56,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
             writer.WritePropertyName("releaseIndicator"u8);
             writer.WriteNumberValue(ReleaseIndicator);
-            if (MessageAssociationAssignedCode != null)
+            if (Optional.IsDefined(MessageAssociationAssignedCode))
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (TargetNamespace != null)
+            if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);

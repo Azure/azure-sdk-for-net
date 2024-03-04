@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("networkPrefix"u8);
             writer.WriteStringValue(NetworkPrefix);
-            if (Condition.HasValue)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition.Value.ToString());
             }
-            if (SubnetMaskLength != null)
+            if (Optional.IsDefined(SubnetMaskLength))
             {
                 writer.WritePropertyName("subnetMaskLength"u8);
                 writer.WriteStringValue(SubnetMaskLength);

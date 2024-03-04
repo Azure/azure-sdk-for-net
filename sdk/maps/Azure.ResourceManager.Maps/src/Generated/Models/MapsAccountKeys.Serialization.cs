@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryKeyLastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKeyLastUpdatedOn))
             {
                 writer.WritePropertyName("primaryKeyLastUpdated"u8);
                 writer.WriteStringValue(PrimaryKeyLastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && SecondaryKeyLastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKeyLastUpdatedOn))
             {
                 writer.WritePropertyName("secondaryKeyLastUpdated"u8);
                 writer.WriteStringValue(SecondaryKeyLastUpdatedOn.Value, "O");

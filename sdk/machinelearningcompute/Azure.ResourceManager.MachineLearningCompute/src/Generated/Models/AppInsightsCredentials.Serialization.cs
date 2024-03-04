@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (InstrumentationKey != null)
+            if (Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("instrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);

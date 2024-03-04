@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Channels.HasValue)
+            if (Optional.IsDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteNumberValue(Channels.Value);
             }
-            if (SamplingRate.HasValue)
+            if (Optional.IsDefined(SamplingRate))
             {
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
             }
-            if (Bitrate.HasValue)
+            if (Optional.IsDefined(Bitrate))
             {
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
