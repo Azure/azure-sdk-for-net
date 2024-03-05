@@ -49,15 +49,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (Optional.IsDefined(ValueNumber))
+            if (Optional.IsDefined(ValueDouble))
             {
                 writer.WritePropertyName("valueNumber"u8);
-                writer.WriteNumberValue(ValueNumber.Value);
+                writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (Optional.IsDefined(ValueInteger))
+            if (Optional.IsDefined(ValueLong))
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueInteger.Value);
+                writer.WriteNumberValue(ValueLong.Value);
             }
             if (Optional.IsDefined(ValueSelectionMark))
             {
@@ -74,21 +74,21 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (Optional.IsCollectionDefined(ValueArray))
+            if (Optional.IsCollectionDefined(ValueList))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueArray)
+                foreach (var item in ValueList)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueObject))
+            if (Optional.IsCollectionDefined(ValueDictionary))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueObject)
+                foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);
