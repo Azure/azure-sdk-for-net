@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Developer.DevCenter.Tests
 {
@@ -39,7 +40,7 @@ namespace Azure.Developer.DevCenter.Tests
                         GetVariable("DEFAULT_TEST_USER_SECRET"),
                         GetVariable("DEFAULT_TEST_USER_NAME"),
                         GetVariable("DEFAULT_DEVCENTER_SCOPE"),
-                        GetVariable("AZURE_AUTHORITY_HOST"),
+                        new(GetVariable("AZURE_AUTHORITY_HOST") ?? AzureAuthorityHosts.AzurePublicCloud.ToString()),
                         GetVariable("TENANT_ID"));
                 }
 

@@ -26,13 +26,13 @@ namespace Azure.Developer.DevCenter.Tests
         private readonly string _userName;
         private readonly string[] _dataplaneScopes;
 
-        public DevCenterTestUserCredential(string clientId, string clientSecret, string userSecret, string userName, string dataplaneScope, string authorityHost, string tenantId)
+        public DevCenterTestUserCredential(string clientId, string clientSecret, string userSecret, string userName, string dataplaneScope, Uri authorityHost, string tenantId)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userSecret = userSecret;
             _userName = userName;
-            _authority = new(Path.Combine(authorityHost, tenantId));
+            _authority = new(authorityHost, tenantId);
             _dataplaneScopes = new string[] { dataplaneScope };
         }
 
