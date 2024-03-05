@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (MinPort.HasValue)
+            if (Optional.IsDefined(MinPort))
             {
                 writer.WritePropertyName("minPort"u8);
                 writer.WriteNumberValue(MinPort.Value);
             }
-            if (MaxPort.HasValue)
+            if (Optional.IsDefined(MaxPort))
             {
                 writer.WritePropertyName("maxPort"u8);
                 writer.WriteNumberValue(MaxPort.Value);

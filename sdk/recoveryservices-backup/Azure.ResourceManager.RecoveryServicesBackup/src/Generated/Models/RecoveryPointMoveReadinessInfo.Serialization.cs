@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (IsReadyForMove.HasValue)
+            if (Optional.IsDefined(IsReadyForMove))
             {
                 writer.WritePropertyName("isReadyForMove"u8);
                 writer.WriteBooleanValue(IsReadyForMove.Value);
             }
-            if (AdditionalInfo != null)
+            if (Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStringValue(AdditionalInfo);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
-            if (Windows != null)
+            if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
                 writer.WriteObjectValue(Windows);
             }
-            if (Linux != null)
+            if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
                 writer.WriteObjectValue(Linux);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (!(AzureVirtualMachines is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureVirtualMachines))
             {
                 writer.WritePropertyName("azureVirtualMachines"u8);
                 writer.WriteStartArray();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NonAzureComputerNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NonAzureComputerNames))
             {
                 writer.WritePropertyName("nonAzureComputerNames"u8);
                 writer.WriteStartArray();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Targets != null)
+            if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteObjectValue(Targets);

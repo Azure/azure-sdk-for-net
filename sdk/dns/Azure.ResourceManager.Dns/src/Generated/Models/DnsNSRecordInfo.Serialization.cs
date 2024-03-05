@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (DnsNSDomainName != null)
+            if (Optional.IsDefined(DnsNSDomainName))
             {
                 writer.WritePropertyName("nsdname"u8);
                 writer.WriteStringValue(DnsNSDomainName);

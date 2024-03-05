@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyNodes);
-            if (MaxPercentUpgradeDomainDeltaUnhealthyNodes.HasValue)
+            if (Optional.IsDefined(MaxPercentUpgradeDomainDeltaUnhealthyNodes))
             {
                 writer.WritePropertyName("maxPercentUpgradeDomainDeltaUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes.Value);
             }
-            if (MaxPercentDeltaUnhealthyApplications.HasValue)
+            if (Optional.IsDefined(MaxPercentDeltaUnhealthyApplications))
             {
                 writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications.Value);

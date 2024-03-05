@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (!(Labels is ChangeTrackingDictionary<string, bool> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndObject();
             }
-            if (Transfers.HasValue)
+            if (Optional.IsDefined(Transfers))
             {
                 writer.WritePropertyName("transfers"u8);
                 writer.WriteStringValue(Transfers.Value.ToString());

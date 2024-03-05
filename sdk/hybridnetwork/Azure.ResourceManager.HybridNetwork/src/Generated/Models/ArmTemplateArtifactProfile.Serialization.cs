@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (TemplateName != null)
+            if (Optional.IsDefined(TemplateName))
             {
                 writer.WritePropertyName("templateName"u8);
                 writer.WriteStringValue(TemplateName);
             }
-            if (TemplateVersion != null)
+            if (Optional.IsDefined(TemplateVersion))
             {
                 writer.WritePropertyName("templateVersion"u8);
                 writer.WriteStringValue(TemplateVersion);

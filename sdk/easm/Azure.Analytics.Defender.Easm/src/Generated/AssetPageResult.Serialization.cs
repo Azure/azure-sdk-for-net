@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (TotalElements.HasValue)
+            if (Optional.IsDefined(TotalElements))
             {
                 writer.WritePropertyName("totalElements"u8);
                 writer.WriteNumberValue(TotalElements.Value);
             }
-            if (Mark != null)
+            if (Optional.IsDefined(Mark))
             {
                 writer.WritePropertyName("mark"u8);
                 writer.WriteStringValue(Mark);
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(Value is ChangeTrackingList<AssetResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

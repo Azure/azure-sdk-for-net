@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (PreprocessingComponentId != null)
+            if (Optional.IsDefined(PreprocessingComponentId))
             {
                 if (PreprocessingComponentId != null)
                 {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowOffset, "P");
             writer.WritePropertyName("windowSize"u8);
             writer.WriteStringValue(WindowSize, "P");
-            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (DataContext != null)
+            if (Optional.IsDefined(DataContext))
             {
                 if (DataContext != null)
                 {

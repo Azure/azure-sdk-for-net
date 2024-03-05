@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(Context);
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
-            if (CompletedOn.HasValue)
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (!(ActionDetails is ChangeTrackingList<NotificationActionDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ActionDetails))
             {
                 writer.WritePropertyName("actionDetails"u8);
                 writer.WriteStartArray();

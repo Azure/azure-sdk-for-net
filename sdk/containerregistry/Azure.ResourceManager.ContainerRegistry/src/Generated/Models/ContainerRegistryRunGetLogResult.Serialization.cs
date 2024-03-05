@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (LogLink != null)
+            if (Optional.IsDefined(LogLink))
             {
                 writer.WritePropertyName("logLink"u8);
                 writer.WriteStringValue(LogLink);
             }
-            if (LogArtifactLink != null)
+            if (Optional.IsDefined(LogArtifactLink))
             {
                 writer.WritePropertyName("logArtifactLink"u8);
                 writer.WriteStringValue(LogArtifactLink);

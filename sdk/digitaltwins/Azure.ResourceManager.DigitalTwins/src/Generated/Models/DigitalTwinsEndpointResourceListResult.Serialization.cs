@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 if (NextLink != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (!(Value is ChangeTrackingList<DigitalTwinsEndpointResourceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

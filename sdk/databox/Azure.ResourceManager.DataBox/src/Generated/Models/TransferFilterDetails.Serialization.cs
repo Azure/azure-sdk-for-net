@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (BlobFilterDetails != null)
+            if (Optional.IsDefined(BlobFilterDetails))
             {
                 writer.WritePropertyName("blobFilterDetails"u8);
                 writer.WriteObjectValue(BlobFilterDetails);
             }
-            if (AzureFileFilterDetails != null)
+            if (Optional.IsDefined(AzureFileFilterDetails))
             {
                 writer.WritePropertyName("azureFileFilterDetails"u8);
                 writer.WriteObjectValue(AzureFileFilterDetails);
             }
-            if (!(FilterFileDetails is ChangeTrackingList<FilterFileDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilterFileDetails))
             {
                 writer.WritePropertyName("filterFileDetails"u8);
                 writer.WriteStartArray();

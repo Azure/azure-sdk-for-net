@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ChunkSize.HasValue)
+            if (Optional.IsDefined(ChunkSize))
             {
                 writer.WritePropertyName("chunkSize"u8);
                 writer.WriteNumberValue(ChunkSize.Value);
             }
-            if (FileSize.HasValue)
+            if (Optional.IsDefined(FileSize))
             {
                 writer.WritePropertyName("fileSize"u8);
                 writer.WriteNumberValue(FileSize.Value);
             }
-            if (NumberOfChunks.HasValue)
+            if (Optional.IsDefined(NumberOfChunks))
             {
                 writer.WritePropertyName("numberOfChunks"u8);
                 writer.WriteNumberValue(NumberOfChunks.Value);

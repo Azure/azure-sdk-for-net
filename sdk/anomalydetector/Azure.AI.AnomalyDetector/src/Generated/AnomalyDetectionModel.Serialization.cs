@@ -33,7 +33,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(CreatedTime, "O");
             writer.WritePropertyName("lastUpdatedTime"u8);
             writer.WriteStringValue(LastUpdatedTime, "O");
-            if (ModelInfo != null)
+            if (Optional.IsDefined(ModelInfo))
             {
                 writer.WritePropertyName("modelInfo"u8);
                 writer.WriteObjectValue(ModelInfo);

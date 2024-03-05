@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
             writer.WriteObjectValue(ForwardAddress);
-            if (options.Format != "W" && ReturnAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
                 writer.WriteObjectValue(ReturnAddress);

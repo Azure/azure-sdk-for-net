@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EntityName != null)
+            if (Optional.IsDefined(EntityName))
             {
                 writer.WritePropertyName("entityName"u8);
                 writer.WriteStringValue(EntityName);
             }
-            if (EntityConnectionString != null)
+            if (Optional.IsDefined(EntityConnectionString))
             {
                 writer.WritePropertyName("entityConnectionString"u8);
                 writer.WriteStringValue(EntityConnectionString);
             }
-            if (ResourceConnectionString != null)
+            if (Optional.IsDefined(ResourceConnectionString))
             {
                 writer.WritePropertyName("resourceConnectionString"u8);
                 writer.WriteStringValue(ResourceConnectionString);
             }
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (BiztalkUri != null)
+            if (Optional.IsDefined(BiztalkUri))
             {
                 writer.WritePropertyName("biztalkUri"u8);
                 writer.WriteStringValue(BiztalkUri.AbsoluteUri);

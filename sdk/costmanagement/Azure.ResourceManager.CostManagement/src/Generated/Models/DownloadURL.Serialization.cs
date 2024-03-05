@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ExpiryOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (ValidTill.HasValue)
+            if (Optional.IsDefined(ValidTill))
             {
                 writer.WritePropertyName("validTill"u8);
                 writer.WriteStringValue(ValidTill.Value, "O");
             }
-            if (DownloadUri != null)
+            if (Optional.IsDefined(DownloadUri))
             {
                 writer.WritePropertyName("downloadUrl"u8);
                 writer.WriteStringValue(DownloadUri.AbsoluteUri);

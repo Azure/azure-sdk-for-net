@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateLinkServiceAlias != null)
+            if (Optional.IsDefined(PrivateLinkServiceAlias))
             {
                 writer.WritePropertyName("privateLinkServiceAlias"u8);
                 writer.WriteStringValue(PrivateLinkServiceAlias);

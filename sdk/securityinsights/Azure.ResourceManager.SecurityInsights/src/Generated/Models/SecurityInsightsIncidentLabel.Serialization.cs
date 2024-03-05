@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("labelName"u8);
             writer.WriteStringValue(LabelName);
-            if (options.Format != "W" && LabelType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LabelType))
             {
                 writer.WritePropertyName("labelType"u8);
                 writer.WriteStringValue(LabelType.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(StagingStorageAccountId);
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (SharePassword != null)
+            if (Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);

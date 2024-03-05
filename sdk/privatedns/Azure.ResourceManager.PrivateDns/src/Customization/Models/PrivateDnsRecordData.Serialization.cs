@@ -158,23 +158,23 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<bool> isAutoRegistered = default;
-            Optional<IList<PrivateDnsARecordInfo>> aRecords = default;
-            Optional<IList<PrivateDnsAaaaRecordInfo>> aaaaRecords = default;
-            Optional<PrivateDnsCnameRecordInfo> privateDnsCnameRecordInfo = default;
-            Optional<IList<PrivateDnsMXRecordInfo>> mxRecords = default;
-            Optional<IList<PrivateDnsPtrRecordInfo>> ptrRecords = default;
-            Optional<PrivateDnsSoaRecordInfo> privateDnsSoaRecordInfo = default;
-            Optional<IList<PrivateDnsSrvRecordInfo>> srvRecords = default;
-            Optional<IList<PrivateDnsTxtRecordInfo>> txtRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            bool? isAutoRegistered = default;
+            IList<PrivateDnsARecordInfo> aRecords = default;
+            IList<PrivateDnsAaaaRecordInfo> aaaaRecords = default;
+            PrivateDnsCnameRecordInfo privateDnsCnameRecordInfo = default;
+            IList<PrivateDnsMXRecordInfo> mxRecords = default;
+            IList<PrivateDnsPtrRecordInfo> ptrRecords = default;
+            PrivateDnsSoaRecordInfo privateDnsSoaRecordInfo = default;
+            IList<PrivateDnsSrvRecordInfo> srvRecords = default;
+            IList<PrivateDnsTxtRecordInfo> txtRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -382,7 +382,25 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aRecords), Optional.ToList(aaaaRecords), privateDnsCnameRecordInfo.Value, Optional.ToList(mxRecords), Optional.ToList(ptrRecords), privateDnsSoaRecordInfo.Value, Optional.ToList(srvRecords), Optional.ToList(txtRecords), serializedAdditionalRawData);
+            return new PrivateDnsRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                isAutoRegistered,
+                aRecords ?? new ChangeTrackingList<PrivateDnsARecordInfo>(),
+                aaaaRecords ?? new ChangeTrackingList<PrivateDnsAaaaRecordInfo>(),
+                privateDnsCnameRecordInfo,
+                mxRecords ?? new ChangeTrackingList<PrivateDnsMXRecordInfo>(),
+                ptrRecords ?? new ChangeTrackingList<PrivateDnsPtrRecordInfo>(),
+                privateDnsSoaRecordInfo,
+                srvRecords ?? new ChangeTrackingList<PrivateDnsSrvRecordInfo>(),
+                txtRecords ?? new ChangeTrackingList<PrivateDnsTxtRecordInfo>(),
+                serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<PrivateDnsRecordData>.Write(ModelReaderWriterOptions options)
         {

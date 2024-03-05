@@ -27,37 +27,37 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Cause != null)
+            if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (CauseElementXPath != null)
+            if (Optional.IsDefined(CauseElementXPath))
             {
                 writer.WritePropertyName("causeElementXPath"u8);
                 writer.WriteStringValue(CauseElementXPath);
             }
-            if (Location != null)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (PossibleMatches.HasValue)
+            if (Optional.IsDefined(PossibleMatches))
             {
                 writer.WritePropertyName("possibleMatches"u8);
                 writer.WriteNumberValue(PossibleMatches.Value);
             }
-            if (LoopDetected.HasValue)
+            if (Optional.IsDefined(LoopDetected))
             {
                 writer.WritePropertyName("loopDetected"u8);
                 writer.WriteBooleanValue(LoopDetected.Value);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (DomChangeIndex.HasValue)
+            if (Optional.IsDefined(DomChangeIndex))
             {
                 writer.WritePropertyName("domChangeIndex"u8);
                 writer.WriteNumberValue(DomChangeIndex.Value);

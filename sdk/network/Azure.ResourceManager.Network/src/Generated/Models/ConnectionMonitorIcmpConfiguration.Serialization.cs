@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (DisableTraceRoute.HasValue)
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);

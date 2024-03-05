@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,17 +17,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sensitivity.HasValue)
+            if (Optional.IsDefined(Sensitivity))
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
-            if (OutputMotionRegion.HasValue)
+            if (Optional.IsDefined(OutputMotionRegion))
             {
                 writer.WritePropertyName("outputMotionRegion"u8);
                 writer.WriteBooleanValue(OutputMotionRegion.Value);
             }
-            if (EventAggregationWindow != null)
+            if (Optional.IsDefined(EventAggregationWindow))
             {
                 writer.WritePropertyName("eventAggregationWindow"u8);
                 writer.WriteStringValue(EventAggregationWindow);

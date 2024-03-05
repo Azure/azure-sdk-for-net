@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (!(CorsRulesValue is ChangeTrackingList<MapsCorsRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorsRulesValue))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();

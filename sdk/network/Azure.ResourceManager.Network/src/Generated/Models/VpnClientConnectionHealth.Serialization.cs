@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalIngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalIngressBytesTransferred))
             {
                 writer.WritePropertyName("totalIngressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalIngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && TotalEgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalEgressBytesTransferred))
             {
                 writer.WritePropertyName("totalEgressBytesTransferred"u8);
                 writer.WriteNumberValue(TotalEgressBytesTransferred.Value);
             }
-            if (VpnClientConnectionsCount.HasValue)
+            if (Optional.IsDefined(VpnClientConnectionsCount))
             {
                 writer.WritePropertyName("vpnClientConnectionsCount"u8);
                 writer.WriteNumberValue(VpnClientConnectionsCount.Value);
             }
-            if (!(AllocatedIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllocatedIPAddresses))
             {
                 writer.WritePropertyName("allocatedIpAddresses"u8);
                 writer.WriteStartArray();

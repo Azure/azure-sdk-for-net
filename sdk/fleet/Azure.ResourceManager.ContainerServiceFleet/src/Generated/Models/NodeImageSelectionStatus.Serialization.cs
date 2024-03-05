@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(SelectedNodeImageVersions is ChangeTrackingList<NodeImageVersion> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SelectedNodeImageVersions))
             {
                 writer.WritePropertyName("selectedNodeImageVersions"u8);
                 writer.WriteStartArray();

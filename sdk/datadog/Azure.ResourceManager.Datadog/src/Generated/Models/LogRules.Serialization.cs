@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (SendAadLogs.HasValue)
+            if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
-            if (SendSubscriptionLogs.HasValue)
+            if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
-            if (SendResourceLogs.HasValue)
+            if (Optional.IsDefined(SendResourceLogs))
             {
                 writer.WritePropertyName("sendResourceLogs"u8);
                 writer.WriteBooleanValue(SendResourceLogs.Value);
             }
-            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();

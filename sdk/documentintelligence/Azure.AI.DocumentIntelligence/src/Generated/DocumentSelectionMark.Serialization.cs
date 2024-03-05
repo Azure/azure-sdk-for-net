@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
-            if (!(Polygon is ChangeTrackingList<float> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Polygon))
             {
                 writer.WritePropertyName("polygon"u8);
                 writer.WriteStartArray();

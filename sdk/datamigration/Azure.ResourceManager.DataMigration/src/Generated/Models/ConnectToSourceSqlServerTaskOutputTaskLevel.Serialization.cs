@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Databases != null)
+            if (options.Format != "W" && Optional.IsDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStringValue(Databases);
             }
-            if (options.Format != "W" && Logins != null)
+            if (options.Format != "W" && Optional.IsDefined(Logins))
             {
                 writer.WritePropertyName("logins"u8);
                 writer.WriteStringValue(Logins);
             }
-            if (options.Format != "W" && AgentJobs != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentJobs))
             {
                 writer.WritePropertyName("agentJobs"u8);
                 writer.WriteStringValue(AgentJobs);
             }
-            if (options.Format != "W" && DatabaseTdeCertificateMapping != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseTdeCertificateMapping))
             {
                 writer.WritePropertyName("databaseTdeCertificateMapping"u8);
                 writer.WriteStringValue(DatabaseTdeCertificateMapping);
             }
-            if (options.Format != "W" && SourceServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && SourceServerBrandVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

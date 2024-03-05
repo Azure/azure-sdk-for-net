@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WebChatEmbedCode != null)
+            if (options.Format != "W" && Optional.IsDefined(WebChatEmbedCode))
             {
                 writer.WritePropertyName("webChatEmbedCode"u8);
                 writer.WriteStringValue(WebChatEmbedCode);
             }
-            if (!(Sites is ChangeTrackingList<WebChatSite> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();

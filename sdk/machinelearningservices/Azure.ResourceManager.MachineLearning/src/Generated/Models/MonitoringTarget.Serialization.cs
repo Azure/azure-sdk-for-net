@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DeploymentId != null)
+            if (Optional.IsDefined(DeploymentId))
             {
                 if (DeploymentId != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("deploymentId");
                 }
             }
-            if (ModelId != null)
+            if (Optional.IsDefined(ModelId))
             {
                 if (ModelId != null)
                 {

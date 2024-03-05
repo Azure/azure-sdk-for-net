@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Nfvis is ChangeTrackingList<NFVIs> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Nfvis))
             {
                 writer.WritePropertyName("nfvis"u8);
                 writer.WriteStartArray();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SiteNetworkServiceReferences is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SiteNetworkServiceReferences))
             {
                 writer.WritePropertyName("siteNetworkServiceReferences"u8);
                 writer.WriteStartArray();

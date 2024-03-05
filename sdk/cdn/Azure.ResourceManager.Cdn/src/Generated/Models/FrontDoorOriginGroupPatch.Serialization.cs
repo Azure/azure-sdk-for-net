@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (LoadBalancingSettings != null)
+            if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
-            if (HealthProbeSettings != null)
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (TrafficRestorationTimeInMinutes.HasValue)
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (SessionAffinityState.HasValue)
+            if (Optional.IsDefined(SessionAffinityState))
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());

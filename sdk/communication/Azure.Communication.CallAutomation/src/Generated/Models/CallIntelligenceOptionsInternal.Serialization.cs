@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CognitiveServicesEndpoint != null)
+            if (Optional.IsDefined(CognitiveServicesEndpoint))
             {
                 writer.WritePropertyName("cognitiveServicesEndpoint"u8);
                 writer.WriteStringValue(CognitiveServicesEndpoint);

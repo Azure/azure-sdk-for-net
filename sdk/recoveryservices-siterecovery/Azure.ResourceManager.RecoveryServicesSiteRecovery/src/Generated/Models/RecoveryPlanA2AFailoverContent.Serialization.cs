@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
-            if (CloudServiceCreationOption != null)
+            if (Optional.IsDefined(CloudServiceCreationOption))
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);
             }
-            if (MultiVmSyncPointOption.HasValue)
+            if (Optional.IsDefined(MultiVmSyncPointOption))
             {
                 writer.WritePropertyName("multiVmSyncPointOption"u8);
                 writer.WriteStringValue(MultiVmSyncPointOption.Value.ToString());

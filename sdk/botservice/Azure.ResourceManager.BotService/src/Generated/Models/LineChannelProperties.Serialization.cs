@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && CallbackUri != null)
+            if (options.Format != "W" && Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUrl"u8);
                 writer.WriteStringValue(CallbackUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IsValidated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);

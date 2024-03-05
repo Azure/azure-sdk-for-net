@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && VersionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(ConfigurationGroupSchemaReferences is ChangeTrackingDictionary<string, WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationGroupSchemaReferences))
             {
                 writer.WritePropertyName("configurationGroupSchemaReferences"u8);
                 writer.WriteStartObject();
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(NfvisFromSite is ChangeTrackingDictionary<string, NfviDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NfvisFromSite))
             {
                 writer.WritePropertyName("nfvisFromSite"u8);
                 writer.WriteStartObject();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ResourceElementTemplates is ChangeTrackingList<ResourceElementTemplate> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceElementTemplates))
             {
                 writer.WritePropertyName("resourceElementTemplates"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TargetVaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetVaultId))
             {
                 writer.WritePropertyName("targetVaultId"u8);
                 writer.WriteStringValue(TargetVaultId);
             }
-            if (options.Format != "W" && TargetResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (options.Format != "W" && TargetFabricId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetFabricId))
             {
                 writer.WritePropertyName("targetFabricId"u8);
                 writer.WriteStringValue(TargetFabricId);
             }
-            if (options.Format != "W" && TargetApplianceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetApplianceId))
             {
                 writer.WritePropertyName("targetApplianceId"u8);
                 writer.WriteStringValue(TargetApplianceId);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ParentHierarchyId != null)
+            if (Optional.IsDefined(ParentHierarchyId))
             {
                 writer.WritePropertyName("parentHierarchyId"u8);
                 writer.WriteStringValue(ParentHierarchyId);
             }
-            if (ManagementProjectNumber != null)
+            if (Optional.IsDefined(ManagementProjectNumber))
             {
                 writer.WritePropertyName("managementProjectNumber"u8);
                 writer.WriteStringValue(ManagementProjectNumber);

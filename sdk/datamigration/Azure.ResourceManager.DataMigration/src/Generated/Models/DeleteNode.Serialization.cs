@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (NodeName != null)
+            if (Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (IntegrationRuntimeName != null)
+            if (Optional.IsDefined(IntegrationRuntimeName))
             {
                 writer.WritePropertyName("integrationRuntimeName"u8);
                 writer.WriteStringValue(IntegrationRuntimeName);

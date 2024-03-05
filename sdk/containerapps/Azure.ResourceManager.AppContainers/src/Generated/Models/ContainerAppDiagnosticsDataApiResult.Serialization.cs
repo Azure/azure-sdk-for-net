@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (RenderingProperties != null)
+            if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);

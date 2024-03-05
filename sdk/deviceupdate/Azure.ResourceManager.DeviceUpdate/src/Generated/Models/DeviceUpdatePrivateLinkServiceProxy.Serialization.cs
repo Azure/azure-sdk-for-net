@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (RemotePrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
             }
-            if (RemotePrivateEndpointConnection != null)
+            if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
                 JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
             }
-            if (!(GroupConnectivityInformation is ChangeTrackingList<GroupConnectivityInformation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupConnectivityInformation))
             {
                 writer.WritePropertyName("groupConnectivityInformation"u8);
                 writer.WriteStartArray();

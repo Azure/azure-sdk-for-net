@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OverageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OverageCost))
             {
                 writer.WritePropertyName("overageCost"u8);
                 writer.WriteNumberValue(OverageCost.Value);
             }
-            if (options.Format != "W" && BenefitCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BenefitCost))
             {
                 writer.WritePropertyName("benefitCost"u8);
                 writer.WriteNumberValue(BenefitCost.Value);
             }
-            if (options.Format != "W" && TotalCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCost))
             {
                 writer.WritePropertyName("totalCost"u8);
                 writer.WriteNumberValue(TotalCost.Value);
             }
-            if (options.Format != "W" && SavingsAmount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SavingsAmount))
             {
                 writer.WritePropertyName("savingsAmount"u8);
                 writer.WriteNumberValue(SavingsAmount.Value);
             }
-            if (options.Format != "W" && SavingsPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SavingsPercentage))
             {
                 writer.WritePropertyName("savingsPercentage"u8);
                 writer.WriteNumberValue(SavingsPercentage.Value);
             }
-            if (options.Format != "W" && CoveragePercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CoveragePercentage))
             {
                 writer.WritePropertyName("coveragePercentage"u8);
                 writer.WriteNumberValue(CoveragePercentage.Value);
             }
-            if (options.Format != "W" && CommitmentAmount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommitmentAmount))
             {
                 writer.WritePropertyName("commitmentAmount"u8);
                 writer.WriteNumberValue(CommitmentAmount.Value);
             }
-            if (options.Format != "W" && AverageUtilizationPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AverageUtilizationPercentage))
             {
                 writer.WritePropertyName("averageUtilizationPercentage"u8);
                 writer.WriteNumberValue(AverageUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && WastageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WastageCost))
             {
                 writer.WritePropertyName("wastageCost"u8);
                 writer.WriteNumberValue(WastageCost.Value);

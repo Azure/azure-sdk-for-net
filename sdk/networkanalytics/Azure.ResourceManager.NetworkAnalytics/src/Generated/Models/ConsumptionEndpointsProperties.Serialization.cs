@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IngestionUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IngestionUri))
             {
                 writer.WritePropertyName("ingestionUrl"u8);
                 writer.WriteStringValue(IngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && IngestionResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(IngestionResourceId))
             {
                 writer.WritePropertyName("ingestionResourceId"u8);
                 writer.WriteStringValue(IngestionResourceId);
             }
-            if (options.Format != "W" && FileAccessUri != null)
+            if (options.Format != "W" && Optional.IsDefined(FileAccessUri))
             {
                 writer.WritePropertyName("fileAccessUrl"u8);
                 writer.WriteStringValue(FileAccessUri.AbsoluteUri);
             }
-            if (options.Format != "W" && FileAccessResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(FileAccessResourceId))
             {
                 writer.WritePropertyName("fileAccessResourceId"u8);
                 writer.WriteStringValue(FileAccessResourceId);
             }
-            if (options.Format != "W" && QueryUri != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryUri))
             {
                 writer.WritePropertyName("queryUrl"u8);
                 writer.WriteStringValue(QueryUri.AbsoluteUri);
             }
-            if (options.Format != "W" && QueryResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryResourceId))
             {
                 writer.WritePropertyName("queryResourceId"u8);
                 writer.WriteStringValue(QueryResourceId);

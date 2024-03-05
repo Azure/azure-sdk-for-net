@@ -32,37 +32,37 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (StartedAt.HasValue)
+            if (Optional.IsDefined(StartedAt))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt.Value, "O");
             }
-            if (CompletedAt.HasValue)
+            if (Optional.IsDefined(CompletedAt))
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (LastPolledAt.HasValue)
+            if (Optional.IsDefined(LastPolledAt))
             {
                 writer.WritePropertyName("lastPolledAt"u8);
                 writer.WriteStringValue(LastPolledAt.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Phase.HasValue)
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

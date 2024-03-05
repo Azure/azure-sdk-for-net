@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RawCertData != null)
+            if (Optional.IsDefined(RawCertData))
             {
                 writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
-            if (ContainerIdentityInfo != null)
+            if (Optional.IsDefined(ContainerIdentityInfo))
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
                 writer.WriteObjectValue(ContainerIdentityInfo);
             }
-            if (!(ServiceEndpoints is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();

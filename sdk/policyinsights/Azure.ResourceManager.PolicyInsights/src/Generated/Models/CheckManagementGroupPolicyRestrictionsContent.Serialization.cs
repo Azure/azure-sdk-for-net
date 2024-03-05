@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceDetails != null)
+            if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (!(PendingFields is ChangeTrackingList<PendingField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PendingFields))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();

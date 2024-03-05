@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination"u8);
             writer.WriteStringValue(Destination);
-            if (PreserveUnmatchedPath.HasValue)
+            if (Optional.IsDefined(PreserveUnmatchedPath))
             {
                 writer.WritePropertyName("preserveUnmatchedPath"u8);
                 writer.WriteBooleanValue(PreserveUnmatchedPath.Value);

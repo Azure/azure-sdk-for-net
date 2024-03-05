@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ConnectorId != null)
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("ConnectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (ConnectorDataConfiguration != null)
+            if (Optional.IsDefined(ConnectorDataConfiguration))
             {
                 writer.WritePropertyName("ConnectorDataConfiguration"u8);
                 writer.WriteStringValue(ConnectorDataConfiguration);
             }
-            if (IsValidateOnly.HasValue)
+            if (Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("ValidateOnly"u8);
                 writer.WriteBooleanValue(IsValidateOnly.Value);
             }
-            if (!(WorkItemProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkItemProperties))
             {
                 writer.WritePropertyName("WorkItemProperties"u8);
                 writer.WriteStartObject();

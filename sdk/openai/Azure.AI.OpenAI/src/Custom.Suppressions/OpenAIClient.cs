@@ -46,6 +46,10 @@ namespace Azure.AI.OpenAI
     [CodeGenSuppress("GetImageGenerations", typeof(string), typeof(ImageGenerationOptions), typeof(CancellationToken))]
     [CodeGenSuppress("GetImageGenerationsAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("GetImageGenerationsAsync", typeof(string), typeof(ImageGenerationOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("GenerateSpeechFromText", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("GenerateSpeechFromText", typeof(string), typeof(SpeechGenerationOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("GenerateSpeechFromTextAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("GenerateSpeechFromTextAsync", typeof(string), typeof(SpeechGenerationOptions), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetChatCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetEmbeddingsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
@@ -54,6 +58,8 @@ namespace Azure.AI.OpenAI
     [CodeGenSuppress("CreateGetAudioTranscriptionAsResponseObjectRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetAudioTranslationAsPlainTextRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetAudioTranslationAsResponseObjectRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGetImageGenerationsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateGenerateSpeechFromTextRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class OpenAIClient
     {
     }

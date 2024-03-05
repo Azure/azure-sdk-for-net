@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scaleMode"u8);
             writer.WriteStringValue(ScaleMode.ToSerialString());
-            if (ScaleLookAheadTime.HasValue)
+            if (Optional.IsDefined(ScaleLookAheadTime))
             {
                 writer.WritePropertyName("scaleLookAheadTime"u8);
                 writer.WriteStringValue(ScaleLookAheadTime.Value, "P");

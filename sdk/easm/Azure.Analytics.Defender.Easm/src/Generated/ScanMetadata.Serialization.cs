@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (BannerMetadata != null)
+            if (Optional.IsDefined(BannerMetadata))
             {
                 writer.WritePropertyName("bannerMetadata"u8);
                 writer.WriteStringValue(BannerMetadata);
             }
-            if (StartScan.HasValue)
+            if (Optional.IsDefined(StartScan))
             {
                 writer.WritePropertyName("startScan"u8);
                 writer.WriteStringValue(StartScan.Value, "O");
             }
-            if (EndScan.HasValue)
+            if (Optional.IsDefined(EndScan))
             {
                 writer.WritePropertyName("endScan"u8);
                 writer.WriteStringValue(EndScan.Value, "O");

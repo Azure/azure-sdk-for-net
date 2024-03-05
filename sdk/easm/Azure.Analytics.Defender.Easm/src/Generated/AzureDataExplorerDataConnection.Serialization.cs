@@ -31,7 +31,7 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -41,47 +41,47 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Content.HasValue)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (options.Format != "W" && CreatedDate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (FrequencyOffset.HasValue)
+            if (Optional.IsDefined(FrequencyOffset))
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
-            if (options.Format != "W" && UpdatedDate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedDate))
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (options.Format != "W" && UserUpdatedAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UserUpdatedAt))
             {
                 writer.WritePropertyName("userUpdatedAt"u8);
                 writer.WriteStringValue(UserUpdatedAt.Value, "O");
             }
-            if (Active.HasValue)
+            if (Optional.IsDefined(Active))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(Active.Value);
             }
-            if (options.Format != "W" && InactiveMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(InactiveMessage))
             {
                 writer.WritePropertyName("inactiveMessage"u8);
                 writer.WriteStringValue(InactiveMessage);

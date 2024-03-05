@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AggregationType.HasValue)
+            if (Optional.IsDefined(AggregationType))
             {
                 writer.WritePropertyName("aggregationType"u8);
                 writer.WriteStringValue(AggregationType.Value.ToString());
             }
-            if (TimeSpanDuration.HasValue)
+            if (Optional.IsDefined(TimeSpanDuration))
             {
                 writer.WritePropertyName("timeSpanDuration"u8);
                 writer.WriteStringValue(TimeSpanDuration.Value, "P");
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (FilterGroup != null)
+            if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
                 writer.WriteObjectValue(FilterGroup);
             }
-            if (ReplacementKey != null)
+            if (Optional.IsDefined(ReplacementKey))
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);

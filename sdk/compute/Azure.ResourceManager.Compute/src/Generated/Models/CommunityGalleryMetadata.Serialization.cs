@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PublisherUri != null)
+            if (Optional.IsDefined(PublisherUri))
             {
                 writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUri.AbsoluteUri);
             }
             writer.WritePropertyName("publisherContact"u8);
             writer.WriteStringValue(PublisherContact);
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PrivacyStatementUri != null)
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -40,52 +41,52 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (PathPattern != null)
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (BlobName != null)
+            if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (DeltaPathPattern != null)
+            if (Optional.IsDefined(DeltaPathPattern))
             {
                 writer.WritePropertyName("deltaPathPattern"u8);
                 writer.WriteStringValue(DeltaPathPattern);
             }
-            if (SourcePartitionCount.HasValue)
+            if (Optional.IsDefined(SourcePartitionCount))
             {
                 writer.WritePropertyName("sourcePartitionCount"u8);
                 writer.WriteNumberValue(SourcePartitionCount.Value);
             }
-            if (FullSnapshotRefreshInterval.HasValue)
+            if (Optional.IsDefined(FullSnapshotRefreshInterval))
             {
                 writer.WritePropertyName("fullSnapshotRefreshRate"u8);
                 writer.WriteStringValue(FullSnapshotRefreshInterval.Value, "T");
             }
-            if (DeltaSnapshotRefreshInterval.HasValue)
+            if (Optional.IsDefined(DeltaSnapshotRefreshInterval))
             {
                 writer.WritePropertyName("deltaSnapshotRefreshRate"u8);
                 writer.WriteStringValue(DeltaSnapshotRefreshInterval.Value, "T");
