@@ -28,4 +28,18 @@ internal class ContentDispositionHeaderValueTests : SyncAsyncTestBase
     {
         Assert.Throws<ArgumentNullException>(() => new ContentDispositionHeaderValue(""));
     }
+
+    [Test]
+    public void FormatsCorrectlyWithName()
+    {
+        var contentDisposition = new ContentDispositionHeaderValue("name");
+        Assert.AreEqual("form-data; name=\"name\"", contentDisposition.ToString());
+    }
+
+    [Test]
+    public void FormatsCorrectlyWithNameFilename()
+    {
+        var contentDisposition = new ContentDispositionHeaderValue("name", "filename");
+        Assert.AreEqual("form-data; name=\"name\"; filename=\"filename\"", contentDisposition.ToString());
+    }
 }

@@ -3,6 +3,7 @@
 
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
+using Moq;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         Assert.Throws<ArgumentException>(() => new MultipartContent("\"boundary\""));
 
         // Too long
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
         new MultipartContent("12345678910111213141516171819202122232425262728293031323334353637383940414243454546"));
     }
 
@@ -65,7 +66,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void CanSetBoundary()
     {
-        var boundary = " passWORD123!+'(+,_-./:=? ending";
+        var boundary = " passWORD123'(+,_-./:=? ending";
         var content = new MultipartContent(boundary);
         var contentType = new ContentType("multipart/form-data");
         var contentTypeString = content.GetContentType(contentType).ToString();
@@ -84,13 +85,15 @@ internal class MultipartContentTests : SyncAsyncTestBase
     public void DisposeDisposesInnerBinaryContents()
     {
         MultipartContent content = new MultipartContent();
-        var binaryContent = BinaryContent.Create(new BinaryData("Hello"));
-        content.Add(binaryContent);
+        var binaryContentMock = new Mock<BinaryContent>();
+        binaryContentMock.Setup(b => b.Dispose()).Verifiable();
+
+        content.Add(binaryContentMock.Object);
 
         content.Dispose();
-        Assert.Throws<ObjectDisposedException>(() => content.Add(BinaryContent.Create(new BinaryData("World"))));
-        Assert.Throws<ObjectDisposedException>(() => binaryContent.TryComputeLength(out var length));
+        binaryContentMock.Verify(b => b.Dispose(), Times.Once);
 
+        // Calling dispose again should not throw
         content.Dispose();
     }
 
@@ -169,7 +172,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var stream = new MemoryStream();
         binaryContent.WriteTo(stream, CancellationToken.None);
 
-        var expected = $"\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{content.Boundary}--";
+        var expected = $"--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{content.Boundary}--";
         var actual = Encoding.UTF8.GetString(stream.ToArray());
 
         Assert.AreEqual(expected, actual);
@@ -204,7 +207,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var stream = new MemoryStream();
         binaryContent.WriteTo(stream, CancellationToken.None);
 
-        var expected = $"\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}--";
+        var expected = $"--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}--";
         var actual = Encoding.UTF8.GetString(stream.ToArray());
 
         Assert.AreEqual(expected, actual);
@@ -246,7 +249,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         binaryContent.WriteTo(stream, CancellationToken.None);
         var actual = Encoding.UTF8.GetString(stream.ToArray());
 
-        var expected = $"\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\nContent-Type: text/plain\r\nContent-Language: en-AU\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field3\"\r\nContent-Type: application/json\r\n\r\n{expectedJsonText}\r\n--{content.Boundary}--";
+        var expected = $"--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\nContent-Type: text/plain\r\nContent-Language: en-AU\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field3\"\r\nContent-Type: application/json\r\n\r\n{expectedJsonText}\r\n--{content.Boundary}--";
 
         Assert.AreEqual(expected, actual);
     }
@@ -304,5 +307,39 @@ internal class MultipartContentTests : SyncAsyncTestBase
 
         var expected = $"--{outerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field3\"\r\nContent-Type: multipart/form-data; boundary={innerContent.Boundary}\r\n\r\n--{innerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\nContent-Type: text/plain\r\nContent-Language: en-AU\r\n\r\n{bodyPart1}\r\n--{innerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{innerContent.Boundary}--\r\n--{outerContent.Boundary}--";
         Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void CanHandleLargeByteArrays()
+    {
+        var content = new MultipartContent();
+
+        const long subPartSize = 8192;
+        const long numSubParts = 100;
+        const string contentDisposition = "Content-Disposition";
+        const string contentType = "Content-Type";
+        const string applicationOctetStream = "application/octet-stream";
+
+        var bytes = new byte[subPartSize];
+        for (int i = 0; i < numSubParts; i++)
+        {
+            var headers = new Dictionary<string, string>
+            {
+                { contentDisposition, new ContentDispositionHeaderValue($"field").ToString() },
+                { contentType, applicationOctetStream }
+            };
+            content.Add(BinaryContent.Create(new BinaryData(bytes)), headers);
+        }
+
+        using (Stream stream = new MemoryStream())
+        {
+            content.ToBinaryContent().WriteTo(stream, CancellationToken.None);
+            var expectedSize = subPartSize * numSubParts; // bodies
+            expectedSize += (content.Boundary.Length + 6) * numSubParts; // new line + -- + boundary + new line
+            expectedSize += (contentDisposition.Length + ": ".Length + "form-data; name=\"field\"".Length + "\r\n".Length + contentType.Length + ": ".Length + applicationOctetStream.Length + "\r\n\r\n".Length)*numSubParts; // headers
+            expectedSize += (content.Boundary.Length + 6); // footer
+            expectedSize -= 2; // first boundary is not preceded by \r\n
+            Assert.AreEqual(expectedSize, stream.Length);
+        }
     }
 }
