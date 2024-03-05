@@ -241,6 +241,13 @@ namespace Azure.Provisioning.Tests
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
             var kv = KeyVault.FromExisting(infrastructure, name: "existingVault");
+            kv.AddOutput(data => data.Properties.VaultUri, "vaultUri");
+
+            // can't mutate existing resource
+            Assert.Throws<InvalidOperationException>(() => kv.Properties.Tags.Add("key", "value"));
+            // can't mutate existing resource
+            Assert.Throws<InvalidOperationException>(() => kv.AssignProperty(data => data.Properties.EnableSoftDelete, "true"));
+
             _ = new KeyVaultSecret(infrastructure, "primaryConnectionString", cache.GetConnectionString(), kv);
             _ = new KeyVaultSecret(infrastructure, "secondaryConnectionString", cache.GetConnectionString(useSecondary: true), kv);
 
@@ -248,20 +255,6 @@ namespace Azure.Provisioning.Tests
 
             await ValidateBicepAsync(interactiveMode: true);
         }
-
-        // [RecordedTest]
-        // public async Task RedisCacheWithExistingKeyVaultOtherRg()
-        // {
-        //     TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-        //     var cache = new RedisCache(infrastructure);
-        //     var rg = new ResourceGroup(infrastructure, "otherRg", isExisting: true);
-        //     var kv = KeyVault.FromExisting(infrastructure, parent: rg, name: "existingVault");
-        //     _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(), kv);
-        //
-        //     infrastructure.Build(GetOutputPath());
-        //
-        //     await ValidateBicepAsync(interactiveMode: true);
-        // }
 
         [RecordedTest]
         public async Task PostgreSql()

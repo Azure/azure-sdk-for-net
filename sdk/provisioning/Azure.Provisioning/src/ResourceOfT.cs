@@ -113,12 +113,12 @@ namespace Azure.Provisioning
         /// <returns>The <see cref="Output"/>.</returns>
         public Output AddOutput(Expression<Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false)
         {
-            (object instance, string name, string expression) = EvaluateLambda(propertySelector);
+            (object instance, string name, string expression) = EvaluateLambda(propertySelector, true);
 
             return AddOutput(outputName, instance, name, expression, isLiteral, isSecure);
         }
 
-        private (object Instance, string PropertyName, string Expression) EvaluateLambda(Expression<Func<T, object?>> propertySelector)
+        private (object Instance, string PropertyName, string Expression) EvaluateLambda(Expression<Func<T, object?>> propertySelector, bool isOutput = false)
         {
             ParameterExpression? root = null;
             Expression? body = null;
@@ -148,7 +148,7 @@ namespace Azure.Provisioning
                 throw new InvalidOperationException($"Unsupported expression type {propertySelector.GetType().Name}");
             }
 
-            object instance = Expression.Lambda(body!, root).Compile().DynamicInvoke(Properties)!;
+            object instance = Expression.Lambda(body!, root).Compile().DynamicInvoke(isOutput ? _properties : Properties)!;
             return (instance, name, expression);
         }
 

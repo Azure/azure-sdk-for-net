@@ -39,3 +39,5 @@ resource keyVaultSecret_pekkgeXRu 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
     value: '${redisCache_YE3v6ym48.properties.hostName},ssl=true,password=${redisCache_YE3v6ym48.listkeys(redisCache_YE3v6ym48.apiVersion).secondaryKey}'
   }
 }
+
+output vaultUri string = keyVault_gudpA4XUx.properties.vaultUri
