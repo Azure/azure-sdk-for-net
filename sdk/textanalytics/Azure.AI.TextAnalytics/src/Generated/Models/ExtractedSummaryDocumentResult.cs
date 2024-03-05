@@ -22,18 +22,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="sentences"/> is null. </exception>
         public ExtractedSummaryDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ExtractedSummarySentence> sentences) : base(id, warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (sentences == null)
-            {
-                throw new ArgumentNullException(nameof(sentences));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(sentences, nameof(sentences));
 
             Sentences = sentences.ToList();
         }
