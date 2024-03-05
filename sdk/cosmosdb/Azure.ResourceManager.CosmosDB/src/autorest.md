@@ -309,6 +309,7 @@ rename-mapping:
   CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
   NodeGroupProperties.diskSizeGB: DiskSizeInGB
   IpAddressOrRange: CosmosDBIPAddressOrRange
+  CommandPublicResource: CassandraClusterCommandPublicParameters
 
 prepend-rp-prefix:
 - UniqueKey

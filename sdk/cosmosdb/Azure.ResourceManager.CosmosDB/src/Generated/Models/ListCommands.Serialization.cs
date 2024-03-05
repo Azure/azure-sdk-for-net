@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<CommandPublicResource> value = default;
+            IReadOnlyList<CassandraClusterCommandPublicParameters> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CommandPublicResource> array = new List<CommandPublicResource>();
+                    List<CassandraClusterCommandPublicParameters> array = new List<CassandraClusterCommandPublicParameters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandPublicResource.DeserializeCommandPublicResource(item, options));
+                        array.Add(CassandraClusterCommandPublicParameters.DeserializeCassandraClusterCommandPublicParameters(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListCommands(value ?? new ChangeTrackingList<CommandPublicResource>(), serializedAdditionalRawData);
+            return new ListCommands(value ?? new ChangeTrackingList<CassandraClusterCommandPublicParameters>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListCommands>.Write(ModelReaderWriterOptions options)
