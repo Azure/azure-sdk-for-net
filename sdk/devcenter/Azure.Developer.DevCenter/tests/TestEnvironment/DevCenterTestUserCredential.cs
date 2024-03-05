@@ -43,19 +43,19 @@ namespace Azure.Developer.DevCenter.Tests
 
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            IPublicClientApplication app = PublicClientApplicationBuilder.Create(_clientId)
+            IPublicClientApplication publicApp = PublicClientApplicationBuilder.Create(_clientId)
                                               .WithAuthority(_authority)
                                               .Build();
 
-            AuthenticationResult result1 = await app.AcquireTokenByUsernamePassword(new string[] { $"api://{_clientId}/fidalgotest" }, _userName, _userSecret).ExecuteAsync();
+            AuthenticationResult userAuthentication = await publicApp.AcquireTokenByUsernamePassword(new string[] { $"api://{_clientId}/fidalgotest" }, _userName, _userSecret).ExecuteAsync();
 
-            IConfidentialClientApplication app2 = ConfidentialClientApplicationBuilder.Create(_clientId)
+            IConfidentialClientApplication confidentialApp = ConfidentialClientApplicationBuilder.Create(_clientId)
                                           .WithAuthority(_authority)
                                           .WithClientSecret(_clientSecret)
                                           .Build();
-            AuthenticationResult result2 = await app2.AcquireTokenOnBehalfOf(_dataplaneScopes, new UserAssertion(result1.AccessToken)).ExecuteAsync();
+            AuthenticationResult clientOBOAuthentication = await confidentialApp.AcquireTokenOnBehalfOf(_dataplaneScopes, new UserAssertion(userAuthentication.AccessToken)).ExecuteAsync();
 
-            return new AccessToken(result2.AccessToken, result2.ExpiresOn);
+            return new AccessToken(clientOBOAuthentication.AccessToken, clientOBOAuthentication.ExpiresOn);
         }
     }
 }

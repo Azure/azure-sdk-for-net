@@ -27,7 +27,6 @@ namespace Azure.Developer.DevCenter.Tests
                 {
                     return _credential;
                 }
-
                 if (Mode == RecordedTestMode.Playback)
                 {
                     _credential = new MockCredential();
