@@ -56,12 +56,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="familyName"> The family name of the SKU. </param>
         /// <param name="capabilities"> A collection of capabilities which this SKU supports. </param>
+        /// <param name="batchSupportEndOfLife"> The time when Azure Batch service will retire this SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSupportedSku(string name, string familyName, IReadOnlyList<BatchSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchSupportedSku(string name, string familyName, IReadOnlyList<BatchSkuCapability> capabilities, DateTimeOffset? batchSupportEndOfLife, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FamilyName = familyName;
             Capabilities = capabilities;
+            BatchSupportEndOfLife = batchSupportEndOfLife;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,5 +73,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string FamilyName { get; }
         /// <summary> A collection of capabilities which this SKU supports. </summary>
         public IReadOnlyList<BatchSkuCapability> Capabilities { get; }
+        /// <summary> The time when Azure Batch service will retire this SKU. </summary>
+        public DateTimeOffset? BatchSupportEndOfLife { get; }
     }
 }
