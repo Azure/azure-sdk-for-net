@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
@@ -39,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         /// </summary>
         private readonly List<FilterConjunctionGroup<TTelemetry>> filterGroups = new List<FilterConjunctionGroup<TTelemetry>>();
 
-        private Func<TTelemetry, double>? projectionLambda;
+        private Func<TTelemetry, double> projectionLambda;
         public DerivedMetric(DerivedMetricInfo info, out CollectionConfigurationError[] errors)
         {
             if (info == null)
@@ -120,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 foreach (FilterConjunctionGroupInfo filterConjunctionGroupInfo in this.info.FilterGroups)
                 {
-                    CollectionConfigurationError[]? groupErrors = null;
+                    CollectionConfigurationError[] groupErrors = null;
                     try
                     {
                         var conjunctionFilterGroup = new FilterConjunctionGroup<TTelemetry>(filterConjunctionGroupInfo, out groupErrors);
@@ -180,7 +182,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 else
                 {
                     Filter<TTelemetry>.FieldNameType fieldNameType;
-                    Type? fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
+                    Type fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
                     if (fieldNameType == Filter<TTelemetry>.FieldNameType.AnyField)
                     {
                         throw new ArgumentOutOfRangeException(

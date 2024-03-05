@@ -60,12 +60,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         }
                         else if (tag.Key == SemanticConventions.AttributeExceptionType)
                         {
-                            exceptionType = tag.Value.ToString();
+                            exceptionType = tag.Value.ToString()!;
                             continue;
                         }
                         else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
                         {
-                            exceptionMessage = tag.Value.ToString();
+                            exceptionMessage = tag.Value.ToString()!;
                             continue;
                         }
                     }
