@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProject(name, description.Value, Optional.ToNullable(maxDevBoxesPerUser), serializedAdditionalRawData);
+            return new DevCenterProject(name, description, maxDevBoxesPerUser, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProject>.Write(ModelReaderWriterOptions options)

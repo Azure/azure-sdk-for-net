@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -111,13 +112,13 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             AzureLocation location = default;
-            Optional<DevBoxOSType> osType = default;
-            Optional<DevBoxHardwareProfile> hardwareProfile = default;
-            Optional<HibernateSupport> hibernateSupport = default;
-            Optional<DevBoxStorageProfile> storageProfile = default;
-            Optional<DevBoxImageReference> imageReference = default;
-            Optional<LocalAdministratorStatus> localAdministrator = default;
-            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
+            DevBoxOSType? osType = default;
+            DevBoxHardwareProfile hardwareProfile = default;
+            HibernateSupport? hibernateSupport = default;
+            DevBoxStorageProfile storageProfile = default;
+            DevBoxImageReference imageReference = default;
+            LocalAdministratorStatus? localAdministrator = default;
+            StopOnDisconnectConfiguration stopOnDisconnect = default;
             PoolHealthStatus healthStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -148,7 +149,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value);
+                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hibernateSupport"u8))
@@ -166,7 +167,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value);
+                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -175,7 +176,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value);
+                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localAdministrator"u8))
@@ -193,7 +194,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property.Value);
+                    stopOnDisconnect = StopOnDisconnectConfiguration.DeserializeStopOnDisconnectConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("healthStatus"u8))
@@ -207,7 +208,18 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxPool(name, location, Optional.ToNullable(osType), hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, healthStatus, serializedAdditionalRawData);
+            return new DevBoxPool(
+                name,
+                location,
+                osType,
+                hardwareProfile,
+                hibernateSupport,
+                storageProfile,
+                imageReference,
+                localAdministrator,
+                stopOnDisconnect,
+                healthStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxPool>.Write(ModelReaderWriterOptions options)

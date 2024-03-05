@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             DevBoxActionDelayStatus result = default;
-            Optional<DevBoxAction> action = default;
-            Optional<ResponseError> error = default;
+            DevBoxAction action = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    action = DevBoxAction.DeserializeDevBoxAction(property.Value);
+                    action = DevBoxAction.DeserializeDevBoxAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -121,7 +122,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxActionDelayResult(name, result, action.Value, error.Value, serializedAdditionalRawData);
+            return new DevBoxActionDelayResult(name, result, action, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxActionDelayResult>.Write(ModelReaderWriterOptions options)

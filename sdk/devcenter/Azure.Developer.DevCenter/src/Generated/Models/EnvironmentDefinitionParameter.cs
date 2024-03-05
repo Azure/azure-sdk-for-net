@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -56,7 +56,10 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal EnvironmentDefinitionParameter(string id, EnvironmentDefinitionParameterType parameterType, bool required)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
             Id = id;
             ParameterType = parameterType;

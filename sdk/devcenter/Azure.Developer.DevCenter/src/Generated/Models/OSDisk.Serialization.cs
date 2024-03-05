@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<int> diskSizeGB = default;
+            int? diskSizeGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSDisk(Optional.ToNullable(diskSizeGB), serializedAdditionalRawData);
+            return new OSDisk(diskSizeGB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSDisk>.Write(ModelReaderWriterOptions options)

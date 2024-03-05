@@ -78,8 +78,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxPool>> GetPoolAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetPoolAsync(projectName, poolName, context).ConfigureAwait(false);
@@ -95,8 +109,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,string,CancellationToken)']/*" />
         public virtual Response<DevBoxPool> GetPool(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetPool(projectName, poolName, context);
@@ -225,9 +253,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxSchedule>> GetScheduleAsync(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetScheduleAsync(projectName, poolName, scheduleName, context).ConfigureAwait(false);
@@ -244,9 +293,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedule(string,string,string,CancellationToken)']/*" />
         public virtual Response<DevBoxSchedule> GetSchedule(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException(nameof(scheduleName));
+            }
+            if (scheduleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSchedule(projectName, poolName, scheduleName, context);
@@ -393,9 +463,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBox>> GetDevBoxAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDevBoxAsync(projectName, userId, devBoxName, context).ConfigureAwait(false);
@@ -412,9 +503,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBox(string,string,string,CancellationToken)']/*" />
         public virtual Response<DevBox> GetDevBox(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDevBox(projectName, userId, devBoxName, context);
@@ -561,9 +673,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<RemoteConnection>> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRemoteConnectionAsync(projectName, userId, devBoxName, context).ConfigureAwait(false);
@@ -580,9 +713,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,string,CancellationToken)']/*" />
         public virtual Response<RemoteConnection> GetRemoteConnection(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRemoteConnection(projectName, userId, devBoxName, context);
@@ -730,10 +884,38 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionAsync(string,string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxAction>> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+            if (actionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDevBoxActionAsync(projectName, userId, devBoxName, actionName, context).ConfigureAwait(false);
@@ -751,10 +933,38 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAction(string,string,string,string,CancellationToken)']/*" />
         public virtual Response<DevBoxAction> GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+            if (actionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDevBoxAction(projectName, userId, devBoxName, actionName, context);
@@ -1061,10 +1271,38 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayActionAsync(string,string,string,string,DateTimeOffset,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxAction>> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+            if (actionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DelayActionAsync(projectName, userId, devBoxName, actionName, delayUntil, context).ConfigureAwait(false);
@@ -1083,10 +1321,38 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAction(string,string,string,string,DateTimeOffset,CancellationToken)']/*" />
         public virtual Response<DevBoxAction> DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
+            if (actionName == null)
+            {
+                throw new ArgumentNullException(nameof(actionName));
+            }
+            if (actionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DelayAction(projectName, userId, devBoxName, actionName, delayUntil, context);
@@ -1251,7 +1517,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxPool> GetPoolsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, context);
@@ -1267,7 +1540,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(string,CancellationToken)']/*" />
         public virtual Pageable<DevBoxPool> GetPools(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, context);
@@ -1360,8 +1640,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesAsync(string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxSchedule> GetSchedulesAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, context);
@@ -1378,8 +1672,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedules(string,string,CancellationToken)']/*" />
         public virtual Pageable<DevBoxSchedule> GetSchedules(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, context);
@@ -1563,7 +1871,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBox> GetAllDevBoxesByUserAsync(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, context);
@@ -1579,7 +1894,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,CancellationToken)']/*" />
         public virtual Pageable<DevBox> GetAllDevBoxesByUser(string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, context);
@@ -1672,8 +1994,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesAsync(string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBox> GetDevBoxesAsync(string projectName, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, context);
@@ -1690,8 +2026,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxes(string,string,CancellationToken)']/*" />
         public virtual Pageable<DevBox> GetDevBoxes(string projectName, string userId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, context);
@@ -1803,9 +2153,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionsAsync(string,string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxAction> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
@@ -1823,9 +2194,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActions(string,string,string,CancellationToken)']/*" />
         public virtual Pageable<DevBoxAction> GetDevBoxActions(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (devBoxName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxName));
+            }
+            if (devBoxName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
+            }
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
@@ -2080,10 +2472,6 @@ namespace Azure.Developer.DevCenter
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
             }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
@@ -2140,10 +2528,6 @@ namespace Azure.Developer.DevCenter
             if (devBoxName.Length == 0)
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
             }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);

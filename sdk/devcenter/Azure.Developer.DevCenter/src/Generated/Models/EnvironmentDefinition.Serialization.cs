@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -120,10 +121,10 @@ namespace Azure.Developer.DevCenter.Models
             string id = default;
             string name = default;
             string catalogName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<EnvironmentDefinitionParameter>> parameters = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> parametersSchema = default;
-            Optional<string> templatePath = default;
+            string description = default;
+            IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
+            IReadOnlyDictionary<string, BinaryData> parametersSchema = default;
+            string templatePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,7 @@ namespace Azure.Developer.DevCenter.Models
                     List<EnvironmentDefinitionParameter> array = new List<EnvironmentDefinitionParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item));
+                        array.Add(EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -194,7 +195,15 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvironmentDefinition(id, name, catalogName, description.Value, Optional.ToList(parameters), Optional.ToDictionary(parametersSchema), templatePath.Value, serializedAdditionalRawData);
+            return new EnvironmentDefinition(
+                id,
+                name,
+                catalogName,
+                description,
+                parameters ?? new ChangeTrackingList<EnvironmentDefinitionParameter>(),
+                parametersSchema ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                templatePath,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvironmentDefinition>.Write(ModelReaderWriterOptions options)

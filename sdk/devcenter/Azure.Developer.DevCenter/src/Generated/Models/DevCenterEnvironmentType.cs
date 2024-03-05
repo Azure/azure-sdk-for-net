@@ -57,8 +57,14 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
         internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (deploymentTargetId == null)
+            {
+                throw new ArgumentNullException(nameof(deploymentTargetId));
+            }
 
             Name = name;
             DeploymentTargetId = deploymentTargetId;

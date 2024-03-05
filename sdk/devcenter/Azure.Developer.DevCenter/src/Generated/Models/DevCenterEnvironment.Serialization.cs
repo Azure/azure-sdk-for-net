@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -119,15 +120,15 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             string name = default;
             string environmentType = default;
-            Optional<Guid> user = default;
-            Optional<EnvironmentProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> resourceGroupId = default;
+            Guid? user = default;
+            EnvironmentProvisioningState? provisioningState = default;
+            ResourceIdentifier resourceGroupId = default;
             string catalogName = default;
             string environmentDefinitionName = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +216,17 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterEnvironment(Optional.ToDictionary(parameters), name, environmentType, Optional.ToNullable(user), Optional.ToNullable(provisioningState), resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value, serializedAdditionalRawData);
+            return new DevCenterEnvironment(
+                parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                name,
+                environmentType,
+                user,
+                provisioningState,
+                resourceGroupId,
+                catalogName,
+                environmentDefinitionName,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEnvironment>.Write(ModelReaderWriterOptions options)

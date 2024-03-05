@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<OSDisk> osDisk = default;
+            OSDisk osDisk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +82,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
+                    osDisk = OSDisk.DeserializeOSDisk(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +91,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxStorageProfile(osDisk.Value, serializedAdditionalRawData);
+            return new DevBoxStorageProfile(osDisk, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxStorageProfile>.Write(ModelReaderWriterOptions options)

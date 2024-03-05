@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             DevBoxActionType actionType = default;
             string sourceId = default;
-            Optional<DateTimeOffset> suspendedUntil = default;
-            Optional<DevBoxNextAction> next = default;
+            DateTimeOffset? suspendedUntil = default;
+            DevBoxNextAction next = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    next = DevBoxNextAction.DeserializeDevBoxNextAction(property.Value);
+                    next = DevBoxNextAction.DeserializeDevBoxNextAction(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -132,7 +133,13 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxAction(name, actionType, sourceId, Optional.ToNullable(suspendedUntil), next.Value, serializedAdditionalRawData);
+            return new DevBoxAction(
+                name,
+                actionType,
+                sourceId,
+                suspendedUntil,
+                next,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxAction>.Write(ModelReaderWriterOptions options)

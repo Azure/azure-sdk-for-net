@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -102,13 +103,13 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> @default = default;
+            string name = default;
+            string description = default;
+            string @default = default;
             EnvironmentDefinitionParameterType type = default;
-            Optional<bool> readOnly = default;
+            bool? readOnly = default;
             bool required = default;
-            Optional<IReadOnlyList<string>> allowed = default;
+            IReadOnlyList<string> allowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +173,16 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvironmentDefinitionParameter(id, name.Value, description.Value, @default.Value, type, Optional.ToNullable(readOnly), required, Optional.ToList(allowed), serializedAdditionalRawData);
+            return new EnvironmentDefinitionParameter(
+                id,
+                name,
+                description,
+                @default,
+                type,
+                readOnly,
+                required,
+                allowed ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvironmentDefinitionParameter>.Write(ModelReaderWriterOptions options)

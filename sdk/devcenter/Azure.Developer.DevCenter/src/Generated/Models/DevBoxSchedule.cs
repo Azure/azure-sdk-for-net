@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -54,8 +53,14 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="time"/> or <paramref name="timeZone"/> is null. </exception>
         internal DevBoxSchedule(ScheduledType scheduledType, ScheduleFrequency frequency, string time, string timeZone)
         {
-            Argument.AssertNotNull(time, nameof(time));
-            Argument.AssertNotNull(timeZone, nameof(timeZone));
+            if (time == null)
+            {
+                throw new ArgumentNullException(nameof(time));
+            }
+            if (timeZone == null)
+            {
+                throw new ArgumentNullException(nameof(timeZone));
+            }
 
             ScheduledType = scheduledType;
             Frequency = frequency;

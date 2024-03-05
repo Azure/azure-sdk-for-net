@@ -54,9 +54,18 @@ namespace Azure.Developer.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
         public DevCenterEnvironment(string environmentTypeName, string catalogName, string environmentDefinitionName)
         {
-            Argument.AssertNotNull(environmentTypeName, nameof(environmentTypeName));
-            Argument.AssertNotNull(catalogName, nameof(catalogName));
-            Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
+            if (environmentTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentTypeName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (environmentDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentDefinitionName));
+            }
 
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
             EnvironmentTypeName = environmentTypeName;

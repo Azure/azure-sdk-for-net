@@ -118,7 +118,13 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxSchedule(name, type, frequency, time, timeZone, serializedAdditionalRawData);
+            return new DevBoxSchedule(
+                name,
+                type,
+                frequency,
+                time,
+                timeZone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxSchedule>.Write(ModelReaderWriterOptions options)

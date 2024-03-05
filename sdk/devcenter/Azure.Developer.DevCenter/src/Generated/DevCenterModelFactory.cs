@@ -49,7 +49,18 @@ namespace Azure.Developer.DevCenter.Models
         /// <returns> A new <see cref="Models.DevBoxPool"/> instance for mocking. </returns>
         public static DevBoxPool DevBoxPool(string name = null, AzureLocation location = default, DevBoxOSType? osType = null, DevBoxHardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
         {
-            return new DevBoxPool(name, location, osType, hardwareProfile, hibernateSupport, storageProfile, imageReference, localAdministratorStatus, stopOnDisconnect, healthStatus, serializedAdditionalRawData: null);
+            return new DevBoxPool(
+                name,
+                location,
+                osType,
+                hardwareProfile,
+                hibernateSupport,
+                storageProfile,
+                imageReference,
+                localAdministratorStatus,
+                stopOnDisconnect,
+                healthStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxHardwareProfile"/>. </summary>
@@ -87,7 +98,13 @@ namespace Azure.Developer.DevCenter.Models
         /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
         public static DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
         {
-            return new DevBoxImageReference(name, version, operatingSystem, osBuildNumber, publishedDate, serializedAdditionalRawData: null);
+            return new DevBoxImageReference(
+                name,
+                version,
+                operatingSystem,
+                osBuildNumber,
+                publishedDate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StopOnDisconnectConfiguration"/>. </summary>
@@ -114,7 +131,13 @@ namespace Azure.Developer.DevCenter.Models
         /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
         public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduledType scheduledType = default, ScheduleFrequency frequency = default, string time = null, string timeZone = null)
         {
-            return new DevBoxSchedule(name, scheduledType, frequency, time, timeZone, serializedAdditionalRawData: null);
+            return new DevBoxSchedule(
+                name,
+                scheduledType,
+                frequency,
+                time,
+                timeZone,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBox"/>. </summary>
@@ -147,7 +170,25 @@ namespace Azure.Developer.DevCenter.Models
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
         public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation location = default, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
         {
-            return new DevBox(name, projectName, poolName, hibernateSupport, provisioningState, actionState, powerState, uniqueId, error, location, osType, userId, hardwareProfile, storageProfile, imageReference, createdTime, localAdministratorStatus, serializedAdditionalRawData: null);
+            return new DevBox(
+                name,
+                projectName,
+                poolName,
+                hibernateSupport,
+                provisioningState,
+                actionState,
+                powerState,
+                uniqueId,
+                error,
+                location,
+                osType,
+                userId,
+                hardwareProfile,
+                storageProfile,
+                imageReference,
+                createdTime,
+                localAdministratorStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RemoteConnection"/>. </summary>
@@ -168,7 +209,13 @@ namespace Azure.Developer.DevCenter.Models
         /// <returns> A new <see cref="Models.DevBoxAction"/> instance for mocking. </returns>
         public static DevBoxAction DevBoxAction(string name = null, DevBoxActionType actionType = default, string sourceId = null, DateTimeOffset? suspendedUntil = null, DevBoxNextAction nextAction = null)
         {
-            return new DevBoxAction(name, actionType, sourceId, suspendedUntil, nextAction, serializedAdditionalRawData: null);
+            return new DevBoxAction(
+                name,
+                actionType,
+                sourceId,
+                suspendedUntil,
+                nextAction,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxNextAction"/>. </summary>
@@ -205,7 +252,17 @@ namespace Azure.Developer.DevCenter.Models
         {
             parameters ??= new Dictionary<string, BinaryData>();
 
-            return new DevCenterEnvironment(parameters, name, environmentTypeName, userId, provisioningState, resourceGroupId, catalogName, environmentDefinitionName, error, serializedAdditionalRawData: null);
+            return new DevCenterEnvironment(
+                parameters,
+                name,
+                environmentTypeName,
+                userId,
+                provisioningState,
+                resourceGroupId,
+                catalogName,
+                environmentDefinitionName,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterCatalog"/>. </summary>
@@ -230,7 +287,15 @@ namespace Azure.Developer.DevCenter.Models
             parameters ??= new List<EnvironmentDefinitionParameter>();
             parametersSchema ??= new Dictionary<string, BinaryData>();
 
-            return new EnvironmentDefinition(id, name, catalogName, description, parameters?.ToList(), parametersSchema, templatePath, serializedAdditionalRawData: null);
+            return new EnvironmentDefinition(
+                id,
+                name,
+                catalogName,
+                description,
+                parameters?.ToList(),
+                parametersSchema,
+                templatePath,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinitionParameter"/>. </summary>
@@ -253,7 +318,16 @@ namespace Azure.Developer.DevCenter.Models
         {
             allowed ??= new List<string>();
 
-            return new EnvironmentDefinitionParameter(id, name, description, defaultValue, parameterType, readOnly, required, allowed?.ToList(), serializedAdditionalRawData: null);
+            return new EnvironmentDefinitionParameter(
+                id,
+                name,
+                description,
+                defaultValue,
+                parameterType,
+                readOnly,
+                required,
+                allowed?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironmentType"/>. </summary>

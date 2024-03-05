@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
@@ -148,22 +149,22 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
-            Optional<string> projectName = default;
+            string projectName = default;
             string poolName = default;
-            Optional<HibernateSupport> hibernateSupport = default;
-            Optional<DevBoxProvisioningState> provisioningState = default;
-            Optional<string> actionState = default;
-            Optional<PowerState> powerState = default;
-            Optional<Guid> uniqueId = default;
-            Optional<ResponseError> error = default;
-            Optional<AzureLocation> location = default;
-            Optional<DevBoxOSType> osType = default;
-            Optional<Guid> user = default;
-            Optional<DevBoxHardwareProfile> hardwareProfile = default;
-            Optional<DevBoxStorageProfile> storageProfile = default;
-            Optional<DevBoxImageReference> imageReference = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<LocalAdministratorStatus> localAdministrator = default;
+            HibernateSupport? hibernateSupport = default;
+            DevBoxProvisioningState? provisioningState = default;
+            string actionState = default;
+            PowerState? powerState = default;
+            Guid? uniqueId = default;
+            ResponseError error = default;
+            AzureLocation location = default;
+            DevBoxOSType? osType = default;
+            Guid? user = default;
+            DevBoxHardwareProfile hardwareProfile = default;
+            DevBoxStorageProfile storageProfile = default;
+            DevBoxImageReference imageReference = default;
+            DateTimeOffset? createdTime = default;
+            LocalAdministratorStatus? localAdministrator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,7 +267,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value);
+                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -275,7 +276,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value);
+                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -284,7 +285,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value);
+                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -311,7 +312,25 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, Optional.ToNullable(powerState), Optional.ToNullable(uniqueId), error.Value, location, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator), serializedAdditionalRawData);
+            return new DevBox(
+                name,
+                projectName,
+                poolName,
+                hibernateSupport,
+                provisioningState,
+                actionState,
+                powerState,
+                uniqueId,
+                error,
+                location,
+                osType,
+                user,
+                hardwareProfile,
+                storageProfile,
+                imageReference,
+                createdTime,
+                localAdministrator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBox>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -80,9 +81,9 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<SkuName> skuName = default;
-            Optional<int> vcpUs = default;
-            Optional<int> memoryGB = default;
+            SkuName? skuName = default;
+            int? vcpUs = default;
+            int? memoryGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxHardwareProfile(Optional.ToNullable(skuName), Optional.ToNullable(vcpUs), Optional.ToNullable(memoryGB), serializedAdditionalRawData);
+            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxHardwareProfile>.Write(ModelReaderWriterOptions options)

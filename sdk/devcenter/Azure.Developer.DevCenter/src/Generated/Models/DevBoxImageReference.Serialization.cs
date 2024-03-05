@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> operatingSystem = default;
-            Optional<string> osBuildNumber = default;
-            Optional<DateTimeOffset> publishedDate = default;
+            string name = default;
+            string version = default;
+            string operatingSystem = default;
+            string osBuildNumber = default;
+            DateTimeOffset? publishedDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,13 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxImageReference(name.Value, version.Value, operatingSystem.Value, osBuildNumber.Value, Optional.ToNullable(publishedDate), serializedAdditionalRawData);
+            return new DevBoxImageReference(
+                name,
+                version,
+                operatingSystem,
+                osBuildNumber,
+                publishedDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxImageReference>.Write(ModelReaderWriterOptions options)

@@ -53,7 +53,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DevCenterProject>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectAsync(projectName, context).ConfigureAwait(false);
@@ -68,7 +75,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
         public virtual Response<DevCenterProject> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProject(projectName, context);
