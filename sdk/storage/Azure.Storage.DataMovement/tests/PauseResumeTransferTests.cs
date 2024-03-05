@@ -1007,7 +1007,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
-                transferId:  transfer.Id,
+                transferId: transfer.Id,
                 transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));

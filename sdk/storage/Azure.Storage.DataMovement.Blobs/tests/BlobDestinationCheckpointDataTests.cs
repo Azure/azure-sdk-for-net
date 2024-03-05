@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private void TestAssertSerializedData(BlobDestinationCheckpointData data)
         {
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
-            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 data.Serialize(dataStream);
@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             data.TagsBytes = default;
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
-            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 // Act
@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             data.AccessTier = default;
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
-            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 // Act
@@ -182,7 +182,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointData data = CreateSetSampleValues();
 
-            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
+            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             {
                 data.Serialize(stream);
                 stream.Position = 0;

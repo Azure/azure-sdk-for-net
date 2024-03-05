@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public byte[] MetadataBytes;
 
         /// <summary>
-        /// The blob tags for the destination blob.
+        /// The Blob tags for the destination blob.
         /// </summary>
         public DataTransferProperty<Tags> Tags;
         public bool PreserveTags;
@@ -106,7 +106,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex;
+            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
@@ -266,32 +266,32 @@ namespace Azure.Storage.DataMovement.Blobs
             // BlobType
             BlobType blobType = (BlobType)reader.ReadByte();
 
-            // Preserve Content Type
+            // Preserve Content Type and offset/length
             bool preserveContentType = reader.ReadBoolean();
             int contentTypeOffset = reader.ReadInt32();
             int contentTypeLength = reader.ReadInt32();
 
-            // Preserve Content Encoding
+            // Preserve Content Encoding and offset/length
             bool preserveContentEncoding = reader.ReadBoolean();
             int contentEncodingOffset = reader.ReadInt32();
             int contentEncodingLength = reader.ReadInt32();
 
-            // Preserve Content Language
-            bool preserveContentLanguage= reader.ReadBoolean();
+            // Preserve Content Language and offset/length
+            bool preserveContentLanguage = reader.ReadBoolean();
             int contentLanguageOffset = reader.ReadInt32();
             int contentLanguageLength = reader.ReadInt32();
 
-            // ContentDisposition
-            bool preserveContentDisposition= reader.ReadBoolean();
+            // Preserve ContentDisposition and offset/length
+            bool preserveContentDisposition = reader.ReadBoolean();
             int contentDispositionOffset = reader.ReadInt32();
             int contentDispositionLength = reader.ReadInt32();
 
-            // CacheControl
+            // Preserve CacheControl and offset/length
             bool preserveCacheControl = reader.ReadBoolean();
             int cacheControlOffset = reader.ReadInt32();
             int cacheControlLength = reader.ReadInt32();
 
-            // AccessTier
+            // Preserve AccessTier and offset/length
             bool preserveAccessTier = reader.ReadBoolean();
             AccessTier? accessTier = default;
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
@@ -300,12 +300,12 @@ namespace Azure.Storage.DataMovement.Blobs
                 accessTier = new AccessTier(jobPlanAccessTier.ToString());
             }
 
-            // Metadata
+            // Preserve Metadata and offset/length
             bool preserveMetadata = reader.ReadBoolean();
             int metadataOffset = reader.ReadInt32();
             int metadataLength = reader.ReadInt32();
 
-            // Tags
+            // Preserve Tags and offset/length
             bool preserveTags = reader.ReadBoolean();
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
@@ -383,7 +383,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // Length is calculated based on whether the property is preserved.
             // If the property is preserved, the property's length is added to the total length.
-            int length = DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex;
+            int length = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
             if (!PreserveContentType)
             {
                 length += ContentTypeBytes.Length;

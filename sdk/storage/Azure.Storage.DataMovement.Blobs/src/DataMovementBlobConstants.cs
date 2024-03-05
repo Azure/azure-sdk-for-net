@@ -52,7 +52,7 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int PreserveTagsIndex = MetadataLengthIndex + IntSizeInBytes;
             internal const int TagsOffsetIndex = PreserveTagsIndex + OneByte;
             internal const int TagsLengthIndex = TagsOffsetIndex + IntSizeInBytes;
-            internal const int OptionalIndexValuesStartIndex = TagsLengthIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = TagsLengthIndex + IntSizeInBytes;
         }
     }
 }

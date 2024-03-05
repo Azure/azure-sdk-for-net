@@ -18,7 +18,6 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
-using Microsoft.CodeAnalysis;
 using Moq;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
