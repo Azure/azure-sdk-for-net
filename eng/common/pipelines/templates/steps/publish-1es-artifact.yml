@@ -13,17 +13,16 @@ parameters:
 
 steps:
   - pwsh: |
-      Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
-    condition: and(succeeded(), ${{ parameters.CustomCondition }})
-    displayName: Set Artifact Name
-
-  - pwsh: |
-      Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
+      if ($env:AGENT_JOBSTATUS -eq "Failed") {
+        Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
+      } else {
+        Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
+      }
     condition: and(failed(), ${{ parameters.CustomCondition }})
-    displayName: Set Failed Artifact Name
+    displayName: Set Artifact Name $(Agent.JobStatus)
 
   - task: 1ES.PublishPipelineArtifact@1
-    condition: and(failedOrSucceeded(), ${{ parameters.CustomCondition }})
+    condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
     displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
     inputs:
       artifact: '$(PublishArtifactName)'
