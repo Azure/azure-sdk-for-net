@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> providerName = default;
-            Optional<IReadOnlyList<DataProviderKeyValuePair>> propertyBag = default;
+            string providerName = default;
+            IReadOnlyList<DataProviderKeyValuePair> propertyBag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProviderMetadata(providerName.Value, Optional.ToList(propertyBag), serializedAdditionalRawData);
+            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProviderMetadata>.Write(ModelReaderWriterOptions options)

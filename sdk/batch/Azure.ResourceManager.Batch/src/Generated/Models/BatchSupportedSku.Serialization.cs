@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -45,6 +46,11 @@ namespace Azure.ResourceManager.Batch.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(BatchSupportEndOfLife))
+            {
+                writer.WritePropertyName("batchSupportEndOfLife"u8);
+                writer.WriteStringValue(BatchSupportEndOfLife.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,9 +90,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> familyName = default;
-            Optional<IReadOnlyList<BatchSkuCapability>> capabilities = default;
+            string name = default;
+            string familyName = default;
+            IReadOnlyList<BatchSkuCapability> capabilities = default;
+            DateTimeOffset? batchSupportEndOfLife = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,9 +117,18 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchSkuCapability> array = new List<BatchSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchSkuCapability.DeserializeBatchSkuCapability(item));
+                        array.Add(BatchSkuCapability.DeserializeBatchSkuCapability(item, options));
                     }
                     capabilities = array;
+                    continue;
+                }
+                if (property.NameEquals("batchSupportEndOfLife"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    batchSupportEndOfLife = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +137,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchSupportedSku(name.Value, familyName.Value, Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new BatchSupportedSku(name, familyName, capabilities ?? new ChangeTrackingList<BatchSkuCapability>(), batchSupportEndOfLife, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchSupportedSku>.Write(ModelReaderWriterOptions options)

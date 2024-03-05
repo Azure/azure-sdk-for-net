@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<bool> upgradeScheduleEnabled = default;
-            Optional<DateTimeOffset> scheduledTime = default;
+            bool? upgradeScheduleEnabled = default;
+            DateTimeOffset? scheduledTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUpgradeSettings(Optional.ToNullable(upgradeScheduleEnabled), Optional.ToNullable(scheduledTime), serializedAdditionalRawData);
+            return new StorageCacheUpgradeSettings(upgradeScheduleEnabled, scheduledTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUpgradeSettings>.Write(ModelReaderWriterOptions options)

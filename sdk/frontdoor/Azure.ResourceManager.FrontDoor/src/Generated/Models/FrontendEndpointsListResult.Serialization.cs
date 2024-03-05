@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontendEndpointData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FrontendEndpointData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontendEndpointData> array = new List<FrontendEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                        array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendEndpointsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FrontendEndpointsListResult(value ?? new ChangeTrackingList<FrontendEndpointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontendEndpointsListResult>.Write(ModelReaderWriterOptions options)

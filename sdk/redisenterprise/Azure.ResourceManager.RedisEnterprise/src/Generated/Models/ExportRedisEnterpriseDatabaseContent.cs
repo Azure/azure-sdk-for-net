@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUri"/> is null. </exception>
         public ExportRedisEnterpriseDatabaseContent(Uri sasUri)
         {
-            Argument.AssertNotNull(sasUri, nameof(sasUri));
+            if (sasUri == null)
+            {
+                throw new ArgumentNullException(nameof(sasUri));
+            }
 
             SasUri = sasUri;
         }

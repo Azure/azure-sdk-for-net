@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             StorageInsightState state = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageInsightStatus(state, description.Value, serializedAdditionalRawData);
+            return new StorageInsightStatus(state, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageInsightStatus>.Write(ModelReaderWriterOptions options)

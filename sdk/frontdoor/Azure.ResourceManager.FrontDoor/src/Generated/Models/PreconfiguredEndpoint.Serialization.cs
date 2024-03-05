@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -121,16 +122,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> endpoint = default;
-            Optional<FrontDoorEndpointType> endpointType = default;
-            Optional<string> backend = default;
+            SystemData systemData = default;
+            string description = default;
+            string endpoint = default;
+            FrontDoorEndpointType? endpointType = default;
+            string backend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +221,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreconfiguredEndpoint(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, endpoint.Value, Optional.ToNullable(endpointType), backend.Value, serializedAdditionalRawData);
+            return new PreconfiguredEndpoint(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                endpoint,
+                endpointType,
+                backend,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreconfiguredEndpoint>.Write(ModelReaderWriterOptions options)

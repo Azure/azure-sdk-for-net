@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UefiSettings> uefiSettings = default;
-            Optional<bool> encryptionAtHost = default;
-            Optional<SecurityType> securityType = default;
-            Optional<EncryptionIdentity> encryptionIdentity = default;
-            Optional<ProxyAgentSettings> proxyAgentSettings = default;
+            UefiSettings uefiSettings = default;
+            bool? encryptionAtHost = default;
+            SecurityType? securityType = default;
+            EncryptionIdentity encryptionIdentity = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value);
+                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionIdentity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
+                    encryptionIdentity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("proxyAgentSettings"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value);
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityProfile(uefiSettings.Value, Optional.ToNullable(encryptionAtHost), Optional.ToNullable(securityType), encryptionIdentity.Value, proxyAgentSettings.Value, serializedAdditionalRawData);
+            return new SecurityProfile(
+                uefiSettings,
+                encryptionAtHost,
+                securityType,
+                encryptionIdentity,
+                proxyAgentSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityProfile>.Write(ModelReaderWriterOptions options)

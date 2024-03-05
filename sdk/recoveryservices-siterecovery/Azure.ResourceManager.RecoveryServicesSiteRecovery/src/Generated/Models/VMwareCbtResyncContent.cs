@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="skipCbtReset"/> is null. </exception>
         public VMwareCbtResyncContent(string skipCbtReset)
         {
-            Argument.AssertNotNull(skipCbtReset, nameof(skipCbtReset));
+            if (skipCbtReset == null)
+            {
+                throw new ArgumentNullException(nameof(skipCbtReset));
+            }
 
             SkipCbtReset = skipCbtReset;
             InstanceType = "VMwareCbt";

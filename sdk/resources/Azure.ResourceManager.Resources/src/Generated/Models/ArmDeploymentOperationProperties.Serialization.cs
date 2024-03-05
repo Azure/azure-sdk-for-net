@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -121,16 +122,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ProvisioningOperationKind> provisioningOperation = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> serviceRequestId = default;
-            Optional<string> statusCode = default;
-            Optional<StatusMessage> statusMessage = default;
-            Optional<TargetResource> targetResource = default;
-            Optional<HttpMessage> request = default;
-            Optional<HttpMessage> response = default;
+            ProvisioningOperationKind? provisioningOperation = default;
+            string provisioningState = default;
+            DateTimeOffset? timestamp = default;
+            TimeSpan? duration = default;
+            string serviceRequestId = default;
+            string statusCode = default;
+            StatusMessage statusMessage = default;
+            TargetResource targetResource = default;
+            HttpMessage request = default;
+            HttpMessage response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Resources.Models
                         statusMessage = null;
                         continue;
                     }
-                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value);
+                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResource"u8))
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    targetResource = TargetResource.DeserializeTargetResource(property.Value);
+                    targetResource = TargetResource.DeserializeTargetResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    request = HttpMessage.DeserializeHttpMessage(property.Value);
+                    request = HttpMessage.DeserializeHttpMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    response = HttpMessage.DeserializeHttpMessage(property.Value);
+                    response = HttpMessage.DeserializeHttpMessage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +221,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperationProperties(
+                provisioningOperation,
+                provisioningState,
+                timestamp,
+                duration,
+                serviceRequestId,
+                statusCode,
+                statusMessage,
+                targetResource,
+                request,
+                response,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)

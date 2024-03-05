@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<InstancePoolFamilyCapability>> supportedFamilies = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<InstancePoolFamilyCapability> supportedFamilies = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolFamilyCapability> array = new List<InstancePoolFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolFamilyCapability.DeserializeInstancePoolFamilyCapability(item));
+                        array.Add(InstancePoolFamilyCapability.DeserializeInstancePoolFamilyCapability(item, options));
                     }
                     supportedFamilies = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolEditionCapability(name, supportedFamilies ?? new ChangeTrackingList<InstancePoolFamilyCapability>(), status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolEditionCapability>.Write(ModelReaderWriterOptions options)

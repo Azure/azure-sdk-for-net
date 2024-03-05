@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -139,16 +140,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<int> healthyResourceCount = default;
-            Optional<int> unhealthyResourceCount = default;
-            Optional<int> notApplicableResourceCount = default;
-            Optional<long> weight = default;
-            Optional<SecureScoreControlDefinitionItem> definition = default;
-            Optional<int> max = default;
-            Optional<double> current = default;
-            Optional<double> percentage = default;
+            SystemData systemData = default;
+            string displayName = default;
+            int? healthyResourceCount = default;
+            int? unhealthyResourceCount = default;
+            int? notApplicableResourceCount = default;
+            long? weight = default;
+            SecureScoreControlDefinitionItem definition = default;
+            int? max = default;
+            double? current = default;
+            double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value);
+                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("score"u8))
@@ -284,7 +285,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(healthyResourceCount), Optional.ToNullable(unhealthyResourceCount), Optional.ToNullable(notApplicableResourceCount), Optional.ToNullable(weight), definition.Value, Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new SecureScoreControlDetails(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                healthyResourceCount,
+                unhealthyResourceCount,
+                notApplicableResourceCount,
+                weight,
+                definition,
+                max,
+                current,
+                percentage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDetails>.Write(ModelReaderWriterOptions options)

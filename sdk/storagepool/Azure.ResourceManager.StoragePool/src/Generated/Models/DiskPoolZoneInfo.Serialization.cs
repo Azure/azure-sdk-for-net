@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> availabilityZones = default;
-            Optional<IReadOnlyList<string>> additionalCapabilities = default;
-            Optional<StoragePoolSku> sku = default;
+            IReadOnlyList<string> availabilityZones = default;
+            IReadOnlyList<string> additionalCapabilities = default;
+            StoragePoolSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value, serializedAdditionalRawData);
+            return new DiskPoolZoneInfo(availabilityZones ?? new ChangeTrackingList<string>(), additionalCapabilities ?? new ChangeTrackingList<string>(), sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolZoneInfo>.Write(ModelReaderWriterOptions options)

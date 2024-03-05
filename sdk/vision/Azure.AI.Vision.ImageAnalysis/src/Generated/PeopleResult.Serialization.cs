@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedPerson> array = new List<DetectedPerson>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedPerson.DeserializeDetectedPerson(item));
+                        array.Add(DetectedPerson.DeserializeDetectedPerson(item, options));
                     }
                     values = array;
                     continue;

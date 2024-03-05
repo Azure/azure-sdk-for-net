@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -21,9 +20,9 @@ namespace Azure.AI.Language.QuestionAnswering
             }
             ErrorCode code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<Error>> details = default;
-            Optional<InnerErrorModel> innererror = default;
+            string target = default;
+            IReadOnlyList<Error> details = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +64,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new Error(code, message, target, details ?? new ChangeTrackingList<Error>(), innererror);
         }
     }
 }

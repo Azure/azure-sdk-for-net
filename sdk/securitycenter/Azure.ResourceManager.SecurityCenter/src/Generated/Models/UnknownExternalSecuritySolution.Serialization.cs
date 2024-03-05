@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExternalSecuritySolution(document.RootElement, options);
+            return DeserializeExternalSecuritySolution(document.RootElement, options);
         }
 
         internal static UnknownExternalSecuritySolution DeserializeUnknownExternalSecuritySolution(JsonElement element, ModelReaderWriterOptions options = null)
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             ExternalSecuritySolutionKind? kind = "Unknown";
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new UnknownExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExternalSecuritySolution>.Write(ModelReaderWriterOptions options)
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownExternalSecuritySolution(document.RootElement, options);
+                        return DeserializeExternalSecuritySolution(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support '{options.Format}' format.");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> userDN = default;
-            Optional<string> groupDN = default;
-            Optional<string> groupMembershipFilter = default;
+            string userDN = default;
+            string groupDN = default;
+            string groupMembershipFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppLdapSearchScopeConfiguration(userDN.Value, groupDN.Value, groupMembershipFilter.Value, serializedAdditionalRawData);
+            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppLdapSearchScopeConfiguration>.Write(ModelReaderWriterOptions options)

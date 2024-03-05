@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightUsage>> value = default;
+            IReadOnlyList<HDInsightUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightUsage> array = new List<HDInsightUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightUsage.DeserializeHDInsightUsage(item));
+                        array.Add(HDInsightUsage.DeserializeHDInsightUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsagesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new UsagesListResult(value ?? new ChangeTrackingList<HDInsightUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsagesListResult>.Write(ModelReaderWriterOptions options)

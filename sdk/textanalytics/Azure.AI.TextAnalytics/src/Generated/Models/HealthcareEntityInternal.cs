@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -24,7 +23,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public HealthcareEntityInternal(string text, HealthcareEntityCategory category, int offset, int length, double confidenceScore)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
 
             Text = text;
             Category = category;

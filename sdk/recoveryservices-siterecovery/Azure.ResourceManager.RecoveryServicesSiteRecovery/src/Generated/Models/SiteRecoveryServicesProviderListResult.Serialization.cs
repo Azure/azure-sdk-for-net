@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryServicesProviderData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SiteRecoveryServicesProviderData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryServicesProviderData> array = new List<SiteRecoveryServicesProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(item));
+                        array.Add(SiteRecoveryServicesProviderData.DeserializeSiteRecoveryServicesProviderData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryServicesProviderListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SiteRecoveryServicesProviderListResult(value ?? new ChangeTrackingList<SiteRecoveryServicesProviderData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryServicesProviderListResult>.Write(ModelReaderWriterOptions options)

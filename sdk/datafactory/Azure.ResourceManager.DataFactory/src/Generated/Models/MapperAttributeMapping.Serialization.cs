@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<MappingType> type = default;
-            Optional<string> functionName = default;
-            Optional<string> expression = default;
-            Optional<MapperAttributeReference> attributeReference = default;
-            Optional<IList<MapperAttributeReference>> attributeReferences = default;
+            string name = default;
+            MappingType? type = default;
+            string functionName = default;
+            string expression = default;
+            MapperAttributeReference attributeReference = default;
+            IList<MapperAttributeReference> attributeReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value);
+                    attributeReference = MapperAttributeReference.DeserializeMapperAttributeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attributeReferences"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeReference> array = new List<MapperAttributeReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item));
+                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item, options));
                     }
                     attributeReferences = array;
                     continue;
@@ -162,7 +163,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperAttributeMapping(name.Value, Optional.ToNullable(type), functionName.Value, expression.Value, attributeReference.Value, Optional.ToList(attributeReferences), serializedAdditionalRawData);
+            return new MapperAttributeMapping(
+                name,
+                type,
+                functionName,
+                expression,
+                attributeReference,
+                attributeReferences ?? new ChangeTrackingList<MapperAttributeReference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperAttributeMapping>.Write(ModelReaderWriterOptions options)

@@ -57,8 +57,14 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
         public RedisFirewallRuleData(IPAddress startIP, IPAddress endIP)
         {
-            Argument.AssertNotNull(startIP, nameof(startIP));
-            Argument.AssertNotNull(endIP, nameof(endIP));
+            if (startIP == null)
+            {
+                throw new ArgumentNullException(nameof(startIP));
+            }
+            if (endIP == null)
+            {
+                throw new ArgumentNullException(nameof(endIP));
+            }
 
             StartIP = startIP;
             EndIP = endIP;

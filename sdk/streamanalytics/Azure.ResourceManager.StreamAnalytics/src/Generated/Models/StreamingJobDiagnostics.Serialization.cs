@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingJobDiagnosticCondition>> conditions = default;
+            IReadOnlyList<StreamingJobDiagnosticCondition> conditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobDiagnosticCondition> array = new List<StreamingJobDiagnosticCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item));
+                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobDiagnostics(Optional.ToList(conditions), serializedAdditionalRawData);
+            return new StreamingJobDiagnostics(conditions ?? new ChangeTrackingList<StreamingJobDiagnosticCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobDiagnostics>.Write(ModelReaderWriterOptions options)

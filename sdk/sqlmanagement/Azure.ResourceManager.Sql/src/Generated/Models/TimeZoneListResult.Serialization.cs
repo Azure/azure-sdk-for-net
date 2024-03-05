@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlTimeZoneData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlTimeZoneData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlTimeZoneData> array = new List<SqlTimeZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlTimeZoneData.DeserializeSqlTimeZoneData(item));
+                        array.Add(SqlTimeZoneData.DeserializeSqlTimeZoneData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TimeZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TimeZoneListResult(value ?? new ChangeTrackingList<SqlTimeZoneData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeZoneListResult>.Write(ModelReaderWriterOptions options)

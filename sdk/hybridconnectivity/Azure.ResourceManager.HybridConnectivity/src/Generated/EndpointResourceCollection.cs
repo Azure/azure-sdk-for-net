@@ -71,8 +71,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -119,8 +125,14 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +177,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<EndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.Get");
             scope.Start();
@@ -209,7 +224,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<EndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.Get");
             scope.Start();
@@ -313,7 +331,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.Exists");
             scope.Start();
@@ -355,7 +376,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.Exists");
             scope.Start();
@@ -397,7 +421,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<EndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
             scope.Start();
@@ -441,7 +468,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual NullableResponse<EndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResourceCollection.GetIfExists");
             scope.Start();

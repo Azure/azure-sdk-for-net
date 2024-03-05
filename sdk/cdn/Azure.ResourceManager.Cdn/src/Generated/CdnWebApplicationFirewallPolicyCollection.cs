@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CdnWebApplicationFirewallPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, CdnWebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CdnWebApplicationFirewallPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, CdnWebApplicationFirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<CdnWebApplicationFirewallPolicyResource> Get(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual async Task<NullableResponse<CdnWebApplicationFirewallPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
         public virtual NullableResponse<CdnWebApplicationFirewallPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
+            if (policyName == null)
+            {
+                throw new ArgumentNullException(nameof(policyName));
+            }
+            if (policyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(policyName));
+            }
 
             using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyCollection.GetIfExists");
             scope.Start();

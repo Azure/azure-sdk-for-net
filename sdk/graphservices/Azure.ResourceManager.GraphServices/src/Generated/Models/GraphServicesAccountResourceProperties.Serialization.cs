@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GraphServices;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 return null;
             }
-            Optional<GraphServicesProvisioningState> provisioningState = default;
+            GraphServicesProvisioningState? provisioningState = default;
             string appId = default;
-            Optional<string> billingPlanId = default;
+            string billingPlanId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceProperties(Optional.ToNullable(provisioningState), appId, billingPlanId.Value, serializedAdditionalRawData);
+            return new GraphServicesAccountResourceProperties(provisioningState, appId, billingPlanId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceProperties>.Write(ModelReaderWriterOptions options)

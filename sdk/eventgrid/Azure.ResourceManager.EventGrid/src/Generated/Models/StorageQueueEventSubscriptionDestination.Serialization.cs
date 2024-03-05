@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> queueName = default;
-            Optional<long> queueMessageTimeToLiveInSeconds = default;
+            ResourceIdentifier resourceId = default;
+            string queueName = default;
+            long? queueMessageTimeToLiveInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, queueName.Value, Optional.ToNullable(queueMessageTimeToLiveInSeconds));
+            return new StorageQueueEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId, queueName, queueMessageTimeToLiveInSeconds);
         }
 
         BinaryData IPersistableModel<StorageQueueEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

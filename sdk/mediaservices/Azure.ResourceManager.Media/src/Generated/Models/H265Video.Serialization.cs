@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<bool> sceneChangeDetection = default;
-            Optional<H265Complexity> complexity = default;
-            Optional<IList<H265Layer>> layers = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            bool? sceneChangeDetection = default;
+            H265Complexity? complexity = default;
+            IList<H265Layer> layers = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<H265Layer> array = new List<H265Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H265Layer.DeserializeH265Layer(item));
+                        array.Add(H265Layer.DeserializeH265Layer(item, options));
                     }
                     layers = array;
                     continue;
@@ -193,7 +194,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H265Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(sceneChangeDetection), Optional.ToNullable(complexity), Optional.ToList(layers));
+            return new H265Video(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                keyFrameInterval,
+                stretchMode,
+                syncMode,
+                sceneChangeDetection,
+                complexity,
+                layers ?? new ChangeTrackingList<H265Layer>());
         }
 
         BinaryData IPersistableModel<H265Video>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StatusCodeCount>> statusesSummary = default;
+            IReadOnlyList<StatusCodeCount> statusesSummary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<StatusCodeCount> array = new List<StatusCodeCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatusCodeCount.DeserializeStatusCodeCount(item));
+                        array.Add(StatusCodeCount.DeserializeStatusCodeCount(item, options));
                     }
                     statusesSummary = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceViewStatusesSummary(Optional.ToList(statusesSummary), serializedAdditionalRawData);
+            return new InstanceViewStatusesSummary(statusesSummary ?? new ChangeTrackingList<StatusCodeCount>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceViewStatusesSummary>.Write(ModelReaderWriterOptions options)

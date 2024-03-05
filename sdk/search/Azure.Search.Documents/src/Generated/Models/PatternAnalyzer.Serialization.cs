@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -54,10 +55,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> lowercase = default;
-            Optional<string> pattern = default;
-            Optional<string> flags = default;
-            Optional<IList<string>> stopwords = default;
+            bool? lowercase = default;
+            string pattern = default;
+            string flags = default;
+            IList<string> stopwords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, Optional.ToList(stopwords));
+            return new PatternAnalyzer(
+                odataType,
+                name,
+                lowercase,
+                pattern,
+                flags,
+                stopwords ?? new ChangeTrackingList<string>());
         }
     }
 }

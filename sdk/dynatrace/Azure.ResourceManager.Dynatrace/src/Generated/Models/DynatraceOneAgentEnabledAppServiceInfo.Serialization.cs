@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> version = default;
-            Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
-            Optional<DynatraceOneAgentAutoUpdateSetting> autoUpdateSetting = default;
-            Optional<DynatraceOneAgentUpdateStatus> updateStatus = default;
-            Optional<DynatraceOneAgentAvailabilityState> availabilityState = default;
-            Optional<DynatraceLogModuleState> logModule = default;
-            Optional<string> hostGroup = default;
-            Optional<string> hostName = default;
+            ResourceIdentifier resourceId = default;
+            string version = default;
+            DynatraceOneAgentMonitoringType? monitoringType = default;
+            DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting = default;
+            DynatraceOneAgentUpdateStatus? updateStatus = default;
+            DynatraceOneAgentAvailabilityState? availabilityState = default;
+            DynatraceLogModuleState? logModule = default;
+            string hostGroup = default;
+            string hostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value, serializedAdditionalRawData);
+            return new DynatraceOneAgentEnabledAppServiceInfo(
+                resourceId,
+                version,
+                monitoringType,
+                autoUpdateSetting,
+                updateStatus,
+                availabilityState,
+                logModule,
+                hostGroup,
+                hostName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceOneAgentEnabledAppServiceInfo>.Write(ModelReaderWriterOptions options)

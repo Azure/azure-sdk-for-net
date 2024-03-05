@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScriptPackageData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ScriptPackageData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ScriptPackageData> array = new List<ScriptPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptPackageData.DeserializeScriptPackageData(item));
+                        array.Add(ScriptPackageData.DeserializeScriptPackageData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptPackagesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScriptPackagesList(value ?? new ChangeTrackingList<ScriptPackageData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptPackagesList>.Write(ModelReaderWriterOptions options)

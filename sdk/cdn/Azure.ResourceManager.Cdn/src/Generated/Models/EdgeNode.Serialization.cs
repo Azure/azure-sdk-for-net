@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -101,8 +102,8 @@ namespace Azure.ResourceManager.Cdn.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<IPAddressGroup>> ipAddressGroups = default;
+            SystemData systemData = default;
+            IList<IPAddressGroup> ipAddressGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<IPAddressGroup> array = new List<IPAddressGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item));
+                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item, options));
                             }
                             ipAddressGroups = array;
                             continue;
@@ -163,7 +164,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeNode(id, name, type, systemData.Value, Optional.ToList(ipAddressGroups), serializedAdditionalRawData);
+            return new EdgeNode(
+                id,
+                name,
+                type,
+                systemData,
+                ipAddressGroups ?? new ChangeTrackingList<IPAddressGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeNode>.Write(ModelReaderWriterOptions options)

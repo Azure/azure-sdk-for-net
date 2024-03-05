@@ -68,7 +68,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJobAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetBiomassModelJobAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.GetBiomassModelJob");
             scope.Start();
@@ -103,7 +110,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetBiomassModelJob(string,RequestContext)']/*" />
         public virtual Response GetBiomassModelJob(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.GetBiomassModelJob");
             scope.Start();
@@ -138,7 +152,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJobAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorPlacementModelJobAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.GetSensorPlacementModelJob");
             scope.Start();
@@ -173,7 +194,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJob(string,RequestContext)']/*" />
         public virtual Response GetSensorPlacementModelJob(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.GetSensorPlacementModelJob");
             scope.Start();
@@ -208,7 +236,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJobAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSoilMoistureModelJobAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.GetSoilMoistureModelJob");
             scope.Start();
@@ -243,7 +278,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSoilMoistureModelJob(string,RequestContext)']/*" />
         public virtual Response GetSoilMoistureModelJob(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.GetSoilMoistureModelJob");
             scope.Start();
@@ -280,8 +322,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateBiomassModelJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateBiomassModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateBiomassModelJob");
             scope.Start();
@@ -318,8 +370,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateBiomassModelJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateBiomassModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateBiomassModelJob");
             scope.Start();
@@ -356,8 +418,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSensorPlacementModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateSensorPlacementModelJob");
             scope.Start();
@@ -394,8 +466,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSensorPlacementModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateSensorPlacementModelJob");
             scope.Start();
@@ -432,8 +514,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSoilMoistureModelJobAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateSoilMoistureModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateSoilMoistureModelJob");
             scope.Start();
@@ -470,8 +562,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSoilMoistureModelJob(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateSoilMoistureModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateSoilMoistureModelJob");
             scope.Start();

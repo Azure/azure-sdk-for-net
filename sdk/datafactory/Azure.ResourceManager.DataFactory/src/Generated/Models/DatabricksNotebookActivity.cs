@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,8 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
         public DatabricksNotebookActivity(string name, DataFactoryElement<string> notebookPath) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(notebookPath, nameof(notebookPath));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (notebookPath == null)
+            {
+                throw new ArgumentNullException(nameof(notebookPath));
+            }
 
             NotebookPath = notebookPath;
             BaseParameters = new ChangeTrackingDictionary<string, BinaryData>();

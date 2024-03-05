@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> testVmName = default;
-            Optional<string> recoveryPointId = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> networkName = default;
-            Optional<string> subnet = default;
+            string protectedItemName = default;
+            string vmName = default;
+            string testVmName = default;
+            string recoveryPointId = default;
+            DateTimeOffset? recoveryPointTime = default;
+            string networkName = default;
+            string subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProtectedItemProperties(protectedItemName.Value, vmName.Value, testVmName.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), networkName.Value, subnet.Value, serializedAdditionalRawData);
+            return new FailoverProtectedItemProperties(
+                protectedItemName,
+                vmName,
+                testVmName,
+                recoveryPointId,
+                recoveryPointTime,
+                networkName,
+                subnet,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProtectedItemProperties>.Write(ModelReaderWriterOptions options)

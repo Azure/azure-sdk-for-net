@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -118,16 +119,16 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<PeeringKind> kind = default;
+            PeeringKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringLocationProperties> direct = default;
-            Optional<PeeringLocationPropertiesExchange> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<string> country = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            DirectPeeringLocationProperties direct = default;
+            PeeringLocationPropertiesExchange exchange = default;
+            string peeringLocation = default;
+            string country = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value);
+                            direct = DirectPeeringLocationProperties.DeserializeDirectPeeringLocationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exchange"u8))
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.Peering.Models
                             {
                                 continue;
                             }
-                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value);
+                            exchange = PeeringLocationPropertiesExchange.DeserializePeeringLocationPropertiesExchange(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringLocation"u8))
@@ -220,7 +221,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLocation(id, name, type, systemData.Value, Optional.ToNullable(kind), direct.Value, exchange.Value, peeringLocation.Value, country.Value, Optional.ToNullable(azureRegion), serializedAdditionalRawData);
+            return new PeeringLocation(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                direct,
+                exchange,
+                peeringLocation,
+                country,
+                azureRegion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLocation>.Write(ModelReaderWriterOptions options)

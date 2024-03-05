@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> intervalStartTime = default;
-            Optional<QueryTimeGrainType> intervalType = default;
-            Optional<long> executionCount = default;
-            Optional<IList<QueryMetricProperties>> metrics = default;
+            string intervalStartTime = default;
+            QueryTimeGrainType? intervalType = default;
+            long? executionCount = default;
+            IList<QueryMetricProperties> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
+                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item, options));
                     }
                     metrics = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryMetricInterval(intervalStartTime.Value, Optional.ToNullable(intervalType), Optional.ToNullable(executionCount), Optional.ToList(metrics), serializedAdditionalRawData);
+            return new QueryMetricInterval(intervalStartTime, intervalType, executionCount, metrics ?? new ChangeTrackingList<QueryMetricProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryMetricInterval>.Write(ModelReaderWriterOptions options)

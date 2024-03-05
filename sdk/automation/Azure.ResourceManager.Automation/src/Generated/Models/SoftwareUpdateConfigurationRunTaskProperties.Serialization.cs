@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> source = default;
-            Optional<Guid> jobId = default;
+            string status = default;
+            string source = default;
+            Guid? jobId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationRunTaskProperties(status.Value, source.Value, Optional.ToNullable(jobId), serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationRunTaskProperties(status, source, jobId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationRunTaskProperties>.Write(ModelReaderWriterOptions options)

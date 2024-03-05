@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("managedIdentityResourceId"u8);
+            writer.WritePropertyName("managed_identity_resource_id"u8);
             writer.WriteStringValue(ManagedIdentityResourceId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedIdentityResourceId"u8))
+                if (property.NameEquals("managed_identity_resource_id"u8))
                 {
                     managedIdentityResourceId = property.Value.GetString();
                     continue;

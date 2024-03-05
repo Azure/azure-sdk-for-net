@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -25,7 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowlistValues"/> is null. </exception>
         public AllowlistCustomAlertRule(bool isEnabled, IEnumerable<string> allowlistValues) : base(isEnabled)
         {
-            Argument.AssertNotNull(allowlistValues, nameof(allowlistValues));
+            if (allowlistValues == null)
+            {
+                throw new ArgumentNullException(nameof(allowlistValues));
+            }
 
             AllowlistValues = allowlistValues.ToList();
             RuleType = "AllowlistCustomAlertRule";

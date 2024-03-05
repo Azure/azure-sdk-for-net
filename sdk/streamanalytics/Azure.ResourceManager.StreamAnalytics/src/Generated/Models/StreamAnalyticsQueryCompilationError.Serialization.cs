@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<int> startLine = default;
-            Optional<int> startColumn = default;
-            Optional<int> endLine = default;
-            Optional<int> endColumn = default;
-            Optional<bool> isGlobal = default;
+            string message = default;
+            int? startLine = default;
+            int? startColumn = default;
+            int? endLine = default;
+            int? endColumn = default;
+            bool? isGlobal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal), serializedAdditionalRawData);
+            return new StreamAnalyticsQueryCompilationError(
+                message,
+                startLine,
+                startColumn,
+                endLine,
+                endColumn,
+                isGlobal,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationError>.Write(ModelReaderWriterOptions options)

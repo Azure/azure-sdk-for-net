@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<PublishingProfileFormat> format = default;
-            Optional<bool> includeDisasterRecoveryEndpoints = default;
+            PublishingProfileFormat? format = default;
+            bool? includeDisasterRecoveryEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmPublishingProfile(Optional.ToNullable(format), Optional.ToNullable(includeDisasterRecoveryEndpoints), serializedAdditionalRawData);
+            return new CsmPublishingProfile(format, includeDisasterRecoveryEndpoints, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmPublishingProfile>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
@@ -66,8 +67,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="defaultDataLakeStoreAccount"/> or <paramref name="dataLakeStoreAccounts"/> is null. </exception>
         public DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, string defaultDataLakeStoreAccount, IEnumerable<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts)
         {
-            Argument.AssertNotNull(defaultDataLakeStoreAccount, nameof(defaultDataLakeStoreAccount));
-            Argument.AssertNotNull(dataLakeStoreAccounts, nameof(dataLakeStoreAccounts));
+            if (defaultDataLakeStoreAccount == null)
+            {
+                throw new ArgumentNullException(nameof(defaultDataLakeStoreAccount));
+            }
+            if (dataLakeStoreAccounts == null)
+            {
+                throw new ArgumentNullException(nameof(dataLakeStoreAccounts));
+            }
 
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();

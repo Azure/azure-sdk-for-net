@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Models

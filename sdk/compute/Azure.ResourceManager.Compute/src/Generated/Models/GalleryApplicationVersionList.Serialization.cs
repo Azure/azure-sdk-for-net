@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<GalleryApplicationVersionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationVersionData> array = new List<GalleryApplicationVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(item));
+                        array.Add(GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionList(value, nextLink.Value, serializedAdditionalRawData);
+            return new GalleryApplicationVersionList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionList>.Write(ModelReaderWriterOptions options)

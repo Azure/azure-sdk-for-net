@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> kid = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            Uri kid = default;
+            bool? enabled = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountKeyVaultKey(kid.Value, Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+            return new IntegrationAccountKeyVaultKey(kid, enabled, created, updated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountKeyVaultKey>.Write(ModelReaderWriterOptions options)

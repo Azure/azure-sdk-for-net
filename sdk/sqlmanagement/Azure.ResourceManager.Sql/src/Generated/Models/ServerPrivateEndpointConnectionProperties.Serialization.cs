@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
-            Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            IReadOnlyList<string> groupIds = default;
+            SqlPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            SqlPrivateEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = SqlPrivateLinkServiceConnectionStateProperty.DeserializeSqlPrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = SqlPrivateLinkServiceConnectionStateProperty.DeserializeSqlPrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerPrivateEndpointConnectionProperties(privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ServerPrivateEndpointConnectionProperties(privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

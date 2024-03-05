@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -112,12 +113,12 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             StorageSkuName name = default;
-            Optional<StorageSkuTier> tier = default;
-            Optional<string> resourceType = default;
-            Optional<StorageKind> kind = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<StorageSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<StorageSkuRestriction>> restrictions = default;
+            StorageSkuTier? tier = default;
+            string resourceType = default;
+            StorageKind? kind = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<StorageSkuCapability> capabilities = default;
+            IReadOnlyList<StorageSkuRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuCapability> array = new List<StorageSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item));
+                        array.Add(StorageSkuCapability.DeserializeStorageSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuRestriction> array = new List<StorageSkuRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item));
+                        array.Add(StorageSkuRestriction.DeserializeStorageSkuRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -198,7 +199,15 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToNullable(kind), Optional.ToList(locations), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new StorageSkuInformation(
+                name,
+                tier,
+                resourceType,
+                kind,
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<StorageSkuCapability>(),
+                restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuInformation>.Write(ModelReaderWriterOptions options)

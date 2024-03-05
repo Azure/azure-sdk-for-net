@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<JobTier> jobTier = default;
-            Optional<int?> priority = default;
+            JobTier? jobTier = default;
+            int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobQueueSettings(Optional.ToNullable(jobTier), Optional.ToNullable(priority), serializedAdditionalRawData);
+            return new JobQueueSettings(jobTier, priority, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobQueueSettings>.Write(ModelReaderWriterOptions options)

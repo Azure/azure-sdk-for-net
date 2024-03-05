@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -150,22 +151,22 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> iotHubResourceId = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<KustoIotHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
-            Optional<string> sharedAccessPolicyName = default;
-            Optional<KustoDatabaseRouting> databaseRouting = default;
-            Optional<DateTimeOffset> retrievalStartDate = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier iotHubResourceId = default;
+            string consumerGroup = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            KustoIotHubDataFormat? dataFormat = default;
+            IList<string> eventSystemProperties = default;
+            string sharedAccessPolicyName = default;
+            KustoDatabaseRouting? databaseRouting = default;
+            DateTimeOffset? retrievalStartDate = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +306,24 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), sharedAccessPolicyName.Value, Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoIotHubDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                iotHubResourceId,
+                consumerGroup,
+                tableName,
+                mappingRuleName,
+                dataFormat,
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                sharedAccessPolicyName,
+                databaseRouting,
+                retrievalStartDate,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<KustoIotHubDataConnection>.Write(ModelReaderWriterOptions options)

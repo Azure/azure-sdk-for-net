@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -15,20 +14,26 @@ namespace Azure.Communication.Messages
     public partial class MessageTemplateText : MessageTemplateValue
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="text"> The text value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="text"/> is null. </exception>
         public MessageTemplateText(string name, string text) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(text, nameof(text));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
 
             Kind = "text";
             Text = text;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateText"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>

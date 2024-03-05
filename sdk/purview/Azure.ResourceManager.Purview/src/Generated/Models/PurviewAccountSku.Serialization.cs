@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<int> capacity = default;
-            Optional<PurviewAccountSkuName> name = default;
+            int? capacity = default;
+            PurviewAccountSkuName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountSku(Optional.ToNullable(capacity), Optional.ToNullable(name), serializedAdditionalRawData);
+            return new PurviewAccountSku(capacity, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountSku>.Write(ModelReaderWriterOptions options)

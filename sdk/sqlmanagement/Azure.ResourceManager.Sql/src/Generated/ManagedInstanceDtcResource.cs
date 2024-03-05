@@ -198,7 +198,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceDtcResource>> UpdateAsync(WaitUntil waitUntil, ManagedInstanceDtcData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcResource.Update");
             scope.Start();
@@ -244,7 +247,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceDtcResource> Update(WaitUntil waitUntil, ManagedInstanceDtcData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceDtcClientDiagnostics.CreateScope("ManagedInstanceDtcResource.Update");
             scope.Start();

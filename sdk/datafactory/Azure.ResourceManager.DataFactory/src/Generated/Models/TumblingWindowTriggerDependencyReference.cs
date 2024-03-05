@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TumblingWindowTriggerDependencyReference(DataFactoryTriggerReference referenceTrigger) : base(referenceTrigger)
         {
-            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
+            if (referenceTrigger == null)
+            {
+                throw new ArgumentNullException(nameof(referenceTrigger));
+            }
 
             DependencyReferenceType = "TumblingWindowTriggerDependencyReference";
         }

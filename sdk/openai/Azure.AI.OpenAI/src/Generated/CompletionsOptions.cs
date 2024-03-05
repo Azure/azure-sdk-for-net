@@ -90,6 +90,7 @@ namespace Azure.AI.OpenAI
         /// A value that controls the emission of log probabilities for the provided number of most likely
         /// tokens within a completions response.
         /// </param>
+        /// <param name="suffix"> The suffix that comes after a completion of inserted text. </param>
         /// <param name="echo">
         /// A value specifying whether completions responses should include input prompts as prefixes to
         /// their generated output.
@@ -122,7 +123,7 @@ namespace Azure.AI.OpenAI
         /// resource URI that's connected to.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, string suffix, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Prompts = prompts;
             MaxTokens = maxTokens;
@@ -132,6 +133,7 @@ namespace Azure.AI.OpenAI
             User = user;
             ChoicesPerPrompt = choicesPerPrompt;
             LogProbabilityCount = logProbabilityCount;
+            Suffix = suffix;
             Echo = echo;
             StopSequences = stopSequences;
             PresencePenalty = presencePenalty;
@@ -146,6 +148,8 @@ namespace Azure.AI.OpenAI
         /// or rate-limiting purposes.
         /// </summary>
         public string User { get; set; }
+        /// <summary> The suffix that comes after a completion of inserted text. </summary>
+        public string Suffix { get; set; }
         /// <summary>
         /// A value specifying whether completions responses should include input prompts as prefixes to
         /// their generated output.

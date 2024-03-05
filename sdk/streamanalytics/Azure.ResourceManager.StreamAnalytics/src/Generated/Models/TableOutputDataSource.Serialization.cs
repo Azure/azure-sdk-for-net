@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -110,13 +111,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<string> table = default;
-            Optional<string> partitionKey = default;
-            Optional<string> rowKey = default;
-            Optional<IList<string>> columnsToRemove = default;
-            Optional<int> batchSize = default;
+            string accountName = default;
+            string accountKey = default;
+            string table = default;
+            string partitionKey = default;
+            string rowKey = default;
+            IList<string> columnsToRemove = default;
+            int? batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +193,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableOutputDataSource(type, serializedAdditionalRawData, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, Optional.ToList(columnsToRemove), Optional.ToNullable(batchSize));
+            return new TableOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                accountName,
+                accountKey,
+                table,
+                partitionKey,
+                rowKey,
+                columnsToRemove ?? new ChangeTrackingList<string>(),
+                batchSize);
         }
 
         BinaryData IPersistableModel<TableOutputDataSource>.Write(ModelReaderWriterOptions options)

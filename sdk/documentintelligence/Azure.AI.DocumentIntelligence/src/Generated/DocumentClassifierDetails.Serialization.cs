@@ -90,9 +90,9 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string classifierId = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             string apiVersion = default;
             IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, ClassifierDocumentTypeDetails> dictionary = new Dictionary<string, ClassifierDocumentTypeDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value));
+                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value, options));
                     }
                     docTypes = dictionary;
                     continue;
@@ -144,7 +144,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion, docTypes, serializedAdditionalRawData);
+            return new DocumentClassifierDetails(
+                classifierId,
+                description,
+                createdDateTime,
+                expirationDateTime,
+                apiVersion,
+                docTypes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentClassifierDetails>.Write(ModelReaderWriterOptions options)
@@ -177,6 +184,14 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         string IPersistableModel<DocumentClassifierDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentClassifierDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentClassifierDetails(document.RootElement);
+        }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()

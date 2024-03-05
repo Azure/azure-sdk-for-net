@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            ResourceIdentifier sourceResourceId = default;
+            DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("restoreTargetInfo"u8))
                 {
-                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value);
+                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStoreType"u8))
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +137,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRecoveryTimeBasedRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointTime);
+            return new BackupRecoveryTimeBasedRestoreContent(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData,
+                recoveryPointTime);
         }
 
         BinaryData IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.Write(ModelReaderWriterOptions options)

@@ -202,7 +202,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> EnforceAsync(WaitUntil waitUntil, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningResource.Enforce");
             scope.Start();
@@ -248,7 +251,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Enforce(WaitUntil waitUntil, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningResource.Enforce");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -134,19 +135,19 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<KeyVaultSku> sku = default;
-            Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
-            Optional<bool> enabledForDeployment = default;
-            Optional<bool> enabledForDiskEncryption = default;
-            Optional<bool> enabledForTemplateDeployment = default;
-            Optional<bool> enableSoftDelete = default;
-            Optional<bool> enableRbacAuthorization = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<KeyVaultPatchMode> createMode = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<KeyVaultNetworkRuleSet> networkAcls = default;
-            Optional<string> publicNetworkAccess = default;
+            Guid? tenantId = default;
+            KeyVaultSku sku = default;
+            IList<KeyVaultAccessPolicy> accessPolicies = default;
+            bool? enabledForDeployment = default;
+            bool? enabledForDiskEncryption = default;
+            bool? enabledForTemplateDeployment = default;
+            bool? enableSoftDelete = default;
+            bool? enableRbacAuthorization = default;
+            int? softDeleteRetentionInDays = default;
+            KeyVaultPatchMode? createMode = default;
+            bool? enablePurgeProtection = default;
+            KeyVaultNetworkRuleSet networkAcls = default;
+            string publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
+                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -275,7 +276,21 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultPatchProperties(Optional.ToNullable(tenantId), sku.Value, Optional.ToList(accessPolicies), Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, publicNetworkAccess.Value, serializedAdditionalRawData);
+            return new KeyVaultPatchProperties(
+                tenantId,
+                sku,
+                accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(),
+                enabledForDeployment,
+                enabledForDiskEncryption,
+                enabledForTemplateDeployment,
+                enableSoftDelete,
+                enableRbacAuthorization,
+                softDeleteRetentionInDays,
+                createMode,
+                enablePurgeProtection,
+                networkAcls,
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultPatchProperties>.Write(ModelReaderWriterOptions options)

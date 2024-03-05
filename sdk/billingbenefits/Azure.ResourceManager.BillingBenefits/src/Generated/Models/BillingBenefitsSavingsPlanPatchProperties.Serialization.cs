@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Optional<bool> renew = default;
-            Optional<RenewProperties> renewProperties = default;
+            string displayName = default;
+            BillingBenefitsAppliedScopeType? appliedScopeType = default;
+            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
+            bool? renew = default;
+            RenewProperties renewProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property.Value);
+                    appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renew"u8))
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value);
+                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanPatchProperties(displayName.Value, Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, Optional.ToNullable(renew), renewProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanPatchProperties(
+                displayName,
+                appliedScopeType,
+                appliedScopeProperties,
+                renew,
+                renewProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanPatchProperties>.Write(ModelReaderWriterOptions options)

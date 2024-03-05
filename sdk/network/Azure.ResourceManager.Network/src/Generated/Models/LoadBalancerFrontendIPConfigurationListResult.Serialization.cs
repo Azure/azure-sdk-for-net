@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontendIPConfigurationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FrontendIPConfigurationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                        array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerFrontendIPConfigurationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LoadBalancerFrontendIPConfigurationListResult(value ?? new ChangeTrackingList<FrontendIPConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerFrontendIPConfigurationListResult>.Write(ModelReaderWriterOptions options)

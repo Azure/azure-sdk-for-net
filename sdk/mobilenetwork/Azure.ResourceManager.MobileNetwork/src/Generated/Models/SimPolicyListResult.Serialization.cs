@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkSimPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MobileNetworkSimPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkSimPolicyData> array = new List<MobileNetworkSimPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(item));
+                        array.Add(MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SimPolicyListResult(value ?? new ChangeTrackingList<MobileNetworkSimPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimPolicyListResult>.Write(ModelReaderWriterOptions options)

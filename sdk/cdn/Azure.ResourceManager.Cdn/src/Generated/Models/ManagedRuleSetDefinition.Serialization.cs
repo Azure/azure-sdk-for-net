@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -118,15 +119,15 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<CdnSku> sku = default;
+            CdnSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
-            Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string ruleSetType = default;
+            string ruleSetVersion = default;
+            IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    sku = CdnSku.DeserializeCdnSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item, options));
                             }
                             ruleGroups = array;
                             continue;
@@ -211,7 +212,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), serializedAdditionalRawData);
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                provisioningState,
+                ruleSetType,
+                ruleSetVersion,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)

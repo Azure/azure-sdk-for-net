@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -105,11 +106,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<CassandraReaperStatus> reaperStatus = default;
-            Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
-            Optional<IReadOnlyList<CassandraError>> errors = default;
-            Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
+            ETag? eTag = default;
+            CassandraReaperStatus reaperStatus = default;
+            IReadOnlyList<CassandraConnectionError> connectionErrors = default;
+            IReadOnlyList<CassandraError> errors = default;
+            IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionErrors"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraConnectionError> array = new List<CassandraConnectionError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item));
+                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item, options));
                     }
                     connectionErrors = array;
                     continue;
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraError> array = new List<CassandraError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraError.DeserializeCassandraError(item));
+                        array.Add(CassandraError.DeserializeCassandraError(item, options));
                     }
                     errors = array;
                     continue;
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterPublicStatusDataCentersItem> array = new List<CassandraClusterPublicStatusDataCentersItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item));
+                        array.Add(CassandraClusterPublicStatusDataCentersItem.DeserializeCassandraClusterPublicStatusDataCentersItem(item, options));
                     }
                     dataCenters = array;
                     continue;
@@ -180,7 +181,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(errors), Optional.ToList(dataCenters), serializedAdditionalRawData);
+            return new CassandraClusterPublicStatus(
+                eTag,
+                reaperStatus,
+                connectionErrors ?? new ChangeTrackingList<CassandraConnectionError>(),
+                errors ?? new ChangeTrackingList<CassandraError>(),
+                dataCenters ?? new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterPublicStatus>.Write(ModelReaderWriterOptions options)

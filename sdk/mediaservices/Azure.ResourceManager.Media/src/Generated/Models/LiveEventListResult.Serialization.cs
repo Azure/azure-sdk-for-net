@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaLiveEventData>> value = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            IReadOnlyList<MediaLiveEventData> value = default;
+            int? odataCount = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaLiveEventData> array = new List<MediaLiveEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item));
+                        array.Add(MediaLiveEventData.DeserializeMediaLiveEventData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventListResult(Optional.ToList(value), Optional.ToNullable(odataCount), odataNextLink.Value, serializedAdditionalRawData);
+            return new LiveEventListResult(value ?? new ChangeTrackingList<MediaLiveEventData>(), odataCount, odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> interactionName = default;
-            Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
+            string interactionName = default;
+            IReadOnlyList<RelationshipsLookup> suggestedRelationships = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<RelationshipsLookup> array = new List<RelationshipsLookup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item));
+                        array.Add(RelationshipsLookup.DeserializeRelationshipsLookup(item, options));
                     }
                     suggestedRelationships = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuggestRelationshipLinksResponse(interactionName.Value, Optional.ToList(suggestedRelationships), serializedAdditionalRawData);
+            return new SuggestRelationshipLinksResponse(interactionName, suggestedRelationships ?? new ChangeTrackingList<RelationshipsLookup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuggestRelationshipLinksResponse>.Write(ModelReaderWriterOptions options)

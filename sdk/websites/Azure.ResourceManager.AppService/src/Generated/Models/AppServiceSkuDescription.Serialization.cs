@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
-            Optional<AppServiceSkuCapacity> skuCapacity = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<AppServiceSkuCapability>> capabilities = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
+            AppServiceSkuCapacity skuCapacity = default;
+            IList<AzureLocation> locations = default;
+            IList<AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
+                    skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -198,7 +199,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new AppServiceSkuDescription(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                skuCapacity,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSkuDescription>.Write(ModelReaderWriterOptions options)

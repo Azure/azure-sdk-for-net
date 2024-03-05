@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -55,10 +56,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> serviceIdentifier = default;
-            Optional<string> remoteIPAddress = default;
-            Optional<IList<string>> scopes = default;
-            Optional<IList<string>> endpoints = default;
+            string serviceIdentifier = default;
+            string remoteIPAddress = default;
+            IList<string> scopes = default;
+            IList<string> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceIdentifier"u8))
@@ -100,7 +101,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDevice(serviceIdentifier.Value, remoteIPAddress.Value, Optional.ToList(scopes), Optional.ToList(endpoints));
+            return new DiscoveredOnvifDevice(serviceIdentifier, remoteIPAddress, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
         }
     }
 }

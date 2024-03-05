@@ -112,23 +112,23 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<string> alg = default;
-            Optional<string> crv = default;
-            Optional<string> d = default;
-            Optional<string> dp = default;
-            Optional<string> dq = default;
-            Optional<string> e = default;
-            Optional<string> k = default;
-            Optional<string> kid = default;
+            string alg = default;
+            string crv = default;
+            string d = default;
+            string dp = default;
+            string dq = default;
+            string e = default;
+            string k = default;
+            string kid = default;
             string kty = default;
-            Optional<string> n = default;
-            Optional<string> p = default;
-            Optional<string> q = default;
-            Optional<string> qi = default;
-            Optional<string> use = default;
-            Optional<string> x = default;
-            Optional<IList<string>> x5c = default;
-            Optional<string> y = default;
+            string n = default;
+            string p = default;
+            string q = default;
+            string qi = default;
+            string use = default;
+            string x = default;
+            IList<string> x5c = default;
+            string y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alg"u8))
@@ -226,7 +226,24 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value);
+            return new JsonWebKey(
+                alg,
+                crv,
+                d,
+                dp,
+                dq,
+                e,
+                k,
+                kid,
+                kty,
+                n,
+                p,
+                q,
+                qi,
+                use,
+                x,
+                x5c ?? new ChangeTrackingList<string>(),
+                y);
         }
     }
 }

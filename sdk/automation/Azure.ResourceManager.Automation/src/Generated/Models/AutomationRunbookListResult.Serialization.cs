@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationRunbookData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutomationRunbookData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationRunbookData> array = new List<AutomationRunbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationRunbookData.DeserializeAutomationRunbookData(item));
+                        array.Add(AutomationRunbookData.DeserializeAutomationRunbookData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationRunbookListResult(value ?? new ChangeTrackingList<AutomationRunbookData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookListResult>.Write(ModelReaderWriterOptions options)

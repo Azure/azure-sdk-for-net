@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> @namespace = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            string @namespace = default;
+            IReadOnlyList<ProviderResourceType> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item));
+                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
                     }
                     resourceTypes = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes), serializedAdditionalRawData);
+            return new TenantResourceProvider(@namespace, resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantResourceProvider>.Write(ModelReaderWriterOptions options)

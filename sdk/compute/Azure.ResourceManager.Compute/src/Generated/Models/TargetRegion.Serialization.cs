@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<int> regionalReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
-            Optional<bool> excludeFromLatest = default;
+            int? regionalReplicaCount = default;
+            ImageStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
+            bool? excludeFromLatest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"u8))
@@ -142,7 +143,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, Optional.ToNullable(excludeFromLatest), serializedAdditionalRawData);
+            return new TargetRegion(
+                name,
+                regionalReplicaCount,
+                storageAccountType,
+                encryption,
+                excludeFromLatest,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetRegion>.Write(ModelReaderWriterOptions options)

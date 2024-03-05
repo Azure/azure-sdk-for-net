@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -109,9 +110,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string containerName = default;
-            Optional<Guid> dataSetId = default;
+            Guid? dataSetId = default;
             string prefix = default;
             string resourceGroup = default;
             string storageAccountName = default;
@@ -201,7 +202,19 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobFolderDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, Optional.ToNullable(dataSetId), prefix, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                prefix,
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobFolderDataSet>.Write(ModelReaderWriterOptions options)

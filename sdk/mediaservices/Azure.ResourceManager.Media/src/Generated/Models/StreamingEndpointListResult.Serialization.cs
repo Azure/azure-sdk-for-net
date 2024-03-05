@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingEndpointData>> value = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            IReadOnlyList<StreamingEndpointData> value = default;
+            int? odataCount = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingEndpointData> array = new List<StreamingEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingEndpointData.DeserializeStreamingEndpointData(item));
+                        array.Add(StreamingEndpointData.DeserializeStreamingEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointListResult(Optional.ToList(value), Optional.ToNullable(odataCount), odataNextLink.Value, serializedAdditionalRawData);
+            return new StreamingEndpointListResult(value ?? new ChangeTrackingList<StreamingEndpointData>(), odataCount, odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices.Models
@@ -95,12 +96,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<ManagedServicesRegistrationAssignmentRegistrationProperties> properties = default;
-            Optional<ManagedServicesPlan> plan = default;
+            ManagedServicesRegistrationAssignmentRegistrationProperties properties = default;
+            ManagedServicesPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value);
+                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
+                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -153,7 +154,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, type, systemData.Value, properties.Value, plan.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationAssignmentRegistrationData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.Write(ModelReaderWriterOptions options)

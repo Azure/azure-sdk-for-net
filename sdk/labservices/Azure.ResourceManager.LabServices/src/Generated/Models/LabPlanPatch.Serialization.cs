@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -123,15 +124,15 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<string>> tags = default;
-            Optional<LabConnectionProfile> defaultConnectionProfile = default;
-            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
-            Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<LabPlanSupportInfo> supportInfo = default;
-            Optional<Uri> linkedLmsInstance = default;
+            ManagedServiceIdentity identity = default;
+            IList<string> tags = default;
+            LabConnectionProfile defaultConnectionProfile = default;
+            LabAutoShutdownProfile defaultAutoShutdownProfile = default;
+            LabPlanNetworkProfile defaultNetworkProfile = default;
+            IList<AzureLocation> allowedRegions = default;
+            ResourceIdentifier sharedGalleryId = default;
+            LabPlanSupportInfo supportInfo = default;
+            Uri linkedLmsInstance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"u8))
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"u8))
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value);
+                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedRegions"u8))
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"u8))
@@ -245,7 +246,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanPatch(Optional.ToList(tags), serializedAdditionalRawData, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value);
+            return new LabPlanPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                identity,
+                defaultConnectionProfile,
+                defaultAutoShutdownProfile,
+                defaultNetworkProfile,
+                allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                sharedGalleryId,
+                supportInfo,
+                linkedLmsInstance);
         }
 
         BinaryData IPersistableModel<LabPlanPatch>.Write(ModelReaderWriterOptions options)

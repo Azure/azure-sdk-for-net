@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string keyName = default;
             Uri vaultBaseUrl = default;
-            Optional<string> keyVersion = default;
-            Optional<DataFactoryCmkIdentity> identity = default;
+            string keyVersion = default;
+            DataFactoryCmkIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    identity = DataFactoryCmkIdentity.DeserializeDataFactoryCmkIdentity(property.Value);
+                    identity = DataFactoryCmkIdentity.DeserializeDataFactoryCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryEncryptionConfiguration(keyName, vaultBaseUrl, keyVersion.Value, identity.Value, serializedAdditionalRawData);
+            return new DataFactoryEncryptionConfiguration(keyName, vaultBaseUrl, keyVersion, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryEncryptionConfiguration>.Write(ModelReaderWriterOptions options)

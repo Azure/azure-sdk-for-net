@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> seedNodes = default;
-            Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
+            string name = default;
+            IReadOnlyList<string> seedNodes = default;
+            IReadOnlyList<CassandraClusterDataCenterNodeItem> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterDataCenterNodeItem> array = new List<CassandraClusterDataCenterNodeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item));
+                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item, options));
                     }
                     nodes = array;
                     continue;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterPublicStatusDataCentersItem(name.Value, Optional.ToList(seedNodes), Optional.ToList(nodes), serializedAdditionalRawData);
+            return new CassandraClusterPublicStatusDataCentersItem(name, seedNodes ?? new ChangeTrackingList<string>(), nodes ?? new ChangeTrackingList<CassandraClusterDataCenterNodeItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterPublicStatusDataCentersItem>.Write(ModelReaderWriterOptions options)

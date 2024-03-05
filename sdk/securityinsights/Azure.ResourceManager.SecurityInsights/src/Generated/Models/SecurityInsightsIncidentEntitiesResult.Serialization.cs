@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityInsightsEntity>> entities = default;
-            Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
+            IReadOnlyList<SecurityInsightsEntity> entities = default;
+            IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata> metaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsEntity> array = new List<SecurityInsightsEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item));
+                        array.Add(SecurityInsightsEntity.DeserializeSecurityInsightsEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsIncidentEntitiesMetadata> array = new List<SecurityInsightsIncidentEntitiesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsIncidentEntitiesMetadata.DeserializeSecurityInsightsIncidentEntitiesMetadata(item));
+                        array.Add(SecurityInsightsIncidentEntitiesMetadata.DeserializeSecurityInsightsIncidentEntitiesMetadata(item, options));
                     }
                     metaData = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentEntitiesResult(Optional.ToList(entities), Optional.ToList(metaData), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentEntitiesResult(entities ?? new ChangeTrackingList<SecurityInsightsEntity>(), metaData ?? new ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentEntitiesResult>.Write(ModelReaderWriterOptions options)

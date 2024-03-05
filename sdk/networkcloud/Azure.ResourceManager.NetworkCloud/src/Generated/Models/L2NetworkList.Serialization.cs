@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudL2NetworkData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<NetworkCloudL2NetworkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudL2NetworkData> array = new List<NetworkCloudL2NetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(item));
+                        array.Add(NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L2NetworkList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new L2NetworkList(nextLink, value ?? new ChangeTrackingList<NetworkCloudL2NetworkData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L2NetworkList>.Write(ModelReaderWriterOptions options)

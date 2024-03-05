@@ -19,7 +19,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksLinkedService(object domain)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
 
             Domain = domain;
             NewClusterSparkConf = new ChangeTrackingDictionary<string, object>();

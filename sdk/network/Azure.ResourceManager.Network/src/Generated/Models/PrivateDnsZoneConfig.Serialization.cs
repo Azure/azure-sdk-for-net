@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateDnsZoneId = default;
-            Optional<IReadOnlyList<RecordSet>> recordSets = default;
+            string name = default;
+            string privateDnsZoneId = default;
+            IReadOnlyList<RecordSet> recordSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<RecordSet> array = new List<RecordSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecordSet.DeserializeRecordSet(item));
+                                array.Add(RecordSet.DeserializeRecordSet(item, options));
                             }
                             recordSets = array;
                             continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets), serializedAdditionalRawData);
+            return new PrivateDnsZoneConfig(name, privateDnsZoneId, recordSets ?? new ChangeTrackingList<RecordSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneConfig>.Write(ModelReaderWriterOptions options)

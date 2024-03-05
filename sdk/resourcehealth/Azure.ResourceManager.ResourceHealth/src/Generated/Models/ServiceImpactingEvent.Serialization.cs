@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> eventStartTime = default;
-            Optional<DateTimeOffset> eventStatusLastModifiedTime = default;
-            Optional<string> correlationId = default;
-            Optional<ServiceImpactingEventStatus> status = default;
-            Optional<ServiceImpactingEventIncidentProperties> incidentProperties = default;
+            DateTimeOffset? eventStartTime = default;
+            DateTimeOffset? eventStatusLastModifiedTime = default;
+            string correlationId = default;
+            ServiceImpactingEventStatus status = default;
+            ServiceImpactingEventIncidentProperties incidentProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value);
+                    status = ServiceImpactingEventStatus.DeserializeServiceImpactingEventStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("incidentProperties"u8))
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value);
+                    incidentProperties = ServiceImpactingEventIncidentProperties.DeserializeServiceImpactingEventIncidentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceImpactingEvent(Optional.ToNullable(eventStartTime), Optional.ToNullable(eventStatusLastModifiedTime), correlationId.Value, status.Value, incidentProperties.Value, serializedAdditionalRawData);
+            return new ServiceImpactingEvent(
+                eventStartTime,
+                eventStatusLastModifiedTime,
+                correlationId,
+                status,
+                incidentProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceImpactingEvent>.Write(ModelReaderWriterOptions options)

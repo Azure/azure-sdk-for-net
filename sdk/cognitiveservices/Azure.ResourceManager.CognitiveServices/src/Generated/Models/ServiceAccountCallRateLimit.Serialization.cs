@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<float> count = default;
-            Optional<float> renewalPeriod = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
+            float? count = default;
+            float? renewalPeriod = default;
+            IReadOnlyList<ServiceAccountThrottlingRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountCallRateLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ServiceAccountCallRateLimit(count, renewalPeriod, rules ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountCallRateLimit>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DatadogOrganizationProperties> datadogOrganizationProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            ProvisioningState? provisioningState = default;
+            MonitoringStatus? monitoringStatus = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            DatadogOrganizationProperties datadogOrganizationProperties = default;
+            UserInfo userInfo = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value);
+                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))
@@ -179,7 +180,15 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), serializedAdditionalRawData);
+            return new MonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                datadogOrganizationProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)

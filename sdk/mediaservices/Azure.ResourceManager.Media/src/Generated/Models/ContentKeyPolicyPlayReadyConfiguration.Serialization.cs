@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
-            Optional<BinaryData> responseCustomData = default;
+            BinaryData responseCustomData = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyPlayReadyLicense> array = new List<ContentKeyPolicyPlayReadyLicense>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item));
+                        array.Add(ContentKeyPolicyPlayReadyLicense.DeserializeContentKeyPolicyPlayReadyLicense(item, options));
                     }
                     licenses = array;
                     continue;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyConfiguration(odataType, serializedAdditionalRawData, licenses, responseCustomData.Value);
+            return new ContentKeyPolicyPlayReadyConfiguration(odataType, serializedAdditionalRawData, licenses, responseCustomData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyConfiguration>.Write(ModelReaderWriterOptions options)

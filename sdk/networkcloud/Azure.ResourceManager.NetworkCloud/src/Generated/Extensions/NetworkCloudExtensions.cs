@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource"/> object. </returns>
         public static NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudBareMetalMachineResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource"/> object. </returns>
         public static NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudCloudServicesNetworkResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource"/> object. </returns>
         public static NetworkCloudClusterManagerResource GetNetworkCloudClusterManagerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudClusterManagerResource(id);
         }
@@ -105,7 +114,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudClusterResource"/> object. </returns>
         public static NetworkCloudClusterResource GetNetworkCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudClusterResource(id);
         }
@@ -124,7 +136,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource"/> object. </returns>
         public static NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudKubernetesClusterResource(id);
         }
@@ -143,7 +158,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource"/> object. </returns>
         public static NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudL2NetworkResource(id);
         }
@@ -162,7 +180,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource"/> object. </returns>
         public static NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudL3NetworkResource(id);
         }
@@ -181,7 +202,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudRackSkuResource"/> object. </returns>
         public static NetworkCloudRackSkuResource GetNetworkCloudRackSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudRackSkuResource(id);
         }
@@ -200,7 +224,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudRackResource"/> object. </returns>
         public static NetworkCloudRackResource GetNetworkCloudRackResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudRackResource(id);
         }
@@ -219,7 +246,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource"/> object. </returns>
         public static NetworkCloudStorageApplianceResource GetNetworkCloudStorageApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudStorageApplianceResource(id);
         }
@@ -238,7 +268,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource"/> object. </returns>
         public static NetworkCloudTrunkedNetworkResource GetNetworkCloudTrunkedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudTrunkedNetworkResource(id);
         }
@@ -257,7 +290,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource"/> object. </returns>
         public static NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudVirtualMachineResource(id);
         }
@@ -276,7 +312,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudVolumeResource"/> object. </returns>
         public static NetworkCloudVolumeResource GetNetworkCloudVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudVolumeResource(id);
         }
@@ -295,7 +334,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource"/> object. </returns>
         public static NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudBareMetalMachineKeySetResource(id);
         }
@@ -314,7 +356,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource"/> object. </returns>
         public static NetworkCloudBmcKeySetResource GetNetworkCloudBmcKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudBmcKeySetResource(id);
         }
@@ -333,7 +378,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> object. </returns>
         public static NetworkCloudClusterMetricsConfigurationResource GetNetworkCloudClusterMetricsConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudClusterMetricsConfigurationResource(id);
         }
@@ -352,7 +400,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource"/> object. </returns>
         public static NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudAgentPoolResource(id);
         }
@@ -371,7 +422,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource"/> object. </returns>
         public static NetworkCloudVirtualMachineConsoleResource GetNetworkCloudVirtualMachineConsoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableNetworkCloudArmClient(client).GetNetworkCloudVirtualMachineConsoleResource(id);
         }
@@ -388,7 +442,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
         public static NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudBareMetalMachines();
         }
@@ -426,7 +483,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudBareMetalMachineAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
         }
@@ -464,7 +524,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudBareMetalMachine(bareMetalMachineName, cancellationToken);
         }
@@ -481,7 +544,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
         public static NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
         }
@@ -519,7 +585,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCloudServicesNetworkAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -557,7 +626,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCloudServicesNetwork(cloudServicesNetworkName, cancellationToken);
         }
@@ -574,7 +646,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
         public static NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterManagers();
         }
@@ -612,7 +687,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterManagerAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
         }
@@ -650,7 +728,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterManager(clusterManagerName, cancellationToken);
         }
@@ -667,7 +748,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
         public static NetworkCloudClusterCollection GetNetworkCloudClusters(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusters();
         }
@@ -705,7 +789,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -743,7 +830,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudClusterResource> GetNetworkCloudCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCluster(clusterName, cancellationToken);
         }
@@ -760,7 +850,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
         public static NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudKubernetesClusters();
         }
@@ -798,7 +891,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudKubernetesClusterAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -836,7 +932,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudKubernetesCluster(kubernetesClusterName, cancellationToken);
         }
@@ -853,7 +952,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
         public static NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL2Networks();
         }
@@ -891,7 +993,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL2NetworkAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -929,7 +1034,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL2Network(l2NetworkName, cancellationToken);
         }
@@ -946,7 +1054,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
         public static NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL3Networks();
         }
@@ -984,7 +1095,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL3NetworkAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -1022,7 +1136,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL3Network(l3NetworkName, cancellationToken);
         }
@@ -1039,7 +1156,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
         public static NetworkCloudRackCollection GetNetworkCloudRacks(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudRacks();
         }
@@ -1077,7 +1197,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudRackResource>> GetNetworkCloudRackAsync(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudRackAsync(rackName, cancellationToken).ConfigureAwait(false);
         }
@@ -1115,7 +1238,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudRackResource> GetNetworkCloudRack(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudRack(rackName, cancellationToken);
         }
@@ -1132,7 +1258,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
         public static NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudStorageAppliances();
         }
@@ -1170,7 +1299,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudStorageApplianceAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
         }
@@ -1208,7 +1340,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudStorageAppliance(storageApplianceName, cancellationToken);
         }
@@ -1225,7 +1360,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
         public static NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudTrunkedNetworks();
         }
@@ -1263,7 +1401,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudTrunkedNetworkAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -1301,7 +1442,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudTrunkedNetwork(trunkedNetworkName, cancellationToken);
         }
@@ -1318,7 +1462,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
         public static NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVirtualMachines();
         }
@@ -1356,7 +1503,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
@@ -1394,7 +1544,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVirtualMachine(virtualMachineName, cancellationToken);
         }
@@ -1411,7 +1564,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
         public static NetworkCloudVolumeCollection GetNetworkCloudVolumes(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVolumes();
         }
@@ -1449,7 +1605,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVolumeAsync(volumeName, cancellationToken).ConfigureAwait(false);
         }
@@ -1487,7 +1646,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudVolumeResource> GetNetworkCloudVolume(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVolume(volumeName, cancellationToken);
         }
@@ -1504,7 +1666,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudRackSkuResources and their operations over a NetworkCloudRackSkuResource. </returns>
         public static NetworkCloudRackSkuCollection GetNetworkCloudRackSkus(this SubscriptionResource subscriptionResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRackSkus();
         }
@@ -1542,7 +1707,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudRackSkuResource>> GetNetworkCloudRackSkuAsync(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRackSkuAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
         }
@@ -1580,7 +1748,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudRackSkuResource> GetNetworkCloudRackSku(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRackSku(rackSkuName, cancellationToken);
         }
@@ -1616,7 +1787,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
         }
@@ -1652,7 +1826,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
         }
@@ -1688,7 +1865,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
         }
@@ -1724,7 +1904,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
         }
@@ -1760,7 +1943,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
         }
@@ -1796,7 +1982,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
         }
@@ -1832,7 +2021,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
         }
@@ -1868,7 +2060,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
         }
@@ -1904,7 +2099,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
         }
@@ -1940,7 +2138,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
         }
@@ -1976,7 +2177,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
         }
@@ -2012,7 +2216,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
         }
@@ -2048,7 +2255,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
         }
@@ -2084,7 +2294,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
         }
@@ -2120,7 +2333,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
         }
@@ -2156,7 +2372,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
         }
@@ -2192,7 +2411,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
         }
@@ -2228,7 +2450,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
         }
@@ -2264,7 +2489,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
         }
@@ -2300,7 +2528,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
         }
@@ -2336,7 +2567,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
         }
@@ -2372,7 +2606,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
         }
@@ -2408,7 +2645,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
         }
@@ -2444,7 +2684,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
         }

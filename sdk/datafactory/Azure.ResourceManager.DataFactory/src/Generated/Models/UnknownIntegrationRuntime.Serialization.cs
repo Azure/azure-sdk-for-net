@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownIntegrationRuntime(document.RootElement, options);
+            return DeserializeDataFactoryIntegrationRuntimeProperties(document.RootElement, options);
         }
 
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IntegrationRuntimeType type = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownIntegrationRuntime(type, description.Value, additionalProperties);
+            return new UnknownIntegrationRuntime(type, description, additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryIntegrationRuntimeProperties>.Write(ModelReaderWriterOptions options)
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownIntegrationRuntime(document.RootElement, options);
+                        return DeserializeDataFactoryIntegrationRuntimeProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeProperties)} does not support '{options.Format}' format.");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> catalogPlanId = default;
-            Optional<string> marketplaceSkuId = default;
-            Optional<IList<string>> marketplaceSkuVersions = default;
+            string catalogPlanId = default;
+            string marketplaceSkuId = default;
+            IList<string> marketplaceSkuVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Optional.ToList(marketplaceSkuVersions), serializedAdditionalRawData);
+            return new HciSkuMappings(catalogPlanId, marketplaceSkuId, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciSkuMappings>.Write(ModelReaderWriterOptions options)

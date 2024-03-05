@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,9 +20,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="message"/> or <paramref name="errorCode"/> is null. </exception>
         public FailActivity(string name, object message, object errorCode) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(message, nameof(message));
-            Argument.AssertNotNull(errorCode, nameof(errorCode));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+            if (errorCode == null)
+            {
+                throw new ArgumentNullException(nameof(errorCode));
+            }
 
             Message = message;
             ErrorCode = errorCode;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
+            IList<AppPlatformConfigurationServiceGitRepository> repositories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceGitRepository> array = new List<AppPlatformConfigurationServiceGitRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item));
+                        array.Add(AppPlatformConfigurationServiceGitRepository.DeserializeAppPlatformConfigurationServiceGitRepository(item, options));
                     }
                     repositories = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationServiceGitProperty(Optional.ToList(repositories), serializedAdditionalRawData);
+            return new ConfigurationServiceGitProperty(repositories ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationServiceGitProperty>.Write(ModelReaderWriterOptions options)

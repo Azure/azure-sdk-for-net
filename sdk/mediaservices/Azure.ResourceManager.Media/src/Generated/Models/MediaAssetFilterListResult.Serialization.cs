@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaAssetFilterData>> value = default;
-            Optional<string> odataNextLink = default;
+            IReadOnlyList<MediaAssetFilterData> value = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetFilterData> array = new List<MediaAssetFilterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetFilterData.DeserializeMediaAssetFilterData(item));
+                        array.Add(MediaAssetFilterData.DeserializeMediaAssetFilterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetFilterListResult(Optional.ToList(value), odataNextLink.Value, serializedAdditionalRawData);
+            return new MediaAssetFilterListResult(value ?? new ChangeTrackingList<MediaAssetFilterData>(), odataNextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetFilterListResult>.Write(ModelReaderWriterOptions options)

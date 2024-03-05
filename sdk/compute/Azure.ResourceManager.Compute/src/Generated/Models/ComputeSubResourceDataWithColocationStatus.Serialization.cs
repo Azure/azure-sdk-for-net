@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<InstanceViewStatus> colocationStatus = default;
-            Optional<ResourceIdentifier> id = default;
+            InstanceViewStatus colocationStatus = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
+                    colocationStatus = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeSubResourceDataWithColocationStatus(id.Value, serializedAdditionalRawData, colocationStatus.Value);
+            return new ComputeSubResourceDataWithColocationStatus(id, serializedAdditionalRawData, colocationStatus);
         }
 
         BinaryData IPersistableModel<ComputeSubResourceDataWithColocationStatus>.Write(ModelReaderWriterOptions options)

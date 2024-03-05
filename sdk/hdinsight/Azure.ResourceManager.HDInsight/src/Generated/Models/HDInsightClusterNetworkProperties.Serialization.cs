@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightResourceProviderConnection> resourceProviderConnection = default;
-            Optional<HDInsightPrivateLinkState> privateLink = default;
+            HDInsightResourceProviderConnection? resourceProviderConnection = default;
+            HDInsightPrivateLinkState? privateLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterNetworkProperties(Optional.ToNullable(resourceProviderConnection), Optional.ToNullable(privateLink), serializedAdditionalRawData);
+            return new HDInsightClusterNetworkProperties(resourceProviderConnection, privateLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterNetworkProperties>.Write(ModelReaderWriterOptions options)

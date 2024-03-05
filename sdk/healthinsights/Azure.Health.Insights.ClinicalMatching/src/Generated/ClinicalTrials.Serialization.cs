@@ -85,8 +85,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<IList<ClinicalTrialDetails>> customTrials = default;
-            Optional<IList<ClinicalTrialRegistryFilter>> registryFilters = default;
+            IList<ClinicalTrialDetails> customTrials = default;
+            IList<ClinicalTrialRegistryFilter> registryFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialDetails> array = new List<ClinicalTrialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item));
+                        array.Add(ClinicalTrialDetails.DeserializeClinicalTrialDetails(item, options));
                     }
                     customTrials = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialRegistryFilter> array = new List<ClinicalTrialRegistryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item));
+                        array.Add(ClinicalTrialRegistryFilter.DeserializeClinicalTrialRegistryFilter(item, options));
                     }
                     registryFilters = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrials(Optional.ToList(customTrials), Optional.ToList(registryFilters), serializedAdditionalRawData);
+            return new ClinicalTrials(customTrials ?? new ChangeTrackingList<ClinicalTrialDetails>(), registryFilters ?? new ChangeTrackingList<ClinicalTrialRegistryFilter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrials>.Write(ModelReaderWriterOptions options)

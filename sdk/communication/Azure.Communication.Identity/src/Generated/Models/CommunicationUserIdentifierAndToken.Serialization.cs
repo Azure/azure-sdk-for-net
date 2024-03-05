@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Communication.Identity.Models;
-using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
@@ -20,7 +19,7 @@ namespace Azure.Communication.Identity
                 return null;
             }
             CommunicationIdentity identity = default;
-            Optional<CommunicationIdentityAccessToken> accessToken = default;
+            CommunicationIdentityAccessToken accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -38,7 +37,7 @@ namespace Azure.Communication.Identity
                     continue;
                 }
             }
-            return new CommunicationUserIdentifierAndToken(identity, accessToken.Value);
+            return new CommunicationUserIdentifierAndToken(identity, accessToken);
         }
     }
 }

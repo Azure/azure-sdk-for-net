@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<string> privateEndpointConnectionName = default;
-            Optional<string> status = default;
+            ResourceIdentifier privateLinkServiceId = default;
+            string privateEndpointConnectionName = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionRequestStatus(privateLinkServiceId.Value, privateEndpointConnectionName.Value, status.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionRequestStatus(privateLinkServiceId, privateEndpointConnectionName, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionRequestStatus>.Write(ModelReaderWriterOptions options)

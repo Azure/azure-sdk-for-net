@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> osVhdId = default;
-            Optional<string> osType = default;
-            Optional<string> vhdName = default;
+            string osVhdId = default;
+            string osType = default;
+            string vhdName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryOSDiskDetails(osVhdId.Value, osType.Value, vhdName.Value, serializedAdditionalRawData);
+            return new SiteRecoveryOSDiskDetails(osVhdId, osType, vhdName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryOSDiskDetails>.Write(ModelReaderWriterOptions options)

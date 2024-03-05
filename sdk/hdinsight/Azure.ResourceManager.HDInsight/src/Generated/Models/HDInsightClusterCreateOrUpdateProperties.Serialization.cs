@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -139,20 +140,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> clusterVersion = default;
-            Optional<HDInsightOSType> osType = default;
-            Optional<HDInsightTier> tier = default;
-            Optional<HDInsightClusterDefinition> clusterDefinition = default;
-            Optional<KafkaRestProperties> kafkaRestProperties = default;
-            Optional<HDInsightSecurityProfile> securityProfile = default;
-            Optional<ComputeProfile> computeProfile = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
-            Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
-            Optional<string> minSupportedTlsVersion = default;
-            Optional<HDInsightClusterNetworkProperties> networkProperties = default;
-            Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
-            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            string clusterVersion = default;
+            HDInsightOSType? osType = default;
+            HDInsightTier? tier = default;
+            HDInsightClusterDefinition clusterDefinition = default;
+            KafkaRestProperties kafkaRestProperties = default;
+            HDInsightSecurityProfile securityProfile = default;
+            ComputeProfile computeProfile = default;
+            StorageProfile storageProfile = default;
+            HDInsightDiskEncryptionProperties diskEncryptionProperties = default;
+            EncryptionInTransitProperties encryptionInTransitProperties = default;
+            string minSupportedTlsVersion = default;
+            HDInsightClusterNetworkProperties networkProperties = default;
+            HDInsightComputeIsolationProperties computeIsolationProperties = default;
+            IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clusterDefinition = HDInsightClusterDefinition.DeserializeHDInsightClusterDefinition(property.Value);
+                    clusterDefinition = HDInsightClusterDefinition.DeserializeHDInsightClusterDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kafkaRestProperties"u8))
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    kafkaRestProperties = KafkaRestProperties.DeserializeKafkaRestProperties(property.Value);
+                    kafkaRestProperties = KafkaRestProperties.DeserializeKafkaRestProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    securityProfile = HDInsightSecurityProfile.DeserializeHDInsightSecurityProfile(property.Value);
+                    securityProfile = HDInsightSecurityProfile.DeserializeHDInsightSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeProfile"u8))
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value);
+                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionProperties"u8))
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    diskEncryptionProperties = HDInsightDiskEncryptionProperties.DeserializeHDInsightDiskEncryptionProperties(property.Value);
+                    diskEncryptionProperties = HDInsightDiskEncryptionProperties.DeserializeHDInsightDiskEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionInTransitProperties"u8))
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    encryptionInTransitProperties = EncryptionInTransitProperties.DeserializeEncryptionInTransitProperties(property.Value);
+                    encryptionInTransitProperties = EncryptionInTransitProperties.DeserializeEncryptionInTransitProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minSupportedTlsVersion"u8))
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    networkProperties = HDInsightClusterNetworkProperties.DeserializeHDInsightClusterNetworkProperties(property.Value);
+                    networkProperties = HDInsightClusterNetworkProperties.DeserializeHDInsightClusterNetworkProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeIsolationProperties"u8))
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    computeIsolationProperties = HDInsightComputeIsolationProperties.DeserializeHDInsightComputeIsolationProperties(property.Value);
+                    computeIsolationProperties = HDInsightComputeIsolationProperties.DeserializeHDInsightComputeIsolationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateLinkConfigurations"u8))
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item, options));
                     }
                     privateLinkConfigurations = array;
                     continue;
@@ -286,7 +287,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreateOrUpdateProperties(clusterVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterDefinition.Value, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, storageProfile.Value, diskEncryptionProperties.Value, encryptionInTransitProperties.Value, minSupportedTlsVersion.Value, networkProperties.Value, computeIsolationProperties.Value, Optional.ToList(privateLinkConfigurations), serializedAdditionalRawData);
+            return new HDInsightClusterCreateOrUpdateProperties(
+                clusterVersion,
+                osType,
+                tier,
+                clusterDefinition,
+                kafkaRestProperties,
+                securityProfile,
+                computeProfile,
+                storageProfile,
+                diskEncryptionProperties,
+                encryptionInTransitProperties,
+                minSupportedTlsVersion,
+                networkProperties,
+                computeIsolationProperties,
+                privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreateOrUpdateProperties>.Write(ModelReaderWriterOptions options)

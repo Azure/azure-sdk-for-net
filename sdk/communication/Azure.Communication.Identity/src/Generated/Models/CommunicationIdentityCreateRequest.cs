@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Communication.Identity;
-using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {

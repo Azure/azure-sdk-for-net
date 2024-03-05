@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -154,15 +155,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> userDefinedRouteResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> networkSecurityRuleResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> resourceLockResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> dnsResolutionResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> storageAccountResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> keyVaultResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> containerRegistryResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> applicationInsightsResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> otherResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> userDefinedRouteResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> networkSecurityRuleResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> resourceLockResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> dnsResolutionResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> storageAccountResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> keyVaultResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> containerRegistryResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> applicationInsightsResults = default;
+            IReadOnlyList<MachineLearningDiagnoseResult> otherResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     userDefinedRouteResults = array;
                     continue;
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     networkSecurityRuleResults = array;
                     continue;
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     resourceLockResults = array;
                     continue;
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     dnsResolutionResults = array;
                     continue;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     storageAccountResults = array;
                     continue;
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     keyVaultResults = array;
                     continue;
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     containerRegistryResults = array;
                     continue;
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     applicationInsightsResults = array;
                     continue;
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item, options));
                     }
                     otherResults = array;
                     continue;
@@ -299,7 +300,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDiagnoseResultValue(Optional.ToList(userDefinedRouteResults), Optional.ToList(networkSecurityRuleResults), Optional.ToList(resourceLockResults), Optional.ToList(dnsResolutionResults), Optional.ToList(storageAccountResults), Optional.ToList(keyVaultResults), Optional.ToList(containerRegistryResults), Optional.ToList(applicationInsightsResults), Optional.ToList(otherResults), serializedAdditionalRawData);
+            return new MachineLearningDiagnoseResultValue(
+                userDefinedRouteResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                networkSecurityRuleResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                resourceLockResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                dnsResolutionResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                storageAccountResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                keyVaultResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                containerRegistryResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                applicationInsightsResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                otherResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDiagnoseResultValue>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<string> runOn = default;
+            RunbookAssociationProperty runbook = default;
+            IDictionary<string, string> parameters = default;
+            string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobCreateOrUpdateContent(runbook.Value, Optional.ToDictionary(parameters), runOn.Value, serializedAdditionalRawData);
+            return new AutomationJobCreateOrUpdateContent(runbook, parameters ?? new ChangeTrackingDictionary<string, string>(), runOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

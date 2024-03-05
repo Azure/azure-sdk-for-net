@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<BinaryData> template = default;
-            Optional<ResponseError> error = default;
+            BinaryData template = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupExportResult(template.Value, error.Value, serializedAdditionalRawData);
+            return new ResourceGroupExportResult(template, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupExportResult>.Write(ModelReaderWriterOptions options)

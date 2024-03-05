@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -92,11 +93,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element);
-                    case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element);
+                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element, options);
+                    case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element, options);
                 }
             }
-            return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element);
+            return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element, options);
         }
 
         BinaryData IPersistableModel<MultiMetricCriteria>.Write(ModelReaderWriterOptions options)

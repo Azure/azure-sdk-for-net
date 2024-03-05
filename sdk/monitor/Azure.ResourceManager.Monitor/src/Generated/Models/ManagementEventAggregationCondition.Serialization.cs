@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<MonitorConditionOperator> @operator = default;
-            Optional<double> threshold = default;
-            Optional<TimeSpan> windowSize = default;
+            MonitorConditionOperator? @operator = default;
+            double? threshold = default;
+            TimeSpan? windowSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementEventAggregationCondition(Optional.ToNullable(@operator), Optional.ToNullable(threshold), Optional.ToNullable(windowSize), serializedAdditionalRawData);
+            return new ManagementEventAggregationCondition(@operator, threshold, windowSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementEventAggregationCondition>.Write(ModelReaderWriterOptions options)

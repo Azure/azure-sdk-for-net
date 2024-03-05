@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -113,11 +114,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> schema = default;
-            Optional<string> contentVersion = default;
-            Optional<BinaryData> parameters = default;
-            Optional<IReadOnlyList<BinaryData>> resources = default;
-            Optional<ResourceIdentifier> id = default;
+            string schema = default;
+            string contentVersion = default;
+            BinaryData parameters = default;
+            IReadOnlyList<BinaryData> resources = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +178,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineCaptureResult(id.Value, serializedAdditionalRawData, schema.Value, contentVersion.Value, parameters.Value, Optional.ToList(resources));
+            return new VirtualMachineCaptureResult(
+                id,
+                serializedAdditionalRawData,
+                schema,
+                contentVersion,
+                parameters,
+                resources ?? new ChangeTrackingList<BinaryData>());
         }
 
         BinaryData IPersistableModel<VirtualMachineCaptureResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> primaryEndpoint = default;
-            Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
+            string id = default;
+            string primaryEndpoint = default;
+            PurviewPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewIngestionStorage(id.Value, primaryEndpoint.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewIngestionStorage(id, primaryEndpoint, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewIngestionStorage>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Guid> assignedLicenseImmutableId = default;
-            Optional<IReadOnlyList<EsuKey>> esuKeys = default;
+            Guid? assignedLicenseImmutableId = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileStorageModelEsuProperties(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), serializedAdditionalRawData);
+            return new LicenseProfileStorageModelEsuProperties(assignedLicenseImmutableId, esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LicenseProfileStorageModelEsuProperties>.Write(ModelReaderWriterOptions options)

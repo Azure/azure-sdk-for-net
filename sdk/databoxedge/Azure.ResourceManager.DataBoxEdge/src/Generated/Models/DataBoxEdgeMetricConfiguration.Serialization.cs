@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<string> mdmAccount = default;
-            Optional<string> metricNameSpace = default;
+            string mdmAccount = default;
+            string metricNameSpace = default;
             IList<DataBoxEdgeMetricCounterSet> counterSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounterSet> array = new List<DataBoxEdgeMetricCounterSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounterSet.DeserializeDataBoxEdgeMetricCounterSet(item));
+                        array.Add(DataBoxEdgeMetricCounterSet.DeserializeDataBoxEdgeMetricCounterSet(item, options));
                     }
                     counterSets = array;
                     continue;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount.Value, metricNameSpace.Value, counterSets, serializedAdditionalRawData);
+            return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount, metricNameSpace, counterSets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMetricConfiguration>.Write(ModelReaderWriterOptions options)

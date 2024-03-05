@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -55,11 +54,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="protectedAccountKeyName"/>, <paramref name="blobEndpoint"/>, <paramref name="queueEndpoint"/> or <paramref name="tableEndpoint"/> is null. </exception>
         public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
         {
-            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
-            Argument.AssertNotNull(protectedAccountKeyName, nameof(protectedAccountKeyName));
-            Argument.AssertNotNull(blobEndpoint, nameof(blobEndpoint));
-            Argument.AssertNotNull(queueEndpoint, nameof(queueEndpoint));
-            Argument.AssertNotNull(tableEndpoint, nameof(tableEndpoint));
+            if (storageAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountName));
+            }
+            if (protectedAccountKeyName == null)
+            {
+                throw new ArgumentNullException(nameof(protectedAccountKeyName));
+            }
+            if (blobEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(blobEndpoint));
+            }
+            if (queueEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(queueEndpoint));
+            }
+            if (tableEndpoint == null)
+            {
+                throw new ArgumentNullException(nameof(tableEndpoint));
+            }
 
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;

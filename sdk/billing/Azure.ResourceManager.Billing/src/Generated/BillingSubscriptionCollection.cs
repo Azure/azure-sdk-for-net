@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+            if (billingSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(billingSubscriptionName));
+            }
+            if (billingSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingSubscriptionName));
+            }
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.Get");
             scope.Start();
@@ -131,7 +138,14 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         public virtual Response<BillingSubscriptionResource> Get(string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+            if (billingSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(billingSubscriptionName));
+            }
+            if (billingSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingSubscriptionName));
+            }
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.Get");
             scope.Start();
@@ -236,7 +250,14 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+            if (billingSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(billingSubscriptionName));
+            }
+            if (billingSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingSubscriptionName));
+            }
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.Exists");
             scope.Start();
@@ -279,7 +300,14 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+            if (billingSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(billingSubscriptionName));
+            }
+            if (billingSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingSubscriptionName));
+            }
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.Exists");
             scope.Start();
@@ -322,7 +350,14 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         public virtual async Task<NullableResponse<BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+            if (billingSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(billingSubscriptionName));
+            }
+            if (billingSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingSubscriptionName));
+            }
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -367,7 +402,14 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
         public virtual NullableResponse<BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(billingSubscriptionName, nameof(billingSubscriptionName));
+            if (billingSubscriptionName == null)
+            {
+                throw new ArgumentNullException(nameof(billingSubscriptionName));
+            }
+            if (billingSubscriptionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(billingSubscriptionName));
+            }
 
             using var scope = _billingSubscriptionClientDiagnostics.CreateScope("BillingSubscriptionCollection.GetIfExists");
             scope.Start();

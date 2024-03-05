@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricIPCommunityData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkFabricIPCommunityData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricIPCommunityData> array = new List<NetworkFabricIPCommunityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(item));
+                        array.Add(NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPCommunitiesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IPCommunitiesListResult(value ?? new ChangeTrackingList<NetworkFabricIPCommunityData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPCommunitiesListResult>.Write(ModelReaderWriterOptions options)

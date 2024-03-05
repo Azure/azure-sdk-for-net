@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SubResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncDatabaseIdListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SyncDatabaseIdListResult(value ?? new ChangeTrackingList<SubResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncDatabaseIdListResult>.Write(ModelReaderWriterOptions options)

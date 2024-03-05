@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -23,11 +22,26 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="baseDirectoryPath"/>, <paramref name="fileNamePattern"/> or <paramref name="maximumSizeMiB"/> is null. </exception>
         public FileSink(string name, IEnumerable<NodeInput> inputs, string baseDirectoryPath, string fileNamePattern, string maximumSizeMiB) : base(name, inputs)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(baseDirectoryPath, nameof(baseDirectoryPath));
-            Argument.AssertNotNull(fileNamePattern, nameof(fileNamePattern));
-            Argument.AssertNotNull(maximumSizeMiB, nameof(maximumSizeMiB));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
+            if (baseDirectoryPath == null)
+            {
+                throw new ArgumentNullException(nameof(baseDirectoryPath));
+            }
+            if (fileNamePattern == null)
+            {
+                throw new ArgumentNullException(nameof(fileNamePattern));
+            }
+            if (maximumSizeMiB == null)
+            {
+                throw new ArgumentNullException(nameof(maximumSizeMiB));
+            }
 
             BaseDirectoryPath = baseDirectoryPath;
             FileNamePattern = fileNamePattern;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> adminUsername = default;
-            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
+            string adminUsername = default;
+            IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
+                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item, options));
                     }
                     sshPublicKeys = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdministratorConfiguration(adminUsername.Value, Optional.ToList(sshPublicKeys), serializedAdditionalRawData);
+            return new AdministratorConfiguration(adminUsername, sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdministratorConfiguration>.Write(ModelReaderWriterOptions options)

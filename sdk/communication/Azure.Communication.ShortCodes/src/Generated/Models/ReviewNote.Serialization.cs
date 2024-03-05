@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -35,8 +36,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<DateTimeOffset> date = default;
+            string message = default;
+            DateTimeOffset? date = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -54,7 +55,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ReviewNote(message.Value, Optional.ToNullable(date));
+            return new ReviewNote(message, date);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<StorageCacheHealthStateType> state = default;
-            Optional<string> statusDescription = default;
-            Optional<IReadOnlyList<OutstandingCondition>> conditions = default;
+            StorageCacheHealthStateType? state = default;
+            string statusDescription = default;
+            IReadOnlyList<OutstandingCondition> conditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<OutstandingCondition> array = new List<OutstandingCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item));
+                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheHealth(Optional.ToNullable(state), statusDescription.Value, Optional.ToList(conditions), serializedAdditionalRawData);
+            return new StorageCacheHealth(state, statusDescription, conditions ?? new ChangeTrackingList<OutstandingCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheHealth>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryPrivateLinkResourceProperties> properties = default;
-            Optional<ETag> etag = default;
+            DataFactoryPrivateLinkResourceProperties properties = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    properties = DataFactoryPrivateLinkResourceProperties.DeserializeDataFactoryPrivateLinkResourceProperties(property.Value);
+                    properties = DataFactoryPrivateLinkResourceProperties.DeserializeDataFactoryPrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -154,7 +155,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPrivateLinkResource(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new DataFactoryPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateLinkResource>.Write(ModelReaderWriterOptions options)

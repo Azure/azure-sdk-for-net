@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<HnswParameters> hnswParameters = default;
+            HnswParameters hnswParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new HnswAlgorithmConfiguration(name, kind, hnswParameters.Value);
+            return new HnswAlgorithmConfiguration(name, kind, hnswParameters);
         }
     }
 }

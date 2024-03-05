@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IssueState> state = default;
-            Optional<ResourceIdentifier> apiId = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> userId = default;
+            DateTimeOffset? createdDate = default;
+            IssueState? state = default;
+            ResourceIdentifier apiId = default;
+            string title = default;
+            string description = default;
+            string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssuePatch(Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value, serializedAdditionalRawData);
+            return new ApiIssuePatch(
+                createdDate,
+                state,
+                apiId,
+                title,
+                description,
+                userId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssuePatch>.Write(ModelReaderWriterOptions options)

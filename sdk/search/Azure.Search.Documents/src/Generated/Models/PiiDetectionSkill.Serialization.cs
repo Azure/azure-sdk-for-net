@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -131,17 +132,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultLanguageCode = default;
-            Optional<double?> minimumPrecision = default;
-            Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
-            Optional<string> maskingCharacter = default;
-            Optional<string> modelVersion = default;
-            Optional<IList<string>> piiCategories = default;
-            Optional<string> domain = default;
+            string defaultLanguageCode = default;
+            double? minimumPrecision = default;
+            PiiDetectionSkillMaskingMode? maskingMode = default;
+            string maskingCharacter = default;
+            string modelVersion = default;
+            IList<string> piiCategories = default;
+            string domain = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -260,7 +261,20 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultLanguageCode,
+                minimumPrecision,
+                maskingMode,
+                maskingCharacter,
+                modelVersion,
+                piiCategories ?? new ChangeTrackingList<string>(),
+                domain);
         }
     }
 }

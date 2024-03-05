@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> category = default;
-            Optional<IList<EndpointDependency>> endpoints = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string category = default;
+            IList<EndpointDependency> endpoints = default;
+            KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             List<EndpointDependency> array = new List<EndpointDependency>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                                array.Add(EndpointDependency.DeserializeEndpointDependency(item, options));
                             }
                             endpoints = array;
                             continue;
@@ -205,7 +206,16 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Optional.ToNullable(etag), category.Value, Optional.ToList(endpoints), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new OutboundNetworkDependenciesEndpoint(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                category,
+                endpoints ?? new ChangeTrackingList<EndpointDependency>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)

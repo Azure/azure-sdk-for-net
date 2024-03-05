@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<DynatraceSingleSignOnState> singleSignOnState = default;
-            Optional<Guid> enterpriseAppId = default;
-            Optional<Uri> singleSignOnUrl = default;
-            Optional<IList<string>> aadDomains = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            DynatraceSingleSignOnState? singleSignOnState = default;
+            Guid? enterpriseAppId = default;
+            Uri singleSignOnUrl = default;
+            IList<string> aadDomains = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSingleSignOnProperties(Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DynatraceSingleSignOnProperties(
+                singleSignOnState,
+                enterpriseAppId,
+                singleSignOnUrl,
+                aadDomains ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSingleSignOnProperties>.Write(ModelReaderWriterOptions options)

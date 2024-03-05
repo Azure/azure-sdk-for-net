@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SupportTicketData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SupportTicketData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportTicketData> array = new List<SupportTicketData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportTicketData.DeserializeSupportTicketData(item));
+                        array.Add(SupportTicketData.DeserializeSupportTicketData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportTicketsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SupportTicketsListResult(value ?? new ChangeTrackingList<SupportTicketData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportTicketsListResult>.Write(ModelReaderWriterOptions options)

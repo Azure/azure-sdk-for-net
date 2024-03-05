@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -112,15 +113,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> name = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier resourceId = default;
+            string name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
-            Optional<ResponseError> error = default;
+            float? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<OperationStatusResult> operations = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeOperationStatusResult(item));
+                        array.Add(DeserializeOperationStatusResult(item, options));
                     }
                     operations = array;
                     continue;
@@ -209,7 +210,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, serializedAdditionalRawData);
+            return new OperationStatusResult(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startTime,
+                endTime,
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationStatusResult>.Write(ModelReaderWriterOptions options)

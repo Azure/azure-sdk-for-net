@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
-            Optional<string> certBlob = default;
-            Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
-            Optional<bool> resyncRequired = default;
-            Optional<string> dnsServers = default;
-            Optional<bool> isSwift = default;
+            ResourceIdentifier vnetResourceId = default;
+            string certThumbprint = default;
+            string certBlob = default;
+            IReadOnlyList<AppServiceVirtualNetworkRoute> routes = default;
+            bool? resyncRequired = default;
+            string dnsServers = default;
+            bool? isSwift = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item, options));
                     }
                     routes = array;
                     continue;
@@ -177,7 +178,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkProperties(vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkProperties(
+                vnetResourceId,
+                certThumbprint,
+                certBlob,
+                routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
+                resyncRequired,
+                dnsServers,
+                isSwift,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)

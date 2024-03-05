@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<long> activeMessageCount = default;
-            Optional<long> deadLetterMessageCount = default;
-            Optional<long> scheduledMessageCount = default;
-            Optional<long> transferMessageCount = default;
-            Optional<long> transferDeadLetterMessageCount = default;
+            long? activeMessageCount = default;
+            long? deadLetterMessageCount = default;
+            long? scheduledMessageCount = default;
+            long? transferMessageCount = default;
+            long? transferDeadLetterMessageCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageCountDetails(Optional.ToNullable(activeMessageCount), Optional.ToNullable(deadLetterMessageCount), Optional.ToNullable(scheduledMessageCount), Optional.ToNullable(transferMessageCount), Optional.ToNullable(transferDeadLetterMessageCount), serializedAdditionalRawData);
+            return new MessageCountDetails(
+                activeMessageCount,
+                deadLetterMessageCount,
+                scheduledMessageCount,
+                transferMessageCount,
+                transferDeadLetterMessageCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageCountDetails>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ArmApplicationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ArmApplicationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmApplicationData> array = new List<ArmApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmApplicationData.DeserializeArmApplicationData(item));
+                        array.Add(ArmApplicationData.DeserializeArmApplicationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmApplicationListResult(value ?? new ChangeTrackingList<ArmApplicationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationListResult>.Write(ModelReaderWriterOptions options)

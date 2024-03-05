@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<AzureLocation> location = default;
-            Optional<FailoverGroupReplicationRole> replicationRole = default;
+            AzureLocation? location = default;
+            FailoverGroupReplicationRole? replicationRole = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerServerInfo(id, Optional.ToNullable(location), Optional.ToNullable(replicationRole), serializedAdditionalRawData);
+            return new PartnerServerInfo(id, location, replicationRole, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerServerInfo>.Write(ModelReaderWriterOptions options)

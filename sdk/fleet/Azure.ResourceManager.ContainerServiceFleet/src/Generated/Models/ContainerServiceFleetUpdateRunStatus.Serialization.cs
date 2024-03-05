@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<IReadOnlyList<ContainerServiceFleetUpdateStageStatus>> stages = default;
-            Optional<NodeImageSelectionStatus> nodeImageSelection = default;
+            ContainerServiceFleetUpdateStatus status = default;
+            IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages = default;
+            NodeImageSelectionStatus nodeImageSelection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stages"u8))
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateStageStatus> array = new List<ContainerServiceFleetUpdateStageStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateStageStatus.DeserializeContainerServiceFleetUpdateStageStatus(item));
+                        array.Add(ContainerServiceFleetUpdateStageStatus.DeserializeContainerServiceFleetUpdateStageStatus(item, options));
                     }
                     stages = array;
                     continue;
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(property.Value);
+                    nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateRunStatus(status.Value, Optional.ToList(stages), nodeImageSelection.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateRunStatus(status, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateRunStatus>.Write(ModelReaderWriterOptions options)

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("workspace"u8))
                 {
-                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value);
+                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

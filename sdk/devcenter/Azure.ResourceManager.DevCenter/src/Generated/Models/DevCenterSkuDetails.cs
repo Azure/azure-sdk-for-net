@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DevCenterSkuDetails(string name) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Locations = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<DevCenterCapability>();

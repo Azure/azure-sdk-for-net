@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -80,11 +81,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<SapDatabaseType> databaseType = default;
+            SapDatabaseType? databaseType = default;
             ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
-            Optional<DiskConfiguration> diskConfiguration = default;
+            DiskConfiguration diskConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    diskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value);
+                    diskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +129,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseConfiguration(Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, instanceCount, diskConfiguration.Value, serializedAdditionalRawData);
+            return new DatabaseConfiguration(
+                databaseType,
+                subnetId,
+                virtualMachineConfiguration,
+                instanceCount,
+                diskConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseConfiguration>.Write(ModelReaderWriterOptions options)

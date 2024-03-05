@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<DataReplicationProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> serviceResourceId = default;
-            Optional<DataReplicationReplicationVaultType> vaultType = default;
+            DataReplicationProvisioningState? provisioningState = default;
+            ResourceIdentifier serviceResourceId = default;
+            DataReplicationReplicationVaultType? vaultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationVaultProperties(Optional.ToNullable(provisioningState), serviceResourceId.Value, Optional.ToNullable(vaultType), serializedAdditionalRawData);
+            return new DataReplicationVaultProperties(provisioningState, serviceResourceId, vaultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationVaultProperties>.Write(ModelReaderWriterOptions options)

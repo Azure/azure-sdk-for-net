@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFilter(document.RootElement, options);
+            return DeserializeEventGridFilter(document.RootElement, options);
         }
 
         internal static UnknownFilter DeserializeUnknownFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             FilterOperatorType operatorType = "Unknown";
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownFilter(operatorType, key.Value, serializedAdditionalRawData);
+            return new UnknownFilter(operatorType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridFilter>.Write(ModelReaderWriterOptions options)
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFilter(document.RootElement, options);
+                        return DeserializeEventGridFilter(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EventGridFilter)} does not support '{options.Format}' format.");

@@ -77,6 +77,5 @@ public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConf
     public OnYourDataVectorizationSource VectorizationSource
     {
         get => Parameters.EmbeddingDependency;
-        set => Parameters.EmbeddingDependency = value;
     }
 }

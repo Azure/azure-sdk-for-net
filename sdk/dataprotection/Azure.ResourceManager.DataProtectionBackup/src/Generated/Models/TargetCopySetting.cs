@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -56,8 +55,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="copyAfter"/> or <paramref name="dataStore"/> is null. </exception>
         public TargetCopySetting(DataProtectionBackupCopySetting copyAfter, DataStoreInfoBase dataStore)
         {
-            Argument.AssertNotNull(copyAfter, nameof(copyAfter));
-            Argument.AssertNotNull(dataStore, nameof(dataStore));
+            if (copyAfter == null)
+            {
+                throw new ArgumentNullException(nameof(copyAfter));
+            }
+            if (dataStore == null)
+            {
+                throw new ArgumentNullException(nameof(dataStore));
+            }
 
             CopyAfter = copyAfter;
             DataStore = dataStore;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryTokenCertificateName> name = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<string> encodedPemCertificate = default;
+            ContainerRegistryTokenCertificateName? name = default;
+            DateTimeOffset? expiry = default;
+            string thumbprint = default;
+            string encodedPemCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenCertificate(Optional.ToNullable(name), Optional.ToNullable(expiry), thumbprint.Value, encodedPemCertificate.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenCertificate(name, expiry, thumbprint, encodedPemCertificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenCertificate>.Write(ModelReaderWriterOptions options)

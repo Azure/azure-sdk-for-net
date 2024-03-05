@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -101,14 +102,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<IntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<IntegrationRuntimeVnetProperties> vnetProperties = default;
-            Optional<CopyComputeScaleProperties> copyComputeScaleProperties = default;
-            Optional<PipelineExternalComputeScaleProperties> pipelineExternalComputeScaleProperties = default;
+            AzureLocation? location = default;
+            string nodeSize = default;
+            int? numberOfNodes = default;
+            int? maxParallelExecutionsPerNode = default;
+            IntegrationRuntimeDataFlowProperties dataFlowProperties = default;
+            IntegrationRuntimeVnetProperties vnetProperties = default;
+            CopyComputeScaleProperties copyComputeScaleProperties = default;
+            PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = IntegrationRuntimeDataFlowProperties.DeserializeIntegrationRuntimeDataFlowProperties(property.Value);
+                    dataFlowProperties = IntegrationRuntimeDataFlowProperties.DeserializeIntegrationRuntimeDataFlowProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    vnetProperties = IntegrationRuntimeVnetProperties.DeserializeIntegrationRuntimeVnetProperties(property.Value);
+                    vnetProperties = IntegrationRuntimeVnetProperties.DeserializeIntegrationRuntimeVnetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("copyComputeScaleProperties"u8))
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyComputeScaleProperties = CopyComputeScaleProperties.DeserializeCopyComputeScaleProperties(property.Value);
+                    copyComputeScaleProperties = CopyComputeScaleProperties.DeserializeCopyComputeScaleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pipelineExternalComputeScaleProperties"u8))
@@ -178,13 +179,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pipelineExternalComputeScaleProperties = PipelineExternalComputeScaleProperties.DeserializePipelineExternalComputeScaleProperties(property.Value);
+                    pipelineExternalComputeScaleProperties = PipelineExternalComputeScaleProperties.DeserializePipelineExternalComputeScaleProperties(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vnetProperties.Value, copyComputeScaleProperties.Value, pipelineExternalComputeScaleProperties.Value, additionalProperties);
+            return new IntegrationRuntimeComputeProperties(
+                location,
+                nodeSize,
+                numberOfNodes,
+                maxParallelExecutionsPerNode,
+                dataFlowProperties,
+                vnetProperties,
+                copyComputeScaleProperties,
+                pipelineExternalComputeScaleProperties,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)

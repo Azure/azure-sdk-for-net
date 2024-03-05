@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<FlowAccessControlConfigurationPolicy> triggers = default;
-            Optional<FlowAccessControlConfigurationPolicy> contents = default;
-            Optional<FlowAccessControlConfigurationPolicy> actions = default;
-            Optional<FlowAccessControlConfigurationPolicy> workflowManagement = default;
+            FlowAccessControlConfigurationPolicy triggers = default;
+            FlowAccessControlConfigurationPolicy contents = default;
+            FlowAccessControlConfigurationPolicy actions = default;
+            FlowAccessControlConfigurationPolicy workflowManagement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contents"u8))
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workflowManagement"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
+                    workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowAccessControlConfiguration(triggers.Value, contents.Value, actions.Value, workflowManagement.Value, serializedAdditionalRawData);
+            return new FlowAccessControlConfiguration(triggers, contents, actions, workflowManagement, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowAccessControlConfiguration>.Write(ModelReaderWriterOptions options)

@@ -77,7 +77,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("rule"u8))
                 {
-                    rule = RouterRule.DeserializeRouterRule(property.Value);
+                    rule = RouterRule.DeserializeRouterRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

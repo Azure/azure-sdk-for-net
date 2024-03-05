@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPs"/> is null. </exception>
         public FirewallNetworkProfile(FirewallNetworkType networkType, IEnumerable<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat)
         {
-            Argument.AssertNotNull(publicIPs, nameof(publicIPs));
+            if (publicIPs == null)
+            {
+                throw new ArgumentNullException(nameof(publicIPs));
+            }
 
             NetworkType = networkType;
             PublicIPs = publicIPs.ToList();

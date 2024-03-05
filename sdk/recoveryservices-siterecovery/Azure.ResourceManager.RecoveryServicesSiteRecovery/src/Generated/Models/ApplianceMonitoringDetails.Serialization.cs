@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ApplianceResourceDetails> cpuDetails = default;
-            Optional<ApplianceResourceDetails> ramDetails = default;
-            Optional<IReadOnlyList<DataStoreUtilizationDetails>> datastoreSnapshot = default;
-            Optional<ApplianceResourceDetails> disksReplicationDetails = default;
-            Optional<ApplianceResourceDetails> esxiNfcBuffer = default;
-            Optional<ApplianceResourceDetails> networkBandwidth = default;
+            ApplianceResourceDetails cpuDetails = default;
+            ApplianceResourceDetails ramDetails = default;
+            IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot = default;
+            ApplianceResourceDetails disksReplicationDetails = default;
+            ApplianceResourceDetails esxiNfcBuffer = default;
+            ApplianceResourceDetails networkBandwidth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    cpuDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    cpuDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ramDetails"u8))
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    ramDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    ramDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datastoreSnapshot"u8))
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<DataStoreUtilizationDetails> array = new List<DataStoreUtilizationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreUtilizationDetails.DeserializeDataStoreUtilizationDetails(item));
+                        array.Add(DataStoreUtilizationDetails.DeserializeDataStoreUtilizationDetails(item, options));
                     }
                     datastoreSnapshot = array;
                     continue;
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    disksReplicationDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    disksReplicationDetails = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("esxiNfcBuffer"u8))
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    esxiNfcBuffer = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    esxiNfcBuffer = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkBandwidth"u8))
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    networkBandwidth = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value);
+                    networkBandwidth = ApplianceResourceDetails.DeserializeApplianceResourceDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceMonitoringDetails(cpuDetails.Value, ramDetails.Value, Optional.ToList(datastoreSnapshot), disksReplicationDetails.Value, esxiNfcBuffer.Value, networkBandwidth.Value, serializedAdditionalRawData);
+            return new ApplianceMonitoringDetails(
+                cpuDetails,
+                ramDetails,
+                datastoreSnapshot ?? new ChangeTrackingList<DataStoreUtilizationDetails>(),
+                disksReplicationDetails,
+                esxiNfcBuffer,
+                networkBandwidth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceMonitoringDetails>.Write(ModelReaderWriterOptions options)

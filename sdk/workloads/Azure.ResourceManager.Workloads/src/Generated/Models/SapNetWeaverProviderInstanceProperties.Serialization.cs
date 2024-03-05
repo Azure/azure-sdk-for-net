@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -126,17 +127,17 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> sapSid = default;
-            Optional<string> sapHostname = default;
-            Optional<string> sapInstanceNr = default;
-            Optional<IList<string>> sapHostFileEntries = default;
-            Optional<string> sapUsername = default;
-            Optional<string> sapPassword = default;
-            Optional<Uri> sapPasswordUri = default;
-            Optional<string> sapClientId = default;
-            Optional<string> sapPortNumber = default;
-            Optional<Uri> sslCertificateUri = default;
-            Optional<SapSslPreference> sslPreference = default;
+            string sapSid = default;
+            string sapHostname = default;
+            string sapInstanceNr = default;
+            IList<string> sapHostFileEntries = default;
+            string sapUsername = default;
+            string sapPassword = default;
+            Uri sapPasswordUri = default;
+            string sapClientId = default;
+            string sapPortNumber = default;
+            Uri sslCertificateUri = default;
+            SapSslPreference? sslPreference = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,7 +230,20 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapNetWeaverProviderInstanceProperties(providerType, serializedAdditionalRawData, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, Optional.ToList(sapHostFileEntries), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Optional.ToNullable(sslPreference));
+            return new SapNetWeaverProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                sapSid,
+                sapHostname,
+                sapInstanceNr,
+                sapHostFileEntries ?? new ChangeTrackingList<string>(),
+                sapUsername,
+                sapPassword,
+                sapPasswordUri,
+                sapClientId,
+                sapPortNumber,
+                sslCertificateUri,
+                sslPreference);
         }
 
         BinaryData IPersistableModel<SapNetWeaverProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

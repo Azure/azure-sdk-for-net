@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricManagedApplicationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceFabricManagedApplicationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedApplicationData> array = new List<ServiceFabricManagedApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(item));
+                        array.Add(ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationResourceList(value ?? new ChangeTrackingList<ServiceFabricManagedApplicationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationResourceList>.Write(ModelReaderWriterOptions options)

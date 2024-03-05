@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ArtifactStorageType> artifactsStorageType = default;
-            Optional<string> artifactStorageClassName = default;
-            Optional<string> artifactStorageMountPath = default;
-            Optional<string> artifactStorageNodeName = default;
-            Optional<string> artifactStorageAccessMode = default;
-            Optional<FrontEndConfiguration> frontEndServiceConfiguration = default;
-            Optional<string> kubeConfig = default;
+            ArtifactStorageType? artifactsStorageType = default;
+            string artifactStorageClassName = default;
+            string artifactStorageMountPath = default;
+            string artifactStorageNodeName = default;
+            string artifactStorageAccessMode = default;
+            FrontEndConfiguration frontEndServiceConfiguration = default;
+            string kubeConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value);
+                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeConfig"u8))
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcConfiguration(Optional.ToNullable(artifactsStorageType), artifactStorageClassName.Value, artifactStorageMountPath.Value, artifactStorageNodeName.Value, artifactStorageAccessMode.Value, frontEndServiceConfiguration.Value, kubeConfig.Value, serializedAdditionalRawData);
+            return new ArcConfiguration(
+                artifactsStorageType,
+                artifactStorageClassName,
+                artifactStorageMountPath,
+                artifactStorageNodeName,
+                artifactStorageAccessMode,
+                frontEndServiceConfiguration,
+                kubeConfig,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcConfiguration>.Write(ModelReaderWriterOptions options)

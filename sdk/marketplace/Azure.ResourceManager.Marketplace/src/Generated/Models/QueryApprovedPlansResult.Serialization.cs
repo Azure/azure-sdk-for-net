@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QueryApprovedPlansDetails>> details = default;
+            IReadOnlyList<QueryApprovedPlansDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<QueryApprovedPlansDetails> array = new List<QueryApprovedPlansDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryApprovedPlansDetails.DeserializeQueryApprovedPlansDetails(item));
+                        array.Add(QueryApprovedPlansDetails.DeserializeQueryApprovedPlansDetails(item, options));
                     }
                     details = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovedPlansResult(Optional.ToList(details), serializedAdditionalRawData);
+            return new QueryApprovedPlansResult(details ?? new ChangeTrackingList<QueryApprovedPlansDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovedPlansResult>.Write(ModelReaderWriterOptions options)

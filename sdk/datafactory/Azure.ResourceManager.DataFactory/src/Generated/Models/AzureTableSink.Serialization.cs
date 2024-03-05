@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -114,17 +115,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> azureTableDefaultPartitionKeyValue = default;
-            Optional<DataFactoryElement<string>> azureTablePartitionKeyName = default;
-            Optional<DataFactoryElement<string>> azureTableRowKeyName = default;
-            Optional<DataFactoryElement<string>> azureTableInsertType = default;
+            DataFactoryElement<string> azureTableDefaultPartitionKeyValue = default;
+            DataFactoryElement<string> azureTablePartitionKeyName = default;
+            DataFactoryElement<string> azureTableRowKeyName = default;
+            DataFactoryElement<string> azureTableInsertType = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +228,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, azureTableDefaultPartitionKeyValue.Value, azureTablePartitionKeyName.Value, azureTableRowKeyName.Value, azureTableInsertType.Value);
+            return new AzureTableSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                azureTableDefaultPartitionKeyValue,
+                azureTablePartitionKeyName,
+                azureTableRowKeyName,
+                azureTableInsertType);
         }
 
         BinaryData IPersistableModel<AzureTableSink>.Write(ModelReaderWriterOptions options)

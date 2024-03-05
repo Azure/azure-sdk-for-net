@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> result = default;
-            Optional<string> errorCode = default;
-            Optional<IReadOnlyList<string>> parameters = default;
-            Optional<string> activityId = default;
+            string type = default;
+            DateTimeOffset? startTime = default;
+            string result = default;
+            string errorCode = default;
+            IReadOnlyList<string> parameters = default;
+            string activityId = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeOperationResult(type.Value, Optional.ToNullable(startTime), result.Value, errorCode.Value, Optional.ToList(parameters), activityId.Value, additionalProperties);
+            return new ManagedIntegrationRuntimeOperationResult(
+                type,
+                startTime,
+                result,
+                errorCode,
+                parameters ?? new ChangeTrackingList<string>(),
+                activityId,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeOperationResult>.Write(ModelReaderWriterOptions options)

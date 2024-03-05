@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ElasticDeploymentStatus> status = default;
-            Optional<string> version = default;
-            Optional<string> memoryCapacity = default;
-            Optional<string> diskCapacity = default;
+            ElasticDeploymentStatus? status = default;
+            string version = default;
+            string memoryCapacity = default;
+            string diskCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentInfoResponse(Optional.ToNullable(status), version.Value, memoryCapacity.Value, diskCapacity.Value, serializedAdditionalRawData);
+            return new DeploymentInfoResponse(status, version, memoryCapacity, diskCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentInfoResponse>.Write(ModelReaderWriterOptions options)

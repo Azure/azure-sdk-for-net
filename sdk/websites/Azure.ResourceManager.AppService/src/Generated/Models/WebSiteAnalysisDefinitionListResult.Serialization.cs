@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<WebSiteAnalysisDefinitionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebSiteAnalysisDefinitionData> array = new List<WebSiteAnalysisDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(item));
+                        array.Add(WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteAnalysisDefinitionListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new WebSiteAnalysisDefinitionListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebSiteAnalysisDefinitionListResult>.Write(ModelReaderWriterOptions options)

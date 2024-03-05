@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudBareMetalMachineData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<NetworkCloudBareMetalMachineData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudBareMetalMachineData> array = new List<NetworkCloudBareMetalMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(item));
+                        array.Add(NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BareMetalMachineList(nextLink, value ?? new ChangeTrackingList<NetworkCloudBareMetalMachineData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineList>.Write(ModelReaderWriterOptions options)

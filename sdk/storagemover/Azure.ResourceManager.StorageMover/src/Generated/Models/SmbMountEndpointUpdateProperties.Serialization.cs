@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<AzureKeyVaultSmbCredentials> credentials = default;
+            AzureKeyVaultSmbCredentials credentials = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value);
+                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpointType"u8))
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmbMountEndpointUpdateProperties(endpointType, description.Value, serializedAdditionalRawData, credentials.Value);
+            return new SmbMountEndpointUpdateProperties(endpointType, description, serializedAdditionalRawData, credentials);
         }
 
         BinaryData IPersistableModel<SmbMountEndpointUpdateProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> since = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            DateTimeOffset? since = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobDiagnosticCondition(Optional.ToNullable(since), code.Value, message.Value, serializedAdditionalRawData);
+            return new StreamingJobDiagnosticCondition(since, code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobDiagnosticCondition>.Write(ModelReaderWriterOptions options)

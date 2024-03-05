@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualNetworkDnsForwardingRuleset>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualNetworkDnsForwardingRuleset> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<VirtualNetworkDnsForwardingRuleset> array = new List<VirtualNetworkDnsForwardingRuleset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(item));
+                        array.Add(VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkDnsForwardingRulesetListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualNetworkDnsForwardingRulesetListResult(value ?? new ChangeTrackingList<VirtualNetworkDnsForwardingRuleset>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkDnsForwardingRulesetListResult>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<ErrorData> error = default;
+            ErrorData error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -31,7 +30,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new RestError(error.Value);
+            return new RestError(error);
         }
     }
 }

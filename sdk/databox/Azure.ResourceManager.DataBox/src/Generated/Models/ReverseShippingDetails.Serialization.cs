@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ContactInfo> contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<bool> isUpdated = default;
+            ContactInfo contactDetails = default;
+            DataBoxShippingAddress shippingAddress = default;
+            bool? isUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value);
+                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUpdated"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Optional.ToNullable(isUpdated), serializedAdditionalRawData);
+            return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReverseShippingDetails>.Write(ModelReaderWriterOptions options)

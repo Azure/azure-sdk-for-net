@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element);
-                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element);
-                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element);
+                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element, options);
+                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element, options);
+                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element, options);
                 }
             }
-            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element);
+            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfoBase>.Write(ModelReaderWriterOptions options)

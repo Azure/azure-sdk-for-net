@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -124,13 +125,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeKubernetesState> provisioningState = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeKubernetesClusterInfo> kubernetesClusterInfo = default;
-            Optional<EdgeKubernetesRoleResources> kubernetesRoleResources = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            SystemData systemData = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            EdgeKubernetesState? provisioningState = default;
+            HostPlatformType? hostPlatformType = default;
+            EdgeKubernetesClusterInfo kubernetesClusterInfo = default;
+            EdgeKubernetesRoleResources kubernetesRoleResources = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value);
+                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesRoleResources"u8))
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value);
+                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))
@@ -236,7 +237,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus));
+            return new EdgeKubernetesRole(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                hostPlatform,
+                provisioningState,
+                hostPlatformType,
+                kubernetesClusterInfo,
+                kubernetesRoleResources,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRole>.Write(ModelReaderWriterOptions options)

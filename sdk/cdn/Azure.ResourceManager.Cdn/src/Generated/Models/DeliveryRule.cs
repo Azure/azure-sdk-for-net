@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public DeliveryRule(int order, IEnumerable<DeliveryRuleAction> actions)
         {
-            Argument.AssertNotNull(actions, nameof(actions));
+            if (actions == null)
+            {
+                throw new ArgumentNullException(nameof(actions));
+            }
 
             Order = order;
             Conditions = new ChangeTrackingList<DeliveryRuleCondition>();

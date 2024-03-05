@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculatePriceResultPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
-            Optional<double> netTotal = default;
-            Optional<double> taxTotal = default;
-            Optional<double> grandTotal = default;
-            Optional<bool> isTaxIncluded = default;
-            Optional<bool> isBillingPartnerManaged = default;
-            Optional<Guid> reservationOrderId = default;
-            Optional<string> skuTitle = default;
-            Optional<string> skuDescription = default;
-            Optional<CalculatePriceResultPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
-            Optional<IReadOnlyList<PaymentDetail>> paymentSchedule = default;
+            CalculatePriceResultPropertiesBillingCurrencyTotal billingCurrencyTotal = default;
+            double? netTotal = default;
+            double? taxTotal = default;
+            double? grandTotal = default;
+            bool? isTaxIncluded = default;
+            bool? isBillingPartnerManaged = default;
+            Guid? reservationOrderId = default;
+            string skuTitle = default;
+            string skuDescription = default;
+            CalculatePriceResultPropertiesPricingCurrencyTotal pricingCurrencyTotal = default;
+            IReadOnlyList<PaymentDetail> paymentSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value);
+                    billingCurrencyTotal = CalculatePriceResultPropertiesBillingCurrencyTotal.DeserializeCalculatePriceResultPropertiesBillingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("netTotal"u8))
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value);
+                    pricingCurrencyTotal = CalculatePriceResultPropertiesPricingCurrencyTotal.DeserializeCalculatePriceResultPropertiesPricingCurrencyTotal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("paymentSchedule"u8))
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<PaymentDetail> array = new List<PaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        array.Add(PaymentDetail.DeserializePaymentDetail(item, options));
                     }
                     paymentSchedule = array;
                     continue;
@@ -241,7 +242,19 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculatePriceResultProperties(billingCurrencyTotal.Value, Optional.ToNullable(netTotal), Optional.ToNullable(taxTotal), Optional.ToNullable(grandTotal), Optional.ToNullable(isTaxIncluded), Optional.ToNullable(isBillingPartnerManaged), Optional.ToNullable(reservationOrderId), skuTitle.Value, skuDescription.Value, pricingCurrencyTotal.Value, Optional.ToList(paymentSchedule), serializedAdditionalRawData);
+            return new CalculatePriceResultProperties(
+                billingCurrencyTotal,
+                netTotal,
+                taxTotal,
+                grandTotal,
+                isTaxIncluded,
+                isBillingPartnerManaged,
+                reservationOrderId,
+                skuTitle,
+                skuDescription,
+                pricingCurrencyTotal,
+                paymentSchedule ?? new ChangeTrackingList<PaymentDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculatePriceResultProperties>.Write(ModelReaderWriterOptions options)

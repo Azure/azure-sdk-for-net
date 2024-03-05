@@ -58,7 +58,41 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<PrivateLinkScopedResourceContent>();
 
-            return new ApplicationInsightsComponentData(id, name, resourceType, systemData, tags, location, kind, etag, applicationId, appId, namePropertiesName, applicationType, flowType, requestSource, instrumentationKey, createdOn, tenantId, hockeyAppId, hockeyAppToken, provisioningState, samplingPercentage, connectionString, retentionInDays, isDisableIPMasking, isImmediatePurgeDataOn30Days, workspaceResourceId, laMigrationOn, privateLinkScopedResources?.ToList(), publicNetworkAccessForIngestion, publicNetworkAccessForQuery, ingestionMode, isDisableLocalAuth, isForceCustomerStorageForProfiler, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                etag,
+                applicationId,
+                appId,
+                namePropertiesName,
+                applicationType,
+                flowType,
+                requestSource,
+                instrumentationKey,
+                createdOn,
+                tenantId,
+                hockeyAppId,
+                hockeyAppToken,
+                provisioningState,
+                samplingPercentage,
+                connectionString,
+                retentionInDays,
+                isDisableIPMasking,
+                isImmediatePurgeDataOn30Days,
+                workspaceResourceId,
+                laMigrationOn,
+                privateLinkScopedResources?.ToList(),
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                ingestionMode,
+                isDisableLocalAuth,
+                isForceCustomerStorageForProfiler,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkScopedResourceContent"/>. </summary>
@@ -99,7 +133,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             linkedReadProperties ??= new List<string>();
             linkedWriteProperties ??= new List<string>();
 
-            return new ApplicationInsightsComponentAPIKey(id, apiKey, createdDate, name, linkedReadProperties?.ToList(), linkedWriteProperties?.ToList(), serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentAPIKey(
+                id,
+                apiKey,
+                createdDate,
+                name,
+                linkedReadProperties?.ToList(),
+                linkedWriteProperties?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentExportConfiguration"/>. </summary>
@@ -125,7 +166,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentExportConfiguration"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = null, string instrumentationKey = null, string recordTypes = null, string applicationName = null, string subscriptionId = null, string resourceGroup = null, string destinationStorageSubscriptionId = null, string destinationStorageLocationId = null, string destinationAccountId = null, string destinationType = null, string isUserEnabled = null, string lastUserUpdate = null, string notificationQueueEnabled = null, string exportStatus = null, string lastSuccessTime = null, string lastGapTime = null, string permanentErrorReason = null, string storageName = null, string containerName = null)
         {
-            return new ApplicationInsightsComponentExportConfiguration(exportId, instrumentationKey, recordTypes, applicationName, subscriptionId, resourceGroup, destinationStorageSubscriptionId, destinationStorageLocationId, destinationAccountId, destinationType, isUserEnabled, lastUserUpdate, notificationQueueEnabled, exportStatus, lastSuccessTime, lastGapTime, permanentErrorReason, storageName, containerName, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentExportConfiguration(
+                exportId,
+                instrumentationKey,
+                recordTypes,
+                applicationName,
+                subscriptionId,
+                resourceGroup,
+                destinationStorageSubscriptionId,
+                destinationStorageLocationId,
+                destinationAccountId,
+                destinationType,
+                isUserEnabled,
+                lastUserUpdate,
+                notificationQueueEnabled,
+                exportStatus,
+                lastSuccessTime,
+                lastGapTime,
+                permanentErrorReason,
+                storageName,
+                containerName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentDataVolumeCap"/>. </summary>
@@ -138,7 +199,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentDataVolumeCap"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentDataVolumeCap ApplicationInsightsComponentDataVolumeCap(float? cap = null, int? resetTime = null, int? warningThreshold = null, bool? isStopSendNotificationWhenHitThreshold = null, bool? isStopSendNotificationWhenHitCap = null, float? maxHistoryCap = null)
         {
-            return new ApplicationInsightsComponentDataVolumeCap(cap, resetTime, warningThreshold, isStopSendNotificationWhenHitThreshold, isStopSendNotificationWhenHitCap, maxHistoryCap, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentDataVolumeCap(
+                cap,
+                resetTime,
+                warningThreshold,
+                isStopSendNotificationWhenHitThreshold,
+                isStopSendNotificationWhenHitCap,
+                maxHistoryCap,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentQuotaStatus"/>. </summary>
@@ -171,7 +239,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFeatureCapabilities"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentFeatureCapabilities ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData = null, string burstThrottlePolicy = null, string metadataClass = null, bool? liveStreamMetrics = null, bool? applicationMap = null, bool? workItemIntegration = null, bool? powerBIIntegration = null, bool? openSchema = null, bool? proactiveDetection = null, bool? analyticsIntegration = null, bool? multipleStepWebTest = null, string apiAccessLevel = null, string trackingType = null, float? dailyCap = null, float? dailyCapResetTime = null, float? throttleRate = null)
         {
-            return new ApplicationInsightsComponentFeatureCapabilities(supportExportData, burstThrottlePolicy, metadataClass, liveStreamMetrics, applicationMap, workItemIntegration, powerBIIntegration, openSchema, proactiveDetection, analyticsIntegration, multipleStepWebTest, apiAccessLevel, trackingType, dailyCap, dailyCapResetTime, throttleRate, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentFeatureCapabilities(
+                supportExportData,
+                burstThrottlePolicy,
+                metadataClass,
+                liveStreamMetrics,
+                applicationMap,
+                workItemIntegration,
+                powerBIIntegration,
+                openSchema,
+                proactiveDetection,
+                analyticsIntegration,
+                multipleStepWebTest,
+                apiAccessLevel,
+                trackingType,
+                dailyCap,
+                dailyCapResetTime,
+                throttleRate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAvailableFeatures"/>. </summary>
@@ -199,7 +284,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
             capabilities ??= new List<ApplicationInsightsComponentFeatureCapability>();
 
-            return new ApplicationInsightsComponentFeature(featureName, meterId, meterRateFrequency, resourceId, isHidden, capabilities?.ToList(), title, isMainFeature, supportedAddonFeatures, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentFeature(
+                featureName,
+                meterId,
+                meterRateFrequency,
+                resourceId,
+                isHidden,
+                capabilities?.ToList(),
+                title,
+                isMainFeature,
+                supportedAddonFeatures,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFeatureCapability"/>. </summary>
@@ -212,7 +307,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentFeatureCapability"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentFeatureCapability ApplicationInsightsComponentFeatureCapability(string name = null, string description = null, string value = null, string unit = null, string meterId = null, string meterRateFrequency = null)
         {
-            return new ApplicationInsightsComponentFeatureCapability(name, description, value, unit, meterId, meterRateFrequency, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentFeatureCapability(
+                name,
+                description,
+                value,
+                unit,
+                meterId,
+                meterRateFrequency,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkItemConfiguration"/>. </summary>
@@ -224,7 +326,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="Models.WorkItemConfiguration"/> instance for mocking. </returns>
         public static WorkItemConfiguration WorkItemConfiguration(string connectorId = null, string configDisplayName = null, bool? isDefault = null, string id = null, string configProperties = null)
         {
-            return new WorkItemConfiguration(connectorId, configDisplayName, isDefault, id, configProperties, serializedAdditionalRawData: null);
+            return new WorkItemConfiguration(
+                connectorId,
+                configDisplayName,
+                isDefault,
+                id,
+                configProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentFavorite"/>. </summary>
@@ -244,7 +352,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
             tags ??= new List<string>();
 
-            return new ApplicationInsightsComponentFavorite(name, config, version, favoriteId, favoriteType, sourceType, timeModified, tags?.ToList(), category, isGeneratedFromTemplate, userId, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentFavorite(
+                name,
+                config,
+                version,
+                favoriteId,
+                favoriteType,
+                sourceType,
+                timeModified,
+                tags?.ToList(),
+                category,
+                isGeneratedFromTemplate,
+                userId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentWebTestLocation"/>. </summary>
@@ -283,7 +403,28 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             tags ??= new Dictionary<string, string>();
             locations ??= new List<WebTestGeolocation>();
 
-            return new WebTestData(id, name, resourceType, systemData, tags, location, kind, syntheticMonitorId, webTestName, description, isEnabled, frequencyInSeconds, timeoutInSeconds, webTestKind, isRetryEnabled, locations?.ToList(), webTest != null ? new WebTestPropertiesConfiguration(webTest, serializedAdditionalRawData: null) : null, provisioningState, request, validationRules, serializedAdditionalRawData: null);
+            return new WebTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                syntheticMonitorId,
+                webTestName,
+                description,
+                isEnabled,
+                frequencyInSeconds,
+                timeoutInSeconds,
+                webTestKind,
+                isRetryEnabled,
+                locations?.ToList(),
+                webTest != null ? new WebTestPropertiesConfiguration(webTest, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                request,
+                validationRules,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/>. </summary>
@@ -299,7 +440,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentAnalyticsItem"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = null, string name = null, string content = null, string version = null, ItemScope? scope = null, ItemType? itemType = null, string timeCreated = null, string timeModified = null, string applicationInsightsComponentAnalyticsItemFunctionAlias = null)
         {
-            return new ApplicationInsightsComponentAnalyticsItem(id, name, content, version, scope, itemType, timeCreated, timeModified, applicationInsightsComponentAnalyticsItemFunctionAlias != null ? new ApplicationInsightsComponentAnalyticsItemProperties(applicationInsightsComponentAnalyticsItemFunctionAlias, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ApplicationInsightsComponentAnalyticsItem(
+                id,
+                name,
+                content,
+                version,
+                scope,
+                itemType,
+                timeCreated,
+                timeModified,
+                applicationInsightsComponentAnalyticsItemFunctionAlias != null ? new ApplicationInsightsComponentAnalyticsItemProperties(applicationInsightsComponentAnalyticsItemFunctionAlias, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WorkbookTemplateData"/>. </summary>
@@ -321,7 +472,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             galleries ??= new List<WorkbookTemplateGallery>();
             localizedGalleries ??= new Dictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
 
-            return new WorkbookTemplateData(id, name, resourceType, systemData, tags, location, priority, author, templateData, galleries?.ToList(), localizedGalleries, serializedAdditionalRawData: null);
+            return new WorkbookTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                priority,
+                author,
+                templateData,
+                galleries?.ToList(),
+                localizedGalleries,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsights.MyWorkbookData"/>. </summary>
@@ -348,7 +511,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             tags ??= new Dictionary<string, string>();
             etag ??= new Dictionary<string, string>();
 
-            return new MyWorkbookData(identity, id, name, resourceType, location, tags, etag, serializedAdditionalRawData: null, kind, systemData, displayName, serializedData, version, timeModified, category, userId, sourceId, storageUri);
+            return new MyWorkbookData(
+                identity,
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                etag,
+                serializedAdditionalRawData: null,
+                kind,
+                systemData,
+                displayName,
+                serializedData,
+                version,
+                timeModified,
+                category,
+                userId,
+                sourceId,
+                storageUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MyWorkbookUserAssignedIdentities"/>. </summary>
@@ -385,7 +566,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new WorkbookData(id, name, resourceType, systemData, tags, location, displayName, serializedData, version, modifiedOn, category, userId, sourceId, storageUri, description, revision, identity, kind, etag, serializedAdditionalRawData: null);
+            return new WorkbookData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                displayName,
+                serializedData,
+                version,
+                modifiedOn,
+                category,
+                userId,
+                sourceId,
+                storageUri,
+                description,
+                revision,
+                identity,
+                kind,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LiveTokenResponse"/>. </summary>
@@ -405,7 +606,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <returns> A new <see cref="ApplicationInsights.ComponentLinkedStorageAccountData"/> instance for mocking. </returns>
         public static ComponentLinkedStorageAccountData ComponentLinkedStorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string linkedStorageAccount = null)
         {
-            return new ComponentLinkedStorageAccountData(id, name, resourceType, systemData, linkedStorageAccount, serializedAdditionalRawData: null);
+            return new ComponentLinkedStorageAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                linkedStorageAccount,
+                serializedAdditionalRawData: null);
         }
     }
 }

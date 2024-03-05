@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> elasticMaximum = default;
-            Optional<int> @default = default;
-            Optional<string> scaleType = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? elasticMaximum = default;
+            int? @default = default;
+            string scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(elasticMaximum), Optional.ToNullable(@default), scaleType.Value, serializedAdditionalRawData);
+            return new AppServiceSkuCapacity(
+                minimum,
+                maximum,
+                elasticMaximum,
+                @default,
+                scaleType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSkuCapacity>.Write(ModelReaderWriterOptions options)

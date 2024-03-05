@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<RequestMethod> method = default;
-            Optional<string> basePath = default;
-            Optional<string> relativePath = default;
-            Optional<IReadOnlyList<string>> relativePathParameters = default;
-            Optional<LogicWorkflowTriggerCallbackQueryParameterInfo> queries = default;
+            string value = default;
+            RequestMethod? method = default;
+            string basePath = default;
+            string relativePath = default;
+            IReadOnlyList<string> relativePathParameters = default;
+            LogicWorkflowTriggerCallbackQueryParameterInfo queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    queries = LogicWorkflowTriggerCallbackQueryParameterInfo.DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(property.Value);
+                    queries = LogicWorkflowTriggerCallbackQueryParameterInfo.DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,7 +163,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerCallbackUri(value.Value, Optional.ToNullable(method), basePath.Value, relativePath.Value, Optional.ToList(relativePathParameters), queries.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerCallbackUri(
+                value,
+                method,
+                basePath,
+                relativePath,
+                relativePathParameters ?? new ChangeTrackingList<string>(),
+                queries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerCallbackUri>.Write(ModelReaderWriterOptions options)

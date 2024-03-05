@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
-            Optional<WritableSubResource> privateEndpoint = default;
+            PrivateLinkConnectionState privateLinkServiceConnectionState = default;
+            WritableSubResource privateEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property.Value);
+                    privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpoint"u8))
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState.Value, privateEndpoint, serializedAdditionalRawData);
+            return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState, privateEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkConnectionApprovalRequest>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SubResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedResourceListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LinkedResourceListResponse(value ?? new ChangeTrackingList<SubResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedResourceListResponse>.Write(ModelReaderWriterOptions options)

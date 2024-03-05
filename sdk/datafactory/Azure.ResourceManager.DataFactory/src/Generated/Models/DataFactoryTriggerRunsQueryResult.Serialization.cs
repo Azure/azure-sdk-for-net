@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<DataFactoryTriggerRun> value = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryTriggerRun> array = new List<DataFactoryTriggerRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(item));
+                        array.Add(DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryTriggerRunsQueryResult(value, continuationToken.Value, serializedAdditionalRawData);
+            return new DataFactoryTriggerRunsQueryResult(value, continuationToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryTriggerRunsQueryResult>.Write(ModelReaderWriterOptions options)

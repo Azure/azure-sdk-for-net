@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyName, ManagedInstanceKeyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceKeyResource> CreateOrUpdate(WaitUntil waitUntil, string keyName, ManagedInstanceKeyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual async Task<Response<ManagedInstanceKeyResource>> GetAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<ManagedInstanceKeyResource> Get(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual Response<bool> Exists(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedInstanceKeyResource>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public virtual NullableResponse<ManagedInstanceKeyResource> GetIfExists(string keyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(keyName));
+            }
 
             using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetIfExists");
             scope.Start();

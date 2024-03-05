@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> trackingId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> cloud = default;
-            Optional<ResourceHealthEventSeverityLevel> severity = default;
-            Optional<ResourceHealthEventStageValue> stage = default;
-            Optional<bool> published = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
+            string title = default;
+            string description = default;
+            string trackingId = default;
+            DateTimeOffset? startTime = default;
+            string cloud = default;
+            ResourceHealthEventSeverityLevel? severity = default;
+            ResourceHealthEventStageValue? stage = default;
+            bool? published = default;
+            DateTimeOffset? lastModifiedTime = default;
+            IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpact> array = new List<EmergingIssueImpact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item));
+                        array.Add(EmergingIssueImpact.DeserializeEmergingIssueImpact(item, options));
                     }
                     impacts = array;
                     continue;
@@ -218,7 +219,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts), serializedAdditionalRawData);
+            return new EmergingIssueActiveEventType(
+                title,
+                description,
+                trackingId,
+                startTime,
+                cloud,
+                severity,
+                stage,
+                published,
+                lastModifiedTime,
+                impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)

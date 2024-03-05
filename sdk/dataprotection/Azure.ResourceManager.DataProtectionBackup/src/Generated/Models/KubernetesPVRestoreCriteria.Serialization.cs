@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> storageClassName = default;
+            string name = default;
+            string storageClassName = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPVRestoreCriteria(objectType, serializedAdditionalRawData, name.Value, storageClassName.Value);
+            return new KubernetesPVRestoreCriteria(objectType, serializedAdditionalRawData, name, storageClassName);
         }
 
         BinaryData IPersistableModel<KubernetesPVRestoreCriteria>.Write(ModelReaderWriterOptions options)

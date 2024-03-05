@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<long> @default = default;
-            Optional<long> minimum = default;
-            Optional<long> maximum = default;
-            Optional<LabServicesSkuCapacityScaleType> scaleType = default;
+            long? @default = default;
+            long? minimum = default;
+            long? maximum = default;
+            LabServicesSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSkuCapacity(Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new AvailableLabServicesSkuCapacity(@default, minimum, maximum, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSkuCapacity>.Write(ModelReaderWriterOptions options)

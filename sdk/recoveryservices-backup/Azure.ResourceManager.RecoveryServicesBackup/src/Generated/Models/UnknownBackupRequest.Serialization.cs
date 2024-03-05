@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupRequest(document.RootElement, options);
+            return DeserializeBackupContent(document.RootElement, options);
         }
 
         internal static UnknownBackupRequest DeserializeUnknownBackupRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBackupRequest(document.RootElement, options);
+                        return DeserializeBackupContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BackupContent)} does not support '{options.Format}' format.");

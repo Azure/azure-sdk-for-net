@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
         public BandwidthScheduleData(TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
         {
-            Argument.AssertNotNull(days, nameof(days));
+            if (days == null)
+            {
+                throw new ArgumentNullException(nameof(days));
+            }
 
             StartOn = startOn;
             StopOn = stopOn;

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataShareTriggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string triggerName, DataShareTriggerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataShareTriggerResource> CreateOrUpdate(WaitUntil waitUntil, string triggerName, DataShareTriggerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<DataShareTriggerResource>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<DataShareTriggerResource> Get(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<bool> Exists(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataShareTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual NullableResponse<DataShareTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.GetIfExists");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<BillingBenefitsPrice> billingCurrencyTotal = default;
-            Optional<BillingBenefitsPaymentStatus> status = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<string> billingAccount = default;
+            DateTimeOffset? dueDate = default;
+            DateTimeOffset? paymentDate = default;
+            BillingBenefitsPrice pricingCurrencyTotal = default;
+            BillingBenefitsPrice billingCurrencyTotal = default;
+            BillingBenefitsPaymentStatus? status = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
+            string billingAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
+                    billingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = BillingBenefitsExtendedStatusInfo.DeserializeBillingBenefitsExtendedStatusInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"u8))
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value, serializedAdditionalRawData);
+            return new SavingsPlanOrderPaymentDetail(
+                dueDate,
+                paymentDate,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                status,
+                extendedStatusInfo,
+                billingAccount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanOrderPaymentDetail>.Write(ModelReaderWriterOptions options)

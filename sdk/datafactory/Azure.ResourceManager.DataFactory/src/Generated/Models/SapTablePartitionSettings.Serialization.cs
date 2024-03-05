@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> partitionColumnName = default;
-            Optional<DataFactoryElement<string>> partitionUpperBound = default;
-            Optional<DataFactoryElement<string>> partitionLowerBound = default;
-            Optional<DataFactoryElement<int>> maxPartitionsNumber = default;
+            DataFactoryElement<string> partitionColumnName = default;
+            DataFactoryElement<string> partitionUpperBound = default;
+            DataFactoryElement<string> partitionLowerBound = default;
+            DataFactoryElement<int> maxPartitionsNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapTablePartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, maxPartitionsNumber.Value, serializedAdditionalRawData);
+            return new SapTablePartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, maxPartitionsNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapTablePartitionSettings>.Write(ModelReaderWriterOptions options)

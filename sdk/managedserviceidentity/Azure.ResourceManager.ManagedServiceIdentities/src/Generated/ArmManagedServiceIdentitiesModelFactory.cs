@@ -33,7 +33,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SystemAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, clientSecretUri, serializedAdditionalRawData: null);
+            return new SystemAssignedIdentityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                tenantId,
+                principalId,
+                clientId,
+                clientSecretUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/>. </summary>
@@ -51,7 +62,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new UserAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, serializedAdditionalRawData: null);
+            return new UserAssignedIdentityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                tenantId,
+                principalId,
+                clientId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
@@ -69,7 +90,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new UserAssignedIdentityPatch(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, serializedAdditionalRawData: null);
+            return new UserAssignedIdentityPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                tenantId,
+                principalId,
+                clientId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/>. </summary>
@@ -85,7 +116,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         {
             audiences ??= new List<string>();
 
-            return new FederatedIdentityCredentialData(id, name, resourceType, systemData, issuerUri, subject, audiences?.ToList(), serializedAdditionalRawData: null);
+            return new FederatedIdentityCredentialData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                issuerUri,
+                subject,
+                audiences?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Kind = "Y";
         }
 
-        internal ModelY(string kind, string name, string yProperty, Dictionary<string, BinaryData> rawData)
+        internal ModelY(string kind, string? name, string? yProperty, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
@@ -24,12 +24,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             YProperty = yProperty;
         }
 
-        public string YProperty { get; private set; }
+        public string? YProperty { get; private set; }
 
-        void IJsonModel<ModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
+        void IJsonModel<ModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions? options) => Serialize(writer, options);
 
-        private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions? options)
         {
+            options ??= ModelReaderWriterOptions.Json;
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -50,18 +52,19 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(ModelY)}'");
             }
-            string kind = default;
+            string? kind = default;
             OptionalProperty<string> name = default;
             OptionalProperty<string> yProperty = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -85,6 +88,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+
+            if (kind is null)
+            {
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(ModelY)}': Missing 'kind' property");
+            }
+
             return new ModelY(kind, name, yProperty, rawData);
         }
 

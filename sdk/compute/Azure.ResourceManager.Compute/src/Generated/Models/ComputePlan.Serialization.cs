@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> promotionCode = default;
+            string name = default;
+            string publisher = default;
+            string product = default;
+            string promotionCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePlan(name.Value, publisher.Value, product.Value, promotionCode.Value, serializedAdditionalRawData);
+            return new ComputePlan(name, publisher, product, promotionCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePlan>.Write(ModelReaderWriterOptions options)

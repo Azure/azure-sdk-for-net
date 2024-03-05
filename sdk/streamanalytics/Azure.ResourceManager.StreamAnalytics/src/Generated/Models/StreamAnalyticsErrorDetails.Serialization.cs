@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
+            string code = default;
+            string target = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsErrorDetails(code.Value, target.Value, message.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsErrorDetails(code, target, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsErrorDetails>.Write(ModelReaderWriterOptions options)

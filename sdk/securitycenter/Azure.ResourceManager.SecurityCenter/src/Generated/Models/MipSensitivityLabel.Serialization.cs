@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Guid> id = default;
-            Optional<float> order = default;
+            string name = default;
+            Guid? id = default;
+            float? order = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MipSensitivityLabel(name.Value, Optional.ToNullable(id), Optional.ToNullable(order), serializedAdditionalRawData);
+            return new MipSensitivityLabel(name, id, order, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MipSensitivityLabel>.Write(ModelReaderWriterOptions options)

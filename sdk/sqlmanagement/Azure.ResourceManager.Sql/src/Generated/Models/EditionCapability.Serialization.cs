@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ServiceObjectiveCapability>> supportedServiceLevelObjectives = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ReadScaleCapability> readScale = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default;
+            bool? zoneRedundant = default;
+            ReadScaleCapability readScale = default;
+            IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServiceObjectiveCapability> array = new List<ServiceObjectiveCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item));
+                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item, options));
                     }
                     supportedServiceLevelObjectives = array;
                     continue;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value);
+                    readScale = ReadScaleCapability.DeserializeReadScaleCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageCapabilities"u8))
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
                     }
                     supportedStorageCapabilities = array;
                     continue;
@@ -191,7 +192,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EditionCapability(name.Value, Optional.ToList(supportedServiceLevelObjectives), Optional.ToNullable(zoneRedundant), readScale.Value, Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new EditionCapability(
+                name,
+                supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(),
+                zoneRedundant,
+                readScale,
+                supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EditionCapability>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -256,22 +257,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AutoMLVerticalRegressionPrimaryMetric> primaryMetric = default;
-            Optional<RegressionTrainingSettings> trainingSettings = default;
-            Optional<IList<string>> cvSplitColumnNames = default;
-            Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<TableFixedParameters> fixedParameters = default;
-            Optional<TableVerticalLimitSettings> limitSettings = default;
-            Optional<NCrossValidations> nCrossValidations = default;
-            Optional<IList<TableParameterSubspace>> searchSpace = default;
-            Optional<TableSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> testData = default;
-            Optional<double?> testDataSize = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<string> weightColumnName = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            AutoMLVerticalRegressionPrimaryMetric? primaryMetric = default;
+            RegressionTrainingSettings trainingSettings = default;
+            IList<string> cvSplitColumnNames = default;
+            TableVerticalFeaturizationSettings featurizationSettings = default;
+            TableFixedParameters fixedParameters = default;
+            TableVerticalLimitSettings limitSettings = default;
+            NCrossValidations nCrossValidations = default;
+            IList<TableParameterSubspace> searchSpace = default;
+            TableSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput testData = default;
+            double? testDataSize = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            string weightColumnName = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         trainingSettings = null;
                         continue;
                     }
-                    trainingSettings = RegressionTrainingSettings.DeserializeRegressionTrainingSettings(property.Value);
+                    trainingSettings = RegressionTrainingSettings.DeserializeRegressionTrainingSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cvSplitColumnNames"u8))
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         featurizationSettings = null;
                         continue;
                     }
-                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value);
+                    featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fixedParameters"u8))
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         fixedParameters = null;
                         continue;
                     }
-                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value);
+                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         limitSettings = null;
                         continue;
                     }
-                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value);
+                    limitSettings = TableVerticalLimitSettings.DeserializeTableVerticalLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nCrossValidations"u8))
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nCrossValidations = null;
                         continue;
                     }
-                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value);
+                    nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -362,7 +363,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<TableParameterSubspace> array = new List<TableParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item));
+                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item, options));
                     }
                     searchSpace = array;
                     continue;
@@ -374,7 +375,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value);
+                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testData"u8))
@@ -384,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         testData = null;
                         continue;
                     }
-                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    testData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("testDataSize"u8))
@@ -404,7 +405,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -453,7 +454,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -462,7 +463,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoMLVerticalRegression(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, Optional.ToList(searchSpace), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new AutoMLVerticalRegression(
+                logVerbosity,
+                targetColumnName,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                primaryMetric,
+                trainingSettings,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings,
+                fixedParameters,
+                limitSettings,
+                nCrossValidations,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings,
+                testData,
+                testDataSize,
+                validationData,
+                validationDataSize,
+                weightColumnName);
         }
 
         BinaryData IPersistableModel<AutoMLVerticalRegression>.Write(ModelReaderWriterOptions options)

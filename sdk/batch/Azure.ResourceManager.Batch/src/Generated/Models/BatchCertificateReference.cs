@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -51,7 +52,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public BatchCertificateReference(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
             Id = id;
             Visibility = new ChangeTrackingList<BatchCertificateVisibility>();

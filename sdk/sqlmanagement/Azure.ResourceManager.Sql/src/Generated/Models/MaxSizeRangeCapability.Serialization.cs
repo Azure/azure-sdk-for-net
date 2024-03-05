@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<MaxSizeCapability> minValue = default;
-            Optional<MaxSizeCapability> maxValue = default;
-            Optional<MaxSizeCapability> scaleSize = default;
-            Optional<LogSizeCapability> logSize = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            MaxSizeCapability minValue = default;
+            MaxSizeCapability maxValue = default;
+            MaxSizeCapability scaleSize = default;
+            LogSizeCapability logSize = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxValue"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSize"u8))
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logSize"u8))
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
+                    logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MaxSizeRangeCapability(
+                minValue,
+                maxValue,
+                scaleSize,
+                logSize,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaxSizeRangeCapability>.Write(ModelReaderWriterOptions options)

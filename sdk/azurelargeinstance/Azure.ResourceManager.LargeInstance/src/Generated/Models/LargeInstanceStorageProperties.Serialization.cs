@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<LargeInstanceProvisioningState> provisioningState = default;
-            Optional<string> offeringType = default;
-            Optional<string> storageType = default;
-            Optional<string> generation = default;
-            Optional<LargeInstanceHardwareTypeName> hardwareType = default;
-            Optional<string> workloadType = default;
-            Optional<LargeInstanceStorageBillingProperties> storageBillingProperties = default;
+            LargeInstanceProvisioningState? provisioningState = default;
+            string offeringType = default;
+            string storageType = default;
+            string generation = default;
+            LargeInstanceHardwareTypeName? hardwareType = default;
+            string workloadType = default;
+            LargeInstanceStorageBillingProperties storageBillingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     {
                         continue;
                     }
-                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value);
+                    storageBillingProperties = LargeInstanceStorageBillingProperties.DeserializeLargeInstanceStorageBillingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +164,15 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProperties(Optional.ToNullable(provisioningState), offeringType.Value, storageType.Value, generation.Value, Optional.ToNullable(hardwareType), workloadType.Value, storageBillingProperties.Value, serializedAdditionalRawData);
+            return new LargeInstanceStorageProperties(
+                provisioningState,
+                offeringType,
+                storageType,
+                generation,
+                hardwareType,
+                workloadType,
+                storageBillingProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProperties>.Write(ModelReaderWriterOptions options)

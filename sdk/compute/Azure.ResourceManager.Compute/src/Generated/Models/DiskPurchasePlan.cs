@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/> or <paramref name="product"/> is null. </exception>
         public DiskPurchasePlan(string name, string publisher, string product)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(publisher, nameof(publisher));
-            Argument.AssertNotNull(product, nameof(product));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
 
             Name = name;
             Publisher = publisher;

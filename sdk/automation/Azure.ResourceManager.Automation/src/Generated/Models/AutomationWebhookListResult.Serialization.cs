@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationWebhookData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutomationWebhookData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationWebhookData> array = new List<AutomationWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationWebhookData.DeserializeAutomationWebhookData(item));
+                        array.Add(AutomationWebhookData.DeserializeAutomationWebhookData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationWebhookListResult(value ?? new ChangeTrackingList<AutomationWebhookData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookListResult>.Write(ModelReaderWriterOptions options)

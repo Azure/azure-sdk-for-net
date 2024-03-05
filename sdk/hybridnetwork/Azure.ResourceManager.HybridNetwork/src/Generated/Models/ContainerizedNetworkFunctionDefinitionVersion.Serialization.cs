@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ContainerizedNetworkFunctionTemplate> networkFunctionTemplate = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> deployParameters = default;
+            ContainerizedNetworkFunctionTemplate networkFunctionTemplate = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string deployParameters = default;
             NetworkFunctionType networkFunctionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value);
+                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -149,7 +150,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerizedNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData, networkFunctionTemplate.Value);
+            return new ContainerizedNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                networkFunctionType,
+                serializedAdditionalRawData,
+                networkFunctionTemplate);
         }
 
         BinaryData IPersistableModel<ContainerizedNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)

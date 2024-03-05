@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FeatureData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FeatureData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<FeatureData> array = new List<FeatureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FeatureData.DeserializeFeatureData(item));
+                        array.Add(FeatureData.DeserializeFeatureData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureOperationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FeatureOperationsListResult(value ?? new ChangeTrackingList<FeatureData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureOperationsListResult>.Write(ModelReaderWriterOptions options)

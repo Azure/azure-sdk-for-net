@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -139,20 +140,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningScheduleAction action = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEnabled = default;
-            Optional<MachineLearningScheduleProvisioningStatus> provisioningState = default;
+            string displayName = default;
+            bool? isEnabled = default;
+            MachineLearningScheduleProvisioningStatus? provisioningState = default;
             MachineLearningTriggerBase trigger = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
                 {
-                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value);
+                    action = MachineLearningScheduleAction.DeserializeMachineLearningScheduleAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trigger"u8))
                 {
-                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value);
+                    trigger = MachineLearningTriggerBase.DeserializeMachineLearningTriggerBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -234,7 +235,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScheduleProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger);
+            return new MachineLearningScheduleProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                action,
+                displayName,
+                isEnabled,
+                provisioningState,
+                trigger);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleProperties>.Write(ModelReaderWriterOptions options)

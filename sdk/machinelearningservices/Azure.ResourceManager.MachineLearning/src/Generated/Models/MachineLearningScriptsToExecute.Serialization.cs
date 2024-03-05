@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningScriptReference> startupScript = default;
-            Optional<MachineLearningScriptReference> creationScript = default;
+            MachineLearningScriptReference startupScript = default;
+            MachineLearningScriptReference creationScript = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);
+                    startupScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationScript"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    creationScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value);
+                    creationScript = MachineLearningScriptReference.DeserializeMachineLearningScriptReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScriptsToExecute(startupScript.Value, creationScript.Value, serializedAdditionalRawData);
+            return new MachineLearningScriptsToExecute(startupScript, creationScript, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningScriptsToExecute>.Write(ModelReaderWriterOptions options)

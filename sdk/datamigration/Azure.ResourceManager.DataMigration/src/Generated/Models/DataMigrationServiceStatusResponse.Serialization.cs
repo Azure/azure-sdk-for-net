@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -101,11 +102,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<BinaryData> agentConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> vmSize = default;
-            Optional<IReadOnlyList<string>> supportedTaskTypes = default;
+            string agentVersion = default;
+            BinaryData agentConfiguration = default;
+            string status = default;
+            string vmSize = default;
+            IReadOnlyList<string> supportedTaskTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes), serializedAdditionalRawData);
+            return new DataMigrationServiceStatusResponse(
+                agentVersion,
+                agentConfiguration,
+                status,
+                vmSize,
+                supportedTaskTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceStatusResponse>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inviteeEmail"/> is null. </exception>
         public DatabaseInviteFollowerContent(string inviteeEmail)
         {
-            Argument.AssertNotNull(inviteeEmail, nameof(inviteeEmail));
+            if (inviteeEmail == null)
+            {
+                throw new ArgumentNullException(nameof(inviteeEmail));
+            }
 
             InviteeEmail = inviteeEmail;
         }

@@ -349,7 +349,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MediaTransformResource>> UpdateAsync(MediaTransformData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformResource.Update");
             scope.Start();
@@ -391,7 +394,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<MediaTransformResource> Update(MediaTransformData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformResource.Update");
             scope.Start();

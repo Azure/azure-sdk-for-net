@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> displayName = default;
-            Optional<string> languageCode = default;
-            Optional<HlsSettings> hlsSettings = default;
-            Optional<TrackDashSettings> dashSettings = default;
-            Optional<int?> mpeg4TrackId = default;
-            Optional<int> bitRate = default;
+            string fileName = default;
+            string displayName = default;
+            string languageCode = default;
+            HlsSettings hlsSettings = default;
+            TrackDashSettings dashSettings = default;
+            int? mpeg4TrackId = default;
+            int? bitRate = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dashSettings"u8))
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mpeg4TrackId"u8))
@@ -183,7 +184,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            return new AudioTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName,
+                displayName,
+                languageCode,
+                hlsSettings,
+                dashSettings,
+                mpeg4TrackId,
+                bitRate);
         }
 
         BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)

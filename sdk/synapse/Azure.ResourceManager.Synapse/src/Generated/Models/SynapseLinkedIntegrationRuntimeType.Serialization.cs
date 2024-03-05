@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Key": return SynapseLinkedIntegrationRuntimeKeyAuthorization.DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(element);
-                    case "RBAC": return SynapseLinkedIntegrationRuntimeRbacAuthorization.DeserializeSynapseLinkedIntegrationRuntimeRbacAuthorization(element);
+                    case "Key": return SynapseLinkedIntegrationRuntimeKeyAuthorization.DeserializeSynapseLinkedIntegrationRuntimeKeyAuthorization(element, options);
+                    case "RBAC": return SynapseLinkedIntegrationRuntimeRbacAuthorization.DeserializeSynapseLinkedIntegrationRuntimeRbacAuthorization(element, options);
                 }
             }
-            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
+            return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element, options);
         }
 
         BinaryData IPersistableModel<SynapseLinkedIntegrationRuntimeType>.Write(ModelReaderWriterOptions options)

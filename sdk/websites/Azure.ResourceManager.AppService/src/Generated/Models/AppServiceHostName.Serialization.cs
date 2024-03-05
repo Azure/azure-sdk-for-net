@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> siteNames = default;
-            Optional<string> azureResourceName = default;
-            Optional<AppServiceResourceType> azureResourceType = default;
-            Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<AppServiceHostNameType> hostNameType = default;
+            string name = default;
+            IReadOnlyList<string> siteNames = default;
+            string azureResourceName = default;
+            AppServiceResourceType? azureResourceType = default;
+            CustomHostNameDnsRecordType? customHostNameDnsRecordType = default;
+            AppServiceHostNameType? hostNameType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceHostName(name.Value, Optional.ToList(siteNames), azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), serializedAdditionalRawData);
+            return new AppServiceHostName(
+                name,
+                siteNames ?? new ChangeTrackingList<string>(),
+                azureResourceName,
+                azureResourceType,
+                customHostNameDnsRecordType,
+                hostNameType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceHostName>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -157,24 +158,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> nodeName = default;
-            Optional<string> machineName = default;
-            Optional<Uri> hostServiceUri = default;
-            Optional<SelfHostedIntegrationRuntimeNodeStatus> status = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<string> versionStatus = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> registerTime = default;
-            Optional<DateTimeOffset> lastConnectTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DateTimeOffset> lastStartTime = default;
-            Optional<DateTimeOffset> lastStopTime = default;
-            Optional<IntegrationRuntimeUpdateResult> lastUpdateResult = default;
-            Optional<DateTimeOffset> lastStartUpdateTime = default;
-            Optional<DateTimeOffset> lastEndUpdateTime = default;
-            Optional<bool> isActiveDispatcher = default;
-            Optional<int> concurrentJobsLimit = default;
-            Optional<int> maxConcurrentJobs = default;
+            string nodeName = default;
+            string machineName = default;
+            Uri hostServiceUri = default;
+            SelfHostedIntegrationRuntimeNodeStatus? status = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
+            string versionStatus = default;
+            string version = default;
+            DateTimeOffset? registerTime = default;
+            DateTimeOffset? lastConnectTime = default;
+            DateTimeOffset? expiryTime = default;
+            DateTimeOffset? lastStartTime = default;
+            DateTimeOffset? lastStopTime = default;
+            IntegrationRuntimeUpdateResult? lastUpdateResult = default;
+            DateTimeOffset? lastStartUpdateTime = default;
+            DateTimeOffset? lastEndUpdateTime = default;
+            bool? isActiveDispatcher = default;
+            int? concurrentJobsLimit = default;
+            int? maxConcurrentJobs = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,7 +334,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
+            return new SelfHostedIntegrationRuntimeNode(
+                nodeName,
+                machineName,
+                hostServiceUri,
+                status,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                versionStatus,
+                version,
+                registerTime,
+                lastConnectTime,
+                expiryTime,
+                lastStartTime,
+                lastStopTime,
+                lastUpdateResult,
+                lastStartUpdateTime,
+                lastEndUpdateTime,
+                isActiveDispatcher,
+                concurrentJobsLimit,
+                maxConcurrentJobs,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

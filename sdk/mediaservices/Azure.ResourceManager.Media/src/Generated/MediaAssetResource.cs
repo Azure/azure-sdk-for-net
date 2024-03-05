@@ -420,7 +420,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MediaAssetResource>> UpdateAsync(MediaAssetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.Update");
             scope.Start();
@@ -462,7 +465,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<MediaAssetResource> Update(MediaAssetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.Update");
             scope.Start();
@@ -505,7 +511,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="Uri"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Uri> GetStorageContainerUrisAsync(MediaAssetStorageContainerSasContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
@@ -538,7 +547,10 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="Uri"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Uri> GetStorageContainerUris(MediaAssetStorageContainerSasContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);

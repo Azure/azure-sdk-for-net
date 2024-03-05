@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Monitor.Query.Models
                 return null;
             }
             string value = default;
-            Optional<string> localizedValue = default;
+            string localizedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +32,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new LocalizableString(value, localizedValue.Value);
+            return new LocalizableString(value, localizedValue);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -129,13 +130,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<double> id = default;
-            Optional<string> displayName = default;
-            Optional<double> order = default;
-            Optional<string> description = default;
-            Optional<DiagnosticSolutionType> type = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metadata = default;
+            double? id = default;
+            string displayName = default;
+            double? order = default;
+            string description = default;
+            DiagnosticSolutionType? type = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            IList<IList<AppServiceNameValuePair>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -235,7 +236,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSolution(Optional.ToNullable(id), displayName.Value, Optional.ToNullable(order), description.Value, Optional.ToNullable(type), Optional.ToList(data), Optional.ToList(metadata), serializedAdditionalRawData);
+            return new DiagnosticSolution(
+                id,
+                displayName,
+                order,
+                description,
+                type,
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                metadata ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSolution>.Write(ModelReaderWriterOptions options)

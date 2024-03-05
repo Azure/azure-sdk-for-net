@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<FeatureSupportStatus> supportStatus = default;
-            Optional<IReadOnlyList<string>> exposureControlledFeatures = default;
+            string featureName = default;
+            FeatureSupportStatus? supportStatus = default;
+            IReadOnlyList<string> exposureControlledFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupSupportedFeature(featureName.Value, Optional.ToNullable(supportStatus), Optional.ToList(exposureControlledFeatures), serializedAdditionalRawData);
+            return new BackupSupportedFeature(featureName, supportStatus, exposureControlledFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupSupportedFeature>.Write(ModelReaderWriterOptions options)

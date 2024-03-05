@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<EdgeOrderProductImageType> imageType = default;
-            Optional<Uri> imageUrl = default;
+            EdgeOrderProductImageType? imageType = default;
+            Uri imageUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProductImageInformation(Optional.ToNullable(imageType), imageUrl.Value, serializedAdditionalRawData);
+            return new EdgeOrderProductImageInformation(imageType, imageUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductImageInformation>.Write(ModelReaderWriterOptions options)

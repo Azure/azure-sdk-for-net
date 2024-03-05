@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
-            Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
+            DataBoxEdgeEtcdInfo etcdInfo = default;
+            IReadOnlyList<EdgeKubernetesNodeInfo> nodes = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value);
+                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodes"u8))
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesNodeInfo> array = new List<EdgeKubernetesNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item));
+                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item, options));
                     }
                     nodes = array;
                     continue;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version, serializedAdditionalRawData);
+            return new EdgeKubernetesClusterInfo(etcdInfo, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesClusterInfo>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOverlay(document.RootElement, options);
+            return DeserializeMediaOverlayBase(document.RootElement, options);
         }
 
         internal static UnknownOverlay DeserializeUnknownOverlay(JsonElement element, ModelReaderWriterOptions options = null)
@@ -95,11 +96,11 @@ namespace Azure.ResourceManager.Media.Models
             }
             string odataType = "Unknown";
             string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
+            TimeSpan? start = default;
+            TimeSpan? end = default;
+            TimeSpan? fadeInDuration = default;
+            TimeSpan? fadeOutDuration = default;
+            double? audioGainLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +166,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), serializedAdditionalRawData);
+            return new UnknownOverlay(
+                odataType,
+                inputLabel,
+                start,
+                end,
+                fadeInDuration,
+                fadeOutDuration,
+                audioGainLevel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaOverlayBase>.Write(ModelReaderWriterOptions options)
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOverlay(document.RootElement, options);
+                        return DeserializeMediaOverlayBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MediaOverlayBase)} does not support '{options.Format}' format.");

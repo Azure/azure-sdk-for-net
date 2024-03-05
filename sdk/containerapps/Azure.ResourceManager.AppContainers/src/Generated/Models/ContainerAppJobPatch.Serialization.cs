@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ContainerAppJobPatchProperties> properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ContainerAppJobPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppJobPatchProperties.DeserializeContainerAppJobPatchProperties(property.Value);
+                    properties = ContainerAppJobPatchProperties.DeserializeContainerAppJobPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobPatch(identity, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new ContainerAppJobPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobPatch>.Write(ModelReaderWriterOptions options)

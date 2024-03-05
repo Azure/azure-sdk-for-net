@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> authority = default;
-            Optional<string> audience = default;
-            Optional<bool> smartProxyEnabled = default;
+            string authority = default;
+            string audience = default;
+            bool? smartProxyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceAuthenticationConfiguration(authority.Value, audience.Value, Optional.ToNullable(smartProxyEnabled), serializedAdditionalRawData);
+            return new FhirServiceAuthenticationConfiguration(authority, audience, smartProxyEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceAuthenticationConfiguration>.Write(ModelReaderWriterOptions options)

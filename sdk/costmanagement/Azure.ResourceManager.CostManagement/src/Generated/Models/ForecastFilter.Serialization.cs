@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<ForecastFilter>> and = default;
-            Optional<IList<ForecastFilter>> or = default;
-            Optional<ForecastComparisonExpression> dimensions = default;
-            Optional<ForecastComparisonExpression> tags = default;
+            IList<ForecastFilter> and = default;
+            IList<ForecastFilter> or = default;
+            ForecastComparisonExpression dimensions = default;
+            ForecastComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ForecastFilter> array = new List<ForecastFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeForecastFilter(item));
+                        array.Add(DeserializeForecastFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ForecastFilter> array = new List<ForecastFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeForecastFilter(item));
+                        array.Add(DeserializeForecastFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value);
+                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value);
+                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            return new ForecastFilter(and ?? new ChangeTrackingList<ForecastFilter>(), or ?? new ChangeTrackingList<ForecastFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastFilter>.Write(ModelReaderWriterOptions options)

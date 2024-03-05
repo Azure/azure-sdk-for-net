@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -36,9 +37,9 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<PiiTaskParameters> parameters = default;
+            PiiTaskParameters parameters = default;
             AnalyzeTextLROTaskKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -61,7 +62,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new PiiLROTask(taskName.Value, kind, parameters.Value);
+            return new PiiLROTask(taskName, kind, parameters);
         }
     }
 }

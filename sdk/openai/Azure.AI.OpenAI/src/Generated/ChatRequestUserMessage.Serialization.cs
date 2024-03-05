@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string content = default;
-            Optional<string> name = default;
+            string name = default;
             ChatRole role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatRequestUserMessage(role, serializedAdditionalRawData, content, name.Value);
+            return new ChatRequestUserMessage(role, serializedAdditionalRawData, content, name);
         }
 
         BinaryData IPersistableModel<ChatRequestUserMessage>.Write(ModelReaderWriterOptions options)

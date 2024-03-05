@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string resourceGroupName = default;
             string vaultName = default;
             string secretName = default;
-            Optional<string> secretVersion = default;
+            string secretVersion = default;
             CertificateUpdateAction updateRule = default;
             CertificateDeleteAction deleteRule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +142,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultCertificateSource(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion.Value, updateRule, deleteRule, serializedAdditionalRawData);
+            return new KeyVaultCertificateSource(
+                typeName,
+                subscriptionId,
+                resourceGroupName,
+                vaultName,
+                secretName,
+                secretVersion,
+                updateRule,
+                deleteRule,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultCertificateSource>.Write(ModelReaderWriterOptions options)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<DataFactoryDataFlowData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryDataFlowData> array = new List<DataFactoryDataFlowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(item));
+                        array.Add(DataFactoryDataFlowData.DeserializeDataFactoryDataFlowData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DataFactoryDataFlowListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowListResult>.Write(ModelReaderWriterOptions options)

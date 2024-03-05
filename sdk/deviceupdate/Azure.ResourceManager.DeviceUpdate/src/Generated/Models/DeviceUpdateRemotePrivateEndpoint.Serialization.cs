@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -129,15 +130,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> immutableSubscriptionId = default;
-            Optional<ResourceIdentifier> immutableResourceId = default;
-            Optional<string> vnetTrafficTag = default;
-            Optional<IList<DeviceUpdatePrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
-            Optional<IList<DeviceUpdatePrivateLinkServiceConnection>> privateLinkServiceConnections = default;
-            Optional<IList<DeviceUpdatePrivateLinkServiceProxy>> privateLinkServiceProxies = default;
-            Optional<IList<DeviceUpdatePrivateEndpointConnectionDetails>> connectionDetails = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            string immutableSubscriptionId = default;
+            ResourceIdentifier immutableResourceId = default;
+            string vnetTrafficTag = default;
+            IList<DeviceUpdatePrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
+            IList<DeviceUpdatePrivateLinkServiceConnection> privateLinkServiceConnections = default;
+            IList<DeviceUpdatePrivateLinkServiceProxy> privateLinkServiceProxies = default;
+            IList<DeviceUpdatePrivateEndpointConnectionDetails> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceConnection> array = new List<DeviceUpdatePrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item, options));
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceConnection> array = new List<DeviceUpdatePrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item, options));
                     }
                     privateLinkServiceConnections = array;
                     continue;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceProxy> array = new List<DeviceUpdatePrivateLinkServiceProxy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceProxy.DeserializeDeviceUpdatePrivateLinkServiceProxy(item));
+                        array.Add(DeviceUpdatePrivateLinkServiceProxy.DeserializeDeviceUpdatePrivateLinkServiceProxy(item, options));
                     }
                     privateLinkServiceProxies = array;
                     continue;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateEndpointConnectionDetails> array = new List<DeviceUpdatePrivateEndpointConnectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateEndpointConnectionDetails.DeserializeDeviceUpdatePrivateEndpointConnectionDetails(item));
+                        array.Add(DeviceUpdatePrivateEndpointConnectionDetails.DeserializeDeviceUpdatePrivateEndpointConnectionDetails(item, options));
                     }
                     connectionDetails = array;
                     continue;
@@ -241,7 +242,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateRemotePrivateEndpoint(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(privateLinkServiceConnections), Optional.ToList(privateLinkServiceProxies), Optional.ToList(connectionDetails), serializedAdditionalRawData);
+            return new DeviceUpdateRemotePrivateEndpoint(
+                id,
+                location,
+                immutableSubscriptionId,
+                immutableResourceId,
+                vnetTrafficTag,
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(),
+                privateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(),
+                privateLinkServiceProxies ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceProxy>(),
+                connectionDetails ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateRemotePrivateEndpoint>.Write(ModelReaderWriterOptions options)

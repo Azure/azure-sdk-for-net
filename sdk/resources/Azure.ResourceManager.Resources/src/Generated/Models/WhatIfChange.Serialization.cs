@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -109,10 +110,10 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string resourceId = default;
             WhatIfChangeType changeType = default;
-            Optional<string> unsupportedReason = default;
-            Optional<BinaryData> before = default;
-            Optional<BinaryData> after = default;
-            Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
+            string unsupportedReason = default;
+            BinaryData before = default;
+            BinaryData after = default;
+            IReadOnlyList<WhatIfPropertyChange> delta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
+                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item, options));
                     }
                     delta = array;
                     continue;
@@ -170,7 +171,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta), serializedAdditionalRawData);
+            return new WhatIfChange(
+                resourceId,
+                changeType,
+                unsupportedReason,
+                before,
+                after,
+                delta ?? new ChangeTrackingList<WhatIfPropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options)

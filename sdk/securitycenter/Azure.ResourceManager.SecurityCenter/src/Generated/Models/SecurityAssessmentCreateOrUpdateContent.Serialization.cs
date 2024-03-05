@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -132,14 +133,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Optional<string> displayName = default;
-            Optional<IDictionary<string, string>> additionalData = default;
-            Optional<AssessmentLinks> links = default;
-            Optional<SecurityAssessmentMetadataProperties> metadata = default;
-            Optional<SecurityAssessmentPartner> partnersData = default;
-            Optional<SecurityAssessmentStatus> status = default;
+            SystemData systemData = default;
+            SecurityCenterResourceDetails resourceDetails = default;
+            string displayName = default;
+            IDictionary<string, string> additionalData = default;
+            AssessmentLinks links = default;
+            SecurityAssessmentMetadataProperties metadata = default;
+            SecurityAssessmentPartner partnersData = default;
+            SecurityAssessmentStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value);
+                            resourceDetails = SecurityCenterResourceDetails.DeserializeSecurityCenterResourceDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value);
+                            links = AssessmentLinks.DeserializeAssessmentLinks(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value);
+                            metadata = SecurityAssessmentMetadataProperties.DeserializeSecurityAssessmentMetadataProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("partnersData"u8))
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value);
+                            partnersData = SecurityAssessmentPartner.DeserializeSecurityAssessmentPartner(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            status = SecurityAssessmentStatus.DeserializeSecurityAssessmentStatus(property0.Value);
+                            status = SecurityAssessmentStatus.DeserializeSecurityAssessmentStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -250,7 +251,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentCreateOrUpdateContent(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                resourceDetails,
+                displayName,
+                additionalData ?? new ChangeTrackingDictionary<string, string>(),
+                links,
+                metadata,
+                partnersData,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

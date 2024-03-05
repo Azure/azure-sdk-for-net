@@ -8,7 +8,6 @@
 using System;
 using Azure.Communication;
 using Azure.Communication.MediaComposition;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {

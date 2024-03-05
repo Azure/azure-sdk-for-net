@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeProfileSubscription> subscription = default;
+            EdgeProfileSubscription subscription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value);
+                    subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeProfile(subscription.Value, serializedAdditionalRawData);
+            return new EdgeProfile(subscription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeProfile>.Write(ModelReaderWriterOptions options)

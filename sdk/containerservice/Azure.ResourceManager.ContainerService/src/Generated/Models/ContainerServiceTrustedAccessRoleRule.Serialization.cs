@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> verbs = default;
-            Optional<IReadOnlyList<string>> apiGroups = default;
-            Optional<IReadOnlyList<string>> resources = default;
-            Optional<IReadOnlyList<string>> resourceNames = default;
-            Optional<IReadOnlyList<string>> nonResourceUrls = default;
+            IReadOnlyList<string> verbs = default;
+            IReadOnlyList<string> apiGroups = default;
+            IReadOnlyList<string> resources = default;
+            IReadOnlyList<string> resourceNames = default;
+            IReadOnlyList<string> nonResourceUrls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRoleRule(Optional.ToList(verbs), Optional.ToList(apiGroups), Optional.ToList(resources), Optional.ToList(resourceNames), Optional.ToList(nonResourceUrls), serializedAdditionalRawData);
+            return new ContainerServiceTrustedAccessRoleRule(
+                verbs ?? new ChangeTrackingList<string>(),
+                apiGroups ?? new ChangeTrackingList<string>(),
+                resources ?? new ChangeTrackingList<string>(),
+                resourceNames ?? new ChangeTrackingList<string>(),
+                nonResourceUrls ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleRule>.Write(ModelReaderWriterOptions options)

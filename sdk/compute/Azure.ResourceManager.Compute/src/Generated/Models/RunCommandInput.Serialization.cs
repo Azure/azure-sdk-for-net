@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string commandId = default;
-            Optional<IList<string>> script = default;
-            Optional<IList<RunCommandInputParameter>> parameters = default;
+            IList<string> script = default;
+            IList<RunCommandInputParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RunCommandInput(commandId, Optional.ToList(script), Optional.ToList(parameters), serializedAdditionalRawData);
+            return new RunCommandInput(commandId, script ?? new ChangeTrackingList<string>(), parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunCommandInput>.Write(ModelReaderWriterOptions options)

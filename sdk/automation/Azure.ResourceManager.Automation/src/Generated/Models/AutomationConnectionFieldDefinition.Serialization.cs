@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<bool> isEncrypted = default;
-            Optional<bool> isOptional = default;
+            bool? isEncrypted = default;
+            bool? isOptional = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionFieldDefinition(Optional.ToNullable(isEncrypted), Optional.ToNullable(isOptional), type, serializedAdditionalRawData);
+            return new AutomationConnectionFieldDefinition(isEncrypted, isOptional, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionFieldDefinition>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -118,12 +119,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<IDictionary<string, string>> migrationSetting = default;
-            Optional<IDictionary<string, string>> sourceSetting = default;
-            Optional<IDictionary<string, string>> targetSetting = default;
-            Optional<IDictionary<string, string>> tableMap = default;
+            string name = default;
+            string targetDatabaseName = default;
+            IDictionary<string, string> migrationSetting = default;
+            IDictionary<string, string> sourceSetting = default;
+            IDictionary<string, string> targetSetting = default;
+            IDictionary<string, string> tableMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), Optional.ToDictionary(tableMap), serializedAdditionalRawData);
+            return new MigrateMySqlAzureDBForMySqlSyncDatabaseInput(
+                name,
+                targetDatabaseName,
+                migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

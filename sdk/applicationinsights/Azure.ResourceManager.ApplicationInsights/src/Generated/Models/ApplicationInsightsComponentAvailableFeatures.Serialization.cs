@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationInsightsComponentFeature>> result = default;
+            IReadOnlyList<ApplicationInsightsComponentFeature> result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentFeature> array = new List<ApplicationInsightsComponentFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentFeature.DeserializeApplicationInsightsComponentFeature(item));
+                        array.Add(ApplicationInsightsComponentFeature.DeserializeApplicationInsightsComponentFeature(item, options));
                     }
                     result = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAvailableFeatures(Optional.ToList(result), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAvailableFeatures(result ?? new ChangeTrackingList<ApplicationInsightsComponentFeature>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAvailableFeatures>.Write(ModelReaderWriterOptions options)

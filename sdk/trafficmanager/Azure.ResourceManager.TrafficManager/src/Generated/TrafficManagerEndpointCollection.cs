@@ -80,9 +80,26 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -131,9 +148,26 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/>, <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -180,8 +214,22 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Get");
             scope.Start();
@@ -227,8 +275,22 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual Response<TrafficManagerEndpointResource> Get(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Get");
             scope.Start();
@@ -274,8 +336,22 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Exists");
             scope.Start();
@@ -319,8 +395,22 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.Exists");
             scope.Start();
@@ -364,8 +454,22 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<TrafficManagerEndpointResource>> GetIfExistsAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.GetIfExists");
             scope.Start();
@@ -411,8 +515,22 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         public virtual NullableResponse<TrafficManagerEndpointResource> GetIfExists(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            if (endpointType == null)
+            {
+                throw new ArgumentNullException(nameof(endpointType));
+            }
+            if (endpointType.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointType));
+            }
+            if (endpointName == null)
+            {
+                throw new ArgumentNullException(nameof(endpointName));
+            }
+            if (endpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
+            }
 
             using var scope = _trafficManagerEndpointEndpointsClientDiagnostics.CreateScope("TrafficManagerEndpointCollection.GetIfExists");
             scope.Start();

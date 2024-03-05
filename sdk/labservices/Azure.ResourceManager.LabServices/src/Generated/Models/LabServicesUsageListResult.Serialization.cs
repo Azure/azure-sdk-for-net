@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LabServicesUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LabServicesUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabServicesUsage> array = new List<LabServicesUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabServicesUsage.DeserializeLabServicesUsage(item));
+                        array.Add(LabServicesUsage.DeserializeLabServicesUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsageListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LabServicesUsageListResult(value ?? new ChangeTrackingList<LabServicesUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsageListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -204,34 +205,34 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> netCoreSomaxconn = default;
-            Optional<int> netCoreNetdevMaxBacklog = default;
-            Optional<int> netCoreRmemDefault = default;
-            Optional<int> netCoreRmemMax = default;
-            Optional<int> netCoreWmemDefault = default;
-            Optional<int> netCoreWmemMax = default;
-            Optional<int> netCoreOptmemMax = default;
-            Optional<int> netIPv4TcpMaxSynBacklog = default;
-            Optional<int> netIPv4TcpMaxTwBuckets = default;
-            Optional<int> netIPv4TcpFinTimeout = default;
-            Optional<int> netIPv4TcpKeepaliveTime = default;
-            Optional<int> netIPv4TcpKeepaliveProbes = default;
-            Optional<int> netIPv4TcpKeepaliveIntvl = default;
-            Optional<bool> netIPv4TcpTwReuse = default;
-            Optional<string> netIPv4IPLocalPortRange = default;
-            Optional<int> netIPv4NeighDefaultGcThresh1 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh2 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh3 = default;
-            Optional<int> netNetfilterNfConntrackMax = default;
-            Optional<int> netNetfilterNfConntrackBuckets = default;
-            Optional<int> fsInotifyMaxUserWatches = default;
-            Optional<int> fsFileMax = default;
-            Optional<int> fsAioMaxNr = default;
-            Optional<int> fsNrOpen = default;
-            Optional<int> kernelThreadsMax = default;
-            Optional<int> vmMaxMapCount = default;
-            Optional<int> vmSwappiness = default;
-            Optional<int> vmVfsCachePressure = default;
+            int? netCoreSomaxconn = default;
+            int? netCoreNetdevMaxBacklog = default;
+            int? netCoreRmemDefault = default;
+            int? netCoreRmemMax = default;
+            int? netCoreWmemDefault = default;
+            int? netCoreWmemMax = default;
+            int? netCoreOptmemMax = default;
+            int? netIPv4TcpMaxSynBacklog = default;
+            int? netIPv4TcpMaxTwBuckets = default;
+            int? netIPv4TcpFinTimeout = default;
+            int? netIPv4TcpKeepaliveTime = default;
+            int? netIPv4TcpKeepaliveProbes = default;
+            int? netIPv4TcpKeepaliveIntvl = default;
+            bool? netIPv4TcpTwReuse = default;
+            string netIPv4IPLocalPortRange = default;
+            int? netIPv4NeighDefaultGcThresh1 = default;
+            int? netIPv4NeighDefaultGcThresh2 = default;
+            int? netIPv4NeighDefaultGcThresh3 = default;
+            int? netNetfilterNfConntrackMax = default;
+            int? netNetfilterNfConntrackBuckets = default;
+            int? fsInotifyMaxUserWatches = default;
+            int? fsFileMax = default;
+            int? fsAioMaxNr = default;
+            int? fsNrOpen = default;
+            int? kernelThreadsMax = default;
+            int? vmMaxMapCount = default;
+            int? vmSwappiness = default;
+            int? vmVfsCachePressure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -490,7 +491,36 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure), serializedAdditionalRawData);
+            return new SysctlConfig(
+                netCoreSomaxconn,
+                netCoreNetdevMaxBacklog,
+                netCoreRmemDefault,
+                netCoreRmemMax,
+                netCoreWmemDefault,
+                netCoreWmemMax,
+                netCoreOptmemMax,
+                netIPv4TcpMaxSynBacklog,
+                netIPv4TcpMaxTwBuckets,
+                netIPv4TcpFinTimeout,
+                netIPv4TcpKeepaliveTime,
+                netIPv4TcpKeepaliveProbes,
+                netIPv4TcpKeepaliveIntvl,
+                netIPv4TcpTwReuse,
+                netIPv4IPLocalPortRange,
+                netIPv4NeighDefaultGcThresh1,
+                netIPv4NeighDefaultGcThresh2,
+                netIPv4NeighDefaultGcThresh3,
+                netNetfilterNfConntrackMax,
+                netNetfilterNfConntrackBuckets,
+                fsInotifyMaxUserWatches,
+                fsFileMax,
+                fsAioMaxNr,
+                fsNrOpen,
+                kernelThreadsMax,
+                vmMaxMapCount,
+                vmSwappiness,
+                vmVfsCachePressure,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SysctlConfig>.Write(ModelReaderWriterOptions options)

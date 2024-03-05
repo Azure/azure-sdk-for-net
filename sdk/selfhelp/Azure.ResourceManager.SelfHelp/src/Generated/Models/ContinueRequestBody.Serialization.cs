@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> stepId = default;
-            Optional<IList<TroubleshooterResult>> responses = default;
+            string stepId = default;
+            IList<TroubleshooterResult> responses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TroubleshooterResult> array = new List<TroubleshooterResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item, options));
                     }
                     responses = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinueRequestBody(stepId.Value, Optional.ToList(responses), serializedAdditionalRawData);
+            return new ContinueRequestBody(stepId, responses ?? new ChangeTrackingList<TroubleshooterResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContinueRequestBody>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<SubResource> privateEndpoint = default;
+            SubResource privateEndpoint = default;
             IotHubPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = IotHubPrivateLinkServiceConnectionState.DeserializeIotHubPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = IotHubPrivateLinkServiceConnectionState.DeserializeIotHubPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

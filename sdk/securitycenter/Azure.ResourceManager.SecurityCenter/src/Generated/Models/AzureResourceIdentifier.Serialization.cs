@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             ResourceIdentifierType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureResourceIdentifier(type, serializedAdditionalRawData, azureResourceId.Value);
+            return new AzureResourceIdentifier(type, serializedAdditionalRawData, azureResourceId);
         }
 
         BinaryData IPersistableModel<AzureResourceIdentifier>.Write(ModelReaderWriterOptions options)

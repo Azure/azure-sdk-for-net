@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -52,7 +51,10 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal UnassignJobResult(string jobId, int unassignmentCount)
         {
-            Argument.AssertNotNull(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
 
             JobId = jobId;
             UnassignmentCount = unassignmentCount;

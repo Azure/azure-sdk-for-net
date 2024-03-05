@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<StorageAccountType> storageAccountType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
-            Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
-            Optional<ResourceIdentifier> id = default;
+            StorageAccountType? storageAccountType = default;
+            WritableSubResource diskEncryptionSet = default;
+            VirtualMachineDiskSecurityProfile securityProfile = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(property.Value);
+                    securityProfile = VirtualMachineDiskSecurityProfile.DeserializeVirtualMachineDiskSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineManagedDisk(id.Value, serializedAdditionalRawData, Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
+            return new VirtualMachineManagedDisk(id, serializedAdditionalRawData, storageAccountType, diskEncryptionSet, securityProfile);
         }
 
         BinaryData IPersistableModel<VirtualMachineManagedDisk>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -124,18 +125,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> vpnConnectionId = default;
-            Optional<long> vpnConnectionDuration = default;
-            Optional<DateTimeOffset> vpnConnectionTime = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> vpnUserName = default;
-            Optional<long> maxBandwidth = default;
-            Optional<long> egressPacketsTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<long> ingressPacketsTransferred = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> maxPacketsPerSecond = default;
+            string vpnConnectionId = default;
+            long? vpnConnectionDuration = default;
+            DateTimeOffset? vpnConnectionTime = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
+            string vpnUserName = default;
+            long? maxBandwidth = default;
+            long? egressPacketsTransferred = default;
+            long? egressBytesTransferred = default;
+            long? ingressPacketsTransferred = default;
+            long? ingressBytesTransferred = default;
+            long? maxPacketsPerSecond = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +239,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), serializedAdditionalRawData);
+            return new VpnClientConnectionHealthDetail(
+                vpnConnectionId,
+                vpnConnectionDuration,
+                vpnConnectionTime,
+                publicIPAddress,
+                privateIPAddress,
+                vpnUserName,
+                maxBandwidth,
+                egressPacketsTransferred,
+                egressBytesTransferred,
+                ingressPacketsTransferred,
+                ingressBytesTransferred,
+                maxPacketsPerSecond,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealthDetail>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> snapshotsToKeep = default;
-            Optional<int> hour = default;
-            Optional<int> minute = default;
-            Optional<long> usedBytes = default;
+            int? snapshotsToKeep = default;
+            int? hour = default;
+            int? minute = default;
+            long? usedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyDailySchedule(Optional.ToNullable(snapshotsToKeep), Optional.ToNullable(hour), Optional.ToNullable(minute), Optional.ToNullable(usedBytes), serializedAdditionalRawData);
+            return new SnapshotPolicyDailySchedule(snapshotsToKeep, hour, minute, usedBytes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyDailySchedule>.Write(ModelReaderWriterOptions options)

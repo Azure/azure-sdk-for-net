@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -82,10 +83,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element);
+                    case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element, options);
                 }
             }
-            return UnknownWebhook.DeserializeUnknownWebhook(element);
+            return UnknownWebhook.DeserializeUnknownWebhook(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)

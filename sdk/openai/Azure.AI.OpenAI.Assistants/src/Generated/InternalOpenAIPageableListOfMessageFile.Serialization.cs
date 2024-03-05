@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<MessageFile> array = new List<MessageFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageFile.DeserializeMessageFile(item));
+                        array.Add(MessageFile.DeserializeMessageFile(item, options));
                     }
                     data = array;
                     continue;
@@ -125,7 +125,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfMessageFile(@object, data, firstId, lastId, hasMore, serializedAdditionalRawData);
+            return new InternalOpenAIPageableListOfMessageFile(
+                @object,
+                data,
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalOpenAIPageableListOfMessageFile>.Write(ModelReaderWriterOptions options)

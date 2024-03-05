@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element);
-                    case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element);
-                    case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element);
-                    case "#Microsoft.Media.JobInputSequence": return MediaJobInputSequence.DeserializeMediaJobInputSequence(element);
-                    case "#Microsoft.Media.JobInputs": return MediaJobInputs.DeserializeMediaJobInputs(element);
+                    case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element, options);
+                    case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element, options);
+                    case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element, options);
+                    case "#Microsoft.Media.JobInputSequence": return MediaJobInputSequence.DeserializeMediaJobInputSequence(element, options);
+                    case "#Microsoft.Media.JobInputs": return MediaJobInputs.DeserializeMediaJobInputs(element, options);
                 }
             }
-            return UnknownJobInput.DeserializeUnknownJobInput(element);
+            return UnknownJobInput.DeserializeUnknownJobInput(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobInputBasicProperties>.Write(ModelReaderWriterOptions options)

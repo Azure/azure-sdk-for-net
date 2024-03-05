@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -20,8 +21,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> or <paramref name="returnToCustomerPackageDetails"/> is null. </exception>
         public DataBoxCustomerDiskJobDetails(DataBoxContactDetails contactDetails, PackageCarrierDetails returnToCustomerPackageDetails) : base(contactDetails)
         {
-            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
-            Argument.AssertNotNull(returnToCustomerPackageDetails, nameof(returnToCustomerPackageDetails));
+            if (contactDetails == null)
+            {
+                throw new ArgumentNullException(nameof(contactDetails));
+            }
+            if (returnToCustomerPackageDetails == null)
+            {
+                throw new ArgumentNullException(nameof(returnToCustomerPackageDetails));
+            }
 
             ImportDiskDetails = new ChangeTrackingDictionary<string, ImportDiskDetails>();
             ExportDiskDetails = new ChangeTrackingDictionary<string, ExportDiskDetails>();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<EncodingCaptureDescription> encoding = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> sizeLimitInBytes = default;
-            Optional<EventHubDestination> destination = default;
-            Optional<bool> skipEmptyArchives = default;
+            bool? enabled = default;
+            EncodingCaptureDescription? encoding = default;
+            int? intervalInSeconds = default;
+            int? sizeLimitInBytes = default;
+            EventHubDestination destination = default;
+            bool? skipEmptyArchives = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value);
+                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"u8))
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CaptureDescription(Optional.ToNullable(enabled), Optional.ToNullable(encoding), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(sizeLimitInBytes), destination.Value, Optional.ToNullable(skipEmptyArchives), serializedAdditionalRawData);
+            return new CaptureDescription(
+                enabled,
+                encoding,
+                intervalInSeconds,
+                sizeLimitInBytes,
+                destination,
+                skipEmptyArchives,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options)

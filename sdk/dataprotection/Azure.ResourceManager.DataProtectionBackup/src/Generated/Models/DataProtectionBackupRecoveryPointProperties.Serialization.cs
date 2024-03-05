@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupDiscreteRecoveryPoint": return DataProtectionBackupDiscreteRecoveryPointProperties.DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(element);
+                    case "AzureBackupDiscreteRecoveryPoint": return DataProtectionBackupDiscreteRecoveryPointProperties.DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(element, options);
                 }
             }
-            return UnknownAzureBackupRecoveryPoint.DeserializeUnknownAzureBackupRecoveryPoint(element);
+            return UnknownAzureBackupRecoveryPoint.DeserializeUnknownAzureBackupRecoveryPoint(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

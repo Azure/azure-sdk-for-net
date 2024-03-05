@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicApiOperationInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LogicApiOperationInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicApiOperationInfo> array = new List<LogicApiOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicApiOperationInfo.DeserializeLogicApiOperationInfo(item));
+                        array.Add(LogicApiOperationInfo.DeserializeLogicApiOperationInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiOperationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicApiOperationListResult(value ?? new ChangeTrackingList<LogicApiOperationInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiOperationListResult>.Write(ModelReaderWriterOptions options)

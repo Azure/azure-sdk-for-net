@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountModel> model = default;
-            Optional<string> kind = default;
-            Optional<string> skuName = default;
+            CognitiveServicesAccountModel model = default;
+            string kind = default;
+            string skuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(property.Value);
+                    model = CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesModel(model.Value, kind.Value, skuName.Value, serializedAdditionalRawData);
+            return new CognitiveServicesModel(model, kind, skuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesModel>.Write(ModelReaderWriterOptions options)

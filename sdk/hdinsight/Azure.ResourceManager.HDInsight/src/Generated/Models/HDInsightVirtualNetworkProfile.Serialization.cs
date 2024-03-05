@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> subnet = default;
+            ResourceIdentifier id = default;
+            string subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVirtualNetworkProfile(id.Value, subnet.Value, serializedAdditionalRawData);
+            return new HDInsightVirtualNetworkProfile(id, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVirtualNetworkProfile>.Write(ModelReaderWriterOptions options)

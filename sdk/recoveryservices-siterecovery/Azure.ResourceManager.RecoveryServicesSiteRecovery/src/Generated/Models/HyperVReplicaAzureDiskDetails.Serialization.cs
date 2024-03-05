@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            string diskId = default;
+            ResourceIdentifier logStorageAccountId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureDiskDetails(diskId.Value, logStorageAccountId.Value, Optional.ToNullable(diskType), diskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new HyperVReplicaAzureDiskDetails(diskId, logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureDiskDetails>.Write(ModelReaderWriterOptions options)

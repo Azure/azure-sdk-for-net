@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,8 +19,14 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="playSourceInfo"/> is null. </exception>
         public StartHoldMusicRequestInternal(CommunicationIdentifierModel targetParticipant, PlaySourceInternal playSourceInfo)
         {
-            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
-            Argument.AssertNotNull(playSourceInfo, nameof(playSourceInfo));
+            if (targetParticipant == null)
+            {
+                throw new ArgumentNullException(nameof(targetParticipant));
+            }
+            if (playSourceInfo == null)
+            {
+                throw new ArgumentNullException(nameof(playSourceInfo));
+            }
 
             TargetParticipant = targetParticipant;
             PlaySourceInfo = playSourceInfo;

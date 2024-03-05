@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -82,16 +83,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "custom_model": return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element);
-                    case "literal": return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element);
-                    case "mlflow_model": return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element);
-                    case "mltable": return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element);
-                    case "triton_model": return MachineLearningTritonModelJobInput.DeserializeMachineLearningTritonModelJobInput(element);
-                    case "uri_file": return MachineLearningUriFileJobInput.DeserializeMachineLearningUriFileJobInput(element);
-                    case "uri_folder": return MachineLearningUriFolderJobInput.DeserializeMachineLearningUriFolderJobInput(element);
+                    case "custom_model": return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element, options);
+                    case "literal": return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element, options);
+                    case "mlflow_model": return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element, options);
+                    case "mltable": return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element, options);
+                    case "triton_model": return MachineLearningTritonModelJobInput.DeserializeMachineLearningTritonModelJobInput(element, options);
+                    case "uri_file": return MachineLearningUriFileJobInput.DeserializeMachineLearningUriFileJobInput(element, options);
+                    case "uri_folder": return MachineLearningUriFolderJobInput.DeserializeMachineLearningUriFolderJobInput(element, options);
                 }
             }
-            return UnknownJobInput.DeserializeUnknownJobInput(element);
+            return UnknownJobInput.DeserializeUnknownJobInput(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobInput>.Write(ModelReaderWriterOptions options)

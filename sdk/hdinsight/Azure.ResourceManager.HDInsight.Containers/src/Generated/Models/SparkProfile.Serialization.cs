@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> defaultStorageUrl = default;
-            Optional<SparkMetastoreSpec> metastoreSpec = default;
-            Optional<SparkUserPluginListResult> userPluginsSpec = default;
+            string defaultStorageUrl = default;
+            SparkMetastoreSpec metastoreSpec = default;
+            SparkUserPluginListResult userPluginsSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    metastoreSpec = SparkMetastoreSpec.DeserializeSparkMetastoreSpec(property.Value);
+                    metastoreSpec = SparkMetastoreSpec.DeserializeSparkMetastoreSpec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userPluginsSpec"u8))
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value);
+                    userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkProfile(defaultStorageUrl.Value, metastoreSpec.Value, userPluginsSpec.Value, serializedAdditionalRawData);
+            return new SparkProfile(defaultStorageUrl, metastoreSpec, userPluginsSpec, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkProfile>.Write(ModelReaderWriterOptions options)

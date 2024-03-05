@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<SecretAttributes> attributes = default;
-            Optional<Uri> secretUri = default;
-            Optional<string> secretUriWithVersion = default;
+            string value = default;
+            string contentType = default;
+            SecretAttributes attributes = default;
+            Uri secretUri = default;
+            string secretUriWithVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
+                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretUri"u8))
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value, serializedAdditionalRawData);
+            return new SecretProperties(
+                value,
+                contentType,
+                attributes,
+                secretUri,
+                secretUriWithVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceOperation>> value = default;
+            IReadOnlyList<ResourceOperation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     List<ResourceOperation> array = new List<ResourceOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperation.DeserializeResourceOperation(item));
+                        array.Add(ResourceOperation.DeserializeResourceOperation(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableOperations(Optional.ToList(value), serializedAdditionalRawData);
+            return new AvailableOperations(value ?? new ChangeTrackingList<ResourceOperation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableOperations>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxOrderPreferences> preference = default;
+            DataBoxOrderPreferences preference = default;
             DataBoxSkuName deviceType = default;
             DataBoxValidationInputDiscriminator validationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preference = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
+                    preference = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deviceType"u8))
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreferencesValidationContent(validationType, serializedAdditionalRawData, preference.Value, deviceType);
+            return new PreferencesValidationContent(validationType, serializedAdditionalRawData, preference, deviceType);
         }
 
         BinaryData IPersistableModel<PreferencesValidationContent>.Write(ModelReaderWriterOptions options)

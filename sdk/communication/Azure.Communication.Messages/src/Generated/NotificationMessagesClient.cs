@@ -55,8 +55,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public NotificationMessagesClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -73,7 +79,10 @@ namespace Azure.Communication.Messages
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
         public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
+            if (notificationContent == null)
+            {
+                throw new ArgumentNullException(nameof(notificationContent));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
@@ -88,7 +97,10 @@ namespace Azure.Communication.Messages
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
         public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
+            if (notificationContent == null)
+            {
+                throw new ArgumentNullException(nameof(notificationContent));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
@@ -119,7 +131,10 @@ namespace Azure.Communication.Messages
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
             scope.Start();
@@ -158,7 +173,10 @@ namespace Azure.Communication.Messages
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(RequestContent,RequestContext)']/*" />
         public virtual Response Send(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
             scope.Start();
@@ -181,7 +199,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual async Task<Response<BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DownloadMediaInternalAsync(id, context).ConfigureAwait(false);
@@ -195,7 +220,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         internal virtual Response<BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DownloadMediaInternal(id, context);
@@ -225,7 +257,14 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> DownloadMediaInternalAsync(string id, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
             scope.Start();
@@ -264,7 +303,14 @@ namespace Azure.Communication.Messages
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DownloadMediaInternal(string id, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (id.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.DownloadMediaInternal");
             scope.Start();

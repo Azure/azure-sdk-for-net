@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,9 +23,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
         public HDInsightSparkActivity(string name, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(rootPath, nameof(rootPath));
-            Argument.AssertNotNull(entryFilePath, nameof(entryFilePath));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (rootPath == null)
+            {
+                throw new ArgumentNullException(nameof(rootPath));
+            }
+            if (entryFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(entryFilePath));
+            }
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;

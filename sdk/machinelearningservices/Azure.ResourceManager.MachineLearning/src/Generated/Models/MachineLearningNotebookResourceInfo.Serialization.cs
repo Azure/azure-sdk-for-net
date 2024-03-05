@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<bool> isPrivateLinkEnabled = default;
-            Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
-            Optional<string> resourceId = default;
+            string fqdn = default;
+            bool? isPrivateLinkEnabled = default;
+            MachineLearningNotebookPreparationError notebookPreparationError = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value);
+                    notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningNotebookResourceInfo(fqdn.Value, Optional.ToNullable(isPrivateLinkEnabled), notebookPreparationError.Value, resourceId.Value, serializedAdditionalRawData);
+            return new MachineLearningNotebookResourceInfo(fqdn, isPrivateLinkEnabled, notebookPreparationError, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningNotebookResourceInfo>.Write(ModelReaderWriterOptions options)

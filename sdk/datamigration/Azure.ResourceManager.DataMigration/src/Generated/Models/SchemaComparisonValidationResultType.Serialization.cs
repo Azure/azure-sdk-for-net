@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> objectName = default;
-            Optional<ObjectType> objectType = default;
-            Optional<UpdateActionType> updateAction = default;
+            string objectName = default;
+            ObjectType? objectType = default;
+            UpdateActionType? updateAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SchemaComparisonValidationResultType(objectName.Value, Optional.ToNullable(objectType), Optional.ToNullable(updateAction), serializedAdditionalRawData);
+            return new SchemaComparisonValidationResultType(objectName, objectType, updateAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SchemaComparisonValidationResultType>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -96,10 +97,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Optional<LogicExpressionErrorInfo> error = default;
+            string text = default;
+            BinaryData value = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
+            LogicExpressionErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpression> array = new List<LogicExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLogicExpression(item));
+                        array.Add(DeserializeLogicExpression(item, options));
                     }
                     subexpressions = array;
                     continue;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value);
+                    error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpression(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, serializedAdditionalRawData);
+            return new LogicExpression(text, value, subexpressions ?? new ChangeTrackingList<LogicExpression>(), error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicExpression>.Write(ModelReaderWriterOptions options)

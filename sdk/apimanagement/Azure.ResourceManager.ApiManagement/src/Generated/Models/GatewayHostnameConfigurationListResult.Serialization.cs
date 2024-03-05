@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementGatewayHostnameConfigurationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementGatewayHostnameConfigurationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementGatewayHostnameConfigurationData> array = new List<ApiManagementGatewayHostnameConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(item));
+                        array.Add(ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayHostnameConfigurationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GatewayHostnameConfigurationListResult(value ?? new ChangeTrackingList<ApiManagementGatewayHostnameConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayHostnameConfigurationListResult>.Write(ModelReaderWriterOptions options)

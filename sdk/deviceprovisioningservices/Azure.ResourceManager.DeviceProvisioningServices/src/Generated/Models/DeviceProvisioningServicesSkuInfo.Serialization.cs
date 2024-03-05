@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<DeviceProvisioningServicesSku> name = default;
-            Optional<string> tier = default;
-            Optional<long> capacity = default;
+            DeviceProvisioningServicesSku? name = default;
+            string tier = default;
+            long? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesSkuInfo(Optional.ToNullable(name), tier.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new DeviceProvisioningServicesSkuInfo(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesSkuInfo>.Write(ModelReaderWriterOptions options)

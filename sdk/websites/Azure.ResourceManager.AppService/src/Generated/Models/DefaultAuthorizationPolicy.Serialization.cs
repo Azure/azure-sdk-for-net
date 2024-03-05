@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceAadAllowedPrincipals> allowedPrincipals = default;
-            Optional<IList<string>> allowedApplications = default;
+            AppServiceAadAllowedPrincipals allowedPrincipals = default;
+            IList<string> allowedApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value);
+                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedApplications"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultAuthorizationPolicy(allowedPrincipals.Value, Optional.ToList(allowedApplications), serializedAdditionalRawData);
+            return new DefaultAuthorizationPolicy(allowedPrincipals, allowedApplications ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultAuthorizationPolicy>.Write(ModelReaderWriterOptions options)

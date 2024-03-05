@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationServiceEnvironmentName, IntegrationServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string integrationServiceEnvironmentName, IntegrationServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentResource>> GetAsync(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentResource> Get(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationServiceEnvironmentResource>> GetIfExistsAsync(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationServiceEnvironmentName"/> is null. </exception>
         public virtual NullableResponse<IntegrationServiceEnvironmentResource> GetIfExists(string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            if (integrationServiceEnvironmentName == null)
+            {
+                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
+            }
+            if (integrationServiceEnvironmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
+            }
 
             using var scope = _integrationServiceEnvironmentClientDiagnostics.CreateScope("IntegrationServiceEnvironmentCollection.GetIfExists");
             scope.Start();

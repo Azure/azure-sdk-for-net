@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<SignalRRequestType>> allow = default;
-            Optional<IList<SignalRRequestType>> deny = default;
+            IList<SignalRRequestType> allow = default;
+            IList<SignalRRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRNetworkAcl(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData);
+            return new SignalRNetworkAcl(allow ?? new ChangeTrackingList<SignalRRequestType>(), deny ?? new ChangeTrackingList<SignalRRequestType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRNetworkAcl>.Write(ModelReaderWriterOptions options)

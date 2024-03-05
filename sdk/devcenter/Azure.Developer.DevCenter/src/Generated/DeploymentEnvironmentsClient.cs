@@ -52,8 +52,14 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new DevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -127,9 +133,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnvironmentAsync(string projectName, string userId, string environmentName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironment");
             scope.Start();
@@ -171,9 +198,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironment(string,string,string,RequestContext)']/*" />
         public virtual Response GetEnvironment(string projectName, string userId, string environmentName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironment");
             scope.Start();
@@ -248,8 +296,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetCatalogAsync(string projectName, string catalogName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetCatalog");
             scope.Start();
@@ -290,8 +352,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalog(string,string,RequestContext)']/*" />
         public virtual Response GetCatalog(string projectName, string catalogName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetCatalog");
             scope.Start();
@@ -371,9 +447,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnvironmentDefinitionAsync(string projectName, string catalogName, string definitionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (definitionName == null)
+            {
+                throw new ArgumentNullException(nameof(definitionName));
+            }
+            if (definitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(definitionName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironmentDefinition");
             scope.Start();
@@ -415,9 +512,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinition(string,string,string,RequestContext)']/*" />
         public virtual Response GetEnvironmentDefinition(string projectName, string catalogName, string definitionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
-            Argument.AssertNotNullOrEmpty(definitionName, nameof(definitionName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
+            if (definitionName == null)
+            {
+                throw new ArgumentNullException(nameof(definitionName));
+            }
+            if (definitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(definitionName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetEnvironmentDefinition");
             scope.Start();
@@ -489,7 +607,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetAllEnvironmentsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllEnvironmentsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllEnvironmentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllEnvironmentsNextPageRequest(nextLink, projectName, context);
@@ -520,7 +645,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetAllEnvironments(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllEnvironments(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllEnvironmentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllEnvironmentsNextPageRequest(nextLink, projectName, context);
@@ -588,8 +720,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentsAsync(string projectName, string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(projectName, userId, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, projectName, userId, context);
@@ -621,8 +767,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironments(string projectName, string userId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentsRequest(projectName, userId, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentsNextPageRequest(nextLink, projectName, userId, context);
@@ -685,7 +845,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCatalogsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogsNextPageRequest(nextLink, projectName, context);
@@ -716,7 +883,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogs(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCatalogs(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCatalogsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCatalogsNextPageRequest(nextLink, projectName, context);
@@ -779,7 +953,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentDefinitionsAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentDefinitionsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentDefinitionsNextPageRequest(nextLink, projectName, context);
@@ -810,7 +991,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitions(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentDefinitions(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentDefinitionsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentDefinitionsNextPageRequest(nextLink, projectName, context);
@@ -878,8 +1066,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionsByCatalogAsync(string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentDefinitionsByCatalogAsync(string projectName, string catalogName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentDefinitionsByCatalogRequest(projectName, catalogName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentDefinitionsByCatalogNextPageRequest(nextLink, projectName, catalogName, context);
@@ -911,8 +1113,22 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionsByCatalog(string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentDefinitionsByCatalog(string projectName, string catalogName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (catalogName == null)
+            {
+                throw new ArgumentNullException(nameof(catalogName));
+            }
+            if (catalogName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentDefinitionsByCatalogRequest(projectName, catalogName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentDefinitionsByCatalogNextPageRequest(nextLink, projectName, catalogName, context);
@@ -975,7 +1191,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEnvironmentTypesAsync(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, projectName, context);
@@ -1006,7 +1229,14 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEnvironmentTypes(string projectName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEnvironmentTypesRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEnvironmentTypesNextPageRequest(nextLink, projectName, context);
@@ -1087,10 +1317,34 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironmentAsync(WaitUntil,string,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
             scope.Start();
@@ -1134,10 +1388,34 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='CreateOrUpdateEnvironment(WaitUntil,string,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdateEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.CreateOrUpdateEnvironment");
             scope.Start();
@@ -1176,9 +1454,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.DeleteEnvironment");
             scope.Start();
@@ -1217,9 +1516,30 @@ namespace Azure.Developer.DevCenter
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironment(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation DeleteEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
+            }
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+            if (environmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.DeleteEnvironment");
             scope.Start();

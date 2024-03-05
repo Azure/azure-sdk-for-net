@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ManagedHsmNetworkRuleBypassOption> bypass = default;
-            Optional<ManagedHsmNetworkRuleAction> defaultAction = default;
-            Optional<IList<ManagedHsmIPRule>> ipRules = default;
-            Optional<IList<ManagedHsmVirtualNetworkRule>> virtualNetworkRules = default;
+            ManagedHsmNetworkRuleBypassOption? bypass = default;
+            ManagedHsmNetworkRuleAction? defaultAction = default;
+            IList<ManagedHsmIPRule> ipRules = default;
+            IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmIPRule> array = new List<ManagedHsmIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item));
+                        array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmVirtualNetworkRule> array = new List<ManagedHsmVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item));
+                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new ManagedHsmNetworkRuleSet(bypass, defaultAction, ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmNetworkRuleSet>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningRecurrenceFrequency> frequency = default;
-            Optional<int> interval = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
-            Optional<MachineLearningRecurrenceSchedule> schedule = default;
+            MachineLearningRecurrenceFrequency? frequency = default;
+            int? interval = default;
+            string startTime = default;
+            string timeZone = default;
+            MachineLearningRecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value);
+                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +154,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeStartStopRecurrenceSchedule(Optional.ToNullable(frequency), Optional.ToNullable(interval), startTime.Value, timeZone.Value, schedule.Value, serializedAdditionalRawData);
+            return new ComputeStartStopRecurrenceSchedule(
+                frequency,
+                interval,
+                startTime,
+                timeZone,
+                schedule,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeStartStopRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

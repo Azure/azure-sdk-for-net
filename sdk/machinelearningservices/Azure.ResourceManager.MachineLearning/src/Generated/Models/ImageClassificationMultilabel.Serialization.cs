@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -157,15 +158,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
-            Optional<ImageModelSettingsClassification> modelSettings = default;
-            Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;
+            ClassificationMultilabelPrimaryMetric? primaryMetric = default;
+            ImageModelSettingsClassification modelSettings = default;
+            IList<ImageModelDistributionSettingsClassification> searchSpace = default;
             ImageLimitSettings limitSettings = default;
-            Optional<ImageSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            ImageSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelSettings = null;
                         continue;
                     }
-                    modelSettings = ImageModelSettingsClassification.DeserializeImageModelSettingsClassification(property.Value);
+                    modelSettings = ImageModelSettingsClassification.DeserializeImageModelSettingsClassification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -201,14 +202,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ImageModelDistributionSettingsClassification> array = new List<ImageModelDistributionSettingsClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageModelDistributionSettingsClassification.DeserializeImageModelDistributionSettingsClassification(item));
+                        array.Add(ImageModelDistributionSettingsClassification.DeserializeImageModelDistributionSettingsClassification(item, options));
                     }
                     searchSpace = array;
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
                 {
-                    limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value);
+                    limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sweepSettings"u8))
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value);
+                    sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -276,7 +277,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageClassificationMultilabel(
+                logVerbosity,
+                targetColumnName,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                primaryMetric,
+                modelSettings,
+                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsClassification>(),
+                limitSettings,
+                sweepSettings,
+                validationData,
+                validationDataSize);
         }
 
         BinaryData IPersistableModel<ImageClassificationMultilabel>.Write(ModelReaderWriterOptions options)

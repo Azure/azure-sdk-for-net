@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<SessionHostHealthCheckName> healthCheckName = default;
-            Optional<SessionHostHealthCheckResult> healthCheckResult = default;
-            Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
+            SessionHostHealthCheckName? healthCheckName = default;
+            SessionHostHealthCheckResult? healthCheckResult = default;
+            SessionHostHealthCheckFailureDetails additionalFailureDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value);
+                    additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SessionHostHealthCheckReport(Optional.ToNullable(healthCheckName), Optional.ToNullable(healthCheckResult), additionalFailureDetails.Value, serializedAdditionalRawData);
+            return new SessionHostHealthCheckReport(healthCheckName, healthCheckResult, additionalFailureDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SessionHostHealthCheckReport>.Write(ModelReaderWriterOptions options)

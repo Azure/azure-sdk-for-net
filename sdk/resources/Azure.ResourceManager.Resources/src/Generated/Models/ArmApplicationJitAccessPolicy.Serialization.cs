@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             bool jitAccessEnabled = default;
-            Optional<JitApprovalMode> jitApprovalMode = default;
-            Optional<IList<JitApprover>> jitApprovers = default;
-            Optional<TimeSpan> maximumJitAccessDuration = default;
+            JitApprovalMode? jitApprovalMode = default;
+            IList<JitApprover> jitApprovers = default;
+            TimeSpan? maximumJitAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitApprover> array = new List<JitApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitApprover.DeserializeJitApprover(item));
+                        array.Add(JitApprover.DeserializeJitApprover(item, options));
                     }
                     jitApprovers = array;
                     continue;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), Optional.ToNullable(maximumJitAccessDuration), serializedAdditionalRawData);
+            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmApplicationJitAccessPolicy>.Write(ModelReaderWriterOptions options)

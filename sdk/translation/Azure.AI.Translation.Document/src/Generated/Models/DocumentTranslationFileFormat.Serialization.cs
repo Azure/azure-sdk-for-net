@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -22,8 +21,8 @@ namespace Azure.AI.Translation.Document
             string format = default;
             IReadOnlyList<string> fileExtensions = default;
             IReadOnlyList<string> contentTypes = default;
-            Optional<string> defaultVersion = default;
-            Optional<IReadOnlyList<string>> versions = default;
+            string defaultVersion = default;
+            IReadOnlyList<string> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("format"u8))
@@ -71,7 +70,7 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
+            return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion, versions ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public RecoveryPlanScriptActionDetails(string path, RecoveryPlanActionLocation fabricLocation)
         {
-            Argument.AssertNotNull(path, nameof(path));
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
 
             Path = path;
             FabricLocation = fabricLocation;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> certificateChain = default;
+            string certificateChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereCertificateChainResult(certificateChain.Value, serializedAdditionalRawData);
+            return new SphereCertificateChainResult(certificateChain, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereCertificateChainResult>.Write(ModelReaderWriterOptions options)

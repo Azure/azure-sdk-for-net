@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRoleManagementPolicyRule(document.RootElement, options);
+            return DeserializeRoleManagementPolicyRule(document.RootElement, options);
         }
 
         internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             RoleManagementPolicyRuleType ruleType = "Unknown";
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            RoleManagementPolicyRuleTarget target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRoleManagementPolicyRule(id.Value, ruleType, target.Value, serializedAdditionalRawData);
+            return new UnknownRoleManagementPolicyRule(id, ruleType, target, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyRule>.Write(ModelReaderWriterOptions options)
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRoleManagementPolicyRule(document.RootElement, options);
+                        return DeserializeRoleManagementPolicyRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementPolicyRule)} does not support '{options.Format}' format.");

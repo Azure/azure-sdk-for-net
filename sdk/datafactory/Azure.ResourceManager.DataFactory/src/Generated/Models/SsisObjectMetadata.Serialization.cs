@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -85,13 +86,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Environment": return SsisEnvironment.DeserializeSsisEnvironment(element);
-                    case "Folder": return SsisFolder.DeserializeSsisFolder(element);
-                    case "Package": return SsisPackage.DeserializeSsisPackage(element);
-                    case "Project": return SsisProject.DeserializeSsisProject(element);
+                    case "Environment": return SsisEnvironment.DeserializeSsisEnvironment(element, options);
+                    case "Folder": return SsisFolder.DeserializeSsisFolder(element, options);
+                    case "Package": return SsisPackage.DeserializeSsisPackage(element, options);
+                    case "Project": return SsisProject.DeserializeSsisProject(element, options);
                 }
             }
-            return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element);
+            return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element, options);
         }
 
         BinaryData IPersistableModel<SsisObjectMetadata>.Write(ModelReaderWriterOptions options)

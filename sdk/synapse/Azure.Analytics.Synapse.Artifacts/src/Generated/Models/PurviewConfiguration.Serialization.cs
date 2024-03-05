@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> purviewResourceId = default;
+            string purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purviewResourceId"u8))
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PurviewConfiguration(purviewResourceId.Value);
+            return new PurviewConfiguration(purviewResourceId);
         }
 
         internal partial class PurviewConfigurationConverter : JsonConverter<PurviewConfiguration>

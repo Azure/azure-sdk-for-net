@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -75,12 +76,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateSqlServerSqlMISyncTaskOutputError.DeserializeMigrateSqlServerSqlMISyncTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateSqlServerSqlMISyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(element);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlMISyncTaskOutputError.DeserializeMigrateSqlServerSqlMISyncTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateSqlServerSqlMISyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(element, options);
                 }
             }
-            return UnknownMigrateSqlServerSqlMISyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(element);
+            return UnknownMigrateSqlServerSqlMISyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutput>.Write(ModelReaderWriterOptions options)

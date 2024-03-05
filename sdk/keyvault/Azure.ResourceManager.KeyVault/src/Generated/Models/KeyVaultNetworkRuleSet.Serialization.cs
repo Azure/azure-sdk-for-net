@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
-            Optional<KeyVaultNetworkRuleAction> defaultAction = default;
-            Optional<IList<KeyVaultIPRule>> ipRules = default;
-            Optional<IList<KeyVaultVirtualNetworkRule>> virtualNetworkRules = default;
+            KeyVaultNetworkRuleBypassOption? bypass = default;
+            KeyVaultNetworkRuleAction? defaultAction = default;
+            IList<KeyVaultIPRule> ipRules = default;
+            IList<KeyVaultVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultIPRule> array = new List<KeyVaultIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultIPRule.DeserializeKeyVaultIPRule(item));
+                        array.Add(KeyVaultIPRule.DeserializeKeyVaultIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultVirtualNetworkRule> array = new List<KeyVaultVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultVirtualNetworkRule.DeserializeKeyVaultVirtualNetworkRule(item));
+                        array.Add(KeyVaultVirtualNetworkRule.DeserializeKeyVaultVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            return new KeyVaultNetworkRuleSet(bypass, defaultAction, ipRules ?? new ChangeTrackingList<KeyVaultIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<KeyVaultVirtualNetworkRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultNetworkRuleSet>.Write(ModelReaderWriterOptions options)

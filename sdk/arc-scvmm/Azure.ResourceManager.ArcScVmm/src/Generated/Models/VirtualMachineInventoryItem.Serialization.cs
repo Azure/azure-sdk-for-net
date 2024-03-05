@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -116,16 +117,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> powerState = default;
-            Optional<IList<string>> ipAddresses = default;
-            Optional<InventoryItemDetails> cloud = default;
+            OSType? osType = default;
+            string osName = default;
+            string powerState = default;
+            IList<string> ipAddresses = default;
+            InventoryItemDetails cloud = default;
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            string managedResourceId = default;
+            string uuid = default;
+            string inventoryItemName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    cloud = InventoryItemDetails.DeserializeInventoryItemDetails(property.Value);
+                    cloud = InventoryItemDetails.DeserializeInventoryItemDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inventoryType"u8))
@@ -203,7 +204,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData, Optional.ToNullable(osType), osName.Value, powerState.Value, Optional.ToList(ipAddresses), cloud.Value);
+            return new VirtualMachineInventoryItem(
+                inventoryType,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData,
+                osType,
+                osName,
+                powerState,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                cloud);
         }
 
         BinaryData IPersistableModel<VirtualMachineInventoryItem>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPConfigurationProperties> properties = default;
+            string name = default;
+            IPConfigurationProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = IPConfigurationProperties.DeserializeIPConfigurationProperties(property.Value);
+                    properties = IPConfigurationProperties.DeserializeIPConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPConfiguration(name.Value, properties.Value, serializedAdditionalRawData);
+            return new IPConfiguration(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPConfiguration>.Write(ModelReaderWriterOptions options)

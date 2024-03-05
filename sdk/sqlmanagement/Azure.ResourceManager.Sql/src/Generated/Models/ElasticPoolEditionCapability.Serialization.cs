@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ElasticPoolPerformanceLevelCapability>> supportedElasticPoolPerformanceLevels = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = default;
+            bool? zoneRedundant = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerformanceLevelCapability> array = new List<ElasticPoolPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerformanceLevelCapability.DeserializeElasticPoolPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerformanceLevelCapability.DeserializeElasticPoolPerformanceLevelCapability(item, options));
                     }
                     supportedElasticPoolPerformanceLevels = array;
                     continue;
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolEditionCapability(name.Value, Optional.ToList(supportedElasticPoolPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolEditionCapability(
+                name,
+                supportedElasticPoolPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>(),
+                zoneRedundant,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolEditionCapability>.Write(ModelReaderWriterOptions options)

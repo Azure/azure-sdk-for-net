@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> reservationId = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<CapacityReservationInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            ComputeSku sku = default;
+            IDictionary<string, string> tags = default;
+            string reservationId = default;
+            int? platformFaultDomainCount = default;
+            IReadOnlyList<SubResource> virtualMachinesAssociated = default;
+            DateTimeOffset? provisioningTime = default;
+            string provisioningState = default;
+            CapacityReservationInstanceView instanceView = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value);
+                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))
@@ -238,7 +239,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, reservationId.Value, Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new CapacityReservationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku,
+                reservationId,
+                platformFaultDomainCount,
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                provisioningTime,
+                provisioningState,
+                instanceView,
+                timeCreated);
         }
 
         BinaryData IPersistableModel<CapacityReservationPatch>.Write(ModelReaderWriterOptions options)

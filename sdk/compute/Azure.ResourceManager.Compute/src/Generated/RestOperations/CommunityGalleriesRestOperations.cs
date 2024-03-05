@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-03";
+            _apiVersion = apiVersion ?? "2023-07-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,8 +65,22 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommunityGalleryData>> GetAsync(string subscriptionId, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (publicGalleryName == null)
+            {
+                throw new ArgumentNullException(nameof(publicGalleryName));
+            }
+            if (publicGalleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicGalleryName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, location, publicGalleryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -95,8 +109,22 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommunityGalleryData> Get(string subscriptionId, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (publicGalleryName == null)
+            {
+                throw new ArgumentNullException(nameof(publicGalleryName));
+            }
+            if (publicGalleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(publicGalleryName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, location, publicGalleryName);
             _pipeline.Send(message, cancellationToken);

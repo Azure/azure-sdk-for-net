@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<PlacementPolicyResource>> UpdateAsync(WaitUntil waitUntil, PlacementPolicyPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<PlacementPolicyResource> Update(WaitUntil waitUntil, PlacementPolicyPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyResource.Update");
             scope.Start();

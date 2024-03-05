@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<StorageCacheUsageName> name = default;
+            int? limit = default;
+            string unit = default;
+            int? currentValue = default;
+            StorageCacheUsageName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value);
+                    name = StorageCacheUsageName.DeserializeStorageCacheUsageName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsage(Optional.ToNullable(limit), unit.Value, Optional.ToNullable(currentValue), name.Value, serializedAdditionalRawData);
+            return new StorageCacheUsage(limit, unit, currentValue, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsage>.Write(ModelReaderWriterOptions options)

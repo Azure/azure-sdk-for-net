@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> nodeSelector = default;
-            Optional<MachineLearningInstanceTypeSchemaResources> resources = default;
+            IDictionary<string, string> nodeSelector = default;
+            MachineLearningInstanceTypeSchemaResources resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    resources = MachineLearningInstanceTypeSchemaResources.DeserializeMachineLearningInstanceTypeSchemaResources(property.Value);
+                    resources = MachineLearningInstanceTypeSchemaResources.DeserializeMachineLearningInstanceTypeSchemaResources(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningInstanceTypeSchema(Optional.ToDictionary(nodeSelector), resources.Value, serializedAdditionalRawData);
+            return new MachineLearningInstanceTypeSchema(nodeSelector ?? new ChangeTrackingDictionary<string, string>(), resources, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningInstanceTypeSchema>.Write(ModelReaderWriterOptions options)

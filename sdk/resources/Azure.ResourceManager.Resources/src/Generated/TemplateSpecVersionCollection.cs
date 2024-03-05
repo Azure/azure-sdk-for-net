@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TemplateSpecVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string templateSpecVersion, TemplateSpecVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            Argument.AssertNotNull(data, nameof(data));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TemplateSpecVersionResource> CreateOrUpdate(WaitUntil waitUntil, string templateSpecVersion, TemplateSpecVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
-            Argument.AssertNotNull(data, nameof(data));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
         public virtual async Task<Response<TemplateSpecVersionResource>> GetAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
         public virtual Response<TemplateSpecVersionResource> Get(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
         public virtual Response<bool> Exists(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
         public virtual async Task<NullableResponse<TemplateSpecVersionResource>> GetIfExistsAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
         public virtual NullableResponse<TemplateSpecVersionResource> GetIfExists(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(templateSpecVersion, nameof(templateSpecVersion));
+            if (templateSpecVersion == null)
+            {
+                throw new ArgumentNullException(nameof(templateSpecVersion));
+            }
+            if (templateSpecVersion.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(templateSpecVersion));
+            }
 
             using var scope = _templateSpecVersionClientDiagnostics.CreateScope("TemplateSpecVersionCollection.GetIfExists");
             scope.Start();

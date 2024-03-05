@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -113,11 +114,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<IList<ResourceIdentifier>> databases = default;
-            Optional<IList<PartnerServerInfo>> partnerServers = default;
+            IDictionary<string, string> tags = default;
+            FailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            IList<ResourceIdentifier> databases = default;
+            IList<PartnerServerInfo> partnerServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value);
+                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value);
+                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
                             }
                             partnerServers = array;
                             continue;
@@ -207,7 +208,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupPatch(Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToList(databases), Optional.ToList(partnerServers), serializedAdditionalRawData);
+            return new FailoverGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupPatch>.Write(ModelReaderWriterOptions options)

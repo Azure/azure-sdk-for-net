@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -111,11 +112,11 @@ namespace Azure.ResourceManager.LoadTesting.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> currentUsage = default;
-            Optional<int> currentQuota = default;
-            Optional<int> newQuota = default;
-            Optional<LoadTestingQuotaBucketDimensions> dimensions = default;
+            SystemData systemData = default;
+            int? currentUsage = default;
+            int? currentQuota = default;
+            int? newQuota = default;
+            LoadTestingQuotaBucketDimensions dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             {
                                 continue;
                             }
-                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value);
+                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value, options);
                             continue;
                         }
                     }
@@ -198,7 +199,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaBucketContent(id, name, type, systemData.Value, Optional.ToNullable(currentUsage), Optional.ToNullable(currentQuota), Optional.ToNullable(newQuota), dimensions.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                type,
+                systemData,
+                currentUsage,
+                currentQuota,
+                newQuota,
+                dimensions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaBucketContent>.Write(ModelReaderWriterOptions options)

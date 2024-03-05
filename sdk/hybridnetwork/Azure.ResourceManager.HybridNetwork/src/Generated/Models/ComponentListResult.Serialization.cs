@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComponentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ComponentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ComponentData> array = new List<ComponentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentData.DeserializeComponentData(item));
+                        array.Add(ComponentData.DeserializeComponentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ComponentListResult(value ?? new ChangeTrackingList<ComponentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentListResult>.Write(ModelReaderWriterOptions options)

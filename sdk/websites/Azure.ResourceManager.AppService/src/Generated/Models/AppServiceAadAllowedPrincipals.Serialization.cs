@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> groups = default;
-            Optional<IList<string>> identities = default;
+            IList<string> groups = default;
+            IList<string> identities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities), serializedAdditionalRawData);
+            return new AppServiceAadAllowedPrincipals(groups ?? new ChangeTrackingList<string>(), identities ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadAllowedPrincipals>.Write(ModelReaderWriterOptions options)

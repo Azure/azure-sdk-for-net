@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabSecretData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevTestLabSecretData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabSecretData> array = new List<DevTestLabSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabSecretData.DeserializeDevTestLabSecretData(item));
+                        array.Add(DevTestLabSecretData.DeserializeDevTestLabSecretData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecretList(value ?? new ChangeTrackingList<DevTestLabSecretData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretList>.Write(ModelReaderWriterOptions options)

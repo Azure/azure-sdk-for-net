@@ -75,8 +75,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<AcceptedAge> minimumAge = default;
-            Optional<AcceptedAge> maximumAge = default;
+            AcceptedAge minimumAge = default;
+            AcceptedAge maximumAge = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    minimumAge = AcceptedAge.DeserializeAcceptedAge(property.Value);
+                    minimumAge = AcceptedAge.DeserializeAcceptedAge(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumAge"u8))
@@ -96,7 +96,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    maximumAge = AcceptedAge.DeserializeAcceptedAge(property.Value);
+                    maximumAge = AcceptedAge.DeserializeAcceptedAge(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptedAgeRange(minimumAge.Value, maximumAge.Value, serializedAdditionalRawData);
+            return new AcceptedAgeRange(minimumAge, maximumAge, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptedAgeRange>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupStorageType> storageModelType = default;
-            Optional<BackupStorageType> storageType = default;
-            Optional<BackupStorageTypeState> storageTypeState = default;
-            Optional<EnhancedSecurityState> enhancedSecurityState = default;
-            Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isSoftDeleteFeatureStateEditable = default;
+            BackupStorageType? storageModelType = default;
+            BackupStorageType? storageType = default;
+            BackupStorageTypeState? storageTypeState = default;
+            EnhancedSecurityState? enhancedSecurityState = default;
+            SoftDeleteFeatureState? softDeleteFeatureState = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            IList<string> resourceGuardOperationRequests = default;
+            bool? isSoftDeleteFeatureStateEditable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +205,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToNullable(softDeleteRetentionPeriodInDays), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable), serializedAdditionalRawData);
+            return new BackupResourceVaultConfigProperties(
+                storageModelType,
+                storageType,
+                storageTypeState,
+                enhancedSecurityState,
+                softDeleteFeatureState,
+                softDeleteRetentionPeriodInDays,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isSoftDeleteFeatureStateEditable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceVaultConfigProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeResourceMoveStatus> operationInProgress = default;
-            Optional<DateTimeOffset> operationInProgressLockTimeoutInUtc = default;
+            DataBoxEdgeResourceMoveStatus? operationInProgress = default;
+            DateTimeOffset? operationInProgressLockTimeoutInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeResourceMoveDetails(Optional.ToNullable(operationInProgress), Optional.ToNullable(operationInProgressLockTimeoutInUtc), serializedAdditionalRawData);
+            return new DataBoxEdgeResourceMoveDetails(operationInProgress, operationInProgressLockTimeoutInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeResourceMoveDetails>.Write(ModelReaderWriterOptions options)

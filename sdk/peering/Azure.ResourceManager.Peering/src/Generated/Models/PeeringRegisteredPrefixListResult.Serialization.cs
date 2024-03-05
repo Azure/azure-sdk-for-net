@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringRegisteredPrefixData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PeeringRegisteredPrefixData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringRegisteredPrefixData> array = new List<PeeringRegisteredPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(item));
+                        array.Add(PeeringRegisteredPrefixData.DeserializePeeringRegisteredPrefixData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringRegisteredPrefixListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeeringRegisteredPrefixListResult(value ?? new ChangeTrackingList<PeeringRegisteredPrefixData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringRegisteredPrefixListResult>.Write(ModelReaderWriterOptions options)

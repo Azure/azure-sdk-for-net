@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ReservationCalculateRefundRequestProperties> properties = default;
+            string id = default;
+            ReservationCalculateRefundRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationCalculateRefundRequestProperties.DeserializeReservationCalculateRefundRequestProperties(property.Value);
+                    properties = ReservationCalculateRefundRequestProperties.DeserializeReservationCalculateRefundRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCalculateRefundContent(id.Value, properties.Value, serializedAdditionalRawData);
+            return new ReservationCalculateRefundContent(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCalculateRefundContent>.Write(ModelReaderWriterOptions options)

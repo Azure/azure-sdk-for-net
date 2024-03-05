@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> latestVersion = default;
-            Optional<string> latestAgentReleaseDate = default;
-            Optional<string> driverVersion = default;
-            Optional<string> latestUpgradableVersionWithoutReboot = default;
-            Optional<DateTimeOffset> agentVersionExpireOn = default;
-            Optional<DateTimeOffset> driverVersionExpireOn = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<IReadOnlyList<AgentUpgradeBlockedReason>> reasonsBlockingUpgrade = default;
-            Optional<string> isUpgradeable = default;
+            string version = default;
+            string latestVersion = default;
+            string latestAgentReleaseDate = default;
+            string driverVersion = default;
+            string latestUpgradableVersionWithoutReboot = default;
+            DateTimeOffset? agentVersionExpireOn = default;
+            DateTimeOffset? driverVersionExpireOn = default;
+            DateTimeOffset? lastHeartbeatUtc = default;
+            IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default;
+            string isUpgradeable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +211,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmMobilityAgentDetails(version.Value, latestVersion.Value, latestAgentReleaseDate.Value, driverVersion.Value, latestUpgradableVersionWithoutReboot.Value, Optional.ToNullable(agentVersionExpireOn), Optional.ToNullable(driverVersionExpireOn), Optional.ToNullable(lastHeartbeatUtc), Optional.ToList(reasonsBlockingUpgrade), isUpgradeable.Value, serializedAdditionalRawData);
+            return new InMageRcmMobilityAgentDetails(
+                version,
+                latestVersion,
+                latestAgentReleaseDate,
+                driverVersion,
+                latestUpgradableVersionWithoutReboot,
+                agentVersionExpireOn,
+                driverVersionExpireOn,
+                lastHeartbeatUtc,
+                reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(),
+                isUpgradeable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmMobilityAgentDetails>.Write(ModelReaderWriterOptions options)

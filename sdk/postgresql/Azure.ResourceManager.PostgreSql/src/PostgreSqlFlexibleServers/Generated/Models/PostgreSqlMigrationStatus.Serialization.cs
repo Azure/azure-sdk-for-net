@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<PostgreSqlMigrationState> state = default;
-            Optional<string> error = default;
-            Optional<PostgreSqlMigrationSubStateDetails> currentSubStateDetails = default;
+            PostgreSqlMigrationState? state = default;
+            string error = default;
+            PostgreSqlMigrationSubStateDetails currentSubStateDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value);
+                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationStatus(Optional.ToNullable(state), error.Value, currentSubStateDetails.Value, serializedAdditionalRawData);
+            return new PostgreSqlMigrationStatus(state, error, currentSubStateDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationStatus>.Write(ModelReaderWriterOptions options)

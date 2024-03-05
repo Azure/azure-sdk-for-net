@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipv6Address = default;
+            IPAddress ipv6Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsAaaaRecordInfo(ipv6Address.Value, serializedAdditionalRawData);
+            return new PrivateDnsAaaaRecordInfo(ipv6Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsAaaaRecordInfo>.Write(ModelReaderWriterOptions options)

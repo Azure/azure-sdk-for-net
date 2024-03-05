@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -121,15 +122,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> fetchAaddsResource = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<string>> zones = default;
-            Optional<HDInsightClusterCreateOrUpdateProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            string name = default;
+            string type = default;
+            Guid? tenantId = default;
+            bool? fetchAaddsResource = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<string> zones = default;
+            HDInsightClusterCreateOrUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    properties = HDInsightClusterCreateOrUpdateProperties.DeserializeHDInsightClusterCreateOrUpdateProperties(property.Value);
+                    properties = HDInsightClusterCreateOrUpdateProperties.DeserializeHDInsightClusterCreateOrUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -223,7 +224,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreationValidateContent(Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), properties.Value, identity, serializedAdditionalRawData, name.Value, type.Value, Optional.ToNullable(tenantId), Optional.ToNullable(fetchAaddsResource));
+            return new HDInsightClusterCreationValidateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                zones ?? new ChangeTrackingList<string>(),
+                properties,
+                identity,
+                serializedAdditionalRawData,
+                name,
+                type,
+                tenantId,
+                fetchAaddsResource);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateContent>.Write(ModelReaderWriterOptions options)
