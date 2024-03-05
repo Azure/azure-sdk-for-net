@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (IsIPv6Enabled.HasValue)
+            if (Optional.IsDefined(IsIPv6Enabled))
             {
                 writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
-            if (PrivateEndpointNetworkPolicies.HasValue)
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
             }
-            if (PrivateLinkServiceNetworkPolicies.HasValue)
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
             }
-            if (NetworkSecurityGroupId != null)
+            if (Optional.IsDefined(NetworkSecurityGroupId))
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);

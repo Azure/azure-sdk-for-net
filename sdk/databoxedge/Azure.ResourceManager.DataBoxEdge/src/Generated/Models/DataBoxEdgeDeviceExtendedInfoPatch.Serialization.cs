@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (ClientSecretStoreId != null)
+            if (Optional.IsDefined(ClientSecretStoreId))
             {
                 writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
-            if (ClientSecretStoreUri != null)
+            if (Optional.IsDefined(ClientSecretStoreUri))
             {
                 writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
-            if (ChannelIntegrityKeyName != null)
+            if (Optional.IsDefined(ChannelIntegrityKeyName))
             {
                 writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
-            if (ChannelIntegrityKeyVersion != null)
+            if (Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
                 writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
-            if (SyncStatus.HasValue)
+            if (Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus.Value.ToString());

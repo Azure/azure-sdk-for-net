@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (OfferName != null)
+            if (Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
-            if (ValueInMbps.HasValue)
+            if (Optional.IsDefined(ValueInMbps))
             {
                 writer.WritePropertyName("valueInMbps"u8);
                 writer.WriteNumberValue(ValueInMbps.Value);

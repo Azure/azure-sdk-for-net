@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +48,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (UnauthenticatedClientAction.HasValue)
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (IsTokenStoreEnabled.HasValue)
+            if (Optional.IsDefined(IsTokenStoreEnabled))
             {
                 writer.WritePropertyName("tokenStoreEnabled"u8);
                 writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
-            if (!(AllowedExternalRedirectUrls is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -84,47 +85,47 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultProvider.HasValue)
+            if (Optional.IsDefined(DefaultProvider))
             {
                 writer.WritePropertyName("defaultProvider"u8);
                 writer.WriteStringValue(DefaultProvider.Value.ToSerialString());
             }
-            if (TokenRefreshExtensionHours.HasValue)
+            if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
                 writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (ClientSecretSettingName != null)
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (ClientSecretCertificateThumbprintString != null)
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
                 writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (ValidateIssuer.HasValue)
+            if (Optional.IsDefined(ValidateIssuer))
             {
                 writer.WritePropertyName("validateIssuer"u8);
                 writer.WriteBooleanValue(ValidateIssuer.Value);
             }
-            if (!(AllowedAudiences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalLoginParams is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalLoginParams))
             {
                 writer.WritePropertyName("additionalLoginParams"u8);
                 writer.WriteStartArray();
@@ -144,27 +145,27 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AadClaimsAuthorization != null)
+            if (Optional.IsDefined(AadClaimsAuthorization))
             {
                 writer.WritePropertyName("aadClaimsAuthorization"u8);
                 writer.WriteStringValue(AadClaimsAuthorization);
             }
-            if (GoogleClientId != null)
+            if (Optional.IsDefined(GoogleClientId))
             {
                 writer.WritePropertyName("googleClientId"u8);
                 writer.WriteStringValue(GoogleClientId);
             }
-            if (GoogleClientSecret != null)
+            if (Optional.IsDefined(GoogleClientSecret))
             {
                 writer.WritePropertyName("googleClientSecret"u8);
                 writer.WriteStringValue(GoogleClientSecret);
             }
-            if (GoogleClientSecretSettingName != null)
+            if (Optional.IsDefined(GoogleClientSecretSettingName))
             {
                 writer.WritePropertyName("googleClientSecretSettingName"u8);
                 writer.WriteStringValue(GoogleClientSecretSettingName);
             }
-            if (!(GoogleOAuthScopes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(GoogleOAuthScopes))
             {
                 writer.WritePropertyName("googleOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -174,22 +175,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FacebookAppId != null)
+            if (Optional.IsDefined(FacebookAppId))
             {
                 writer.WritePropertyName("facebookAppId"u8);
                 writer.WriteStringValue(FacebookAppId);
             }
-            if (FacebookAppSecret != null)
+            if (Optional.IsDefined(FacebookAppSecret))
             {
                 writer.WritePropertyName("facebookAppSecret"u8);
                 writer.WriteStringValue(FacebookAppSecret);
             }
-            if (FacebookAppSecretSettingName != null)
+            if (Optional.IsDefined(FacebookAppSecretSettingName))
             {
                 writer.WritePropertyName("facebookAppSecretSettingName"u8);
                 writer.WriteStringValue(FacebookAppSecretSettingName);
             }
-            if (!(FacebookOAuthScopes is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(FacebookOAuthScopes))
             {
                 writer.WritePropertyName("facebookOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -199,22 +200,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (GitHubClientId != null)
+            if (Optional.IsDefined(GitHubClientId))
             {
                 writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
-            if (GitHubClientSecret != null)
+            if (Optional.IsDefined(GitHubClientSecret))
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteStringValue(GitHubClientSecret);
             }
-            if (GitHubClientSecretSettingName != null)
+            if (Optional.IsDefined(GitHubClientSecretSettingName))
             {
                 writer.WritePropertyName("gitHubClientSecretSettingName"u8);
                 writer.WriteStringValue(GitHubClientSecretSettingName);
             }
-            if (!(GitHubOAuthScopes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(GitHubOAuthScopes))
             {
                 writer.WritePropertyName("gitHubOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -224,37 +225,37 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TwitterConsumerKey != null)
+            if (Optional.IsDefined(TwitterConsumerKey))
             {
                 writer.WritePropertyName("twitterConsumerKey"u8);
                 writer.WriteStringValue(TwitterConsumerKey);
             }
-            if (TwitterConsumerSecret != null)
+            if (Optional.IsDefined(TwitterConsumerSecret))
             {
                 writer.WritePropertyName("twitterConsumerSecret"u8);
                 writer.WriteStringValue(TwitterConsumerSecret);
             }
-            if (TwitterConsumerSecretSettingName != null)
+            if (Optional.IsDefined(TwitterConsumerSecretSettingName))
             {
                 writer.WritePropertyName("twitterConsumerSecretSettingName"u8);
                 writer.WriteStringValue(TwitterConsumerSecretSettingName);
             }
-            if (MicrosoftAccountClientId != null)
+            if (Optional.IsDefined(MicrosoftAccountClientId))
             {
                 writer.WritePropertyName("microsoftAccountClientId"u8);
                 writer.WriteStringValue(MicrosoftAccountClientId);
             }
-            if (MicrosoftAccountClientSecret != null)
+            if (Optional.IsDefined(MicrosoftAccountClientSecret))
             {
                 writer.WritePropertyName("microsoftAccountClientSecret"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecret);
             }
-            if (MicrosoftAccountClientSecretSettingName != null)
+            if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
             {
                 writer.WritePropertyName("microsoftAccountClientSecretSettingName"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecretSettingName);
             }
-            if (!(MicrosoftAccountOAuthScopes is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
             {
                 writer.WritePropertyName("microsoftAccountOAuthScopes"u8);
                 writer.WriteStartArray();
@@ -264,17 +265,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsAuthFromFile != null)
+            if (Optional.IsDefined(IsAuthFromFile))
             {
                 writer.WritePropertyName("isAuthFromFile"u8);
                 writer.WriteStringValue(IsAuthFromFile);
             }
-            if (AuthFilePath != null)
+            if (Optional.IsDefined(AuthFilePath))
             {
                 writer.WritePropertyName("authFilePath"u8);
                 writer.WriteStringValue(AuthFilePath);
             }
-            if (ConfigVersion != null)
+            if (Optional.IsDefined(ConfigVersion))
             {
                 writer.WritePropertyName("configVersion"u8);
                 writer.WriteStringValue(ConfigVersion);

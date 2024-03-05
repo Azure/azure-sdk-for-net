@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && CompletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTimestamp"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && NamespaceFilesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NamespaceFilesCount))
             {
                 writer.WritePropertyName("namespaceFilesCount"u8);
                 writer.WriteNumberValue(NamespaceFilesCount.Value);
             }
-            if (options.Format != "W" && NamespaceDirectoriesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NamespaceDirectoriesCount))
             {
                 writer.WritePropertyName("namespaceDirectoriesCount"u8);
                 writer.WriteNumberValue(NamespaceDirectoriesCount.Value);
             }
-            if (options.Format != "W" && NamespaceSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NamespaceSizeInBytes))
             {
                 writer.WritePropertyName("namespaceSizeBytes"u8);
                 writer.WriteNumberValue(NamespaceSizeInBytes.Value);
             }
-            if (options.Format != "W" && NextRunTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextRunTimestamp))
             {
                 writer.WritePropertyName("nextRunTimestamp"u8);
                 writer.WriteStringValue(NextRunTimestamp.Value, "O");

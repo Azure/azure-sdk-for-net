@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -28,44 +29,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartObject();
             writer.WritePropertyName("priority"u8);
             writer.WriteStringValue(Priority);
-            if (RuleStackName != null)
+            if (Optional.IsDefined(RuleStackName))
             {
                 writer.WritePropertyName("ruleStackName"u8);
                 writer.WriteStringValue(RuleStackName);
             }
-            if (RuleListName != null)
+            if (Optional.IsDefined(RuleListName))
             {
                 writer.WritePropertyName("ruleListName"u8);
                 writer.WriteStringValue(RuleListName);
             }
-            if (FirewallName != null)
+            if (Optional.IsDefined(FirewallName))
             {
                 writer.WritePropertyName("firewallName"u8);
                 writer.WriteStringValue(FirewallName);
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            if (HitCount.HasValue)
+            if (Optional.IsDefined(HitCount))
             {
                 writer.WritePropertyName("hitCount"u8);
                 writer.WriteNumberValue(HitCount.Value);
             }
-            if (AppSeen != null)
+            if (Optional.IsDefined(AppSeen))
             {
                 writer.WritePropertyName("appSeen"u8);
                 writer.WriteObjectValue(AppSeen);
             }
-            if (ResponseOn.HasValue)
+            if (Optional.IsDefined(ResponseOn))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(ResponseOn.Value, "O");
             }
-            if (RequestOn.HasValue)
+            if (Optional.IsDefined(RequestOn))
             {
                 writer.WritePropertyName("requestTimestamp"u8);
                 writer.WriteStringValue(RequestOn.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");

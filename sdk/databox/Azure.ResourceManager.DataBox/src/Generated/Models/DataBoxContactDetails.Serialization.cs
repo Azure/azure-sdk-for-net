@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (PhoneExtension != null)
+            if (Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Mobile != null)
+            if (Optional.IsDefined(Mobile))
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(NotificationPreference is ChangeTrackingList<NotificationPreference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NotificationPreference))
             {
                 writer.WritePropertyName("notificationPreference"u8);
                 writer.WriteStartArray();

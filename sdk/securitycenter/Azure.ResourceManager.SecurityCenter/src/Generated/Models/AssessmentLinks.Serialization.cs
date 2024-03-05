@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzurePortalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AzurePortalUri))
             {
                 writer.WritePropertyName("azurePortalUri"u8);
                 writer.WriteStringValue(AzurePortalUri.AbsoluteUri);

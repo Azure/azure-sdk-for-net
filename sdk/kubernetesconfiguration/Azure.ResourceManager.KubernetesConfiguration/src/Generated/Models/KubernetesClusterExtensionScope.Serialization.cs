@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Cluster != null)
+            if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("cluster");
                 }
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 if (Namespace != null)
                 {

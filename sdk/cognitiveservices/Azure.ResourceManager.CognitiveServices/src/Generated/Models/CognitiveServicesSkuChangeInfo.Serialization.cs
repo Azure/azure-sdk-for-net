@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (CountOfDowngrades.HasValue)
+            if (Optional.IsDefined(CountOfDowngrades))
             {
                 writer.WritePropertyName("countOfDowngrades"u8);
                 writer.WriteNumberValue(CountOfDowngrades.Value);
             }
-            if (CountOfUpgradesAfterDowngrades.HasValue)
+            if (Optional.IsDefined(CountOfUpgradesAfterDowngrades))
             {
                 writer.WritePropertyName("countOfUpgradesAfterDowngrades"u8);
                 writer.WriteNumberValue(CountOfUpgradesAfterDowngrades.Value);
             }
-            if (LastChangedOn.HasValue)
+            if (Optional.IsDefined(LastChangedOn))
             {
                 writer.WritePropertyName("lastChangeDate"u8);
                 writer.WriteStringValue(LastChangedOn.Value, "O");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (RateLimitPercentage.HasValue)
+            if (Optional.IsDefined(RateLimitPercentage))
             {
                 writer.WritePropertyName("rateLimitPercentage"u8);
                 writer.WriteNumberValue(RateLimitPercentage.Value);
             }
-            if (Expiration.HasValue)
+            if (Optional.IsDefined(Expiration))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(Expiration.Value, "O");

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="content"> File Content in base64 encoded format. </param>
         /// <param name="chunkIndex"> Index of the uploaded chunk (Index starts at 0). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadFileContent(string content, float? chunkIndex, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UploadFileContent(string content, int? chunkIndex, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             ChunkIndex = chunkIndex;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> File Content in base64 encoded format. </summary>
         public string Content { get; set; }
         /// <summary> Index of the uploaded chunk (Index starts at 0). </summary>
-        public float? ChunkIndex { get; set; }
+        public int? ChunkIndex { get; set; }
     }
 }

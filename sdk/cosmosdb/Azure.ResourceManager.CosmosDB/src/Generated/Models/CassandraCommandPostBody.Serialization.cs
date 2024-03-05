@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (!(Arguments is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartObject();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
-            if (CassandraStopStart.HasValue)
+            if (Optional.IsDefined(CassandraStopStart))
             {
                 writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (AllowWrite.HasValue)
+            if (Optional.IsDefined(AllowWrite))
             {
                 writer.WritePropertyName("readwrite"u8);
                 writer.WriteBooleanValue(AllowWrite.Value);

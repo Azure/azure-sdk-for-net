@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Columns is ChangeTrackingList<SyncFullSchemaTableColumn> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,22 +37,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ErrorId != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorId))
             {
                 writer.WritePropertyName("errorId"u8);
                 writer.WriteStringValue(ErrorId);
             }
-            if (options.Format != "W" && HasError.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasError))
             {
                 writer.WritePropertyName("hasError"u8);
                 writer.WriteBooleanValue(HasError.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && QuotedName != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotedName))
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);

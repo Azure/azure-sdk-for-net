@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Identity;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
@@ -22,7 +23,7 @@ namespace Azure.Communication.Identity.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (ExpiresInMinutes.HasValue)
+            if (Optional.IsDefined(ExpiresInMinutes))
             {
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);

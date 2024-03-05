@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ValidationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {
                 writer.WritePropertyName("validationStatus"u8);
                 writer.WriteStringValue(ValidationStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && !(AlternateAddresses is ChangeTrackingList<DataBoxShippingAddress> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AlternateAddresses))
             {
                 writer.WritePropertyName("alternateAddresses"u8);
                 writer.WriteStartArray();
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);

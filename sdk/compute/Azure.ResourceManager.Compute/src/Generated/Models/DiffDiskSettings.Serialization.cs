@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Option.HasValue)
+            if (Optional.IsDefined(Option))
             {
                 writer.WritePropertyName("option"u8);
                 writer.WriteStringValue(Option.Value.ToString());
             }
-            if (Placement.HasValue)
+            if (Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(VmDetails is ChangeTrackingList<InconsistentVmDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDetails))
             {
                 writer.WritePropertyName("vmDetails"u8);
                 writer.WriteStartArray();

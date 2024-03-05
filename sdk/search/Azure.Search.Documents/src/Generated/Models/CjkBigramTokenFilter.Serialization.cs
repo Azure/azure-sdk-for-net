@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(IgnoreScripts is ChangeTrackingList<CjkBigramTokenFilterScripts> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IgnoreScripts))
             {
                 writer.WritePropertyName("ignoreScripts"u8);
                 writer.WriteStartArray();
@@ -26,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputUnigrams.HasValue)
+            if (Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);

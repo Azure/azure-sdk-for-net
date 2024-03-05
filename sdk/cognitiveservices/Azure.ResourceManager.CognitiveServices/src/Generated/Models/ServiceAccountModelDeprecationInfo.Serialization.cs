@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (FineTuneOn.HasValue)
+            if (Optional.IsDefined(FineTuneOn))
             {
                 writer.WritePropertyName("fineTune"u8);
                 writer.WriteStringValue(FineTuneOn.Value, "O");
             }
-            if (InferenceOn.HasValue)
+            if (Optional.IsDefined(InferenceOn))
             {
                 writer.WritePropertyName("inference"u8);
                 writer.WriteStringValue(InferenceOn.Value, "O");

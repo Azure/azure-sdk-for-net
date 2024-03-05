@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SynthesizeGeneratedKeyName.HasValue)
+            if (Optional.IsDefined(SynthesizeGeneratedKeyName))
             {
                 writer.WritePropertyName("synthesizeGeneratedKeyName"u8);
                 writer.WriteBooleanValue(SynthesizeGeneratedKeyName.Value);

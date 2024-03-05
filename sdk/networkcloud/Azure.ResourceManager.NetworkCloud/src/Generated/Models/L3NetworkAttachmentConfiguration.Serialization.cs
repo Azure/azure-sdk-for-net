@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (IpamEnabled.HasValue)
+            if (Optional.IsDefined(IpamEnabled))
             {
                 writer.WritePropertyName("ipamEnabled"u8);
                 writer.WriteStringValue(IpamEnabled.Value.ToString());
             }
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (PluginType.HasValue)
+            if (Optional.IsDefined(PluginType))
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());

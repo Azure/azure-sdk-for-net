@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (CapacityReservationLevel.HasValue)
+            if (Optional.IsDefined(CapacityReservationLevel))
             {
                 writer.WritePropertyName("capacityReservationLevel"u8);
                 writer.WriteNumberValue((int)CapacityReservationLevel.Value);
             }
-            if (options.Format != "W" && LastSkuUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
             {
                 writer.WritePropertyName("lastSkuUpdate"u8);
                 writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");

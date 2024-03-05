@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,82 +27,82 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && MigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());
             }
-            if (options.Format != "W" && IncomingChanges.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IncomingChanges))
             {
                 writer.WritePropertyName("incomingChanges"u8);
                 writer.WriteNumberValue(IncomingChanges.Value);
             }
-            if (options.Format != "W" && AppliedChanges.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppliedChanges))
             {
                 writer.WritePropertyName("appliedChanges"u8);
                 writer.WriteNumberValue(AppliedChanges.Value);
             }
-            if (options.Format != "W" && CdcInsertCounter.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CdcInsertCounter))
             {
                 writer.WritePropertyName("cdcInsertCounter"u8);
                 writer.WriteNumberValue(CdcInsertCounter.Value);
             }
-            if (options.Format != "W" && CdcDeleteCounter.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CdcDeleteCounter))
             {
                 writer.WritePropertyName("cdcDeleteCounter"u8);
                 writer.WriteNumberValue(CdcDeleteCounter.Value);
             }
-            if (options.Format != "W" && CdcUpdateCounter.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CdcUpdateCounter))
             {
                 writer.WritePropertyName("cdcUpdateCounter"u8);
                 writer.WriteNumberValue(CdcUpdateCounter.Value);
             }
-            if (options.Format != "W" && FullLoadCompletedTables.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadCompletedTables))
             {
                 writer.WritePropertyName("fullLoadCompletedTables"u8);
                 writer.WriteNumberValue(FullLoadCompletedTables.Value);
             }
-            if (options.Format != "W" && FullLoadLoadingTables.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadLoadingTables))
             {
                 writer.WritePropertyName("fullLoadLoadingTables"u8);
                 writer.WriteNumberValue(FullLoadLoadingTables.Value);
             }
-            if (options.Format != "W" && FullLoadQueuedTables.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadQueuedTables))
             {
                 writer.WritePropertyName("fullLoadQueuedTables"u8);
                 writer.WriteNumberValue(FullLoadQueuedTables.Value);
             }
-            if (options.Format != "W" && FullLoadErroredTables.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FullLoadErroredTables))
             {
                 writer.WritePropertyName("fullLoadErroredTables"u8);
                 writer.WriteNumberValue(FullLoadErroredTables.Value);
             }
-            if (options.Format != "W" && InitializationCompleted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitializationCompleted))
             {
                 writer.WritePropertyName("initializationCompleted"u8);
                 writer.WriteBooleanValue(InitializationCompleted.Value);
             }
-            if (options.Format != "W" && Latency.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Latency))
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

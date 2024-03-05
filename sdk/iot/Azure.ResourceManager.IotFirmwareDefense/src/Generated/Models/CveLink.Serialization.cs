@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 if (Href != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("href");
                 }
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 if (Label != null)
                 {

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (DiskName != null)
+            if (Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (DiskSizeInMB != null)
+            if (Optional.IsDefined(DiskSizeInMB))
             {
                 writer.WritePropertyName("diskSizeInMB"u8);
                 writer.WriteStringValue(DiskSizeInMB);
             }
-            if (DiskType != null)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
-            if (DiskConfiguration != null)
+            if (Optional.IsDefined(DiskConfiguration))
             {
                 writer.WritePropertyName("diskConfiguration"u8);
                 writer.WriteStringValue(DiskConfiguration);
             }
-            if (!(VolumeList is ChangeTrackingList<SiteRecoveryDiskVolumeDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeList))
             {
                 writer.WritePropertyName("volumeList"u8);
                 writer.WriteStartArray();

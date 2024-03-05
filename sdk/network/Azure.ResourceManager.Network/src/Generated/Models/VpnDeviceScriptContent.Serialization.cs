@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (DeviceFamily != null)
+            if (Optional.IsDefined(DeviceFamily))
             {
                 writer.WritePropertyName("deviceFamily"u8);
                 writer.WriteStringValue(DeviceFamily);
             }
-            if (FirmwareVersion != null)
+            if (Optional.IsDefined(FirmwareVersion))
             {
                 writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);

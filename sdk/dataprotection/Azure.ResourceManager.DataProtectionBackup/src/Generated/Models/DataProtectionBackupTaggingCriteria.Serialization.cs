@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(Criteria is ChangeTrackingList<DataProtectionBackupCriteria> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();

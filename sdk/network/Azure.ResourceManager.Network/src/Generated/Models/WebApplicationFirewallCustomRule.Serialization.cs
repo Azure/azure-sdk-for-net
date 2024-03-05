@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,29 +28,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RateLimitDuration.HasValue)
+            if (Optional.IsDefined(RateLimitDuration))
             {
                 writer.WritePropertyName("rateLimitDuration"u8);
                 writer.WriteStringValue(RateLimitDuration.Value.ToString());
             }
-            if (RateLimitThreshold.HasValue)
+            if (Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(GroupByUserSession is ChangeTrackingList<GroupByUserSession> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupByUserSession))
             {
                 writer.WritePropertyName("groupByUserSession"u8);
                 writer.WriteStartArray();

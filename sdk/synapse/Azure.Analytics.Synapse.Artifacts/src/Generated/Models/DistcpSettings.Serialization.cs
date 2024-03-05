@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             writer.WriteObjectValue(TempScriptPath);
-            if (DistcpOptions != null)
+            if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 writer.WriteObjectValue(DistcpOptions);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (!(ConfigurationServiceGitRepositories is ChangeTrackingList<AppPlatformConfigurationServiceGitRepository> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();

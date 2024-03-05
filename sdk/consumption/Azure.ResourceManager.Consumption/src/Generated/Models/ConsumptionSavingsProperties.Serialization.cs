@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (!(CalculatedSavings is ChangeTrackingList<ConsumptionCalculatedSavingsProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CalculatedSavings))
             {
                 writer.WritePropertyName("calculatedSavings"u8);
                 writer.WriteStartArray();
@@ -36,27 +37,27 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LookBackPeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteNumberValue(LookBackPeriod.Value);
             }
-            if (options.Format != "W" && RecommendedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
             {
                 writer.WritePropertyName("recommendedQuantity"u8);
                 writer.WriteNumberValue(RecommendedQuantity.Value);
             }
-            if (options.Format != "W" && ReservationOrderTerm != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderTerm))
             {
                 writer.WritePropertyName("reservationOrderTerm"u8);
                 writer.WriteStringValue(ReservationOrderTerm);
             }
-            if (options.Format != "W" && SavingsType != null)
+            if (options.Format != "W" && Optional.IsDefined(SavingsType))
             {
                 writer.WritePropertyName("savingsType"u8);
                 writer.WriteStringValue(SavingsType);
             }
-            if (options.Format != "W" && UnitOfMeasure != null)
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (IntegrationRuntimeEntityReferenceType.HasValue)
+            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
-            if (ReferenceName != null)
+            if (Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);

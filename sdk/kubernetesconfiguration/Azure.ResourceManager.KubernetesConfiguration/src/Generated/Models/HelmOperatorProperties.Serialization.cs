@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (ChartVersion != null)
+            if (Optional.IsDefined(ChartVersion))
             {
                 writer.WritePropertyName("chartVersion"u8);
                 writer.WriteStringValue(ChartVersion);
             }
-            if (ChartValues != null)
+            if (Optional.IsDefined(ChartValues))
             {
                 writer.WritePropertyName("chartValues"u8);
                 writer.WriteStringValue(ChartValues);

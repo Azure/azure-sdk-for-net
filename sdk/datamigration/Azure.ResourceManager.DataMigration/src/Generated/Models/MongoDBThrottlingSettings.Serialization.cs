@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (MinFreeCpu.HasValue)
+            if (Optional.IsDefined(MinFreeCpu))
             {
                 writer.WritePropertyName("minFreeCpu"u8);
                 writer.WriteNumberValue(MinFreeCpu.Value);
             }
-            if (MinFreeMemoryMb.HasValue)
+            if (Optional.IsDefined(MinFreeMemoryMb))
             {
                 writer.WritePropertyName("minFreeMemoryMb"u8);
                 writer.WriteNumberValue(MinFreeMemoryMb.Value);
             }
-            if (MaxParallelism.HasValue)
+            if (Optional.IsDefined(MaxParallelism))
             {
                 writer.WritePropertyName("maxParallelism"u8);
                 writer.WriteNumberValue(MaxParallelism.Value);

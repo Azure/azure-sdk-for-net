@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (ExportIPv4RoutePolicyId != null)
+            if (Optional.IsDefined(ExportIPv4RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv4RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv4RoutePolicyId);
             }
-            if (ExportIPv6RoutePolicyId != null)
+            if (Optional.IsDefined(ExportIPv6RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv6RoutePolicyId);

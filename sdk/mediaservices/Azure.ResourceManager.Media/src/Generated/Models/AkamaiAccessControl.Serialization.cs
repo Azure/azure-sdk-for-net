@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(AkamaiSignatureHeaderAuthenticationKeyList is ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AkamaiSignatureHeaderAuthenticationKeyList))
             {
                 writer.WritePropertyName("akamaiSignatureHeaderAuthenticationKeyList"u8);
                 writer.WriteStartArray();

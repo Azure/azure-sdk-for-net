@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (GeneratedInvitation != null)
+            if (Optional.IsDefined(GeneratedInvitation))
             {
                 writer.WritePropertyName("generatedInvitation"u8);
                 writer.WriteStringValue(GeneratedInvitation);
