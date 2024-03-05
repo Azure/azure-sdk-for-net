@@ -209,7 +209,8 @@ namespace Azure.Core.Pipeline
                 if (!message.TryGetProperty(typeof(BeforeTimestamp), out object? beforeTimestamp) ||
                     beforeTimestamp is not long before)
                 {
-                    throw new InvalidOperationException("'BeforeProcessTimestamp' was not set on message by RetryPolicy.");
+                    Debug.Fail("'BeforeTimestamp' was not set on message by RetryPolicy.");
+                    return;
                 }
 
                 long after = Stopwatch.GetTimestamp();
@@ -225,7 +226,8 @@ namespace Azure.Core.Pipeline
                 if (!message.TryGetProperty(typeof(BeforeTimestamp), out object? beforeTimestamp) ||
                     beforeTimestamp is not long before)
                 {
-                    throw new InvalidOperationException("'BeforeProcessTimestamp' was not set on message by RetryPolicy.");
+                    Debug.Fail("'BeforeTimestamp' was not set on message by RetryPolicy.");
+                    return;
                 }
 
                 long after = Stopwatch.GetTimestamp();
@@ -248,7 +250,8 @@ namespace Azure.Core.Pipeline
                 if (!message.TryGetProperty(typeof(ElapsedTime), out object? elapsedTime) ||
                     elapsedTime is not double elapsed)
                 {
-                    throw new InvalidOperationException("'ElapsedTime' was not set on message by RetryPolicy.");
+                    Debug.Fail("'ElapsedTime' was not set on message by RetryPolicy.");
+                    return;
                 }
 
                 // This logic can move into System.ClientModel's ClientRetryPolicy
