@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Defender != null)
+            if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
                 writer.WriteObjectValue(Defender);
             }
-            if (AzureKeyVaultKms != null)
+            if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
-            if (WorkloadIdentity != null)
+            if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
                 writer.WriteObjectValue(WorkloadIdentity);
             }
-            if (ImageCleaner != null)
+            if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner);

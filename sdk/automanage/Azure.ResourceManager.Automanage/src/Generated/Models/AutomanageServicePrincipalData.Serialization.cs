@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automanage;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage.Models
@@ -42,19 +43,19 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ServicePrincipalId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteStringValue(ServicePrincipalId);
             }
-            if (options.Format != "W" && IsAuthorizationSet.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAuthorizationSet))
             {
                 writer.WritePropertyName("authorizationSet"u8);
                 writer.WriteBooleanValue(IsAuthorizationSet.Value);

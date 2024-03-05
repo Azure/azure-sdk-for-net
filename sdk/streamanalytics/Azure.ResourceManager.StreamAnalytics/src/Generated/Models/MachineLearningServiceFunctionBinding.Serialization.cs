@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (!(Inputs is ChangeTrackingList<MachineLearningServiceInputColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<MachineLearningServiceOutputColumn> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -60,22 +61,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (NumberOfParallelRequests.HasValue)
+            if (Optional.IsDefined(NumberOfParallelRequests))
             {
                 writer.WritePropertyName("numberOfParallelRequests"u8);
                 writer.WriteNumberValue(NumberOfParallelRequests.Value);
             }
-            if (InputRequestName != null)
+            if (Optional.IsDefined(InputRequestName))
             {
                 writer.WritePropertyName("inputRequestName"u8);
                 writer.WriteStringValue(InputRequestName);
             }
-            if (OutputResponseName != null)
+            if (Optional.IsDefined(OutputResponseName))
             {
                 writer.WritePropertyName("outputResponseName"u8);
                 writer.WriteStringValue(OutputResponseName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Priority != null)
+            if (options.Format != "W" && Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority);
             }
-            if (RuleStackName != null)
+            if (Optional.IsDefined(RuleStackName))
             {
                 writer.WritePropertyName("ruleStackName"u8);
                 writer.WriteStringValue(RuleStackName);
             }
-            if (RuleListName != null)
+            if (Optional.IsDefined(RuleListName))
             {
                 writer.WritePropertyName("ruleListName"u8);
                 writer.WriteStringValue(RuleListName);
             }
-            if (FirewallName != null)
+            if (Optional.IsDefined(FirewallName))
             {
                 writer.WritePropertyName("firewallName"u8);
                 writer.WriteStringValue(FirewallName);
             }
-            if (RuleName != null)
+            if (Optional.IsDefined(RuleName))
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);

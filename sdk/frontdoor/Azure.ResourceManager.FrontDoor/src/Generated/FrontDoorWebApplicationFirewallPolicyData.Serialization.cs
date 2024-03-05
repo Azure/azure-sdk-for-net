@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,29 +68,29 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PolicySettings != null)
+            if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (CustomRuleList != null)
+            if (Optional.IsDefined(CustomRuleList))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteObjectValue(CustomRuleList);
             }
-            if (ManagedRules != null)
+            if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
-            if (options.Format != "W" && !(FrontendEndpointLinks is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FrontendEndpointLinks))
             {
                 writer.WritePropertyName("frontendEndpointLinks"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RoutingRuleLinks is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RoutingRuleLinks))
             {
                 writer.WritePropertyName("routingRuleLinks"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SecurityPolicyLinks is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecurityPolicyLinks))
             {
                 writer.WritePropertyName("securityPolicyLinks"u8);
                 writer.WriteStartArray();
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());

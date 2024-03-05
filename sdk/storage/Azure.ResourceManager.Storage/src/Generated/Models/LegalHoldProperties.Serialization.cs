@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HasLegalHold.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
             }
-            if (!(Tags is ChangeTrackingList<LegalHoldTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProtectedAppendWritesHistory != null)
+            if (Optional.IsDefined(ProtectedAppendWritesHistory))
             {
                 writer.WritePropertyName("protectedAppendWritesHistory"u8);
                 writer.WriteObjectValue(ProtectedAppendWritesHistory);

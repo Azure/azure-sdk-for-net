@@ -29,24 +29,24 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("createdDateTime"u8);
             writer.WriteStringValue(CreatedDateTime, "O");
-            if (ExpirationDateTime.HasValue)
+            if (Optional.IsDefined(ExpirationDateTime))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 writer.WriteStringValue(ExpirationDateTime.Value, "O");
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,22 +57,22 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (BuildMode.HasValue)
+            if (Optional.IsDefined(BuildMode))
             {
                 writer.WritePropertyName("buildMode"u8);
                 writer.WriteStringValue(BuildMode.Value.ToString());
             }
-            if (AzureBlobSource != null)
+            if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
                 writer.WriteObjectValue(AzureBlobSource);
             }
-            if (AzureBlobFileListSource != null)
+            if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
                 writer.WriteObjectValue(AzureBlobFileListSource);
             }
-            if (!(DocTypes is ChangeTrackingDictionary<string, DocumentTypeDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DocTypes))
             {
                 writer.WritePropertyName("docTypes"u8);
                 writer.WriteStartObject();

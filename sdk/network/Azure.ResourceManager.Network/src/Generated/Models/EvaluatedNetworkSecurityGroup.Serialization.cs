@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkSecurityGroupId != null)
+            if (Optional.IsDefined(NetworkSecurityGroupId))
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
             }
-            if (AppliedTo != null)
+            if (Optional.IsDefined(AppliedTo))
             {
                 writer.WritePropertyName("appliedTo"u8);
                 writer.WriteStringValue(AppliedTo);
             }
-            if (MatchedRule != null)
+            if (Optional.IsDefined(MatchedRule))
             {
                 writer.WritePropertyName("matchedRule"u8);
                 writer.WriteObjectValue(MatchedRule);
             }
-            if (options.Format != "W" && !(RulesEvaluationResult is ChangeTrackingList<NetworkSecurityRulesEvaluationResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RulesEvaluationResult))
             {
                 writer.WritePropertyName("rulesEvaluationResult"u8);
                 writer.WriteStartArray();

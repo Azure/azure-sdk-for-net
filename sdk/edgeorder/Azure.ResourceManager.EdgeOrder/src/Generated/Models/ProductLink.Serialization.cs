@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LinkType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToString());
             }
-            if (options.Format != "W" && LinkUri != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkUri))
             {
                 writer.WritePropertyName("linkUrl"u8);
                 writer.WriteStringValue(LinkUri.AbsoluteUri);

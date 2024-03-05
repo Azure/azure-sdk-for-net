@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(EmailOn is ChangeTrackingList<EmailNotificationEnableType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EmailOn))
             {
                 if (EmailOn != null)
                 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("emailOn");
                 }
             }
-            if (!(Emails is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Emails))
             {
                 if (Emails != null)
                 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("emails");
                 }
             }
-            if (!(Webhooks is ChangeTrackingDictionary<string, MachineLearningWebhook> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Webhooks))
             {
                 if (Webhooks != null)
                 {

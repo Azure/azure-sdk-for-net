@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (SkipShutdown.HasValue)
+            if (Optional.IsDefined(SkipShutdown))
             {
                 writer.WritePropertyName("skipShutdown"u8);
                 writer.WriteStringValue(SkipShutdown.Value.ToString());

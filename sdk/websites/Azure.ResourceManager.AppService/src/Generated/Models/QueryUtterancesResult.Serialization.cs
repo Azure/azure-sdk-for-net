@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (SampleUtterance != null)
+            if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
                 writer.WriteObjectValue(SampleUtterance);
             }
-            if (Score.HasValue)
+            if (Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);

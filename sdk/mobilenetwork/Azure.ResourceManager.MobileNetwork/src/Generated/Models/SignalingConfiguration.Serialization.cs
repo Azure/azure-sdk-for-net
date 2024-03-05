@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (NasReroute != null)
+            if (Optional.IsDefined(NasReroute))
             {
                 writer.WritePropertyName("nasReroute"u8);
                 writer.WriteObjectValue(NasReroute);

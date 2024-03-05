@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Keywords != null)
+            if (Optional.IsDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStringValue(Keywords);
             }
-            if (MaxDomainRecommendations.HasValue)
+            if (Optional.IsDefined(MaxDomainRecommendations))
             {
                 writer.WritePropertyName("maxDomainRecommendations"u8);
                 writer.WriteNumberValue(MaxDomainRecommendations.Value);

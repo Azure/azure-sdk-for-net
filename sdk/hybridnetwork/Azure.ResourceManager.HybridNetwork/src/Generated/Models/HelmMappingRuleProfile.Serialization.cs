@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ReleaseNamespace != null)
+            if (Optional.IsDefined(ReleaseNamespace))
             {
                 writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);
             }
-            if (ReleaseName != null)
+            if (Optional.IsDefined(ReleaseName))
             {
                 writer.WritePropertyName("releaseName"u8);
                 writer.WriteStringValue(ReleaseName);
             }
-            if (HelmPackageVersion != null)
+            if (Optional.IsDefined(HelmPackageVersion))
             {
                 writer.WritePropertyName("helmPackageVersion"u8);
                 writer.WriteStringValue(HelmPackageVersion);
             }
-            if (Values != null)
+            if (Optional.IsDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);

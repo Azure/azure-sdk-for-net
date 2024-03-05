@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WriteStartObject();
-            if (DetectedLanguage != null)
+            if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteObjectValue(DetectedLanguage);
@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (SourceText != null)
+            if (Optional.IsDefined(SourceText))
             {
                 writer.WritePropertyName("sourceText"u8);
                 writer.WriteObjectValue(SourceText);

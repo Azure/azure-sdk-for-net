@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VnetName != null)
+            if (Optional.IsDefined(VnetName))
             {
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (VpnPackageUri != null)
+            if (Optional.IsDefined(VpnPackageUri))
             {
                 writer.WritePropertyName("vpnPackageUri"u8);
                 writer.WriteStringValue(VpnPackageUri.AbsoluteUri);

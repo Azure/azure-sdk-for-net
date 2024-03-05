@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +42,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -78,32 +79,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (MLPipelineId != null)
+            if (Optional.IsDefined(MLPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId"u8);
                 JsonSerializer.Serialize(writer, MLPipelineId);
             }
-            if (MLPipelineEndpointId != null)
+            if (Optional.IsDefined(MLPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId"u8);
                 JsonSerializer.Serialize(writer, MLPipelineEndpointId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 JsonSerializer.Serialize(writer, Version);
             }
-            if (ExperimentName != null)
+            if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 JsonSerializer.Serialize(writer, ExperimentName);
             }
-            if (MLPipelineParameters != null)
+            if (Optional.IsDefined(MLPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
                 JsonSerializer.Serialize(writer, MLPipelineParameters);
             }
-            if (DataPathAssignments != null)
+            if (Optional.IsDefined(DataPathAssignments))
             {
                 writer.WritePropertyName("dataPathAssignments"u8);
 #if NET6_0_OR_GREATER
@@ -115,12 +116,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (MLParentRunId != null)
+            if (Optional.IsDefined(MLParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
                 JsonSerializer.Serialize(writer, MLParentRunId);
             }
-            if (ContinueOnStepFailure != null)
+            if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
                 JsonSerializer.Serialize(writer, ContinueOnStepFailure);

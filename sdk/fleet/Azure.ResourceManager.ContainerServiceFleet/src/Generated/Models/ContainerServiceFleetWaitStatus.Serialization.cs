@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && WaitDurationInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WaitDurationInSeconds))
             {
                 writer.WritePropertyName("waitDurationInSeconds"u8);
                 writer.WriteNumberValue(WaitDurationInSeconds.Value);

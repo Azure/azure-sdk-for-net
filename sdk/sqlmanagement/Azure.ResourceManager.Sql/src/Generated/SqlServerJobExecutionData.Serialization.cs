@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && JobVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobVersion))
             {
                 writer.WritePropertyName("jobVersion"u8);
                 writer.WriteNumberValue(JobVersion.Value);
             }
-            if (options.Format != "W" && StepName != null)
+            if (options.Format != "W" && Optional.IsDefined(StepName))
             {
                 writer.WritePropertyName("stepName"u8);
                 writer.WriteStringValue(StepName);
             }
-            if (options.Format != "W" && StepId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StepId))
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
-            if (options.Format != "W" && JobExecutionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobExecutionId))
             {
                 writer.WritePropertyName("jobExecutionId"u8);
                 writer.WriteStringValue(JobExecutionId.Value);
             }
-            if (options.Format != "W" && Lifecycle.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Lifecycle))
             {
                 writer.WritePropertyName("lifecycle"u8);
                 writer.WriteStringValue(Lifecycle.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CreateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (CurrentAttempts.HasValue)
+            if (Optional.IsDefined(CurrentAttempts))
             {
                 writer.WritePropertyName("currentAttempts"u8);
                 writer.WriteNumberValue(CurrentAttempts.Value);
             }
-            if (options.Format != "W" && CurrentAttemptStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentAttemptStartOn))
             {
                 writer.WritePropertyName("currentAttemptStartTime"u8);
                 writer.WriteStringValue(CurrentAttemptStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(LastMessage))
             {
                 writer.WritePropertyName("lastMessage"u8);
                 writer.WriteStringValue(LastMessage);
             }
-            if (options.Format != "W" && Target != null)
+            if (options.Format != "W" && Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);

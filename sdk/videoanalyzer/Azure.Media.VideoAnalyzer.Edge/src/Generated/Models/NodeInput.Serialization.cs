@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nodeName"u8);
             writer.WriteStringValue(NodeName);
-            if (!(OutputSelectors is ChangeTrackingList<OutputSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputSelectors))
             {
                 writer.WritePropertyName("outputSelectors"u8);
                 writer.WriteStartArray();

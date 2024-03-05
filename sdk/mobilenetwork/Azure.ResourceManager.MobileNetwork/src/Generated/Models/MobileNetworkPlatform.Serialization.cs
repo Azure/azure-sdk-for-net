@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (PlatformType.HasValue)
+            if (Optional.IsDefined(PlatformType))
             {
                 writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
-            if (VersionState.HasValue)
+            if (Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (MinimumPlatformSoftwareVersion != null)
+            if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
-            if (MaximumPlatformSoftwareVersion != null)
+            if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
-            if (RecommendedVersion.HasValue)
+            if (Optional.IsDefined(RecommendedVersion))
             {
                 writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
-            if (ObsoleteVersion.HasValue)
+            if (Optional.IsDefined(ObsoleteVersion))
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());

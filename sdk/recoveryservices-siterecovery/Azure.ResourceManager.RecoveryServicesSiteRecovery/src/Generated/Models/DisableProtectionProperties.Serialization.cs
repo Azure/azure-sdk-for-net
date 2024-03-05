@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DisableProtectionReason.HasValue)
+            if (Optional.IsDefined(DisableProtectionReason))
             {
                 writer.WritePropertyName("disableProtectionReason"u8);
                 writer.WriteStringValue(DisableProtectionReason.Value.ToString());
             }
-            if (ReplicationProviderContent != null)
+            if (Optional.IsDefined(ReplicationProviderContent))
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
                 writer.WriteObjectValue(ReplicationProviderContent);

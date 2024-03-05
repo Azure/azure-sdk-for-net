@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (HostPoolId != null)
+            if (Optional.IsDefined(HostPoolId))
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
                 writer.WriteStringValue(HostPoolId);
             }
-            if (IsScalingPlanEnabled.HasValue)
+            if (Optional.IsDefined(IsScalingPlanEnabled))
             {
                 writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);

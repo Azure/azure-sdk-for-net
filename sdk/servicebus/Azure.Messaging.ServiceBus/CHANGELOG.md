@@ -1,12 +1,10 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.17.4 (2024-03-05)
 
 ### Bugs Fixed
+
+- When creating a new `ServiceBusMessage` from an existing `ServiceBusReceivedMessage`, diagnostic properties will now be properly reset.  Previously, they were incorrectly retained which led to the new message being indistinguishable from the old in traces.
 
 ### Other Changes
 

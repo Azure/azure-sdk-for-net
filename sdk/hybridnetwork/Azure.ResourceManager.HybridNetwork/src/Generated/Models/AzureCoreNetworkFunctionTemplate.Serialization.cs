@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(NetworkFunctionApplications is ChangeTrackingList<AzureCoreNetworkFunctionApplication> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkFunctionApplications))
             {
                 writer.WritePropertyName("networkFunctionApplications"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (SensorIntegration != null)
+            if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStringValue(KustoPoolResourceId);
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);

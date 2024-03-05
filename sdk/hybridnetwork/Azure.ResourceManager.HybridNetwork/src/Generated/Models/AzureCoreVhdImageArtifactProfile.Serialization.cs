@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (VhdArtifactProfile != null)
+            if (Optional.IsDefined(VhdArtifactProfile))
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
                 writer.WriteObjectValue(VhdArtifactProfile);
             }
-            if (ArtifactStore != null)
+            if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);

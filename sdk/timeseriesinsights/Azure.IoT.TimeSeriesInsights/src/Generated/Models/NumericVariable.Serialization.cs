@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (Interpolation != null)
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteObjectValue(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);

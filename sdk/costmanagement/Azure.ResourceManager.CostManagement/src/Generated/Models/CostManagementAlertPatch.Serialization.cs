@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -28,57 +29,57 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (CostEntityId != null)
+            if (Optional.IsDefined(CostEntityId))
             {
                 writer.WritePropertyName("costEntityId"u8);
                 writer.WriteStringValue(CostEntityId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (CloseOn.HasValue)
+            if (Optional.IsDefined(CloseOn))
             {
                 writer.WritePropertyName("closeTime"u8);
                 writer.WriteStringValue(CloseOn.Value, "O");
             }
-            if (ModifiedOn.HasValue)
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modificationTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (StatusModificationUserName != null)
+            if (Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (StatusModifiedOn.HasValue)
+            if (Optional.IsDefined(StatusModifiedOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
                 writer.WriteStringValue(StatusModifiedOn.Value, "O");

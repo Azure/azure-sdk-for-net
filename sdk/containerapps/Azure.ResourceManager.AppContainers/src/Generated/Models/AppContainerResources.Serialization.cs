@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Cpu.HasValue)
+            if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Memory != null)
+            if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
-            if (options.Format != "W" && EphemeralStorage != null)
+            if (options.Format != "W" && Optional.IsDefined(EphemeralStorage))
             {
                 writer.WritePropertyName("ephemeralStorage"u8);
                 writer.WriteStringValue(EphemeralStorage);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ConsentToAuthorization.HasValue)
+            if (Optional.IsDefined(ConsentToAuthorization))
             {
                 writer.WritePropertyName("consentToAuthorization"u8);
                 writer.WriteBooleanValue(ConsentToAuthorization.Value);

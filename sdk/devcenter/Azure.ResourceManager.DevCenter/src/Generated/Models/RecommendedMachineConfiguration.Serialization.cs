@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Memory != null)
+            if (options.Format != "W" && Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteObjectValue(Memory);
             }
-            if (options.Format != "W" && VCpus != null)
+            if (options.Format != "W" && Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
                 writer.WriteObjectValue(VCpus);
