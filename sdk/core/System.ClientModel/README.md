@@ -22,27 +22,125 @@ dotnet add package System.ClientModel
 
 None needed for `System.ClientModel`.
 
-### Authenticate the client
-
-The `System.ClientModel` package provides an `ApiKeyCredential` type for authentication.
-
 ## Key concepts
+
+`System.ClientModel` contains two categories of types: those used to author service clients and those used by the end-users of service clients.  Types provided for the convenience of client end-users are in the `System.ClientModel` namespace.  Types used by client authors and in lower-level service client APIs are in the `System.ClientModel.Primitives` namespace.
 
 The main concepts in `System.ClientModel` include:
 
-- Configuring service clients (`ClientPipelineOptions`).
-- Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
-- Handling exceptions that result from failed requests (`ClientResultException`).
-- Customizing HTTP requests (`RequestOptions`).
+- Client pipeline to send and receive HTTP messages (`ClientPipeline`).
+- Interfaces to read and write input and output models in client convenience APIs (`IPersistableModel<T>` and `IJsonModel<T>`).
+- Options to configure service clients (`ClientPipelineOptions`).
+- Results to enable access to service response and HTTP response details (`ClientResult<T>`, `ClientResult`).
+- Exceptions that result from failed requests (`ClientResultException`).
+- Options to customize HTTP requests (`RequestOptions`).
 - Reading and writing models in different formats (`ModelReaderWriter`).
 
 Below, you will find sections explaining these shared concepts in more detail.
 
 ## Examples
 
+### Send a message using the ClientPipeline
+
+`System.ClientModel`-based clients, or **service clients**, use the `ClientPipeline` type to send and receive HTTP messages. The following sample shows a minimal example of what a service client implementation might look like.
+
+```C# Snippet:ReadmeSampleClient
+public class SampleClient
+{
+    private readonly Uri _endpoint;
+    private readonly ApiKeyCredential _credential;
+    private readonly ClientPipeline _pipeline;
+
+    public SampleClient(Uri endpoint, ApiKeyCredential credential, SampleClientOptions? options = default)
+    {
+        options ??= new SampleClientOptions();
+
+        _endpoint = endpoint;
+        _credential = credential;
+
+        ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
+        _pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+    }
+
+    public ClientResult<SampleResource> GetResource(string id)
+    {
+        PipelineMessage message = _pipeline.CreateMessage();
+        message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+
+        PipelineRequest request = message.Request;
+        request.Method = "GET";
+        request.Uri = new Uri("https://www.example.com/");
+        request.Headers.Add("Accept", "application/json");
+
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError)
+        {
+            throw new ClientResultException(response);
+        }
+
+        SampleResource resource = ModelReaderWriter.Read<SampleResource>(response.Content)!;
+        return ClientResult.FromValue(resource, response);
+    }
+}
+```
+
+### Reading and writing model content to HTTP messages
+
+Service clients provide model types representing service resources as input parameters and return types from many service methods.  Client authors can implement the `IPersistableModel<T>` and `IJsonModel<T>` in model type implementations to enable service clients to write input model content into request message bodies and read response body content to create instances of output models, as shown in the example client's service method above.  The following sample shows a minimal example of what a persistable model implementation might look like.
+
+```C# Snippet:ReadmeSampleModel
+public class SampleResource : IJsonModel<SampleResource>
+{
+    public SampleResource(string id)
+    {
+        Id = id;
+    }
+
+    public string Id { get; init; }
+
+    SampleResource IJsonModel<SampleResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        => FromJson(reader);
+
+    SampleResource IPersistableModel<SampleResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        => FromJson(new Utf8JsonReader(data));
+
+    string IPersistableModel<SampleResource>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        => options.Format;
+
+    void IJsonModel<SampleResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        => ToJson(writer);
+
+    BinaryData IPersistableModel<SampleResource>.Write(ModelReaderWriterOptions options)
+        => ModelReaderWriter.Write(this, options);
+
+    private void ToJson(Utf8JsonWriter writer)
+    {
+        writer.WriteStartObject();
+        writer.WritePropertyName("id");
+        writer.WriteStringValue(Id);
+        writer.WriteEndObject();
+    }
+
+    private static SampleResource FromJson(Utf8JsonReader reader)
+    {
+        reader.Read(); // start object
+        reader.Read(); // property name
+        reader.Read(); // id value
+
+        return new SampleResource(reader.GetString()!);
+    }
+}
+```
+
 ### Configuring service clients
 
-`System.ClientModel`-based clients, or **service clients**, provide a constructor that takes a service endpoint and a credential used to authenticate with the service.  They also provide a constructor overload that takes an endpoint, a credential, and an instance of `ClientPipelineOptions`.
+Service clients provide a constructor that takes a service endpoint and a credential used to authenticate with the service.  They also provide a constructor overload that takes an endpoint, a credential, and an instance of `ClientPipelineOptions`.
 Passing `ClientPipelineOptions` when a client is created will configure the pipeline that the client uses to send and receive HTTP requests and responses.  Client pipeline options can be used to override default values such as the network timeout used to send or retry a request.
 
 ```C# Snippet:ClientModelConfigurationReadme
@@ -51,8 +149,8 @@ MapsClientOptions options = new()
     NetworkTimeout = TimeSpan.FromSeconds(120),
 };
 
-string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-ApiKeyCredential credential = new(key);
+string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+ApiKeyCredential credential = new(key!);
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
 ```
 

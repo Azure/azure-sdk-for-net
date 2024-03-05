@@ -24,8 +24,8 @@ public class ConfigurationSamples
             NetworkTimeout = TimeSpan.FromSeconds(120),
         };
 
-        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        ApiKeyCredential credential = new(key);
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new(key!);
         MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
 
         #endregion
