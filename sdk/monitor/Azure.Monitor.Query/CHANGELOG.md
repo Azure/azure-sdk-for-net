@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 - Enable national cloud support for US Gov and China clouds
+- `MetricsBatchQueryClient` renamed to `MetricsClient`
+- `QueryBatch` renamed to `QueryResources` in `MetricsClient`
+- `MetricsBatchResult` renamed to `MetricsQueryResourcesResult` in `MetricsClient`
 
 ### Other Changes
 
