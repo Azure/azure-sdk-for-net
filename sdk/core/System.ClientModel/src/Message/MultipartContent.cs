@@ -228,7 +228,7 @@ public class MultipartContent : IDisposable
     private class MultipartBinaryContent : BinaryContent
     {
         private readonly List<MultipartContentSubpart> _subParts;
-        private string _boundary;
+        private readonly string _boundary;
 
         public MultipartBinaryContent(List<MultipartContentSubpart> subParts, string boundary)
         {
