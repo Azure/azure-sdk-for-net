@@ -66,7 +66,7 @@ internal sealed class AppServiceResourceDetector : IResourceDetector
 
     private static string? GetAzureResourceURI(string websiteSiteName)
     {
-        string websiteResourceGroup = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceResourceGroupEnvVar);
+        string? websiteResourceGroup = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceResourceGroupEnvVar);
         string websiteOwnerName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceOwnerNameEnvVar) ?? string.Empty;
 
         int idx = websiteOwnerName.IndexOf("+", StringComparison.Ordinal);

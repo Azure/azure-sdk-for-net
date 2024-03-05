@@ -4,6 +4,8 @@
 
 #nullable enable
 
+#if !NET6_0_OR_GREATER
+
 namespace Microsoft.Extensions.Configuration.EnvironmentVariables
 {
     /// <summary>
@@ -27,3 +29,4 @@ namespace Microsoft.Extensions.Configuration.EnvironmentVariables
         }
     }
 }
+#endif

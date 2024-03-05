@@ -4,6 +4,8 @@
 
 #nullable enable
 
+#if !NET6_0_OR_GREATER
+
 using System;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 
@@ -50,3 +52,4 @@ namespace Microsoft.Extensions.Configuration
             => builder.Add(configureSource);
     }
 }
+#endif

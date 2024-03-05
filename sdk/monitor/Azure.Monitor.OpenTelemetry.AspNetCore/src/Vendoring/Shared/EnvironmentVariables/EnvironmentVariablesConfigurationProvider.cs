@@ -4,6 +4,8 @@
 
 #nullable enable
 
+#if !NET6_0_OR_GREATER 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,3 +85,4 @@ namespace Microsoft.Extensions.Configuration.EnvironmentVariables
         private static string Normalize(string key) => key.Replace("__", ConfigurationPath.KeyDelimiter);
     }
 }
+#endif
