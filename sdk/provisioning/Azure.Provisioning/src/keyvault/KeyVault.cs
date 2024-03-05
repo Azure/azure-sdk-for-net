@@ -18,6 +18,16 @@ namespace Azure.Provisioning.KeyVaults
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults";
 
         /// <summary>
+        /// Creates a new instance of the <see cref="KeyVault"/> class referencing an existing KeyVault.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static KeyVault FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new KeyVault(scope, parent, name, isExisting: true);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KeyVault"/> class.
         /// </summary>
         /// <param name="scope">The scope.</param>
@@ -26,6 +36,11 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="location">The location.</param>
         /// <param name="parent"></param>
         public KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default)
+            : this(scope, parent, name, version, location, false)
+        {
+        }
+
+        private KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default, bool isExisting = false)
             : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultData(
                 name: name,
                 resourceType: ResourceTypeName,
@@ -43,13 +58,17 @@ namespace Azure.Provisioning.KeyVaults
                             }
                         })
                     } : default,
-                    enableRbacAuthorization: true)))
+                    enableRbacAuthorization: true)),
+                isExisting: isExisting)
         {
-            AssignProperty(data => data.Name, GetAzureName(scope, name));
-
-            if (scope.Root.Properties.TenantId == Guid.Empty)
+            if (!isExisting)
             {
-                AssignProperty(kv => kv.Properties.TenantId, Tenant.TenantIdExpression);
+                AssignProperty(data => data.Name, GetAzureName(scope, name));
+
+                if (scope.Root.Properties.TenantId == Guid.Empty)
+                {
+                    AssignProperty(kv => kv.Properties.TenantId, Tenant.TenantIdExpression);
+                }
             }
         }
 

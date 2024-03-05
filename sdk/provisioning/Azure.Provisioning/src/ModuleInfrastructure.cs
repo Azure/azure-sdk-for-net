@@ -112,25 +112,29 @@ namespace Azure.Provisioning
 
             if (parentScope != null)
             {
-                foreach (var parameter in resource.Parameters)
+                foreach (var parameter in resource.Scope.GetParameters(false))
                 {
                     parentScope.AddParameter(parameter);
                 }
 
-                foreach (var typeDictPair in resource.ParameterOverrides)
+                foreach (var typeDictPair in resource.PropertyOverrides)
                 {
                     // ToList to avoid modifying the collection while iterating
                     foreach (var propertyParameterPair in typeDictPair.Value.ToList())
                     {
-                        var parameterToCopy = propertyParameterPair.Value;
-                        resource.ParameterOverrides[typeDictPair.Key][propertyParameterPair.Key] = new Parameter(
-                            parameterToCopy.Name,
-                            parameterToCopy.Description,
-                            parameterToCopy.DefaultValue,
-                            parameterToCopy.IsSecure,
+                        var parameterToCopy = propertyParameterPair.Value.Parameter;
+                        if (parameterToCopy == null)
+                        {
+                            continue;
+                        }
+                        resource.PropertyOverrides[typeDictPair.Key][propertyParameterPair.Key] = new PropertyOverride(parameter: new Parameter(
+                            parameterToCopy.Value.Name,
+                            parameterToCopy.Value.Description,
+                            parameterToCopy.Value.DefaultValue,
+                            parameterToCopy.Value.IsSecure,
                             parentScope,
-                            parameterToCopy.Value,
-                            parameterToCopy.Output);
+                            parameterToCopy.Value.Value,
+                            parameterToCopy.Value.Output));
                     }
                 }
             }
@@ -164,7 +168,7 @@ namespace Azure.Provisioning
                 }
             }
 
-            if (resource is ResourceGroup)
+            if (resource is ResourceGroup && !resource.IsExisting)
             {
                 // TODO add policy support
                 return resourceTree[resource].Count > 0;

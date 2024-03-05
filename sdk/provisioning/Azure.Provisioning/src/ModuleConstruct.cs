@@ -113,11 +113,15 @@ namespace Azure.Provisioning
 
             foreach (var resource in GetResources(false))
             {
+                if (resource.IsExisting)
+                {
+                    continue;
+                }
                 if (resource is Tenant)
                 {
                     continue;
                 }
-                if (resource is ResourceGroup && resource.Id.Name == "resourceGroup()")
+                if (resource is ResourceGroup && resource.Id.Name == ResourceGroup.ResourceGroupFunction)
                 {
                     continue;
                 }
@@ -139,11 +143,11 @@ namespace Azure.Provisioning
 
         private void WriteExistingResources(MemoryStream stream)
         {
-            foreach (var resource in GetExistingResources(false))
+            foreach (var resource in GetResources(false).Where(r => r.IsExisting))
             {
                 stream.WriteLine();
                 stream.WriteLine($"resource {resource.Name} '{resource.Id.ResourceType}@{resource.Version}' existing = {{");
-                stream.WriteLine($"  name: '{resource.Name}'");
+                stream.WriteLine($"  name: '{resource.Id.Name}'");
                 stream.WriteLine($"}}");
             }
         }

@@ -41,7 +41,9 @@ module rg2_TEST_module './resources/rg2_TEST_module/rg2_TEST_module.bicep' = {
   name: 'rg2_TEST_module'
   scope: resourceGroup_hu2r8JaSi
   params: {
+    enableSoftDelete: enableSoftDelete
     STORAGE_PRINCIPAL_ID: rg1_TEST_module.outputs.STORAGE_PRINCIPAL_ID
+    SERVICE_API_IDENTITY_PRINCIPAL_ID: rg3_TEST_module.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
   }
 }
 

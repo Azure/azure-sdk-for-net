@@ -21,9 +21,7 @@ namespace Azure.Provisioning
     public abstract class Resource : IPersistableModel<Resource>
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        internal Dictionary<object, Dictionary<string, Parameter>> ParameterOverrides { get; }
-
-        private Dictionary<object, Dictionary<string, string>> PropertyOverrides { get; }
+        internal Dictionary<object, Dictionary<string, PropertyOverride>> PropertyOverrides { get; }
 
         private IList<Resource> Dependencies { get; }
 
@@ -74,20 +72,26 @@ namespace Azure.Provisioning
         /// <param name="createProperties">Lambda to create the ARM properties.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="scope"/> is null.</exception>
         protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, Func<string, object> createProperties)
+            : this(scope, parent, resourceName, resourceType, version, createProperties, false)
+        {
+        }
+
+        internal Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, Func<string, object> createProperties, bool isExisting)
         {
             if (scope is null) throw new ArgumentNullException(nameof(scope));
 
             Scope = scope;
             Parameters = new List<Parameter>();
             Parent = parent ?? FindParentInScope(scope);
-            var azureName = GetAzureName(scope, resourceName);
+
+            var azureName = isExisting ? resourceName : GetAzureName(scope, resourceName);
             Scope.AddResource(this);
             ResourceData = createProperties(azureName);
             Version = version;
-            ParameterOverrides = new Dictionary<object, Dictionary<string, Parameter>>();
-            PropertyOverrides = new Dictionary<object, Dictionary<string, string>>();
+            PropertyOverrides = new Dictionary<object, Dictionary<string, PropertyOverride>>();
             Dependencies = new List<Resource>();
             ResourceType = resourceType;
+            IsExisting = isExisting;
             Id = Parent is null
                 ? ResourceIdentifier.Root
                 : Parent is ResourceGroup
@@ -95,6 +99,11 @@ namespace Azure.Provisioning
                     : Parent.Id.AppendChildResource(ResourceType.GetLastType(), azureName);
             Name = GetHash();
         }
+
+        /// <summary>
+        /// Whether or not the resource already exists.
+        /// </summary>
+        public bool IsExisting { get; }
 
         /// <summary>
         /// Validate and sanitize the resource name.
@@ -161,13 +170,13 @@ namespace Azure.Provisioning
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
         private protected void AssignProperty(object instance, string propertyName, Parameter parameter)
         {
-            if (ParameterOverrides.TryGetValue(instance, out var overrides))
+            if (PropertyOverrides.TryGetValue(instance, out var overrides))
             {
-                overrides[propertyName] = parameter;
+                overrides[propertyName] = new PropertyOverride(parameter: parameter);
             }
             else
             {
-                ParameterOverrides.Add(instance, new Dictionary<string, Parameter> {  { propertyName, parameter } });
+                PropertyOverrides.Add(instance, new Dictionary<string, PropertyOverride> {  { propertyName, new PropertyOverride(parameter: parameter) } });
             }
             Scope.AddParameter(parameter);
             //TODO: We should not need this instead a parameter should have a reference to the resource it is associated with but belong to the construct only.
@@ -179,11 +188,11 @@ namespace Azure.Provisioning
         {
             if (PropertyOverrides.TryGetValue(instance, out var overrides))
             {
-                overrides[propertyName] = propertyValue;
+                overrides[propertyName] = new PropertyOverride(propertyValue: propertyValue);
             }
             else
             {
-                PropertyOverrides.Add(instance, new Dictionary<string, string> {  { propertyName, propertyValue } });
+                PropertyOverrides.Add(instance, new Dictionary<string, PropertyOverride> {  { propertyName, new PropertyOverride(propertyValue: propertyValue) } });
             }
         }
 
@@ -262,15 +271,6 @@ namespace Azure.Provisioning
             }
 
             var bicepOptions = new BicepModelReaderWriterOptions();
-            foreach (var parameter in ParameterOverrides)
-            {
-                var dict = new Dictionary<string, string>();
-                foreach (var kvp in parameter.Value)
-                {
-                    dict.Add(kvp.Key, kvp.Value.GetParameterString(ModuleScope!));
-                }
-                bicepOptions.ParameterOverrides.Add(parameter.Key, dict);
-            }
             foreach (var propertyOverride in PropertyOverrides)
             {
                 if (!bicepOptions.ParameterOverrides.TryGetValue(propertyOverride.Key, out var dict))
@@ -280,7 +280,7 @@ namespace Azure.Provisioning
                 }
                 foreach (var kvp in propertyOverride.Value)
                 {
-                    dict.Add(kvp.Key, kvp.Value);
+                    dict[kvp.Key] = kvp.Value.Parameter?.GetParameterString(ModuleScope!) ?? kvp.Value.PropertyValue;
                 }
             }
             var data = ModelReaderWriter.Write(ResourceData, bicepOptions).ToMemory();

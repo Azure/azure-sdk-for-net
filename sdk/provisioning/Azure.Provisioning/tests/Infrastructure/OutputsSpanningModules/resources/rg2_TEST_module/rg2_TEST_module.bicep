@@ -1,5 +1,12 @@
+@description('Enable soft delete')
+param enableSoftDelete string = 'True'
+
 @description('')
 param STORAGE_PRINCIPAL_ID string
+
+@secure()
+@description('')
+param SERVICE_API_IDENTITY_PRINCIPAL_ID string
 
 
 resource webSite_80I4ejz5T 'Microsoft.Web/sites@2021-02-01' = {
