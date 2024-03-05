@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Monitoring;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
