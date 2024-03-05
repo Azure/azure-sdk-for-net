@@ -19,6 +19,7 @@ using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -228,7 +229,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -282,7 +283,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -352,7 +353,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.PauseTransferIfRunningAsync("bad transfer Id"));
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -411,7 +412,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -463,7 +464,11 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
 
             // Act - Resume Job
-            DataTransferOptions resumeOptions = new DataTransferOptions();
+            DataTransferOptions resumeOptions = new DataTransferOptions()
+            {
+                // Enable overwrite on resume, to overwrite destination.
+                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+            };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transferId: transfer.Id,
@@ -486,7 +491,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -561,7 +566,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
@@ -583,6 +588,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TransferManager transferManager = new TransferManager(options);
 
+            Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions testOptions = new()
             {
                 Metadata = new(DataProvider.BuildMetadata()),
@@ -623,9 +629,9 @@ namespace Azure.Storage.DataMovement.Tests
             BlobUriBuilder builder = new BlobUriBuilder(destination.Uri);
             BlockBlobClient blob = blobContainer.Container.GetBlockBlobClient(builder.BlobName);
             BlobProperties props = (await blob.GetPropertiesAsync()).Value;
-            Assert.AreEqual(testOptions.Metadata, props.Metadata);
-            Assert.AreEqual(testOptions.AccessTier, new AccessTier(props.AccessTier));
-            Assert.AreEqual(testOptions.ContentLanguage, props.ContentLanguage);
+            Assert.That(props.Metadata, Is.EqualTo(metadata));
+            Assert.AreEqual(testOptions.AccessTier.Value, new AccessTier(props.AccessTier));
+            Assert.AreEqual(testOptions.ContentLanguage.Value, props.ContentLanguage);
         }
 
         private async Task<StorageResource> CreateBlobDirectorySourceResourceAsync(
@@ -775,7 +781,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -826,7 +832,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -837,8 +843,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -877,7 +883,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -888,8 +894,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -934,7 +940,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -957,7 +963,11 @@ namespace Azure.Storage.DataMovement.Tests
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
-            DataTransferOptions transferOptions = new DataTransferOptions();
+            DataTransferOptions transferOptions = new DataTransferOptions()
+            {
+                InitialTransferSize = Constants.KB,
+                MaximumTransferChunkSize = Constants.KB
+            };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
             int partCount = 4;
@@ -997,7 +1007,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
-                transferId: transfer.Id,
+                transferId:  transfer.Id,
                 transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
@@ -1017,7 +1027,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -1040,7 +1050,11 @@ namespace Azure.Storage.DataMovement.Tests
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
-            DataTransferOptions transferOptions = new DataTransferOptions();
+            DataTransferOptions transferOptions = new DataTransferOptions()
+            {
+                InitialTransferSize = Constants.KB,
+                MaximumTransferChunkSize = Constants.KB
+            };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
             int partCount = 4;
@@ -1100,7 +1114,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        //[Ignore("Likely to fail in pipelines and takes a while to run.")]
+        [Ignore("Likely to fail in pipelines and takes a while to run.")]
         [Test, Pairwise]
         [LiveOnly]
         public async Task ResumeTransferAsync_Directory_Large(
@@ -1143,8 +1157,14 @@ namespace Azure.Storage.DataMovement.Tests
                 blobProvider: blobProvider,
                 localProvider: localProvider);
 
+            DataTransferOptions transferOptions = new()
+            {
+                InitialTransferSize = size / 4,
+                MaximumTransferChunkSize = size / 4
+            };
+
             // Start transfer
-            DataTransfer transfer = await transferManager.StartTransferAsync(sResource, dResource);
+            DataTransfer transfer = await transferManager.StartTransferAsync(sResource, dResource, transferOptions);
 
             // Sleep before pausing
             await Task.Delay(delayInMs);

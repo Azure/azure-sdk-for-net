@@ -18,6 +18,11 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class RehydrateBlobResourceTests
     {
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
         public RehydrateBlobResourceTests()
         { }
 
@@ -49,15 +54,15 @@ namespace Azure.Storage.DataMovement.Tests
             BlobType blobType,
             AccessTier? accessTier = default)
         => new BlobDestinationCheckpointData(
-                blobType,
-                new("no-cache"),
-                new("inline"),
-                new("gzip"),
-                new("en-US"),
-                new("text/plain"),
-                new(accessTier),
-                new(DataProvider.BuildMetadata()),
-                new(DataProvider.BuildTags()));
+                blobType: blobType,
+                contentType: new(DefaultContentType),
+                contentEncoding: new(DefaultContentEncoding),
+                contentLanguage: new(DefaultContentLanguage),
+                contentDisposition: new(DefaultContentDisposition),
+                cacheControl: new(DefaultCacheControl),
+                accessTier: new(accessTier),
+                metadata: new(DataProvider.BuildMetadata()),
+                tags: new(DataProvider.BuildTags()));
 
         private static BlobDestinationCheckpointData GetDefaultDestinationCheckpointData(BlobType blobType)
         => new BlobDestinationCheckpointData(

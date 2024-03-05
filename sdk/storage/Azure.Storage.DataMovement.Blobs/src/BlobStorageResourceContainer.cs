@@ -172,15 +172,15 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                _options?.BlobType ?? BlobType.Block,
-                _options?.BlobOptions?.CacheControl,
-                _options?.BlobOptions?.ContentDisposition,
-                _options?.BlobOptions?.ContentEncoding,
-                _options?.BlobOptions?.ContentLanguage,
-                _options?.BlobOptions?.ContentType,
-                _options?.BlobOptions?.AccessTier,
-                _options?.BlobOptions?.Metadata,
-                default /* tags */);
+                blobType: _options?.BlobType ?? BlobType.Block,
+                contentType: _options?.BlobOptions?.ContentType,
+                contentEncoding: _options?.BlobOptions?.ContentEncoding,
+                contentLanguage: _options?.BlobOptions?.ContentLanguage,
+                contentDisposition: _options?.BlobOptions?.ContentDisposition,
+                cacheControl: _options?.BlobOptions?.CacheControl,
+                accessTier: _options?.BlobOptions?.AccessTier,
+                metadata: _options?.BlobOptions?.Metadata,
+                tags: default);
         }
 
         private string ApplyOptionalPrefix(string path)

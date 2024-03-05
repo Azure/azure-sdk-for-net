@@ -125,7 +125,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             // Preserve Content Encoding
@@ -138,7 +138,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             // Preserve Content Language
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             // Preserve Content Disposition
@@ -164,7 +164,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             // Preserve Cache Control
@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             // Preserve Access Tier
@@ -203,7 +203,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             // Preserve Blob Tags
@@ -216,7 +216,7 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 // Padding
-                writer.WriteEmptyLengthOffset(ref currentVariableLengthIndex);
+                writer.WriteEmptyLengthOffset();
             }
 
             if (!PreserveContentType)

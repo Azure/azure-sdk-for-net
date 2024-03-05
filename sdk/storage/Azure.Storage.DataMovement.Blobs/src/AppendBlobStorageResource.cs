@@ -312,15 +312,15 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                BlobType.Append,
-                _options?.CacheControl,
-                _options?.ContentDisposition,
-                _options?.ContentEncoding,
-                _options?.ContentLanguage,
-                _options?.ContentType,
-                _options?.AccessTier,
-                _options?.Metadata,
-                default /* tags */);
+                blobType: BlobType.Append,
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                accessTier: _options?.AccessTier,
+                metadata:_options?.Metadata,
+                tags: default);
         }
     }
 }

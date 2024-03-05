@@ -156,11 +156,10 @@ namespace Azure.Storage.DataMovement
         /// Writes two int zero values to represent the length and offset of a value
         /// that is preserved.
         /// </summary>
-        internal static void WriteEmptyLengthOffset(this BinaryWriter writer, ref int currentOffset)
+        internal static void WriteEmptyLengthOffset(this BinaryWriter writer)
         {
             writer.Write(0);
             writer.Write(0);
-            currentOffset += (DataMovementConstants.IntSizeInBytes * 2);
         }
 
         /// <summary>
