@@ -52,28 +52,17 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ParametersSchema))
+            if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-                writer.WriteStartObject();
-                foreach (var item in ParametersSchema)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(ParametersSchema);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(ParametersSchema))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
-                writer.WriteEndObject();
+#endif
             }
             if (Optional.IsDefined(TemplatePath))
             {
@@ -123,7 +112,7 @@ namespace Azure.Developer.DevCenter.Models
             string catalogName = default;
             string description = default;
             IReadOnlyList<EnvironmentDefinitionParameter> parameters = default;
-            IReadOnlyDictionary<string, BinaryData> parametersSchema = default;
+            BinaryData parametersSchema = default;
             string templatePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -169,19 +158,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    parametersSchema = dictionary;
+                    parametersSchema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))
@@ -201,7 +178,7 @@ namespace Azure.Developer.DevCenter.Models
                 catalogName,
                 description,
                 parameters ?? new ChangeTrackingList<EnvironmentDefinitionParameter>(),
-                parametersSchema ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                parametersSchema,
                 templatePath,
                 serializedAdditionalRawData);
         }

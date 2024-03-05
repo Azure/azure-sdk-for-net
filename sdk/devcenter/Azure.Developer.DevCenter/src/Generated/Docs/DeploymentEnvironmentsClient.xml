@@ -279,7 +279,7 @@ Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToStri
 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("parametersSchema").ToString());
 Console.WriteLine(result.GetProperty("templatePath").ToString());
 ]]></code></example>
     </member>
@@ -319,7 +319,7 @@ Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("type").ToStri
 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("parametersSchema").ToString());
 Console.WriteLine(result.GetProperty("templatePath").ToString());
 ]]></code></example>
     </member>
@@ -762,7 +762,7 @@ await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("<projec
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
     Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
@@ -804,7 +804,7 @@ foreach (BinaryData item in client.GetEnvironmentDefinitions("<projectName>", nu
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
     Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
@@ -892,7 +892,7 @@ await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
     Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>
@@ -934,7 +934,7 @@ foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("<projectN
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
     Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-    Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("parametersSchema").ToString());
     Console.WriteLine(result.GetProperty("templatePath").ToString());
 }
 ]]></code></example>

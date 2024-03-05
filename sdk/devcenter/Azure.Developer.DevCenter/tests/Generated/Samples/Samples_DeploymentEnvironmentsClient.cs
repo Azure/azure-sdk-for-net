@@ -324,7 +324,7 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
             Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
             Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-            Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("parametersSchema").ToString());
             Console.WriteLine(result.GetProperty("templatePath").ToString());
         }
 
@@ -351,7 +351,7 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
             Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
             Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-            Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("parametersSchema").ToString());
             Console.WriteLine(result.GetProperty("templatePath").ToString());
         }
 
@@ -852,7 +852,7 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
                 Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
@@ -880,7 +880,7 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
                 Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
@@ -994,7 +994,7 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
                 Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }
@@ -1022,7 +1022,7 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("readOnly").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("required").ToString());
                 Console.WriteLine(result.GetProperty("parameters")[0].GetProperty("allowed")[0].ToString());
-                Console.WriteLine(result.GetProperty("parametersSchema").GetProperty("<key>").ToString());
+                Console.WriteLine(result.GetProperty("parametersSchema").ToString());
                 Console.WriteLine(result.GetProperty("templatePath").ToString());
             }
         }

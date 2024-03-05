@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
@@ -65,7 +64,6 @@ namespace Azure.Developer.DevCenter.Models
             Id = id;
             CatalogName = catalogName;
             Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
-            ParametersSchema = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
@@ -77,7 +75,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, IReadOnlyDictionary<string, BinaryData> parametersSchema, string templatePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, BinaryData parametersSchema, string templatePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -107,7 +105,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary>
         /// JSON schema defining the parameters object passed to an environment.
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -134,7 +132,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ParametersSchema { get; }
+        public BinaryData ParametersSchema { get; }
         /// <summary> Path to the Environment Definition entrypoint file. </summary>
         public string TemplatePath { get; }
     }
