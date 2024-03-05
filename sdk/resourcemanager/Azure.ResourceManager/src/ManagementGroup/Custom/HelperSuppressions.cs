@@ -5,3 +5,4 @@ using Azure.Core;
 
 [assembly: CodeGenSuppressType("Azure.ResourceManager.Optional")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.ChangeTrackingList")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.Argument")]
