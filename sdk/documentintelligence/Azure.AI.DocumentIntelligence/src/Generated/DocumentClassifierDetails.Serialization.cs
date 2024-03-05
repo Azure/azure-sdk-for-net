@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             writer.WritePropertyName("apiVersion"u8);
             writer.WriteStringValue(ApiVersion);
-            if (BaseClassifierId != null)
+            if (Optional.IsDefined(BaseClassifierId))
             {
                 writer.WritePropertyName("baseClassifierId"u8);
                 writer.WriteStringValue(BaseClassifierId);
@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (!(Warnings is ChangeTrackingList<DocumentIntelligenceWarning> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Warnings))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();

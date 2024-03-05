@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (BaseClassifierId != null)
+            if (Optional.IsDefined(BaseClassifierId))
             {
                 writer.WritePropertyName("baseClassifierId"u8);
                 writer.WriteStringValue(BaseClassifierId);

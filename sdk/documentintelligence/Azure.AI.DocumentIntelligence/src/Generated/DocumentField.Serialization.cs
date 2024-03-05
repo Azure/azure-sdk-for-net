@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
             }
-            if (Optional.IsDefined(ValueSelectionGroup))
+            if (Optional.IsCollectionDefined(ValueSelectionGroup))
             {
                 writer.WritePropertyName("valueSelectionGroup"u8);
                 writer.WriteStartArray();

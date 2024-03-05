@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (!(Warnings is ChangeTrackingList<DocumentIntelligenceWarning> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Warnings))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
