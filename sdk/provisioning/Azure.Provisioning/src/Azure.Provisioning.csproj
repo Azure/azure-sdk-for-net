@@ -18,6 +18,7 @@
     <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
     <PackageReference Include="Azure.ResourceManager.Authorization" />
     <PackageReference Include="Azure.ResourceManager.Redis" />
+    <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 

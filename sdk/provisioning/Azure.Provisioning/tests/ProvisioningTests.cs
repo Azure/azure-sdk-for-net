@@ -19,9 +19,11 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -231,6 +233,37 @@ namespace Azure.Provisioning.Tests
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task PostgreSql()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var adminLogin = new Parameter("adminLogin", "Administrator login");
+            var adminPassword = new Parameter("adminPassword", "Administrator password", isSecure: true);
+            var server = new PostgreSqlFlexibleServer(
+                infrastructure,
+                administratorLogin: adminLogin,
+                administratorPassword: adminPassword,
+                highAvailability: new PostgreSqlFlexibleServerHighAvailability { Mode = "haMode" },
+                backup: new PostgreSqlFlexibleServerBackupProperties
+                {
+                    BackupRetentionDays = 7,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
+                });
+            _ = infrastructure.AddKeyVault();
+            _ = new KeyVaultSecret(infrastructure, "connectionString", server.GetConnectionString(adminLogin, adminPassword));
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(
+                BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "password" },
+                        adminPassword = new { value = "password" }
+                    }),
+                interactiveMode: true);
         }
 
         [RecordedTest]
