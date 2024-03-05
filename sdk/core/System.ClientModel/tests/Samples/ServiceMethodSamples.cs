@@ -79,7 +79,7 @@ public class ServiceMethodSamples
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
-        // Dummy CancellationToken
+        // CancellationToken used for snippet - doesn't need a real value.
         CancellationToken cancellationToken = CancellationToken.None;
 
         try

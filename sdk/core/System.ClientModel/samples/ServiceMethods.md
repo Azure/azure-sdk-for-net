@@ -74,7 +74,7 @@ string isoCode = outputAsJson.RootElement
 Console.WriteLine($"Code for added country is '{isoCode}'.");
 ```
 
-Protocol methods take an optional `RequestOptions` value that allows callers to add a header to the request, or to add a policy to the client pipeline that can modify the request in any way before sending it to the service.  `RequestOptions` also allows passing a `CancellationToken` to the method.
+Protocol methods take an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the HTTP request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service.  `RequestOptions` also enables passing a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
 // Create RequestOptions instance

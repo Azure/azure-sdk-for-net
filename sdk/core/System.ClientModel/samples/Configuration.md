@@ -19,7 +19,7 @@ MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, opti
 
 ## Add a custom policy to the pipeline
 
-Azure SDKs provides a way to add policies to the pipeline at three positions, `PerCall`, `PerTry`, and `BeforeTranspor`.
+Azure SDKs provides a way to add policies to the pipeline at three positions, `PerCall`, `PerTry`, and `BeforeTransport`.
 
 - `PerCall` policies run once per request
 

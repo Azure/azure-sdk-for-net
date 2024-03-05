@@ -62,9 +62,9 @@ For more information on client configuration, see [Client configuration samples]
 
 Service clients have methods that are used to call cloud services to invoke service operations. These methods on a client are called **service methods**. Service clients expose two types of service methods: _convenience methods_ and _protocol methods_.
 
-**Convenience methods** provide a convenient way to invoke a service operation.  They are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response can be obtained from the return value.
+**Convenience methods** provide a convenient way to invoke a service operation.  They are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response may also be obtained from the return value.
 
-**Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return a `ClientResult` holding only the raw HTTP response details.  These methods also take an optional `RequestOptions` value that allows the client pipeline and the request to be configured for the duration of the call.
+**Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return a `ClientResult` holding only the raw HTTP response details.  These methods also take an optional `RequestOptions` parameter that allows the client pipeline and the request to be configured for the duration of the call.
 
 The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
 
@@ -117,7 +117,7 @@ catch (ClientResultException e) when (e.Status == 404)
 
 ### Customizing HTTP requests
 
-Service clients expose low-level _protocol methods_ that allow callers to customize the details of HTTP requests.  Protocol methods take an optional `RequestOptions` value that allows callers to add a header to the request, or to add a policy to the client pipeline that can modify the request in any way before sending it to the service.  `RequestOptions` also allows passing a `CancellationToken` to the method.
+Service clients expose low-level _protocol methods_ that allow callers to customize the details of HTTP requests by passing an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service. `RequestOptions` also enables passing a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
 // Create RequestOptions instance
