@@ -6,7 +6,7 @@
 
 - Azure.Core.Expressions.DataFactory is now generally available.
 
-### Breaking Changes
+### Other Changes
 
 - `DataFactorySecretBaseDefinition` has been renamed to `DataFactorySecretDefinition`.
 - `DataFactoryModelFactory` has been removed.
