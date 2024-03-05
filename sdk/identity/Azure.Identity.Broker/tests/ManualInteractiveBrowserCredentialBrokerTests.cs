@@ -67,6 +67,30 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task GetPopTokenWithAuthenticate(bool isAsync)
+        {
+            using var logger = AzureEventSourceListener.CreateConsoleLogger();
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            InteractiveBrowserCredential credential = new InteractiveBrowserCredential(
+                            new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true });
+            // this should pop browser amd validate the AuthenticateAsync path.
+            await credential.AuthenticateAsync();
+
+            var client = new PopTestClient(
+                credential,
+                new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
+            var response = isAsync ?
+                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
+                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(200, response.Status);
+        }
+
+        [Test]
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public void AuthenticateWithBrokerAsyncWithSTA([Values(true, false)] bool isAsync)
         {
