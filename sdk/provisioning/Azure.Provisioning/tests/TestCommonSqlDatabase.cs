@@ -27,10 +27,10 @@ namespace Azure.Provisioning.Tests
             AddParameter(sqlAdminPasswordParam);
             AddParameter(appUserPasswordParam);
 
-            KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(this, "sqlAdminPassword");
+            KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(this, name: "sqlAdminPassword");
             sqlAdminSecret.AssignProperty(secret => secret.Properties.Value, sqlAdminPasswordParam);
 
-            KeyVaultSecret appUserSecret = new KeyVaultSecret(this, "appUserPassword");
+            KeyVaultSecret appUserSecret = new KeyVaultSecret(this, name: "appUserPassword");
             appUserSecret.AssignProperty(secret => secret.Properties.Value, appUserPasswordParam);
 
             SqlServer sqlServer = new SqlServer(this, "sqlserver");

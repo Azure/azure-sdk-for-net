@@ -24,7 +24,20 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the properties of the resource.
         /// </summary>
-        public T Properties { get; }
+        public T Properties
+        {
+            get
+            {
+                if (IsExisting)
+                {
+                    throw new InvalidOperationException("Properties are not available for existing resources");
+                }
+
+                return _properties;
+            }
+        }
+
+        private readonly T _properties;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Resource{T}"/>.
@@ -42,15 +55,27 @@ namespace Azure.Provisioning
             ResourceType resourceType,
             string version,
             Func<string, T> createProperties)
-            : base(scope, parent, resourceName, resourceType, version, name => createProperties(name))
+            : this(scope, parent, resourceName, resourceType, version, name => createProperties(name), false)
         {
-            Properties = (T)ResourceData;
+        }
+
+        internal Resource(
+            IConstruct scope,
+            Resource? parent,
+            string resourceName,
+            ResourceType resourceType,
+            string version,
+            Func<string, T> createProperties,
+            bool isExisting)
+            : base(scope, parent, resourceName, resourceType, version, name => createProperties(name), isExisting)
+        {
+            _properties = (T)ResourceData;
 
             if (scope.Configuration?.UseInteractiveMode == true)
             {
                 // We can't use the lambda overload because not all of the T's will inherit from TrackedResourceData
                 // TODO we may need to add a protected LocationSelector property in the future if there are exceptions to the rule
-                AssignProperty(Properties, "Location", new Parameter("location", null, defaultValue: $"{ResourceGroup.ResourceGroupFunction}.location", isExpression: true));
+                AssignProperty(_properties, "Location", new Parameter("location", null, defaultValue: $"{ResourceGroup.ResourceGroupFunction}.location", isExpression: true));
             }
         }
 

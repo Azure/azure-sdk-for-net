@@ -72,11 +72,11 @@ namespace Azure.Provisioning.Tests
             kv.AssignRole(RoleDefinition.KeyVaultAdministrator, Guid.Empty);
             kv.AddOutput(data => data.Properties.VaultUri, "vaultUri");
 
-            KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, "sqlAdminPassword");
+            KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, name: "sqlAdminPassword");
             Assert.False(sqlAdminSecret.Properties.Name.EndsWith(infra.EnvironmentName));
             sqlAdminSecret.AssignProperty(secret => secret.Properties.Value, sqlAdminPasswordParam);
 
-            KeyVaultSecret appUserSecret = new KeyVaultSecret(infra, "appUserPassword");
+            KeyVaultSecret appUserSecret = new KeyVaultSecret(infra, name: "appUserPassword");
             Assert.False(appUserSecret.Properties.Name.EndsWith(infra.EnvironmentName));
             appUserSecret.AssignProperty(secret => secret.Properties.Value, appUserPasswordParam);
 
@@ -215,7 +215,7 @@ namespace Azure.Provisioning.Tests
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
             _ = infrastructure.AddKeyVault();
-            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString());
+            _ = new KeyVaultSecret(infrastructure, name: "connectionString", connectionString: cache.GetConnectionString());
 
             infrastructure.Build(GetOutputPath());
 
@@ -236,6 +236,34 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task RedisCacheWithExistingKeyVault()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var cache = new RedisCache(infrastructure);
+            var kv = KeyVault.FromExisting(infrastructure, name: "existingVault");
+            _ = new KeyVaultSecret(infrastructure, "primaryConnectionString", cache.GetConnectionString(), kv);
+            _ = new KeyVaultSecret(infrastructure, "secondaryConnectionString", cache.GetConnectionString(useSecondary: true), kv);
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        // [RecordedTest]
+        // public async Task RedisCacheWithExistingKeyVaultOtherRg()
+        // {
+        //     TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+        //     var cache = new RedisCache(infrastructure);
+        //     var rg = new ResourceGroup(infrastructure, "otherRg", isExisting: true);
+        //     var kv = KeyVault.FromExisting(infrastructure, parent: rg, name: "existingVault");
+        //     _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(), kv);
+        //
+        //     infrastructure.Build(GetOutputPath());
+        //
+        //     await ValidateBicepAsync(interactiveMode: true);
+        // }
+
+        [RecordedTest]
         public async Task PostgreSql()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
@@ -251,7 +279,10 @@ namespace Azure.Provisioning.Tests
                     BackupRetentionDays = 7,
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
                 });
-            _ = infrastructure.AddKeyVault();
+            var kv = infrastructure.AddKeyVault();
+            // verify we can assign a property that is already assigned automatically by the CDK
+            var p = new Parameter("p", defaultValue: "name");
+            kv.AssignProperty(x=> x.Name, p);
             _ = new KeyVaultSecret(infrastructure, "connectionString", server.GetConnectionString(adminLogin, adminPassword));
 
             infrastructure.Build(GetOutputPath());

@@ -19,10 +19,11 @@ namespace Azure.Provisioning.KeyVaults
         /// Initializes a new instance of the <see cref="KeyVaultSecret"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parent">The parent vault.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
-        public KeyVaultSecret(IConstruct scope, string name = "kvs", string version = "2023-02-01")
-            : base(scope, null, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
+        public KeyVaultSecret(IConstruct scope, KeyVault? parent = null, string name = "kvs", string version = "2023-02-01")
+            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
                 name: name,
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
@@ -35,11 +36,12 @@ namespace Azure.Provisioning.KeyVaults
         /// Initializes a new instance of the <see cref="KeyVaultSecret"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parent"></param>
         /// <param name="name">The name.</param>
         /// <param name="connectionString">The connection string.</param>
         /// <param name="version">The version.</param>
-        public KeyVaultSecret(IConstruct scope, string name, ConnectionString connectionString, string version = "2023-02-01")
-            : base(scope, null, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
+        public KeyVaultSecret(IConstruct scope, string name, ConnectionString connectionString, KeyVault? parent = null, string version = "2023-02-01")
+            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
                 name: name,
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(

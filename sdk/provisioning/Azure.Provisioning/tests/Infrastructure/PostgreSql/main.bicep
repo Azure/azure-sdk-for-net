@@ -10,6 +10,9 @@ param adminLogin string
 @description('Administrator password')
 param adminPassword string
 
+@description('')
+param p string = 'name'
+
 
 resource postgreSqlFlexibleServer_mZ8PC2Gce 'Microsoft.DBforPostgreSQL/flexibleServers@2020-06-01' = {
   name: toLower(take(concat('postgres', uniqueString(resourceGroup().id)), 24))
@@ -28,7 +31,7 @@ resource postgreSqlFlexibleServer_mZ8PC2Gce 'Microsoft.DBforPostgreSQL/flexibleS
 }
 
 resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
+  name: p
   location: location
   properties: {
     tenantId: tenant().tenantId
