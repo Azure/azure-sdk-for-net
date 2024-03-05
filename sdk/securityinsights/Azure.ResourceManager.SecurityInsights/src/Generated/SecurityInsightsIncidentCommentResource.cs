@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsIncidentCommentResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsIncidentCommentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsIncidentCommentResource> Update(WaitUntil waitUntil, SecurityInsightsIncidentCommentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentResource.Update");
             scope.Start();

@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceAdministratorResource>> UpdateAsync(WaitUntil waitUntil, ManagedInstanceAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceAdministratorResource> Update(WaitUntil waitUntil, ManagedInstanceAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorResource.Update");
             scope.Start();

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -54,14 +55,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="ipConfigurations"/> is null. </exception>
         public AdditionalNetworkInterfaceConfiguration(string name, IEnumerable<ServiceFabricManagedClusterIPConfiguration> ipConfigurations)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (ipConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurations));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             Name = name;
             IPConfigurations = ipConfigurations.ToList();

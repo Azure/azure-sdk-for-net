@@ -280,10 +280,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<LinkerResource>> UpdateAsync(WaitUntil waitUntil, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Update");
             scope.Start();
@@ -329,10 +326,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<LinkerResource> Update(WaitUntil waitUntil, LinkerResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _linkerResourceLinkerClientDiagnostics.CreateScope("LinkerResource.Update");
             scope.Start();

@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual async Task<Response<SqlServerDatabaseRestorePointResource>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<SqlServerDatabaseRestorePointResource> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual Response<bool> Exists(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerDatabaseRestorePointResource>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         public virtual NullableResponse<SqlServerDatabaseRestorePointResource> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
         {
-            if (restorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointName));
-            }
-            if (restorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
             using var scope = _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics.CreateScope("SqlServerDatabaseRestorePointCollection.GetIfExists");
             scope.Start();
