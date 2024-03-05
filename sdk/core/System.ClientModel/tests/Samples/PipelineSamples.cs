@@ -61,15 +61,16 @@ public class PipelineSamples
                 beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         }
 
-        public ClientResult<SampleResource> GetResource(string id)
+        public ClientResult<SampleResource> UpdateResource(SampleResource resource)
         {
             PipelineMessage message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
             PipelineRequest request = message.Request;
-            request.Method = "GET";
-            request.Uri = new Uri("https://www.example.com/");
+            request.Method = "PATCH";
+            request.Uri = new Uri($"https://www.example.com/update?id={resource.Id}");
             request.Headers.Add("Accept", "application/json");
+            request.Content = BinaryContent.Create(resource);
 
             _pipeline.Send(message);
 
@@ -80,8 +81,8 @@ public class PipelineSamples
                 throw new ClientResultException(response);
             }
 
-            SampleResource resource = ModelReaderWriter.Read<SampleResource>(response.Content)!;
-            return ClientResult.FromValue(resource, response);
+            SampleResource updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
+            return ClientResult.FromValue(updated, response);
         }
     }
     #endregion
