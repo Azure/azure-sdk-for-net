@@ -213,6 +213,20 @@ namespace Azure.Provisioning.KeyVaults
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
 }
+namespace Azure.Provisioning.PostgreSql
+{
+    public partial class PostgreSqlConnectionString : Azure.Provisioning.ConnectionString
+    {
+        internal PostgreSqlConnectionString() : base (default(string)) { }
+    }
+    public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>
+    {
+        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku? sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability? highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorage? storage = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties? backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork? network = null, string? availabilityZone = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", string version = "2020-06-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
+        protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
+        public Azure.Provisioning.PostgreSql.PostgreSqlConnectionString GetConnectionString(Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword) { throw null; }
+    }
+}
 namespace Azure.Provisioning.Redis
 {
     public partial class RedisCache : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisData>
@@ -271,7 +285,7 @@ namespace Azure.Provisioning.Sql
     }
     public partial class SqlDatabaseConnectionString : Azure.Provisioning.ConnectionString
     {
-        public SqlDatabaseConnectionString(Azure.Provisioning.Sql.SqlDatabase database, Azure.Provisioning.Parameter password, string userName) : base (default(string)) { }
+        internal SqlDatabaseConnectionString() : base (default(string)) { }
     }
     public partial class SqlFirewallRule : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlFirewallRuleData>
     {

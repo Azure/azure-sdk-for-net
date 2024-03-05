@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Provisioning.Redis;
 using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
@@ -23,8 +24,8 @@ namespace Azure.Provisioning.PostgreSql
         /// Creates a new instance of the <see cref="PostgreSqlFlexibleServer"/> class.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="adminLogin">The administrator login.</param>
-        /// <param name="adminPassword">The administrator password.</param>
+        /// <param name="administratorLogin">The administrator login.</param>
+        /// <param name="administratorPassword">The administrator password.</param>
         /// <param name="sku">The Sku.</param>
         /// <param name="highAvailability">The high availability.</param>
         /// <param name="storage">The storage.</param>
@@ -37,8 +38,8 @@ namespace Azure.Provisioning.PostgreSql
         /// <param name="location">The location.</param>
         public PostgreSqlFlexibleServer(
             IConstruct scope,
-            Parameter adminLogin,
-            Parameter adminPassword,
+            Parameter administratorLogin,
+            Parameter administratorPassword,
             PostgreSqlFlexibleServerSku? sku = default,
             PostgreSqlFlexibleServerHighAvailability? highAvailability = default,
             PostgreSqlFlexibleServerStorage? storage = default,
@@ -61,8 +62,28 @@ namespace Azure.Provisioning.PostgreSql
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
-            AssignProperty(data => data.AdministratorLogin, adminLogin);
-            AssignProperty(data => data.AdministratorLoginPassword, adminPassword);
+            AssignProperty(data => data.AdministratorLogin, administratorLogin);
+            AssignProperty(data => data.AdministratorLoginPassword, administratorPassword);
         }
+
+        /// <inheritdoc/>
+        protected override Resource? FindParentInScope(IConstruct scope)
+        {
+            var result = base.FindParentInScope(scope);
+            if (result is null)
+            {
+                result = scope.GetOrAddResourceGroup();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the connection string for the <see cref="RedisCache"/>.
+        /// </summary>
+        public PostgreSqlConnectionString GetConnectionString(Parameter administratorLogin, Parameter administratorPassword)
+            => new PostgreSqlConnectionString(this, administratorLogin, administratorPassword);
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }

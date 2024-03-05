@@ -239,10 +239,12 @@ namespace Azure.Provisioning.Tests
         public async Task PostgreSql()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var adminLogin = new Parameter("adminLogin", "Administrator login");
+            var adminPassword = new Parameter("adminPassword", "Administrator password", isSecure: true);
             var server = new PostgreSqlFlexibleServer(
                 infrastructure,
-                adminLogin: new Parameter("adminLogin", "SQL Server administrator login"),
-                adminPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true),
+                administratorLogin: adminLogin,
+                administratorPassword: adminPassword,
                 highAvailability: new PostgreSqlFlexibleServerHighAvailability { Mode = "haMode" },
                 backup: new PostgreSqlFlexibleServerBackupProperties
                 {
@@ -250,11 +252,18 @@ namespace Azure.Provisioning.Tests
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
                 });
             _ = infrastructure.AddKeyVault();
-            _ = new KeyVaultSecret(infrastructure, "connectionString", cache.GetConnectionString(new Parameter(primaryKey)));
+            _ = new KeyVaultSecret(infrastructure, "connectionString", server.GetConnectionString(adminLogin, adminPassword));
 
             infrastructure.Build(GetOutputPath());
 
-            await ValidateBicepAsync(interactiveMode: true);
+            await ValidateBicepAsync(
+                BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        adminLogin = new { value = "password" },
+                        adminPassword = new { value = "password" }
+                    }),
+                interactiveMode: true);
         }
 
         [RecordedTest]
