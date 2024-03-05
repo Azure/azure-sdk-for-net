@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthBotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string botName, HealthBotData data, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthBotResource> CreateOrUpdate(WaitUntil waitUntil, string botName, HealthBotData data, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual async Task<Response<HealthBotResource>> GetAsync(string botName, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual Response<HealthBotResource> Get(string botName, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string botName, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual Response<bool> Exists(string botName, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthBotResource>> GetIfExistsAsync(string botName, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual NullableResponse<HealthBotResource> GetIfExists(string botName, CancellationToken cancellationToken = default)
         {
-            if (botName == null)
-            {
-                throw new ArgumentNullException(nameof(botName));
-            }
-            if (botName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(botName));
-            }
+            Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
             using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetIfExists");
             scope.Start();

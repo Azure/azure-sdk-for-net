@@ -18,10 +18,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="asset"/> is null. </exception>
         internal PageAssetResource(PageAsset asset)
         {
-            if (asset == null)
-            {
-                throw new ArgumentNullException(nameof(asset));
-            }
+            Argument.AssertNotNull(asset, nameof(asset));
 
             Kind = "page";
             Asset = asset;

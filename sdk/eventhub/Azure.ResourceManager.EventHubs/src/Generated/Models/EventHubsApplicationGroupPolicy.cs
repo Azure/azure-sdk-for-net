@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -54,10 +55,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected EventHubsApplicationGroupPolicy(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

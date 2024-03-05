@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PartnerDestinationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerDestinationName, PartnerDestinationData data, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PartnerDestinationResource> CreateOrUpdate(WaitUntil waitUntil, string partnerDestinationName, PartnerDestinationData data, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
         public virtual async Task<Response<PartnerDestinationResource>> GetAsync(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
         public virtual Response<PartnerDestinationResource> Get(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.Get");
             scope.Start();
@@ -367,14 +333,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.Exists");
             scope.Start();
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
         public virtual Response<bool> Exists(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.Exists");
             scope.Start();
@@ -467,14 +419,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
         public virtual async Task<NullableResponse<PartnerDestinationResource>> GetIfExistsAsync(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.GetIfExists");
             scope.Start();
@@ -519,14 +464,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerDestinationName"/> is null. </exception>
         public virtual NullableResponse<PartnerDestinationResource> GetIfExists(string partnerDestinationName, CancellationToken cancellationToken = default)
         {
-            if (partnerDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerDestinationName));
-            }
-            if (partnerDestinationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerDestinationName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerDestinationName, nameof(partnerDestinationName));
 
             using var scope = _partnerDestinationClientDiagnostics.CreateScope("PartnerDestinationCollection.GetIfExists");
             scope.Start();

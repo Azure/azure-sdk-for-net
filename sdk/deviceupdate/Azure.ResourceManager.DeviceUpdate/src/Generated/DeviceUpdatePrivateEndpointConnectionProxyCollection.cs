@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceUpdatePrivateEndpointConnectionProxyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceUpdatePrivateEndpointConnectionProxyResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         public virtual async Task<Response<DeviceUpdatePrivateEndpointConnectionProxyResource>> GetAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         public virtual Response<DeviceUpdatePrivateEndpointConnectionProxyResource> Get(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         public virtual async Task<NullableResponse<DeviceUpdatePrivateEndpointConnectionProxyResource>> GetIfExistsAsync(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         public virtual NullableResponse<DeviceUpdatePrivateEndpointConnectionProxyResource> GetIfExists(string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionProxyId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionProxyId));
-            }
-            if (privateEndpointConnectionProxyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionProxyId));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyId, nameof(privateEndpointConnectionProxyId));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyCollection.GetIfExists");
             scope.Start();

@@ -54,14 +54,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="cells"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentTable(int rowCount, int columnCount, IEnumerable<DocumentTableCell> cells, IEnumerable<DocumentSpan> spans)
         {
-            if (cells == null)
-            {
-                throw new ArgumentNullException(nameof(cells));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(cells, nameof(cells));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             RowCount = rowCount;
             ColumnCount = columnCount;

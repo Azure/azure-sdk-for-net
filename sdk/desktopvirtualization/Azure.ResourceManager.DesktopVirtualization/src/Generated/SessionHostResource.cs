@@ -353,10 +353,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, bool? force = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostResource.Update");
             scope.Start();
@@ -399,10 +396,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SessionHostResource> Update(SessionHostPatch patch, bool? force = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostResource.Update");
             scope.Start();
