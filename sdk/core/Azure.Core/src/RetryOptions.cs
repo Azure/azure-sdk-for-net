@@ -41,20 +41,20 @@ namespace Azure.Core
         /// <summary>
         /// The maximum number of retry attempts before giving up.
         /// </summary>
-        public int MaxRetries { get; set; } = 3;
+        public int MaxRetries { get; set; } = DefaultMaxRetries;
 
         /// <summary>
         /// The delay between retry attempts for a fixed approach or the delay
         /// on which to base calculations for a backoff-based approach.
         /// If the service provides a Retry-After response header, the next retry will be delayed by the duration specified by the header value.
         /// </summary>
-        public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(0.8);
+        public TimeSpan Delay { get; set; } = DefaultInitialDelay;
 
         /// <summary>
         /// The maximum permissible delay between retry attempts when the service does not provide a Retry-After response header.
         /// If the service provides a Retry-After response header, the next retry will be delayed by the duration specified by the header value.
         /// </summary>
-        public TimeSpan MaxDelay { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan MaxDelay { get; set; } = DefaultMaxDelay;
 
         /// <summary>
         /// The approach to use for calculating retry delays.
@@ -64,6 +64,6 @@ namespace Azure.Core
         /// <summary>
         /// The timeout applied to an individual network operations.
         /// </summary>
-        public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
+        public TimeSpan NetworkTimeout { get; set; } = ClientOptions.DefaultNetworkTimeout;
     }
 }

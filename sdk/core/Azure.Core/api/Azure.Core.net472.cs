@@ -23,12 +23,11 @@ namespace Azure
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AzureKeyCredential
+    public partial class AzureKeyCredential : System.ClientModel.ApiKeyCredential
     {
-        public AzureKeyCredential(string key) { }
+        public AzureKeyCredential(string key) : base (default(string)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Key { get { throw null; } }
-        public void Update(string key) { }
     }
     public partial class AzureNamedKeyCredential
     {
@@ -235,7 +234,7 @@ namespace Azure
         public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
         public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
         public string? ErrorCode { get { throw null; } }
-        public static System.Threading.Tasks.ValueTask<Azure.RequestFailedException> CreateAsync(Azure.Response response, Azure.Core.RequestFailedDetailsParser? parser = null, System.Exception? innerException = null) { throw null; }
+        public static System.Threading.Tasks.ValueTask<Azure.RequestFailedException> CreateAsync(Azure.Response response, Azure.Core.RequestFailedDetailsParser? detailsParser = null, System.Exception? innerException = null) { throw null; }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public new Azure.Response? GetRawResponse() { throw null; }
     }
@@ -1085,14 +1084,14 @@ namespace Azure.Core.Pipeline
     public partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public RetryPolicy(int maxRetries = 3, Azure.Core.DelayStrategy? delayStrategy = null) { }
-        protected internal virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
-        protected internal virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
-        protected internal virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
-        protected internal virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual void OnRequestSent(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual void OnSendingRequest(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected internal virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
-        protected internal virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        protected virtual bool ShouldRetry(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(Azure.Core.HttpMessage message, System.Exception? exception) { throw null; }
     }
     public partial class ServerCertificateCustomValidationArgs
     {
