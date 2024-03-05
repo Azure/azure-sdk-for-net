@@ -20,7 +20,7 @@ steps:
       } else {
         Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
       }
-    condition: and(failed(), ${{ parameters.CustomCondition }})
+    condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
     displayName: Set Artifact Name $(Agent.JobStatus)
 
   - task: 1ES.PublishPipelineArtifact@1
