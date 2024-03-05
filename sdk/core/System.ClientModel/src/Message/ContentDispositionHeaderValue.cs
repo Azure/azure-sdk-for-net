@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// A class to represent the Content-Disposition value for a multipart/form-data request.
 /// </summary>
-public class ContentDispositionValue
+public class ContentDispositionHeaderValue
 {
     /// <summary>
     /// The name of the form field.
@@ -23,12 +23,16 @@ public class ContentDispositionValue
     public string? FileName { get; }
 
     /// <summary>
-    /// Creates a new instance of the <see cref="ContentDispositionValue"/> class.
+    /// Creates a new instance of the <see cref="ContentDispositionHeaderValue"/> class.
     /// </summary>
     /// <param name="name">The name of the form field.</param>
     /// <param name="fileName">The filename of the file being uploaded.</param>
-    public ContentDispositionValue(string name, string? fileName = null)
+    public ContentDispositionHeaderValue(string name, string? fileName = null)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
         Name = name;
     }
 

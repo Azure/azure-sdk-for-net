@@ -21,9 +21,9 @@ public class MultipartContent : IDisposable
     private const string ColonSpace = ": ";
     private const string DashDash = "--";
 
-    private protected static readonly byte[] _crLfBytes = Encoding.UTF8.GetBytes(CrLf);
-    private protected static readonly byte[] _colonSpaceBytes = Encoding.UTF8.GetBytes(ColonSpace);
-    private protected static readonly byte[] _dashDashBytes = Encoding.UTF8.GetBytes(DashDash);
+    private protected static readonly byte[] s_crLfBytes = Encoding.UTF8.GetBytes(CrLf);
+    private protected static readonly byte[] s_colonSpaceBytes = Encoding.UTF8.GetBytes(ColonSpace);
+    private protected static readonly byte[] s_dashDashBytes = Encoding.UTF8.GetBytes(DashDash);
 
     private readonly List<MultipartContentSubpart> _subparts = new();
     private readonly string _boundary;
@@ -96,8 +96,6 @@ public class MultipartContent : IDisposable
             throw new ArgumentNullException(nameof(headers));
         }
 
-        var subpart = new MultipartContentSubpart(content, headers);
-
         _subparts.Add(new MultipartContentSubpart(content, headers));
     }
 
@@ -138,6 +136,11 @@ public class MultipartContent : IDisposable
     /// </summary>
     public void Dispose()
     {
+        foreach (var subpart in _subparts)
+        {
+            subpart.Content.Dispose();
+        }
+        _subparts.Clear();
     }
 
     #region Subpart
@@ -171,18 +174,20 @@ public class MultipartContent : IDisposable
         public void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             // Write headers on a new line
-            stream.Write(_crLfBytes, 0, _crLfBytes.Length);
+            stream.Write(s_crLfBytes, 0, s_crLfBytes.Length);
 
             // Write the headers to stream
             foreach (var header in Headers)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 string headerString = $"{header.Key}{ColonSpace}{header.Value}{CrLf}";
                 byte[] headerBytes = Encoding.UTF8.GetBytes(headerString);
                 stream.Write(headerBytes, 0, headerBytes.Length);
             }
 
             // Add another line
-            stream.Write(_crLfBytes, 0, _crLfBytes.Length);
+            stream.Write(s_crLfBytes, 0, s_crLfBytes.Length);
 
             // Write the content to stream
             Content.WriteTo(stream, cancellationToken);
@@ -196,7 +201,7 @@ public class MultipartContent : IDisposable
         public async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             // Write headers on a new line
-            await stream.WriteAsync(_crLfBytes, 0, _crLfBytes.Length, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(s_crLfBytes, 0, s_crLfBytes.Length, cancellationToken).ConfigureAwait(false);
 
             // Write the headers to stream
             foreach (var header in Headers)
@@ -207,7 +212,7 @@ public class MultipartContent : IDisposable
             }
 
             // Add another line
-            await stream.WriteAsync(_crLfBytes, 0, _crLfBytes.Length, cancellationToken).ConfigureAwait(false);
+            await stream.WriteAsync(s_crLfBytes, 0, s_crLfBytes.Length, cancellationToken).ConfigureAwait(false);
 
             // Write the content to stream
             await Content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
@@ -239,7 +244,7 @@ public class MultipartContent : IDisposable
 
             // Footer boundary
             long multipartLength = 0;
-            multipartLength += (boundaryBytes + _dashDashBytes.Length);
+            multipartLength += (boundaryBytes + s_dashDashBytes.Length);
 
             // Subparts
             foreach (var part in _subParts)
@@ -254,9 +259,9 @@ public class MultipartContent : IDisposable
                 }
 
                 partLength += boundaryBytes;
-                partLength += _crLfBytes.Length; // before headers
-                partLength += part.Headers.Sum(h => Encoding.UTF8.GetBytes(h.Key).Length + _colonSpaceBytes.Length + Encoding.UTF8.GetBytes(h.Value).Length + _crLfBytes.Length);
-                partLength += _crLfBytes.Length; // after headers
+                partLength += s_crLfBytes.Length; // before headers
+                partLength += part.Headers.Sum(h => Encoding.UTF8.GetBytes(h.Key).Length + s_colonSpaceBytes.Length + Encoding.UTF8.GetBytes(h.Value).Length + s_crLfBytes.Length);
+                partLength += s_crLfBytes.Length; // after headers
 
                 multipartLength += partLength;
             }
@@ -267,14 +272,30 @@ public class MultipartContent : IDisposable
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
+            var firstBoundary = true;
+            byte[] boundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}");
+            byte[] firstBoundaryBytes = Encoding.UTF8.GetBytes($"{DashDash}{_boundary}");
+
             // Write the subparts to stream
             foreach (var part in _subParts)
             {
-                byte[] boundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}--{_boundary}");
+                cancellationToken.ThrowIfCancellationRequested();
+
+                // Don't write a new line if this is the first boundary. This helps to avoid extra new lines
+                // both at the beginning of the request and when using nested multipart content.
+                if (firstBoundary)
+                {
+                    stream.Write(firstBoundaryBytes, 0, firstBoundaryBytes.Length);
+                    firstBoundary = false;
+                }
+                else
+                {
+                    stream.Write(boundaryBytes, 0, boundaryBytes.Length);
+                }
                 stream.Write(boundaryBytes, 0, boundaryBytes.Length);
                 part.WriteTo(stream, cancellationToken);
             }
-            byte[] endBoundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}--{_boundary}--");
+            byte[] endBoundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}{DashDash}");
             stream.Write(endBoundaryBytes, 0, endBoundaryBytes.Length);
         }
 
