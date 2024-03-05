@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -60,10 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> is null. </exception>
         protected BackupRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType)
         {
-            if (restoreTargetInfo == null)
-            {
-                throw new ArgumentNullException(nameof(restoreTargetInfo));
-            }
+            Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
 
             RestoreTargetInfo = restoreTargetInfo;
             SourceDataStoreType = sourceDataStoreType;

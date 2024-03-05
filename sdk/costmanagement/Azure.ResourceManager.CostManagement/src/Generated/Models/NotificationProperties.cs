@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="subject"/> is null. </exception>
         public NotificationProperties(IEnumerable<string> to, string subject)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(subject, nameof(subject));
 
             To = to.ToList();
             Subject = subject;

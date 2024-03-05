@@ -80,10 +80,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ChargesListResult>> ListAsync(string scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, startDate, endDate, filter, apply);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,10 +108,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ChargesListResult> List(string scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, startDate, endDate, filter, apply);
             _pipeline.Send(message, cancellationToken);
