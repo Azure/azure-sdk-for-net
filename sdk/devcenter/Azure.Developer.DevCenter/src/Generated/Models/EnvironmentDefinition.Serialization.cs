@@ -51,17 +51,28 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ParametersSchema))
+            if (Optional.IsCollectionDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ParametersSchema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ParametersSchema))
+                writer.WriteStartObject();
+                foreach (var item in ParametersSchema)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(TemplatePath))
             {
@@ -111,7 +122,7 @@ namespace Azure.Developer.DevCenter.Models
             string catalogName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<EnvironmentDefinitionParameter>> parameters = default;
-            Optional<BinaryData> parametersSchema = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> parametersSchema = default;
             Optional<string> templatePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +168,19 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    parametersSchema = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    parametersSchema = dictionary;
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))
@@ -171,7 +194,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvironmentDefinition(id, name, catalogName, description.Value, Optional.ToList(parameters), parametersSchema.Value, templatePath.Value, serializedAdditionalRawData);
+            return new EnvironmentDefinition(id, name, catalogName, description.Value, Optional.ToList(parameters), Optional.ToDictionary(parametersSchema), templatePath.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvironmentDefinition>.Write(ModelReaderWriterOptions options)

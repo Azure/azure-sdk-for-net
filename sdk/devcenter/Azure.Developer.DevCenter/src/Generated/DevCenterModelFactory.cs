@@ -225,9 +225,10 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
         /// <returns> A new <see cref="Models.EnvironmentDefinition"/> instance for mocking. </returns>
-        public static EnvironmentDefinition EnvironmentDefinition(string id = null, string name = null, string catalogName = null, string description = null, IEnumerable<EnvironmentDefinitionParameter> parameters = null, BinaryData parametersSchema = null, string templatePath = null)
+        public static EnvironmentDefinition EnvironmentDefinition(string id = null, string name = null, string catalogName = null, string description = null, IEnumerable<EnvironmentDefinitionParameter> parameters = null, IReadOnlyDictionary<string, BinaryData> parametersSchema = null, string templatePath = null)
         {
             parameters ??= new List<EnvironmentDefinitionParameter>();
+            parametersSchema ??= new Dictionary<string, BinaryData>();
 
             return new EnvironmentDefinition(id, name, catalogName, description, parameters?.ToList(), parametersSchema, templatePath, serializedAdditionalRawData: null);
         }
