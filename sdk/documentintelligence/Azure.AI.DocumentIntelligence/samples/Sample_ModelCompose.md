@@ -92,7 +92,7 @@ DocumentModelDetails purchaseOrderModel = purchaseOrderOperation.Value;
 
 Console.WriteLine($"Model ID: {purchaseOrderModel.ModelId}");
 Console.WriteLine($"Model description: {purchaseOrderModel.Description}");
-Console.WriteLine($"Created on: {purchaseOrderModel.CreatedDateTime}");
+Console.WriteLine($"Created on: {purchaseOrderModel.CreatedOn}");
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence#getting-started

@@ -106,8 +106,8 @@ namespace Azure.AI.DocumentIntelligence
             }
             bool? isHandwritten = default;
             string similarFontFamily = default;
-            FontStyle? fontStyle = default;
-            FontWeight? fontWeight = default;
+            DocumentFontStyle? fontStyle = default;
+            DocumentFontWeight? fontWeight = default;
             string color = default;
             string backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontStyle = new FontStyle(property.Value.GetString());
+                    fontStyle = new DocumentFontStyle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fontWeight"u8))
@@ -145,7 +145,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontWeight = new FontWeight(property.Value.GetString());
+                    fontWeight = new DocumentFontWeight(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("color"u8))
