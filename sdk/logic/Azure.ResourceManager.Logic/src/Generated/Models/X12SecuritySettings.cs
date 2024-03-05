@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationQualifier"/> or <paramref name="securityQualifier"/> is null. </exception>
         public X12SecuritySettings(string authorizationQualifier, string securityQualifier)
         {
-            if (authorizationQualifier == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationQualifier));
-            }
-            if (securityQualifier == null)
-            {
-                throw new ArgumentNullException(nameof(securityQualifier));
-            }
+            Argument.AssertNotNull(authorizationQualifier, nameof(authorizationQualifier));
+            Argument.AssertNotNull(securityQualifier, nameof(securityQualifier));
 
             AuthorizationQualifier = authorizationQualifier;
             SecurityQualifier = securityQualifier;

@@ -286,10 +286,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningLabelingJobResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningLabelingJobData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningLabelingJobLabelingJobsClientDiagnostics.CreateScope("MachineLearningLabelingJobResource.Update");
             scope.Start();
@@ -335,10 +332,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningLabelingJobResource> Update(WaitUntil waitUntil, MachineLearningLabelingJobData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningLabelingJobLabelingJobsClientDiagnostics.CreateScope("MachineLearningLabelingJobResource.Update");
             scope.Start();
@@ -384,10 +378,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<ArmOperation<ExportSummary>> ExportLabelsAsync(WaitUntil waitUntil, ExportSummary body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _machineLearningLabelingJobLabelingJobsClientDiagnostics.CreateScope("MachineLearningLabelingJobResource.ExportLabels");
             scope.Start();
@@ -433,10 +424,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<ExportSummary> ExportLabels(WaitUntil waitUntil, ExportSummary body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _machineLearningLabelingJobLabelingJobsClientDiagnostics.CreateScope("MachineLearningLabelingJobResource.ExportLabels");
             scope.Start();
