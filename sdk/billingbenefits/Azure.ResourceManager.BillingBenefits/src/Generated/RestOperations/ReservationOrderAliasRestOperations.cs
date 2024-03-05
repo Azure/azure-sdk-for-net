@@ -65,18 +65,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderAliasName));
-            }
-            if (reservationOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(reservationOrderAliasName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,18 +88,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderAliasName));
-            }
-            if (reservationOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(reservationOrderAliasName, content);
             _pipeline.Send(message, cancellationToken);
@@ -146,14 +126,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BillingBenefitsReservationOrderAliasData>> GetAsync(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderAliasName));
-            }
-            if (reservationOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
             using var message = CreateGetRequest(reservationOrderAliasName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -180,14 +153,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BillingBenefitsReservationOrderAliasData> Get(string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderAliasName));
-            }
-            if (reservationOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderAliasName, nameof(reservationOrderAliasName));
 
             using var message = CreateGetRequest(reservationOrderAliasName);
             _pipeline.Send(message, cancellationToken);

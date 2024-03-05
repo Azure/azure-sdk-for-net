@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkVmGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkVmGroupResource> CreateOrUpdate(WaitUntil waitUntil, string vmGroupId, WorkloadNetworkVmGroupData data, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetAsync(string vmGroupId, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         public virtual Response<WorkloadNetworkVmGroupResource> Get(string vmGroupId, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vmGroupId, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         public virtual Response<bool> Exists(string vmGroupId, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkVmGroupResource>> GetIfExistsAsync(string vmGroupId, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkVmGroupResource> GetIfExists(string vmGroupId, CancellationToken cancellationToken = default)
         {
-            if (vmGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(vmGroupId));
-            }
-            if (vmGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
 
             using var scope = _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkVmGroupCollection.GetIfExists");
             scope.Start();

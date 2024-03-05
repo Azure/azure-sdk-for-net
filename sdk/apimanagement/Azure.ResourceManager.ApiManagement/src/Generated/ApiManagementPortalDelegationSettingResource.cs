@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response> UpdateAsync(ETag ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
             scope.Start();
@@ -243,10 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response Update(ETag ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
             scope.Start();
@@ -290,10 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementPortalDelegationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
             scope.Start();
@@ -340,10 +331,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementPortalDelegationSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
             scope.Start();
