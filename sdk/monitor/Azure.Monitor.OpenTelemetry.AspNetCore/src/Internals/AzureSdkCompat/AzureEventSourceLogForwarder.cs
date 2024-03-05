@@ -7,7 +7,6 @@ using Azure.Core.Diagnostics;
 using Azure.Core.Shared;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Azure;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
 {
@@ -60,10 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
             }
         }
 
-        private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception exception)
-        {
-            return EventSourceEventFormatting.Format(eventSourceEvent.EventData);
-        }
+        private static string FormatMessage(EventSourceEvent eventSourceEvent, Exception _) => eventSourceEvent.Format();
 
         public Task StartAsync(CancellationToken cancellationToken)
         {

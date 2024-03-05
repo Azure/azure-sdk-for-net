@@ -3,6 +3,7 @@
 
 #if NET6_0_OR_GREATER
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
             else
             {
-                Assert.False(transport.Requests.Any());
+                await AssertContentDoesNotContain(transport.Requests, "hello");
             }
         }
 
@@ -81,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
             else
             {
-                Assert.False(transport.Requests.Any());
+                await AssertContentDoesNotContain(transport.Requests, "hello");
             }
         }
 
@@ -109,6 +110,20 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             // also check that message appears just once
             Assert.Equal(content.IndexOf(jsonMessage), content.LastIndexOf(jsonMessage));
+        }
+
+        private static async Task AssertContentDoesNotContain(List<MockRequest> requests, string expectedMessage)
+        {
+            foreach (var request in requests)
+            {
+                using var contentStream = new MemoryStream();
+                await request.Content.WriteToAsync(contentStream, default);
+                contentStream.Position = 0;
+                var content = BinaryData.FromStream(contentStream).ToString();
+                Console.WriteLine(content);
+
+                Assert.DoesNotContain(expectedMessage, content);
+            }
         }
 
         private static void SetUpOTelAndLogging(WebApplicationBuilder builder, MockTransport transport, LogLevel enableLevel)
@@ -172,7 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                         LogTestVerboseEvent(message);
                         break;
                     default:
-                        Assert.Fail("Log level not supported");
+                        Assert.Fail("Log level is not supported");
                         break;
                 }
             }

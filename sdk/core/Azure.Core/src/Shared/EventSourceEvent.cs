@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
-namespace Microsoft.Extensions.Azure
+namespace Azure.Core.Shared
 {
     internal readonly struct EventSourceEvent: IReadOnlyList<KeyValuePair<string, object>>
     {
@@ -30,6 +30,11 @@ namespace Microsoft.Extensions.Azure
         }
 
         public int Count => EventData.PayloadNames.Count;
+
+        public string Format()
+        {
+            return EventSourceEventFormatting.Format(EventData);
+        }
 
         public KeyValuePair<string, object> this[int index] => new KeyValuePair<string, object>(EventData.PayloadNames[index], EventData.Payload[index]);
     }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
@@ -34,8 +34,8 @@
   <!-- Shared sources -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
-    <Compile Include="..\..\..\extensions\Microsoft.Extensions.Azure\src\Internal\EventSourceEvent.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)\EventSourceEventFormatting.cs"  LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs"  LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
