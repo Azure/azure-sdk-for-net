@@ -235,9 +235,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         /// <summary>
         ///   Looks up a localized string similar to No Access Token in request found..
         /// </summary>
-        internal static string Ex_Invalid_Token {
+        internal static string Ex_No_AccessToken {
             get {
-                return ResourceManager.GetString("Ex_Invalid_Token", resourceCulture);
+                return ResourceManager.GetString("Ex_No_AccessToken", resourceCulture);
             }
         }
         

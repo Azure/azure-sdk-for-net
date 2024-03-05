@@ -25,13 +25,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             HttpRequestMessage request,
             ConfigurationManager configurationManager)
         {
-            IdentityModelEventSource.ShowPII = ConfigurationManager.ShowPIIDataInLogs;
+            IdentityModelEventSource.ShowPII = ConfigurationManager.IsUnsafeSupportLoggingEnabled;
 
             string accessToken = request.Headers?.Authorization?.Parameter;
 
             if (string.IsNullOrWhiteSpace(accessToken))
             {
-                throw new UnauthorizedAccessException(AuthenticationEventResource.Ex_Invalid_Token);
+                throw new UnauthorizedAccessException(AuthenticationEventResource.Ex_No_AccessToken);
             }
 
             JsonWebToken jsonWebToken = new JsonWebToken(accessToken);

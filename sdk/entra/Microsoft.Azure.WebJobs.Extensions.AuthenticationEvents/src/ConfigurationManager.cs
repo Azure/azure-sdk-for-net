@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         private const string AuthorizedPartyAppIdKey = AuthenticationEventsKeyPrefix + "AuthorizedPartyAppId";
         private const string AudienceAppIdKey = AuthenticationEventsKeyPrefix + "AudienceAppId";
         private const string BypassTokenValidationKey = AuthenticationEventsKeyPrefix + "BypassTokenValidation";
-        private const string ShowPIIDataInLogsKey = AuthenticationEventsKeyPrefix + "ShowPIIDataInLogs";
+        private const string IsUnsafeSupportLoggingEnabledKey = AuthenticationEventsKeyPrefix + "IsUnsafeSupportLoggingEnabled";
 
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Show PII data in logs.
         /// </summary>
-        internal static bool ShowPIIDataInLogs => GetConfigValue(ShowPIIDataInLogsKey, true);
+        internal static bool IsUnsafeSupportLoggingEnabled => GetConfigValue(IsUnsafeSupportLoggingEnabledKey, false);
 
         /// <summary>
         /// If we should bypass the token validation.

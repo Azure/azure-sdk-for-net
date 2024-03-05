@@ -47,7 +47,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     .BindToTrigger(new AuthenticationEventBindingProvider(this));
 
             _base_uri = context.GetWebhookHandler();
-            //LogInformation(string.Format(AuthenticationEventResource.Log_EventHandler_Url, Uri));
         }
 
         internal void Log(string message, LogLevel logLevel = LogLevel.Information, params object[] args)
