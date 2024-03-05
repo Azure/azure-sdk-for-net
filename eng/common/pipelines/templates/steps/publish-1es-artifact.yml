@@ -5,26 +5,28 @@
 # ArtifactName - The name of the artifact in the "successful" case.
 # ArtifactPath - The path we will be publishing.
 # CustomCondition - Used if there is additional logic necessary to prevent attempt of publish.
+# SbomEnabled - Set whether to auto-inject 1es pipeline template sbom tasks
 
 parameters:
   ArtifactName: ''
   ArtifactPath: ''
   CustomCondition: true
+  SbomEnabled: true
 
 steps:
   - pwsh: |
-      Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
-    condition: and(succeeded(), ${{ parameters.CustomCondition }})
-    displayName: Set Artifact Name
-
-  - pwsh: |
-      Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
-    condition: and(failed(), ${{ parameters.CustomCondition }})
-    displayName: Set Failed Artifact Name
+      if ($env:AGENT_JOBSTATUS -eq "Failed") {
+        Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}-FailedAttempt$(System.JobAttempt)"
+      } else {
+        Write-Host "##vso[task.setvariable variable=PublishArtifactName;]${{ parameters.ArtifactName }}"
+      }
+    condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
+    displayName: Set Artifact Name $(Agent.JobStatus)
 
   - task: 1ES.PublishPipelineArtifact@1
-    condition: and(succeeded(), ${{ parameters.CustomCondition }})
+    condition: and(succeededOrFailed(), ${{ parameters.CustomCondition }})
     displayName: 'Publish ${{ parameters.ArtifactName }} Artifacts'
     inputs:
-      artifact: '$(PublishArtifactName)'
-      path: '${{ parameters.ArtifactPath }}'
+      artifactName: '$(PublishArtifactName)'
+      targetPath: '${{ parameters.ArtifactPath }}'
+      sbomEnabled: ${{ parameters.SbomEnabled }}
