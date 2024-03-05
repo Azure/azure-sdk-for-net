@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentId))
+            if (Optional.IsDefined(EnrollmentId))
             {
                 writer.WritePropertyName("enrollmentId"u8);
                 writer.WriteStringValue(EnrollmentId);
