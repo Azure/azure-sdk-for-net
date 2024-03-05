@@ -105,7 +105,7 @@ public class MultipartContent : IDisposable
     {
         if (string.IsNullOrWhiteSpace(boundary))
         {
-            throw new ArgumentException("Value cannot be null or empty.", boundary);
+            throw new ArgumentException("Value cannot be null or empty.", nameof(boundary));
         }
 
         // RFC 2046 Section 5.1.1
