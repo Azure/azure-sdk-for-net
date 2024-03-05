@@ -37,20 +37,20 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsDefined(CreatedTimestamp))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
-                writer.WriteStringValue(CreatedTimestamp);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedTimestamp))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
-                writer.WriteStringValue(UpdatedTimestamp);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(DeletedTimestamp))
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletedTimestamp"u8);
-                writer.WriteStringValue(DeletedTimestamp);
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             string self = default;
             string resourceName = default;
-            string createdTimestamp = default;
-            string updatedTimestamp = default;
-            string deletedTimestamp = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            DateTimeOffset? deletedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,17 +111,29 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (property.NameEquals("createdTimestamp"u8))
                 {
-                    createdTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("updatedTimestamp"u8))
                 {
-                    updatedTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updatedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deletedTimestamp"u8))
                 {
-                    deletedTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deletedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

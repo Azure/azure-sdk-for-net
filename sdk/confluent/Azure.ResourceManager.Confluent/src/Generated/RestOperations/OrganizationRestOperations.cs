@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListRegionsRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListRegionsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1314,9 +1314,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1325,11 +1325,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListRegionsSuccessResponse>> ListRegionsAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentRegionListResult>> ListRegionsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1355,20 +1355,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ListRegionsSuccessResponse value = default;
+                        ConfluentRegionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListRegionsSuccessResponse.DeserializeListRegionsSuccessResponse(document.RootElement);
+                        value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1380,11 +1380,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListRegionsSuccessResponse> ListRegions(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<ConfluentRegionListResult> ListRegions(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1410,20 +1410,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ListRegionsSuccessResponse value = default;
+                        ConfluentRegionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListRegionsSuccessResponse.DeserializeListRegionsSuccessResponse(document.RootElement);
+                        value = ConfluentRegionListResult.DeserializeConfluentRegionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateCreateAPIKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CreateAPIKeyModel body)
+        internal HttpMessage CreateCreateApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1453,9 +1453,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1466,11 +1466,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="environmentId"> Confluent environment id. </param>
         /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
-        /// <param name="body"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<APIKeyRecord>> CreateAPIKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CreateAPIKeyModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentApiKeyRecord>> CreateApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1512,20 +1512,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateCreateAPIKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, body);
+            using var message = CreateCreateApiKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        APIKeyRecord value = default;
+                        ConfluentApiKeyRecord value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = APIKeyRecord.DeserializeAPIKeyRecord(document.RootElement);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1539,11 +1539,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="environmentId"> Confluent environment id. </param>
         /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
-        /// <param name="body"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<APIKeyRecord> CreateAPIKey(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CreateAPIKeyModel body, CancellationToken cancellationToken = default)
+        public Response<ConfluentApiKeyRecord> CreateApiKey(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1585,20 +1585,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateCreateAPIKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, body);
+            using var message = CreateCreateApiKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        APIKeyRecord value = default;
+                        ConfluentApiKeyRecord value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = APIKeyRecord.DeserializeAPIKeyRecord(document.RootElement);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1606,7 +1606,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateDeleteClusterAPIKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        internal HttpMessage CreateDeleteClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteClusterAPIKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteClusterApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var message = CreateDeleteClusterAPIKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            using var message = CreateDeleteClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1691,7 +1691,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteClusterAPIKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        public Response DeleteClusterApiKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var message = CreateDeleteClusterAPIKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            using var message = CreateDeleteClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1738,7 +1738,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateGetClusterAPIKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        internal HttpMessage CreateGetClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1768,7 +1768,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<APIKeyRecord>> GetClusterAPIKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConfluentApiKeyRecord>> GetClusterApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1803,15 +1803,15 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var message = CreateGetClusterAPIKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            using var message = CreateGetClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        APIKeyRecord value = default;
+                        ConfluentApiKeyRecord value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = APIKeyRecord.DeserializeAPIKeyRecord(document.RootElement);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1827,7 +1827,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<APIKeyRecord> GetClusterAPIKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
+        public Response<ConfluentApiKeyRecord> GetClusterApiKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1862,15 +1862,15 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var message = CreateGetClusterAPIKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
+            using var message = CreateGetClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        APIKeyRecord value = default;
+                        ConfluentApiKeyRecord value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = APIKeyRecord.DeserializeAPIKeyRecord(document.RootElement);
+                        value = ConfluentApiKeyRecord.DeserializeConfluentApiKeyRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

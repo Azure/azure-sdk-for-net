@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Organization_GetEnvironmentById
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEnvironmentById_OrganizationGetEnvironmentById()
+        public async Task GetEnvironment_OrganizationGetEnvironmentById()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetEnvironmentById.json
             // this example is just showing the usage of "Organization_GetEnvironmentById" operation, for the dependent resources, they will have to be created separately.
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation
             string environmentId = "dlz-f3a90de";
-            SCEnvironmentRecord result = await confluentOrganization.GetEnvironmentByIdAsync(environmentId);
+            SCEnvironmentRecord result = await confluentOrganization.GetEnvironmentAsync(environmentId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["region"] = "eastus",
 },
             };
-            ListRegionsSuccessResponse result = await confluentOrganization.GetRegionsAsync(body);
+            ConfluentRegionListResult result = await confluentOrganization.GetRegionsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Organization_CreateAPIKey
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateAPIKey_OrganizationCreateAPIKey()
+        public async Task CreateApiKey_OrganizationCreateAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_CreateClusterAPIKey.json
             // this example is just showing the usage of "Organization_CreateAPIKey" operation, for the dependent resources, they will have to be created separately.
@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             string environmentId = "env-12132";
             string clusterId = "clusterId-123";
-            CreateAPIKeyModel body = new CreateAPIKeyModel()
+            ConfluentApiKeyCreateContent content = new ConfluentApiKeyCreateContent()
             {
                 Name = "CI kafka access key",
                 Description = "This API key provides kafka access to cluster x",
             };
-            APIKeyRecord result = await confluentOrganization.CreateAPIKeyAsync(environmentId, clusterId, body);
+            ConfluentApiKeyRecord result = await confluentOrganization.CreateApiKeyAsync(environmentId, clusterId, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Organization_DeleteClusterAPIKey
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteClusterAPIKey_OrganizationDeleteClusterAPIKey()
+        public async Task DeleteClusterApiKey_OrganizationDeleteClusterAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_DeleteClusterAPIKey.json
             // this example is just showing the usage of "Organization_DeleteClusterAPIKey" operation, for the dependent resources, they will have to be created separately.
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation
             string apiKeyId = "ZFZ6SZZZWGYBEIFB";
-            await confluentOrganization.DeleteClusterAPIKeyAsync(apiKeyId);
+            await confluentOrganization.DeleteClusterApiKeyAsync(apiKeyId);
 
             Console.WriteLine($"Succeeded");
         }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Organization_GetClusterAPIKey
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterAPIKey_OrganizationGetClusterAPIKey()
+        public async Task GetClusterApiKey_OrganizationGetClusterAPIKey()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetClusterAPIKey.json
             // this example is just showing the usage of "Organization_GetClusterAPIKey" operation, for the dependent resources, they will have to be created separately.
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation
             string apiKeyId = "apiKeyId-123";
-            APIKeyRecord result = await confluentOrganization.GetClusterAPIKeyAsync(apiKeyId);
+            ConfluentApiKeyRecord result = await confluentOrganization.GetClusterApiKeyAsync(apiKeyId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Organization_GetSchemaRegistryClusterById
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSchemaRegistryClusterById_OrganizationGetSchemaRegistryClusterById()
+        public async Task GetSchemaRegistryCluster_OrganizationGetSchemaRegistryClusterById()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetSchemaRegistryClusterById.json
             // this example is just showing the usage of "Organization_GetSchemaRegistryClusterById" operation, for the dependent resources, they will have to be created separately.
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             string environmentId = "env-stgcczjp2j3";
             string clusterId = "lsrc-stgczkq22z";
-            SchemaRegistryClusterRecord result = await confluentOrganization.GetSchemaRegistryClusterByIdAsync(environmentId, clusterId);
+            SchemaRegistryClusterRecord result = await confluentOrganization.GetSchemaRegistryClusterAsync(environmentId, clusterId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Organization_GetClusterById
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterById_OrganizationGetClusterById()
+        public async Task GetCluster_OrganizationGetClusterById()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_GetClusterById.json
             // this example is just showing the usage of "Organization_GetClusterById" operation, for the dependent resources, they will have to be created separately.
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             string environmentId = "env-12132";
             string clusterId = "dlz-f3a90de";
-            SCClusterRecord result = await confluentOrganization.GetClusterByIdAsync(environmentId, clusterId);
+            SCClusterRecord result = await confluentOrganization.GetClusterAsync(environmentId, clusterId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessListUsersSuccessResponse result = await confluentOrganization.GetUsersAccessAsync(body);
+            AccessUserListResult result = await confluentOrganization.GetUsersAccessAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_ServiceAccountsList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetServiceAccountsAccess_AccessServiceAccountsList()
+        public async Task GetAccessServiceAccounts_AccessServiceAccountsList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_ServiceAccountsList.json
             // this example is just showing the usage of "Access_ListServiceAccounts" operation, for the dependent resources, they will have to be created separately.
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessListServiceAccountsSuccessResponse result = await confluentOrganization.GetServiceAccountsAccessAsync(body);
+            AccessServiceAccountListResult result = await confluentOrganization.GetAccessServiceAccountsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_InvitationsList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetInvitationsAccess_AccessInvitationsList()
+        public async Task GetAccessInvitations_AccessInvitationsList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_InvitationsList.json
             // this example is just showing the usage of "Access_ListInvitations" operation, for the dependent resources, they will have to be created separately.
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["status"] = "INVITE_STATUS_SENT",
 },
             };
-            AccessListInvitationsSuccessResponse result = await confluentOrganization.GetInvitationsAccessAsync(body);
+            AccessInvitationListResult result = await confluentOrganization.GetAccessInvitationsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_InviteUser
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task InviteUserAccess_AccessInviteUser()
+        public async Task InviteUser_AccessInviteUser()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_InviteUser.json
             // this example is just showing the usage of "Access_InviteUser" operation, for the dependent resources, they will have to be created separately.
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessInviteUserAccountModel body = new AccessInviteUserAccountModel()
+            AccessInvitationContent content = new AccessInvitationContent()
             {
                 InvitedUserDetails = new AccessInvitedUserDetails()
                 {
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Confluent.Samples
                     AuthType = "AUTH_TYPE_SSO",
                 },
             };
-            InvitationRecord result = await confluentOrganization.InviteUserAccessAsync(body);
+            AccessInvitationRecord result = await confluentOrganization.InviteUserAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_EnvironmentList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEnvironmentsAccess_AccessEnvironmentList()
+        public async Task GetAccessEnvironments_AccessEnvironmentList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_EnvironmentList.json
             // this example is just showing the usage of "Access_ListEnvironments" operation, for the dependent resources, they will have to be created separately.
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessListEnvironmentsSuccessResponse result = await confluentOrganization.GetEnvironmentsAccessAsync(body);
+            AccessEnvironmentListResult result = await confluentOrganization.GetAccessEnvironmentsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_ClusterList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClustersAccess_AccessClusterList()
+        public async Task GetAccessClusters_AccessClusterList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_ClusterList.json
             // this example is just showing the usage of "Access_ListClusters" operation, for the dependent resources, they will have to be created separately.
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessListClusterSuccessResponse result = await confluentOrganization.GetClustersAccessAsync(body);
+            AccessClusterListResult result = await confluentOrganization.GetAccessClustersAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessListRoleBindingsSuccessResponse result = await confluentOrganization.GetRoleBindingsAccessAsync(body);
+            AccessListRoleBindingsSuccessResponse result = await confluentOrganization.GetRoleBindingsAccessAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_CreateRoleBinding
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateRoleBindingAccess_AccessCreateRoleBinding()
+        public async Task CreateAccessRoleBinding_AccessCreateRoleBinding()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_CreateRoleBinding.json
             // this example is just showing the usage of "Access_CreateRoleBinding" operation, for the dependent resources, they will have to be created separately.
@@ -722,13 +722,13 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessCreateRoleBindingRequestModel body = new AccessCreateRoleBindingRequestModel()
+            AccessRoleBindingCreateContent content = new AccessRoleBindingCreateContent()
             {
                 Principal = "User:u-111aaa",
                 RoleName = "CloudClusterAdmin",
                 CrnPattern = "crn://confluent.cloud/organization=1111aaaa-11aa-11aa-11aa-111111aaaaaa/environment=env-aaa1111/cloud-cluster=lkc-1111aaa",
             };
-            RoleBindingRecord result = await confluentOrganization.CreateRoleBindingAccessAsync(body);
+            AccessRoleBindingRecord result = await confluentOrganization.CreateAccessRoleBindingAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_DeleteRoleBinding
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteRoleBindingAccess_AccessDeleteRoleBinding()
+        public async Task DeleteAccessRoleBinding_AccessDeleteRoleBinding()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_DeleteRoleBinding.json
             // this example is just showing the usage of "Access_DeleteRoleBinding" operation, for the dependent resources, they will have to be created separately.
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation
             string roleBindingId = "dlz-f3a90de";
-            await confluentOrganization.DeleteRoleBindingAccessAsync(roleBindingId);
+            await confluentOrganization.DeleteAccessRoleBindingAsync(roleBindingId);
 
             Console.WriteLine($"Succeeded");
         }
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_RoleBindingNameList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetRoleBindingNameListAccess_AccessRoleBindingNameList()
+        public async Task GetAccessRoleBindingNames_AccessRoleBindingNameList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_RoleBindingNameList.json
             // this example is just showing the usage of "Access_ListRoleBindingNameList" operation, for the dependent resources, they will have to be created separately.
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            ListAccessRequestModel body = new ListAccessRequestModel()
+            AccessListContent content = new AccessListContent()
             {
                 SearchFilters =
 {
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["namespace"] = "public,dataplane,networking,identity,datagovernance,connect,streamcatalog,pipelines,ksql",
 },
             };
-            AccessRoleBindingNameListSuccessResponse result = await confluentOrganization.GetRoleBindingNameListAccessAsync(body);
+            AccessRoleBindingNameListResult result = await confluentOrganization.GetAccessRoleBindingNamesAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

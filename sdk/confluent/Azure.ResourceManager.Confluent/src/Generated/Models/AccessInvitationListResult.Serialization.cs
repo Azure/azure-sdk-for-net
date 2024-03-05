@@ -14,16 +14,16 @@ using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class AccessListRoleBindingsSuccessResponse : IUtf8JsonSerializable, IJsonModel<AccessListRoleBindingsSuccessResponse>
+    public partial class AccessInvitationListResult : IUtf8JsonSerializable, IJsonModel<AccessInvitationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessListRoleBindingsSuccessResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessInvitationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AccessListRoleBindingsSuccessResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AccessInvitationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessListRoleBindingsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInvitationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessListRoleBindingsSuccessResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessInvitationListResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteEndObject();
         }
 
-        AccessListRoleBindingsSuccessResponse IJsonModel<AccessListRoleBindingsSuccessResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AccessInvitationListResult IJsonModel<AccessInvitationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessListRoleBindingsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInvitationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessListRoleBindingsSuccessResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessInvitationListResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessListRoleBindingsSuccessResponse(document.RootElement, options);
+            return DeserializeAccessInvitationListResult(document.RootElement, options);
         }
 
-        internal static AccessListRoleBindingsSuccessResponse DeserializeAccessListRoleBindingsSuccessResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AccessInvitationListResult DeserializeAccessInvitationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             string kind = default;
             ConfluentListMetadata metadata = default;
-            IReadOnlyList<AccessRoleBindingRecord> data = default;
+            IReadOnlyList<AccessInvitationRecord> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    List<AccessRoleBindingRecord> array = new List<AccessRoleBindingRecord>();
+                    List<AccessInvitationRecord> array = new List<AccessInvitationRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessRoleBindingRecord.DeserializeAccessRoleBindingRecord(item, options));
+                        array.Add(AccessInvitationRecord.DeserializeAccessInvitationRecord(item, options));
                     }
                     data = array;
                     continue;
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessListRoleBindingsSuccessResponse(kind, metadata, data ?? new ChangeTrackingList<AccessRoleBindingRecord>(), serializedAdditionalRawData);
+            return new AccessInvitationListResult(kind, metadata, data ?? new ChangeTrackingList<AccessInvitationRecord>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccessListRoleBindingsSuccessResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AccessInvitationListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessListRoleBindingsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInvitationListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessListRoleBindingsSuccessResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessInvitationListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        AccessListRoleBindingsSuccessResponse IPersistableModel<AccessListRoleBindingsSuccessResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AccessInvitationListResult IPersistableModel<AccessInvitationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessListRoleBindingsSuccessResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInvitationListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccessListRoleBindingsSuccessResponse(document.RootElement, options);
+                        return DeserializeAccessInvitationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessListRoleBindingsSuccessResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessInvitationListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccessListRoleBindingsSuccessResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AccessInvitationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

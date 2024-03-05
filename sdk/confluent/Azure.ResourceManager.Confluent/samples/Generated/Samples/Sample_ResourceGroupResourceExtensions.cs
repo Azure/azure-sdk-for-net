@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Validations_ValidateOrganizations
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ValidateOrganizationV2Validation_ValidationsValidateOrganizations()
+        public async Task ValidateOrganizationV2_ValidationsValidateOrganizations()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Validations_ValidateOrganizationsV2.json
             // this example is just showing the usage of "Validations_ValidateOrganizationV2" operation, for the dependent resources, they will have to be created separately.
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["Environment"] = "Dev",
 },
             };
-            ValidationResponse result = await resourceGroupResource.ValidateOrganizationV2ValidationAsync(organizationName, data);
+            ConfluentOrganizationValidationResult result = await resourceGroupResource.ValidateOrganizationV2Async(organizationName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }

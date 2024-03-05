@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Metadata of the data record. </summary>
-    public partial class SCMetadataEntity
+    /// <summary> Create role binding request model. </summary>
+    public partial class AccessRoleBindingCreateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,29 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        /// <summary> Initializes a new instance of <see cref="AccessRoleBindingCreateContent"/>. </summary>
+        public AccessRoleBindingCreateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <summary> Initializes a new instance of <see cref="AccessRoleBindingCreateContent"/>. </summary>
+        /// <param name="principal"> The principal User or Group to bind the role to. </param>
+        /// <param name="roleName"> The name of the role to bind to the principal. </param>
+        /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessRoleBindingCreateContent(string principal, string roleName, string crnPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Self = self;
-            ResourceName = resourceName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            DeletedOn = deletedOn;
+            Principal = principal;
+            RoleName = roleName;
+            CrnPattern = crnPattern;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Self lookup url. </summary>
-        public string Self { get; }
-        /// <summary> Resource name of the record. </summary>
-        public string ResourceName { get; }
-        /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> The principal User or Group to bind the role to. </summary>
+        public string Principal { get; set; }
+        /// <summary> The name of the role to bind to the principal. </summary>
+        public string RoleName { get; set; }
+        /// <summary> A CRN that specifies the scope and resource patterns necessary for the role to bind. </summary>
+        public string CrnPattern { get; set; }
     }
 }

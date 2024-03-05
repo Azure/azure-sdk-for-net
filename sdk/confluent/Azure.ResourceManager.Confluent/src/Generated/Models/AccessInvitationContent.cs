@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Metadata of the data record. </summary>
-    public partial class SCMetadataEntity
+    /// <summary> Invite User Account model. </summary>
+    public partial class AccessInvitationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,33 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        /// <summary> Initializes a new instance of <see cref="AccessInvitationContent"/>. </summary>
+        public AccessInvitationContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <summary> Initializes a new instance of <see cref="AccessInvitationContent"/>. </summary>
+        /// <param name="organizationId"> Id of the organization. </param>
+        /// <param name="email"> Email of the logged in user. </param>
+        /// <param name="upn"> Upn of the logged in user. </param>
+        /// <param name="invitedUserDetails"> Details of the user who is being invited. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessInvitationContent(string organizationId, string email, string upn, AccessInvitedUserDetails invitedUserDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Self = self;
-            ResourceName = resourceName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            DeletedOn = deletedOn;
+            OrganizationId = organizationId;
+            Email = email;
+            Upn = upn;
+            InvitedUserDetails = invitedUserDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Self lookup url. </summary>
-        public string Self { get; }
-        /// <summary> Resource name of the record. </summary>
-        public string ResourceName { get; }
-        /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> Id of the organization. </summary>
+        public string OrganizationId { get; set; }
+        /// <summary> Email of the logged in user. </summary>
+        public string Email { get; set; }
+        /// <summary> Upn of the logged in user. </summary>
+        public string Upn { get; set; }
+        /// <summary> Details of the user who is being invited. </summary>
+        public AccessInvitedUserDetails InvitedUserDetails { get; set; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Metadata of the data record. </summary>
-    public partial class SCMetadataEntity
+    /// <summary> Result of POST request to list regions supported by confluent. </summary>
+    public partial class ConfluentRegionListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +46,22 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        /// <summary> Initializes a new instance of <see cref="ConfluentRegionListResult"/>. </summary>
+        internal ConfluentRegionListResult()
         {
+            Data = new ChangeTrackingList<ConfluentRegionRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <summary> Initializes a new instance of <see cref="ConfluentRegionListResult"/>. </summary>
+        /// <param name="data"> List of regions supported by confluent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfluentRegionListResult(IReadOnlyList<ConfluentRegionRecord> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Self = self;
-            ResourceName = resourceName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            DeletedOn = deletedOn;
+            Data = data;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Self lookup url. </summary>
-        public string Self { get; }
-        /// <summary> Resource name of the record. </summary>
-        public string ResourceName { get; }
-        /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> List of regions supported by confluent. </summary>
+        public IReadOnlyList<ConfluentRegionRecord> Data { get; }
     }
 }

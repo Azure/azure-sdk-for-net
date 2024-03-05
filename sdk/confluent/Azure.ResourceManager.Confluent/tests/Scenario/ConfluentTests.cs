@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             {
                 if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
                 {
-                    var cluster = confluentOrganization.GetClusterByIdAsync("env-123", "lkc-1235");
+                    var cluster = confluentOrganization.GetClusterAsync("env-123", "lkc-1235");
                     Assert.NotNull(cluster);   // since the access is via partner signed token which is failing to get env.
                     break;
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             {
                 if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
                 {
-                    var schemaRegistryCluster = confluentOrganization.GetSchemaRegistryClusterByIdAsync("env-123", "cluster-134");
+                    var schemaRegistryCluster = confluentOrganization.GetSchemaRegistryClusterAsync("env-123", "cluster-134");
                     Assert.NotNull(schemaRegistryCluster);   // since the access is via partner signed token which is failing to get env.
                     Assert.NotNull(schemaRegistryCluster.Id);
                     break;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
                 {
                     try
                     {
-                        var Cluster = confluentOrganization.GetSchemaRegistryClusterByIdAsync("env-123", "cluster-134");
+                        var Cluster = confluentOrganization.GetSchemaRegistryClusterAsync("env-123", "cluster-134");
                         Assert.NotNull(Cluster);   // since the access is via partner signed token which is failing to get env.
                         Assert.NotNull(Cluster.Id);
                         break;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             {
                 if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
                 {
-                    var deleteresponse = confluentOrganization.DeleteClusterAPIKeyAsync("apiKeyId");
+                    var deleteresponse = confluentOrganization.DeleteClusterApiKeyAsync("apiKeyId");
                     Assert.NotNull(deleteresponse);   // since the access is via partner signed token which is failing to get env.
                     break;
                 }
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
         {
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
             {
-                CreateAPIKeyModel createAPIKeyModel = new CreateAPIKeyModel();
-                createAPIKeyModel.Name = "testkey";
-                createAPIKeyModel.Description = "testkey";
+                ConfluentApiKeyCreateContent content = new ConfluentApiKeyCreateContent();
+                content.Name = "testkey";
+                content.Description = "testkey";
                 if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
                 {
-                    var apiKey = confluentOrganization.CreateAPIKeyAsync("env-123", "cluster-134", createAPIKeyModel);
+                    var apiKey = confluentOrganization.CreateApiKeyAsync("env-123", "cluster-134", content);
                     Assert.IsNotNull(apiKey);  // since the access is via partner signed token which is failing to get env.
                     break;
                 }

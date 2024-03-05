@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Metadata of the data record. </summary>
-    public partial class SCMetadataEntity
+    /// <summary> Record of the user. </summary>
+    public partial class AccessUserRecord
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,41 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        /// <summary> Initializes a new instance of <see cref="AccessUserRecord"/>. </summary>
+        internal AccessUserRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <summary> Initializes a new instance of <see cref="AccessUserRecord"/>. </summary>
+        /// <param name="kind"> Type of account. </param>
+        /// <param name="id"> Id of the user. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="email"> Email of the user. </param>
+        /// <param name="fullName"> Name of the user. </param>
+        /// <param name="authType"> Auth type of the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessUserRecord(string kind, string id, MetadataEntity metadata, string email, string fullName, string authType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Self = self;
-            ResourceName = resourceName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            DeletedOn = deletedOn;
+            Kind = kind;
+            Id = id;
+            Metadata = metadata;
+            Email = email;
+            FullName = fullName;
+            AuthType = authType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Self lookup url. </summary>
-        public string Self { get; }
-        /// <summary> Resource name of the record. </summary>
-        public string ResourceName { get; }
-        /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> Type of account. </summary>
+        public string Kind { get; }
+        /// <summary> Id of the user. </summary>
+        public string Id { get; }
+        /// <summary> Metadata of the record. </summary>
+        public MetadataEntity Metadata { get; }
+        /// <summary> Email of the user. </summary>
+        public string Email { get; }
+        /// <summary> Name of the user. </summary>
+        public string FullName { get; }
+        /// <summary> Auth type of the user. </summary>
+        public string AuthType { get; }
     }
 }

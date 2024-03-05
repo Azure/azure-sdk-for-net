@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Metadata of the data record. </summary>
-    public partial class SCMetadataEntity
+    /// <summary> API Key Owner details which can be a user or service account. </summary>
+    public partial class ApiKeyOwnerEntity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,33 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        /// <summary> Initializes a new instance of <see cref="ApiKeyOwnerEntity"/>. </summary>
+        internal ApiKeyOwnerEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyOwnerEntity"/>. </summary>
+        /// <param name="id"> API Key owner id. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <param name="kind"> Type of the owner service or user account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiKeyOwnerEntity(string id, string related, string resourceName, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Self = self;
+            Id = id;
+            Related = related;
             ResourceName = resourceName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            DeletedOn = deletedOn;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Self lookup url. </summary>
-        public string Self { get; }
-        /// <summary> Resource name of the record. </summary>
+        /// <summary> API Key owner id. </summary>
+        public string Id { get; }
+        /// <summary> API URL for accessing or modifying the referred object. </summary>
+        public string Related { get; }
+        /// <summary> CRN reference to the referred resource. </summary>
         public string ResourceName { get; }
-        /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> Type of the owner service or user account. </summary>
+        public string Kind { get; }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Details of the role bindings returned on successful response. </summary>
-    public partial class AccessListRoleBindingsSuccessResponse
+    /// <summary> Details on principal, role name and crn pattern of a role binding. </summary>
+    public partial class AccessRoleBindingRecord
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,30 +45,41 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessListRoleBindingsSuccessResponse"/>. </summary>
-        internal AccessListRoleBindingsSuccessResponse()
+        /// <summary> Initializes a new instance of <see cref="AccessRoleBindingRecord"/>. </summary>
+        internal AccessRoleBindingRecord()
         {
-            Data = new ChangeTrackingList<AccessRoleBindingRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessListRoleBindingsSuccessResponse"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> List of role binding. </param>
+        /// <summary> Initializes a new instance of <see cref="AccessRoleBindingRecord"/>. </summary>
+        /// <param name="kind"> The type of the resource. </param>
+        /// <param name="id"> Id of the role binding. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="principal"> The principal User or Group to bind the role to. </param>
+        /// <param name="roleName"> The name of the role to bind to the principal. </param>
+        /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessListRoleBindingsSuccessResponse(string kind, ConfluentListMetadata metadata, IReadOnlyList<AccessRoleBindingRecord> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessRoleBindingRecord(string kind, string id, MetadataEntity metadata, string principal, string roleName, string crnPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            Id = id;
             Metadata = metadata;
-            Data = data;
+            Principal = principal;
+            RoleName = roleName;
+            CrnPattern = crnPattern;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of response. </summary>
+        /// <summary> The type of the resource. </summary>
         public string Kind { get; }
-        /// <summary> Metadata of the list. </summary>
-        public ConfluentListMetadata Metadata { get; }
-        /// <summary> List of role binding. </summary>
-        public IReadOnlyList<AccessRoleBindingRecord> Data { get; }
+        /// <summary> Id of the role binding. </summary>
+        public string Id { get; }
+        /// <summary> Metadata of the record. </summary>
+        public MetadataEntity Metadata { get; }
+        /// <summary> The principal User or Group to bind the role to. </summary>
+        public string Principal { get; }
+        /// <summary> The name of the role to bind to the principal. </summary>
+        public string RoleName { get; }
+        /// <summary> A CRN that specifies the scope and resource patterns necessary for the role to bind. </summary>
+        public string CrnPattern { get; }
     }
 }

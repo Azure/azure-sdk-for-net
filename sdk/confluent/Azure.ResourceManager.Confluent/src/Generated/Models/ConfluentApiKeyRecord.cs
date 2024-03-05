@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Metadata of the data record. </summary>
-    public partial class SCMetadataEntity
+    /// <summary> Details API key. </summary>
+    public partial class ConfluentApiKeyRecord
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,33 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        /// <summary> Initializes a new instance of <see cref="ConfluentApiKeyRecord"/>. </summary>
+        internal ConfluentApiKeyRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <summary> Initializes a new instance of <see cref="ConfluentApiKeyRecord"/>. </summary>
+        /// <param name="kind"> Type of api key. </param>
+        /// <param name="id"> Id of the api key. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="spec"> Specification of the API Key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfluentApiKeyRecord(string kind, string id, SCMetadataEntity metadata, ApiKeySpecEntity spec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Self = self;
-            ResourceName = resourceName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            DeletedOn = deletedOn;
+            Kind = kind;
+            Id = id;
+            Metadata = metadata;
+            Spec = spec;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Self lookup url. </summary>
-        public string Self { get; }
-        /// <summary> Resource name of the record. </summary>
-        public string ResourceName { get; }
-        /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        /// <summary> Type of api key. </summary>
+        public string Kind { get; }
+        /// <summary> Id of the api key. </summary>
+        public string Id { get; }
+        /// <summary> Metadata of the record. </summary>
+        public SCMetadataEntity Metadata { get; }
+        /// <summary> Specification of the API Key. </summary>
+        public ApiKeySpecEntity Spec { get; }
     }
 }
