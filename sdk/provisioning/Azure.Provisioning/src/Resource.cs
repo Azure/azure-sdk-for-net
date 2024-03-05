@@ -49,16 +49,6 @@ namespace Azure.Provisioning
         /// Gets the <see cref="ResourceIdentifier"/> of the resource.
         /// </summary>
         public ResourceIdentifier Id { get; }
-        //
-        // /// <summary>
-        // /// The type of the resource.
-        // /// </summary>
-        // public abstract string ResourceTypeName { get; }
-        //
-        // /// <summary>
-        // /// The version of the resource.
-        // /// </summary>
-        // public abstract string ResourceTypeVersion { get; }
 
         /// <summary>
         /// Gets the <see cref="IConstruct"/> scope of the resource.
@@ -92,18 +82,7 @@ namespace Azure.Provisioning
 
             Scope = scope;
             Parameters = new List<Parameter>();
-            // if (isExisting && this is not ResourceGroup && this is not Subscription && this is not Tenant)
-            // {
-            //     Parent = parent ?? throw new InvalidOperationException("Existing resources must have a parent specified.");
-            // }
-            // else
-            // {
             Parent = parent ?? FindParentInScope(scope);
-            if (Parent?.IsExisting == true)
-            {
-                Parent.References.Add(this);
-            }
-            // }
 
             var azureName = isExisting ? resourceName : GetAzureName(scope, resourceName);
             Scope.AddResource(this);
@@ -120,8 +99,6 @@ namespace Azure.Provisioning
                     : Parent.Id.AppendChildResource(ResourceType.GetLastType(), azureName);
             Name = GetHash();
         }
-
-        internal IList<Resource> References { get; } = new List<Resource>();
 
         /// <summary>
         /// Whether or not the resource already exists.
