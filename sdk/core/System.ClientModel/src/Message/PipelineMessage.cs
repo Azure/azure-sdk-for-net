@@ -146,7 +146,7 @@ public class PipelineMessage : IDisposable
     /// <param name="key">The key for the property in the message's property
     /// bag.</param>
     /// <param name="value">The value of the property.</param>
-    public void SetProperty(Type key, object value) =>
+    public void SetProperty(Type key, object? value) =>
         _propertyBag.Set((ulong)key.TypeHandle.Value, value);
 
     #endregion
