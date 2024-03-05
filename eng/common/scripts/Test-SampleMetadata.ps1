@@ -430,7 +430,6 @@ begin {
         "sql-server-2008",
         "surface-duo",
         "sway",
-        "system-clientmodel",
         "vs-app-center",
         "vs-code",
         "vs-mac",
