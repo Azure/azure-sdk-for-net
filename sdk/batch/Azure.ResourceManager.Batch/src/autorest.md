@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 library-name: Batch
-namespace: Azure.ResourceManager.Batch   
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1435fde816ebc8297b246b886ab3edefd78a98e/specification/batch/resource-manager/readme.md
+namespace: Azure.ResourceManager.Batch
+require: https://github.com/Azure/azure-rest-api-specs/blob/d6fcc46341f274b8af42a4cdcfa14e1f8d472619/specification/batch/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
