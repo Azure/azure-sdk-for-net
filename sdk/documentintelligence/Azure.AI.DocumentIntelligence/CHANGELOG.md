@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2024-03-05)
 
 ### Features Added
 - Added property `BaseClassifierId` to `BuildDocumentClassifierContent`.
@@ -41,10 +41,6 @@
   - Renamed property `QRCode` to `QrCode`.
   - Renamed property `UPCA` to `Upca`.
   - Renamed property `UPCE` to `Upce`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2023-11-16)
 
