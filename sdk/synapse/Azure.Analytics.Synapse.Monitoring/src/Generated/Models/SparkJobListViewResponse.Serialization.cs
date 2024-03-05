@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Analytics.Synapse.Monitoring;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {

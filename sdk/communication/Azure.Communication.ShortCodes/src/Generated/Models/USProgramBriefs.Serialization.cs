@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {

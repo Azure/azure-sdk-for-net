@@ -42,9 +42,9 @@ namespace Azure.AI.OpenAI.Tests
 
             ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
-                    AzureOpenAIModelFactory.ChatResponseMessage(e.role, e.text),
-                    e.index,
-                    e.reason))
+                    message: AzureOpenAIModelFactory.ChatResponseMessage(e.role, e.text),
+                    index: e.index,
+                    finishReason: e.reason))
                 .ToArray();
             Assert.That(chatChoices, Is.All.Not.Null);
 
@@ -76,9 +76,9 @@ namespace Azure.AI.OpenAI.Tests
 
             ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
-                    AzureOpenAIModelFactory.ChatResponseMessage(e.role, e.text),
-                    e.index,
-                    e.reason))
+                    message: AzureOpenAIModelFactory.ChatResponseMessage(e.role, e.text),
+                    index: e.index,
+                    finishReason: e.reason))
                 .ToArray();
 
             var promptFilterResults = new List<ContentFilterResultsForPrompt>()
