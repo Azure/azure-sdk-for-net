@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("azStackHciSiteId"u8);
             writer.WriteStringValue(AzStackHciSiteId);
-            if (options.Format != "W" && !(ApplianceName is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApplianceName))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStartArray();
@@ -40,19 +41,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("cluster"u8);
             writer.WriteObjectValue(Cluster);
-            if (options.Format != "W" && FabricResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);
                 writer.WriteStringValue(FabricResourceId);
             }
-            if (options.Format != "W" && FabricContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricContainerId))
             {
                 writer.WritePropertyName("fabricContainerId"u8);
                 writer.WriteStringValue(FabricContainerId);
             }
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
-            if (options.Format != "W" && MigrationHubUri != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationHubUri))
             {
                 writer.WritePropertyName("migrationHubUri"u8);
                 writer.WriteStringValue(MigrationHubUri.AbsoluteUri);

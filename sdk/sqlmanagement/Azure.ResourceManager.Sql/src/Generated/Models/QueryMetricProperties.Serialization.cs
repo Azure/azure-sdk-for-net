@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && Min.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (options.Format != "W" && Max.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (options.Format != "W" && Avg.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Avg))
             {
                 writer.WritePropertyName("avg"u8);
                 writer.WriteNumberValue(Avg.Value);
             }
-            if (options.Format != "W" && Sum.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Sum))
             {
                 writer.WritePropertyName("sum"u8);
                 writer.WriteNumberValue(Sum.Value);
             }
-            if (options.Format != "W" && Stdev.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Stdev))
             {
                 writer.WritePropertyName("stdev"u8);
                 writer.WriteNumberValue(Stdev.Value);

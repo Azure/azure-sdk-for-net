@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NumberOfQueries.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfQueries))
             {
                 writer.WritePropertyName("numberOfQueries"u8);
                 writer.WriteNumberValue(NumberOfQueries.Value);
             }
-            if (options.Format != "W" && AggregationFunction != null)
+            if (options.Format != "W" && Optional.IsDefined(AggregationFunction))
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (options.Format != "W" && ObservationMetric != null)
+            if (options.Format != "W" && Optional.IsDefined(ObservationMetric))
             {
                 writer.WritePropertyName("observationMetric"u8);
                 writer.WriteStringValue(ObservationMetric);
             }
-            if (options.Format != "W" && IntervalType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IntervalType))
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && StartTime != null)
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && EndTime != null)
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (!(Queries is ChangeTrackingList<QueryStatisticsProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();

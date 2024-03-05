@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (!(MetricCategories is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MetricCategories))
             {
                 writer.WritePropertyName("metricCategories"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metrics is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (!(Filters is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -57,17 +57,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (GroupBy != null)
+            if (Optional.IsDefined(GroupBy))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStringValue(GroupBy);
             }
-            if (SegmentBy != null)
+            if (Optional.IsDefined(SegmentBy))
             {
                 writer.WritePropertyName("segmentBy"u8);
                 writer.WriteStringValue(SegmentBy);
             }
-            if (LabelName != null)
+            if (Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);

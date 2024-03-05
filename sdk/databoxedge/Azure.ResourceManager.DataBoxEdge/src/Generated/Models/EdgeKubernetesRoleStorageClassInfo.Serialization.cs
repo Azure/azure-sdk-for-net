@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && KubernetesRoleStorageClassInfoType != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesRoleStorageClassInfoType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KubernetesRoleStorageClassInfoType);
             }
-            if (options.Format != "W" && PosixCompliant.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PosixCompliant))
             {
                 writer.WritePropertyName("posixCompliant"u8);
                 writer.WriteStringValue(PosixCompliant.Value.ToString());

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Hops is ChangeTrackingList<ConnectivityHopInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Hops))
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();
@@ -36,32 +37,32 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NetworkConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetworkConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(NetworkConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && AvgLatencyInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvgLatencyInMs))
             {
                 writer.WritePropertyName("avgLatencyInMs"u8);
                 writer.WriteNumberValue(AvgLatencyInMs.Value);
             }
-            if (options.Format != "W" && MinLatencyInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinLatencyInMs))
             {
                 writer.WritePropertyName("minLatencyInMs"u8);
                 writer.WriteNumberValue(MinLatencyInMs.Value);
             }
-            if (options.Format != "W" && MaxLatencyInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxLatencyInMs))
             {
                 writer.WritePropertyName("maxLatencyInMs"u8);
                 writer.WriteNumberValue(MaxLatencyInMs.Value);
             }
-            if (options.Format != "W" && ProbesSent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProbesSent))
             {
                 writer.WritePropertyName("probesSent"u8);
                 writer.WriteNumberValue(ProbesSent.Value);
             }
-            if (options.Format != "W" && ProbesFailed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProbesFailed))
             {
                 writer.WritePropertyName("probesFailed"u8);
                 writer.WriteNumberValue(ProbesFailed.Value);

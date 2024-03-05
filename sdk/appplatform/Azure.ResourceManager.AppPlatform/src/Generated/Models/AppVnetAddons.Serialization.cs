@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (IsPublicEndpoint.HasValue)
+            if (Optional.IsDefined(IsPublicEndpoint))
             {
                 writer.WritePropertyName("publicEndpoint"u8);
                 writer.WriteBooleanValue(IsPublicEndpoint.Value);
             }
-            if (options.Format != "W" && PublicEndpointUri != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicEndpointUri))
             {
                 writer.WritePropertyName("publicEndpointUrl"u8);
                 writer.WriteStringValue(PublicEndpointUri.AbsoluteUri);

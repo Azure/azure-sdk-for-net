@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (OverrideSettings != null)
+            if (Optional.IsDefined(OverrideSettings))
             {
                 writer.WritePropertyName("overrideSettings"u8);
                 writer.WriteObjectValue(OverrideSettings);

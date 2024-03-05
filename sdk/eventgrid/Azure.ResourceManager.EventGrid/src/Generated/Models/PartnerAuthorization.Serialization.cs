@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultMaximumExpirationTimeInDays.HasValue)
+            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
             }
-            if (!(AuthorizedPartnersList is ChangeTrackingList<EventGridPartnerContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizedPartnersList))
             {
                 writer.WritePropertyName("authorizedPartnersList"u8);
                 writer.WriteStartArray();

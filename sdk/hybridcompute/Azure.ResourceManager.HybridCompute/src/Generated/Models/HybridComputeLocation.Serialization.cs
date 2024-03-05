@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (District != null)
+            if (Optional.IsDefined(District))
             {
                 writer.WritePropertyName("district"u8);
                 writer.WriteStringValue(District);
             }
-            if (CountryOrRegion != null)
+            if (Optional.IsDefined(CountryOrRegion))
             {
                 writer.WritePropertyName("countryOrRegion"u8);
                 writer.WriteStringValue(CountryOrRegion);

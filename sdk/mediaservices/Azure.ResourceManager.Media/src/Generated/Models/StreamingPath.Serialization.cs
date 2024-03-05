@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(StreamingProtocol.ToString());
             writer.WritePropertyName("encryptionScheme"u8);
             writer.WriteStringValue(EncryptionScheme.ToString());
-            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (!(Instructions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataSourceUri is ChangeTrackingList<AppServiceNameValuePair> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataSourceUri))
             {
                 writer.WritePropertyName("dataSourceUri"u8);
                 writer.WriteStartArray();

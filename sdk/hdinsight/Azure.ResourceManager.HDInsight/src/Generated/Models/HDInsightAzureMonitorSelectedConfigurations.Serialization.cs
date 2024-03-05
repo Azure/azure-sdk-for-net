@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (ConfigurationVersion != null)
+            if (Optional.IsDefined(ConfigurationVersion))
             {
                 writer.WritePropertyName("configurationVersion"u8);
                 writer.WriteStringValue(ConfigurationVersion);
             }
-            if (!(GlobalConfigurations is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GlobalConfigurations))
             {
                 writer.WritePropertyName("globalConfigurations"u8);
                 writer.WriteStartObject();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TableList is ChangeTrackingList<HDInsightAzureMonitorTableConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TableList))
             {
                 writer.WritePropertyName("tableList"u8);
                 writer.WriteStartArray();

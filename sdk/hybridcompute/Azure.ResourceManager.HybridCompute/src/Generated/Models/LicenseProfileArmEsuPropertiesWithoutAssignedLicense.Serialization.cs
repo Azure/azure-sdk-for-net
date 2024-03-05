@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
-            if (options.Format != "W" && EsuEligibility.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EsuEligibility))
             {
                 writer.WritePropertyName("esuEligibility"u8);
                 writer.WriteStringValue(EsuEligibility.Value.ToString());
             }
-            if (options.Format != "W" && EsuKeyState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EsuKeyState))
             {
                 writer.WritePropertyName("esuKeyState"u8);
                 writer.WriteStringValue(EsuKeyState.Value.ToString());
             }
-            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();

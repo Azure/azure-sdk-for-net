@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (IncludePrivacy.HasValue)
+            if (Optional.IsDefined(IncludePrivacy))
             {
                 writer.WritePropertyName("includePrivacy"u8);
                 writer.WriteBooleanValue(IncludePrivacy.Value);
             }
-            if (IsForTransfer.HasValue)
+            if (Optional.IsDefined(IsForTransfer))
             {
                 writer.WritePropertyName("forTransfer"u8);
                 writer.WriteBooleanValue(IsForTransfer.Value);

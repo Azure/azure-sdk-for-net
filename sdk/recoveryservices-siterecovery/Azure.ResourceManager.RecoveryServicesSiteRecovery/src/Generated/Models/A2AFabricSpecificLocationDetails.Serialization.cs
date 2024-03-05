@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (InitialPrimaryZone != null)
+            if (Optional.IsDefined(InitialPrimaryZone))
             {
                 writer.WritePropertyName("initialPrimaryZone"u8);
                 writer.WriteStringValue(InitialPrimaryZone);
             }
-            if (InitialRecoveryZone != null)
+            if (Optional.IsDefined(InitialRecoveryZone))
             {
                 writer.WritePropertyName("initialRecoveryZone"u8);
                 writer.WriteStringValue(InitialRecoveryZone);
             }
-            if (InitialPrimaryExtendedLocation != null)
+            if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
                 writer.WriteObjectValue(InitialPrimaryExtendedLocation);
             }
-            if (InitialRecoveryExtendedLocation != null)
+            if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
                 writer.WriteObjectValue(InitialRecoveryExtendedLocation);
             }
-            if (InitialPrimaryFabricLocation.HasValue)
+            if (Optional.IsDefined(InitialPrimaryFabricLocation))
             {
                 writer.WritePropertyName("initialPrimaryFabricLocation"u8);
                 writer.WriteStringValue(InitialPrimaryFabricLocation.Value);
             }
-            if (InitialRecoveryFabricLocation.HasValue)
+            if (Optional.IsDefined(InitialRecoveryFabricLocation))
             {
                 writer.WritePropertyName("initialRecoveryFabricLocation"u8);
                 writer.WriteStringValue(InitialRecoveryFabricLocation.Value);
             }
-            if (PrimaryZone != null)
+            if (Optional.IsDefined(PrimaryZone))
             {
                 writer.WritePropertyName("primaryZone"u8);
                 writer.WriteStringValue(PrimaryZone);
             }
-            if (RecoveryZone != null)
+            if (Optional.IsDefined(RecoveryZone))
             {
                 writer.WritePropertyName("recoveryZone"u8);
                 writer.WriteStringValue(RecoveryZone);
             }
-            if (PrimaryExtendedLocation != null)
+            if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
                 writer.WriteObjectValue(PrimaryExtendedLocation);
             }
-            if (RecoveryExtendedLocation != null)
+            if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);
             }
-            if (PrimaryFabricLocation.HasValue)
+            if (Optional.IsDefined(PrimaryFabricLocation))
             {
                 writer.WritePropertyName("primaryFabricLocation"u8);
                 writer.WriteStringValue(PrimaryFabricLocation.Value);
             }
-            if (RecoveryFabricLocation.HasValue)
+            if (Optional.IsDefined(RecoveryFabricLocation))
             {
                 writer.WritePropertyName("recoveryFabricLocation"u8);
                 writer.WriteStringValue(RecoveryFabricLocation.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Requests != null)
+            if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteObjectValue(Requests);
             }
-            if (PrivateBytesInKB.HasValue)
+            if (Optional.IsDefined(PrivateBytesInKB))
             {
                 writer.WritePropertyName("privateBytesInKB"u8);
                 writer.WriteNumberValue(PrivateBytesInKB.Value);
             }
-            if (!(StatusCodes is ChangeTrackingList<StatusCodesBasedTrigger> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SlowRequests != null)
+            if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
                 writer.WriteObjectValue(SlowRequests);
             }
-            if (!(SlowRequestsWithPath is ChangeTrackingList<SlowRequestsBasedTrigger> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
                 writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StatusCodesRange is ChangeTrackingList<StatusCodesRangeBasedTrigger> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusCodesRange))
             {
                 writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();

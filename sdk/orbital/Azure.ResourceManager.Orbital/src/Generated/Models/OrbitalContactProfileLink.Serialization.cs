@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -32,12 +33,12 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Polarization.ToString());
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (GainOverTemperature.HasValue)
+            if (Optional.IsDefined(GainOverTemperature))
             {
                 writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
-            if (EirpdBW.HasValue)
+            if (Optional.IsDefined(EirpdBW))
             {
                 writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);

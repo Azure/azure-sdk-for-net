@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(FunctionName);
             writer.WritePropertyName("httpTriggerUrl"u8);
             writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);

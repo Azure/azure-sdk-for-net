@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (QuestionId != null)
+            if (Optional.IsDefined(QuestionId))
             {
                 writer.WritePropertyName("questionId"u8);
                 writer.WriteStringValue(QuestionId);
             }
-            if (QuestionType.HasValue)
+            if (Optional.IsDefined(QuestionType))
             {
                 writer.WritePropertyName("questionType"u8);
                 writer.WriteStringValue(QuestionType.Value.ToString());
             }
-            if (Response != null)
+            if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStringValue(Response);

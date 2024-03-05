@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
-            if (MaxStalenessPrefix.HasValue)
+            if (Optional.IsDefined(MaxStalenessPrefix))
             {
                 writer.WritePropertyName("maxStalenessPrefix"u8);
                 writer.WriteNumberValue(MaxStalenessPrefix.Value);
             }
-            if (MaxIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MaxIntervalInSeconds))
             {
                 writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);

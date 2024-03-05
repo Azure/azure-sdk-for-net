@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);

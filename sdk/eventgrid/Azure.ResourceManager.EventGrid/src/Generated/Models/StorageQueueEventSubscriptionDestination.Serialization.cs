@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (QueueName != null)
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (QueueMessageTimeToLiveInSeconds.HasValue)
+            if (Optional.IsDefined(QueueMessageTimeToLiveInSeconds))
             {
                 writer.WritePropertyName("queueMessageTimeToLiveInSeconds"u8);
                 writer.WriteNumberValue(QueueMessageTimeToLiveInSeconds.Value);

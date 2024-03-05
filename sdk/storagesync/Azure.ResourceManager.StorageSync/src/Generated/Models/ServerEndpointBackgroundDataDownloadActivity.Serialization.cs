@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && PercentProgress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentProgress))
             {
                 writer.WritePropertyName("percentProgress"u8);
                 writer.WriteNumberValue(PercentProgress.Value);
             }
-            if (options.Format != "W" && DownloadedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DownloadedBytes))
             {
                 writer.WritePropertyName("downloadedBytes"u8);
                 writer.WriteNumberValue(DownloadedBytes.Value);

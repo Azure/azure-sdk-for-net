@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (EnableDiagnosticsSupport.HasValue)
+            if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Logging != null)
+            if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
-            if (ScalingProperties != null)
+            if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties);
             }
-            if (UserProfile != null)
+            if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);

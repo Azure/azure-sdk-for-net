@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,12 +16,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StorageConnectionString != null)
+            if (Optional.IsDefined(StorageConnectionString))
             {
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (EnableReprocessing.HasValue)
+            if (Optional.IsDefined(EnableReprocessing))
             {
                 if (EnableReprocessing != null)
                 {
@@ -32,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableReprocessing");
                 }
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {

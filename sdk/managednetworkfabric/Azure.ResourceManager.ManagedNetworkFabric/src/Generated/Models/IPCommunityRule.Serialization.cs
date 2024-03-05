@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStringValue(Action.ToString());
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
-            if (!(WellKnownCommunities is ChangeTrackingList<WellKnownCommunity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WellKnownCommunities))
             {
                 writer.WritePropertyName("wellKnownCommunities"u8);
                 writer.WriteStartArray();

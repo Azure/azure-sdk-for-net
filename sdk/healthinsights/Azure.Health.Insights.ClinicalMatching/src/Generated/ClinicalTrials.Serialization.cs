@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (!(CustomTrials is ChangeTrackingList<ClinicalTrialDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomTrials))
             {
                 writer.WritePropertyName("customTrials"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistryFilters is ChangeTrackingList<ClinicalTrialRegistryFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistryFilters))
             {
                 writer.WritePropertyName("registryFilters"u8);
                 writer.WriteStartArray();
