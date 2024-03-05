@@ -95,9 +95,9 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ContentDispositionValue
+    public partial class ContentDispositionHeaderValue
     {
-        public ContentDispositionValue(string name, string? fileName = null) { }
+        public ContentDispositionHeaderValue(string name, string? fileName = null) { }
         public string? FileName { get { throw null; } }
         public string Name { get { throw null; } }
         public override string ToString() { throw null; }
