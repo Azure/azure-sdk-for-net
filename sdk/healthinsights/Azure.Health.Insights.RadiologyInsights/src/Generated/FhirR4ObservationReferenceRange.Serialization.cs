@@ -27,22 +27,22 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Low != null)
+            if (Optional.IsDefined(Low))
             {
                 writer.WritePropertyName("low"u8);
                 writer.WriteObjectValue(Low);
             }
-            if (High != null)
+            if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
                 writer.WriteObjectValue(High);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteObjectValue(Type);
             }
-            if (!(AppliesTo is ChangeTrackingList<FhirR4CodeableConcept> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AppliesTo))
             {
                 writer.WritePropertyName("appliesTo"u8);
                 writer.WriteStartArray();
@@ -52,12 +52,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Age != null)
+            if (Optional.IsDefined(Age))
             {
                 writer.WritePropertyName("age"u8);
                 writer.WriteObjectValue(Age);
             }
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);

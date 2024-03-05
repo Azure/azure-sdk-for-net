@@ -29,22 +29,22 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Meta != null)
+            if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
                 writer.WriteObjectValue(Meta);
             }
-            if (ImplicitRules != null)
+            if (Optional.IsDefined(ImplicitRules))
             {
                 writer.WritePropertyName("implicitRules"u8);
                 writer.WriteStringValue(ImplicitRules);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);

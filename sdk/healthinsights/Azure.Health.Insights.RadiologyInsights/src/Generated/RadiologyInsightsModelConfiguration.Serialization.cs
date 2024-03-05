@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Verbose.HasValue)
+            if (Optional.IsDefined(Verbose))
             {
                 writer.WritePropertyName("verbose"u8);
                 writer.WriteBooleanValue(Verbose.Value);
             }
-            if (IncludeEvidence.HasValue)
+            if (Optional.IsDefined(IncludeEvidence))
             {
                 writer.WritePropertyName("includeEvidence"u8);
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
-            if (!(InferenceTypes is ChangeTrackingList<RadiologyInsightsInferenceType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InferenceTypes))
             {
                 writer.WritePropertyName("inferenceTypes"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (InferenceOptions != null)
+            if (Optional.IsDefined(InferenceOptions))
             {
                 writer.WritePropertyName("inferenceOptions"u8);
                 writer.WriteObjectValue(InferenceOptions);
             }
-            if (Locale != null)
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);

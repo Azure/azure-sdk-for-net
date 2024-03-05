@@ -29,72 +29,72 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteObjectValue(Code);
-            if (ValueQuantity != null)
+            if (Optional.IsDefined(ValueQuantity))
             {
                 writer.WritePropertyName("valueQuantity"u8);
                 writer.WriteObjectValue(ValueQuantity);
             }
-            if (ValueCodeableConcept != null)
+            if (Optional.IsDefined(ValueCodeableConcept))
             {
                 writer.WritePropertyName("valueCodeableConcept"u8);
                 writer.WriteObjectValue(ValueCodeableConcept);
             }
-            if (ValueString != null)
+            if (Optional.IsDefined(ValueString))
             {
                 writer.WritePropertyName("valueString"u8);
                 writer.WriteStringValue(ValueString);
             }
-            if (ValueBoolean.HasValue)
+            if (Optional.IsDefined(ValueBoolean))
             {
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
             }
-            if (ValueInteger.HasValue)
+            if (Optional.IsDefined(ValueInteger))
             {
                 writer.WritePropertyName("valueInteger"u8);
                 writer.WriteNumberValue(ValueInteger.Value);
             }
-            if (ValueRange != null)
+            if (Optional.IsDefined(ValueRange))
             {
                 writer.WritePropertyName("valueRange"u8);
                 writer.WriteObjectValue(ValueRange);
             }
-            if (ValueRatio != null)
+            if (Optional.IsDefined(ValueRatio))
             {
                 writer.WritePropertyName("valueRatio"u8);
                 writer.WriteObjectValue(ValueRatio);
             }
-            if (ValueSampledData != null)
+            if (Optional.IsDefined(ValueSampledData))
             {
                 writer.WritePropertyName("valueSampledData"u8);
                 writer.WriteObjectValue(ValueSampledData);
             }
-            if (ValueTime.HasValue)
+            if (Optional.IsDefined(ValueTime))
             {
                 writer.WritePropertyName("valueTime"u8);
                 writer.WriteStringValue(ValueTime.Value, "T");
             }
-            if (ValueDateTime != null)
+            if (Optional.IsDefined(ValueDateTime))
             {
                 writer.WritePropertyName("valueDateTime"u8);
                 writer.WriteStringValue(ValueDateTime);
             }
-            if (ValuePeriod != null)
+            if (Optional.IsDefined(ValuePeriod))
             {
                 writer.WritePropertyName("valuePeriod"u8);
                 writer.WriteObjectValue(ValuePeriod);
             }
-            if (ValueReference != null)
+            if (Optional.IsDefined(ValueReference))
             {
                 writer.WritePropertyName("valueReference"u8);
                 writer.WriteObjectValue(ValueReference);
             }
-            if (DataAbsentReason != null)
+            if (Optional.IsDefined(DataAbsentReason))
             {
                 writer.WritePropertyName("dataAbsentReason"u8);
                 writer.WriteObjectValue(DataAbsentReason);
             }
-            if (!(Interpretation is ChangeTrackingList<FhirR4CodeableConcept> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Interpretation))
             {
                 writer.WritePropertyName("interpretation"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReferenceRange is ChangeTrackingList<FhirR4ObservationReferenceRange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ReferenceRange))
             {
                 writer.WritePropertyName("referenceRange"u8);
                 writer.WriteStartArray();
@@ -114,12 +114,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

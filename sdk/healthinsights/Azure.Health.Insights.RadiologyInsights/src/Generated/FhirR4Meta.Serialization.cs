@@ -27,22 +27,22 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (VersionId != null)
+            if (Optional.IsDefined(VersionId))
             {
                 writer.WritePropertyName("versionId"u8);
                 writer.WriteStringValue(VersionId);
             }
-            if (LastUpdated != null)
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (!(Profile is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(Security is ChangeTrackingList<FhirR4Coding> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Security))
             {
                 writer.WritePropertyName("security"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tag is ChangeTrackingList<FhirR4Coding> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStartArray();

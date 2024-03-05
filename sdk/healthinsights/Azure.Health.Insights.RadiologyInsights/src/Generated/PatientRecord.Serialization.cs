@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);
             }
-            if (!(Encounters is ChangeTrackingList<Encounter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Encounters))
             {
                 writer.WritePropertyName("encounters"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatientDocuments is ChangeTrackingList<PatientDocument> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PatientDocuments))
             {
                 writer.WritePropertyName("patientDocuments"u8);
                 writer.WriteStartArray();

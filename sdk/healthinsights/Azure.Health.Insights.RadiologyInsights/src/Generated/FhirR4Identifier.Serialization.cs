@@ -27,42 +27,42 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Use != null)
+            if (Optional.IsDefined(Use))
             {
                 writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteObjectValue(Type);
             }
-            if (System != null)
+            if (Optional.IsDefined(System))
             {
                 writer.WritePropertyName("system"u8);
                 writer.WriteStringValue(System);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Period != null)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteObjectValue(Period);
             }
-            if (Assigner != null)
+            if (Optional.IsDefined(Assigner))
             {
                 writer.WritePropertyName("assigner"u8);
                 writer.WriteObjectValue(Assigner);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

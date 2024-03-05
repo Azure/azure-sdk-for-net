@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("orderType"u8);
             writer.WriteObjectValue(OrderType);
-            if (!(PresentBodyParts is ChangeTrackingList<FhirR4CodeableConcept> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PresentBodyParts))
             {
                 writer.WritePropertyName("presentBodyParts"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(PresentBodyPartMeasurements is ChangeTrackingList<FhirR4CodeableConcept> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PresentBodyPartMeasurements))
             {
                 writer.WritePropertyName("presentBodyPartMeasurements"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

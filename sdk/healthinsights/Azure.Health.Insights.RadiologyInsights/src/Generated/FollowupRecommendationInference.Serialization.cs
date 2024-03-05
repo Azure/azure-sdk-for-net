@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (EffectiveDateTime != null)
+            if (Optional.IsDefined(EffectiveDateTime))
             {
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectiveDateTime);
             }
-            if (EffectivePeriod != null)
+            if (Optional.IsDefined(EffectivePeriod))
             {
                 writer.WritePropertyName("effectivePeriod"u8);
                 writer.WriteObjectValue(EffectivePeriod);
             }
-            if (!(Findings is ChangeTrackingList<FhirR4Extendible> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Findings))
             {
                 writer.WritePropertyName("findings"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteObjectValue(RecommendedProcedure);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

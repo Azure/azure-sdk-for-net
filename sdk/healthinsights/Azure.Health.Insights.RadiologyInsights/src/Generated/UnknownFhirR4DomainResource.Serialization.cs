@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);
             }
-            if (!(Contained is ChangeTrackingList<FhirR4Resource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Contained))
             {
                 writer.WritePropertyName("contained"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(ModifierExtension is ChangeTrackingList<FhirR4Extension> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ModifierExtension))
             {
                 writer.WritePropertyName("modifierExtension"u8);
                 writer.WriteStartArray();
@@ -64,22 +64,22 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Meta != null)
+            if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
                 writer.WriteObjectValue(Meta);
             }
-            if (ImplicitRules != null)
+            if (Optional.IsDefined(ImplicitRules))
             {
                 writer.WritePropertyName("implicitRules"u8);
                 writer.WriteStringValue(ImplicitRules);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);

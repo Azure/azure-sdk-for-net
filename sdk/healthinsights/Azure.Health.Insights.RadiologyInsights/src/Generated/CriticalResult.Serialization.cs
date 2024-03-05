@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (Finding != null)
+            if (Optional.IsDefined(Finding))
             {
                 writer.WritePropertyName("finding"u8);
                 writer.WriteObjectValue(Finding);

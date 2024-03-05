@@ -31,34 +31,34 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteObjectValue(Origin);
             writer.WritePropertyName("period"u8);
             writer.WriteNumberValue(Period);
-            if (Factor.HasValue)
+            if (Optional.IsDefined(Factor))
             {
                 writer.WritePropertyName("factor"u8);
                 writer.WriteNumberValue(Factor.Value);
             }
-            if (LowerLimit.HasValue)
+            if (Optional.IsDefined(LowerLimit))
             {
                 writer.WritePropertyName("lowerLimit"u8);
                 writer.WriteNumberValue(LowerLimit.Value);
             }
-            if (UpperLimit.HasValue)
+            if (Optional.IsDefined(UpperLimit))
             {
                 writer.WritePropertyName("upperLimit"u8);
                 writer.WriteNumberValue(UpperLimit.Value);
             }
             writer.WritePropertyName("dimensions"u8);
             writer.WriteNumberValue(Dimensions);
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

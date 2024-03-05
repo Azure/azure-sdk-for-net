@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (IncludeRecommendationsWithNoSpecifiedModality.HasValue)
+            if (Optional.IsDefined(IncludeRecommendationsWithNoSpecifiedModality))
             {
                 writer.WritePropertyName("includeRecommendationsWithNoSpecifiedModality"u8);
                 writer.WriteBooleanValue(IncludeRecommendationsWithNoSpecifiedModality.Value);
             }
-            if (IncludeRecommendationsInReferences.HasValue)
+            if (Optional.IsDefined(IncludeRecommendationsInReferences))
             {
                 writer.WritePropertyName("includeRecommendationsInReferences"u8);
                 writer.WriteBooleanValue(IncludeRecommendationsInReferences.Value);
             }
-            if (ProvideFocusedSentenceEvidence.HasValue)
+            if (Optional.IsDefined(ProvideFocusedSentenceEvidence))
             {
                 writer.WritePropertyName("provideFocusedSentenceEvidence"u8);
                 writer.WriteBooleanValue(ProvideFocusedSentenceEvidence.Value);

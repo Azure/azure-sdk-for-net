@@ -29,24 +29,24 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (ClinicalType.HasValue)
+            if (Optional.IsDefined(ClinicalType))
             {
                 writer.WritePropertyName("clinicalType"u8);
                 writer.WriteStringValue(ClinicalType.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (CreatedDateTime.HasValue)
+            if (Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
-            if (!(Authors is ChangeTrackingList<DocumentAuthor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Authors))
             {
                 writer.WritePropertyName("authors"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (SpecialtyType.HasValue)
+            if (Optional.IsDefined(SpecialtyType))
             {
                 writer.WritePropertyName("specialtyType"u8);
                 writer.WriteStringValue(SpecialtyType.Value.ToString());
             }
-            if (AdministrativeMetadata != null)
+            if (Optional.IsDefined(AdministrativeMetadata))
             {
                 writer.WritePropertyName("administrativeMetadata"u8);
                 writer.WriteObjectValue(AdministrativeMetadata);

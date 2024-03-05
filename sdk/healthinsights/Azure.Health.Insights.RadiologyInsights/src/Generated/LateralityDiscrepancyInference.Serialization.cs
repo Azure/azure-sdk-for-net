@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (LateralityIndication != null)
+            if (Optional.IsDefined(LateralityIndication))
             {
                 writer.WritePropertyName("lateralityIndication"u8);
                 writer.WriteObjectValue(LateralityIndication);
@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStringValue(DiscrepancyType.ToString());
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

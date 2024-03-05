@@ -27,22 +27,22 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Numerator != null)
+            if (Optional.IsDefined(Numerator))
             {
                 writer.WritePropertyName("numerator"u8);
                 writer.WriteObjectValue(Numerator);
             }
-            if (Denominator != null)
+            if (Optional.IsDefined(Denominator))
             {
                 writer.WritePropertyName("denominator"u8);
                 writer.WriteObjectValue(Denominator);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

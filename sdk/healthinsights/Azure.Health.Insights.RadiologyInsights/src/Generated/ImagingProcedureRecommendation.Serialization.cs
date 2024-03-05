@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (!(ProcedureCodes is ChangeTrackingList<FhirR4CodeableConcept> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProcedureCodes))
             {
                 writer.WritePropertyName("procedureCodes"u8);
                 writer.WriteStartArray();

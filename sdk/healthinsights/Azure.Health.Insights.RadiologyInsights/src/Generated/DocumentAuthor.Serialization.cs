@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (FullName != null)
+            if (Optional.IsDefined(FullName))
             {
                 writer.WritePropertyName("fullName"u8);
                 writer.WriteStringValue(FullName);

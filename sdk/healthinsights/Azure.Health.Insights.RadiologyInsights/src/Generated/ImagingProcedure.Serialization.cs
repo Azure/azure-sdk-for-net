@@ -31,17 +31,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteObjectValue(Modality);
             writer.WritePropertyName("anatomy"u8);
             writer.WriteObjectValue(Anatomy);
-            if (Laterality != null)
+            if (Optional.IsDefined(Laterality))
             {
                 writer.WritePropertyName("laterality"u8);
                 writer.WriteObjectValue(Laterality);
             }
-            if (Contrast != null)
+            if (Optional.IsDefined(Contrast))
             {
                 writer.WritePropertyName("contrast"u8);
                 writer.WriteObjectValue(Contrast);
             }
-            if (View != null)
+            if (Optional.IsDefined(View))
             {
                 writer.WritePropertyName("view"u8);
                 writer.WriteObjectValue(View);

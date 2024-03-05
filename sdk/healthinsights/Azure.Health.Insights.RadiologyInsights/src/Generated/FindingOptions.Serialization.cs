@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (ProvideFocusedSentenceEvidence.HasValue)
+            if (Optional.IsDefined(ProvideFocusedSentenceEvidence))
             {
                 writer.WritePropertyName("provideFocusedSentenceEvidence"u8);
                 writer.WriteBooleanValue(ProvideFocusedSentenceEvidence.Value);

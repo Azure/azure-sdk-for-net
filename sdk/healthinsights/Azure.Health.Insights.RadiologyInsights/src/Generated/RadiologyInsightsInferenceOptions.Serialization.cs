@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (FollowupRecommendationOptions != null)
+            if (Optional.IsDefined(FollowupRecommendationOptions))
             {
                 writer.WritePropertyName("followupRecommendationOptions"u8);
                 writer.WriteObjectValue(FollowupRecommendationOptions);
             }
-            if (FindingOptions != null)
+            if (Optional.IsDefined(FindingOptions))
             {
                 writer.WritePropertyName("findingOptions"u8);
                 writer.WriteObjectValue(FindingOptions);

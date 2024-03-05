@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (!(DateTime is ChangeTrackingList<DateTimeOffset> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DateTime))
             {
                 writer.WritePropertyName("dateTime"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(Recipient is ChangeTrackingList<MedicalProfessionalType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Recipient))
             {
                 writer.WritePropertyName("recipient"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteBooleanValue(WasAcknowledged);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

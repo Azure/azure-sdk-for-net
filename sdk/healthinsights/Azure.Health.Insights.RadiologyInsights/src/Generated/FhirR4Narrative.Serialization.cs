@@ -31,12 +31,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStringValue(Status);
             writer.WritePropertyName("div"u8);
             writer.WriteStringValue(Div);
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Extension is ChangeTrackingList<FhirR4Extension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStartArray();

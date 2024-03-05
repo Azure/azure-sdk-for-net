@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
 
             writer.WriteStartObject();
-            if (!(OrderedProcedures is ChangeTrackingList<FhirR4Extendible> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OrderedProcedures))
             {
                 writer.WritePropertyName("orderedProcedures"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (EncounterId != null)
+            if (Optional.IsDefined(EncounterId))
             {
                 writer.WritePropertyName("encounterId"u8);
                 writer.WriteStringValue(EncounterId);
