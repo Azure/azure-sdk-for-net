@@ -292,7 +292,6 @@ public class MultipartContent : IDisposable
                 {
                     stream.Write(boundaryBytes, 0, boundaryBytes.Length);
                 }
-                stream.Write(boundaryBytes, 0, boundaryBytes.Length);
                 part.WriteTo(stream, cancellationToken);
             }
             byte[] endBoundaryBytes = Encoding.UTF8.GetBytes($"{CrLf}{DashDash}{_boundary}{DashDash}");

@@ -286,7 +286,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         {
             { "Content-Disposition", new ContentDispositionHeaderValue("field2").ToString() },
         };
-        innerContent.Add(binaryContent1, headers1);
+        innerContent.Add(binaryContent2, headers2);
 
         MultipartContent outerContent = new();
         var headers3 = new Dictionary<string, string>
@@ -304,11 +304,5 @@ internal class MultipartContentTests : SyncAsyncTestBase
 
         var expected = $"--{outerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field3\"\r\nContent-Type: multipart/form-data; boundary={innerContent.Boundary}\r\n\r\n--{innerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\nContent-Type: text/plain\r\nContent-Language: en-AU\r\n\r\n{bodyPart1}\r\n--{innerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{innerContent.Boundary}--\r\n--{outerContent.Boundary}--";
         Assert.AreEqual(expected, actual);
-    }
-
-    [Test]
-    public void LargeRequestIsHandledCorrectly()
-    {
-        // TODO
     }
 }
