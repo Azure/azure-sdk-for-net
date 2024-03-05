@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Represents collection of metric definitions. </summary>
-    internal partial class MetricDefinitionCollection
+    internal partial class SubscriptionScopeMetricDefinitionCollection
     {
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinitionCollection"/>. </summary>
         /// <param name="value"> The values for the metric definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricDefinitionCollection(IEnumerable<MetricDefinition> value)
+        internal SubscriptionScopeMetricDefinitionCollection(IEnumerable<SubscriptionScopeMetricDefinition> value)
         {
             if (value == null)
             {
@@ -27,14 +27,14 @@ namespace Azure.Monitor.Query.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinitionCollection"/>. </summary>
         /// <param name="value"> The values for the metric definitions. </param>
-        internal MetricDefinitionCollection(IReadOnlyList<MetricDefinition> value)
+        internal SubscriptionScopeMetricDefinitionCollection(IReadOnlyList<SubscriptionScopeMetricDefinition> value)
         {
             Value = value;
         }
 
         /// <summary> The values for the metric definitions. </summary>
-        public IReadOnlyList<MetricDefinition> Value { get; }
+        public IReadOnlyList<SubscriptionScopeMetricDefinition> Value { get; }
     }
 }
