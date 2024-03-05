@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="fileSize"> Size of the file to be uploaded. </param>
         /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportFileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, float? chunkSize, float? fileSize, float? numberOfChunks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SupportFileDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, int? chunkSize, int? fileSize, int? numberOfChunks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             ChunkSize = chunkSize;
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Support
         /// <summary> Time in UTC (ISO 8601 format) when file workspace was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Size of each chunk. </summary>
-        public float? ChunkSize { get; set; }
+        public int? ChunkSize { get; set; }
         /// <summary> Size of the file to be uploaded. </summary>
-        public float? FileSize { get; set; }
+        public int? FileSize { get; set; }
         /// <summary> Number of chunks to be uploaded. </summary>
-        public float? NumberOfChunks { get; set; }
+        public int? NumberOfChunks { get; set; }
     }
 }

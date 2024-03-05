@@ -109,7 +109,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
             {
-                writer.WritePropertyName("dataSources"u8);
+                writer.WritePropertyName("data_sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in InternalAzureExtensionsDataSources)
                 {
@@ -126,6 +126,30 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("seed"u8);
                 writer.WriteNumberValue(Seed.Value);
+            }
+            if (Optional.IsDefined(EnableLogProbabilities))
+            {
+                if (EnableLogProbabilities != null)
+                {
+                    writer.WritePropertyName("logprobs"u8);
+                    writer.WriteBooleanValue(EnableLogProbabilities.Value);
+                }
+                else
+                {
+                    writer.WriteNull("logprobs");
+                }
+            }
+            if (Optional.IsDefined(LogProbabilitiesPerToken))
+            {
+                if (LogProbabilitiesPerToken != null)
+                {
+                    writer.WritePropertyName("top_logprobs"u8);
+                    writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_logprobs");
+                }
             }
             if (Optional.IsDefined(ResponseFormat))
             {
@@ -209,6 +233,8 @@ namespace Azure.AI.OpenAI
             IList<AzureChatExtensionConfiguration> dataSources = default;
             AzureChatEnhancementConfiguration enhancements = default;
             long? seed = default;
+            bool? logprobs = default;
+            int? topLogprobs = default;
             ChatCompletionsResponseFormat responseFormat = default;
             IList<ChatCompletionsToolDefinition> tools = default;
             BinaryData toolChoice = default;
@@ -341,7 +367,7 @@ namespace Azure.AI.OpenAI
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSources"u8))
+                if (property.NameEquals("data_sources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -371,6 +397,26 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     seed = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("top_logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topLogprobs = null;
+                        continue;
+                    }
+                    topLogprobs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("response_format"u8))
@@ -429,6 +475,8 @@ namespace Azure.AI.OpenAI
                 dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
                 enhancements,
                 seed,
+                logprobs,
+                topLogprobs,
                 responseFormat,
                 tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
                 toolChoice,

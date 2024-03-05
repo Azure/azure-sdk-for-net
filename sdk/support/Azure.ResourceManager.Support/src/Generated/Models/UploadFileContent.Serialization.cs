@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Support.Models
                 return null;
             }
             string content = default;
-            float? chunkIndex = default;
+            int? chunkIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    chunkIndex = property.Value.GetSingle();
+                    chunkIndex = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
