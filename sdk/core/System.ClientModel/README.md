@@ -169,8 +169,8 @@ The following sample illustrates how to call a convenience method and access bot
 
 ```C# Snippet:ClientResultTReadme
 // Create a client
-string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-ApiKeyCredential credential = new(key);
+string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+ApiKeyCredential credential = new(key!);
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
 // Call a service method, which returns ClientResult<T>

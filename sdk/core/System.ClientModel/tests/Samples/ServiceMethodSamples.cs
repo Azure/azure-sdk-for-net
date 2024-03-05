@@ -20,8 +20,8 @@ public class ServiceMethodSamples
     {
         #region Snippet:ClientResultTReadme
         // Create a client
-        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        ApiKeyCredential credential = new(key);
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new(key!);
         MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
         // Call a service method, which returns ClientResult<T>
@@ -51,8 +51,8 @@ public class ServiceMethodSamples
     public async Task ClientResultExceptionReadme()
     {
         // Create a client
-        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        ApiKeyCredential credential = new(key);
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new(key!);
         MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
         #region Snippet:ClientResultExceptionReadme
@@ -74,8 +74,8 @@ public class ServiceMethodSamples
     [Ignore("Used for README")]
     public async Task RequestOptionsReadme()
     {
-        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        ApiKeyCredential credential = new ApiKeyCredential(key);
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new ApiKeyCredential(key!);
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
@@ -110,8 +110,8 @@ public class ServiceMethodSamples
     [Ignore("Used for README")]
     public async Task ServiceMethodsProtocolMethod()
     {
-        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        ApiKeyCredential credential = new ApiKeyCredential(key);
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new ApiKeyCredential(key!);
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
