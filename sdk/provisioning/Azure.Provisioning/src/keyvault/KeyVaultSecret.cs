@@ -62,7 +62,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
         /// <returns>The KeyVault instance.</returns>
-        public static KeyVaultSecret FromExisting(IConstruct scope, string name, KeyVault? parent = null)
+        public static KeyVaultSecret FromExisting(IConstruct scope, string name, KeyVault parent)
             => new KeyVaultSecret(scope, parent, name, isExisting: true);
 
         /// <inheritdoc/>

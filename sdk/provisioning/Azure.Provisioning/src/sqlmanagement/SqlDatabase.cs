@@ -53,7 +53,7 @@ namespace Azure.Provisioning.Sql
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
         /// <returns>The KeyVault instance.</returns>
-        public static SqlDatabase FromExisting(IConstruct scope, string name, SqlServer? parent = null)
+        public static SqlDatabase FromExisting(IConstruct scope, string name, SqlServer parent)
             => new SqlDatabase(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>

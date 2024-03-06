@@ -233,7 +233,7 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBSqlDatabase : Azure.Provisioning.Resource<Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData>
     {
         public CosmosDBSqlDatabase(Azure.Provisioning.IConstruct scope, Azure.Provisioning.CosmosDB.CosmosDBAccount? parent = null, Azure.ResourceManager.CosmosDB.Models.ExtendedCosmosDBSqlDatabaseResourceInfo? databaseResourceInfo = null, Azure.ResourceManager.CosmosDB.Models.CosmosDBSqlDatabasePropertiesConfig? propertiesConfig = null, string name = "db", string version = "2022-05-15", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.CosmosDB.CosmosDBSqlDatabaseData>)) { }
-        public static Azure.Provisioning.CosmosDB.CosmosDBSqlDatabase FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.CosmosDB.CosmosDBAccount? parent = null) { throw null; }
+        public static Azure.Provisioning.CosmosDB.CosmosDBSqlDatabase FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.CosmosDB.CosmosDBAccount parent) { throw null; }
     }
 }
 namespace Azure.Provisioning.KeyVaults
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.KeyVaults
         public KeyVaultSecret(Azure.Provisioning.IConstruct scope, Azure.Provisioning.KeyVaults.KeyVault? parent = null, string name = "kvs", string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
         public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ConnectionString connectionString, Azure.Provisioning.KeyVaults.KeyVault? parent = null, string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
-        public static Azure.Provisioning.KeyVaults.KeyVaultSecret FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.KeyVaults.KeyVault? parent = null) { throw null; }
+        public static Azure.Provisioning.KeyVaults.KeyVaultSecret FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.KeyVaults.KeyVault parent) { throw null; }
     }
 }
 namespace Azure.Provisioning.PostgreSql
@@ -330,7 +330,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlDatabase(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Sql.SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlDatabaseData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
-        public static Azure.Provisioning.Sql.SqlDatabase FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.SqlServer? parent = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlDatabase FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.SqlServer parent) { throw null; }
         public Azure.Provisioning.Sql.SqlDatabaseConnectionString GetConnectionString(Azure.Provisioning.Parameter passwordSecret, string userName = "appUser") { throw null; }
     }
     public partial class SqlDatabaseConnectionString : Azure.Provisioning.ConnectionString
@@ -341,7 +341,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlFirewallRule(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Sql.SqlServer? parent = null, string name = "fw", string version = "2020-11-01-preview") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlFirewallRuleData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
-        public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.SqlServer? parent = null) { throw null; }
+        public static Azure.Provisioning.Sql.SqlFirewallRule FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.SqlServer parent) { throw null; }
     }
     public partial class SqlServer : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlServerData>
     {
@@ -364,7 +364,7 @@ namespace Azure.Provisioning.Storage
     {
         public BlobService(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Storage.StorageAccount? parent = null) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Storage.BlobServiceData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
-        public static Azure.Provisioning.Storage.BlobService FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Storage.StorageAccount? parent = null) { throw null; }
+        public static Azure.Provisioning.Storage.BlobService FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Storage.StorageAccount parent) { throw null; }
     }
     public partial class StorageAccount : Azure.Provisioning.Resource<Azure.ResourceManager.Storage.StorageAccountData>
     {
