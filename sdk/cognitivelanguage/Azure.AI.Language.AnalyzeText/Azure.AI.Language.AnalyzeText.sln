@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{694C616D-47CF-46F4-BE56-A478EEEDE458}") = "Azure.AI.Language.TextAnalytics.Perf", "perf\Azure.AI.Language.TextAnalytics.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
+Project("{694C616D-47CF-46F4-BE56-A478EEEDE458}") = "Azure.AI.Language.AnalyzeText.Perf", "perf\Azure.AI.Language.AnalyzeText.Perf.csproj", "{30C5FF85-655A-49FC-A324-16438130FF3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.TextAnalytics", "src\Azure.AI.Language.TextAnalytics.csproj", "{8FD34F50-8B51-45F5-B9EE-9F20EF1557AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.AnalyzeText", "src\Azure.AI.Language.AnalyzeText.csproj", "{8FD34F50-8B51-45F5-B9EE-9F20EF1557AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.TextAnalytics.Tests", "tests\Azure.AI.Language.TextAnalytics.Tests.csproj", "{60F3DF9F-4DD0-49A5-8953-2E48CEB4FE9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.AnalyzeText.Tests", "tests\Azure.AI.Language.AnalyzeText.Tests.csproj", "{60F3DF9F-4DD0-49A5-8953-2E48CEB4FE9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
