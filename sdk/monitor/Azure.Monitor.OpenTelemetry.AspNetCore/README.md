@@ -23,7 +23,7 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * Provides automatic collection of Application Insights Standard metrics.
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
-  * Logs created with `Microsoft.Extensions.Logging`, see [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/aspnet/core/fundamentals/logging) for more details on how to create and configure logging.
+  * Logs created with `Microsoft.Extensions.Logging`. See [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/aspnet/core/fundamentals/logging) for more details on how to create and configure logging.
   * [Azure SDK logs](https://learn.microsoft.com/dotnet/azure/sdk/logging) are recorded as a subset of `Microsoft.Extensions.Logging`
 
 * Resource Detectors
