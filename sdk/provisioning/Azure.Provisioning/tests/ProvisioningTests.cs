@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
-using Azure.Identity;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
@@ -19,11 +18,12 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
@@ -324,6 +324,29 @@ namespace Azure.Provisioning.Tests
                         keyVaultName = new { value = "vault" },
                     }),
                 interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public void CognitiveServices()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var account = new CognitiveServicesAccount(infrastructure, location: AzureLocation.EastUS);
+            account.AssignProperty(data => data.Properties.PublicNetworkAccess, new Parameter("publicNetworkAccess", defaultValue: "Enabled"));
+
+            _ = new CognitiveServicesAccountDeployment(
+                infrastructure,
+                new CognitiveServicesAccountDeploymentModel
+                {
+                    Name = "text-embedding-3-large",
+                    Format = "OpenAI",
+                    Version = "1"
+                },
+                account);
+
+            infrastructure.Build(GetOutputPath());
+
+            // couldn't fine a deployable combination of sku and model using test subscription
+            // await ValidateBicepAsync(interactiveMode: true);
         }
 
         [RecordedTest]

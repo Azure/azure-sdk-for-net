@@ -82,17 +82,6 @@ namespace Azure.Provisioning.CosmosDB
             => new CosmosDBAccountConnectionString(this, key ?? CosmosDBKey.PrimaryKey);
 
         /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
-        }
-
-        /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }

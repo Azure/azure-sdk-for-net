@@ -125,16 +125,5 @@ namespace Azure.Provisioning.AppService
             var logConfig = new WebSiteConfigLogs(Scope, resourceName, this);
             logConfig.AddDependency(AppSettings);
         }
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
-        }
     }
 }

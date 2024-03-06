@@ -37,7 +37,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="location">The location.</param>
         /// <param name="parent"></param>
         public KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default)
-            : this(scope, parent, name, version, location, false, (name) => ArmKeyVaultModelFactory.KeyVaultData(
+            : this(scope, parent, name, version, false, (name) => ArmKeyVaultModelFactory.KeyVaultData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.KeyVaults
             }
         }
 
-        private KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default, bool isExisting = false, Func<string, KeyVaultData>? creator = null)
+        private KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", bool isExisting = false, Func<string, KeyVaultData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting: isExisting)
         {
         }
@@ -76,17 +76,6 @@ namespace Azure.Provisioning.KeyVaults
         public void AddAccessPolicy(Output output)
         {
             _ = new KeyVaultAddAccessPolicy(Scope, new Parameter(output), this);
-        }
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
         }
 
         /// <inheritdoc/>

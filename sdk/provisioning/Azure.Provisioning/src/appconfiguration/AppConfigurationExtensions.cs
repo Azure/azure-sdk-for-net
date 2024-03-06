@@ -16,7 +16,7 @@ namespace Azure.Provisioning.AppConfiguration
         /// <returns></returns>
         public static AppConfigurationStore AddAppConfigurationStore(this IConstruct construct, string name = "store")
         {
-            return new AppConfigurationStore(construct, name);
+            return new AppConfigurationStore(construct, name: name);
         }
     }
 }
