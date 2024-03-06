@@ -31,8 +31,18 @@ namespace Azure.ResourceManager.Sphere.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SphereCatalogData(id, name, resourceType, systemData, tags, location, tenantId, provisioningState, serializedAdditionalRawData: null);
-          
+            return new SphereCatalogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                tenantId,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sphere.SphereCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

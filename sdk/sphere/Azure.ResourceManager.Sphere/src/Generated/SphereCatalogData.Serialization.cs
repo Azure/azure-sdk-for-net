@@ -63,13 +63,12 @@ namespace Azure.ResourceManager.Sphere
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -118,11 +117,9 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<SphereProvisioningState> provisioningState = default;
-            
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +203,16 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereCatalogData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(tenantId), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereCatalogData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                tenantId,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereCatalogData>.Write(ModelReaderWriterOptions options)
