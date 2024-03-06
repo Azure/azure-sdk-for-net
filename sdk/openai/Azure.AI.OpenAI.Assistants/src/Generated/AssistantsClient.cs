@@ -4768,6 +4768,130 @@ namespace Azure.AI.OpenAI.Assistants
             }
         }
 
+        /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<BinaryData>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
+        {
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (fileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetFileContentAsync(fileId, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<BinaryData> GetFileContent(string fileId, CancellationToken cancellationToken = default)
+        {
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (fileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetFileContent(fileId, context);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns information about a specific file. Does not retrieve file content.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetFileContentAsync(string fileId, RequestContext context)
+        {
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (fileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
+            }
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFileContent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFileContentRequest(fileId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns information about a specific file. Does not retrieve file content.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The ID of the file to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetFileContent(string fileId, RequestContext context)
+        {
+            if (fileId == null)
+            {
+                throw new ArgumentNullException(nameof(fileId));
+            }
+            if (fileId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fileId));
+            }
+
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFileContent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetFileContentRequest(fileId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         private static RequestContext DefaultRequestContext = new RequestContext();
         internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
