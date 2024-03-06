@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (!(PrefixMatch is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(BlobIndexMatch is ChangeTrackingList<ManagementPolicyTagFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobIndexMatch))
             {
                 writer.WritePropertyName("blobIndexMatch"u8);
                 writer.WriteStartArray();

@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIDocumentIntelligenceClientOptions())
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
         {
             if (endpoint == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -84,7 +84,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, AzureAIDocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
         {
             if (endpoint == null)
             {
@@ -94,7 +94,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new AzureAIDocumentIntelligenceClientOptions();
+            options ??= new DocumentIntelligenceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
@@ -536,6 +536,144 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetResourceInfoRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets operation info. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetOperationAsync(operationId, context).ConfigureAwait(false);
+            return Response.FromValue(OperationDetails.FromResponse(response), response);
+        }
+
+        /// <summary> Gets operation info. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(string,CancellationToken)']/*" />
+        public virtual Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        {
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetOperation(operationId, context);
+            return Response.FromValue(OperationDetails.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets operation info.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperationAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
+        {
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets operation info.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperation(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(string,RequestContext)']/*" />
+        public virtual Response GetOperation(string operationId, RequestContext context)
+        {
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationRequest(operationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1295,7 +1433,7 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
-        internal HttpMessage CreateGetOperationRequest(Guid operationId, RequestContext context)
+        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (options.Format != "W" && DefaultState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultState))
             {
                 writer.WritePropertyName("defaultState"u8);
                 writer.WriteStringValue(DefaultState.Value.ToString());
             }
-            if (options.Format != "W" && DefaultAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

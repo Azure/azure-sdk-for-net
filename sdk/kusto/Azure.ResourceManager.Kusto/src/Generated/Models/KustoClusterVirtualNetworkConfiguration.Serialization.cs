@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(EnginePublicIPId);
             writer.WritePropertyName("dataManagementPublicIpId"u8);
             writer.WriteStringValue(DataManagementPublicIPId);
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

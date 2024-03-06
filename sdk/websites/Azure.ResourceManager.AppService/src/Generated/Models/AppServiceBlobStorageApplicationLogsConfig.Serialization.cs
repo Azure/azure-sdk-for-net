@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);

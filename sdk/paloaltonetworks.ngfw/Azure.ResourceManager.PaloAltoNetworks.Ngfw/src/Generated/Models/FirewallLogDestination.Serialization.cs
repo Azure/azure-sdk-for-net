@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (StorageConfiguration != null)
+            if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfigurations"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (EventHubConfiguration != null)
+            if (Optional.IsDefined(EventHubConfiguration))
             {
                 writer.WritePropertyName("eventHubConfigurations"u8);
                 writer.WriteObjectValue(EventHubConfiguration);
             }
-            if (MonitorConfiguration != null)
+            if (Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfigurations"u8);
                 writer.WriteObjectValue(MonitorConfiguration);

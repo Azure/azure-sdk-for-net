@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && LastCompletionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCompletionOn))
             {
                 writer.WritePropertyName("lastCompletionTime"u8);
                 writer.WriteStringValue(LastCompletionOn.Value, "O");
             }
-            if (options.Format != "W" && LastStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStartedOn))
             {
                 writer.WritePropertyName("lastStartedTime"u8);
                 writer.WriteStringValue(LastStartedOn.Value, "O");
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

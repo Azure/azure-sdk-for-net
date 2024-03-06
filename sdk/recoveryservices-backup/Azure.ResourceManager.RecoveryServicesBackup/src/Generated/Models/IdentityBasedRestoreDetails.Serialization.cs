@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (TargetStorageAccountId != null)
+            if (Optional.IsDefined(TargetStorageAccountId))
             {
                 writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);

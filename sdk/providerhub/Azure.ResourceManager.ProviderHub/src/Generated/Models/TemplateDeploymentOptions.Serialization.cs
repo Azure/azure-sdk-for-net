@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (IsPreflightSupported.HasValue)
+            if (Optional.IsDefined(IsPreflightSupported))
             {
                 writer.WritePropertyName("preflightSupported"u8);
                 writer.WriteBooleanValue(IsPreflightSupported.Value);
             }
-            if (!(PreflightOptions is ChangeTrackingList<PreflightOption> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PreflightOptions))
             {
                 writer.WritePropertyName("preflightOptions"u8);
                 writer.WriteStartArray();

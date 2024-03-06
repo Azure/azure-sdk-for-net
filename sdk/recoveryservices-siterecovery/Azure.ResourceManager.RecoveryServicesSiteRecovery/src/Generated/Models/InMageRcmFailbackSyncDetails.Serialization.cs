@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProgressHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressHealth))
             {
                 writer.WritePropertyName("progressHealth"u8);
                 writer.WriteStringValue(ProgressHealth.Value.ToString());
             }
-            if (options.Format != "W" && TransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransferredBytes))
             {
                 writer.WritePropertyName("transferredBytes"u8);
                 writer.WriteNumberValue(TransferredBytes.Value);
             }
-            if (options.Format != "W" && Last15MinutesTransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Last15MinutesTransferredBytes))
             {
                 writer.WritePropertyName("last15MinutesTransferredBytes"u8);
                 writer.WriteNumberValue(Last15MinutesTransferredBytes.Value);
             }
-            if (options.Format != "W" && LastDataTransferOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastDataTransferOn))
             {
                 writer.WritePropertyName("lastDataTransferTimeUtc"u8);
                 writer.WriteStringValue(LastDataTransferOn.Value, "O");
             }
-            if (options.Format != "W" && ProcessedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedBytes))
             {
                 writer.WritePropertyName("processedBytes"u8);
                 writer.WriteNumberValue(ProcessedBytes.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastRefreshedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshTime"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (options.Format != "W" && ProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);

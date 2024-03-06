@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInMB))
             {
                 writer.WritePropertyName("sizeInMB"u8);
                 writer.WriteNumberValue(SizeInMB.Value);

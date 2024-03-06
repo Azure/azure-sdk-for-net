@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (SensitivityThresholdLabelOrder.HasValue)
+            if (Optional.IsDefined(SensitivityThresholdLabelOrder))
             {
                 writer.WritePropertyName("sensitivityThresholdLabelOrder"u8);
                 writer.WriteNumberValue(SensitivityThresholdLabelOrder.Value);
             }
-            if (SensitivityThresholdLabelId.HasValue)
+            if (Optional.IsDefined(SensitivityThresholdLabelId))
             {
                 writer.WritePropertyName("sensitivityThresholdLabelId"u8);
                 writer.WriteStringValue(SensitivityThresholdLabelId.Value);

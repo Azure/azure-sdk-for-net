@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(Available is ChangeTrackingList<HDInsightVersionSpec> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStartArray();

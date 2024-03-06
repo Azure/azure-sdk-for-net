@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,52 +29,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(ContainerName);
-            if (IndexingPolicy != null)
+            if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (DefaultTtl.HasValue)
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (UniqueKeyPolicy != null)
+            if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (ConflictResolutionPolicy != null)
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (ClientEncryptionPolicy != null)
+            if (Optional.IsDefined(ClientEncryptionPolicy))
             {
                 writer.WritePropertyName("clientEncryptionPolicy"u8);
                 writer.WriteObjectValue(ClientEncryptionPolicy);
             }
-            if (AnalyticalStorageTtl.HasValue)
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (RestoreParameters != null)
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (MaterializedViewDefinition != null)
+            if (Optional.IsDefined(MaterializedViewDefinition))
             {
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);

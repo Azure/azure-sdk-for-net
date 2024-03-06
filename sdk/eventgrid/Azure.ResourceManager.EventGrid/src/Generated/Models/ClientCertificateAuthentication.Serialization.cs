@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (ValidationScheme.HasValue)
+            if (Optional.IsDefined(ValidationScheme))
             {
                 writer.WritePropertyName("validationScheme"u8);
                 writer.WriteStringValue(ValidationScheme.Value.ToString());
             }
-            if (!(AllowedThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedThumbprints))
             {
                 writer.WritePropertyName("allowedThumbprints"u8);
                 writer.WriteStartArray();

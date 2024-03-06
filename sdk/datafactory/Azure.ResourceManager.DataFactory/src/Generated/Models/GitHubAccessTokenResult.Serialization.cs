@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (GitHubAccessToken != null)
+            if (Optional.IsDefined(GitHubAccessToken))
             {
                 writer.WritePropertyName("gitHubAccessToken"u8);
                 writer.WriteStringValue(GitHubAccessToken);

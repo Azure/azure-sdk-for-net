@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Attributes != null)
+            if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);

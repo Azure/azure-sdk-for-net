@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (Istio != null)
+            if (Optional.IsDefined(Istio))
             {
                 writer.WritePropertyName("istio"u8);
                 writer.WriteObjectValue(Istio);

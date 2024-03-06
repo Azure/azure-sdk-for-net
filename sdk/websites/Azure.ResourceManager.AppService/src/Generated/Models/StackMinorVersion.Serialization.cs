@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (DisplayVersion != null)
+            if (Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (IsRemoteDebuggingEnabled.HasValue)
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);

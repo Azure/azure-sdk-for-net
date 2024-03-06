@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,67 +27,67 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Stage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Stage))
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && NumberOfObjects.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfObjects))
             {
                 writer.WritePropertyName("numberOfObjects"u8);
                 writer.WriteNumberValue(NumberOfObjects.Value);
             }
-            if (options.Format != "W" && NumberOfObjectsCompleted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfObjectsCompleted))
             {
                 writer.WritePropertyName("numberOfObjectsCompleted"u8);
                 writer.WriteNumberValue(NumberOfObjectsCompleted.Value);
             }
-            if (options.Format != "W" && ErrorCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCount))
             {
                 writer.WritePropertyName("errorCount"u8);
                 writer.WriteNumberValue(ErrorCount.Value);
             }
-            if (options.Format != "W" && ErrorPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorPrefix))
             {
                 writer.WritePropertyName("errorPrefix"u8);
                 writer.WriteStringValue(ErrorPrefix);
             }
-            if (options.Format != "W" && ResultPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(ResultPrefix))
             {
                 writer.WritePropertyName("resultPrefix"u8);
                 writer.WriteStringValue(ResultPrefix);
             }
-            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();
@@ -96,17 +97,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastStorageUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdate))
             {
                 writer.WritePropertyName("lastStorageUpdate"u8);
                 writer.WriteStringValue(LastStorageUpdate.Value, "O");
             }
-            if (options.Format != "W" && ObjectSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectSummary))
             {
                 writer.WritePropertyName("objectSummary"u8);
                 writer.WriteStringValue(ObjectSummary);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

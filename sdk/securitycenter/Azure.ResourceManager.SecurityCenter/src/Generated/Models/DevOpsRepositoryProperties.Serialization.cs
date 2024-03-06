@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdatedOn))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ParentOrgName != null)
+            if (Optional.IsDefined(ParentOrgName))
             {
                 writer.WritePropertyName("parentOrgName"u8);
                 writer.WriteStringValue(ParentOrgName);
             }
-            if (ParentProjectName != null)
+            if (Optional.IsDefined(ParentProjectName))
             {
                 writer.WritePropertyName("parentProjectName"u8);
                 writer.WriteStringValue(ParentProjectName);
             }
-            if (options.Format != "W" && RepoId != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (options.Format != "W" && RepoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Visibility != null)
+            if (options.Format != "W" && Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);

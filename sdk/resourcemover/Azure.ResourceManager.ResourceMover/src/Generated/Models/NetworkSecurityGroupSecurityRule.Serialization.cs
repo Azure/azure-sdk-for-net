@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Access != null)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DestinationAddressPrefix != null)
+            if (Optional.IsDefined(DestinationAddressPrefix))
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (DestinationPortRange != null)
+            if (Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Direction != null)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (SourceAddressPrefix != null)
+            if (Optional.IsDefined(SourceAddressPrefix))
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (SourcePortRange != null)
+            if (Optional.IsDefined(SourcePortRange))
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);

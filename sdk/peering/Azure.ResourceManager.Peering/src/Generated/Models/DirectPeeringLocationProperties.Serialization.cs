@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (!(PeeringFacilities is ChangeTrackingList<DirectPeeringFacility> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PeeringFacilities))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BandwidthOffers is ChangeTrackingList<PeeringBandwidthOffer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BandwidthOffers))
             {
                 writer.WritePropertyName("bandwidthOffers"u8);
                 writer.WriteStartArray();

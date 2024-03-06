@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             writer.WritePropertyName("backupMetadata"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CloudEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudEndpointName))
             {
                 writer.WritePropertyName("cloudEndpointName"u8);
                 writer.WriteStringValue(CloudEndpointName);

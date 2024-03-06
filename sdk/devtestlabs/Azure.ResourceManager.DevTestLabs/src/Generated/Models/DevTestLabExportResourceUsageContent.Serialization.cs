@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (BlobStorageAbsoluteSasUri != null)
+            if (Optional.IsDefined(BlobStorageAbsoluteSasUri))
             {
                 writer.WritePropertyName("blobStorageAbsoluteSasUri"u8);
                 writer.WriteStringValue(BlobStorageAbsoluteSasUri.AbsoluteUri);
             }
-            if (UsageStartOn.HasValue)
+            if (Optional.IsDefined(UsageStartOn))
             {
                 writer.WritePropertyName("usageStartDate"u8);
                 writer.WriteStringValue(UsageStartOn.Value, "O");

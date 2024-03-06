@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ResolutionStatus != null)
+            if (Optional.IsDefined(ResolutionStatus))
             {
                 writer.WritePropertyName("resolutionStatus"u8);
                 writer.WriteStringValue(ResolutionStatus);
             }
-            if (ResolutionType.HasValue)
+            if (Optional.IsDefined(ResolutionType))
             {
                 writer.WritePropertyName("resolutionType"u8);
                 writer.WriteStringValue(ResolutionType.Value.ToString());
             }
-            if (DependencyType.HasValue)
+            if (Optional.IsDefined(DependencyType))
             {
                 writer.WritePropertyName("dependencyType"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (ManualResolution != null)
+            if (Optional.IsDefined(ManualResolution))
             {
                 writer.WritePropertyName("manualResolution"u8);
                 writer.WriteObjectValue(ManualResolution);
             }
-            if (AutomaticResolution != null)
+            if (Optional.IsDefined(AutomaticResolution))
             {
                 writer.WritePropertyName("automaticResolution"u8);
                 writer.WriteObjectValue(AutomaticResolution);
             }
-            if (IsDependencyOptional != null)
+            if (Optional.IsDefined(IsDependencyOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteStringValue(IsDependencyOptional);

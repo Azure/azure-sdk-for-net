@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<SyslogDataSourceStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FacilityNames is ChangeTrackingList<SyslogDataSourceFacilityName> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FacilityNames))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LogLevels is ChangeTrackingList<SyslogDataSourceLogLevel> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LogLevels))
             {
                 writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

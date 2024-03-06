@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SuccessfulInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfulInstanceCount))
             {
                 writer.WritePropertyName("successfulInstanceCount"u8);
                 writer.WriteNumberValue(SuccessfulInstanceCount.Value);
             }
-            if (options.Format != "W" && FailedInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedInstanceCount))
             {
                 writer.WritePropertyName("failedInstanceCount"u8);
                 writer.WriteNumberValue(FailedInstanceCount.Value);
             }
-            if (options.Format != "W" && InProgressInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InProgressInstanceCount))
             {
                 writer.WritePropertyName("inProgressInstanceCount"u8);
                 writer.WriteNumberValue(InProgressInstanceCount.Value);
             }
-            if (options.Format != "W" && PendingInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingInstanceCount))
             {
                 writer.WritePropertyName("pendingInstanceCount"u8);
                 writer.WriteNumberValue(PendingInstanceCount.Value);

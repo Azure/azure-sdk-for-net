@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PoolId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PoolId))
             {
                 writer.WritePropertyName("poolId"u8);
                 writer.WriteStringValue(PoolId.Value);
@@ -78,32 +78,32 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteNumberValue(Size);
             writer.WritePropertyName("serviceLevel"u8);
             writer.WriteStringValue(ServiceLevel.ToString());
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && TotalThroughputMibps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalThroughputMibps))
             {
                 writer.WritePropertyName("totalThroughputMibps"u8);
                 writer.WriteNumberValue(TotalThroughputMibps.Value);
             }
-            if (options.Format != "W" && UtilizedThroughputMibps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UtilizedThroughputMibps))
             {
                 writer.WritePropertyName("utilizedThroughputMibps"u8);
                 writer.WriteNumberValue(UtilizedThroughputMibps.Value);
             }
-            if (QosType.HasValue)
+            if (Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
                 writer.WriteStringValue(QosType.Value.ToString());
             }
-            if (IsCoolAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (EncryptionType.HasValue)
+            if (Optional.IsDefined(EncryptionType))
             {
                 if (EncryptionType != null)
                 {

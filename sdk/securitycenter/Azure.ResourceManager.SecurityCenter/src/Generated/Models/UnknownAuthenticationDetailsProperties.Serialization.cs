@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();

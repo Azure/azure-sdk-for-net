@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (ConsiderWarningAsError.HasValue)
+            if (Optional.IsDefined(ConsiderWarningAsError))
             {
                 writer.WritePropertyName("considerWarningAsError"u8);
                 writer.WriteBooleanValue(ConsiderWarningAsError.Value);
             }
-            if (MaxPercentUnhealthyDeployedApplications.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyDeployedApplications))
             {
                 writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyDeployedApplications.Value);
             }
-            if (DefaultServiceTypeHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (!(ServiceTypeHealthPolicyMap is ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicyMap"u8);
                 writer.WriteStartObject();

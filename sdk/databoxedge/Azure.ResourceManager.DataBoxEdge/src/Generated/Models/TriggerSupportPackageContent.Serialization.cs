@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MinimumTimeStamp.HasValue)
+            if (Optional.IsDefined(MinimumTimeStamp))
             {
                 writer.WritePropertyName("minimumTimeStamp"u8);
                 writer.WriteStringValue(MinimumTimeStamp.Value, "O");
             }
-            if (MaximumTimeStamp.HasValue)
+            if (Optional.IsDefined(MaximumTimeStamp))
             {
                 writer.WritePropertyName("maximumTimeStamp"u8);
                 writer.WriteStringValue(MaximumTimeStamp.Value, "O");
             }
-            if (Include != null)
+            if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStringValue(Include);

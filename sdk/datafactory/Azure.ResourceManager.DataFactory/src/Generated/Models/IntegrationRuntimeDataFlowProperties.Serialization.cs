@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ComputeType.HasValue)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (TimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (ShouldCleanupAfterTtl.HasValue)
+            if (Optional.IsDefined(ShouldCleanupAfterTtl))
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(ShouldCleanupAfterTtl.Value);
             }
-            if (!(CustomProperties is ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -30,32 +31,32 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStringValue(SourceServerId);
             writer.WritePropertyName("restorePointInTime"u8);
             writer.WriteStringValue(RestorePointInTime, "O");
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (SslEnforcement.HasValue)
+            if (Optional.IsDefined(SslEnforcement))
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (MinimalTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (InfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);

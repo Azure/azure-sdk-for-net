@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NotActions))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataActions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotDataActions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NotDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (ConditionVersion != null)
+            if (Optional.IsDefined(ConditionVersion))
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);

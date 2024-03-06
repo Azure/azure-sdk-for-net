@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (PublicNetwork != null)
+            if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
-            if (!(PrivateEndpoints is ChangeTrackingList<SignalRPrivateEndpointAcl> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();

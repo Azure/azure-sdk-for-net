@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (JobTier.HasValue)
+            if (Optional.IsDefined(JobTier))
             {
                 writer.WritePropertyName("jobTier"u8);
                 writer.WriteStringValue(JobTier.Value.ToString());
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && DefaultSku != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultSku))
             {
                 writer.WritePropertyName("defaultSku"u8);
                 writer.WriteStringValue(DefaultSku);
             }
-            if (options.Format != "W" && DefaultStorageSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultStorageSize))
             {
                 writer.WritePropertyName("defaultStorageSize"u8);
                 writer.WriteNumberValue(DefaultStorageSize.Value);
             }
-            if (options.Format != "W" && !(SupportedStorageEditions is ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageEditions))
             {
                 writer.WritePropertyName("supportedStorageEditions"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedSkus is ChangeTrackingList<SkuCapabilityV2> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedSkus))
             {
                 writer.WritePropertyName("supportedSkus"u8);
                 writer.WriteStartArray();

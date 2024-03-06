@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (FileLocation != null)
+            if (Optional.IsDefined(FileLocation))
             {
                 writer.WritePropertyName("fileLocation"u8);
                 writer.WriteStringValue(FileLocation);
             }
-            if (FamilySequenceNumber.HasValue)
+            if (Optional.IsDefined(FamilySequenceNumber))
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

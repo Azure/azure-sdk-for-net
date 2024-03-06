@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Tool != null)
+            if (Optional.IsDefined(Tool))
             {
                 writer.WritePropertyName("tool"u8);
                 writer.WriteStringValue(Tool);
             }
-            if (ToolVersion != null)
+            if (Optional.IsDefined(ToolVersion))
             {
                 writer.WritePropertyName("toolVersion"u8);
                 writer.WriteStringValue(ToolVersion);
             }
-            if (InstallerVersion != null)
+            if (Optional.IsDefined(InstallerVersion))
             {
                 writer.WritePropertyName("installerVersion"u8);
                 writer.WriteStringValue(InstallerVersion);

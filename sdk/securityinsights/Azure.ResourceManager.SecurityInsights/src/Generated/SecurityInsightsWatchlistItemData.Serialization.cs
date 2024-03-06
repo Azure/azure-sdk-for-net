@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WatchlistItemType != null)
+            if (Optional.IsDefined(WatchlistItemType))
             {
                 writer.WritePropertyName("watchlistItemType"u8);
                 writer.WriteStringValue(WatchlistItemType);
             }
-            if (WatchlistItemId != null)
+            if (Optional.IsDefined(WatchlistItemId))
             {
                 writer.WritePropertyName("watchlistItemId"u8);
                 writer.WriteStringValue(WatchlistItemId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsDeleted.HasValue)
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (ItemsKeyValue != null)
+            if (Optional.IsDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
 #if NET6_0_OR_GREATER
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
 #endif
             }
-            if (EntityMapping != null)
+            if (Optional.IsDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping"u8);
 #if NET6_0_OR_GREATER

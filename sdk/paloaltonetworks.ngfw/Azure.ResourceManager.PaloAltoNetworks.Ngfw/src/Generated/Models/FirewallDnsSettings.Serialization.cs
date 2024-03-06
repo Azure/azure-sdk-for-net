@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (EnableDnsProxy.HasValue)
+            if (Optional.IsDefined(EnableDnsProxy))
             {
                 writer.WritePropertyName("enableDnsProxy"u8);
                 writer.WriteStringValue(EnableDnsProxy.Value.ToString());
             }
-            if (EnabledDnsType.HasValue)
+            if (Optional.IsDefined(EnabledDnsType))
             {
                 writer.WritePropertyName("enabledDnsType"u8);
                 writer.WriteStringValue(EnabledDnsType.Value.ToString());
             }
-            if (!(DnsServers is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();

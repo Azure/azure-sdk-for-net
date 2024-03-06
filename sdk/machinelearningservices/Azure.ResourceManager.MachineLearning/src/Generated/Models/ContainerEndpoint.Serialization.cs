@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Published.HasValue)
+            if (Optional.IsDefined(Published))
             {
                 if (Published != null)
                 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("published");
                 }
             }
-            if (HostIP != null)
+            if (Optional.IsDefined(HostIP))
             {
                 if (HostIP != null)
                 {

@@ -16,7 +16,7 @@ namespace Azure.Communication.Identity.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(CreateTokenWithScopes is ChangeTrackingList<CommunicationTokenScope> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
                 writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Communication.Identity.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExpiresInMinutes.HasValue)
+            if (Optional.IsDefined(ExpiresInMinutes))
             {
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);

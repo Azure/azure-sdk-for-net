@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (ConfigurationModeFrequencyMins.HasValue)
+            if (Optional.IsDefined(ConfigurationModeFrequencyMins))
             {
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
                 writer.WriteNumberValue(ConfigurationModeFrequencyMins.Value);
             }
-            if (RebootNodeIfNeeded.HasValue)
+            if (Optional.IsDefined(RebootNodeIfNeeded))
             {
                 writer.WritePropertyName("rebootNodeIfNeeded"u8);
                 writer.WriteBooleanValue(RebootNodeIfNeeded.Value);
             }
-            if (ConfigurationMode != null)
+            if (Optional.IsDefined(ConfigurationMode))
             {
                 writer.WritePropertyName("configurationMode"u8);
                 writer.WriteStringValue(ConfigurationMode);
             }
-            if (ActionAfterReboot != null)
+            if (Optional.IsDefined(ActionAfterReboot))
             {
                 writer.WritePropertyName("actionAfterReboot"u8);
                 writer.WriteStringValue(ActionAfterReboot);
             }
-            if (CertificateId != null)
+            if (Optional.IsDefined(CertificateId))
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (RefreshFrequencyMins.HasValue)
+            if (Optional.IsDefined(RefreshFrequencyMins))
             {
                 writer.WritePropertyName("refreshFrequencyMins"u8);
                 writer.WriteNumberValue(RefreshFrequencyMins.Value);
             }
-            if (AllowModuleOverwrite.HasValue)
+            if (Optional.IsDefined(AllowModuleOverwrite))
             {
                 writer.WritePropertyName("allowModuleOverwrite"u8);
                 writer.WriteBooleanValue(AllowModuleOverwrite.Value);

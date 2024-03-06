@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,27 +28,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (CatalogServerEndpoint != null)
+            if (Optional.IsDefined(CatalogServerEndpoint))
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint);
             }
-            if (CatalogAdminUserName != null)
+            if (Optional.IsDefined(CatalogAdminUserName))
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (CatalogAdminPassword != null)
+            if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
                 JsonSerializer.Serialize(writer, CatalogAdminPassword);
             }
-            if (CatalogPricingTier.HasValue)
+            if (Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
             }
-            if (DualStandbyPairName != null)
+            if (Optional.IsDefined(DualStandbyPairName))
             {
                 writer.WritePropertyName("dualStandbyPairName"u8);
                 writer.WriteStringValue(DualStandbyPairName);

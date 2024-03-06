@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (DBScaleMethod.HasValue)
+            if (Optional.IsDefined(DBScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (HighAvailabilityType.HasValue)
+            if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());

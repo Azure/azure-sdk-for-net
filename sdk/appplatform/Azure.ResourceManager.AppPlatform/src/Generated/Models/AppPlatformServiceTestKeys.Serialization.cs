@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (PrimaryTestEndpoint != null)
+            if (Optional.IsDefined(PrimaryTestEndpoint))
             {
                 writer.WritePropertyName("primaryTestEndpoint"u8);
                 writer.WriteStringValue(PrimaryTestEndpoint);
             }
-            if (SecondaryTestEndpoint != null)
+            if (Optional.IsDefined(SecondaryTestEndpoint))
             {
                 writer.WritePropertyName("secondaryTestEndpoint"u8);
                 writer.WriteStringValue(SecondaryTestEndpoint);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

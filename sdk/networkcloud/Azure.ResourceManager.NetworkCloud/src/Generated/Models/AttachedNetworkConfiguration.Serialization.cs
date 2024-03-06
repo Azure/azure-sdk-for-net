@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(L2Networks is ChangeTrackingList<L2NetworkAttachmentConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(L2Networks))
             {
                 writer.WritePropertyName("l2Networks"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(L3Networks is ChangeTrackingList<L3NetworkAttachmentConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(L3Networks))
             {
                 writer.WritePropertyName("l3Networks"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrunkedNetworks is ChangeTrackingList<TrunkedNetworkAttachmentConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TrunkedNetworks))
             {
                 writer.WritePropertyName("trunkedNetworks"u8);
                 writer.WriteStartArray();

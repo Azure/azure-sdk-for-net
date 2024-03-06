@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyDefinitionId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionId))
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (options.Format != "W" && PolicyAssignmentId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentId))
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (options.Format != "W" && PolicyAssignmentDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentDisplayName))
             {
                 writer.WritePropertyName("policyAssignmentDisplayName"u8);
                 writer.WriteStringValue(PolicyAssignmentDisplayName);
             }
-            if (options.Format != "W" && PolicyAssignmentScope != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentScope))
             {
                 writer.WritePropertyName("policyAssignmentScope"u8);
                 writer.WriteStringValue(PolicyAssignmentScope);
             }
-            if (options.Format != "W" && PolicySetDefinitionId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicySetDefinitionId))
             {
                 writer.WritePropertyName("policySetDefinitionId"u8);
                 writer.WriteStringValue(PolicySetDefinitionId);
             }
-            if (options.Format != "W" && PolicyDefinitionReferenceId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteObjectValue(Condition);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);

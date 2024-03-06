@@ -29,54 +29,54 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RemoteVirtualNetwork != null)
+            if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
-            if (AllowHubToRemoteVnetTransit.HasValue)
+            if (Optional.IsDefined(AllowHubToRemoteVnetTransit))
             {
                 writer.WritePropertyName("allowHubToRemoteVnetTransit"u8);
                 writer.WriteBooleanValue(AllowHubToRemoteVnetTransit.Value);
             }
-            if (AllowRemoteVnetToUseHubVnetGateways.HasValue)
+            if (Optional.IsDefined(AllowRemoteVnetToUseHubVnetGateways))
             {
                 writer.WritePropertyName("allowRemoteVnetToUseHubVnetGateways"u8);
                 writer.WriteBooleanValue(AllowRemoteVnetToUseHubVnetGateways.Value);
             }
-            if (EnableInternetSecurity.HasValue)
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (RoutingConfiguration != null)
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

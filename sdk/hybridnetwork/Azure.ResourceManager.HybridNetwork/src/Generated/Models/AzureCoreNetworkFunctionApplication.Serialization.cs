@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DependsOnProfile != null)
+            if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);

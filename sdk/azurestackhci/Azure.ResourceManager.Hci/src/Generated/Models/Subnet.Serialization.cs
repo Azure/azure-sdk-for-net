@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -27,19 +28,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,12 +50,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IPAllocationMethod.HasValue)
+            if (Optional.IsDefined(IPAllocationMethod))
             {
                 writer.WritePropertyName("ipAllocationMethod"u8);
                 writer.WriteStringValue(IPAllocationMethod.Value.ToString());
             }
-            if (!(IPConfigurationReferences is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurationReferences))
             {
                 writer.WritePropertyName("ipConfigurationReferences"u8);
                 writer.WriteStartArray();
@@ -64,12 +65,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RouteTable != null)
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (!(IPPools is ChangeTrackingList<IPPool> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPools))
             {
                 writer.WritePropertyName("ipPools"u8);
                 writer.WriteStartArray();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Vlan.HasValue)
+            if (Optional.IsDefined(Vlan))
             {
                 writer.WritePropertyName("vlan"u8);
                 writer.WriteNumberValue(Vlan.Value);

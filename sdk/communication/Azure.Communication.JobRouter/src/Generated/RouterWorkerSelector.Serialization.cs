@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (_value != null)
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,22 +43,22 @@ namespace Azure.Communication.JobRouter
                 }
 #endif
             }
-            if (ExpiresAfter.HasValue)
+            if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
                 WriteExpiresAfter(writer);
             }
-            if (Expedite.HasValue)
+            if (Optional.IsDefined(Expedite))
             {
                 writer.WritePropertyName("expedite"u8);
                 writer.WriteBooleanValue(Expedite.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ExpiresAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresAt))
             {
                 writer.WritePropertyName("expiresAt"u8);
                 writer.WriteStringValue(ExpiresAt.Value, "O");

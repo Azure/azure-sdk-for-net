@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,34 +61,34 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && InstanceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceUri))
             {
                 writer.WritePropertyName("instanceUri"u8);
                 writer.WriteStringValue(InstanceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SensorIntegration != null)
+            if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
                 writer.WriteObjectValue(SensorIntegration);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && PrivateEndpointConnections != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteObjectValue(PrivateEndpointConnections);

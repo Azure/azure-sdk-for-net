@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -30,19 +31,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
-            if (UtcOffset != null)
+            if (Optional.IsDefined(UtcOffset))
             {
                 writer.WritePropertyName("utcOffset"u8);
                 writer.WriteStringValue(UtcOffset);
             }
-            if (StartDate != null)
+            if (Optional.IsDefined(StartDate))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartDate);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
-            if (!(NotAllowedDates is ChangeTrackingList<ContainerServiceDateSpan> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NotAllowedDates))
             {
                 writer.WritePropertyName("notAllowedDates"u8);
                 writer.WriteStartArray();

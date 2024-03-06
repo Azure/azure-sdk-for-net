@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (SharedStorageAccountName != null)
+            if (Optional.IsDefined(SharedStorageAccountName))
             {
                 writer.WritePropertyName("sharedStorageAccountName"u8);
                 writer.WriteStringValue(SharedStorageAccountName);
             }
-            if (SharedStorageAccountPrivateEndPointName != null)
+            if (Optional.IsDefined(SharedStorageAccountPrivateEndPointName))
             {
                 writer.WritePropertyName("sharedStorageAccountPrivateEndPointName"u8);
                 writer.WriteStringValue(SharedStorageAccountPrivateEndPointName);
