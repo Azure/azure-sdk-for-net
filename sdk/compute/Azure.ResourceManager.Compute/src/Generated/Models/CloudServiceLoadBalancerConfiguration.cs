@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="frontendIPConfigurations"/> is null. </exception>
         public CloudServiceLoadBalancerConfiguration(string name, IEnumerable<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (frontendIPConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurations));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(frontendIPConfigurations, nameof(frontendIPConfigurations));
 
             Name = name;
             FrontendIPConfigurations = frontendIPConfigurations.ToList();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceAdminPassword"/> is null. </exception>
         public DataBoxEdgeSecuritySettings(AsymmetricEncryptedSecret deviceAdminPassword)
         {
-            if (deviceAdminPassword == null)
-            {
-                throw new ArgumentNullException(nameof(deviceAdminPassword));
-            }
+            Argument.AssertNotNull(deviceAdminPassword, nameof(deviceAdminPassword));
 
             DeviceAdminPassword = deviceAdminPassword;
         }

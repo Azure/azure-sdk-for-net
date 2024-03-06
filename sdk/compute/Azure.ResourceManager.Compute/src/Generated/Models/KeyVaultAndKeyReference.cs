@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="keyUri"/> is null. </exception>
         public KeyVaultAndKeyReference(WritableSubResource sourceVault, Uri keyUri)
         {
-            if (sourceVault == null)
-            {
-                throw new ArgumentNullException(nameof(sourceVault));
-            }
-            if (keyUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyUri));
-            }
+            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
+            Argument.AssertNotNull(keyUri, nameof(keyUri));
 
             SourceVault = sourceVault;
             KeyUri = keyUri;
