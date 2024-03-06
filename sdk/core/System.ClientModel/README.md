@@ -55,10 +55,10 @@ public class SampleClient
     private readonly ClientPipeline _pipeline;
 
     // Constructor takes service endpoint, credential used to authenticate
-    // with service, and options for configuring the client pipeline.
+    // with the service, and options for configuring the client pipeline.
     public SampleClient(Uri endpoint, ApiKeyCredential credential, SampleClientOptions? options = default)
     {
-        // Default options are used if none are passed by the client user.
+        // Default options are used if none are passed by the client's user.
         options ??= new SampleClientOptions();
 
         _endpoint = endpoint;
@@ -66,8 +66,7 @@ public class SampleClient
 
         // Authentication policy instance is created from the user-provided
         // credential and service authentication scheme.
-        ApiKeyAuthenticationPolicy authenticationPolicy
-            = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
+        ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
 
         // Pipeline is created from user-provided options and policies
         // specific to the service client implementation.
@@ -79,45 +78,45 @@ public class SampleClient
 
     public ClientResult<SampleResource> UpdateResource(SampleResource resource)
     {
-        // Create the message that will be sent via the pipeline.
+        // Create a message that can be sent via the client pipeline.
         PipelineMessage message = _pipeline.CreateMessage();
 
-        // Set a classifier that will decide whether the response is an
+        // Set a classifier that will determine whether the response is an
         // error response based on the response status code.
         message.ResponseClassifier
             = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        // Modify the request as needed for the service operation.
+        // Modify the request as needed to invoke the service operation.
         PipelineRequest request = message.Request;
         request.Method = "PATCH";
         request.Uri = new Uri($"https://www.example.com/update?id={resource.Id}");
         request.Headers.Add("Accept", "application/json");
 
-        // Add request content that will be written using methods defined
-        // by the IJsonModel<T> interface.
+        // Add request body content that will be written using methods
+        // defined by the model's implementation of the IJsonModel<T> interface.
         request.Content = BinaryContent.Create(resource);
 
         // Send the message.
         _pipeline.Send(message);
 
         // Obtain the response from the message Response property.
-        // The PipelineTransport ensures that the Response Value is set
+        // The PipelineTransport ensures that the Response value is set
         // so that every policy in the pipeline can access the property.
         PipelineResponse response = message.Response!;
 
         // If the response is considered an error response, throw an
-        // exception exposing the response details.
+        // exception that exposes the response details.
         if (response.IsError)
         {
             throw new ClientResultException(response);
         }
 
-        // Read the content from the response content and create an instance
-        // of a model from it, to return from this method.
+        // Read the content from the response body and create an instance of
+        // a model from it, to include in the type returned by this method.
         SampleResource updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
 
-        // Return a ClientResult holding the model instance and the
-        // HTTP response details.
+        // Return a ClientResult holding the model instance and the HTTP
+        // response details.
         return ClientResult.FromValue(updated, response);
     }
 }
