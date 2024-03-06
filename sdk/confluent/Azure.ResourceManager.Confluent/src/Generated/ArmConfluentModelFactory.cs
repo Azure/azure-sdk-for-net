@@ -358,16 +358,16 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ClusterStatusEntity(phase, cku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListRoleBindingsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of role binding. </param>
-        /// <returns> A new <see cref="Models.AccessListRoleBindingsSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListRoleBindingsSuccessResponse AccessListRoleBindingsSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessRoleBindingRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessRoleBindingListResult"/> instance for mocking. </returns>
+        public static AccessRoleBindingListResult AccessRoleBindingListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessRoleBindingRecord> data = null)
         {
             data ??= new List<AccessRoleBindingRecord>();
 
-            return new AccessListRoleBindingsSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessRoleBindingListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingRecord"/>. </summary>

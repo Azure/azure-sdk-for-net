@@ -12,7 +12,7 @@ using Azure.ResourceManager.Confluent;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Details of the role bindings returned on successful response. </summary>
-    public partial class AccessListRoleBindingsSuccessResponse
+    public partial class AccessRoleBindingListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.Confluent.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessListRoleBindingsSuccessResponse"/>. </summary>
-        internal AccessListRoleBindingsSuccessResponse()
+        /// <summary> Initializes a new instance of <see cref="AccessRoleBindingListResult"/>. </summary>
+        internal AccessRoleBindingListResult()
         {
             Data = new ChangeTrackingList<AccessRoleBindingRecord>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessListRoleBindingsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessRoleBindingListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of role binding. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessListRoleBindingsSuccessResponse(string kind, ConfluentListMetadata metadata, IReadOnlyList<AccessRoleBindingRecord> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessRoleBindingListResult(string kind, ConfluentListMetadata metadata, IReadOnlyList<AccessRoleBindingRecord> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Metadata = metadata;

@@ -1365,14 +1365,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AccessUserListResult>> GetUsersAccessAsync(AccessListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessUserListResult>> GetAccessUsersAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetUsersAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessUsers");
             scope.Start();
             try
             {
@@ -1406,14 +1406,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AccessUserListResult> GetUsersAccess(AccessListContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AccessUserListResult> GetAccessUsers(AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetUsersAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessUsers");
             scope.Start();
             try
             {
@@ -1857,14 +1857,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AccessListRoleBindingsSuccessResponse>> GetRoleBindingsAccessAsync(AccessListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessRoleBindingListResult>> GetAccessRoleBindingsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRoleBindingsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindings");
             scope.Start();
             try
             {
@@ -1898,14 +1898,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AccessListRoleBindingsSuccessResponse> GetRoleBindingsAccess(AccessListContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AccessRoleBindingListResult> GetAccessRoleBindings(AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (content == null)
             {
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRoleBindingsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindings");
             scope.Start();
             try
             {

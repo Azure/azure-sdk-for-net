@@ -97,6 +97,7 @@ rename-mapping:
   AccessInviteUserAccountModel: AccessInvitationContent
   AccessListUsersSuccessResponse: AccessUserListResult
   UserRecord: AccessUserRecord
+  AccessListRoleBindingsSuccessResponse: AccessRoleBindingListResult
 
 override-operation-name:
   Validations_ValidateOrganization: ValidateOrganization
@@ -112,10 +113,10 @@ override-operation-name:
   Access_ListRoleBindingNameList: GetAccessRoleBindingNames
   Access_ListServiceAccounts: GetAccessServiceAccounts
   Access_InviteUser: InviteUser
+  Access_ListUsers: GetAccessUsers
+  Access_ListRoleBindings: GetAccessRoleBindings
 
 directive:
   - remove-operation: OrganizationOperations_List
 
-irregular-plural-words:
-  access: access
 ```

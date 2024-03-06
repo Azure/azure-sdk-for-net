@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_UsersList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetUsersAccess_AccessUsersList()
+        public async Task GetAccessUsers_AccessUsersList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_UsersList.json
             // this example is just showing the usage of "Access_ListUsers" operation, for the dependent resources, they will have to be created separately.
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessUserListResult result = await confluentOrganization.GetUsersAccessAsync(content);
+            AccessUserListResult result = await confluentOrganization.GetAccessUsersAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         // Access_RoleBindingList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetRoleBindingsAccess_AccessRoleBindingList()
+        public async Task GetAccessRoleBindings_AccessRoleBindingList()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Access_RoleBindingList.json
             // this example is just showing the usage of "Access_ListRoleBindings" operation, for the dependent resources, they will have to be created separately.
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 ["pageToken"] = "asc4fts4ft",
 },
             };
-            AccessListRoleBindingsSuccessResponse result = await confluentOrganization.GetRoleBindingsAccessAsync(content);
+            AccessRoleBindingListResult result = await confluentOrganization.GetAccessRoleBindingsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
