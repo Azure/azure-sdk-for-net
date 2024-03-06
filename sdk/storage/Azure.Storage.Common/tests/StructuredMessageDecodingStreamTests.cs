@@ -235,6 +235,46 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
+        [Combinatorial]
+        public async Task BadStreamWrongContentLength(
+            [Values(-1, 1)] int difference,
+            [Values(true, false)] bool lengthProvided)
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            BinaryPrimitives.WriteInt64LittleEndian(
+                new Span<byte>(encodedData, V1_0.StreamHeaderMessageLengthOffset, 8),
+                encodedData.Length + difference);
+
+            Stream decodingStream = new StructuredMessageDecodingStream(
+                new MemoryStream(encodedData),
+                lengthProvided ? (long?)encodedData.Length : default);
+
+            // manual try/catch with tiny buffer to validate the proccess failed mid-stream rather than the end
+            const int copyBufferSize = 4;
+            bool caught = false;
+            try
+            {
+                await CopyStream(decodingStream, Stream.Null, copyBufferSize);
+            }
+            catch (CopyStreamException ex)
+            {
+                caught = true;
+                if (lengthProvided)
+                {
+                    Assert.That(ex.TotalCopied, Is.EqualTo(0));
+                }
+                else
+                {
+                    Assert.That(ex.TotalCopied, Is.EqualTo(originalData.Length));
+                }
+            }
+            Assert.That(caught);
+        }
+
+        [Test]
         public void BadStreamMissingExpectedStreamFooter()
         {
             byte[] originalData = new byte[1024];
