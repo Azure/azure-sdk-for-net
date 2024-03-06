@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -29,17 +30,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             JsonSerializer.Serialize(writer, Server);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
@@ -87,72 +88,72 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Database);
             writer.WritePropertyName("sslMode"u8);
             JsonSerializer.Serialize(writer, SslMode);
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
-            if (Pooling != null)
+            if (Optional.IsDefined(Pooling))
             {
                 writer.WritePropertyName("pooling"u8);
                 JsonSerializer.Serialize(writer, Pooling);
             }
-            if (ConnectionTimeout != null)
+            if (Optional.IsDefined(ConnectionTimeout))
             {
                 writer.WritePropertyName("connectionTimeout"u8);
                 JsonSerializer.Serialize(writer, ConnectionTimeout);
             }
-            if (CommandTimeout != null)
+            if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
                 JsonSerializer.Serialize(writer, CommandTimeout);
             }
-            if (TrustServerCertificate != null)
+            if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
                 JsonSerializer.Serialize(writer, TrustServerCertificate);
             }
-            if (SslCertificate != null)
+            if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate"u8);
                 JsonSerializer.Serialize(writer, SslCertificate);
             }
-            if (SslKey != null)
+            if (Optional.IsDefined(SslKey))
             {
                 writer.WritePropertyName("sslKey"u8);
                 JsonSerializer.Serialize(writer, SslKey);
             }
-            if (SslPassword != null)
+            if (Optional.IsDefined(SslPassword))
             {
                 writer.WritePropertyName("sslPassword"u8);
                 JsonSerializer.Serialize(writer, SslPassword);
             }
-            if (ReadBufferSize != null)
+            if (Optional.IsDefined(ReadBufferSize))
             {
                 writer.WritePropertyName("readBufferSize"u8);
                 JsonSerializer.Serialize(writer, ReadBufferSize);
             }
-            if (LogParameters != null)
+            if (Optional.IsDefined(LogParameters))
             {
                 writer.WritePropertyName("logParameters"u8);
                 JsonSerializer.Serialize(writer, LogParameters);
             }
-            if (Timezone != null)
+            if (Optional.IsDefined(Timezone))
             {
                 writer.WritePropertyName("timezone"u8);
                 JsonSerializer.Serialize(writer, Timezone);
             }
-            if (Encoding != null)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 JsonSerializer.Serialize(writer, Encoding);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);

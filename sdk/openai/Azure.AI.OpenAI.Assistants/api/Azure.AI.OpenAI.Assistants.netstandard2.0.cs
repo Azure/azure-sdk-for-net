@@ -261,6 +261,74 @@ namespace Azure.AI.OpenAI.Assistants
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.FunctionToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InternalAssistantDeletionStatusObject : System.IEquatable<Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InternalAssistantDeletionStatusObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject AssistantDeleted { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject left, Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject left, Azure.AI.OpenAI.Assistants.InternalAssistantDeletionStatusObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InternalAssistantFileDeletionStatusObject : System.IEquatable<Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InternalAssistantFileDeletionStatusObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject AssistantFileDeleted { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject left, Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject left, Azure.AI.OpenAI.Assistants.InternalAssistantFileDeletionStatusObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InternalFileDeletionStatusObject : System.IEquatable<Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InternalFileDeletionStatusObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject File { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject left, Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject left, Azure.AI.OpenAI.Assistants.InternalFileDeletionStatusObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InternalFileListResponseObject : System.IEquatable<Azure.AI.OpenAI.Assistants.InternalFileListResponseObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InternalFileListResponseObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.InternalFileListResponseObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.InternalFileListResponseObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.InternalFileListResponseObject left, Azure.AI.OpenAI.Assistants.InternalFileListResponseObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.InternalFileListResponseObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.InternalFileListResponseObject left, Azure.AI.OpenAI.Assistants.InternalFileListResponseObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ListSortOrder : System.IEquatable<Azure.AI.OpenAI.Assistants.ListSortOrder>
     {
         private readonly object _dummy;
@@ -403,6 +471,108 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose left, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIFilePurpose (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose left, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAIPageableListOfAssistantFileObject : System.IEquatable<Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAIPageableListOfAssistantFileObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantFileObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAIPageableListOfAssistantObject : System.IEquatable<Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAIPageableListOfAssistantObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfAssistantObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAIPageableListOfMessageFileObject : System.IEquatable<Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAIPageableListOfMessageFileObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfMessageFileObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAIPageableListOfRunStepObject : System.IEquatable<Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAIPageableListOfRunStepObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfRunStepObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAIPageableListOfThreadMessageObject : System.IEquatable<Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAIPageableListOfThreadMessageObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadMessageObject right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAIPageableListOfThreadRunObject : System.IEquatable<Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAIPageableListOfThreadRunObject(string value) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject List { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject left, Azure.AI.OpenAI.Assistants.OpenAIPageableListOfThreadRunObject right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PageableList<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable

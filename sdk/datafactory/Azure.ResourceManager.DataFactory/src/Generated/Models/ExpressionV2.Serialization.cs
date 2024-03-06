@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (V2Type.HasValue)
+            if (Optional.IsDefined(V2Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(V2Type.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Operator != null)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
             }
-            if (!(Operands is ChangeTrackingList<ExpressionV2> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operands))
             {
                 writer.WritePropertyName("operands"u8);
                 writer.WriteStartArray();
