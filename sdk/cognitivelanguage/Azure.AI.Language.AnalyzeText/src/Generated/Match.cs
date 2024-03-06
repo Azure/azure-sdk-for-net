@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The Match. </summary>
-    public partial class Match
+    /// <summary> The EntityLinkingMatch. </summary>
+    public partial class EntityLinkingMatch
     {
-        /// <summary> Initializes a new instance of <see cref="Match"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingMatch"/>. </summary>
         /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
-        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
         /// <param name="offset"> Start position for the entity match text. </param>
         /// <param name="length"> Length for the entity match text. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal Match(double confidenceScore, string text, int offset, int length)
+        internal EntityLinkingMatch(double confidenceScore, string text, int offset, int length)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </summary>
         public double ConfidenceScore { get; }
-        /// <summary> Entity text as appears in the request. </summary>
+        /// <summary> NamedEntity text as appears in the request. </summary>
         public string Text { get; }
         /// <summary> Start position for the entity match text. </summary>
         public int Offset { get; }

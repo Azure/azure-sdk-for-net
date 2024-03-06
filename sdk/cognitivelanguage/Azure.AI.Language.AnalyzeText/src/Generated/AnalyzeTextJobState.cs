@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> status. </param>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
-        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, State status, Tasks tasks)
+        internal AnalyzeTextJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, TaskStatus status, JobStateTasks tasks)
         {
             Argument.AssertNotNull(tasks, nameof(tasks));
 
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text
         /// <param name="nextLink"> next link. </param>
         /// <param name="tasks"></param>
         /// <param name="statistics"></param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, State status, IReadOnlyList<ErrorResponse> errors, string nextLink, Tasks tasks, RequestStatistics statistics)
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TaskStatus status, IReadOnlyList<ErrorResponse> errors, string nextLink, JobStateTasks tasks, RequestStatistics statistics)
         {
             DisplayName = displayName;
             CreatedDateTime = createdDateTime;
@@ -67,13 +67,13 @@ namespace Azure.AI.Language.Text
         /// <summary> last updated date and time. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
         /// <summary> status. </summary>
-        public State Status { get; }
+        public TaskStatus Status { get; }
         /// <summary> errors. </summary>
         public IReadOnlyList<ErrorResponse> Errors { get; }
         /// <summary> next link. </summary>
         public string NextLink { get; }
         /// <summary> Gets the tasks. </summary>
-        public Tasks Tasks { get; }
+        public JobStateTasks Tasks { get; }
         /// <summary> Gets the statistics. </summary>
         public RequestStatistics Statistics { get; }
     }

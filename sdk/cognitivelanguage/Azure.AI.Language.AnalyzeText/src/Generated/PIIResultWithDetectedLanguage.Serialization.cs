@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
             string redactedText = default;
-            IReadOnlyList<Entity> entities = default;
+            IReadOnlyList<NamedEntity> entities = default;
             Optional<string> detectedLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,10 +59,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<Entity> array = new List<Entity>();
+                    List<NamedEntity> array = new List<NamedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(NamedEntity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;

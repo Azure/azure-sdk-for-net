@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for a Custom Entities task. </summary>
-    public partial class CustomEntitiesTaskParameters
+    public partial class CustomEntitiesTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskContent"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomEntitiesTaskParameters(string projectName, string deploymentName)
+        public CustomEntitiesTaskContent(string projectName, string deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
@@ -26,12 +26,12 @@ namespace Azure.AI.Language.Text
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="stringIndexType"></param>
-        internal CustomEntitiesTaskParameters(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType)
+        internal CustomEntitiesTaskContent(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType)
         {
             LoggingOptOut = loggingOptOut;
             ProjectName = projectName;

@@ -88,7 +88,7 @@ In order to do so, we will use the Sentiment Analysis feature of the Text Analyt
 
 ### Identify complaints
 
-To get a deeper analysis into which are the targets that people considered good or bad, we will need to set the `OpinionMining` type into the `SentimentAnalysisTaskParameters`.
+To get a deeper analysis into which are the targets that people considered good or bad, we will need to set the `OpinionMining` type into the `SentimentAnalysisTaskContent`.
 
 ```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining
 string reviewA =
@@ -128,7 +128,7 @@ AnalyzeTextTask body = new AnalyzeTextSentimentAnalysisInput()
             new MultiLanguageInput("C", reviewC, "en"),
         }
     },
-    Parameters = new SentimentAnalysisTaskParameters()
+    Parameters = new SentimentAnalysisTaskContent()
     {
         OpinionMining = true,
     }

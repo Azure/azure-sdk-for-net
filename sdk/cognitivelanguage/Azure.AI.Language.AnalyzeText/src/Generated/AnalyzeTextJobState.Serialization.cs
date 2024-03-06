@@ -26,10 +26,10 @@ namespace Azure.AI.Language.Text
             Optional<DateTimeOffset> expirationDateTime = default;
             string jobId = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            State status = default;
+            TaskStatus status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<string> nextLink = default;
-            Tasks tasks = default;
+            JobStateTasks tasks = default;
             Optional<RequestStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new State(property.Value.GetString());
+                    status = new TaskStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("tasks"u8))
                 {
-                    tasks = Tasks.DeserializeTasks(property.Value);
+                    tasks = JobStateTasks.DeserializeTasks(property.Value);
                     continue;
                 }
                 if (property.NameEquals("statistics"u8))
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeTextJobState FromResponse(Response response)
+        public static AnalyzeTextJobState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeTextJobState(document.RootElement);

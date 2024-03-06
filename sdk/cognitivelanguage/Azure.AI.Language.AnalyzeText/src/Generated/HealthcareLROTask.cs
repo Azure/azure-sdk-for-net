@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal HealthcareLROTask(string taskName, AnalyzeTextLROTaskKind kind, HealthcareTaskParameters parameters) : base(taskName, kind)
+        internal HealthcareLROTask(string taskName, AnalyzeTextLROTaskKind kind, HealthcareTaskContent parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public HealthcareTaskParameters Parameters { get; set; }
+        public HealthcareTaskContent Parameters { get; set; }
     }
 }

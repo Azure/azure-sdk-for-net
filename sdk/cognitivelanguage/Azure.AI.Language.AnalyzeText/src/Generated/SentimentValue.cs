@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The predicted Sentiment for the sentence. </summary>
+    /// <summary> The predicted PredictedSentiment for the sentence. </summary>
     public readonly partial struct SentimentValue : IEquatable<SentimentValue>
     {
         private readonly string _value;

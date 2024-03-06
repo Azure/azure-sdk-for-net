@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for a Custom Multi Classification task. </summary>
-    public partial class CustomMultiLabelClassificationTaskParameters
+    public partial class CustomMultiLabelClassificationTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskContent"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomMultiLabelClassificationTaskParameters(string projectName, string deploymentName)
+        public CustomMultiLabelClassificationTaskContent(string projectName, string deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Text
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        internal CustomMultiLabelClassificationTaskParameters(bool? loggingOptOut, string projectName, string deploymentName)
+        internal CustomMultiLabelClassificationTaskContent(bool? loggingOptOut, string projectName, string deploymentName)
         {
             LoggingOptOut = loggingOptOut;
             ProjectName = projectName;

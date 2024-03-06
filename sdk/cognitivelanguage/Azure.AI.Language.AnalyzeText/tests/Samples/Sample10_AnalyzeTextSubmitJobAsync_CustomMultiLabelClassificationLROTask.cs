@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample10_AnalyzeTextSubmitJob_CustomMultiLabelClassificationLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new CustomMultiLabelClassificationLROTask()
                 {
-                    Parameters = new CustomMultiLabelClassificationTaskParameters(projectName, deploymentName)
+                    Parameters = new CustomMultiLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
             Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);

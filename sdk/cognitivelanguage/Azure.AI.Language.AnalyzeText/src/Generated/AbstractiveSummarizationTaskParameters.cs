@@ -8,20 +8,20 @@
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for the pre-build Abstractive Summarization task. </summary>
-    public partial class AbstractiveSummarizationTaskParameters
+    public partial class AbstractiveSummarizationTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskParameters"/>. </summary>
-        public AbstractiveSummarizationTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskContent"/>. </summary>
+        public AbstractiveSummarizationTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummarizationTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"> Controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
-        internal AbstractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength)
+        internal AbstractiveSummarizationTaskContent(bool? loggingOptOut, string modelVersion, int? sentenceCount, StringIndexType? stringIndexType, SummaryLengthBucket? summaryLength)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

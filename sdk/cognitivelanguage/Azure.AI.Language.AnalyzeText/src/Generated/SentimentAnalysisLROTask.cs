@@ -7,7 +7,7 @@
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>
+    /// <summary> An object representing the task definition for a PredictedSentiment Analysis task. </summary>
     public partial class SentimentAnalysisLROTask : AnalyzeTextLROTask
     {
         /// <summary> Initializes a new instance of <see cref="SentimentAnalysisLROTask"/>. </summary>
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal SentimentAnalysisLROTask(string taskName, AnalyzeTextLROTaskKind kind, SentimentAnalysisTaskParameters parameters) : base(taskName, kind)
+        internal SentimentAnalysisLROTask(string taskName, AnalyzeTextLROTaskKind kind, SentimentAnalysisTaskContent parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public SentimentAnalysisTaskParameters Parameters { get; set; }
+        public SentimentAnalysisTaskContent Parameters { get; set; }
     }
 }

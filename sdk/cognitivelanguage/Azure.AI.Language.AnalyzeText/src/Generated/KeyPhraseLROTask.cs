@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal KeyPhraseLROTask(string taskName, AnalyzeTextLROTaskKind kind, KeyPhraseTaskParameters parameters) : base(taskName, kind)
+        internal KeyPhraseLROTask(string taskName, AnalyzeTextLROTaskKind kind, KeyPhraseTaskContent parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public KeyPhraseTaskParameters Parameters { get; set; }
+        public KeyPhraseTaskContent Parameters { get; set; }
     }
 }

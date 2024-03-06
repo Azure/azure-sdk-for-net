@@ -19,10 +19,10 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            Optional<Conditionality> conditionality = default;
-            Optional<Certainty> certainty = default;
-            Optional<Association> association = default;
-            Optional<Temporality> temporality = default;
+            Optional<HealthcareConditionality> conditionality = default;
+            Optional<HealthcareCertainty> certainty = default;
+            Optional<HealthcareAssociation> association = default;
+            Optional<HealthcareTemporality> temporality = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    conditionality = new Conditionality(property.Value.GetString());
+                    conditionality = new HealthcareConditionality(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("certainty"u8))
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    certainty = new Certainty(property.Value.GetString());
+                    certainty = new HealthcareCertainty(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("association"u8))
@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    association = new Association(property.Value.GetString());
+                    association = new HealthcareAssociation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("temporality"u8))
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    temporality = new Temporality(property.Value.GetString());
+                    temporality = new HealthcareTemporality(property.Value.GetString());
                     continue;
                 }
             }

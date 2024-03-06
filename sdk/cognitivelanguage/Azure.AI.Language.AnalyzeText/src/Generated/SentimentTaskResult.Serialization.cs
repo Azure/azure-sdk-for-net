@@ -18,13 +18,13 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            SentimentResponse results = default;
+            SentimentResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = SentimentResponse.DeserializeSentimentResponse(property.Value);
+                    results = SentimentResult.DeserializeSentimentResponse(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

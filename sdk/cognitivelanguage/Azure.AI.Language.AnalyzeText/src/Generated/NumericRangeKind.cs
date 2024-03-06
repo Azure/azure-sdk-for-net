@@ -10,6 +10,9 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Text
 {
+    /// <summary>
+    /// The kind of numeric range.
+    /// </summary>
     public readonly partial struct NumericRangeKind : IEquatable<NumericRangeKind>
     {
         private readonly string _value;

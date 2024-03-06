@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal PIILROTask(string taskName, AnalyzeTextLROTaskKind kind, PIITaskParameters parameters) : base(taskName, kind)
+        internal PIILROTask(string taskName, AnalyzeTextLROTaskKind kind, PIITaskContent parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public PIITaskParameters Parameters { get; set; }
+        public PIITaskContent Parameters { get; set; }
     }
 }

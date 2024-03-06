@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text
         /// <param name="tasks"></param>
         /// <param name="statistics"></param>
         /// <returns> A new <see cref="Text.AnalyzeTextJobState"/> instance for mocking. </returns>
-        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, State status = default, IEnumerable<ErrorResponse> errors = null, string nextLink = null, Tasks tasks = null, RequestStatistics statistics = null)
+        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string jobId = null, DateTimeOffset lastUpdatedDateTime = default, TaskStatus status = default, IEnumerable<ErrorResponse> errors = null, string nextLink = null, JobStateTasks tasks = null, RequestStatistics statistics = null)
         {
             errors ??= new List<ErrorResponse>();
 
@@ -48,18 +48,18 @@ namespace Azure.AI.Language.Text
             return new ErrorResponse(error);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.Tasks"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.JobStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
         /// <param name="total"></param>
         /// <param name="items"></param>
-        /// <returns> A new <see cref="Text.Tasks"/> instance for mocking. </returns>
-        public static Tasks Tasks(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextLROResult> items = null)
+        /// <returns> A new <see cref="Text.JobStateTasks"/> instance for mocking. </returns>
+        public static JobStateTasks Tasks(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextLROResult> items = null)
         {
             items ??= new List<AnalyzeTextLROResult>();
 
-            return new Tasks(completed, failed, inProgress, total, items?.ToList());
+            return new JobStateTasks(completed, failed, inProgress, total, items?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextLROResult"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
         /// <returns> A new <see cref="Text.AnalyzeTextLROResult"/> instance for mocking. </returns>
-        public static AnalyzeTextLROResult AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, string kind = "Unknown")
+        public static AnalyzeTextLROResult AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, string kind = "Unknown")
         {
             return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, taskName, kind);
         }
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Text
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
         /// <returns> A new <see cref="Text.DocumentWarning"/> instance for mocking. </returns>
-        public static DocumentWarning DocumentWarning(Code code = default, string message = null, string targetRef = null)
+        public static DocumentWarning DocumentWarning(DocumentWarningCode code = default, string message = null, string targetRef = null)
         {
             return new DocumentWarning(code, message, targetRef);
         }
@@ -166,25 +166,25 @@ namespace Azure.AI.Language.Text
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <returns> A new <see cref="Text.EntitiesDocumentResult"/> instance for mocking. </returns>
-        public static EntitiesDocumentResult EntitiesDocumentResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<Entity> entities = null)
+        public static EntitiesDocumentResult EntitiesDocumentResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntity> entities = null)
         {
             warnings ??= new List<DocumentWarning>();
-            entities ??= new List<Entity>();
+            entities ??= new List<NamedEntity>();
 
             return new EntitiesDocumentResult(id, warnings?.ToList(), statistics, entities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.Entity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <summary> Initializes a new instance of <see cref="Text.NamedEntity"/>. </summary>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> NamedEntity type. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <returns> A new <see cref="Text.Entity"/> instance for mocking. </returns>
-        public static Entity Entity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default)
+        /// <returns> A new <see cref="Text.NamedEntity"/> instance for mocking. </returns>
+        public static NamedEntity Entity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default)
         {
-            return new Entity(text, category, subcategory, offset, length, confidenceScore);
+            return new NamedEntity(text, category, subcategory, offset, length, confidenceScore);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.CustomEntitiesResultWithDocumentDetectedLanguage"/>. </summary>
@@ -254,7 +254,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.CustomEntityRecognitionLROResult"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionLROResult CustomEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, CustomEntitiesResultWithDocumentDetectedLanguage results = null)
+        public static CustomEntityRecognitionLROResult CustomEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, CustomEntitiesResultWithDocumentDetectedLanguage results = null)
         {
             return new CustomEntityRecognitionLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.CustomEntityRecognitionLROResults, results);
         }
@@ -265,7 +265,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.CustomSingleLabelClassificationLROResult"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationLROResult CustomSingleLabelClassificationLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, CustomLabelClassificationResultWithDocumentDetectedLanguage results = null)
+        public static CustomSingleLabelClassificationLROResult CustomSingleLabelClassificationLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, CustomLabelClassificationResultWithDocumentDetectedLanguage results = null)
         {
             return new CustomSingleLabelClassificationLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.CustomSingleLabelClassificationLROResults, results);
         }
@@ -276,7 +276,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.CustomMultiLabelClassificationLROResult"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationLROResult CustomMultiLabelClassificationLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, CustomLabelClassificationResultWithDocumentDetectedLanguage results = null)
+        public static CustomMultiLabelClassificationLROResult CustomMultiLabelClassificationLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, CustomLabelClassificationResultWithDocumentDetectedLanguage results = null)
         {
             return new CustomMultiLabelClassificationLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.CustomMultiLabelClassificationLROResults, results);
         }
@@ -379,36 +379,36 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.LinkedEntity"/>. </summary>
-        /// <param name="name"> Entity Linking formal name. </param>
+        /// <param name="name"> NamedEntity Linking formal name. </param>
         /// <param name="matches"> List of instances this entity appears in the text. </param>
-        /// <param name="language"> Language used in the data source. </param>
+        /// <param name="language"> LanguageClient used in the data source. </param>
         /// <param name="id"> Unique identifier of the recognized entity from the data source. </param>
         /// <param name="url"> URL for the entity's page from the data source. </param>
         /// <param name="dataSource"> Data source used to extract entity linking, such as Wiki/Bing etc. </param>
-        /// <param name="bingId"> Bing Entity Search API unique identifier of the recognized entity. </param>
+        /// <param name="bingId"> Bing NamedEntity Search API unique identifier of the recognized entity. </param>
         /// <returns> A new <see cref="Text.LinkedEntity"/> instance for mocking. </returns>
-        public static LinkedEntity LinkedEntity(string name = null, IEnumerable<Match> matches = null, string language = null, string id = null, Uri url = null, string dataSource = null, string bingId = null)
+        public static LinkedEntity LinkedEntity(string name = null, IEnumerable<EntityLinkingMatch> matches = null, string language = null, string id = null, Uri url = null, string dataSource = null, string bingId = null)
         {
-            matches ??= new List<Match>();
+            matches ??= new List<EntityLinkingMatch>();
 
             return new LinkedEntity(name, matches?.ToList(), language, id, url, dataSource, bingId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.Match"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.EntityLinkingMatch"/>. </summary>
         /// <param name="confidenceScore"> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </param>
-        /// <param name="text"> Entity text as appears in the request. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
         /// <param name="offset"> Start position for the entity match text. </param>
         /// <param name="length"> Length for the entity match text. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        /// <returns> A new <see cref="Text.Match"/> instance for mocking. </returns>
-        public static Match Match(double confidenceScore = default, string text = null, int offset = default, int length = default)
+        /// <returns> A new <see cref="Text.EntityLinkingMatch"/> instance for mocking. </returns>
+        public static EntityLinkingMatch Match(double confidenceScore = default, string text = null, int offset = default, int length = default)
         {
             if (text == null)
             {
                 throw new ArgumentNullException(nameof(text));
             }
 
-            return new Match(confidenceScore, text, offset, length);
+            return new EntityLinkingMatch(confidenceScore, text, offset, length);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.EntityLinkingLROResult"/>. </summary>
@@ -417,7 +417,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.EntityLinkingLROResult"/> instance for mocking. </returns>
-        public static EntityLinkingLROResult EntityLinkingLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, EntityLinkingResult results = null)
+        public static EntityLinkingLROResult EntityLinkingLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, EntityLinkingResult results = null)
         {
             return new EntityLinkingLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.EntityLinkingLROResults, results);
         }
@@ -460,9 +460,9 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.EntityWithMetadata"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> NamedEntity type. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
@@ -478,7 +478,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.EntityTag"/>. </summary>
-        /// <param name="name"> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </param>
+        /// <param name="name"> Tags are to express some similarities/affinity between entities. NamedEntity Tags will be unique globally. </param>
         /// <param name="confidenceScore"> Detection score between 0 and 1 of the extracted entity. </param>
         /// <returns> A new <see cref="Text.EntityTag"/> instance for mocking. </returns>
         public static EntityTag EntityTag(string name = null, double? confidenceScore = null)
@@ -492,7 +492,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.EntityRecognitionLROResult"/> instance for mocking. </returns>
-        public static EntityRecognitionLROResult EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, EntitiesResult results = null)
+        public static EntityRecognitionLROResult EntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, EntitiesResult results = null)
         {
             return new EntityRecognitionLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.EntityRecognitionLROResults, results);
         }
@@ -713,15 +713,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.HealthcareEntity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Healthcare Entity Category. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> Healthcare NamedEntity Category. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
-        /// <param name="links"> Entity references in known data sources. </param>
+        /// <param name="links"> NamedEntity references in known data sources. </param>
         /// <returns> A new <see cref="Text.HealthcareEntity"/> instance for mocking. </returns>
         public static HealthcareEntity HealthcareEntity(string text = null, HealthcareEntityCategory category = default, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, HealthcareAssertion assertion = null, string name = null, IEnumerable<HealthcareEntityLink> links = null)
         {
@@ -736,14 +736,14 @@ namespace Azure.AI.Language.Text
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <param name="temporality"> Describes temporal information regarding the entity. </param>
         /// <returns> A new <see cref="Text.HealthcareAssertion"/> instance for mocking. </returns>
-        public static HealthcareAssertion HealthcareAssertion(Conditionality? conditionality = null, Certainty? certainty = null, Association? association = null, Temporality? temporality = null)
+        public static HealthcareAssertion HealthcareAssertion(HealthcareConditionality? conditionality = null, HealthcareCertainty? certainty = null, HealthcareAssociation? association = null, HealthcareTemporality? temporality = null)
         {
             return new HealthcareAssertion(conditionality, certainty, association, temporality);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.HealthcareEntityLink"/>. </summary>
-        /// <param name="dataSource"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
-        /// <param name="id"> Entity id in the given source catalog. </param>
+        /// <param name="dataSource"> NamedEntity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
+        /// <param name="id"> NamedEntity id in the given source catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> or <paramref name="id"/> is null. </exception>
         /// <returns> A new <see cref="Text.HealthcareEntityLink"/> instance for mocking. </returns>
         public static HealthcareEntityLink HealthcareEntityLink(string dataSource = null, string id = null)
@@ -797,7 +797,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.HealthcareLROResult"/> instance for mocking. </returns>
-        public static HealthcareLROResult HealthcareLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, HealthcareResult results = null)
+        public static HealthcareLROResult HealthcareLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, HealthcareResult results = null)
         {
             return new HealthcareLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.HealthcareLROResults, results);
         }
@@ -845,7 +845,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.KeyPhraseExtractionLROResult"/> instance for mocking. </returns>
-        public static KeyPhraseExtractionLROResult KeyPhraseExtractionLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, KeyPhraseResult results = null)
+        public static KeyPhraseExtractionLROResult KeyPhraseExtractionLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, KeyPhraseResult results = null)
         {
             return new KeyPhraseExtractionLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.KeyPhraseExtractionLROResults, results);
         }
@@ -876,7 +876,7 @@ namespace Azure.AI.Language.Text
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="detectedLanguage"> Detected Language. </param>
+        /// <param name="detectedLanguage"> Detected LanguageClient. </param>
         /// <returns> A new <see cref="Text.LanguageDetectionDocumentResult"/> instance for mocking. </returns>
         public static LanguageDetectionDocumentResult LanguageDetectionDocumentResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, DetectedLanguage detectedLanguage = null)
         {
@@ -927,10 +927,10 @@ namespace Azure.AI.Language.Text
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <returns> A new <see cref="Text.PIIResultWithDetectedLanguage"/> instance for mocking. </returns>
-        public static PIIResultWithDetectedLanguage PIIResultWithDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<Entity> entities = null, string detectedLanguage = null)
+        public static PIIResultWithDetectedLanguage PIIResultWithDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<NamedEntity> entities = null, string detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
-            entities ??= new List<Entity>();
+            entities ??= new List<NamedEntity>();
 
             return new PIIResultWithDetectedLanguage(id, warnings?.ToList(), statistics, redactedText, entities?.ToList(), detectedLanguage);
         }
@@ -941,7 +941,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.PIIEntityRecognitionLROResult"/> instance for mocking. </returns>
-        public static PIIEntityRecognitionLROResult PIIEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, PIIResult results = null)
+        public static PIIEntityRecognitionLROResult PIIEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, PIIResult results = null)
         {
             return new PIIEntityRecognitionLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.PiiEntityRecognitionLROResults, results);
         }
@@ -949,23 +949,23 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="Text.SentimentTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.SentimentTaskResult"/> instance for mocking. </returns>
-        public static SentimentTaskResult SentimentTaskResult(SentimentResponse results = null)
+        public static SentimentTaskResult SentimentTaskResult(SentimentResult results = null)
         {
             return new SentimentTaskResult(AnalyzeTextTaskResultsKind.SentimentAnalysisResults, results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.SentimentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SentimentResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"></param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        /// <returns> A new <see cref="Text.SentimentResponse"/> instance for mocking. </returns>
-        public static SentimentResponse SentimentResponse(IEnumerable<AnalyzeTextDocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<SentimentResponseWithDocumentDetectedLanguage> documents = null)
+        /// <returns> A new <see cref="Text.SentimentResult"/> instance for mocking. </returns>
+        public static SentimentResult SentimentResponse(IEnumerable<AnalyzeTextDocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<SentimentResponseWithDocumentDetectedLanguage> documents = null)
         {
             errors ??= new List<AnalyzeTextDocumentError>();
             documents ??= new List<SentimentResponseWithDocumentDetectedLanguage>();
 
-            return new SentimentResponse(errors?.ToList(), statistics, modelVersion, documents?.ToList());
+            return new SentimentResult(errors?.ToList(), statistics, modelVersion, documents?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SentimentResponseWithDocumentDetectedLanguage"/>. </summary>
@@ -977,7 +977,7 @@ namespace Azure.AI.Language.Text
         /// <param name="sentences"></param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <returns> A new <see cref="Text.SentimentResponseWithDocumentDetectedLanguage"/> instance for mocking. </returns>
-        public static SentimentResponseWithDocumentDetectedLanguage SentimentResponseWithDocumentDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, Sentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<SentenceSentiment> sentences = null, string detectedLanguage = null)
+        public static SentimentResponseWithDocumentDetectedLanguage SentimentResponseWithDocumentDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, PredictedSentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<SentenceSentiment> sentences = null, string detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             sentences ??= new List<SentenceSentiment>();
@@ -987,7 +987,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary> Initializes a new instance of <see cref="Text.SentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
-        /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
+        /// <param name="sentiment"> The predicted PredictedSentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
         /// <param name="length"> The length of the target. </param>
@@ -1070,14 +1070,14 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.SentimentLROResult"/> instance for mocking. </returns>
-        public static SentimentLROResult SentimentLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, SentimentResponseWithDocumentDetectedLanguage results = null)
+        public static SentimentLROResult SentimentLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, SentimentResponseWithDocumentDetectedLanguage results = null)
         {
             return new SentimentLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.SentimentAnalysisLROResults, results);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.CustomSentenceSentiment"/>. </summary>
         /// <param name="text"> The sentence text. </param>
-        /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
+        /// <param name="sentiment"> The predicted PredictedSentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
         /// <param name="length"> The length of the target. </param>
@@ -1121,7 +1121,7 @@ namespace Azure.AI.Language.Text
         /// <param name="sentences"></param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <returns> A new <see cref="Text.CustomSentimentAnalysisResultDocument"/> instance for mocking. </returns>
-        public static CustomSentimentAnalysisResultDocument CustomSentimentAnalysisResultDocument(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, Sentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<CustomSentenceSentiment> sentences = null, string detectedLanguage = null)
+        public static CustomSentimentAnalysisResultDocument CustomSentimentAnalysisResultDocument(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, PredictedSentiment sentiment = default, SentimentConfidenceScores confidenceScores = null, IEnumerable<CustomSentenceSentiment> sentences = null, string detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             sentences ??= new List<CustomSentenceSentiment>();
@@ -1135,7 +1135,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.CustomSentimentAnalysisLROResult"/> instance for mocking. </returns>
-        public static CustomSentimentAnalysisLROResult CustomSentimentAnalysisLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, CustomSentimentAnalysisResult results = null)
+        public static CustomSentimentAnalysisLROResult CustomSentimentAnalysisLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, CustomSentimentAnalysisResult results = null)
         {
             return new CustomSentimentAnalysisLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.CustomSentimentAnalysisLROResults, results);
         }
@@ -1192,7 +1192,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.ExtractiveSummarizationLROResult"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationLROResult ExtractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, ExtractiveSummarizationResult results = null)
+        public static ExtractiveSummarizationLROResult ExtractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, ExtractiveSummarizationResult results = null)
         {
             return new ExtractiveSummarizationLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.ExtractiveSummarizationLROResults, results);
         }
@@ -1203,7 +1203,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.AbstractiveSummarizationLROResult"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationLROResult AbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, AbstractiveSummarizationResult results = null)
+        public static AbstractiveSummarizationLROResult AbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, AbstractiveSummarizationResult results = null)
         {
             return new AbstractiveSummarizationLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.AbstractiveSummarizationLROResults, results);
         }
@@ -1254,7 +1254,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.CustomAbstractiveSummarizationLROResult"/> instance for mocking. </returns>
-        public static CustomAbstractiveSummarizationLROResult CustomAbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, CustomAbstractiveSummarizationResult results = null)
+        public static CustomAbstractiveSummarizationLROResult CustomAbstractiveSummarizationLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, CustomAbstractiveSummarizationResult results = null)
         {
             return new CustomAbstractiveSummarizationLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.CustomAbstractiveSummarizationLROResults, results);
         }
@@ -1307,16 +1307,16 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.CustomHealthcareEntity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Healthcare Entity Category. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> Healthcare NamedEntity Category. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
-        /// <param name="links"> Entity references in known data sources. </param>
-        /// <param name="entityComponentInformation"> (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
+        /// <param name="links"> NamedEntity references in known data sources. </param>
+        /// <param name="entityComponentInformation"> (Optional) NamedEntity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
         /// <returns> A new <see cref="Text.CustomHealthcareEntity"/> instance for mocking. </returns>
         public static CustomHealthcareEntity CustomHealthcareEntity(string text = null, HealthcareEntityCategory category = default, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, HealthcareAssertion assertion = null, string name = null, IEnumerable<HealthcareEntityLink> links = null, IEnumerable<EntityComponentInformation> entityComponentInformation = null)
         {
@@ -1332,7 +1332,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Text.CustomHealthcareLROResult"/> instance for mocking. </returns>
-        public static CustomHealthcareLROResult CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime = default, State status = default, string taskName = null, CustomHealthcareResult results = null)
+        public static CustomHealthcareLROResult CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime = default, TaskStatus status = default, string taskName = null, CustomHealthcareResult results = null)
         {
             return new CustomHealthcareLROResult(lastUpdateDateTime, status, taskName, AnalyzeTextLROResultsKind.CustomHealthcareLROResults, results);
         }

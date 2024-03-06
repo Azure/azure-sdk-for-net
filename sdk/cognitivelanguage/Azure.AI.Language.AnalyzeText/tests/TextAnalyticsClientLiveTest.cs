@@ -128,7 +128,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                         new MultiLanguageInput("A", documentA, "en"),
                     }
                 },
-                Parameters = new KeyPhraseTaskParameters()
+                Parameters = new KeyPhraseTaskContent()
                 {
                     ModelVersion = "latest",
                 }
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                         new MultiLanguageInput("A", documentA, "en"),
                     }
                 },
-                Parameters = new EntitiesTaskParameters()
+                Parameters = new EntitiesTaskContent()
                 {
                     ModelVersion = "latest",
                 }
@@ -236,7 +236,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Assert.IsNotNull(piiResult.Id);
                 Assert.IsNotNull(piiResult.Entities);
-                foreach (Entity entity in piiResult.Entities)
+                foreach (NamedEntity entity in piiResult.Entities)
                 {
                     Assert.IsNotNull(entity);
                     Assert.IsNotNull(entity.Text);
@@ -266,7 +266,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                         new MultiLanguageInput("A", documentA, "en"),
                     }
                 },
-                Parameters = new EntityLinkingTaskParameters()
+                Parameters = new EntityLinkingTaskContent()
                 {
                     ModelVersion = "latest",
                 }
@@ -292,7 +292,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(linkedEntity.Url);
                     Assert.IsNotNull(linkedEntity.Id);
                     Assert.IsNotNull(linkedEntity.Matches);
-                    foreach (Match match in linkedEntity.Matches)
+                    foreach (EntityLinkingMatch match in linkedEntity.Matches)
                     {
                         Assert.NotNull(match.ConfidenceScore);
                         Assert.NotNull(match.Text);
@@ -401,7 +401,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 new CustomEntitiesLROTask()
                 {
-                    Parameters = new CustomEntitiesTaskParameters(projectName, deploymentName)
+                    Parameters = new CustomEntitiesTaskContent(projectName, deploymentName)
                 }
             });
             Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
@@ -425,7 +425,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                         Assert.IsNotNull(entitiesDocument.Id);
                         Assert.IsNotNull(entitiesDocument.Entities);
 
-                        foreach (Entity entity in entitiesDocument.Entities)
+                        foreach (NamedEntity entity in entitiesDocument.Entities)
                         {
                             Assert.IsNotNull(entity);
                             Assert.IsNotNull(entity.Text);
@@ -461,7 +461,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 new CustomSingleLabelClassificationLROTask()
                 {
-                    Parameters = new CustomSingleLabelClassificationTaskParameters(projectName, deploymentName)
+                    Parameters = new CustomSingleLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
             Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
@@ -517,7 +517,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 new CustomMultiLabelClassificationLROTask()
                 {
-                    Parameters = new CustomMultiLabelClassificationTaskParameters(projectName, deploymentName)
+                    Parameters = new CustomMultiLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
             Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);

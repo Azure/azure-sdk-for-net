@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample5_AnalyzeTextAsync_RecognizePii
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("C", documentC),
                     }
                 },
-                Parameters = new PIITaskParameters()
+                Parameters = new PIITaskContent()
                 {
                     ModelVersion = "latest",
                 }
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
                 Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-                foreach (Entity entity in piiResult.Entities)
+                foreach (NamedEntity entity in piiResult.Entities)
                 {
                     Console.WriteLine($"    Text: {entity.Text}");
                     Console.WriteLine($"    Offset: {entity.Offset}");

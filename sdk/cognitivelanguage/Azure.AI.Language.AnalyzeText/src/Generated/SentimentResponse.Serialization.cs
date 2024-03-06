@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class SentimentResponse
+    public partial class SentimentResult
     {
-        internal static SentimentResponse DeserializeSentimentResponse(JsonElement element)
+        internal static SentimentResult DeserializeSentimentResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,12 +61,12 @@ namespace Azure.AI.Language.Text
                     continue;
                 }
             }
-            return new SentimentResponse(errors, statistics.Value, modelVersion, documents);
+            return new SentimentResult(errors, statistics.Value, modelVersion, documents);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SentimentResponse FromResponse(Response response)
+        internal static SentimentResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSentimentResponse(document.RootElement);

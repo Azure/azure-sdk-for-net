@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="detectedLanguage"> Detected Language. </param>
+        /// <param name="detectedLanguage"> Detected LanguageClient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="detectedLanguage"/> is null. </exception>
         internal LanguageDetectionDocumentResult(string id, IEnumerable<DocumentWarning> warnings, DetectedLanguage detectedLanguage)
         {
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="detectedLanguage"> Detected Language. </param>
+        /// <param name="detectedLanguage"> Detected LanguageClient. </param>
         internal LanguageDetectionDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, DetectedLanguage detectedLanguage)
         {
             Id = id;
@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Text
         public IReadOnlyList<DocumentWarning> Warnings { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
-        /// <summary> Detected Language. </summary>
+        /// <summary> Detected LanguageClient. </summary>
         public DetectedLanguage DetectedLanguage { get; }
     }
 }

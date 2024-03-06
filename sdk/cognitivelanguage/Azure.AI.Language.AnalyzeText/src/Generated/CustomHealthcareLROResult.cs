@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
+        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status) : base(lastUpdateDateTime, status)
         {
             Kind = AnalyzeTextLROResultsKind.CustomHealthcareLROResults;
         }
@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
         /// <param name="results"></param>
-        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, CustomHealthcareResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal CustomHealthcareLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind, CustomHealthcareResult results) : base(lastUpdateDateTime, status, taskName, kind)
         {
             Results = results;
         }

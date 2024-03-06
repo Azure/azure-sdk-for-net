@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string name = default;
-            IReadOnlyList<Match> matches = default;
+            IReadOnlyList<EntityLinkingMatch> matches = default;
             string language = default;
             string id = default;
             Uri url = default;
@@ -37,10 +37,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("matches"u8))
                 {
-                    List<Match> array = new List<Match>();
+                    List<EntityLinkingMatch> array = new List<EntityLinkingMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Match.DeserializeMatch(item));
+                        array.Add(EntityLinkingMatch.DeserializeMatch(item));
                     }
                     matches = array;
                     continue;

@@ -7,20 +7,20 @@
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Supported parameters for a Sentiment Analysis task. </summary>
-    public partial class SentimentAnalysisTaskParameters
+    /// <summary> Supported parameters for a PredictedSentiment Analysis task. </summary>
+    public partial class SentimentAnalysisTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
-        public SentimentAnalysisTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskContent"/>. </summary>
+        public SentimentAnalysisTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="opinionMining"></param>
         /// <param name="stringIndexType"></param>
-        internal SentimentAnalysisTaskParameters(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType)
+        internal SentimentAnalysisTaskContent(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

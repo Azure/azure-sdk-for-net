@@ -19,14 +19,14 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            Code code = default;
+            DocumentWarningCode code = default;
             string message = default;
             Optional<string> targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = new Code(property.Value.GetString());
+                    code = new DocumentWarningCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))

@@ -8,17 +8,17 @@
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for a Key Phrase Extraction task. </summary>
-    public partial class KeyPhraseTaskParameters
+    public partial class KeyPhraseTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskParameters"/>. </summary>
-        public KeyPhraseTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskContent"/>. </summary>
+        public KeyPhraseTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        internal KeyPhraseTaskParameters(bool? loggingOptOut, string modelVersion)
+        internal KeyPhraseTaskContent(bool? loggingOptOut, string modelVersion)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

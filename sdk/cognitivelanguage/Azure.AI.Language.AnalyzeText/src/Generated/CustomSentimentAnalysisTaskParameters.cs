@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Supported parameters for a Custom Sentiment Analysis task. </summary>
-    public partial class CustomSentimentAnalysisTaskParameters
+    /// <summary> Supported parameters for a Custom PredictedSentiment Analysis task. </summary>
+    public partial class CustomSentimentAnalysisTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="CustomSentimentAnalysisTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSentimentAnalysisTaskContent"/>. </summary>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomSentimentAnalysisTaskParameters(string projectName, string deploymentName)
+        public CustomSentimentAnalysisTaskContent(string projectName, string deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
@@ -26,12 +26,12 @@ namespace Azure.AI.Language.Text
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomSentimentAnalysisTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSentimentAnalysisTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="stringIndexType"></param>
-        internal CustomSentimentAnalysisTaskParameters(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType)
+        internal CustomSentimentAnalysisTaskContent(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType)
         {
             LoggingOptOut = loggingOptOut;
             ProjectName = projectName;

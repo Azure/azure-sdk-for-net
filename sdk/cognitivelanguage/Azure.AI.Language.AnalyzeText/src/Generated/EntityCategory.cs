@@ -10,6 +10,9 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Text
 {
+    /// <summary>
+    /// Type of entity category.
+    /// </summary>
     public readonly partial struct EntityCategory : IEquatable<EntityCategory>
     {
         private readonly string _value;
@@ -54,7 +57,7 @@ namespace Azure.AI.Language.Text
         private const string LocationValue = "Location";
         private const string GPEValue = "GPE";
         private const string CityValue = "City";
-        private const string StateValue = "State";
+        private const string StateValue = "TaskStatus";
         private const string CountryRegionValue = "CountryRegion";
         private const string ContinentValue = "Continent";
         private const string StructuralValue = "Structural";
@@ -140,7 +143,7 @@ namespace Azure.AI.Language.Text
         public static EntityCategory GPE { get; } = new EntityCategory(GPEValue);
         /// <summary> City-related values. </summary>
         public static EntityCategory City { get; } = new EntityCategory(CityValue);
-        /// <summary> State-related values. </summary>
+        /// <summary> TaskStatus-related values. </summary>
         public static EntityCategory State { get; } = new EntityCategory(StateValue);
         /// <summary> Country or region-related values. </summary>
         public static EntityCategory CountryRegion { get; } = new EntityCategory(CountryRegionValue);

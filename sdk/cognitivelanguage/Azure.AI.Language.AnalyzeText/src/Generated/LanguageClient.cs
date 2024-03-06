@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text
 {
     // Data plane generated sub-client.
-    /// <summary> The Language sub-client. </summary>
-    public partial class Language
+    /// <summary> The LanguageClient sub-client. </summary>
+    public partial class LanguageClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -30,18 +30,18 @@ namespace Azure.AI.Language.Text
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Language for mocking. </summary>
-        protected Language()
+        /// <summary> Initializes a new instance of LanguageClient for mocking. </summary>
+        protected LanguageClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Language. </summary>
+        /// <summary> Initializes a new instance of LanguageClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Language(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint, string apiVersion)
+        internal LanguageClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Text
         /// <param name="body"> Collection of documents to analyze and a single task to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextAsync(AnalyzeTextTask,CancellationToken)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(AnalyzeTextTask,CancellationToken)']/*" />
         public virtual async Task<Response<AnalyzeTextTaskResult>> AnalyzeTextAsync(AnalyzeTextTask body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text
         /// <param name="body"> Collection of documents to analyze and a single task to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeText(AnalyzeTextTask,CancellationToken)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeText(AnalyzeTextTask,CancellationToken)']/*" />
         public virtual Response<AnalyzeTextTaskResult> AnalyzeText(AnalyzeTextTask body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -100,12 +100,12 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextAsync(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeTextAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeText");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeText");
             scope.Start();
             try
             {
@@ -139,12 +139,12 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeText(RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeText(RequestContent,RequestContext)']/*" />
         public virtual Response AnalyzeText(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeText");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeText");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(string,bool?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(string,bool?,int?,int?,CancellationToken)']/*" />
         public virtual async Task<Response<AnalyzeTextJobState>> AnalyzeTextJobStatusAsync(string jobId, bool? showStats = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -186,7 +186,7 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Get the status of an analysis job. A job can consist of one or more tasks. After all tasks succeed, the job transitions to the succeeded state and results are available for each task. </remarks>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(string,bool?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(string,bool?,int?,int?,CancellationToken)']/*" />
         public virtual Response<AnalyzeTextJobState> AnalyzeTextJobStatus(string jobId, bool? showStats = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -220,12 +220,12 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(string,bool?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatusAsync(string,bool?,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeTextJobStatusAsync(string jobId, bool? showStats, int? skip, int? top, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeTextJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeTextJobStatus");
             scope.Start();
             try
             {
@@ -263,12 +263,12 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(string,bool?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextJobStatus(string,bool?,int?,int?,RequestContext)']/*" />
         public virtual Response AnalyzeTextJobStatus(string jobId, bool? showStats, int? skip, int? top, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeTextJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeTextJobStatus");
             scope.Start();
             try
             {
@@ -287,7 +287,7 @@ namespace Azure.AI.Language.Text
         /// <param name="analyzeTextJobsInput"> The <see cref="AnalyzeTextJobsInput"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeTextJobsInput"/> is null. </exception>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,AnalyzeTextJobsInput,CancellationToken)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,AnalyzeTextJobsInput,CancellationToken)']/*" />
         public virtual async Task<Operation> AnalyzeTextSubmitJobAsync(WaitUntil waitUntil, AnalyzeTextJobsInput analyzeTextJobsInput, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(analyzeTextJobsInput, nameof(analyzeTextJobsInput));
@@ -302,7 +302,7 @@ namespace Azure.AI.Language.Text
         /// <param name="analyzeTextJobsInput"> The <see cref="AnalyzeTextJobsInput"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeTextJobsInput"/> is null. </exception>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,AnalyzeTextJobsInput,CancellationToken)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,AnalyzeTextJobsInput,CancellationToken)']/*" />
         public virtual Operation AnalyzeTextSubmitJob(WaitUntil waitUntil, AnalyzeTextJobsInput analyzeTextJobsInput, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(analyzeTextJobsInput, nameof(analyzeTextJobsInput));
@@ -333,17 +333,17 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJobAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> AnalyzeTextSubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeTextSubmitJob");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeTextSubmitJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "Language.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "LanguageClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -373,17 +373,17 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitJob(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation AnalyzeTextSubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeTextSubmitJob");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeTextSubmitJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "Language.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "LanguageClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -410,17 +410,17 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextCancelJobAsync(WaitUntil,string,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextCancelJobAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation> AnalyzeTextCancelJobAsync(WaitUntil waitUntil, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeTextCancelJob");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeTextCancelJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "Language.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "LanguageClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -447,17 +447,17 @@ namespace Azure.AI.Language.Text
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/Language.xml" path="doc/members/member[@name='AnalyzeTextCancelJob(WaitUntil,string,RequestContext)']/*" />
+        /// <include file="Docs/LanguageClient.xml" path="doc/members/member[@name='AnalyzeTextCancelJob(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation AnalyzeTextCancelJob(WaitUntil waitUntil, string jobId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Language.AnalyzeTextCancelJob");
+            using var scope = ClientDiagnostics.CreateScope("LanguageClient.AnalyzeTextCancelJob");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "Language.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "LanguageClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

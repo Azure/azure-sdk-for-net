@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="redactedText"/> or <paramref name="entities"/> is null. </exception>
-        internal PIIResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<Entity> entities)
+        internal PIIResultWithDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, string redactedText, IEnumerable<NamedEntity> entities)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal PIIResultWithDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, string redactedText, IReadOnlyList<Entity> entities, string detectedLanguage)
+        internal PIIResultWithDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, string redactedText, IReadOnlyList<NamedEntity> entities, string detectedLanguage)
         {
             Id = id;
             Warnings = warnings;
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Returns redacted text. </summary>
         public string RedactedText { get; }
         /// <summary> Recognized entities in the document. </summary>
-        public IReadOnlyList<Entity> Entities { get; }
+        public IReadOnlyList<NamedEntity> Entities { get; }
         /// <summary> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </summary>
         public string DetectedLanguage { get; }
     }

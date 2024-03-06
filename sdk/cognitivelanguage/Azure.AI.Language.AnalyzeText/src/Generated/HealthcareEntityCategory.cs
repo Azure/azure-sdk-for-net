@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Healthcare Entity Category. </summary>
+    /// <summary> Healthcare NamedEntity Category. </summary>
     public readonly partial struct HealthcareEntityCategory : IEquatable<HealthcareEntityCategory>
     {
         private readonly string _value;

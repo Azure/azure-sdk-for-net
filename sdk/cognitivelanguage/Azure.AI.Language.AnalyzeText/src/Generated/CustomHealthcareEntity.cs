@@ -15,8 +15,8 @@ namespace Azure.AI.Language.Text
     public partial class CustomHealthcareEntity
     {
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareEntity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Healthcare Entity Category. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> Healthcare NamedEntity Category. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
@@ -35,16 +35,16 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareEntity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Healthcare Entity Category. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> Healthcare NamedEntity Category. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <param name="assertion"></param>
         /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
-        /// <param name="links"> Entity references in known data sources. </param>
-        /// <param name="entityComponentInformation"> (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
+        /// <param name="links"> NamedEntity references in known data sources. </param>
+        /// <param name="entityComponentInformation"> (Optional) NamedEntity component information listing fired components of the extracted entity. This object only applies for custom healthcare. </param>
         internal CustomHealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, int offset, int length, double confidenceScore, HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links, IReadOnlyList<EntityComponentInformation> entityComponentInformation)
         {
             Text = text;
@@ -59,11 +59,11 @@ namespace Azure.AI.Language.Text
             EntityComponentInformation = entityComponentInformation;
         }
 
-        /// <summary> Entity text as appears in the request. </summary>
+        /// <summary> NamedEntity text as appears in the request. </summary>
         public string Text { get; }
-        /// <summary> Healthcare Entity Category. </summary>
+        /// <summary> Healthcare NamedEntity Category. </summary>
         public HealthcareEntityCategory Category { get; }
-        /// <summary> (Optional) Entity sub type. </summary>
+        /// <summary> (Optional) NamedEntity sub type. </summary>
         public string Subcategory { get; }
         /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; }
@@ -75,10 +75,10 @@ namespace Azure.AI.Language.Text
         public HealthcareAssertion Assertion { get; }
         /// <summary> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </summary>
         public string Name { get; }
-        /// <summary> Entity references in known data sources. </summary>
+        /// <summary> NamedEntity references in known data sources. </summary>
         public IReadOnlyList<HealthcareEntityLink> Links { get; }
         /// <summary>
-        /// (Optional) Entity component information listing fired components of the extracted entity. This object only applies for custom healthcare.
+        /// (Optional) NamedEntity component information listing fired components of the extracted entity. This object only applies for custom healthcare.
         /// Please note <see cref="Text.EntityComponentInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PrebuiltComponent"/>, <see cref="LearnedComponent"/> and <see cref="ListComponent"/>.
         /// </summary>

@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample3_AnalyzeText_ExtractKeyPhrases
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("D", documentD),
                     }
                 },
-                Parameters = new KeyPhraseTaskParameters()
+                Parameters = new KeyPhraseTaskContent()
                 {
                     ModelVersion = "latest",
                 }

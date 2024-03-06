@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample6_AnalyzeText_RecognizeLinkedEntities
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
@@ -51,7 +51,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("D", documentD),
                     }
                 },
-                Parameters = new EntityLinkingTaskParameters()
+                Parameters = new EntityLinkingTaskContent()
                 {
                     ModelVersion = "latest",
                 }
@@ -67,13 +67,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 foreach (LinkedEntity linkedEntity in entityLinkingResult.Entities)
                 {
                     Console.WriteLine($"  Name: {linkedEntity.Name}");
-                    Console.WriteLine($"  Language: {linkedEntity.Language}");
+                    Console.WriteLine($"  LanguageClient: {linkedEntity.Language}");
                     Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
                     Console.WriteLine($"  URL: {linkedEntity.Url}");
-                    Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.Id}");
-                    foreach (Match match in linkedEntity.Matches)
+                    Console.WriteLine($"  NamedEntity Id in Data Source: {linkedEntity.Id}");
+                    foreach (EntityLinkingMatch match in linkedEntity.Matches)
                     {
-                        Console.WriteLine($"    Match Text: {match.Text}");
+                        Console.WriteLine($"    EntityLinkingMatch Text: {match.Text}");
                         Console.WriteLine($"    Offset: {match.Offset}");
                         Console.WriteLine($"    Length: {match.Length}");
                         Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");

@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample7_AnalyzeTextSubmitJob_HealthcareLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
@@ -77,7 +77,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");
                         foreach (HealthcareEntity healthcareEntity in healthcareEntitiesDocument.Entities)
                         {
-                            Console.WriteLine($"  Entity: {healthcareEntity.Text}");
+                            Console.WriteLine($"  NamedEntity: {healthcareEntity.Text}");
                             Console.WriteLine($"  Category: {healthcareEntity.Category}");
                             Console.WriteLine($"  Offset: {healthcareEntity.Offset}");
                             Console.WriteLine($"  Length: {healthcareEntity.Length}");
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                             // View the entity data sources.
                             foreach (HealthcareEntityLink healthcareEntityLink in healthcareEntity.Links)
                             {
-                                Console.WriteLine($"    Entity ID in Data Source: {healthcareEntityLink.Id}");
+                                Console.WriteLine($"    NamedEntity ID in Data Source: {healthcareEntityLink.Id}");
                                 Console.WriteLine($"    DataSource: {healthcareEntityLink.DataSource}");
                             }
 
@@ -97,15 +97,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                                 Console.WriteLine($"  Assertions:");
                                 if (healthcareEntity.Assertion?.Association is not null)
                                 {
-                                    Console.WriteLine($"    Association: {healthcareEntity.Assertion?.Association}");
+                                    Console.WriteLine($"    HealthcareAssociation: {healthcareEntity.Assertion?.Association}");
                                 }
                                 if (healthcareEntity.Assertion?.Certainty is not null)
                                 {
-                                    Console.WriteLine($"    Certainty: {healthcareEntity.Assertion?.Certainty}");
+                                    Console.WriteLine($"    HealthcareCertainty: {healthcareEntity.Assertion?.Certainty}");
                                 }
                                 if (healthcareEntity.Assertion?.Conditionality is not null)
                                 {
-                                    Console.WriteLine($"    Conditionality: {healthcareEntity.Assertion?.Conditionality}");
+                                    Console.WriteLine($"    HealthcareConditionality: {healthcareEntity.Assertion?.Conditionality}");
                                 }
                             }
                         }

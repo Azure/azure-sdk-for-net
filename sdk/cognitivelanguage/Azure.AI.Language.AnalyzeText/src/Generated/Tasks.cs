@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The Tasks. </summary>
-    public partial class Tasks
+    /// <summary> The JobStateTasks. </summary>
+    public partial class JobStateTasks
     {
-        /// <summary> Initializes a new instance of <see cref="Tasks"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
         /// <param name="total"></param>
-        internal Tasks(int completed, int failed, int inProgress, int total)
+        internal JobStateTasks(int completed, int failed, int inProgress, int total)
         {
             Completed = completed;
             Failed = failed;
@@ -27,13 +27,13 @@ namespace Azure.AI.Language.Text
             Items = new ChangeTrackingList<AnalyzeTextLROResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Tasks"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
         /// <param name="total"></param>
         /// <param name="items"></param>
-        internal Tasks(int completed, int failed, int inProgress, int total, IReadOnlyList<AnalyzeTextLROResult> items)
+        internal JobStateTasks(int completed, int failed, int inProgress, int total, IReadOnlyList<AnalyzeTextLROResult> items)
         {
             Completed = completed;
             Failed = failed;

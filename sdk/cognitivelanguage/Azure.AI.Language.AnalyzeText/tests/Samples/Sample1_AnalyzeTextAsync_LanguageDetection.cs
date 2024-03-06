@@ -18,7 +18,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             catch (RequestFailedException exception)
             {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Error DocumentWarningCode: {exception.ErrorCode}");
                 Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample1_AnalyzeTextAsync_LanguageDetection_CountryHint
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
@@ -131,7 +131,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             catch (RequestFailedException exception)
             {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Error DocumentWarningCode: {exception.ErrorCode}");
                 Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion

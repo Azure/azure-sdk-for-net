@@ -49,7 +49,7 @@ AnalyzeTextTask body = new AnalyzeTextEntityLinkingInput()
             new MultiLanguageInput("C", documentC),
         }
     },
-    Parameters = new EntityLinkingTaskParameters()
+    Parameters = new EntityLinkingTaskContent()
     {
         ModelVersion = "latest",
     }

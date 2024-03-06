@@ -51,7 +51,7 @@ AnalyzeTextTask body = new AnalyzeTextKeyPhraseExtractionInput()
             new MultiLanguageInput("D", documentD, "en"),
         }
     },
-    Parameters = new KeyPhraseTaskParameters()
+    Parameters = new KeyPhraseTaskContent()
     {
         ModelVersion = "latest",
     }

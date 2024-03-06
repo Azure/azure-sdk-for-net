@@ -8,21 +8,21 @@
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for an Extractive Summarization task. </summary>
-    public partial class ExtractiveSummarizationTaskParameters
+    public partial class ExtractiveSummarizationTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
-        public ExtractiveSummarizationTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskContent"/>. </summary>
+        public ExtractiveSummarizationTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="sentenceCount"></param>
         /// <param name="sortBy"></param>
         /// <param name="stringIndexType"></param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
-        internal ExtractiveSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query)
+        internal ExtractiveSummarizationTaskContent(bool? loggingOptOut, string modelVersion, long? sentenceCount, ExtractiveSummarizationSortingCriteria? sortBy, StringIndexType? stringIndexType, string query)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

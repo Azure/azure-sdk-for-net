@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text
         /// <param name="certainty"> Describes the entities certainty and polarity. </param>
         /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
         /// <param name="temporality"> Describes temporal information regarding the entity. </param>
-        internal HealthcareAssertion(Conditionality? conditionality, Certainty? certainty, Association? association, Temporality? temporality)
+        internal HealthcareAssertion(HealthcareConditionality? conditionality, HealthcareCertainty? certainty, HealthcareAssociation? association, HealthcareTemporality? temporality)
         {
             Conditionality = conditionality;
             Certainty = certainty;
@@ -29,12 +29,12 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Describes any conditionality on the entity. </summary>
-        public Conditionality? Conditionality { get; }
+        public HealthcareConditionality? Conditionality { get; }
         /// <summary> Describes the entities certainty and polarity. </summary>
-        public Certainty? Certainty { get; }
+        public HealthcareCertainty? Certainty { get; }
         /// <summary> Describes if the entity is the subject of the text or if it describes someone else. </summary>
-        public Association? Association { get; }
+        public HealthcareAssociation? Association { get; }
         /// <summary> Describes temporal information regarding the entity. </summary>
-        public Temporality? Temporality { get; }
+        public HealthcareTemporality? Temporality { get; }
     }
 }

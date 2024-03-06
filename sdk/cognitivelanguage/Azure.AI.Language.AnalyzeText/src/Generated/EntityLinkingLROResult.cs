@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal EntityLinkingLROResult(DateTimeOffset lastUpdateDateTime, State status, EntityLinkingResult results) : base(lastUpdateDateTime, status)
+        internal EntityLinkingLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, EntityLinkingResult results) : base(lastUpdateDateTime, status)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
         /// <param name="results"></param>
-        internal EntityLinkingLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind, EntityLinkingResult results) : base(lastUpdateDateTime, status, taskName, kind)
+        internal EntityLinkingLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind, EntityLinkingResult results) : base(lastUpdateDateTime, status, taskName, kind)
         {
             Results = results;
         }

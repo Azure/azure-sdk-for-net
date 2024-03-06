@@ -28,7 +28,10 @@ namespace Azure.AI.Language.Text
             V2023_11_15_Preview = 4,
         }
 
-        internal string Version { get; }
+        /// <summary>
+        /// Version of the service to use.
+        /// </summary>
+        public string Version { get; }
 
         /// <summary> Initializes new instance of AnalyzeTextClientOptions. </summary>
         public AnalyzeTextClientOptions(ServiceVersion version = LatestVersion)

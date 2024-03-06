@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The status of the task at the mentioned last update time. </summary>
-    public readonly partial struct State : IEquatable<State>
+    public readonly partial struct TaskStatus : IEquatable<TaskStatus>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="State"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public State(string value)
+        public TaskStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -31,31 +31,31 @@ namespace Azure.AI.Language.Text
         private const string CancellingValue = "cancelling";
 
         /// <summary> notStarted. </summary>
-        public static State NotStarted { get; } = new State(NotStartedValue);
+        public static TaskStatus NotStarted { get; } = new TaskStatus(NotStartedValue);
         /// <summary> running. </summary>
-        public static State Running { get; } = new State(RunningValue);
+        public static TaskStatus Running { get; } = new TaskStatus(RunningValue);
         /// <summary> succeeded. </summary>
-        public static State Succeeded { get; } = new State(SucceededValue);
+        public static TaskStatus Succeeded { get; } = new TaskStatus(SucceededValue);
         /// <summary> partiallyCompleted. </summary>
-        public static State PartiallyCompleted { get; } = new State(PartiallyCompletedValue);
+        public static TaskStatus PartiallyCompleted { get; } = new TaskStatus(PartiallyCompletedValue);
         /// <summary> failed. </summary>
-        public static State Failed { get; } = new State(FailedValue);
+        public static TaskStatus Failed { get; } = new TaskStatus(FailedValue);
         /// <summary> cancelled. </summary>
-        public static State Cancelled { get; } = new State(CancelledValue);
+        public static TaskStatus Cancelled { get; } = new TaskStatus(CancelledValue);
         /// <summary> cancelling. </summary>
-        public static State Cancelling { get; } = new State(CancellingValue);
-        /// <summary> Determines if two <see cref="State"/> values are the same. </summary>
-        public static bool operator ==(State left, State right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="State"/> values are not the same. </summary>
-        public static bool operator !=(State left, State right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="State"/>. </summary>
-        public static implicit operator State(string value) => new State(value);
+        public static TaskStatus Cancelling { get; } = new TaskStatus(CancellingValue);
+        /// <summary> Determines if two <see cref="TaskStatus"/> values are the same. </summary>
+        public static bool operator ==(TaskStatus left, TaskStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TaskStatus"/> values are not the same. </summary>
+        public static bool operator !=(TaskStatus left, TaskStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="TaskStatus"/>. </summary>
+        public static implicit operator TaskStatus(string value) => new TaskStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is State other && Equals(other);
+        public override bool Equals(object obj) => obj is TaskStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(State other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TaskStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -51,7 +51,7 @@ AnalyzeTextTask body = new AnalyzeTextEntityRecognitionInput()
             new MultiLanguageInput("D", documentD),
         }
     },
-    Parameters = new EntitiesTaskParameters()
+    Parameters = new EntitiesTaskContent()
     {
         ModelVersion = "latest",
     }

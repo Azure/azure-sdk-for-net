@@ -20,7 +20,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample2_AnalyzeTextAsync_Sentiment
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             }
             catch (RequestFailedException exception)
             {
-                Console.WriteLine($"Error Code: {exception.ErrorCode}");
+                Console.WriteLine($"Error DocumentWarningCode: {exception.ErrorCode}");
                 Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample2_AnalyzeTextAsync_Sentiment_OpinionMining
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string reviewA =
                 "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         new MultiLanguageInput("C", reviewC, "en"),
                     }
                 },
-                Parameters = new SentimentAnalysisTaskParameters()
+                Parameters = new SentimentAnalysisTaskContent()
                 {
                     OpinionMining = true,
                 }

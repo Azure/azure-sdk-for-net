@@ -51,7 +51,7 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLangua
 {
     new CustomEntitiesLROTask()
     {
-        Parameters = new CustomEntitiesTaskParameters(projectName, deploymentName)
+        Parameters = new CustomEntitiesTaskContent(projectName, deploymentName)
     }
 });
 Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);

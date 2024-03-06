@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
             }
             CustomSentimentAnalysisResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            State status = default;
+            TaskStatus status = default;
             Optional<string> taskName = default;
             AnalyzeTextLROResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new State(property.Value.GetString());
+                    status = new TaskStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

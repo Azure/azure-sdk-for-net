@@ -7,18 +7,18 @@
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Supported parameters for a Language Detection task. </summary>
-    public partial class LanguageDetectionTaskParameters
+    /// <summary> Supported parameters for a LanguageClient Detection task. </summary>
+    public partial class LanguageDetectionTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskParameters"/>. </summary>
-        public LanguageDetectionTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskContent"/>. </summary>
+        public LanguageDetectionTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        internal LanguageDetectionTaskParameters(bool? loggingOptOut, string modelVersion)
+        internal LanguageDetectionTaskContent(bool? loggingOptOut, string modelVersion)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

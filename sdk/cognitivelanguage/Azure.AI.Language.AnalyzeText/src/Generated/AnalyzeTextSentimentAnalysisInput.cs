@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextSentimentAnalysisInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, SentimentAnalysisTaskParameters parameters) : base(kind)
+        internal AnalyzeTextSentimentAnalysisInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, SentimentAnalysisTaskContent parameters) : base(kind)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -29,6 +29,6 @@ namespace Azure.AI.Language.Text
         /// <summary> Gets or sets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; set; }
         /// <summary> Gets or sets the parameters. </summary>
-        public SentimentAnalysisTaskParameters Parameters { get; set; }
+        public SentimentAnalysisTaskContent Parameters { get; set; }
     }
 }

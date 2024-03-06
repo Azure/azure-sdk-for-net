@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
-AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" }));
+AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" }));
 Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
 ]]></code>
 This sample shows how to call AnalyzeTextAsync with all parameters.
@@ -24,7 +24,7 @@ AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLangua
     {
         Language = "<language>",
     }},
-}, new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" })
+}, new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" })
 {
     LoggingOptOut = true,
     ModelVersion = "<modelVersion>",
@@ -40,7 +40,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
-AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" }));
+AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" }));
 Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
 ]]></code>
 This sample shows how to call AnalyzeText with all parameters.
@@ -55,7 +55,7 @@ AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLangua
     {
         Language = "<language>",
     }},
-}, new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" })
+}, new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" })
 {
     LoggingOptOut = true,
     ModelVersion = "<modelVersion>",
@@ -367,7 +367,7 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLa
 {
     new CustomEntitiesLROTask
     {
-        Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+        Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
         {
             LoggingOptOut = true,
             StringIndexType = StringIndexType.TextElementsV8,
@@ -412,7 +412,7 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLa
 {
     new CustomEntitiesLROTask
     {
-        Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+        Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
         {
             LoggingOptOut = true,
             StringIndexType = StringIndexType.TextElementsV8,

@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="entities"/> is null. </exception>
-        internal EntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<Entity> entities)
+        internal EntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<NamedEntity> entities)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Text
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        internal EntitiesDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<Entity> entities)
+        internal EntitiesDocumentResult(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, IReadOnlyList<NamedEntity> entities)
         {
             Id = id;
             Warnings = warnings;
@@ -51,6 +51,6 @@ namespace Azure.AI.Language.Text
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
         /// <summary> Recognized entities in the document. </summary>
-        public IReadOnlyList<Entity> Entities { get; }
+        public IReadOnlyList<NamedEntity> Entities { get; }
     }
 }

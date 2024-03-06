@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        protected AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, State status)
+        protected AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"></param>
-        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, State status, string taskName, AnalyzeTextLROResultsKind kind)
+        internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TaskStatus status, string taskName, AnalyzeTextLROResultsKind kind)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
@@ -41,10 +41,10 @@ namespace Azure.AI.Language.Text
         /// <summary> The last updated time in UTC for the task. </summary>
         public DateTimeOffset LastUpdateDateTime { get; }
         /// <summary> The status of the task at the mentioned last update time. </summary>
-        public State Status { get; }
+        public TaskStatus Status { get; }
         /// <summary> task name. </summary>
         public string TaskName { get; }
         /// <summary> Gets or sets the kind. </summary>
-        internal AnalyzeTextLROResultsKind Kind { get; set; }
+        public AnalyzeTextLROResultsKind Kind { get; set; }
     }
 }

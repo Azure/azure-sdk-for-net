@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Text
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="parameters"></param>
-        internal AbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskParameters parameters) : base(taskName, kind)
+        internal AbstractiveSummarizationLROTask(string taskName, AnalyzeTextLROTaskKind kind, AbstractiveSummarizationTaskContent parameters) : base(taskName, kind)
         {
             Parameters = parameters;
         }
 
         /// <summary> Gets or sets the parameters. </summary>
-        public AbstractiveSummarizationTaskParameters Parameters { get; set; }
+        public AbstractiveSummarizationTaskContent Parameters { get; set; }
     }
 }

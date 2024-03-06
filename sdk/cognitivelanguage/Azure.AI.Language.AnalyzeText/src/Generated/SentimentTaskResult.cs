@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal SentimentTaskResult(SentimentResponse results)
+        internal SentimentTaskResult(SentimentResult results)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="SentimentTaskResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="results"></param>
-        internal SentimentTaskResult(AnalyzeTextTaskResultsKind kind, SentimentResponse results) : base(kind)
+        internal SentimentTaskResult(AnalyzeTextTaskResultsKind kind, SentimentResult results) : base(kind)
         {
             Results = results;
         }
 
         /// <summary> Gets the results. </summary>
-        public SentimentResponse Results { get; }
+        public SentimentResult Results { get; }
     }
 }

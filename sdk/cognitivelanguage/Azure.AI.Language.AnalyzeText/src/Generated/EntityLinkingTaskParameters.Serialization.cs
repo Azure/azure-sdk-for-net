@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class EntityLinkingTaskParameters : IUtf8JsonSerializable
+    public partial class EntityLinkingTaskContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

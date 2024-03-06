@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The Entity. </summary>
-    public partial class Entity
+    /// <summary> The NamedEntity. </summary>
+    public partial class NamedEntity
     {
-        /// <summary> Initializes a new instance of <see cref="Entity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
+        /// <summary> Initializes a new instance of <see cref="NamedEntity"/>. </summary>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> NamedEntity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
-        internal Entity(string text, string category, int offset, int length, double confidenceScore)
+        internal NamedEntity(string text, string category, int offset, int length, double confidenceScore)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(category, nameof(category));
@@ -32,14 +32,14 @@ namespace Azure.AI.Language.Text
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Entity"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <summary> Initializes a new instance of <see cref="NamedEntity"/>. </summary>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> NamedEntity type. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        internal Entity(string text, string category, string subcategory, int offset, int length, double confidenceScore)
+        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore)
         {
             Text = text;
             Category = category;
@@ -49,11 +49,11 @@ namespace Azure.AI.Language.Text
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Entity text as appears in the request. </summary>
+        /// <summary> NamedEntity text as appears in the request. </summary>
         public string Text { get; }
-        /// <summary> Entity type. </summary>
+        /// <summary> NamedEntity type. </summary>
         public string Category { get; }
-        /// <summary> (Optional) Entity sub type. </summary>
+        /// <summary> (Optional) NamedEntity sub type. </summary>
         public string Subcategory { get; }
         /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; }

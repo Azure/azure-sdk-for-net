@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Sentiment analysis per document. </summary>
+    /// <summary> PredictedSentiment analysis per document. </summary>
     public partial class SentimentResponseWithDocumentDetectedLanguage
     {
         /// <summary> Initializes a new instance of <see cref="SentimentResponseWithDocumentDetectedLanguage"/>. </summary>
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScores"></param>
         /// <param name="sentences"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="confidenceScores"/> or <paramref name="sentences"/> is null. </exception>
-        internal SentimentResponseWithDocumentDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, Sentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentiment> sentences)
+        internal SentimentResponseWithDocumentDetectedLanguage(string id, IEnumerable<DocumentWarning> warnings, PredictedSentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<SentenceSentiment> sentences)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScores"></param>
         /// <param name="sentences"></param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal SentimentResponseWithDocumentDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, Sentiment sentiment, SentimentConfidenceScores confidenceScores, IReadOnlyList<SentenceSentiment> sentences, string detectedLanguage)
+        internal SentimentResponseWithDocumentDetectedLanguage(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, PredictedSentiment sentiment, SentimentConfidenceScores confidenceScores, IReadOnlyList<SentenceSentiment> sentences, string detectedLanguage)
         {
             Id = id;
             Warnings = warnings;
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
         /// <summary> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </summary>
-        public Sentiment Sentiment { get; }
+        public PredictedSentiment Sentiment { get; }
         /// <summary> Gets the confidence scores. </summary>
         public SentimentConfidenceScores ConfidenceScores { get; }
         /// <summary> Gets the sentences. </summary>

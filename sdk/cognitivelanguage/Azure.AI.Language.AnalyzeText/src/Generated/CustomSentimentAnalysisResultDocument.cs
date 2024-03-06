@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="sentences"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="confidenceScores"/> or <paramref name="sentences"/> is null. </exception>
-        internal CustomSentimentAnalysisResultDocument(string id, IEnumerable<DocumentWarning> warnings, Sentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<CustomSentenceSentiment> sentences)
+        internal CustomSentimentAnalysisResultDocument(string id, IEnumerable<DocumentWarning> warnings, PredictedSentiment sentiment, SentimentConfidenceScores confidenceScores, IEnumerable<CustomSentenceSentiment> sentences)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(warnings, nameof(warnings));
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
         /// <param name="sentences"></param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        internal CustomSentimentAnalysisResultDocument(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, Sentiment sentiment, SentimentConfidenceScores confidenceScores, IReadOnlyList<CustomSentenceSentiment> sentences, string detectedLanguage)
+        internal CustomSentimentAnalysisResultDocument(string id, IReadOnlyList<DocumentWarning> warnings, DocumentStatistics statistics, PredictedSentiment sentiment, SentimentConfidenceScores confidenceScores, IReadOnlyList<CustomSentenceSentiment> sentences, string detectedLanguage)
         {
             Id = id;
             Warnings = warnings;
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text
         /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
         public DocumentStatistics Statistics { get; }
         /// <summary> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </summary>
-        public Sentiment Sentiment { get; }
+        public PredictedSentiment Sentiment { get; }
         /// <summary> The sentiment confidence score between 0 and 1 for the sentence for all classes. </summary>
         public SentimentConfidenceScores ConfidenceScores { get; }
         /// <summary> Gets the sentences. </summary>

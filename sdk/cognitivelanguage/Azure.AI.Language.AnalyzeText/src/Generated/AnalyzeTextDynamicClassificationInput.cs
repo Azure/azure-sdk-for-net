@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public AnalyzeTextDynamicClassificationInput(MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskParameters parameters)
+        public AnalyzeTextDynamicClassificationInput(MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskContent parameters)
         {
             Argument.AssertNotNull(analysisInput, nameof(analysisInput));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextDynamicClassificationInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskParameters parameters) : base(kind)
+        internal AnalyzeTextDynamicClassificationInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, DynamicClassificationTaskContent parameters) : base(kind)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -40,6 +40,6 @@ namespace Azure.AI.Language.Text
         /// <summary> Gets the analysis input. </summary>
         public MultiLanguageAnalysisInput AnalysisInput { get; }
         /// <summary> Gets the parameters. </summary>
-        public DynamicClassificationTaskParameters Parameters { get; }
+        public DynamicClassificationTaskContent Parameters { get; }
     }
 }

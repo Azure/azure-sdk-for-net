@@ -8,20 +8,20 @@
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for a Healthcare task. </summary>
-    public partial class HealthcareTaskParameters
+    public partial class HealthcareTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
-        public HealthcareTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskContent"/>. </summary>
+        public HealthcareTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"></param>
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>
         /// <param name="documentType"> Document type that can be provided as input for Fhir Documents. Expect to have fhirVersion provided when used. Behavior of using None enum is the same as not using the documentType parameter. </param>
-        internal HealthcareTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, FhirVersion? fhirVersion, HealthcareDocumentType? documentType)
+        internal HealthcareTaskContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType, FhirVersion? fhirVersion, HealthcareDocumentType? documentType)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

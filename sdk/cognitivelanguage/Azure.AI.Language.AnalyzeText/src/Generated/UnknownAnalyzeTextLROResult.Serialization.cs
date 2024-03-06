@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             DateTimeOffset lastUpdateDateTime = default;
-            State status = default;
+            TaskStatus status = default;
             Optional<string> taskName = default;
             AnalyzeTextLROResultsKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new State(property.Value.GetString());
+                    status = new TaskStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))

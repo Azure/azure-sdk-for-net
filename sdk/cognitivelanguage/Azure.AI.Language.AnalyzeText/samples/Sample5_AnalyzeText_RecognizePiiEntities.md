@@ -42,7 +42,7 @@ AnalyzeTextTask body = new AnalyzeTextPIIEntitiesRecognitionInput()
             new MultiLanguageInput("C", documentC),
         }
     },
-    Parameters = new PIITaskParameters()
+    Parameters = new PIITaskContent()
     {
         ModelVersion = "latest",
     }

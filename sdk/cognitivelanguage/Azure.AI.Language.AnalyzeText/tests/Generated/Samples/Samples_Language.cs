@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -78,9 +78,9 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
-            AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" }));
+            AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" }));
             Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
         }
 
@@ -90,9 +90,9 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
-            AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" }));
+            AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" }));
             Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Text.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -142,7 +142,7 @@ language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -182,7 +182,7 @@ language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput
             {
@@ -190,7 +190,7 @@ language = "<language>",
 {
 Language = "<language>",
 }},
-            }, new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" })
+            }, new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" })
             {
                 LoggingOptOut = true,
                 ModelVersion = "<modelVersion>",
@@ -204,7 +204,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput
             {
@@ -212,7 +212,7 @@ Language = "<language>",
 {
 Language = "<language>",
 }},
-            }, new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" })
+            }, new DynamicClassificationTaskContent(DynamicClassificationType.Multi, new string[] { "<categories>" })
             {
                 LoggingOptOut = true,
                 ModelVersion = "<modelVersion>",
@@ -226,7 +226,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response response = client.AnalyzeTextJobStatus("<jobId>", null, null, null, null);
 
@@ -247,7 +247,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response response = await client.AnalyzeTextJobStatusAsync("<jobId>", null, null, null, null);
 
@@ -268,7 +268,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus("<jobId>");
         }
@@ -279,7 +279,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync("<jobId>");
         }
@@ -290,7 +290,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response response = client.AnalyzeTextJobStatus("<jobId>", true, 1234, 1234, null);
 
@@ -326,7 +326,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response response = await client.AnalyzeTextJobStatusAsync("<jobId>", true, 1234, 1234, null);
 
@@ -362,7 +362,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus("<jobId>", showStats: true, skip: 1234, top: 1234);
         }
@@ -373,7 +373,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync("<jobId>", showStats: true, skip: 1234, top: 1234);
         }
@@ -384,7 +384,7 @@ Language = "<language>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -406,7 +406,7 @@ kind = "CustomEntityRecognition",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -428,7 +428,7 @@ kind = "CustomEntityRecognition",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput(), new AnalyzeTextLROTask[]
             {
@@ -443,7 +443,7 @@ new CustomEntitiesLROTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput(), new AnalyzeTextLROTask[]
             {
@@ -458,7 +458,7 @@ new CustomEntitiesLROTask()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -501,7 +501,7 @@ kind = "CustomEntityRecognition",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -544,7 +544,7 @@ kind = "CustomEntityRecognition",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput
             {
@@ -556,7 +556,7 @@ Language = "<language>",
             {
 new CustomEntitiesLROTask
 {
-Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
 {
 LoggingOptOut = true,
 StringIndexType = StringIndexType.TextElementsV8,
@@ -577,7 +577,7 @@ TaskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput
             {
@@ -589,7 +589,7 @@ Language = "<language>",
             {
 new CustomEntitiesLROTask
 {
-Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+Parameters = new CustomEntitiesTaskContent("<projectName>", "<deploymentName>")
 {
 LoggingOptOut = true,
 StringIndexType = StringIndexType.TextElementsV8,
@@ -610,7 +610,7 @@ TaskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Operation operation = client.AnalyzeTextCancelJob(WaitUntil.Completed, "<jobId>");
         }
@@ -621,7 +621,7 @@ TaskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Operation operation = await client.AnalyzeTextCancelJobAsync(WaitUntil.Completed, "<jobId>");
         }
@@ -632,7 +632,7 @@ TaskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Operation operation = client.AnalyzeTextCancelJob(WaitUntil.Completed, "<jobId>");
         }
@@ -643,7 +643,7 @@ TaskName = "<taskName>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+            LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
 
             Operation operation = await client.AnalyzeTextCancelJobAsync(WaitUntil.Completed, "<jobId>");
         }

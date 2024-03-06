@@ -19,7 +19,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             #region Snippet:Sample8_AnalyzeTextSubmitJob_CustomEntitiesLROTask
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            Text.Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
+            Text.LanguageClient client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-04-01");
 
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
@@ -53,7 +53,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             {
                 new CustomEntitiesLROTask()
                 {
-                    Parameters = new CustomEntitiesTaskParameters(projectName, deploymentName)
+                    Parameters = new CustomEntitiesTaskContent(projectName, deploymentName)
                 }
             });
             Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
@@ -72,9 +72,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         Console.WriteLine($"Result for document with Id = \"{entitiesDocument.Id}\":");
                         Console.WriteLine($"  Recognized {entitiesDocument.Entities.Count} Entities:");
 
-                        foreach (Entity entity in entitiesDocument.Entities)
+                        foreach (NamedEntity entity in entitiesDocument.Entities)
                         {
-                            Console.WriteLine($"  Entity: {entity.Text}");
+                            Console.WriteLine($"  NamedEntity: {entity.Text}");
                             Console.WriteLine($"  Category: {entity.Category}");
                             Console.WriteLine($"  Offset: {entity.Offset}");
                             Console.WriteLine($"  Length: {entity.Length}");

@@ -43,7 +43,7 @@ AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(multiLangua
 {
     new CustomMultiLabelClassificationLROTask()
     {
-        Parameters = new CustomMultiLabelClassificationTaskParameters(projectName, deploymentName)
+        Parameters = new CustomMultiLabelClassificationTaskContent(projectName, deploymentName)
     }
 });
 Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);

@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Supported parameters for a Dynamic Classification task. </summary>
-    public partial class DynamicClassificationTaskParameters
+    public partial class DynamicClassificationTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="DynamicClassificationTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicClassificationTaskContent"/>. </summary>
         /// <param name="classificationType"> Specifies either one or multiple categories per document. Defaults to multi classification which may return more than one class for each document. </param>
         /// <param name="categories"> a list of categories to which input is classified to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categories"/> is null. </exception>
-        public DynamicClassificationTaskParameters(DynamicClassificationType classificationType, IEnumerable<string> categories)
+        public DynamicClassificationTaskContent(DynamicClassificationType classificationType, IEnumerable<string> categories)
         {
             Argument.AssertNotNull(categories, nameof(categories));
 
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Text
             Categories = categories.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynamicClassificationTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicClassificationTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="classificationType"> Specifies either one or multiple categories per document. Defaults to multi classification which may return more than one class for each document. </param>
         /// <param name="categories"> a list of categories to which input is classified to. </param>
-        internal DynamicClassificationTaskParameters(bool? loggingOptOut, string modelVersion, DynamicClassificationType classificationType, IList<string> categories)
+        internal DynamicClassificationTaskContent(bool? loggingOptOut, string modelVersion, DynamicClassificationType classificationType, IList<string> categories)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

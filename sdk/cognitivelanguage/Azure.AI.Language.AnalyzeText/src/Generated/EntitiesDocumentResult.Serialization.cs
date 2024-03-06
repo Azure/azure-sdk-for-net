@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            IReadOnlyList<Entity> entities = default;
+            IReadOnlyList<NamedEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,10 +52,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<Entity> array = new List<Entity>();
+                    List<NamedEntity> array = new List<NamedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(NamedEntity.DeserializeEntity(item));
                     }
                     entities = array;
                     continue;

@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             Optional<DocumentStatistics> statistics = default;
-            Sentiment sentiment = default;
+            PredictedSentiment sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
             IReadOnlyList<SentenceSentiment> sentences = default;
             Optional<string> detectedLanguage = default;
@@ -55,7 +55,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("sentiment"u8))
                 {
-                    sentiment = new Sentiment(property.Value.GetString());
+                    sentiment = new PredictedSentiment(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"u8))

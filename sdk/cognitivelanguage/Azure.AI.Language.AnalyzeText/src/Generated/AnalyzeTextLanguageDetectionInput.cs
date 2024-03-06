@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="analysisInput"></param>
         /// <param name="parameters"></param>
-        internal AnalyzeTextLanguageDetectionInput(AnalyzeTextTaskKind kind, LanguageDetectionAnalysisInput analysisInput, LanguageDetectionTaskParameters parameters) : base(kind)
+        internal AnalyzeTextLanguageDetectionInput(AnalyzeTextTaskKind kind, LanguageDetectionAnalysisInput analysisInput, LanguageDetectionTaskContent parameters) : base(kind)
         {
             AnalysisInput = analysisInput;
             Parameters = parameters;
@@ -29,6 +29,6 @@ namespace Azure.AI.Language.Text
         /// <summary> Gets or sets the analysis input. </summary>
         public LanguageDetectionAnalysisInput AnalysisInput { get; set; }
         /// <summary> Gets or sets the parameters. </summary>
-        public LanguageDetectionTaskParameters Parameters { get; set; }
+        public LanguageDetectionTaskContent Parameters { get; set; }
     }
 }

@@ -57,14 +57,14 @@ namespace Azure.AI.Language.Text
             _endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of Language. </summary>
+        /// <summary> Initializes a new instance of LanguageClient. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Language GetLanguageClient(string apiVersion = "2023-11-15-preview")
+        public virtual LanguageClient GetLanguageClient(string apiVersion = "2023-11-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Language(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
+            return new LanguageClient(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.AI.Language.Text
     public partial class EntityWithMetadata
     {
         /// <summary> Initializes a new instance of <see cref="EntityWithMetadata"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> NamedEntity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
@@ -41,9 +41,9 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityWithMetadata"/>. </summary>
-        /// <param name="text"> Entity text as appears in the request. </param>
-        /// <param name="category"> Entity type. </param>
-        /// <param name="subcategory"> (Optional) Entity sub type. </param>
+        /// <param name="text"> NamedEntity text as appears in the request. </param>
+        /// <param name="category"> NamedEntity type. </param>
+        /// <param name="subcategory"> (Optional) NamedEntity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
@@ -63,11 +63,11 @@ namespace Azure.AI.Language.Text
             Metadata = metadata;
         }
 
-        /// <summary> Entity text as appears in the request. </summary>
+        /// <summary> NamedEntity text as appears in the request. </summary>
         public string Text { get; }
-        /// <summary> Entity type. </summary>
+        /// <summary> NamedEntity type. </summary>
         public string Category { get; }
-        /// <summary> (Optional) Entity sub type. </summary>
+        /// <summary> (Optional) NamedEntity sub type. </summary>
         public string Subcategory { get; }
         /// <summary> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </summary>
         public int Offset { get; }

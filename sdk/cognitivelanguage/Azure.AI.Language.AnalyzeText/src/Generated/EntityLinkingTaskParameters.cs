@@ -7,19 +7,19 @@
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Supported parameters for an Entity Linking task. </summary>
-    public partial class EntityLinkingTaskParameters
+    /// <summary> Supported parameters for an NamedEntity Linking task. </summary>
+    public partial class EntityLinkingTaskContent
     {
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskParameters"/>. </summary>
-        public EntityLinkingTaskParameters()
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskContent"/>. </summary>
+        public EntityLinkingTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"></param>
-        internal EntityLinkingTaskParameters(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType)
+        internal EntityLinkingTaskContent(bool? loggingOptOut, string modelVersion, StringIndexType? stringIndexType)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;

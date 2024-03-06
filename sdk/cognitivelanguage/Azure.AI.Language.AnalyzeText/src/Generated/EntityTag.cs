@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Text
     public partial class EntityTag
     {
         /// <summary> Initializes a new instance of <see cref="EntityTag"/>. </summary>
-        /// <param name="name"> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </param>
+        /// <param name="name"> Tags are to express some similarities/affinity between entities. NamedEntity Tags will be unique globally. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal EntityTag(string name)
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityTag"/>. </summary>
-        /// <param name="name"> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </param>
+        /// <param name="name"> Tags are to express some similarities/affinity between entities. NamedEntity Tags will be unique globally. </param>
         /// <param name="confidenceScore"> Detection score between 0 and 1 of the extracted entity. </param>
         internal EntityTag(string name, double? confidenceScore)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Text
             ConfidenceScore = confidenceScore;
         }
 
-        /// <summary> Tags are to express some similarities/affinity between entities. Entity Tags will be unique globally. </summary>
+        /// <summary> Tags are to express some similarities/affinity between entities. NamedEntity Tags will be unique globally. </summary>
         public string Name { get; }
         /// <summary> Detection score between 0 and 1 of the extracted entity. </summary>
         public double? ConfidenceScore { get; }
