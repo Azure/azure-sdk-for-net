@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subdomainName"/> is null. </exception>
         public CognitiveServicesDomainAvailabilityContent(string subdomainName, ResourceType resourceType)
         {
-            if (subdomainName == null)
-            {
-                throw new ArgumentNullException(nameof(subdomainName));
-            }
+            Argument.AssertNotNull(subdomainName, nameof(subdomainName));
 
             SubdomainName = subdomainName;
             ResourceType = resourceType;
