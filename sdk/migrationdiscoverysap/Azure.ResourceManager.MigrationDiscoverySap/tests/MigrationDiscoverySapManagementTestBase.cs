@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests
     public class MigrationDiscoverySapManagementTestBase : ManagementRecordedTestBase<MigrationDiscoverySapManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected MigrationDiscoverySapManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -26,15 +25,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName, AzureLocation location)
         {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
