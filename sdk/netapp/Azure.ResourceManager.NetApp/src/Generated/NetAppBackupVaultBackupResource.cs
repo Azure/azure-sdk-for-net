@@ -287,10 +287,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppBackupVaultBackupResource>> UpdateAsync(WaitUntil waitUntil, NetAppBackupVaultBackupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.Update");
             scope.Start();
@@ -336,10 +333,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetAppBackupVaultBackupResource> Update(WaitUntil waitUntil, NetAppBackupVaultBackupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.Update");
             scope.Start();
@@ -381,10 +375,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RestoreFilesBackupsUnderBackupVaultAsync(WaitUntil waitUntil, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsUnderBackupVaultClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.RestoreFilesBackupsUnderBackupVault");
             scope.Start();
@@ -426,10 +417,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation RestoreFilesBackupsUnderBackupVault(WaitUntil waitUntil, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsUnderBackupVaultClientDiagnostics.CreateScope("NetAppBackupVaultBackupResource.RestoreFilesBackupsUnderBackupVault");
             scope.Start();

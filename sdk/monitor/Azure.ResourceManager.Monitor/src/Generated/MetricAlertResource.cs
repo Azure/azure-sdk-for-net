@@ -287,10 +287,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MetricAlertResource>> UpdateAsync(MetricAlertPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MetricAlertResource> Update(MetricAlertPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.Update");
             scope.Start();
@@ -425,14 +419,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusByNameAsync(string statusName, CancellationToken cancellationToken = default)
         {
-            if (statusName == null)
-            {
-                throw new ArgumentNullException(nameof(statusName));
-            }
-            if (statusName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(statusName));
-            }
+            Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MetricAlertStatus.DeserializeMetricAlertStatus(e), _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
@@ -462,14 +449,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatusByName(string statusName, CancellationToken cancellationToken = default)
         {
-            if (statusName == null)
-            {
-                throw new ArgumentNullException(nameof(statusName));
-            }
-            if (statusName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(statusName));
-            }
+            Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MetricAlertStatus.DeserializeMetricAlertStatus(e), _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
@@ -502,14 +482,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MetricAlertResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.AddTag");
             scope.Start();
@@ -570,14 +544,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MetricAlertResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.AddTag");
             scope.Start();
@@ -637,10 +605,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MetricAlertResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.SetTags");
             scope.Start();
@@ -697,10 +662,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MetricAlertResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.SetTags");
             scope.Start();
@@ -757,10 +719,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MetricAlertResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.RemoveTag");
             scope.Start();
@@ -820,10 +779,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MetricAlertResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _metricAlertClientDiagnostics.CreateScope("MetricAlertResource.RemoveTag");
             scope.Start();
