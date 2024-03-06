@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Expressions.DataFactory
 {
     [JsonConverter(typeof(DataFactoryKeyVaultSecretReferenceConverter))]
-    public partial class DataFactoryKeyVaultSecretReference : IUtf8JsonSerializable
+    public partial class DataFactoryKeyVaultSecret : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryKeyVaultSecretReference? DeserializeAzureKeyVaultSecretReference(JsonElement element)
+        internal static DataFactoryKeyVaultSecret? DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,16 +64,16 @@ namespace Azure.Core.Expressions.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryKeyVaultSecretReference(type, store, secretName, secretVersion.Value);
+            return new DataFactoryKeyVaultSecret(type, store, secretName, secretVersion.Value);
         }
 
-        internal partial class DataFactoryKeyVaultSecretReferenceConverter : JsonConverter<DataFactoryKeyVaultSecretReference?>
+        internal partial class DataFactoryKeyVaultSecretReferenceConverter : JsonConverter<DataFactoryKeyVaultSecret?>
         {
-            public override void Write(Utf8JsonWriter writer, DataFactoryKeyVaultSecretReference? model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, DataFactoryKeyVaultSecret? model, JsonSerializerOptions options)
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactoryKeyVaultSecretReference? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactoryKeyVaultSecret? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeAzureKeyVaultSecretReference(document.RootElement);
