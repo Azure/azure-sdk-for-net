@@ -64,5 +64,11 @@ namespace Azure.Provisioning.CosmosDB
         /// <returns>The KeyVault instance.</returns>
         public static CosmosDBSqlDatabase FromExisting(IConstruct scope, string name, CosmosDBAccount parent)
             => new CosmosDBSqlDatabase(scope, parent: parent, name: name, isExisting: true);
+
+        /// <inheritdoc/>
+        protected override Resource? FindParentInScope(IConstruct scope)
+        {
+            return scope.GetSingleResource<CosmosDBAccount>() ?? new CosmosDBAccount(scope);
+        }
     }
 }

@@ -45,12 +45,7 @@ namespace Azure.Provisioning.Storage
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
         {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetSingleResource<StorageAccount>() ?? new StorageAccount(scope, StorageKind.BlockBlobStorage, StorageSkuName.PremiumLrs);
-            }
-            return result;
+            return scope.GetSingleResource<StorageAccount>() ?? new StorageAccount(scope, StorageKind.BlockBlobStorage, StorageSkuName.PremiumLrs);
         }
     }
 }

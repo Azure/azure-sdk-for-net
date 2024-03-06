@@ -48,16 +48,5 @@ namespace Azure.Provisioning.AppService
         /// <returns>The KeyVault instance.</returns>
         public static AppServicePlan FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new AppServicePlan(scope, parent: parent, name: name, isExisting: true);
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
-        }
     }
 }

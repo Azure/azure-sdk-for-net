@@ -133,6 +133,7 @@
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.0-alpha.20240222.1" />
     <PackageReference Update="Azure.ResourceManager.AppService" Version="1.1.0-alpha.20240222.2" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.2.0-alpha.20240227.2" />
+    <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0-alpha.20240306.1" />
     <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-alpha.20240305.4" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.0-alpha.20240222.2" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0-alpha.20240304.1" />

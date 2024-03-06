@@ -68,12 +68,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
         {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetSingleResource<KeyVault>() ?? new KeyVault(scope);
-            }
-            return result;
+            return scope.GetSingleResource<KeyVault>() ?? new KeyVault(scope);
         }
     }
 }

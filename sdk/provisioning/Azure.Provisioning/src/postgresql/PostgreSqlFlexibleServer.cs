@@ -52,7 +52,7 @@ namespace Azure.Provisioning.PostgreSql
             string name = "postgres",
             string version = "2020-06-01",
             AzureLocation? location = default)
-        : this(scope, administratorLogin, administratorPassword, sku, highAvailability, storage, backup, network, availabilityZone, parent, name, version, location, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
+        : this(scope, parent, name, version, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
                 name: name,
                 // create new instances so the properties can be overriden by user if needed
                 version: serverVersion ?? new PostgreSqlFlexibleServerVersion(),
@@ -72,33 +72,13 @@ namespace Azure.Provisioning.PostgreSql
 
         private PostgreSqlFlexibleServer(
             IConstruct scope,
-            Parameter administratorLogin = default,
-            Parameter administratorPassword = default,
-            PostgreSqlFlexibleServerSku? sku = default,
-            PostgreSqlFlexibleServerHighAvailability? highAvailability = default,
-            PostgreSqlFlexibleServerStorage? storage = default,
-            PostgreSqlFlexibleServerBackupProperties? backup = default,
-            PostgreSqlFlexibleServerNetwork? network = default,
-            string? availabilityZone = default,
             ResourceGroup? parent = default,
             string name = "postgres",
             string version = "2020-06-01",
-            AzureLocation? location = default,
             bool isExisting = false,
             Func<string, PostgreSqlFlexibleServerData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
         }
 
         /// <summary>

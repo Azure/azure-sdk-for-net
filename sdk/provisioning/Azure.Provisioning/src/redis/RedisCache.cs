@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Redis
         /// <param name="name"></param>
         /// <param name="location"></param>
         public RedisCache(IConstruct scope, RedisSku? sku = default, ResourceGroup? parent = default, string name = "redis", AzureLocation? location = default)
-            : this(scope, sku, parent, name, location, false, (name) => ArmRedisModelFactory.RedisData(
+            : this(scope, sku, parent, name, false, (name) => ArmRedisModelFactory.RedisData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 enableNonSslPort: false,
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.Redis
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private RedisCache(IConstruct scope, RedisSku? sku = default, ResourceGroup? parent = default, string name = "redis", AzureLocation? location = default, bool isExisting = false, Func<string, RedisData>? creator = null)
+        private RedisCache(IConstruct scope, RedisSku? sku = default, ResourceGroup? parent = default, string name = "redis", bool isExisting = false, Func<string, RedisData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, "2020-06-01", creator ?? Empty, isExisting)
         {
         }
@@ -48,17 +48,6 @@ namespace Azure.Provisioning.Redis
         /// </summary>
         public RedisCacheConnectionString GetConnectionString(bool useSecondary = false)
             => new RedisCacheConnectionString(this, useSecondary);
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
-        }
 
         /// <summary>
         /// Creates a new instance of the <see cref="RedisCache"/> class referencing an existing instance.

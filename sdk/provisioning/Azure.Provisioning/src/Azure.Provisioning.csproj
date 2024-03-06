@@ -20,6 +20,7 @@
     <PackageReference Include="Azure.ResourceManager.Redis" />
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
+    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 

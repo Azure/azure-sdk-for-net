@@ -37,7 +37,7 @@ namespace Azure.Provisioning.Sql
             SqlServerAdministrator? administrator = default,
             string version = "2022-08-01-preview",
             AzureLocation? location = default)
-            : this(scope, name, parent, adminLogin, adminPassword, administrator, version, location, false, (name) => ArmSqlModelFactory.SqlServerData(
+            : this(scope, name, parent, version, false, (name) => ArmSqlModelFactory.SqlServerData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
@@ -71,11 +71,7 @@ namespace Azure.Provisioning.Sql
             IConstruct scope,
             string name,
             ResourceGroup? parent = null,
-            Parameter? adminLogin = default,
-            Parameter? adminPassword = default,
-            SqlServerAdministrator? administrator = default,
             string version = "2022-08-01-preview",
-            AzureLocation? location = default,
             bool isExisting = false,
             Func<string, SqlServerData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
@@ -91,17 +87,6 @@ namespace Azure.Provisioning.Sql
         /// <returns>The KeyVault instance.</returns>
         public static SqlServer FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new SqlServer(scope, parent: parent, name: name, isExisting: true);
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
-        }
 
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);

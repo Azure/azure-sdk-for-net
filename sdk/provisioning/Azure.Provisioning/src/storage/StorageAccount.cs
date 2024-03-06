@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Storage
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         public StorageAccount(IConstruct scope, StorageKind kind, StorageSkuName sku, ResourceGroup? parent = null, string name = "sa")
-            : this(scope, kind, sku, parent, name, false, (name) => ArmStorageModelFactory.StorageAccountData(
+            : this(scope, parent, name, false, (name) => ArmStorageModelFactory.StorageAccountData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.Storage
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private StorageAccount(IConstruct scope, StorageKind kind = default, StorageSkuName sku = default, ResourceGroup? parent = null, string name = "sa", bool isExisting = true, Func<string, StorageAccountData>? creator = null)
+        private StorageAccount(IConstruct scope, ResourceGroup? parent = null, string name = "sa", bool isExisting = true, Func<string, StorageAccountData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, "2022-09-01", creator ?? Empty, isExisting)
         {
         }
@@ -52,17 +52,6 @@ namespace Azure.Provisioning.Storage
         /// <returns>The KeyVault instance.</returns>
         public static StorageAccount FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new StorageAccount(scope, parent: parent, name: name, isExisting: true);
-
-        /// <inheritdoc/>
-        protected override Resource? FindParentInScope(IConstruct scope)
-        {
-            var result = base.FindParentInScope(scope);
-            if (result is null)
-            {
-                result = scope.GetOrAddResourceGroup();
-            }
-            return result;
-        }
 
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);

@@ -159,7 +159,22 @@ namespace Azure.Provisioning
         /// <returns>The parent <see cref="Resource"/>.</returns>
         protected virtual Resource? FindParentInScope(IConstruct scope)
         {
-            return scope is Resource resource ? resource : null;
+            if (this is Tenant)
+            {
+                return null;
+            }
+
+            if (this is Subscription)
+            {
+                return scope.Root;
+            }
+
+            if (Parent == null)
+            {
+                return this is ResourceGroup ? scope.GetOrCreateSubscription() : scope.GetOrAddResourceGroup();
+            }
+
+            return Parent;
         }
 
         /// <summary>
