@@ -72,18 +72,8 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedServicesRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string registrationId, ManagedServicesRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,18 +121,8 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedServicesRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string registrationId, ManagedServicesRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +168,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public virtual async Task<Response<ManagedServicesRegistrationResource>> GetAsync(string registrationId, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.Get");
             scope.Start();
@@ -240,14 +213,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public virtual Response<ManagedServicesRegistrationResource> Get(string registrationId, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.Get");
             scope.Start();
@@ -354,14 +320,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string registrationId, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.Exists");
             scope.Start();
@@ -404,14 +363,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public virtual Response<bool> Exists(string registrationId, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.Exists");
             scope.Start();
@@ -454,14 +406,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedServicesRegistrationResource>> GetIfExistsAsync(string registrationId, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.GetIfExists");
             scope.Start();
@@ -506,14 +451,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public virtual NullableResponse<ManagedServicesRegistrationResource> GetIfExists(string registrationId, CancellationToken cancellationToken = default)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
-            if (registrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registrationId));
-            }
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
 
             using var scope = _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesRegistrationCollection.GetIfExists");
             scope.Start();

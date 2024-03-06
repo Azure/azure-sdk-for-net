@@ -18,10 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
         internal CriticalResultInference(CriticalResult result)
         {
-            if (result == null)
-            {
-                throw new ArgumentNullException(nameof(result));
-            }
+            Argument.AssertNotNull(result, nameof(result));
 
             Kind = "criticalResult";
             Result = result;
