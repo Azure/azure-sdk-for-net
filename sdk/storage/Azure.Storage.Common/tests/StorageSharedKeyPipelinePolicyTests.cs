@@ -56,6 +56,8 @@ namespace Azure.Storage.Tests
             mockRequest.Headers.Add("x-ms-meta-meta", "data");
             mockRequest.Headers.Add("x-ms-meta-Capital", "letter");
             mockRequest.Headers.Add("x-ms-meta-UPPER", "case");
+            mockRequest.Headers.Add("x-ms-enable-snapshot-virtual-directory-access", "true");
+            mockRequest.Headers.Add("x-ms-enabled-protocols", "NFS");
             mockRequest.Headers.Add("User-Agent", "azsdk-net-Storage.Files.Shares/12.13.0-alpha.20221025.1,(.NET 6.0.10; Microsoft Windows 10.0.22621)");
             mockRequest.Headers.Add("x-ms-date", "Wed, 23 Feb 2022 02:39:43 GMT"); // value will be replaced by StorageSharedKeyPipelinePolicy
 
@@ -78,6 +80,8 @@ namespace Azure.Storage.Tests
                 .Append("x-ms-client-request-id:8f978611-738a-4cd4-a318-33b2f31068d9\n")
                 .Append("x-ms-creation-time:Tue, 25 Oct 2022 16:47:17 GMT\n")
                 .Append("x-ms-date:").Append(date).Append("\n")
+                .Append("x-ms-enabled-protocols:NFS\n")
+                .Append("x-ms-enable-snapshot-virtual-directory-access:true\n")
                 .Append("x-ms-lease-status:unlocked\n")
                 .Append("x-ms-meta-capital:letter\n")
                 .Append("x-ms-meta-foo:bar\n")
