@@ -47,12 +47,13 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2023_11_07) { }
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2024_03_15_preview) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2021_09_07 = 2,
             V2023_11_07 = 3,
+            V2024_03_15_preview = 4,
         }
     }
     public partial class ChatError
@@ -146,6 +147,10 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? ShareHistoryTime { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier User { get { throw null; } set { } }
     }
+    public abstract partial class ChatRetentionPolicy
+    {
+        protected ChatRetentionPolicy() { }
+    }
     public partial class ChatThreadClient
     {
         protected ChatThreadClient() { }
@@ -204,6 +209,7 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.Communication.Chat.ChatRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Topic { get { throw null; } }
     }
     public partial class CreateChatThreadOptions
@@ -212,6 +218,7 @@ namespace Azure.Communication.Chat
         public string IdempotencyToken { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.Chat.ChatParticipant> Participants { get { throw null; } }
+        public Azure.Communication.Chat.ChatRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Topic { get { throw null; } }
     }
     public partial class CreateChatThreadResult
@@ -219,6 +226,23 @@ namespace Azure.Communication.Chat
         internal CreateChatThreadResult() { }
         public Azure.Communication.Chat.ChatThreadProperties ChatThread { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RetentionPolicyKind : System.IEquatable<Azure.Communication.Chat.RetentionPolicyKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RetentionPolicyKind(string value) { throw null; }
+        public static Azure.Communication.Chat.RetentionPolicyKind ThreadCreationDate { get { throw null; } }
+        public bool Equals(Azure.Communication.Chat.RetentionPolicyKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.Chat.RetentionPolicyKind left, Azure.Communication.Chat.RetentionPolicyKind right) { throw null; }
+        public static implicit operator Azure.Communication.Chat.RetentionPolicyKind (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.Chat.RetentionPolicyKind left, Azure.Communication.Chat.RetentionPolicyKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SendChatMessageOptions
     {
@@ -232,6 +256,11 @@ namespace Azure.Communication.Chat
     {
         internal SendChatMessageResult() { }
         public string Id { get { throw null; } }
+    }
+    public partial class ThreadCreationDateRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
+    {
+        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) { }
+        public int DeleteThreadAfterDays { get { throw null; } set { } }
     }
     public partial class TypingNotificationOptions
     {
@@ -249,6 +278,7 @@ namespace Azure.Communication.Chat
     {
         public UpdateChatThreadPropertiesOptions() { }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.Communication.Chat.ChatRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
     }
 }
