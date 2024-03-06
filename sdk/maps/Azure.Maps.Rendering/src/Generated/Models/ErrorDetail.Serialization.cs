@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {

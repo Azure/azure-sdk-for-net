@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Maps.Routing;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
