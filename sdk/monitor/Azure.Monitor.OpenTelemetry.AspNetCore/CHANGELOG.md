@@ -4,9 +4,15 @@
 
 ### Features Added
 
+* Added NET6 target framework.
+  ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+* Fix runtime crash with Microsoft.Bcl.AsyncInterfaces.
+  ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
 
 ### Other Changes
 
