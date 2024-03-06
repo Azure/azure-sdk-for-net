@@ -32,6 +32,7 @@ namespace Azure.Provisioning.AppService
     public class WebSite : Resource<WebSiteData>
     {
         private const string ResourceTypeName = "Microsoft.Web/sites";
+        private static readonly Func<string, WebSiteData> Empty = (name) => ArmAppServiceModelFactory.WebSiteData();
 
         private ApplicationSettingsResource AppSettings { get; }
 
@@ -39,20 +40,20 @@ namespace Azure.Provisioning.AppService
         /// Initializes a new instance of the <see cref="WebSite"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="resourceName">The resource name.</param>
+        /// <param name="name">The resource name.</param>
         /// <param name="appServicePlan">The appServicePlan.</param>
         /// <param name="runtime">The runtime.</param>
         /// <param name="runtimeVersion">The runtime version</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         /// <param name="parent">The resource group. </param>
-        public WebSite(IConstruct scope, string resourceName, AppServicePlan appServicePlan, WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = null)
-            : base(scope, parent, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.WebSiteData(
+        public WebSite(IConstruct scope, string name, AppServicePlan appServicePlan, WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = null)
+            : this(scope, name, appServicePlan, runtime, runtimeVersion, version, location, parent, false, (name) => ArmAppServiceModelFactory.WebSiteData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
                 kind: "app,linux",
-                appServicePlanId: appServicePlan.Id,
+                appServicePlanId: appServicePlan?.Id,
                 siteConfig: ArmAppServiceModelFactory.SiteConfigProperties(
                     linuxFxVersion: $"{runtime.ToString().ToLower()}|{runtimeVersion}",
                     isAlwaysOn: true,
@@ -70,15 +71,30 @@ namespace Azure.Provisioning.AppService
                 isHttpsOnly: true,
                 identity: new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)))
         {
+        }
+
+        private WebSite(IConstruct scope, string name, AppServicePlan? appServicePlan = default, WebSiteRuntime runtime = default, string? runtimeVersion = default, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = null, bool isExisting = false, Func<string, WebSiteData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
+        {
             var appSettings = runtime == WebSiteRuntime.Dotnetcore
-                ? new Dictionary<string, string>()
-                {
+            ? new Dictionary<string, string>()
+            {
                     { "SCM_DO_BUILD_DURING_DEPLOYMENT", "False"},
                     { "ENABLE_ORYX_BUILD", "True"}
-                }
-                : new Dictionary<string, string>();
+            }
+            : new Dictionary<string, string>();
             AppSettings = new ApplicationSettingsResource(Scope, appSettings, this);
         }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="AppServicePlan"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static WebSite FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new WebSite(scope, parent: parent, name: name, isExisting: true);
 
         /// <summary>
         /// Adds an application setting to the web site.

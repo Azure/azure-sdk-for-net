@@ -15,12 +15,14 @@ namespace Azure.Provisioning.Sql
     public class SqlServer : Resource<SqlServerData>
     {
         private const string ResourceTypeName = "Microsoft.Sql/servers";
+        private static readonly Func<string, SqlServerData> Empty = (name) => ArmSqlModelFactory.SqlServerData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlServer"/> class for mocking.
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="name">The name.</param>
+        /// <param name="parent">The parent.</param>
         /// <param name="adminLogin">The administrator login.</param>
         /// <param name="adminPassword">The administrator password.</param>
         /// <param name="administrator">The administrator when using Entra.</param>
@@ -29,12 +31,13 @@ namespace Azure.Provisioning.Sql
         public SqlServer(
             IConstruct scope,
             string name,
+            ResourceGroup? parent = null,
             Parameter? adminLogin = default,
             Parameter? adminPassword = default,
             SqlServerAdministrator? administrator = default,
             string version = "2022-08-01-preview",
             AzureLocation? location = default)
-            : base(scope, null, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlServerData(
+            : this(scope, name, parent, adminLogin, adminPassword, administrator, version, location, false, (name) => ArmSqlModelFactory.SqlServerData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
@@ -63,6 +66,31 @@ namespace Azure.Provisioning.Sql
                 }
             }
         }
+
+        private SqlServer(
+            IConstruct scope,
+            string name,
+            ResourceGroup? parent = null,
+            Parameter? adminLogin = default,
+            Parameter? adminPassword = default,
+            SqlServerAdministrator? administrator = default,
+            string version = "2022-08-01-preview",
+            AzureLocation? location = default,
+            bool isExisting = false,
+            Func<string, SqlServerData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SqlServer"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static SqlServer FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new SqlServer(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Resources
     {
         private const string ResourceTypeName = "Microsoft.Resources/deploymentScripts";
         private const string _defaultVersion = "2020-10-01";
+        private static readonly Func<string, AzureCliScript> Empty = (name) => ArmResourcesModelFactory.AzureCliScript();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeploymentScript"/>.
@@ -36,7 +37,8 @@ namespace Azure.Provisioning.Resources
                 timeout: TimeSpan.FromMinutes(5),
                 cleanupPreference: ScriptCleanupOptions.OnSuccess,
                 environmentVariables: scriptEnvironmentVariables,
-                scriptContent: scriptContent))
+                scriptContent: scriptContent),
+                  false)
         {
         }
 
@@ -83,11 +85,27 @@ namespace Azure.Provisioning.Resources
                         SCRIPT_END
 
                         ./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql
-                        """))
+                        """),
+                  false)
         {
             AssignProperty(data => data.EnvironmentVariables[0].SecureValue, appUserPasswordSecret);
             AssignProperty(data => data.EnvironmentVariables[1].SecureValue, sqlAdminPasswordSecret);
             AssignProperty(data => data.EnvironmentVariables[2].Value, databaseServerName);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="DeploymentScript"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static DeploymentScript FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new DeploymentScript(scope, parent: parent, name: name, isExisting: true);
+
+        private DeploymentScript(IConstruct scope, string name, ResourceGroup? parent = null, bool isExisting = false)
+            : base(scope, parent, name, ResourceTypeName, _defaultVersion, Empty, isExisting)
+        {
         }
 
         /// <inheritdoc/>

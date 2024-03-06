@@ -15,6 +15,7 @@ namespace Azure.Provisioning.AppConfiguration
     public class AppConfigurationStore : Resource<AppConfigurationStoreData>
     {
         private const string ResourceTypeName = "Microsoft.AppConfiguration/configurationStores";
+        private static readonly Func<string, AppConfigurationStoreData> Empty = (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppConfigurationStore"/> class.
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.AppConfiguration
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public AppConfigurationStore(IConstruct scope, string name = "store", string version = "2023-03-01", AzureLocation? location = default)
-            : base(scope, null, name, ResourceTypeName, version, (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData(
+            : this(scope, name, version, location, null, false, (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -32,6 +33,21 @@ namespace Azure.Provisioning.AppConfiguration
         {
             AddOutput(store => store.Endpoint, $"{Name}_endpoint");
         }
+
+        private AppConfigurationStore(IConstruct scope, string name = "store", string version = "2023-03-01", AzureLocation? location = default, ResourceGroup? parent = null, bool isExisting = false, Func<string, AppConfigurationStoreData>? creator = null)
+            : base(scope, null, name, ResourceTypeName, version, creator ?? Empty, isExisting)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="AppConfigurationStore"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static AppConfigurationStore FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new AppConfigurationStore(scope, name, parent: parent, isExisting: true);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
