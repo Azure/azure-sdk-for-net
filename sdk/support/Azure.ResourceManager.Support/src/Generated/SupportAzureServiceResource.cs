@@ -264,10 +264,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyServiceProblem");
             scope.Start();
@@ -305,10 +302,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _problemClassificationsNoSubscriptionClientDiagnostics.CreateScope("SupportAzureServiceResource.ClassifyServiceProblem");
             scope.Start();

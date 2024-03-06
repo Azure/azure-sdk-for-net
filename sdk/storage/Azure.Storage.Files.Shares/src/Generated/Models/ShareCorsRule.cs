@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
