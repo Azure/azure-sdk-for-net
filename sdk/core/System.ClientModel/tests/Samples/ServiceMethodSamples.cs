@@ -123,8 +123,8 @@ public class ServiceMethodSamples
 #nullable disable
             #region Snippet:ServiceMethodsProtocolMethod
 
-            // Create a BinaryData instance from a JSON string literal
-            BinaryData input = BinaryData.FromString("""   
+            // Create a BinaryData instance from a JSON string literal.
+            BinaryData input = BinaryData.FromString("""
                 {
                     "countryRegion": {
                         "isoCode": "US"
@@ -132,10 +132,13 @@ public class ServiceMethodSamples
                 }
                 """);
 
-            // Call the protocol method
-            ClientResult result = await client.AddCountryCodeAsync(BinaryContent.Create(input));
+            // Create a BinaryContent instance to set as the HTTP request content.
+            BinaryContent requestContent = BinaryContent.Create(input);
 
-            // Obtain the output response content from the returned ClientResult
+            // Call the protocol method
+            ClientResult result = await client.AddCountryCodeAsync(requestContent);
+
+            // Obtain the output response content from the returned ClientResult.
             BinaryData output = result.GetRawResponse().Content;
 
             using JsonDocument outputAsJson = JsonDocument.Parse(output.ToString());

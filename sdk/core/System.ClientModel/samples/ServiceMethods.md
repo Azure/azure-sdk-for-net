@@ -50,8 +50,8 @@ In contrast to convenience methods, **protocol methods** are service methods tha
 The following sample illustrates how to call a protocol method, including creating the request payload and accessing the details of the HTTP response.
 
 ```C# Snippet:ServiceMethodsProtocolMethod
-// Create a BinaryData instance from a JSON string literal
-BinaryData input = BinaryData.FromString("""   
+// Create a BinaryData instance from a JSON string literal.
+BinaryData input = BinaryData.FromString("""
     {
         "countryRegion": {
             "isoCode": "US"
@@ -59,10 +59,13 @@ BinaryData input = BinaryData.FromString("""
     }
     """);
 
-// Call the protocol method
-ClientResult result = await client.AddCountryCodeAsync(BinaryContent.Create(input));
+// Create a BinaryContent instance to set as the HTTP request content.
+BinaryContent requestContent = BinaryContent.Create(input);
 
-// Obtain the output response content from the returned ClientResult
+// Call the protocol method
+ClientResult result = await client.AddCountryCodeAsync(requestContent);
+
+// Obtain the output response content from the returned ClientResult.
 BinaryData output = result.GetRawResponse().Content;
 
 using JsonDocument outputAsJson = JsonDocument.Parse(output.ToString());
