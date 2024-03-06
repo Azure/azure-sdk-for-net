@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using Azure.Core;
 using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.Storage;
@@ -16,6 +15,7 @@ namespace Azure.Provisioning.Storage
     public class StorageAccount : Resource<StorageAccountData>
     {
         private const string ResourceTypeName = "Microsoft.Storage/storageAccounts";
+        private static readonly Func<string, StorageAccountData> Empty = (name) => ArmStorageModelFactory.StorageAccountData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageAccount"/>.
@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Storage
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         public StorageAccount(IConstruct scope, StorageKind kind, StorageSkuName sku, ResourceGroup? parent = null, string name = "sa")
-            : base(scope, parent, name, ResourceTypeName, "2022-09-01", (name) => ArmStorageModelFactory.StorageAccountData(
+            : this(scope, kind, sku, parent, name, false, (name) => ArmStorageModelFactory.StorageAccountData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -37,6 +37,21 @@ namespace Azure.Provisioning.Storage
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
+
+        private StorageAccount(IConstruct scope, StorageKind kind = default, StorageSkuName sku = default, ResourceGroup? parent = null, string name = "sa", bool isExisting = true, Func<string, StorageAccountData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, "2022-09-01", creator ?? Empty, isExisting)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="StorageAccount"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static StorageAccount FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new StorageAccount(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

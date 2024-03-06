@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Provisioning.Sql;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 
@@ -14,6 +13,7 @@ namespace Azure.Provisioning.KeyVaults
     public class KeyVaultSecret : Resource<KeyVaultSecretData>
     {
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults/secrets";
+        private static readonly Func<string, KeyVaultSecretData> Empty = (name) => ArmKeyVaultModelFactory.KeyVaultSecretData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultSecret"/>.
@@ -23,12 +23,17 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         public KeyVaultSecret(IConstruct scope, KeyVault? parent = null, string name = "kvs", string version = "2023-02-01")
-            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
+            : this(scope, parent, name, version, false, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
                 name: name,
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
                     value: Guid.Empty.ToString())
                 ))
+        {
+        }
+
+        private KeyVaultSecret(IConstruct scope, KeyVault? parent = null, string name = "kvs", string version = "2023-02-01", bool isExisting = false, Func<string, KeyVaultSecretData>? createProperties = null)
+            : base(scope, parent, name, ResourceTypeName, version, createProperties ?? Empty, isExisting)
         {
         }
 
@@ -41,7 +46,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="connectionString">The connection string.</param>
         /// <param name="version">The version.</param>
         public KeyVaultSecret(IConstruct scope, string name, ConnectionString connectionString, KeyVault? parent = null, string version = "2023-02-01")
-            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
+            : this(scope, parent, name, version, false, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
                 name: name,
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
@@ -49,6 +54,16 @@ namespace Azure.Provisioning.KeyVaults
                 ))
         {
         }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="KeyVaultSecret"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static KeyVaultSecret FromExisting(IConstruct scope, string name, KeyVault? parent = null)
+            => new KeyVaultSecret(scope, parent, name, isExisting: true);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

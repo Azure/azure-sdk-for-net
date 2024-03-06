@@ -5,11 +5,8 @@ using System;
 using Azure.Core;
 using Azure.Provisioning.Redis;
 using Azure.Provisioning.ResourceManager;
-using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
-using Azure.ResourceManager.PostgreSql.Models;
-using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.Provisioning.PostgreSql
 {
@@ -19,6 +16,7 @@ namespace Azure.Provisioning.PostgreSql
     public class PostgreSqlFlexibleServer : Resource<PostgreSqlFlexibleServerData>
     {
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers";
+        private static readonly Func<string, PostgreSqlFlexibleServerData> Empty = (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData();
 
         /// <summary>
         /// Creates a new instance of the <see cref="PostgreSqlFlexibleServer"/> class.
@@ -50,7 +48,7 @@ namespace Azure.Provisioning.PostgreSql
             string name = "postgres",
             string version = "2020-06-01",
             AzureLocation? location = default)
-            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
+        : this(scope, administratorLogin, administratorPassword, sku, highAvailability, storage, backup, network, availabilityZone, parent, name, version, location, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
                 name: name,
                 sku: sku,
                 // create new instances so the properties can be overriden by user if needed
@@ -66,6 +64,26 @@ namespace Azure.Provisioning.PostgreSql
             AssignProperty(data => data.AdministratorLoginPassword, administratorPassword);
         }
 
+        private PostgreSqlFlexibleServer(
+            IConstruct scope,
+            Parameter administratorLogin = default,
+            Parameter administratorPassword = default,
+            PostgreSqlFlexibleServerSku? sku = default,
+            PostgreSqlFlexibleServerHighAvailability? highAvailability = default,
+            PostgreSqlFlexibleServerStorage? storage = default,
+            PostgreSqlFlexibleServerBackupProperties? backup = default,
+            PostgreSqlFlexibleServerNetwork? network = default,
+            string? availabilityZone = default,
+            ResourceGroup? parent = default,
+            string name = "postgres",
+            string version = "2020-06-01",
+            AzureLocation? location = default,
+            bool isExisting = false,
+            Func<string, PostgreSqlFlexibleServerData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
+        {
+        }
+
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
         {
@@ -76,6 +94,16 @@ namespace Azure.Provisioning.PostgreSql
             }
             return result;
         }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="PostgreSqlFlexibleServer"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static PostgreSqlFlexibleServer FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new PostgreSqlFlexibleServer(scope, parent: parent, name: name, isExisting: true);
 
         /// <summary>
         /// Gets the connection string for the <see cref="RedisCache"/>.

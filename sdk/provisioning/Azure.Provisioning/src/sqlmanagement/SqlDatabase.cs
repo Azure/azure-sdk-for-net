@@ -14,6 +14,7 @@ namespace Azure.Provisioning.Sql
     public class SqlDatabase : Resource<SqlDatabaseData>
     {
         private const string ResourceTypeName = "Microsoft.Sql/servers/databases";
+        private static readonly Func<string, SqlDatabaseData> Empty = (name) => ArmSqlModelFactory.SqlDatabaseData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlDatabase"/>.
@@ -24,10 +25,15 @@ namespace Azure.Provisioning.Sql
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default)
-            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlDatabaseData(
+            : this(scope, parent, name, version, location, false, (name) => ArmSqlModelFactory.SqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
+        {
+        }
+
+        private SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default, bool isExisting = false, Func<string, SqlDatabaseData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 
@@ -39,6 +45,16 @@ namespace Azure.Provisioning.Sql
         /// <returns></returns>
         public SqlDatabaseConnectionString GetConnectionString(Parameter passwordSecret, string userName = "appUser")
             => new SqlDatabaseConnectionString(this, passwordSecret, userName);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SqlDatabase"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static SqlDatabase FromExisting(IConstruct scope, string name, SqlServer? parent = null)
+            => new SqlDatabase(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
