@@ -964,3 +964,7 @@
 
 # Onboarding Documentation and Quickstarts
 /doc/DataPlaneCodeGeneration                                       @chunyu3 @pshao25 @lirenhe @annelo-msft
+
+# PRLabel: %Device Registry
+# ServiceLabel: %Device Registry
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
