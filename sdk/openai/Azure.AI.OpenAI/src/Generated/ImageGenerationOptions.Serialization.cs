@@ -27,39 +27,39 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
             }
             writer.WritePropertyName("prompt"u8);
             writer.WriteStringValue(Prompt);
-            if (ImageCount.HasValue)
+            if (Optional.IsDefined(ImageCount))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ImageCount.Value);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size.Value.ToString());
             }
-            if (ResponseFormat.HasValue)
+            if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
                 writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
-            if (Quality.HasValue)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteStringValue(Quality.Value.ToString());
             }
-            if (Style.HasValue)
+            if (Optional.IsDefined(Style))
             {
                 writer.WritePropertyName("style"u8);
                 writer.WriteStringValue(Style.Value.ToString());
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);

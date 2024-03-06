@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (RestoreFilePath != null)
+            if (Optional.IsDefined(RestoreFilePath))
             {
                 writer.WritePropertyName("restoreFilePath"u8);
                 writer.WriteStringValue(RestoreFilePath);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IList<string> fileList = default;
-            Optional<string> restoreFilePath = default;
+            string restoreFilePath = default;
             ResourceIdentifier destinationVolumeId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupBackupRestoreFilesContent(fileList, restoreFilePath.Value, destinationVolumeId, serializedAdditionalRawData);
+            return new NetAppVolumeBackupBackupRestoreFilesContent(fileList, restoreFilePath, destinationVolumeId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupBackupRestoreFilesContent>.Write(ModelReaderWriterOptions options)

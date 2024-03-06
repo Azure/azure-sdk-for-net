@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Min.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (options.Format != "W" && Max.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);

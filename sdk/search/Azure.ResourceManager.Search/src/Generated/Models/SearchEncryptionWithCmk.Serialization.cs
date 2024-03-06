@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Enforcement.HasValue)
+            if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToSerialString());
             }
-            if (options.Format != "W" && EncryptionComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EncryptionComplianceStatus))
             {
                 writer.WritePropertyName("encryptionComplianceStatus"u8);
                 writer.WriteStringValue(EncryptionComplianceStatus.Value.ToSerialString());

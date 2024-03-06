@@ -29,22 +29,22 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (InternalAudioTaskLabel.HasValue)
+            if (Optional.IsDefined(InternalAudioTaskLabel))
             {
                 writer.WritePropertyName("task"u8);
                 writer.WriteStringValue(InternalAudioTaskLabel.Value.ToString());
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(Convert.ToDouble(Duration.Value.ToString("s\\.fff")));
             }
-            if (!(Segments is ChangeTrackingList<AudioTranslationSegment> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();

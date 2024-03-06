@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<StreamingEndpointData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OdataCount.HasValue)
+            if (Optional.IsDefined(OdataCount))
             {
                 writer.WritePropertyName("@odata.count"u8);
                 writer.WriteNumberValue(OdataCount.Value);
             }
-            if (OdataNextLink != null)
+            if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);

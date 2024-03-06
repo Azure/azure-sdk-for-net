@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<NetAppBackupVaultData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IReadOnlyList<NetAppBackupVaultData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultsList(value ?? new ChangeTrackingList<NetAppBackupVaultData>(), nextLink.Value, serializedAdditionalRawData);
+            return new BackupVaultsList(value ?? new ChangeTrackingList<NetAppBackupVaultData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultsList>.Write(ModelReaderWriterOptions options)

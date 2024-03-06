@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
@@ -39,27 +40,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteObjectValue(AuthenticationIdentity);
             writer.WritePropertyName("resourceAccessIdentity"u8);
             writer.WriteObjectValue(ResourceAccessIdentity);
-            if (options.Format != "W" && IsResponsive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResponsive))
             {
                 writer.WritePropertyName("isResponsive"u8);
                 writer.WriteBooleanValue(IsResponsive.Value);
             }
-            if (options.Format != "W" && LastHeartbeatOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatOn))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatOn.Value, "O");
             }
-            if (options.Format != "W" && VersionNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionNumber))
             {
                 writer.WritePropertyName("versionNumber"u8);
                 writer.WriteStringValue(VersionNumber);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();

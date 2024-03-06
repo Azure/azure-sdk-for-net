@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AlertNotificationSetting != null)
+            if (Optional.IsDefined(AlertNotificationSetting))
             {
                 if (AlertNotificationSetting != null)
                 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("computeConfiguration"u8);
             writer.WriteObjectValue(ComputeConfiguration);
-            if (MonitoringTarget != null)
+            if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {

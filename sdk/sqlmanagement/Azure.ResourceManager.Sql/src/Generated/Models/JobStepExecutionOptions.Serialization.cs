@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (RetryAttempts.HasValue)
+            if (Optional.IsDefined(RetryAttempts))
             {
                 writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
-            if (InitialRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(InitialRetryIntervalSeconds))
             {
                 writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
-            if (MaximumRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
             {
                 writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
-            if (RetryIntervalBackoffMultiplier.HasValue)
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
             {
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);

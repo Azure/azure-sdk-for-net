@@ -43,61 +43,61 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BackupId != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupId))
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Size.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && BackupType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (options.Format != "W" && FailureReason != null)
+            if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
             writer.WritePropertyName("volumeResourceId"u8);
             writer.WriteStringValue(VolumeResourceId);
-            if (UseExistingSnapshot.HasValue)
+            if (Optional.IsDefined(UseExistingSnapshot))
             {
                 writer.WritePropertyName("useExistingSnapshot"u8);
                 writer.WriteBooleanValue(UseExistingSnapshot.Value);
             }
-            if (SnapshotName != null)
+            if (Optional.IsDefined(SnapshotName))
             {
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && BackupPolicyResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyResourceId))
             {
                 writer.WritePropertyName("backupPolicyResourceId"u8);
                 writer.WriteStringValue(BackupPolicyResourceId);
@@ -144,18 +144,18 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> backupId = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> provisioningState = default;
-            Optional<long> size = default;
-            Optional<string> label = default;
-            Optional<NetAppBackupType> backupType = default;
-            Optional<string> failureReason = default;
+            SystemData systemData = default;
+            string backupId = default;
+            DateTimeOffset? creationDate = default;
+            string provisioningState = default;
+            long? size = default;
+            string label = default;
+            NetAppBackupType? backupType = default;
+            string failureReason = default;
             ResourceIdentifier volumeResourceId = default;
-            Optional<bool> useExistingSnapshot = default;
-            Optional<string> snapshotName = default;
-            Optional<string> backupPolicyResourceId = default;
+            bool? useExistingSnapshot = default;
+            string snapshotName = default;
+            string backupPolicyResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,18 +277,18 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
-                backupId.Value,
-                Optional.ToNullable(creationDate),
-                provisioningState.Value,
-                Optional.ToNullable(size),
-                label.Value,
-                Optional.ToNullable(backupType),
-                failureReason.Value,
+                systemData,
+                backupId,
+                creationDate,
+                provisioningState,
+                size,
+                label,
+                backupType,
+                failureReason,
                 volumeResourceId,
-                Optional.ToNullable(useExistingSnapshot),
-                snapshotName.Value,
-                backupPolicyResourceId.Value,
+                useExistingSnapshot,
+                snapshotName,
+                backupPolicyResourceId,
                 serializedAdditionalRawData);
         }
 

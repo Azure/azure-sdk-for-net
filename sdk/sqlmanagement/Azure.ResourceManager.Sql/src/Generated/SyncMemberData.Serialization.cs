@@ -43,69 +43,69 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DatabaseType.HasValue)
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (SyncAgentId != null)
+            if (Optional.IsDefined(SyncAgentId))
             {
                 writer.WritePropertyName("syncAgentId"u8);
                 writer.WriteStringValue(SyncAgentId);
             }
-            if (SqlServerDatabaseId.HasValue)
+            if (Optional.IsDefined(SqlServerDatabaseId))
             {
                 writer.WritePropertyName("sqlServerDatabaseId"u8);
                 writer.WriteStringValue(SqlServerDatabaseId.Value);
             }
-            if (SyncMemberAzureDatabaseResourceId != null)
+            if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
             {
                 writer.WritePropertyName("syncMemberAzureDatabaseResourceId"u8);
                 writer.WriteStringValue(SyncMemberAzureDatabaseResourceId);
             }
-            if (UsePrivateLinkConnection.HasValue)
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
-            if (options.Format != "W" && PrivateEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointName))
             {
                 writer.WritePropertyName("privateEndpointName"u8);
                 writer.WriteStringValue(PrivateEndpointName);
             }
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SyncDirection.HasValue)
+            if (Optional.IsDefined(SyncDirection))
             {
                 writer.WritePropertyName("syncDirection"u8);
                 writer.WriteStringValue(SyncDirection.Value.ToString());
             }
-            if (options.Format != "W" && SyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());

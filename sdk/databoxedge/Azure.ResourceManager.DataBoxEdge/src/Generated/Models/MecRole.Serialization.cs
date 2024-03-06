@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -44,29 +45,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString);
             }
-            if (ControllerEndpoint != null)
+            if (Optional.IsDefined(ControllerEndpoint))
             {
                 writer.WritePropertyName("controllerEndpoint"u8);
                 writer.WriteStringValue(ControllerEndpoint);
             }
-            if (ResourceUniqueId != null)
+            if (Optional.IsDefined(ResourceUniqueId))
             {
                 writer.WritePropertyName("resourceUniqueId"u8);
                 writer.WriteStringValue(ResourceUniqueId);
             }
-            if (RoleStatus.HasValue)
+            if (Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());

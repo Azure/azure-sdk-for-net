@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (LatestRestorableTimestamp.HasValue)
+            if (Optional.IsDefined(LatestRestorableTimestamp))
             {
                 writer.WritePropertyName("latestRestorableTimestamp"u8);
                 writer.WriteStringValue(LatestRestorableTimestamp.Value, "O");

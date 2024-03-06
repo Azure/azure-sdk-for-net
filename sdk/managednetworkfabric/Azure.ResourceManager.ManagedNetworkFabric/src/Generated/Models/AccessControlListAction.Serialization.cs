@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (AclActionType.HasValue)
+            if (Optional.IsDefined(AclActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AclActionType.Value.ToString());
             }
-            if (CounterName != null)
+            if (Optional.IsDefined(CounterName))
             {
                 writer.WritePropertyName("counterName"u8);
                 writer.WriteStringValue(CounterName);

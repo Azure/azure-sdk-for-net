@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (!(NetworkInterfaces is ChangeTrackingList<LargeInstanceIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CircuitId != null)
+            if (options.Format != "W" && Optional.IsDefined(CircuitId))
             {
                 writer.WritePropertyName("circuitId"u8);
                 writer.WriteStringValue(CircuitId);

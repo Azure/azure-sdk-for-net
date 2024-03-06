@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDeviceCount))
             {
                 writer.WritePropertyName("totalDeviceCount"u8);
                 writer.WriteNumberValue(TotalDeviceCount.Value);
             }
-            if (options.Format != "W" && EnabledDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnabledDeviceCount))
             {
                 writer.WritePropertyName("enabledDeviceCount"u8);
                 writer.WriteNumberValue(EnabledDeviceCount.Value);
             }
-            if (options.Format != "W" && DisabledDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisabledDeviceCount))
             {
                 writer.WritePropertyName("disabledDeviceCount"u8);
                 writer.WriteNumberValue(DisabledDeviceCount.Value);

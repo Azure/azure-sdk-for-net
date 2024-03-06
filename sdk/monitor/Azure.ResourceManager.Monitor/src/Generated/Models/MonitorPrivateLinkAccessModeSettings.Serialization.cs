@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(QueryAccessMode.ToString());
             writer.WritePropertyName("ingestionAccessMode"u8);
             writer.WriteStringValue(IngestionAccessMode.ToString());
-            if (!(Exclusions is ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TimestampUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimestampUtc))
             {
                 writer.WritePropertyName("timestampUtc"u8);
                 writer.WriteStringValue(TimestampUtc.Value, "O");
             }
-            if (options.Format != "W" && SourceSlotName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceSlotName))
             {
                 writer.WritePropertyName("sourceSlotName"u8);
                 writer.WriteStringValue(SourceSlotName);
             }
-            if (options.Format != "W" && DestinationSlotName != null)
+            if (options.Format != "W" && Optional.IsDefined(DestinationSlotName))
             {
                 writer.WritePropertyName("destinationSlotName"u8);
                 writer.WriteStringValue(DestinationSlotName);

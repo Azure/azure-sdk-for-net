@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && TotalRecallErrorsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalRecallErrorsCount))
             {
                 writer.WritePropertyName("totalRecallErrorsCount"u8);
                 writer.WriteNumberValue(TotalRecallErrorsCount.Value);
             }
-            if (options.Format != "W" && !(RecallErrors is ChangeTrackingList<ServerEndpointRecallError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecallErrors))
             {
                 writer.WritePropertyName("recallErrors"u8);
                 writer.WriteStartArray();

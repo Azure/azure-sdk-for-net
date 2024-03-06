@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ExistingLabDiskId != null)
+            if (Optional.IsDefined(ExistingLabDiskId))
             {
                 writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);

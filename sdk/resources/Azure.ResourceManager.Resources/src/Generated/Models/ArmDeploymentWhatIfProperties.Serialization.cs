@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (WhatIfSettings != null)
+            if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings"u8);
                 writer.WriteObjectValue(WhatIfSettings);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (TemplateLink != null)
+            if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -60,24 +61,24 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (ParametersLink != null)
+            if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (DebugSetting != null)
+            if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (ErrorDeployment != null)
+            if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment);
             }
-            if (ExpressionEvaluation != null)
+            if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
                 writer.WriteObjectValue(ExpressionEvaluation);

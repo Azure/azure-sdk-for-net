@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (BlobContainerUri != null)
+            if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 JsonSerializer.Serialize(writer, SasToken);

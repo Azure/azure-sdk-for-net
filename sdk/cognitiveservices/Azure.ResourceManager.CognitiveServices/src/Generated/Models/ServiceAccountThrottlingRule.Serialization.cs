@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (RenewalPeriod.HasValue)
+            if (Optional.IsDefined(RenewalPeriod))
             {
                 writer.WritePropertyName("renewalPeriod"u8);
                 writer.WriteNumberValue(RenewalPeriod.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (MinCount.HasValue)
+            if (Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (IsDynamicThrottlingEnabled.HasValue)
+            if (Optional.IsDefined(IsDynamicThrottlingEnabled))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
                 writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
-            if (!(MatchPatterns is ChangeTrackingList<ServiceAccountThrottlingMatchPattern> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchPatterns))
             {
                 writer.WritePropertyName("matchPatterns"u8);
                 writer.WriteStartArray();

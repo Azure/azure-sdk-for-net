@@ -43,109 +43,109 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AuthenticationSettings != null)
+            if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
-            if (SubscriptionKeyParameterNames != null)
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
-            if (ApiType.HasValue)
+            if (Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (ApiRevision != null)
+            if (Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (IsCurrent.HasValue)
+            if (Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
-            if (options.Format != "W" && IsOnline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (ApiRevisionDescription != null)
+            if (Optional.IsDefined(ApiRevisionDescription))
             {
                 writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
-            if (ApiVersionDescription != null)
+            if (Optional.IsDefined(ApiVersionDescription))
             {
                 writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
-            if (ApiVersionSetId != null)
+            if (Optional.IsDefined(ApiVersionSetId))
             {
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (IsSubscriptionRequired.HasValue)
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (TermsOfServiceUri != null)
+            if (Optional.IsDefined(TermsOfServiceUri))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
-            if (Contact != null)
+            if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
-            if (License != null)
+            if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
             }
-            if (SourceApiId != null)
+            if (Optional.IsDefined(SourceApiId))
             {
                 writer.WritePropertyName("sourceApiId"u8);
                 writer.WriteStringValue(SourceApiId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(Protocols is ChangeTrackingList<ApiOperationInvokableProtocol> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (ApiVersionSet != null)
+            if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
                 writer.WriteObjectValue(ApiVersionSet);

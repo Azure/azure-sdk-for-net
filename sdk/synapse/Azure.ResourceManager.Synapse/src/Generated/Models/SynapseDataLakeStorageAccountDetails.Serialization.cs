@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (AccountUri != null)
+            if (Optional.IsDefined(AccountUri))
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUri.AbsoluteUri);
             }
-            if (Filesystem != null)
+            if (Optional.IsDefined(Filesystem))
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (CreateManagedPrivateEndpoint.HasValue)
+            if (Optional.IsDefined(CreateManagedPrivateEndpoint))
             {
                 writer.WritePropertyName("createManagedPrivateEndpoint"u8);
                 writer.WriteBooleanValue(CreateManagedPrivateEndpoint.Value);

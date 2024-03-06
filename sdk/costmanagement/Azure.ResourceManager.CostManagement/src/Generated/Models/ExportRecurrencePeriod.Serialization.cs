@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
-            if (To.HasValue)
+            if (Optional.IsDefined(To))
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(To.Value, "O");

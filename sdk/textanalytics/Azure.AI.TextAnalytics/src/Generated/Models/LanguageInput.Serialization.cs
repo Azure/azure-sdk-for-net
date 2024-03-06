@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -33,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 writer.WriteNull("text");
             }
-            if (CountryHint != null)
+            if (Optional.IsDefined(CountryHint))
             {
                 writer.WritePropertyName("countryHint"u8);
                 writer.WriteStringValue(CountryHint);

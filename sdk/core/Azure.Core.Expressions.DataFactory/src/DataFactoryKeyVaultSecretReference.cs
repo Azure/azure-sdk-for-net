@@ -11,7 +11,7 @@ namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Azure Key Vault secret reference. </summary>
     [PropertyReferenceType(new string[0], new[]{ nameof(SecretBaseType)})]
-    public partial class DataFactoryKeyVaultSecretReference : DataFactorySecretBaseDefinition
+    public partial class DataFactoryKeyVaultSecretReference : DataFactorySecretDefinition
     {
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>

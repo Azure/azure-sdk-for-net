@@ -27,72 +27,72 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (HouseNumber != null)
+            if (Optional.IsDefined(HouseNumber))
             {
                 writer.WritePropertyName("houseNumber"u8);
                 writer.WriteStringValue(HouseNumber);
             }
-            if (PoBox != null)
+            if (Optional.IsDefined(PoBox))
             {
                 writer.WritePropertyName("poBox"u8);
                 writer.WriteStringValue(PoBox);
             }
-            if (Road != null)
+            if (Optional.IsDefined(Road))
             {
                 writer.WritePropertyName("road"u8);
                 writer.WriteStringValue(Road);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (PostalCode != null)
+            if (Optional.IsDefined(PostalCode))
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (CountryRegion != null)
+            if (Optional.IsDefined(CountryRegion))
             {
                 writer.WritePropertyName("countryRegion"u8);
                 writer.WriteStringValue(CountryRegion);
             }
-            if (StreetAddress != null)
+            if (Optional.IsDefined(StreetAddress))
             {
                 writer.WritePropertyName("streetAddress"u8);
                 writer.WriteStringValue(StreetAddress);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (CityDistrict != null)
+            if (Optional.IsDefined(CityDistrict))
             {
                 writer.WritePropertyName("cityDistrict"u8);
                 writer.WriteStringValue(CityDistrict);
             }
-            if (StateDistrict != null)
+            if (Optional.IsDefined(StateDistrict))
             {
                 writer.WritePropertyName("stateDistrict"u8);
                 writer.WriteStringValue(StateDistrict);
             }
-            if (Suburb != null)
+            if (Optional.IsDefined(Suburb))
             {
                 writer.WritePropertyName("suburb"u8);
                 writer.WriteStringValue(Suburb);
             }
-            if (House != null)
+            if (Optional.IsDefined(House))
             {
                 writer.WritePropertyName("house"u8);
                 writer.WriteStringValue(House);
             }
-            if (Level != null)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);

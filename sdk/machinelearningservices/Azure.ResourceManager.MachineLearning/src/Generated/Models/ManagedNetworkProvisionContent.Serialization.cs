@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IncludeSpark.HasValue)
+            if (Optional.IsDefined(IncludeSpark))
             {
                 writer.WritePropertyName("includeSpark"u8);
                 writer.WriteBooleanValue(IncludeSpark.Value);

@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PeerAsn.HasValue)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (!(PeerContactDetail is ChangeTrackingList<PeerAsnContactDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PeerContactDetail))
             {
                 writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndArray();
             }
-            if (PeerName != null)
+            if (Optional.IsDefined(PeerName))
             {
                 writer.WritePropertyName("peerName"u8);
                 writer.WriteStringValue(PeerName);
             }
-            if (options.Format != "W" && ValidationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValidationState))
             {
                 writer.WritePropertyName("validationState"u8);
                 writer.WriteStringValue(ValidationState.Value.ToString());
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (MsixPackageFamilyName != null)
+            if (Optional.IsDefined(MsixPackageFamilyName))
             {
                 if (MsixPackageFamilyName != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("msixPackageFamilyName");
                 }
             }
-            if (MsixPackageApplicationId != null)
+            if (Optional.IsDefined(MsixPackageApplicationId))
             {
                 if (MsixPackageApplicationId != null)
                 {
@@ -94,39 +94,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("msixPackageApplicationId");
                 }
             }
-            if (ApplicationType.HasValue)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             writer.WritePropertyName("commandLineSetting"u8);
             writer.WriteStringValue(CommandLineSetting.ToString());
-            if (CommandLineArguments != null)
+            if (Optional.IsDefined(CommandLineArguments))
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (ShowInPortal.HasValue)
+            if (Optional.IsDefined(ShowInPortal))
             {
                 writer.WritePropertyName("showInPortal"u8);
                 writer.WriteBooleanValue(ShowInPortal.Value);
             }
-            if (IconPath != null)
+            if (Optional.IsDefined(IconPath))
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (IconIndex.HasValue)
+            if (Optional.IsDefined(IconIndex))
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
             }
-            if (options.Format != "W" && IconHash != null)
+            if (options.Format != "W" && Optional.IsDefined(IconHash))
             {
                 writer.WritePropertyName("iconHash"u8);
                 writer.WriteStringValue(IconHash);
             }
-            if (options.Format != "W" && IconContent != null)
+            if (options.Format != "W" && Optional.IsDefined(IconContent))
             {
                 writer.WritePropertyName("iconContent"u8);
 #if NET6_0_OR_GREATER

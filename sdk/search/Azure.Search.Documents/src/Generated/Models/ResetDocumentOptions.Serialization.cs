@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(DocumentKeys is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DocumentKeys))
             {
                 writer.WritePropertyName("documentKeys"u8);
                 writer.WriteStartArray();
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataSourceDocumentIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataSourceDocumentIds))
             {
                 writer.WritePropertyName("datasourceDocumentIds"u8);
                 writer.WriteStartArray();

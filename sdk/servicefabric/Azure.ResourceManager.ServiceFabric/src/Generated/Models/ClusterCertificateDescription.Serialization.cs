@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (ThumbprintSecondary != null)
+            if (Optional.IsDefined(ThumbprintSecondary))
             {
                 writer.WritePropertyName("thumbprintSecondary"u8);
                 writer.WriteStringValue(ThumbprintSecondary);
             }
-            if (X509StoreName.HasValue)
+            if (Optional.IsDefined(X509StoreName))
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());

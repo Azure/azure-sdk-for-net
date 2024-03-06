@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Kernelspec != null)
+            if (Optional.IsDefined(Kernelspec))
             {
                 writer.WritePropertyName("kernelspec"u8);
                 writer.WriteObjectValue(Kernelspec);
             }
-            if (LanguageInfo != null)
+            if (Optional.IsDefined(LanguageInfo))
             {
                 if (LanguageInfo != null)
                 {

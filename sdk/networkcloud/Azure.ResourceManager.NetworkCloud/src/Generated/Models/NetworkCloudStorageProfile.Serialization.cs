@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
             writer.WriteObjectValue(OSDisk);
-            if (!(VolumeAttachments is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();

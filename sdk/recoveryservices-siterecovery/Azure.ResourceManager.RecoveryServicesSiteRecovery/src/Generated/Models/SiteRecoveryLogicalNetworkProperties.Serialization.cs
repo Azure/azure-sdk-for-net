@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (NetworkVirtualizationStatus != null)
+            if (Optional.IsDefined(NetworkVirtualizationStatus))
             {
                 writer.WritePropertyName("networkVirtualizationStatus"u8);
                 writer.WriteStringValue(NetworkVirtualizationStatus);
             }
-            if (LogicalNetworkUsage != null)
+            if (Optional.IsDefined(LogicalNetworkUsage))
             {
                 writer.WritePropertyName("logicalNetworkUsage"u8);
                 writer.WriteStringValue(LogicalNetworkUsage);
             }
-            if (LogicalNetworkDefinitionsStatus != null)
+            if (Optional.IsDefined(LogicalNetworkDefinitionsStatus))
             {
                 writer.WritePropertyName("logicalNetworkDefinitionsStatus"u8);
                 writer.WriteStringValue(LogicalNetworkDefinitionsStatus);

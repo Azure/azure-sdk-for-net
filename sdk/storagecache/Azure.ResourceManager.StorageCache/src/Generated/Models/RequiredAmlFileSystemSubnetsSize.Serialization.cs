@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (FilesystemSubnetSize.HasValue)
+            if (Optional.IsDefined(FilesystemSubnetSize))
             {
                 writer.WritePropertyName("filesystemSubnetSize"u8);
                 writer.WriteNumberValue(FilesystemSubnetSize.Value);

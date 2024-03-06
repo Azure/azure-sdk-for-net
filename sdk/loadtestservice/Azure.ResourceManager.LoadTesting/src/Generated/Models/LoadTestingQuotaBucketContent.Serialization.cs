@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -42,29 +43,29 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CurrentUsage.HasValue)
+            if (Optional.IsDefined(CurrentUsage))
             {
                 writer.WritePropertyName("currentUsage"u8);
                 writer.WriteNumberValue(CurrentUsage.Value);
             }
-            if (CurrentQuota.HasValue)
+            if (Optional.IsDefined(CurrentQuota))
             {
                 writer.WritePropertyName("currentQuota"u8);
                 writer.WriteNumberValue(CurrentQuota.Value);
             }
-            if (NewQuota.HasValue)
+            if (Optional.IsDefined(NewQuota))
             {
                 writer.WritePropertyName("newQuota"u8);
                 writer.WriteNumberValue(NewQuota.Value);
             }
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);

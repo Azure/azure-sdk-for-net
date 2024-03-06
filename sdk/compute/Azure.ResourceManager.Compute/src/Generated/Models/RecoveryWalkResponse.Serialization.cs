@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WalkPerformed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WalkPerformed))
             {
                 writer.WritePropertyName("walkPerformed"u8);
                 writer.WriteBooleanValue(WalkPerformed.Value);
             }
-            if (options.Format != "W" && NextPlatformUpdateDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextPlatformUpdateDomain))
             {
                 writer.WritePropertyName("nextPlatformUpdateDomain"u8);
                 writer.WriteNumberValue(NextPlatformUpdateDomain.Value);

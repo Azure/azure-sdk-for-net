@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (ActionName != null)
+            if (Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (LinkedProperty != null)
+            if (Optional.IsDefined(LinkedProperty))
             {
                 writer.WritePropertyName("linkedProperty"u8);
                 writer.WriteStringValue(LinkedProperty);
             }
-            if (LinkedAction != null)
+            if (Optional.IsDefined(LinkedAction))
             {
                 writer.WritePropertyName("linkedAction"u8);
                 writer.WriteStringValue(LinkedAction);
             }
-            if (LinkedActionVerb != null)
+            if (Optional.IsDefined(LinkedActionVerb))
             {
                 writer.WritePropertyName("linkedActionVerb"u8);
                 writer.WriteStringValue(LinkedActionVerb);
             }
-            if (LinkedType != null)
+            if (Optional.IsDefined(LinkedType))
             {
                 writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);

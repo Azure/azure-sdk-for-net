@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -28,42 +29,42 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClientProtocol.HasValue)
+            if (Optional.IsDefined(ClientProtocol))
             {
                 writer.WritePropertyName("clientProtocol"u8);
                 writer.WriteStringValue(ClientProtocol.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (ClusteringPolicy.HasValue)
+            if (Optional.IsDefined(ClusteringPolicy))
             {
                 writer.WritePropertyName("clusteringPolicy"u8);
                 writer.WriteStringValue(ClusteringPolicy.Value.ToString());
             }
-            if (EvictionPolicy.HasValue)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Persistence != null)
+            if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
                 writer.WriteObjectValue(Persistence);
             }
-            if (!(Modules is ChangeTrackingList<RedisEnterpriseModule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 writer.WriteEndArray();
             }
-            if (GeoReplication != null)
+            if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication);

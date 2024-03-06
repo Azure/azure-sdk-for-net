@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskLunId.HasValue)
+            if (Optional.IsDefined(DiskLunId))
             {
                 writer.WritePropertyName("diskLunId"u8);
                 writer.WriteNumberValue(DiskLunId.Value);
             }
-            if (DiskAutoProtectionStatus.HasValue)
+            if (Optional.IsDefined(DiskAutoProtectionStatus))
             {
                 writer.WritePropertyName("diskAutoProtectionStatus"u8);
                 writer.WriteStringValue(DiskAutoProtectionStatus.Value.ToString());

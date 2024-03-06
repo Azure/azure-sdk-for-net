@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVault>> value = default;
+            IReadOnlyList<NetAppVault> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultList(new ChangeTrackingList<NetAppVault>(), serializedAdditionalRawData);
+            return new VaultList(value ?? new ChangeTrackingList<NetAppVault>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (BillingPlan.HasValue)
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (CompletedTransactions.HasValue)
+            if (Optional.IsDefined(CompletedTransactions))
             {
                 writer.WritePropertyName("completedTransactions"u8);
                 writer.WriteNumberValue(CompletedTransactions.Value);
             }
-            if (TotalTransactions.HasValue)
+            if (Optional.IsDefined(TotalTransactions))
             {
                 writer.WritePropertyName("totalTransactions"u8);
                 writer.WriteNumberValue(TotalTransactions.Value);
             }
-            if (BillingCurrencyTotalPaidAmount != null)
+            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
             }
-            if (BillingCurrencyProratedAmount != null)
+            if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyProratedAmount);
             }
-            if (BillingCurrencyRemainingCommitmentAmount != null)
+            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
