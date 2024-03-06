@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Files.DataLake;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {

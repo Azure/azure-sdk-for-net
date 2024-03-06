@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Queues;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
