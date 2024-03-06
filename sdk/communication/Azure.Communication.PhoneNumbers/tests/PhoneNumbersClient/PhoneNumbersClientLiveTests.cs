@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -1281,6 +1282,30 @@ namespace Azure.Communication.PhoneNumbers.Tests
                 Console.WriteLine("Offering " + offering.ToString());
             }
             Assert.IsNotNull(offerings);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SearchOperatorInformationAsyncSucceeds()
+        {
+            var number = GetTestPhoneNumber();
+            var client = CreateClient();
+
+            var operatorInformation = await client.SearchOperatorInformationAsync(new List<string>() { number });
+
+            Assert.AreEqual(number, operatorInformation.Value.Values[0].PhoneNumber);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SearchOperatorInformationSucceeds()
+        {
+            var number = GetTestPhoneNumber();
+            var client = CreateClient();
+
+            var operatorInformation = client.SearchOperatorInformation(new List<string>() { number });
+
+            Assert.AreEqual(number, operatorInformation.Value.Values[0].PhoneNumber);
         }
 
         private static bool IsSuccess(int statusCode)
