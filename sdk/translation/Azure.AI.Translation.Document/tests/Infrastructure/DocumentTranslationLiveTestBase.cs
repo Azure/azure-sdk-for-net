@@ -60,7 +60,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Diagnostics =
                 {
-                    LoggedHeaderNames = { "x-ms-request-id", "X-RequestId" },
+                    LoggedHeaderNames = { "x-ms-request-id", "X-RequestId", "apim-request-id" },
                     IsLoggingContentEnabled = true
                 }
             };
