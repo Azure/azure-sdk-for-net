@@ -295,14 +295,21 @@ namespace Azure.Provisioning.Tests
         public async Task CosmosDB()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            infrastructure.AddParameter(new Parameter("keyVaultName"));
             var account = new CosmosDBAccount(infrastructure);
             _ = new CosmosDBSqlDatabase(infrastructure, account);
-            _ = infrastructure.AddKeyVault();
-            _ = new KeyVaultSecret(infrastructure, "connectionString", account.GetConnectionString());
+            var kv = KeyVault.FromExisting(infrastructure, name: "keyVaultName");
+            _ = new KeyVaultSecret(infrastructure, "connectionString", account.GetConnectionString(), kv);
 
             infrastructure.Build(GetOutputPath());
 
-            await ValidateBicepAsync(interactiveMode: true);
+            await ValidateBicepAsync(
+                BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        keyVaultName = new { value = "vault" },
+                    }),
+                interactiveMode: true);
         }
 
         [RecordedTest]

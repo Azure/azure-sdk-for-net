@@ -1,8 +1,15 @@
 targetScope = 'resourceGroup'
 
 @description('')
+param keyVaultName string
+
+@description('')
 param location string = resourceGroup().location
 
+
+resource keyVault_UEcuHY1Rh 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+  name: keyVaultName
+}
 
 resource cosmosDBAccount_20A3gDQya 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' = {
   name: toLower(take(concat('cosmosDB', uniqueString(resourceGroup().id)), 24))
@@ -32,21 +39,8 @@ resource cosmosDBSqlDatabase_l1zQLmb4K 'Microsoft.DocumentDB/databaseAccounts/sq
   }
 }
 
-resource keyVault_5t0GshPLB 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
-  location: location
-  properties: {
-    tenantId: tenant().tenantId
-    sku: {
-      name: 'standard'
-      family: 'A'
-    }
-    enableRbacAuthorization: true
-  }
-}
-
-resource keyVaultSecret_R6AWfDGcA 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_5t0GshPLB
+resource keyVaultSecret_q9NjpylOg 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_UEcuHY1Rh
   name: 'connectionString'
   location: location
   properties: {
