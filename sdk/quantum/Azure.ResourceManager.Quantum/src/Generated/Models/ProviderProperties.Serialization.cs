@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Quantum.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ProviderType != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);
             }
-            if (options.Format != "W" && Company != null)
+            if (options.Format != "W" && Optional.IsDefined(Company))
             {
                 writer.WritePropertyName("company"u8);
                 writer.WriteStringValue(Company);
             }
-            if (options.Format != "W" && DefaultEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultEndpoint))
             {
                 writer.WritePropertyName("defaultEndpoint"u8);
                 writer.WriteStringValue(DefaultEndpoint);
             }
-            if (Aad != null)
+            if (Optional.IsDefined(Aad))
             {
                 writer.WritePropertyName("aad"u8);
                 writer.WriteObjectValue(Aad);
             }
-            if (ManagedApplication != null)
+            if (Optional.IsDefined(ManagedApplication))
             {
                 writer.WritePropertyName("managedApplication"u8);
                 writer.WriteObjectValue(ManagedApplication);
             }
-            if (!(Targets is ChangeTrackingList<TargetDescription> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Skus is ChangeTrackingList<SkuDescription> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Skus))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(QuotaDimensions is ChangeTrackingList<QuotaDimension> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(QuotaDimensions))
             {
                 writer.WritePropertyName("quotaDimensions"u8);
                 writer.WriteStartArray();
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PricingDimensions is ChangeTrackingList<PricingDimension> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PricingDimensions))
             {
                 writer.WritePropertyName("pricingDimensions"u8);
                 writer.WriteStartArray();

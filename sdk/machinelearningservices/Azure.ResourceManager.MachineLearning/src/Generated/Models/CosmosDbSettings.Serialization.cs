@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (CollectionsThroughput.HasValue)
+            if (Optional.IsDefined(CollectionsThroughput))
             {
                 writer.WritePropertyName("collectionsThroughput"u8);
                 writer.WriteNumberValue(CollectionsThroughput.Value);

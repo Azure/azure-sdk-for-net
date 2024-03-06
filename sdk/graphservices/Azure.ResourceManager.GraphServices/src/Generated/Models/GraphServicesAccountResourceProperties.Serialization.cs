@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GraphServices;
 
 namespace Azure.ResourceManager.GraphServices.Models
 {
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.GraphServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            if (options.Format != "W" && BillingPlanId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingPlanId))
             {
                 writer.WritePropertyName("billingPlanId"u8);
                 writer.WriteStringValue(BillingPlanId);

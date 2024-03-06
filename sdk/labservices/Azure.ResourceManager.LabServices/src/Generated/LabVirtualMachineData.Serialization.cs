@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && ConnectionProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
-            if (options.Format != "W" && ClaimedByUserId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimedByUserId))
             {
                 writer.WritePropertyName("claimedByUserId"u8);
                 writer.WriteStringValue(ClaimedByUserId);
             }
-            if (options.Format != "W" && VmType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VmType))
             {
                 writer.WritePropertyName("vmType"u8);
                 writer.WriteStringValue(VmType.Value.ToSerialString());

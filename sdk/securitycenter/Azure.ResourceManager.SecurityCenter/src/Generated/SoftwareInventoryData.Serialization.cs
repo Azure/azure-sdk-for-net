@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (OSPlatform != null)
+            if (Optional.IsDefined(OSPlatform))
             {
                 writer.WritePropertyName("osPlatform"u8);
                 writer.WriteStringValue(OSPlatform);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (SoftwareName != null)
+            if (Optional.IsDefined(SoftwareName))
             {
                 writer.WritePropertyName("softwareName"u8);
                 writer.WriteStringValue(SoftwareName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (EndOfSupportStatus.HasValue)
+            if (Optional.IsDefined(EndOfSupportStatus))
             {
                 writer.WritePropertyName("endOfSupportStatus"u8);
                 writer.WriteStringValue(EndOfSupportStatus.Value.ToString());
             }
-            if (EndOfSupportDate != null)
+            if (Optional.IsDefined(EndOfSupportDate))
             {
                 writer.WritePropertyName("endOfSupportDate"u8);
                 writer.WriteStringValue(EndOfSupportDate);
             }
-            if (NumberOfKnownVulnerabilities.HasValue)
+            if (Optional.IsDefined(NumberOfKnownVulnerabilities))
             {
                 writer.WritePropertyName("numberOfKnownVulnerabilities"u8);
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
-            if (FirstSeenOn.HasValue)
+            if (Optional.IsDefined(FirstSeenOn))
             {
                 writer.WritePropertyName("firstSeenAt"u8);
                 writer.WriteStringValue(FirstSeenOn.Value, "O");

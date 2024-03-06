@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (StartSearchOn.HasValue)
+            if (Optional.IsDefined(StartSearchOn))
             {
                 writer.WritePropertyName("startSearchTime"u8);
                 writer.WriteStringValue(StartSearchOn.Value, "O");
             }
-            if (EndSearchOn.HasValue)
+            if (Optional.IsDefined(EndSearchOn))
             {
                 writer.WritePropertyName("endSearchTime"u8);
                 writer.WriteStringValue(EndSearchOn.Value, "O");
             }
-            if (options.Format != "W" && SourceTable != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceTable))
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
-            if (options.Format != "W" && AzureAsyncOperationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
             {
                 writer.WritePropertyName("azureAsyncOperationId"u8);
                 writer.WriteStringValue(AzureAsyncOperationId.Value);

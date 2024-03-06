@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (SoftStopTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(SoftStopTimeoutSeconds))
             {
                 writer.WritePropertyName("softStopTimeoutSeconds"u8);
                 writer.WriteNumberValue(SoftStopTimeoutSeconds.Value);

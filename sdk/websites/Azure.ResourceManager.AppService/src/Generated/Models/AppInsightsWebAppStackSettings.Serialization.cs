@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSupported))
             {
                 writer.WritePropertyName("isSupported"u8);
                 writer.WriteBooleanValue(IsSupported.Value);
             }
-            if (options.Format != "W" && IsDefaultOff.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultOff))
             {
                 writer.WritePropertyName("isDefaultOff"u8);
                 writer.WriteBooleanValue(IsDefaultOff.Value);

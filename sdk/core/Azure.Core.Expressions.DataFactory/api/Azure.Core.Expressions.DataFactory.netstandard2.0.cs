@@ -25,7 +25,7 @@ namespace Azure.Core.Expressions.DataFactory
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromExpression(string expression) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference keyVaultSecretReference) { throw null; }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference secretReference) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<T> FromLiteral(T? literal) { throw null; }
         public static Azure.Core.Expressions.DataFactory.DataFactoryElement<System.String?> FromSecretString(Azure.Core.Expressions.DataFactory.DataFactorySecretString secretString) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -33,7 +33,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryElement<T> (T literal) { throw null; }
         public override string? ToString() { throw null; }
     }
-    public partial class DataFactoryKeyVaultSecretReference : Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition
+    public partial class DataFactoryKeyVaultSecretReference : Azure.Core.Expressions.DataFactory.DataFactorySecretDefinition
     {
         public DataFactoryKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference store, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> secretName) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SecretName { get { throw null; } set { } }
@@ -64,18 +64,11 @@ namespace Azure.Core.Expressions.DataFactory
         public static bool operator !=(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType left, Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public static partial class DataFactoryModelFactory
+    public abstract partial class DataFactorySecretDefinition
     {
-        public static Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecretReference DataFactoryKeyVaultSecretReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference store, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> secretName, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> secretVersion) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference DataFactoryLinkedServiceReference(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType referenceType, string? referenceName, System.Collections.Generic.IDictionary<string, System.BinaryData?> parameters) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition DataFactorySecretBaseDefinition(string secretBaseType) { throw null; }
-        public static Azure.Core.Expressions.DataFactory.DataFactorySecretString DataFactorySecretString(string value) { throw null; }
+        protected DataFactorySecretDefinition() { }
     }
-    public abstract partial class DataFactorySecretBaseDefinition
-    {
-        protected DataFactorySecretBaseDefinition() { }
-    }
-    public partial class DataFactorySecretString : Azure.Core.Expressions.DataFactory.DataFactorySecretBaseDefinition
+    public partial class DataFactorySecretString : Azure.Core.Expressions.DataFactory.DataFactorySecretDefinition
     {
         public DataFactorySecretString(string value) { }
         public string? Value { get { throw null; } set { } }

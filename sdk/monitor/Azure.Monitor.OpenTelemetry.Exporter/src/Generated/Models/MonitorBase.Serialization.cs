@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -15,12 +16,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BaseType != null)
+            if (Optional.IsDefined(BaseType))
             {
                 writer.WritePropertyName("baseType"u8);
                 writer.WriteStringValue(BaseType);
             }
-            if (BaseData != null)
+            if (Optional.IsDefined(BaseData))
             {
                 writer.WritePropertyName("baseData"u8);
                 writer.WriteObjectValue(BaseData);

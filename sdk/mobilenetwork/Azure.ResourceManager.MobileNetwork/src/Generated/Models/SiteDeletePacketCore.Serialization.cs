@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (PacketCore != null)
+            if (Optional.IsDefined(PacketCore))
             {
                 writer.WritePropertyName("packetCore"u8);
                 JsonSerializer.Serialize(writer, PacketCore);

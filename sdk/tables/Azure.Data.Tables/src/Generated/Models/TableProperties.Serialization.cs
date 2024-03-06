@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Data.Tables.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("TableName"u8);
                 writer.WriteStringValue(TableName);

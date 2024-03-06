@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Profiles is ChangeTrackingList<VectorSearchProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
@@ -26,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Algorithms is ChangeTrackingList<VectorSearchAlgorithmConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Algorithms))
             {
                 writer.WritePropertyName("algorithms"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Vectorizers is ChangeTrackingList<VectorSearchVectorizer> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Vectorizers))
             {
                 writer.WritePropertyName("vectorizers"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Compressions is ChangeTrackingList<VectorSearchCompressionConfiguration> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Compressions))
             {
                 writer.WritePropertyName("compressions"u8);
                 writer.WriteStartArray();

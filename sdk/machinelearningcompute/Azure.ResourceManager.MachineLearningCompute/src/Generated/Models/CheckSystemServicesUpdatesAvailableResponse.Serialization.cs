@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UpdatesAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatesAvailable))
             {
                 writer.WritePropertyName("updatesAvailable"u8);
                 writer.WriteStringValue(UpdatesAvailable.Value.ToString());

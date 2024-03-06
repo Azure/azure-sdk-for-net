@@ -27,17 +27,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Sex.HasValue)
+            if (Optional.IsDefined(Sex))
             {
                 writer.WritePropertyName("sex"u8);
                 writer.WriteStringValue(Sex.Value.ToString());
             }
-            if (BirthDate.HasValue)
+            if (Optional.IsDefined(BirthDate))
             {
                 writer.WritePropertyName("birthDate"u8);
                 writer.WriteStringValue(BirthDate.Value, "D");
             }
-            if (!(ClinicalInfo is ChangeTrackingList<ClinicalCodedElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClinicalInfo))
             {
                 writer.WritePropertyName("clinicalInfo"u8);
                 writer.WriteStartArray();

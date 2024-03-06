@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core
             writer.WriteStringValue(InputBlobUri.AbsoluteUri);
             writer.WritePropertyName("outputBlobUri"u8);
             writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 SerializeErrorValue(writer);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (AppName != null)
+            if (Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (ArtifactName != null)
+            if (Optional.IsDefined(ArtifactName))
             {
                 writer.WritePropertyName("artifactName"u8);
                 writer.WriteStringValue(ArtifactName);
             }
-            if (AppPort.HasValue)
+            if (Optional.IsDefined(AppPort))
             {
                 writer.WritePropertyName("appPort"u8);
                 writer.WriteNumberValue(AppPort.Value);
             }
-            if (AppType != null)
+            if (Optional.IsDefined(AppType))
             {
                 writer.WritePropertyName("appType"u8);
                 writer.WriteStringValue(AppType);
             }
-            if (!(ApplicationConfigurations is ChangeTrackingList<SpringBootAppApplicationConfigurationsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationConfigurations))
             {
                 writer.WritePropertyName("applicationConfigurations"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BindingPorts is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BindingPorts))
             {
                 writer.WritePropertyName("bindingPorts"u8);
                 writer.WriteStartArray();
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BuildJdkVersion != null)
+            if (Optional.IsDefined(BuildJdkVersion))
             {
                 writer.WritePropertyName("buildJdkVersion"u8);
                 writer.WriteStringValue(BuildJdkVersion);
             }
-            if (!(Certificates is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Checksum != null)
+            if (Optional.IsDefined(Checksum))
             {
                 writer.WritePropertyName("checksum"u8);
                 writer.WriteStringValue(Checksum);
             }
-            if (!(Dependencies is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Dependencies))
             {
                 writer.WritePropertyName("dependencies"u8);
                 writer.WriteStartArray();
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Environments is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Environments))
             {
                 writer.WritePropertyName("environments"u8);
                 writer.WriteStartArray();
@@ -106,22 +107,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (JarFileLocation != null)
+            if (Optional.IsDefined(JarFileLocation))
             {
                 writer.WritePropertyName("jarFileLocation"u8);
                 writer.WriteStringValue(JarFileLocation);
             }
-            if (JvmMemoryInMB.HasValue)
+            if (Optional.IsDefined(JvmMemoryInMB))
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);
             }
-            if (!(JvmOptions is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(JvmOptions))
             {
                 writer.WritePropertyName("jvmOptions"u8);
                 writer.WriteStartArray();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Miscs is ChangeTrackingList<SpringBootAppMiscsItem> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Miscs))
             {
                 writer.WritePropertyName("miscs"u8);
                 writer.WriteStartArray();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Instances is ChangeTrackingList<SpringBootAppInstancesItem> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -151,12 +152,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RuntimeJdkVersion != null)
+            if (Optional.IsDefined(RuntimeJdkVersion))
             {
                 writer.WritePropertyName("runtimeJdkVersion"u8);
                 writer.WriteStringValue(RuntimeJdkVersion);
             }
-            if (!(Servers is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Servers))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MachineArmIds is ChangeTrackingList<ResourceIdentifier> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(MachineArmIds))
             {
                 writer.WritePropertyName("machineArmIds"u8);
                 writer.WriteStartArray();
@@ -181,17 +182,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SiteName != null)
+            if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (SpringBootVersion != null)
+            if (Optional.IsDefined(SpringBootVersion))
             {
                 writer.WritePropertyName("springBootVersion"u8);
                 writer.WriteStringValue(SpringBootVersion);
             }
-            if (!(StaticContentLocations is ChangeTrackingList<string> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(StaticContentLocations))
             {
                 writer.WritePropertyName("staticContentLocations"u8);
                 writer.WriteStartArray();
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConnectionStrings is ChangeTrackingList<string> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionStrings))
             {
                 writer.WritePropertyName("connectionStrings"u8);
                 writer.WriteStartArray();
@@ -211,22 +212,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection11 && collection11.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

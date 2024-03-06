@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(Queues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Queues))
             {
                 writer.WritePropertyName("queues"u8);
                 writer.WriteStartArray();
@@ -52,12 +52,12 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (!(_labels is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (!(_tags is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(_tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (!(Channels is ChangeTrackingList<RouterChannel> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Channels))
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Offers is ChangeTrackingList<RouterJobOffer> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Offers))
             {
                 writer.WritePropertyName("offers"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AssignedJobs is ChangeTrackingList<RouterWorkerAssignment> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssignedJobs))
             {
                 writer.WritePropertyName("assignedJobs"u8);
                 writer.WriteStartArray();
@@ -133,17 +133,17 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LoadRatio.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LoadRatio))
             {
                 writer.WritePropertyName("loadRatio"u8);
                 writer.WriteNumberValue(LoadRatio.Value);
             }
-            if (AvailableForOffers.HasValue)
+            if (Optional.IsDefined(AvailableForOffers))
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
-            if (MaxConcurrentOffers.HasValue)
+            if (Optional.IsDefined(MaxConcurrentOffers))
             {
                 writer.WritePropertyName("maxConcurrentOffers"u8);
                 writer.WriteNumberValue(MaxConcurrentOffers.Value);

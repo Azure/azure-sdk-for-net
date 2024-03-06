@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IdProvider != null)
+            if (Optional.IsDefined(IdProvider))
             {
                 writer.WritePropertyName("idProvider"u8);
                 writer.WriteStringValue(IdProvider.AbsoluteUri);

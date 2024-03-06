@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (RegistryServer != null)
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryUrl"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (RegistryUserName != null)
+            if (Optional.IsDefined(RegistryUserName))
             {
                 writer.WritePropertyName("registryUserName"u8);
                 writer.WriteStringValue(RegistryUserName);
             }
-            if (RegistryPassword != null)
+            if (Optional.IsDefined(RegistryPassword))
             {
                 writer.WritePropertyName("registryPassword"u8);
                 writer.WriteStringValue(RegistryPassword);

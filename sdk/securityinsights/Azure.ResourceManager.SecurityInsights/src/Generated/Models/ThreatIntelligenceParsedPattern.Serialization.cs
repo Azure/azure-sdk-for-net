@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PatternTypeKey != null)
+            if (Optional.IsDefined(PatternTypeKey))
             {
                 writer.WritePropertyName("patternTypeKey"u8);
                 writer.WriteStringValue(PatternTypeKey);
             }
-            if (!(PatternTypeValues is ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternTypeValues))
             {
                 writer.WritePropertyName("patternTypeValues"u8);
                 writer.WriteStartArray();

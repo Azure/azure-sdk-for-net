@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (SizeInGB.HasValue)
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (MinimumSupportedDiskCount.HasValue)
+            if (Optional.IsDefined(MinimumSupportedDiskCount))
             {
                 writer.WritePropertyName("minimumSupportedDiskCount"u8);
                 writer.WriteNumberValue(MinimumSupportedDiskCount.Value);
             }
-            if (MaximumSupportedDiskCount.HasValue)
+            if (Optional.IsDefined(MaximumSupportedDiskCount))
             {
                 writer.WritePropertyName("maximumSupportedDiskCount"u8);
                 writer.WriteNumberValue(MaximumSupportedDiskCount.Value);
             }
-            if (IopsReadWrite.HasValue)
+            if (Optional.IsDefined(IopsReadWrite))
             {
                 writer.WritePropertyName("iopsReadWrite"u8);
                 writer.WriteNumberValue(IopsReadWrite.Value);
             }
-            if (MbpsReadWrite.HasValue)
+            if (Optional.IsDefined(MbpsReadWrite))
             {
                 writer.WritePropertyName("mbpsReadWrite"u8);
                 writer.WriteNumberValue(MbpsReadWrite.Value);
             }
-            if (DiskTier != null)
+            if (Optional.IsDefined(DiskTier))
             {
                 writer.WritePropertyName("diskTier"u8);
                 writer.WriteStringValue(DiskTier);

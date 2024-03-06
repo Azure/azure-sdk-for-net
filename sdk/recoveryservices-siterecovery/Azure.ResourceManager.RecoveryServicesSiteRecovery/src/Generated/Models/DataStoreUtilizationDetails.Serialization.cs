@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalSnapshotsSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsSupported))
             {
                 writer.WritePropertyName("totalSnapshotsSupported"u8);
                 writer.WriteNumberValue(TotalSnapshotsSupported.Value);
             }
-            if (options.Format != "W" && TotalSnapshotsCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsCreated))
             {
                 writer.WritePropertyName("totalSnapshotsCreated"u8);
                 writer.WriteNumberValue(TotalSnapshotsCreated.Value);
             }
-            if (options.Format != "W" && DataStoreName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataStoreName))
             {
                 writer.WritePropertyName("dataStoreName"u8);
                 writer.WriteStringValue(DataStoreName);

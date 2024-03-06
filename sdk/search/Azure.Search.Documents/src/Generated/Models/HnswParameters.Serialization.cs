@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (M.HasValue)
+            if (Optional.IsDefined(M))
             {
                 if (M != null)
                 {
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("m");
                 }
             }
-            if (EfConstruction.HasValue)
+            if (Optional.IsDefined(EfConstruction))
             {
                 if (EfConstruction != null)
                 {
@@ -39,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("efConstruction");
                 }
             }
-            if (EfSearch.HasValue)
+            if (Optional.IsDefined(EfSearch))
             {
                 if (EfSearch != null)
                 {
@@ -51,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("efSearch");
                 }
             }
-            if (Metric.HasValue)
+            if (Optional.IsDefined(Metric))
             {
                 if (Metric != null)
                 {

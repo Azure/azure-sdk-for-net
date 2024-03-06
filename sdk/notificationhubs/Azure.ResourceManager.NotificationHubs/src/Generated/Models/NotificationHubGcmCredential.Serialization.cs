@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GcmEndpoint != null)
+            if (Optional.IsDefined(GcmEndpoint))
             {
                 writer.WritePropertyName("gcmEndpoint"u8);
                 writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
             }
-            if (GcmApiKey != null)
+            if (Optional.IsDefined(GcmApiKey))
             {
                 writer.WritePropertyName("googleApiKey"u8);
                 writer.WriteStringValue(GcmApiKey);

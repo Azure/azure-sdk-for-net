@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (StateName != null)
+            if (Optional.IsDefined(StateName))
             {
                 writer.WritePropertyName("stateName"u8);
                 writer.WriteStringValue(StateName);
             }
-            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Cities is ChangeTrackingList<AvailableProvidersListCity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Cities))
             {
                 writer.WritePropertyName("cities"u8);
                 writer.WriteStartArray();

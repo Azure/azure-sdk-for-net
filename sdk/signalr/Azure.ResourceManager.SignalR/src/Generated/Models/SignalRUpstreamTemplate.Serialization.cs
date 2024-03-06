@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -26,24 +27,24 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (HubPattern != null)
+            if (Optional.IsDefined(HubPattern))
             {
                 writer.WritePropertyName("hubPattern"u8);
                 writer.WriteStringValue(HubPattern);
             }
-            if (EventPattern != null)
+            if (Optional.IsDefined(EventPattern))
             {
                 writer.WritePropertyName("eventPattern"u8);
                 writer.WriteStringValue(EventPattern);
             }
-            if (CategoryPattern != null)
+            if (Optional.IsDefined(CategoryPattern))
             {
                 writer.WritePropertyName("categoryPattern"u8);
                 writer.WriteStringValue(CategoryPattern);
             }
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Auth != null)
+            if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);

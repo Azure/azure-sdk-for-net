@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Routing;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(BatchItems is ChangeTrackingList<BatchRequestItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BatchItems))
             {
                 writer.WritePropertyName("batchItems"u8);
                 writer.WriteStartArray();

@@ -27,17 +27,17 @@ namespace Azure.AI.AnomalyDetector
             }
 
             writer.WriteStartObject();
-            if (Variable != null)
+            if (Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (ContributionScore.HasValue)
+            if (Optional.IsDefined(ContributionScore))
             {
                 writer.WritePropertyName("contributionScore"u8);
                 writer.WriteNumberValue(ContributionScore.Value);
             }
-            if (CorrelationChanges != null)
+            if (Optional.IsDefined(CorrelationChanges))
             {
                 writer.WritePropertyName("correlationChanges"u8);
                 writer.WriteObjectValue(CorrelationChanges);

@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -15,31 +16,31 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
-            if (ColumnSeparator != null)
+            if (Optional.IsDefined(ColumnSeparator))
             {
                 writer.WriteStartElement("ColumnSeparator");
                 writer.WriteValue(ColumnSeparator);
                 writer.WriteEndElement();
             }
-            if (FieldQuote != null)
+            if (Optional.IsDefined(FieldQuote))
             {
                 writer.WriteStartElement("FieldQuote");
                 writer.WriteValue(FieldQuote);
                 writer.WriteEndElement();
             }
-            if (RecordSeparator != null)
+            if (Optional.IsDefined(RecordSeparator))
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);
                 writer.WriteEndElement();
             }
-            if (EscapeChar != null)
+            if (Optional.IsDefined(EscapeChar))
             {
                 writer.WriteStartElement("EscapeChar");
                 writer.WriteValue(EscapeChar);
                 writer.WriteEndElement();
             }
-            if (HeadersPresent.HasValue)
+            if (Optional.IsDefined(HeadersPresent))
             {
                 writer.WriteStartElement("HasHeaders");
                 writer.WriteValue(HeadersPresent.Value);
