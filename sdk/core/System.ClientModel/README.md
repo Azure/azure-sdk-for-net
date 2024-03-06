@@ -124,7 +124,7 @@ public class SampleClient
 
 ### Reading and writing model content to HTTP messages
 
-Service clients provide model types representing service resources as input parameters and return values from service clients' [convenience methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods).  Client authors can implement the `IPersistableModel<T>` and `IJsonModel<T>` interfaces their in model implementations to make it easy for clients to write input model content to request message bodies, and to read response content and create instances of output models from it.  An example of how clients' service methods might use such models is shown in [Send a message using the ClientPipeline](#send-a-message-using-clientpipeline).  The following sample shows a minimal example of what a persistable model implementation might look like.
+Service clients provide **model types** representing service resources as input parameters and return values from service clients' [convenience methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods).  Client authors can implement the `IPersistableModel<T>` and `IJsonModel<T>` interfaces their in model implementations to make it easy for clients to write input model content to request message bodies, and to read response content and create instances of output models from it.  An example of how clients' service methods might use such models is shown in [Send a message using the ClientPipeline](#send-a-message-using-clientpipeline).  The following sample shows a minimal example of what a persistable model implementation might look like.
 
 ```C# Snippet:ReadmeSampleModel
 public class SampleResource : IJsonModel<SampleResource>
@@ -247,7 +247,7 @@ ApiKeyCredential credential = new(key!);
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
 ```
 
-For more information on client configuration, see [Client configuration samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/Configuration.md)
+For more information on client configuration, see [Client configuration samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/Configuration.md).
 
 ### Customizing HTTP requests
 
@@ -267,11 +267,11 @@ options.AddHeader("CustomHeader", "CustomHeaderValue");
 ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
 ```
 
-For more information on customizing requests, see [Protocol method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods)
+For more information on customizing requests, see [Protocol method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods).
 
 ### Provide request content
 
-In service clients' [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods), users pass the request content as an input parameter to the method as the `BinaryContent` type.  The following example shows how an instance of `BinaryContent` can be created and passed to a protocol method.
+In service clients' [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods), users pass the request content as an input parameter to the method as an instance of `BinaryContent`.  The following example shows how to create a `BinaryContent` instance to pass to a protocol method.
 
 ```C# Snippet:ServiceMethodsProtocolMethod
 // Create a BinaryData instance from a JSON string literal.
