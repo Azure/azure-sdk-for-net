@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Availability != null)
+            if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability);
             }
-            if (Cloud != null)
+            if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (Zone != null)
+            if (Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (KafkaBootstrapEndpoint != null)
+            if (Optional.IsDefined(KafkaBootstrapEndpoint))
             {
                 writer.WritePropertyName("kafkaBootstrapEndpoint"u8);
                 writer.WriteStringValue(KafkaBootstrapEndpoint);
             }
-            if (HttpEndpoint != null)
+            if (Optional.IsDefined(HttpEndpoint))
             {
                 writer.WritePropertyName("httpEndpoint"u8);
                 writer.WriteStringValue(HttpEndpoint);
             }
-            if (ApiEndpoint != null)
+            if (Optional.IsDefined(ApiEndpoint))
             {
                 writer.WritePropertyName("apiEndpoint"u8);
                 writer.WriteStringValue(ApiEndpoint);
             }
-            if (Config != null)
+            if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteObjectValue(Config);
             }
-            if (Environment != null)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment);
             }
-            if (Network != null)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network);
             }
-            if (Byok != null)
+            if (Optional.IsDefined(Byok))
             {
                 writer.WritePropertyName("byok"u8);
                 writer.WriteObjectValue(Byok);

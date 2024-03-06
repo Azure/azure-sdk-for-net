@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
         /// <param name="self"> Self lookup url. </param>
         /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdTimestamp"> Created Date Time. </param>
-        /// <param name="updatedTimestamp"> Updated Date time. </param>
-        /// <param name="deletedTimestamp"> Deleted Date time. </param>
+        /// <param name="createdOn"> Created Date Time. </param>
+        /// <param name="updatedOn"> Updated Date time. </param>
+        /// <param name="deletedOn"> Deleted Date time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SCMetadataEntity(string self, string resourceName, string createdTimestamp, string updatedTimestamp, string deletedTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Self = self;
             ResourceName = resourceName;
-            CreatedTimestamp = createdTimestamp;
-            UpdatedTimestamp = updatedTimestamp;
-            DeletedTimestamp = deletedTimestamp;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            DeletedOn = deletedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Resource name of the record. </summary>
         public string ResourceName { get; }
         /// <summary> Created Date Time. </summary>
-        public string CreatedTimestamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Updated Date time. </summary>
-        public string UpdatedTimestamp { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Deleted Date time. </summary>
-        public string DeletedTimestamp { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

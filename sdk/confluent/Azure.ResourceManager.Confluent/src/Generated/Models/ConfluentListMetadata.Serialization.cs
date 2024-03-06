@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (First != null)
+            if (Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First);
             }
-            if (Last != null)
+            if (Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last);
             }
-            if (Prev != null)
+            if (Optional.IsDefined(Prev))
             {
                 writer.WritePropertyName("prev"u8);
                 writer.WriteStringValue(Prev);
             }
-            if (Next != null)
+            if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
                 writer.WriteStringValue(Next);
             }
-            if (TotalSize.HasValue)
+            if (Optional.IsDefined(TotalSize))
             {
                 writer.WritePropertyName("total_size"u8);
                 writer.WriteNumberValue(TotalSize.Value);

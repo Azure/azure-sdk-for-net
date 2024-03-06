@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (CodemirrorMode != null)
+            if (Optional.IsDefined(CodemirrorMode))
             {
                 writer.WritePropertyName("codemirror_mode"u8);
                 writer.WriteStringValue(CodemirrorMode);

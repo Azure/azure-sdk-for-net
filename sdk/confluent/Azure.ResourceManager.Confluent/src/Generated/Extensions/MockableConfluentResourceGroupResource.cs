@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ValidationResponse>> ValidateOrganizationV2ValidationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentOrganizationValidationResult>> ValidateOrganizationV2Async(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             if (organizationName == null)
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 throw new ArgumentNullException(nameof(data));
             }
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2Validation");
+            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response<ValidationResponse> ValidateOrganizationV2Validation(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentOrganizationValidationResult> ValidateOrganizationV2(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             if (organizationName == null)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 throw new ArgumentNullException(nameof(data));
             }
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2Validation");
+            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
             try
             {

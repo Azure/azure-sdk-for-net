@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataSetId"u8);
             writer.WriteStringValue(DataSetId);
-            if (options.Format != "W" && DataSetMappingStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetMappingStatus))
             {
                 writer.WritePropertyName("dataSetMappingStatus"u8);
                 writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
@@ -62,12 +63,12 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(FilePath);
             writer.WritePropertyName("fileSystem"u8);
             writer.WriteStringValue(FileSystem);
-            if (OutputType.HasValue)
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

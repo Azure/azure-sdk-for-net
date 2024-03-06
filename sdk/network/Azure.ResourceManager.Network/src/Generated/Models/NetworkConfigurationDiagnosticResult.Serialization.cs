@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Profile != null)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteObjectValue(Profile);
             }
-            if (NetworkSecurityGroupResult != null)
+            if (Optional.IsDefined(NetworkSecurityGroupResult))
             {
                 writer.WritePropertyName("networkSecurityGroupResult"u8);
                 writer.WriteObjectValue(NetworkSecurityGroupResult);

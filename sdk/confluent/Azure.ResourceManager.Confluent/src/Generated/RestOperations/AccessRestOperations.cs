@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Confluent
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListUsersRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListUsersRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessListUsersSuccessResponse>> ListUsersAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessUserListResult>> ListUsersAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -96,20 +96,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListUsersRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListUsersRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListUsersSuccessResponse value = default;
+                        AccessUserListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessListUsersSuccessResponse.DeserializeAccessListUsersSuccessResponse(document.RootElement);
+                        value = AccessUserListResult.DeserializeAccessUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessListUsersSuccessResponse> ListUsers(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessUserListResult> ListUsers(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -151,20 +151,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListUsersRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListUsersRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListUsersSuccessResponse value = default;
+                        AccessUserListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessListUsersSuccessResponse.DeserializeAccessListUsersSuccessResponse(document.RootElement);
+                        value = AccessUserListResult.DeserializeAccessUserListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListServiceAccountsRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListServiceAccountsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessListServiceAccountsSuccessResponse>> ListServiceAccountsAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessServiceAccountListResult>> ListServiceAccountsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -231,20 +231,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListServiceAccountsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListServiceAccountsRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListServiceAccountsSuccessResponse value = default;
+                        AccessServiceAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessListServiceAccountsSuccessResponse.DeserializeAccessListServiceAccountsSuccessResponse(document.RootElement);
+                        value = AccessServiceAccountListResult.DeserializeAccessServiceAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -256,11 +256,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessListServiceAccountsSuccessResponse> ListServiceAccounts(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessServiceAccountListResult> ListServiceAccounts(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListServiceAccountsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListServiceAccountsRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListServiceAccountsSuccessResponse value = default;
+                        AccessServiceAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessListServiceAccountsSuccessResponse.DeserializeAccessListServiceAccountsSuccessResponse(document.RootElement);
+                        value = AccessServiceAccountListResult.DeserializeAccessServiceAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListInvitationsRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListInvitationsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessListInvitationsSuccessResponse>> ListInvitationsAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessInvitationListResult>> ListInvitationsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -366,20 +366,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListInvitationsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListInvitationsRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListInvitationsSuccessResponse value = default;
+                        AccessInvitationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessListInvitationsSuccessResponse.DeserializeAccessListInvitationsSuccessResponse(document.RootElement);
+                        value = AccessInvitationListResult.DeserializeAccessInvitationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,11 +391,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessListInvitationsSuccessResponse> ListInvitations(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessInvitationListResult> ListInvitations(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -421,20 +421,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListInvitationsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListInvitationsRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListInvitationsSuccessResponse value = default;
+                        AccessInvitationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessListInvitationsSuccessResponse.DeserializeAccessListInvitationsSuccessResponse(document.RootElement);
+                        value = AccessInvitationListResult.DeserializeAccessInvitationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateInviteUserRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessInviteUserAccountModel body)
+        internal HttpMessage CreateInviteUserRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessInvitationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -460,9 +460,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> Invite user account model. </param>
+        /// <param name="content"> Invite user account model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InvitationRecord>> InviteUserAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessInviteUserAccountModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessInvitationRecord>> InviteUserAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessInvitationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -501,20 +501,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateInviteUserRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateInviteUserRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        InvitationRecord value = default;
+                        AccessInvitationRecord value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = InvitationRecord.DeserializeInvitationRecord(document.RootElement);
+                        value = AccessInvitationRecord.DeserializeAccessInvitationRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> Invite user account model. </param>
+        /// <param name="content"> Invite user account model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InvitationRecord> InviteUser(string subscriptionId, string resourceGroupName, string organizationName, AccessInviteUserAccountModel body, CancellationToken cancellationToken = default)
+        public Response<AccessInvitationRecord> InviteUser(string subscriptionId, string resourceGroupName, string organizationName, AccessInvitationContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -556,20 +556,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateInviteUserRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateInviteUserRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        InvitationRecord value = default;
+                        AccessInvitationRecord value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = InvitationRecord.DeserializeInvitationRecord(document.RootElement);
+                        value = AccessInvitationRecord.DeserializeAccessInvitationRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListEnvironmentsRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListEnvironmentsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -595,9 +595,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -606,11 +606,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessListEnvironmentsSuccessResponse>> ListEnvironmentsAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessEnvironmentListResult>> ListEnvironmentsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -636,20 +636,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListEnvironmentsSuccessResponse value = default;
+                        AccessEnvironmentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessListEnvironmentsSuccessResponse.DeserializeAccessListEnvironmentsSuccessResponse(document.RootElement);
+                        value = AccessEnvironmentListResult.DeserializeAccessEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -661,11 +661,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessListEnvironmentsSuccessResponse> ListEnvironments(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessEnvironmentListResult> ListEnvironments(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -691,20 +691,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListEnvironmentsSuccessResponse value = default;
+                        AccessEnvironmentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessListEnvironmentsSuccessResponse.DeserializeAccessListEnvironmentsSuccessResponse(document.RootElement);
+                        value = AccessEnvironmentListResult.DeserializeAccessEnvironmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -730,9 +730,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -741,11 +741,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessListClusterSuccessResponse>> ListClustersAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessClusterListResult>> ListClustersAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -771,20 +771,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListClusterSuccessResponse value = default;
+                        AccessClusterListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessListClusterSuccessResponse.DeserializeAccessListClusterSuccessResponse(document.RootElement);
+                        value = AccessClusterListResult.DeserializeAccessClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -796,11 +796,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessListClusterSuccessResponse> ListClusters(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessClusterListResult> ListClusters(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -826,20 +826,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListClusterSuccessResponse value = default;
+                        AccessClusterListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessListClusterSuccessResponse.DeserializeAccessListClusterSuccessResponse(document.RootElement);
+                        value = AccessClusterListResult.DeserializeAccessClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListRoleBindingsRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListRoleBindingsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -865,9 +865,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -876,11 +876,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessListRoleBindingsSuccessResponse>> ListRoleBindingsAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessRoleBindingListResult>> ListRoleBindingsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -906,20 +906,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListRoleBindingsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListRoleBindingsRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListRoleBindingsSuccessResponse value = default;
+                        AccessRoleBindingListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessListRoleBindingsSuccessResponse.DeserializeAccessListRoleBindingsSuccessResponse(document.RootElement);
+                        value = AccessRoleBindingListResult.DeserializeAccessRoleBindingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -931,11 +931,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessListRoleBindingsSuccessResponse> ListRoleBindings(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessRoleBindingListResult> ListRoleBindings(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -961,20 +961,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListRoleBindingsRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListRoleBindingsRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessListRoleBindingsSuccessResponse value = default;
+                        AccessRoleBindingListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessListRoleBindingsSuccessResponse.DeserializeAccessListRoleBindingsSuccessResponse(document.RootElement);
+                        value = AccessRoleBindingListResult.DeserializeAccessRoleBindingListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateCreateRoleBindingRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessCreateRoleBindingRequestModel body)
+        internal HttpMessage CreateCreateRoleBindingRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessRoleBindingCreateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1000,9 +1000,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1011,11 +1011,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> Create role binding Request Model. </param>
+        /// <param name="content"> Create role binding Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleBindingRecord>> CreateRoleBindingAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessCreateRoleBindingRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessRoleBindingRecord>> CreateRoleBindingAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessRoleBindingCreateContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1041,20 +1041,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateCreateRoleBindingRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateCreateRoleBindingRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RoleBindingRecord value = default;
+                        AccessRoleBindingRecord value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleBindingRecord.DeserializeRoleBindingRecord(document.RootElement);
+                        value = AccessRoleBindingRecord.DeserializeAccessRoleBindingRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1066,11 +1066,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> Create role binding Request Model. </param>
+        /// <param name="content"> Create role binding Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleBindingRecord> CreateRoleBinding(string subscriptionId, string resourceGroupName, string organizationName, AccessCreateRoleBindingRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessRoleBindingRecord> CreateRoleBinding(string subscriptionId, string resourceGroupName, string organizationName, AccessRoleBindingCreateContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1096,20 +1096,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateCreateRoleBindingRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateCreateRoleBindingRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RoleBindingRecord value = default;
+                        AccessRoleBindingRecord value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleBindingRecord.DeserializeRoleBindingRecord(document.RootElement);
+                        value = AccessRoleBindingRecord.DeserializeAccessRoleBindingRecord(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        internal HttpMessage CreateListRoleBindingNameListRequest(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body)
+        internal HttpMessage CreateListRoleBindingNameListRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1267,9 +1267,9 @@ namespace Azure.ResourceManager.Confluent
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1278,11 +1278,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessRoleBindingNameListSuccessResponse>> ListRoleBindingNameListAsync(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public async Task<Response<AccessRoleBindingNameListResult>> ListRoleBindingNameListAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1308,20 +1308,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListRoleBindingNameListRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListRoleBindingNameListRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessRoleBindingNameListSuccessResponse value = default;
+                        AccessRoleBindingNameListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessRoleBindingNameListSuccessResponse.DeserializeAccessRoleBindingNameListSuccessResponse(document.RootElement);
+                        value = AccessRoleBindingNameListResult.DeserializeAccessRoleBindingNameListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1333,11 +1333,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionId"> Microsoft Azure subscription id. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessRoleBindingNameListSuccessResponse> ListRoleBindingNameList(string subscriptionId, string resourceGroupName, string organizationName, ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        public Response<AccessRoleBindingNameListResult> ListRoleBindingNameList(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -1363,20 +1363,20 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateListRoleBindingNameListRequest(subscriptionId, resourceGroupName, organizationName, body);
+            using var message = CreateListRoleBindingNameListRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccessRoleBindingNameListSuccessResponse value = default;
+                        AccessRoleBindingNameListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessRoleBindingNameListSuccessResponse.DeserializeAccessRoleBindingNameListSuccessResponse(document.RootElement);
+                        value = AccessRoleBindingNameListResult.DeserializeAccessRoleBindingNameListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

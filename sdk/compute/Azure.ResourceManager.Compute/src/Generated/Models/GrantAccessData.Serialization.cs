@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Access.ToString());
             writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
-            if (GetSecureVmGuestStateSas.HasValue)
+            if (Optional.IsDefined(GetSecureVmGuestStateSas))
             {
                 writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
                 writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
             }
-            if (FileFormat.HasValue)
+            if (Optional.IsDefined(FileFormat))
             {
                 writer.WritePropertyName("fileFormat"u8);
                 writer.WriteStringValue(FileFormat.Value.ToString());

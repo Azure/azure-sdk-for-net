@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,30 +27,30 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (Self != null)
+            if (Optional.IsDefined(Self))
             {
                 writer.WritePropertyName("self"u8);
                 writer.WriteStringValue(Self);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resource_name"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (CreatedAt != null)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteStringValue(CreatedAt);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedAt != null)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteStringValue(UpdatedAt);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (DeletedAt != null)
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deleted_at"u8);
-                writer.WriteStringValue(DeletedAt);
+                writer.WriteStringValue(DeletedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             string self = default;
             string resourceName = default;
-            string createdAt = default;
-            string updatedAt = default;
-            string deletedAt = default;
+            DateTimeOffset? createdAt = default;
+            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? deletedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,17 +111,29 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (property.NameEquals("created_at"u8))
                 {
-                    createdAt = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("updated_at"u8))
                 {
-                    updatedAt = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updatedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deleted_at"u8))
                 {
-                    deletedAt = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deletedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

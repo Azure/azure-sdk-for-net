@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (InvitedEmail != null)
+            if (Optional.IsDefined(InvitedEmail))
             {
                 writer.WritePropertyName("invitedEmail"u8);
                 writer.WriteStringValue(InvitedEmail);
             }
-            if (AuthType != null)
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("auth_type"u8);
                 writer.WriteStringValue(AuthType);

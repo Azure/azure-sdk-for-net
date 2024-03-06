@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ReverseDataCenterAccessCode != null)
+            if (Optional.IsDefined(ReverseDataCenterAccessCode))
             {
                 writer.WritePropertyName("reverseDCAccessCode"u8);
                 writer.WriteStringValue(ReverseDataCenterAccessCode);
             }
-            if (ForwardDataCenterAccessCode != null)
+            if (Optional.IsDefined(ForwardDataCenterAccessCode))
             {
                 writer.WritePropertyName("forwardDCAccessCode"u8);
                 writer.WriteStringValue(ForwardDataCenterAccessCode);

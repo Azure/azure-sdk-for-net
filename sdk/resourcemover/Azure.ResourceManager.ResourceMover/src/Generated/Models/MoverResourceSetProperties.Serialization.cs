@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (SourceLocation.HasValue)
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceRegion"u8);
                 writer.WriteStringValue(SourceLocation.Value);
             }
-            if (TargetLocation.HasValue)
+            if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetRegion"u8);
                 writer.WriteStringValue(TargetLocation.Value);
             }
-            if (MoveLocation.HasValue)
+            if (Optional.IsDefined(MoveLocation))
             {
                 writer.WritePropertyName("moveRegion"u8);
                 writer.WriteStringValue(MoveLocation.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (MoveType.HasValue)
+            if (Optional.IsDefined(MoveType))
             {
                 writer.WritePropertyName("moveType"u8);
                 writer.WriteStringValue(MoveType.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 if (Errors != null)
                 {

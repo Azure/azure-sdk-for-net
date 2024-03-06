@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(MetricType.ToString());
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");

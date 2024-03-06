@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (SearchDomains != null)
+            if (Optional.IsDefined(SearchDomains))
             {
                 writer.WritePropertyName("searchDomains"u8);
                 writer.WriteStringValue(SearchDomains);
             }
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);

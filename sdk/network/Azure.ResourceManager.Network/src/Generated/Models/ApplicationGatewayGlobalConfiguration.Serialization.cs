@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (EnableRequestBuffering.HasValue)
+            if (Optional.IsDefined(EnableRequestBuffering))
             {
                 writer.WritePropertyName("enableRequestBuffering"u8);
                 writer.WriteBooleanValue(EnableRequestBuffering.Value);
             }
-            if (EnableResponseBuffering.HasValue)
+            if (Optional.IsDefined(EnableResponseBuffering))
             {
                 writer.WritePropertyName("enableResponseBuffering"u8);
                 writer.WriteBooleanValue(EnableResponseBuffering.Value);

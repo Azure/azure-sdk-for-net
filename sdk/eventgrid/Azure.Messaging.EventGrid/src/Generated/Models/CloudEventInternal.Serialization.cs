@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.Models
 {
@@ -19,36 +20,36 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStringValue(Id);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            if (Data.ValueKind != JsonValueKind.Undefined)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 Data.WriteTo(writer);
             }
-            if (DataBase64 != null)
+            if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64"u8);
                 writer.WriteBase64StringValue(DataBase64, "D");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WritePropertyName("specversion"u8);
             writer.WriteStringValue(Specversion);
-            if (Dataschema != null)
+            if (Optional.IsDefined(Dataschema))
             {
                 writer.WritePropertyName("dataschema"u8);
                 writer.WriteStringValue(Dataschema);
             }
-            if (Datacontenttype != null)
+            if (Optional.IsDefined(Datacontenttype))
             {
                 writer.WritePropertyName("datacontenttype"u8);
                 writer.WriteStringValue(Datacontenttype);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);

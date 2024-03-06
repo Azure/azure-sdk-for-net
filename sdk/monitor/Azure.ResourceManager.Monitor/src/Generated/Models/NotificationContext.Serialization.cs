@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (NotificationSource != null)
+            if (Optional.IsDefined(NotificationSource))
             {
                 writer.WritePropertyName("notificationSource"u8);
                 writer.WriteStringValue(NotificationSource);
             }
-            if (ContextType != null)
+            if (Optional.IsDefined(ContextType))
             {
                 writer.WritePropertyName("contextType"u8);
                 writer.WriteStringValue(ContextType);

@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2Validation(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ValidationResponse>> ValidateOrganizationV2ValidationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfluentOrganizationValidationResult>> ValidateOrganizationV2Async(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             if (resourceGroupResource == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupResource));
             }
 
-            return await GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2ValidationAsync(organizationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2Async(organizationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2Validation(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public static Response<ValidationResponse> ValidateOrganizationV2Validation(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public static Response<ConfluentOrganizationValidationResult> ValidateOrganizationV2(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             if (resourceGroupResource == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroupResource));
             }
 
-            return GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2Validation(organizationName, data, cancellationToken);
+            return GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2(organizationName, data, cancellationToken);
         }
 
         /// <summary>

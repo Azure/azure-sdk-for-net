@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (PortStart.HasValue)
+            if (Optional.IsDefined(PortStart))
             {
                 writer.WritePropertyName("portStart"u8);
                 writer.WriteNumberValue(PortStart.Value);
             }
-            if (PortEnd.HasValue)
+            if (Optional.IsDefined(PortEnd))
             {
                 writer.WritePropertyName("portEnd"u8);
                 writer.WriteNumberValue(PortEnd.Value);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());

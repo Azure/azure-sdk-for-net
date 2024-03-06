@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (HttpEndpoint != null)
+            if (Optional.IsDefined(HttpEndpoint))
             {
                 writer.WritePropertyName("httpEndpoint"u8);
                 writer.WriteStringValue(HttpEndpoint);
             }
-            if (Package != null)
+            if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
                 writer.WriteStringValue(Package);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteObjectValue(Region);
             }
-            if (Environment != null)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment);
             }
-            if (Cloud != null)
+            if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);

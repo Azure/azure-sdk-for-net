@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (AksClusterResourceId != null)
+            if (Optional.IsDefined(AksClusterResourceId))
             {
                 writer.WritePropertyName("aksClusterResourceId"u8);
                 writer.WriteStringValue(AksClusterResourceId);
             }
-            if (AksClusterAgentPoolIdentityProfile != null)
+            if (Optional.IsDefined(AksClusterAgentPoolIdentityProfile))
             {
                 writer.WritePropertyName("aksClusterAgentPoolIdentityProfile"u8);
                 writer.WriteObjectValue(AksClusterAgentPoolIdentityProfile);
             }
-            if (options.Format != "W" && AksVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AksVersion))
             {
                 writer.WritePropertyName("aksVersion"u8);
                 writer.WriteStringValue(AksVersion);

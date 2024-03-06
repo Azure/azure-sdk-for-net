@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildTasks))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();

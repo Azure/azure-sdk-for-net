@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,77 +27,77 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (MessageId != null)
+            if (Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (MessageVersion != null)
+            if (Optional.IsDefined(MessageVersion))
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (MessageRelease != null)
+            if (Optional.IsDefined(MessageRelease))
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
-            if (MessageAssociationAssignedCode != null)
+            if (Optional.IsDefined(MessageAssociationAssignedCode))
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (TargetNamespace != null)
+            if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
-            if (FunctionalGroupId != null)
+            if (Optional.IsDefined(FunctionalGroupId))
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            if (SenderApplicationQualifier != null)
+            if (Optional.IsDefined(SenderApplicationQualifier))
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (SenderApplicationId != null)
+            if (Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (ReceiverApplicationQualifier != null)
+            if (Optional.IsDefined(ReceiverApplicationQualifier))
             {
                 writer.WritePropertyName("receiverApplicationQualifier"u8);
                 writer.WriteStringValue(ReceiverApplicationQualifier);
             }
-            if (ReceiverApplicationId != null)
+            if (Optional.IsDefined(ReceiverApplicationId))
             {
                 writer.WritePropertyName("receiverApplicationId"u8);
                 writer.WriteStringValue(ReceiverApplicationId);
             }
-            if (ControllingAgencyCode != null)
+            if (Optional.IsDefined(ControllingAgencyCode))
             {
                 writer.WritePropertyName("controllingAgencyCode"u8);
                 writer.WriteStringValue(ControllingAgencyCode);
             }
-            if (GroupHeaderMessageVersion != null)
+            if (Optional.IsDefined(GroupHeaderMessageVersion))
             {
                 writer.WritePropertyName("groupHeaderMessageVersion"u8);
                 writer.WriteStringValue(GroupHeaderMessageVersion);
             }
-            if (GroupHeaderMessageRelease != null)
+            if (Optional.IsDefined(GroupHeaderMessageRelease))
             {
                 writer.WritePropertyName("groupHeaderMessageRelease"u8);
                 writer.WriteStringValue(GroupHeaderMessageRelease);
             }
-            if (AssociationAssignedCode != null)
+            if (Optional.IsDefined(AssociationAssignedCode))
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
             }
-            if (ApplicationPassword != null)
+            if (Optional.IsDefined(ApplicationPassword))
             {
                 writer.WritePropertyName("applicationPassword"u8);
                 writer.WriteStringValue(ApplicationPassword);

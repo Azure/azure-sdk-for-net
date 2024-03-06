@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (IPConfigurationId != null)
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
-            if (options.Format != "W" && !(DefaultBgpIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultBgpIPAddresses))
             {
                 writer.WritePropertyName("defaultBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomBgpIPAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
             {
                 writer.WritePropertyName("customBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(TunnelIPAddresses is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelIPAddresses))
             {
                 writer.WritePropertyName("tunnelIpAddresses"u8);
                 writer.WriteStartArray();

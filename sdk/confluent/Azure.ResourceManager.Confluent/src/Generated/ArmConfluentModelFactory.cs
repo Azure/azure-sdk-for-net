@@ -86,26 +86,26 @@ namespace Azure.ResourceManager.Confluent.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentOrganizationValidationResult"/>. </summary>
         /// <param name="info"> Info from the response. </param>
-        /// <returns> A new <see cref="Models.ValidationResponse"/> instance for mocking. </returns>
-        public static ValidationResponse ValidationResponse(IReadOnlyDictionary<string, string> info = null)
+        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
+        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = null)
         {
             info ??= new Dictionary<string, string>();
 
-            return new ValidationResponse(info, serializedAdditionalRawData: null);
+            return new ConfluentOrganizationValidationResult(info, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListUsersSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessUserListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> Data of the users list. </param>
-        /// <returns> A new <see cref="Models.AccessListUsersSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListUsersSuccessResponse AccessListUsersSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<UserRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessUserListResult"/> instance for mocking. </returns>
+        public static AccessUserListResult AccessUserListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessUserRecord> data = null)
         {
-            data ??= new List<UserRecord>();
+            data ??= new List<AccessUserRecord>();
 
-            return new AccessListUsersSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessUserListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfluentListMetadata"/>. </summary>
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.Confluent.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UserRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessUserRecord"/>. </summary>
         /// <param name="kind"> Type of account. </param>
         /// <param name="id"> Id of the user. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="email"> Email of the user. </param>
         /// <param name="fullName"> Name of the user. </param>
         /// <param name="authType"> Auth type of the user. </param>
-        /// <returns> A new <see cref="Models.UserRecord"/> instance for mocking. </returns>
-        public static UserRecord UserRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string fullName = null, string authType = null)
+        /// <returns> A new <see cref="Models.AccessUserRecord"/> instance for mocking. </returns>
+        public static AccessUserRecord AccessUserRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string fullName = null, string authType = null)
         {
-            return new UserRecord(
+            return new AccessUserRecord(
                 kind,
                 id,
                 metadata,
@@ -149,43 +149,43 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of <see cref="Models.MetadataEntity"/>. </summary>
         /// <param name="self"> Self lookup url. </param>
         /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdAt"> Created Date Time. </param>
-        /// <param name="updatedAt"> Updated Date time. </param>
-        /// <param name="deletedAt"> Deleted Date time. </param>
+        /// <param name="createdOn"> Created Date Time. </param>
+        /// <param name="updatedOn"> Updated Date time. </param>
+        /// <param name="deletedOn"> Deleted Date time. </param>
         /// <returns> A new <see cref="Models.MetadataEntity"/> instance for mocking. </returns>
-        public static MetadataEntity MetadataEntity(string self = null, string resourceName = null, string createdAt = null, string updatedAt = null, string deletedAt = null)
+        public static MetadataEntity MetadataEntity(string self = null, string resourceName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? deletedOn = null)
         {
             return new MetadataEntity(
                 self,
                 resourceName,
-                createdAt,
-                updatedAt,
-                deletedAt,
+                createdOn,
+                updatedOn,
+                deletedOn,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListServiceAccountsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessServiceAccountListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> Data of the service accounts list. </param>
-        /// <returns> A new <see cref="Models.AccessListServiceAccountsSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListServiceAccountsSuccessResponse AccessListServiceAccountsSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<ServiceAccountRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessServiceAccountListResult"/> instance for mocking. </returns>
+        public static AccessServiceAccountListResult AccessServiceAccountListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessServiceAccountRecord> data = null)
         {
-            data ??= new List<ServiceAccountRecord>();
+            data ??= new List<AccessServiceAccountRecord>();
 
-            return new AccessListServiceAccountsSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessServiceAccountListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessServiceAccountRecord"/>. </summary>
         /// <param name="kind"> Type of account. </param>
         /// <param name="id"> Id of the service account. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="displayName"> Name of the service account. </param>
         /// <param name="description"> Description of the service account. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountRecord"/> instance for mocking. </returns>
-        public static ServiceAccountRecord ServiceAccountRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, string description = null)
+        /// <returns> A new <see cref="Models.AccessServiceAccountRecord"/> instance for mocking. </returns>
+        public static AccessServiceAccountRecord AccessServiceAccountRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, string description = null)
         {
-            return new ServiceAccountRecord(
+            return new AccessServiceAccountRecord(
                 kind,
                 id,
                 metadata,
@@ -194,88 +194,88 @@ namespace Azure.ResourceManager.Confluent.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListInvitationsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessInvitationListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> Data of the invitations list. </param>
-        /// <returns> A new <see cref="Models.AccessListInvitationsSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListInvitationsSuccessResponse AccessListInvitationsSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<InvitationRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessInvitationListResult"/> instance for mocking. </returns>
+        public static AccessInvitationListResult AccessInvitationListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessInvitationRecord> data = null)
         {
-            data ??= new List<InvitationRecord>();
+            data ??= new List<AccessInvitationRecord>();
 
-            return new AccessListInvitationsSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessInvitationListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InvitationRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessInvitationRecord"/>. </summary>
         /// <param name="kind"> Type of account. </param>
         /// <param name="id"> Id of the invitation. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="email"> Email of the user. </param>
         /// <param name="authType"> Auth type of the user. </param>
         /// <param name="status"> Status of the invitation. </param>
-        /// <param name="acceptedAt"> Accepted date time of the invitation. </param>
-        /// <param name="expiresAt"> Expiration date time of the invitation. </param>
-        /// <returns> A new <see cref="Models.InvitationRecord"/> instance for mocking. </returns>
-        public static InvitationRecord InvitationRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string authType = null, string status = null, string acceptedAt = null, string expiresAt = null)
+        /// <param name="acceptedOn"> Accepted date time of the invitation. </param>
+        /// <param name="expireOn"> Expiration date time of the invitation. </param>
+        /// <returns> A new <see cref="Models.AccessInvitationRecord"/> instance for mocking. </returns>
+        public static AccessInvitationRecord AccessInvitationRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string authType = null, string status = null, DateTimeOffset? acceptedOn = null, DateTimeOffset? expireOn = null)
         {
-            return new InvitationRecord(
+            return new AccessInvitationRecord(
                 kind,
                 id,
                 metadata,
                 email,
                 authType,
                 status,
-                acceptedAt,
-                expiresAt,
+                acceptedOn,
+                expireOn,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListEnvironmentsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessEnvironmentListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the  environment list. </param>
         /// <param name="data"> Environment list data. </param>
-        /// <returns> A new <see cref="Models.AccessListEnvironmentsSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListEnvironmentsSuccessResponse AccessListEnvironmentsSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<EnvironmentRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessEnvironmentListResult"/> instance for mocking. </returns>
+        public static AccessEnvironmentListResult AccessEnvironmentListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessEnvironmentRecord> data = null)
         {
-            data ??= new List<EnvironmentRecord>();
+            data ??= new List<AccessEnvironmentRecord>();
 
-            return new AccessListEnvironmentsSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessEnvironmentListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessEnvironmentRecord"/>. </summary>
         /// <param name="kind"> Type of environment. </param>
         /// <param name="id"> Id of the environment. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="displayName"> Display name of the user. </param>
-        /// <returns> A new <see cref="Models.EnvironmentRecord"/> instance for mocking. </returns>
-        public static EnvironmentRecord EnvironmentRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null)
+        /// <returns> A new <see cref="Models.AccessEnvironmentRecord"/> instance for mocking. </returns>
+        public static AccessEnvironmentRecord AccessEnvironmentRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null)
         {
-            return new EnvironmentRecord(kind, id, metadata, displayName, serializedAdditionalRawData: null);
+            return new AccessEnvironmentRecord(kind, id, metadata, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListClusterSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessClusterListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of clusters. </param>
-        /// <returns> A new <see cref="Models.AccessListClusterSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListClusterSuccessResponse AccessListClusterSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<ClusterRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessClusterListResult"/> instance for mocking. </returns>
+        public static AccessClusterListResult AccessClusterListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessClusterRecord> data = null)
         {
-            data ??= new List<ClusterRecord>();
+            data ??= new List<AccessClusterRecord>();
 
-            return new AccessListClusterSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessClusterListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessClusterRecord"/>. </summary>
         /// <param name="kind"> Type of cluster. </param>
         /// <param name="id"> Id of the cluster. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="displayName"> Display name of the cluster. </param>
         /// <param name="spec"> Specification of the cluster. </param>
         /// <param name="status"> Specification of the cluster. </param>
-        /// <returns> A new <see cref="Models.ClusterRecord"/> instance for mocking. </returns>
-        public static ClusterRecord ClusterRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, ClusterSpecEntity spec = null, ClusterStatusEntity status = null)
+        /// <returns> A new <see cref="Models.AccessClusterRecord"/> instance for mocking. </returns>
+        public static AccessClusterRecord AccessClusterRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, ClusterSpecEntity spec = null, ClusterStatusEntity status = null)
         {
-            return new ClusterRecord(
+            return new AccessClusterRecord(
                 kind,
                 id,
                 metadata,
@@ -358,29 +358,29 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ClusterStatusEntity(phase, cku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessListRoleBindingsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of role binding. </param>
-        /// <returns> A new <see cref="Models.AccessListRoleBindingsSuccessResponse"/> instance for mocking. </returns>
-        public static AccessListRoleBindingsSuccessResponse AccessListRoleBindingsSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<RoleBindingRecord> data = null)
+        /// <returns> A new <see cref="Models.AccessRoleBindingListResult"/> instance for mocking. </returns>
+        public static AccessRoleBindingListResult AccessRoleBindingListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessRoleBindingRecord> data = null)
         {
-            data ??= new List<RoleBindingRecord>();
+            data ??= new List<AccessRoleBindingRecord>();
 
-            return new AccessListRoleBindingsSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessRoleBindingListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RoleBindingRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingRecord"/>. </summary>
         /// <param name="kind"> The type of the resource. </param>
         /// <param name="id"> Id of the role binding. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="principal"> The principal User or Group to bind the role to. </param>
         /// <param name="roleName"> The name of the role to bind to the principal. </param>
         /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
-        /// <returns> A new <see cref="Models.RoleBindingRecord"/> instance for mocking. </returns>
-        public static RoleBindingRecord RoleBindingRecord(string kind = null, string id = null, MetadataEntity metadata = null, string principal = null, string roleName = null, string crnPattern = null)
+        /// <returns> A new <see cref="Models.AccessRoleBindingRecord"/> instance for mocking. </returns>
+        public static AccessRoleBindingRecord AccessRoleBindingRecord(string kind = null, string id = null, MetadataEntity metadata = null, string principal = null, string roleName = null, string crnPattern = null)
         {
-            return new RoleBindingRecord(
+            return new AccessRoleBindingRecord(
                 kind,
                 id,
                 metadata,
@@ -390,16 +390,16 @@ namespace Azure.ResourceManager.Confluent.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingNameListSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingNameListResult"/>. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of role binding names. </param>
-        /// <returns> A new <see cref="Models.AccessRoleBindingNameListSuccessResponse"/> instance for mocking. </returns>
-        public static AccessRoleBindingNameListSuccessResponse AccessRoleBindingNameListSuccessResponse(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<string> data = null)
+        /// <returns> A new <see cref="Models.AccessRoleBindingNameListResult"/> instance for mocking. </returns>
+        public static AccessRoleBindingNameListResult AccessRoleBindingNameListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<string> data = null)
         {
             data ??= new List<string>();
 
-            return new AccessRoleBindingNameListSuccessResponse(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
+            return new AccessRoleBindingNameListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCEnvironmentRecord"/>. </summary>
@@ -416,18 +416,18 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of <see cref="Models.SCMetadataEntity"/>. </summary>
         /// <param name="self"> Self lookup url. </param>
         /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdTimestamp"> Created Date Time. </param>
-        /// <param name="updatedTimestamp"> Updated Date time. </param>
-        /// <param name="deletedTimestamp"> Deleted Date time. </param>
+        /// <param name="createdOn"> Created Date Time. </param>
+        /// <param name="updatedOn"> Updated Date time. </param>
+        /// <param name="deletedOn"> Deleted Date time. </param>
         /// <returns> A new <see cref="Models.SCMetadataEntity"/> instance for mocking. </returns>
-        public static SCMetadataEntity SCMetadataEntity(string self = null, string resourceName = null, string createdTimestamp = null, string updatedTimestamp = null, string deletedTimestamp = null)
+        public static SCMetadataEntity SCMetadataEntity(string self = null, string resourceName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? deletedOn = null)
         {
             return new SCMetadataEntity(
                 self,
                 resourceName,
-                createdTimestamp,
-                updatedTimestamp,
-                deletedTimestamp,
+                createdOn,
+                updatedOn,
+                deletedOn,
                 serializedAdditionalRawData: null);
         }
 
@@ -552,25 +552,25 @@ namespace Azure.ResourceManager.Confluent.Models
             return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ListRegionsSuccessResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentRegionListResult"/>. </summary>
         /// <param name="data"> List of regions supported by confluent. </param>
-        /// <returns> A new <see cref="Models.ListRegionsSuccessResponse"/> instance for mocking. </returns>
-        public static ListRegionsSuccessResponse ListRegionsSuccessResponse(IEnumerable<RegionRecord> data = null)
+        /// <returns> A new <see cref="Models.ConfluentRegionListResult"/> instance for mocking. </returns>
+        public static ConfluentRegionListResult ConfluentRegionListResult(IEnumerable<ConfluentRegionRecord> data = null)
         {
-            data ??= new List<RegionRecord>();
+            data ??= new List<ConfluentRegionRecord>();
 
-            return new ListRegionsSuccessResponse(data?.ToList(), serializedAdditionalRawData: null);
+            return new ConfluentRegionListResult(data?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RegionRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentRegionRecord"/>. </summary>
         /// <param name="kind"> Kind of the cluster. </param>
         /// <param name="id"> Id of the cluster. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="spec"> Specification of the region. </param>
-        /// <returns> A new <see cref="Models.RegionRecord"/> instance for mocking. </returns>
-        public static RegionRecord RegionRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, RegionSpecEntity spec = null)
+        /// <returns> A new <see cref="Models.ConfluentRegionRecord"/> instance for mocking. </returns>
+        public static ConfluentRegionRecord ConfluentRegionRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, RegionSpecEntity spec = null)
         {
-            return new RegionRecord(kind, id, metadata, spec, serializedAdditionalRawData: null);
+            return new ConfluentRegionRecord(kind, id, metadata, spec, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegionSpecEntity"/>. </summary>
@@ -586,27 +586,27 @@ namespace Azure.ResourceManager.Confluent.Models
             return new RegionSpecEntity(name, cloud, regionName, packages?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.APIKeyRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentApiKeyRecord"/>. </summary>
         /// <param name="kind"> Type of api key. </param>
         /// <param name="id"> Id of the api key. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="spec"> Specification of the API Key. </param>
-        /// <returns> A new <see cref="Models.APIKeyRecord"/> instance for mocking. </returns>
-        public static APIKeyRecord APIKeyRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, APIKeySpecEntity spec = null)
+        /// <returns> A new <see cref="Models.ConfluentApiKeyRecord"/> instance for mocking. </returns>
+        public static ConfluentApiKeyRecord ConfluentApiKeyRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, ApiKeySpecEntity spec = null)
         {
-            return new APIKeyRecord(kind, id, metadata, spec, serializedAdditionalRawData: null);
+            return new ConfluentApiKeyRecord(kind, id, metadata, spec, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.APIKeySpecEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiKeySpecEntity"/>. </summary>
         /// <param name="description"> The description of the API Key. </param>
         /// <param name="name"> The name of the API Key. </param>
         /// <param name="secret"> API Key Secret. </param>
         /// <param name="resource"> Specification of the cluster. </param>
         /// <param name="owner"> Specification of the cluster. </param>
-        /// <returns> A new <see cref="Models.APIKeySpecEntity"/> instance for mocking. </returns>
-        public static APIKeySpecEntity APIKeySpecEntity(string description = null, string name = null, string secret = null, APIKeyResourceEntity resource = null, APIKeyOwnerEntity owner = null)
+        /// <returns> A new <see cref="Models.ApiKeySpecEntity"/> instance for mocking. </returns>
+        public static ApiKeySpecEntity ApiKeySpecEntity(string description = null, string name = null, string secret = null, ApiKeyResourceEntity resource = null, ApiKeyOwnerEntity owner = null)
         {
-            return new APIKeySpecEntity(
+            return new ApiKeySpecEntity(
                 description,
                 name,
                 secret,
@@ -615,16 +615,16 @@ namespace Azure.ResourceManager.Confluent.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.APIKeyResourceEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyResourceEntity"/>. </summary>
         /// <param name="id"> Id of the resource. </param>
         /// <param name="environment"> The environment of the api key. </param>
         /// <param name="related"> API URL for accessing or modifying the api key resource object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
         /// <param name="kind"> Type of the owner which can be service or user account. </param>
-        /// <returns> A new <see cref="Models.APIKeyResourceEntity"/> instance for mocking. </returns>
-        public static APIKeyResourceEntity APIKeyResourceEntity(string id = null, string environment = null, string related = null, string resourceName = null, string kind = null)
+        /// <returns> A new <see cref="Models.ApiKeyResourceEntity"/> instance for mocking. </returns>
+        public static ApiKeyResourceEntity ApiKeyResourceEntity(string id = null, string environment = null, string related = null, string resourceName = null, string kind = null)
         {
-            return new APIKeyResourceEntity(
+            return new ApiKeyResourceEntity(
                 id,
                 environment,
                 related,
@@ -633,15 +633,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.APIKeyOwnerEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyOwnerEntity"/>. </summary>
         /// <param name="id"> API Key owner id. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
         /// <param name="kind"> Type of the owner service or user account. </param>
-        /// <returns> A new <see cref="Models.APIKeyOwnerEntity"/> instance for mocking. </returns>
-        public static APIKeyOwnerEntity APIKeyOwnerEntity(string id = null, string related = null, string resourceName = null, string kind = null)
+        /// <returns> A new <see cref="Models.ApiKeyOwnerEntity"/> instance for mocking. </returns>
+        public static ApiKeyOwnerEntity ApiKeyOwnerEntity(string id = null, string related = null, string resourceName = null, string kind = null)
         {
-            return new APIKeyOwnerEntity(id, related, resourceName, kind, serializedAdditionalRawData: null);
+            return new ApiKeyOwnerEntity(id, related, resourceName, kind, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>

@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
-        public virtual async Task<Response<SCEnvironmentRecord>> GetEnvironmentByIdAsync(string environmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SCEnvironmentRecord>> GetEnvironmentAsync(string environmentId, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironmentById");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironment");
             scope.Start();
             try
             {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
-        public virtual Response<SCEnvironmentRecord> GetEnvironmentById(string environmentId, CancellationToken cancellationToken = default)
+        public virtual Response<SCEnvironmentRecord> GetEnvironment(string environmentId, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironmentById");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironment");
             scope.Start();
             try
             {
@@ -712,21 +712,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<ListRegionsSuccessResponse>> GetRegionsAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ConfluentRegionListResult>> GetRegionsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRegions");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.ListRegionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationRestClient.ListRegionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -757,21 +757,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<ListRegionsSuccessResponse> GetRegions(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ConfluentRegionListResult> GetRegions(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRegions");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.ListRegions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _confluentOrganizationOrganizationRestClient.ListRegions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -804,11 +804,11 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="environmentId"> Confluent environment id. </param>
         /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
-        /// <param name="body"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<APIKeyRecord>> CreateAPIKeyAsync(string environmentId, string clusterId, CreateAPIKeyModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ConfluentApiKeyRecord>> CreateApiKeyAsync(string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -826,16 +826,16 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateAPIKey");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateApiKey");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.CreateAPIKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, clusterId, body, cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationRestClient.CreateApiKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, clusterId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -868,11 +868,11 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="environmentId"> Confluent environment id. </param>
         /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
-        /// <param name="body"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="body"/> is null. </exception>
-        public virtual Response<APIKeyRecord> CreateAPIKey(string environmentId, string clusterId, CreateAPIKeyModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<ConfluentApiKeyRecord> CreateApiKey(string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -890,16 +890,16 @@ namespace Azure.ResourceManager.Confluent
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateAPIKey");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateApiKey");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.CreateAPIKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, clusterId, body, cancellationToken);
+                var response = _confluentOrganizationOrganizationRestClient.CreateApiKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, clusterId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
-        public virtual async Task<Response> DeleteClusterAPIKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteClusterApiKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (apiKeyId == null)
             {
@@ -945,11 +945,11 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterAPIKey");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterApiKey");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.DeleteClusterAPIKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationRestClient.DeleteClusterApiKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
-        public virtual Response DeleteClusterAPIKey(string apiKeyId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteClusterApiKey(string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (apiKeyId == null)
             {
@@ -995,11 +995,11 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterAPIKey");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterApiKey");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.DeleteClusterAPIKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken);
+                var response = _confluentOrganizationOrganizationRestClient.DeleteClusterApiKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
-        public virtual async Task<Response<APIKeyRecord>> GetClusterAPIKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentApiKeyRecord>> GetClusterApiKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (apiKeyId == null)
             {
@@ -1045,11 +1045,11 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterAPIKey");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterApiKey");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.GetClusterAPIKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationRestClient.GetClusterApiKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
-        public virtual Response<APIKeyRecord> GetClusterAPIKey(string apiKeyId, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentApiKeyRecord> GetClusterApiKey(string apiKeyId, CancellationToken cancellationToken = default)
         {
             if (apiKeyId == null)
             {
@@ -1095,11 +1095,11 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterAPIKey");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterApiKey");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.GetClusterAPIKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken);
+                var response = _confluentOrganizationOrganizationRestClient.GetClusterApiKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiKeyId, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
-        public virtual async Task<Response<SchemaRegistryClusterRecord>> GetSchemaRegistryClusterByIdAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SchemaRegistryClusterRecord>> GetSchemaRegistryClusterAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetSchemaRegistryClusterById");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetSchemaRegistryCluster");
             scope.Start();
             try
             {
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
-        public virtual Response<SchemaRegistryClusterRecord> GetSchemaRegistryClusterById(string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        public virtual Response<SchemaRegistryClusterRecord> GetSchemaRegistryCluster(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetSchemaRegistryClusterById");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetSchemaRegistryCluster");
             scope.Start();
             try
             {
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
-        public virtual async Task<Response<SCClusterRecord>> GetClusterByIdAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SCClusterRecord>> GetClusterAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterById");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetCluster");
             scope.Start();
             try
             {
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
-        public virtual Response<SCClusterRecord> GetClusterById(string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        public virtual Response<SCClusterRecord> GetCluster(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
             if (environmentId == null)
             {
@@ -1331,7 +1331,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
             }
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterById");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetCluster");
             scope.Start();
             try
             {
@@ -1362,21 +1362,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessListUsersSuccessResponse>> GetUsersAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessUserListResult>> GetAccessUsersAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetUsersAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessUsers");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListUsersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListUsersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1403,21 +1403,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessListUsersSuccessResponse> GetUsersAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessUserListResult> GetAccessUsers(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetUsersAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessUsers");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListUsers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListUsers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1444,21 +1444,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessListServiceAccountsSuccessResponse>> GetServiceAccountsAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessServiceAccountListResult>> GetAccessServiceAccountsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetServiceAccountsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessServiceAccounts");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListServiceAccountsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListServiceAccountsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1485,21 +1485,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessListServiceAccountsSuccessResponse> GetServiceAccountsAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessServiceAccountListResult> GetAccessServiceAccounts(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetServiceAccountsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessServiceAccounts");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListServiceAccounts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListServiceAccounts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1526,21 +1526,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessListInvitationsSuccessResponse>> GetInvitationsAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessInvitationListResult>> GetAccessInvitationsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetInvitationsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessInvitations");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListInvitationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListInvitationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1567,21 +1567,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessListInvitationsSuccessResponse> GetInvitationsAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessInvitationListResult> GetAccessInvitations(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetInvitationsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessInvitations");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListInvitations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListInvitations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1608,21 +1608,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Invite user account model. </param>
+        /// <param name="content"> Invite user account model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<InvitationRecord>> InviteUserAccessAsync(AccessInviteUserAccountModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessInvitationRecord>> InviteUserAsync(AccessInvitationContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.InviteUserAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.InviteUser");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.InviteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.InviteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1649,21 +1649,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Invite user account model. </param>
+        /// <param name="content"> Invite user account model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<InvitationRecord> InviteUserAccess(AccessInviteUserAccountModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessInvitationRecord> InviteUser(AccessInvitationContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.InviteUserAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.InviteUser");
             scope.Start();
             try
             {
-                var response = _accessRestClient.InviteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.InviteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1690,21 +1690,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessListEnvironmentsSuccessResponse>> GetEnvironmentsAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessEnvironmentListResult>> GetAccessEnvironmentsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironmentsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessEnvironments");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListEnvironmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListEnvironmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1731,21 +1731,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessListEnvironmentsSuccessResponse> GetEnvironmentsAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessEnvironmentListResult> GetAccessEnvironments(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironmentsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessEnvironments");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListEnvironments(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListEnvironments(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1772,21 +1772,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessListClusterSuccessResponse>> GetClustersAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessClusterListResult>> GetAccessClustersAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClustersAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessClusters");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListClustersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListClustersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1813,21 +1813,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessListClusterSuccessResponse> GetClustersAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessClusterListResult> GetAccessClusters(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClustersAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessClusters");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListClusters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListClusters(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1854,21 +1854,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessListRoleBindingsSuccessResponse>> GetRoleBindingsAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessRoleBindingListResult>> GetAccessRoleBindingsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRoleBindingsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindings");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListRoleBindingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListRoleBindingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1895,21 +1895,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessListRoleBindingsSuccessResponse> GetRoleBindingsAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessRoleBindingListResult> GetAccessRoleBindings(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRoleBindingsAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindings");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListRoleBindings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListRoleBindings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1936,21 +1936,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Create role binding Request Model. </param>
+        /// <param name="content"> Create role binding Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<RoleBindingRecord>> CreateRoleBindingAccessAsync(AccessCreateRoleBindingRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessRoleBindingRecord>> CreateAccessRoleBindingAsync(AccessRoleBindingCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateRoleBindingAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateAccessRoleBinding");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.CreateRoleBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.CreateRoleBindingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1977,21 +1977,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Create role binding Request Model. </param>
+        /// <param name="content"> Create role binding Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<RoleBindingRecord> CreateRoleBindingAccess(AccessCreateRoleBindingRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessRoleBindingRecord> CreateAccessRoleBinding(AccessRoleBindingCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateRoleBindingAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateAccessRoleBinding");
             scope.Start();
             try
             {
-                var response = _accessRestClient.CreateRoleBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.CreateRoleBinding(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2022,7 +2022,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleBindingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleBindingId"/> is null. </exception>
-        public virtual async Task<Response> DeleteRoleBindingAccessAsync(string roleBindingId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAccessRoleBindingAsync(string roleBindingId, CancellationToken cancellationToken = default)
         {
             if (roleBindingId == null)
             {
@@ -2033,7 +2033,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(roleBindingId));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteRoleBindingAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteAccessRoleBinding");
             scope.Start();
             try
             {
@@ -2068,7 +2068,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleBindingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleBindingId"/> is null. </exception>
-        public virtual Response DeleteRoleBindingAccess(string roleBindingId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteAccessRoleBinding(string roleBindingId, CancellationToken cancellationToken = default)
         {
             if (roleBindingId == null)
             {
@@ -2079,7 +2079,7 @@ namespace Azure.ResourceManager.Confluent
                 throw new ArgumentException("Value cannot be an empty string.", nameof(roleBindingId));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteRoleBindingAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteAccessRoleBinding");
             scope.Start();
             try
             {
@@ -2110,21 +2110,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<AccessRoleBindingNameListSuccessResponse>> GetRoleBindingNameListAccessAsync(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AccessRoleBindingNameListResult>> GetAccessRoleBindingNamesAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRoleBindingNameListAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindingNames");
             scope.Start();
             try
             {
-                var response = await _accessRestClient.ListRoleBindingNameListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _accessRestClient.ListRoleBindingNameListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2151,21 +2151,21 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> List Access Request Model. </param>
+        /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<AccessRoleBindingNameListSuccessResponse> GetRoleBindingNameListAccess(ListAccessRequestModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AccessRoleBindingNameListResult> GetAccessRoleBindingNames(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (content == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(content));
             }
 
-            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRoleBindingNameListAccess");
+            using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindingNames");
             scope.Start();
             try
             {
-                var response = _accessRestClient.ListRoleBindingNameList(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _accessRestClient.ListRoleBindingNameList(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

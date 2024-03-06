@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (AzureBackupRGNamePrefix != null)
+            if (Optional.IsDefined(AzureBackupRGNamePrefix))
             {
                 writer.WritePropertyName("azureBackupRGNamePrefix"u8);
                 writer.WriteStringValue(AzureBackupRGNamePrefix);
             }
-            if (AzureBackupRGNameSuffix != null)
+            if (Optional.IsDefined(AzureBackupRGNameSuffix))
             {
                 writer.WritePropertyName("azureBackupRGNameSuffix"u8);
                 writer.WriteStringValue(AzureBackupRGNameSuffix);
