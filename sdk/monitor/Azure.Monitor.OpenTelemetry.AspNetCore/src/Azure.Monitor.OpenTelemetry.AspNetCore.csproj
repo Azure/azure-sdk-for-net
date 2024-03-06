@@ -35,7 +35,7 @@
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs"  LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs"  LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>
