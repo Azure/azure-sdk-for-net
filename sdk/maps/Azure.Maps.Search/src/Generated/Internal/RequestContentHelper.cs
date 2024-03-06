@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Maps.Search
+namespace Azure.Maps.Common
 {
     internal static class RequestContentHelper
     {
