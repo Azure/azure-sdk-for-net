@@ -16,25 +16,20 @@ namespace Azure.Communication.CallAutomation
             IEnumerable<CommunicationIdentifier> targets,
             CallConnectionState callConnectionState,
             Uri callbackUri,
-            CommunicationIdentifier source,
+            CommunicationIdentifier sourceIdentity,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
-            string mediaSubscriptionId,
-            string dataSubscriptionId,
-            CommunicationUserIdentifier answeredBy
-            )
+            CommunicationIdentifier answeredBy)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             Targets = targets == null ? new List<CommunicationIdentifier>() : targets.ToList();
             CallConnectionState = callConnectionState == default ? CallConnectionState.Unknown : callConnectionState;
             CallbackUri = callbackUri;
-            Source = source;
+            Source = sourceIdentity;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            MediaSubscriptionId = mediaSubscriptionId;
-            DataSubscriptionId = dataSubscriptionId;
-            AnsweredBy = answeredBy;
+            AnsweredBy = new CommunicationUserIdentifier(answeredBy.RawId);
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -43,7 +38,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
 
-            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
+            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState == default(CallConnectionState))
             {
                 CallConnectionState = CallConnectionState.Unknown;
             }
@@ -53,12 +48,10 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
-            MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
-            DataSubscriptionId = callConnectionPropertiesDtoInternal.DataSubscriptionId;
-            Source = callConnectionPropertiesDtoInternal.Source == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
+            Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
-            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
+            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null ? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
 
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
@@ -76,10 +69,6 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionState CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
-        /// <summary> SubscriptionId for media streaming. </summary>
-        public string MediaSubscriptionId { get; }
-        /// <summary> SubscriptionId for transcription. </summary>
-        public string DataSubscriptionId { get; }
         /// <summary>
         /// Caller ID phone number to appear on the invitee.
         /// </summary>
@@ -97,7 +86,6 @@ namespace Azure.Communication.CallAutomation
         /// The correlation ID.
         /// </summary>
         public string CorrelationId { get; }
-
         /// <summary>
         /// Identity of the answering entity. Only populated when identity is provided in the request.
         /// </summary>

@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Communication.CallAutomation.Tests.EventCatcher;
 using Azure.Communication.Identity;
-using Azure.Communication.PhoneNumbers;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -49,9 +48,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
-            JsonPathSanitizers.Add("$..botAppId");
-            JsonPathSanitizers.Add("$..ivrContext");
-            JsonPathSanitizers.Add("$..dialog.botAppId");
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized") { JsonPath = "..callbackUri" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx, "https://sanitized.skype.com"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
@@ -92,7 +88,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         }
 
         public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClient" />
@@ -102,15 +98,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
-            CallAutomationClient callAutomationClient;
-            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
-            {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
-            }
-            else
-            {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
-            }
+            CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
 
             return InstrumentClient(callAutomationClient);
         }
@@ -179,7 +167,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestStaticConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
         {
@@ -310,7 +298,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private HttpPipeline BuildHttpPipeline()
         {
             var clientOptions = CreateServerCallingClientOptionsWithCorrelationVectorLogs();
-            return clientOptions.CustomBuildHttpPipeline(
+            return clientOptions.BuildHttpPipeline(
                 ConnectionString.Parse(TestEnvironment.LiveTestStaticConnectionString));
         }
 

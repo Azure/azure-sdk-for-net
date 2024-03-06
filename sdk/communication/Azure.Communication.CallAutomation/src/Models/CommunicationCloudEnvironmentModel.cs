@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication
 {
     [CodeGenModel("CommunicationCloudEnvironmentModel")]
-    internal readonly partial struct CommunicationCloudEnvironmentModel
+    public readonly partial struct CommunicationCloudEnvironmentModel
     {
     }
 }

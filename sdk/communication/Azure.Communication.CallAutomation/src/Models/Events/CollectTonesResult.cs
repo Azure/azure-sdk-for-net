@@ -8,6 +8,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
+    /// <summary>
+    /// Represents the result of a collect tones operation.
+    /// </summary>
     [CodeGenModel("CollectTonesResult", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CollectTonesResult : RecognizeResult
     {

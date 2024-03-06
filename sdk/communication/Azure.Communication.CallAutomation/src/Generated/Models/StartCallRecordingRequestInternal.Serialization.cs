@@ -58,15 +58,15 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (ExternalStorage != null)
-            {
-                writer.WritePropertyName("externalStorage"u8);
-                writer.WriteObjectValue(ExternalStorage);
-            }
             if (PauseOnStart.HasValue)
             {
                 writer.WritePropertyName("pauseOnStart"u8);
                 writer.WriteBooleanValue(PauseOnStart.Value);
+            }
+            if (ExternalStorage != null)
+            {
+                writer.WritePropertyName("externalStorage"u8);
+                writer.WriteObjectValue(ExternalStorage);
             }
             writer.WriteEndObject();
         }

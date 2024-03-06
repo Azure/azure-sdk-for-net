@@ -44,25 +44,10 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (MediaStreamingConfiguration != null)
-            {
-                writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
-            }
-            if (TranscriptionConfiguration != null)
-            {
-                writer.WritePropertyName("transcriptionConfiguration"u8);
-                writer.WriteObjectValue(TranscriptionConfiguration);
-            }
             if (CallIntelligenceOptions != null)
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
-            }
-            if (CustomCallingContext != null)
-            {
-                writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
             }
             writer.WriteEndObject();
         }

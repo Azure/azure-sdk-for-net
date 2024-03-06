@@ -17,11 +17,6 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (CustomCallingContext != null)
-            {
-                writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
-            }
             if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -36,6 +31,11 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
+            }
+            if (CustomCallingContext != null)
+            {
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
             }
             writer.WriteEndObject();
         }

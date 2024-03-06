@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
 
-        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"source\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
+        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"sourceIdentity\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
 
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 
@@ -42,14 +42,12 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected const string RemoveParticipantPayload = AddParticipantsPayload;
 
-        protected const string DialogPayload = "{\"dialogId\":\"dialogId\",\"dialogInputType\":\"powerVirtualAgent\"}";
-
         protected const string CancelAddParticipantPayload = "{" +
                                     "\"operationContext\": \"someOperationContext\"," +
                                     "\"invitationId\": \"invitationId\"" +
                                     "}";
 
-        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
+        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions? options = default)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -84,7 +82,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallConnection CreateMoakCallConnection(string? callConnectionId = default)
         {
-            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null, null);
+            CallConnection callconn = new CallConnection(callConnectionId == default ? CallConnectionId : callConnectionId, null, null, null, null);
 
             return callconn;
         }
@@ -98,7 +96,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected CallInvite CreateMockInvite(CallInvite? target = default)
         {
-            return target == default? new CallInvite(new CommunicationUserIdentifier(TargetUser)) : target;
+            return target == default ? new CallInvite(new CommunicationUserIdentifier(TargetUser)) : target;
         }
 
         protected CallConnection CreateMockCallConnection(int responseCode, string? responseContent = default, string? callConnectionId = default)

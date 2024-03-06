@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.CallAutomation;
+
 namespace Azure.Communication
 {
     /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
@@ -21,13 +23,15 @@ namespace Azure.Communication
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
+        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp)
         {
             Kind = kind;
             RawId = rawId;
             CommunicationUser = communicationUser;
             PhoneNumber = phoneNumber;
             MicrosoftTeamsUser = microsoftTeamsUser;
+            MicrosoftTeamsApp = microsoftTeamsApp;
         }
 
         /// <summary> The identifier kind. Only required in responses. </summary>
@@ -40,5 +44,7 @@ namespace Azure.Communication
         public PhoneNumberIdentifierModel PhoneNumber { get; set; }
         /// <summary> The Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; set; }
+        /// <summary> The Microsoft Teams application. </summary>
+        public MicrosoftTeamsAppIdentifierModel MicrosoftTeamsApp { get; set; }
     }
 }

@@ -19,11 +19,6 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (CustomCallingContext != null)
-            {
-                writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
-            }
             writer.WriteEndObject();
         }
     }

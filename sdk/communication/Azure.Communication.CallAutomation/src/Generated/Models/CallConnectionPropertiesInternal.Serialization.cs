@@ -25,14 +25,11 @@ namespace Azure.Communication.CallAutomation
             IReadOnlyList<CommunicationIdentifierModel> targets = default;
             CallConnectionState? callConnectionState = default;
             string callbackUri = default;
-            string mediaSubscriptionId = default;
-            string dataSubscriptionId = default;
             PhoneNumberIdentifierModel sourceCallerIdNumber = default;
             string sourceDisplayName = default;
             CommunicationIdentifierModel source = default;
             string correlationId = default;
             CommunicationUserIdentifierModel answeredBy = default;
-            PhoneNumberIdentifierModel originalPstnTarget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -73,16 +70,6 @@ namespace Azure.Communication.CallAutomation
                     callbackUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mediaSubscriptionId"u8))
-                {
-                    mediaSubscriptionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSubscriptionId"u8))
-                {
-                    dataSubscriptionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("sourceCallerIdNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,15 +107,6 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("originalPstnTarget"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    originalPstnTarget = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
-                    continue;
-                }
             }
             return new CallConnectionPropertiesInternal(
                 callConnectionId,
@@ -136,14 +114,11 @@ namespace Azure.Communication.CallAutomation
                 targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
                 callConnectionState,
                 callbackUri,
-                mediaSubscriptionId,
-                dataSubscriptionId,
                 sourceCallerIdNumber,
                 sourceDisplayName,
                 source,
                 correlationId,
-                answeredBy,
-                originalPstnTarget);
+                answeredBy);
         }
     }
 }

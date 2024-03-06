@@ -73,25 +73,6 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         }
 
         [Test]
-        public void EventMismatch()
-        {
-            // Ongoing handler with delegate tests
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
-            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
-            string callConnectionIdPassedFromOngoingEventProcessor = ServerCallId;
-
-            // Add delegate for call connected event
-            handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
-            var internalEvent = new CallTransferAcceptedInternal(null, null, null, null, CallConnectionId, ServerCallId, CorelationId);
-
-            // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallTransferAccepted(internalEvent));
-
-            // Assert if the delegate was never called
-            Assert.AreEqual(ServerCallId, callConnectionIdPassedFromOngoingEventProcessor);
-        }
-
-        [Test]
         public void CheckIfOngoingProcessorIsDetachedAfterCallDisconnect()
         {
             // Ongoing handler with delegate tests
