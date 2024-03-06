@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- Updated the code of vendored instrumentation library `OpenTelemetry.Instrumentation.SqlClient` from the OpenTelemetry .NET repository.
+  Code has been updated to [1.7.0-beta.1](https://github.com/open-telemetry/opentelemetry-dotnet/tree/Instrumentation.SqlClient-1.7.0-beta.1/src/OpenTelemetry.Instrumentation.SqlClient).
+  ([]())
+
+* Updated the code of vendored resource detector library `OpenTelemetry.ResourceDetectors.Azure` from the OpenTelemetry .NET contrib repository.
+  Code has been updated to [1.0.0-beta.5](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/ResourceDetectors.Azure-1.0.0-beta.5/src/OpenTelemetry.ResourceDetectors.Azure).
+  ([]())
+
 ## 1.2.0-beta.1 (2024-02-09)
 
 ### Features Added
