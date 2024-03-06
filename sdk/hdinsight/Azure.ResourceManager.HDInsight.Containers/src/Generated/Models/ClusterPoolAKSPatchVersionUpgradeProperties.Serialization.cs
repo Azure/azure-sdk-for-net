@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (UpgradeClusterPool.HasValue)
+            if (Optional.IsDefined(UpgradeClusterPool))
             {
                 writer.WritePropertyName("upgradeClusterPool"u8);
                 writer.WriteBooleanValue(UpgradeClusterPool.Value);
             }
-            if (UpgradeAllClusterNodes.HasValue)
+            if (Optional.IsDefined(UpgradeAllClusterNodes))
             {
                 writer.WritePropertyName("upgradeAllClusterNodes"u8);
                 writer.WriteBooleanValue(UpgradeAllClusterNodes.Value);
             }
-            if (TargetAksVersion != null)
+            if (Optional.IsDefined(TargetAksVersion))
             {
                 writer.WritePropertyName("targetAksVersion"u8);
                 writer.WriteStringValue(TargetAksVersion);

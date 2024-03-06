@@ -10,41 +10,52 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class HDInsightClusterPatch : IUtf8JsonSerializable, IJsonModel<HDInsightClusterPatch>
+    public partial class SparkMetastoreSpec : IUtf8JsonSerializable, IJsonModel<SparkMetastoreSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkMetastoreSpec>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<HDInsightClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SparkMetastoreSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            writer.WritePropertyName("dbServerHost"u8);
+            writer.WriteStringValue(DBServerHost);
+            writer.WritePropertyName("dbName"u8);
+            writer.WriteStringValue(DBName);
+            if (Optional.IsDefined(DBConnectionAuthenticationMode))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("dbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(DBConnectionAuthenticationMode.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (ClusterProfile != null)
+            if (Optional.IsDefined(DBUserName))
             {
-                writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                writer.WritePropertyName("dbUserName"u8);
+                writer.WriteStringValue(DBUserName);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(DBPasswordSecretName))
+            {
+                writer.WritePropertyName("dbPasswordSecretName"u8);
+                writer.WriteStringValue(DBPasswordSecretName);
+            }
+            if (Optional.IsDefined(KeyVaultId))
+            {
+                writer.WritePropertyName("keyVaultId"u8);
+                writer.WriteStringValue(KeyVaultId);
+            }
+            if (Optional.IsDefined(ThriftUriString))
+            {
+                writer.WritePropertyName("thriftUrl"u8);
+                writer.WriteStringValue(ThriftUriString);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -63,19 +74,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteEndObject();
         }
 
-        HDInsightClusterPatch IJsonModel<HDInsightClusterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SparkMetastoreSpec IJsonModel<SparkMetastoreSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHDInsightClusterPatch(document.RootElement, options);
+            return DeserializeSparkMetastoreSpec(document.RootElement, options);
         }
 
-        internal static HDInsightClusterPatch DeserializeHDInsightClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SparkMetastoreSpec DeserializeSparkMetastoreSpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -83,45 +94,54 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            UpdatableClusterProfile clusterProfile = default;
+            string dbServerHost = default;
+            string dbName = default;
+            DBConnectionAuthenticationMode? dbConnectionAuthenticationMode = default;
+            string dbUserName = default;
+            string dbPasswordSecretName = default;
+            string keyVaultId = default;
+            string thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (property.NameEquals("dbServerHost"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    dbServerHost = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("dbName"u8))
+                {
+                    dbName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dbConnectionAuthenticationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("clusterProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterProfile = UpdatableClusterProfile.DeserializeUpdatableClusterProfile(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    dbConnectionAuthenticationMode = new DBConnectionAuthenticationMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dbUserName"u8))
+                {
+                    dbUserName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dbPasswordSecretName"u8))
+                {
+                    dbPasswordSecretName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultId"u8))
+                {
+                    keyVaultId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("thriftUrl"u8))
+                {
+                    thriftUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,38 +150,46 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), clusterProfile, serializedAdditionalRawData);
+            return new SparkMetastoreSpec(
+                dbServerHost,
+                dbName,
+                dbConnectionAuthenticationMode,
+                dbUserName,
+                dbPasswordSecretName,
+                keyVaultId,
+                thriftUrl,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HDInsightClusterPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{options.Format}' format.");
             }
         }
 
-        HDInsightClusterPatch IPersistableModel<HDInsightClusterPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SparkMetastoreSpec IPersistableModel<SparkMetastoreSpec>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SparkMetastoreSpec>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHDInsightClusterPatch(document.RootElement, options);
+                        return DeserializeSparkMetastoreSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkMetastoreSpec)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HDInsightClusterPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SparkMetastoreSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (OutboundType.HasValue)
+            if (Optional.IsDefined(OutboundType))
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType.Value.ToString());
             }
-            if (EnablePrivateApiServer.HasValue)
+            if (Optional.IsDefined(EnablePrivateApiServer))
             {
                 writer.WritePropertyName("enablePrivateApiServer"u8);
                 writer.WriteBooleanValue(EnablePrivateApiServer.Value);
             }
-            if (!(ApiServerAuthorizedIPRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiServerAuthorizedIPRanges))
             {
                 writer.WritePropertyName("apiServerAuthorizedIpRanges"u8);
                 writer.WriteStartArray();

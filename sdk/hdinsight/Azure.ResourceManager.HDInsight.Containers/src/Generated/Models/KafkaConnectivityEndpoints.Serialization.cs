@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (BootstrapServerEndpoint != null)
+            if (Optional.IsDefined(BootstrapServerEndpoint))
             {
                 writer.WritePropertyName("bootstrapServerEndpoint"u8);
                 writer.WriteStringValue(BootstrapServerEndpoint);
             }
-            if (!(BrokerEndpoints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BrokerEndpoints))
             {
                 writer.WritePropertyName("brokerEndpoints"u8);
                 writer.WriteStartArray();

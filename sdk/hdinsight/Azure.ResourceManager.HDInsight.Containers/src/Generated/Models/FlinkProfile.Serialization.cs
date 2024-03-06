@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
-            if (DeploymentMode.HasValue)
+            if (Optional.IsDefined(DeploymentMode))
             {
                 writer.WritePropertyName("deploymentMode"u8);
                 writer.WriteStringValue(DeploymentMode.Value.ToString());
             }
-            if (JobSpec != null)
+            if (Optional.IsDefined(JobSpec))
             {
                 writer.WritePropertyName("jobSpec"u8);
                 writer.WriteObjectValue(JobSpec);

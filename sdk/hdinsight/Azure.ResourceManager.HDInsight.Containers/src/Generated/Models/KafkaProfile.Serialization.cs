@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (EnableKRaft.HasValue)
+            if (Optional.IsDefined(EnableKRaft))
             {
                 writer.WritePropertyName("enableKRaft"u8);
                 writer.WriteBooleanValue(EnableKRaft.Value);
             }
-            if (EnablePublicEndpoints.HasValue)
+            if (Optional.IsDefined(EnablePublicEndpoints))
             {
                 writer.WritePropertyName("enablePublicEndpoints"u8);
                 writer.WriteBooleanValue(EnablePublicEndpoints.Value);
             }
-            if (RemoteStorageUri != null)
+            if (Optional.IsDefined(RemoteStorageUri))
             {
                 writer.WritePropertyName("remoteStorageUri"u8);
                 writer.WriteStringValue(RemoteStorageUri.AbsoluteUri);
             }
             writer.WritePropertyName("diskStorage"u8);
             writer.WriteObjectValue(DiskStorage);
-            if (options.Format != "W" && ClusterIdentity != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterIdentity))
             {
                 writer.WritePropertyName("clusterIdentity"u8);
                 writer.WriteObjectValue(ClusterIdentity);
             }
-            if (options.Format != "W" && ConnectivityEndpoints != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteObjectValue(ConnectivityEndpoints);

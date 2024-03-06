@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,19 +27,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (MetastoreDBConnectionAuthenticationMode.HasValue)
+            if (Optional.IsDefined(MetastoreDBConnectionAuthenticationMode))
             {
                 writer.WritePropertyName("metastoreDbConnectionAuthenticationMode"u8);
                 writer.WriteStringValue(MetastoreDBConnectionAuthenticationMode.Value.ToString());
             }
-            if (MetastoreDBConnectionPasswordSecret != null)
+            if (Optional.IsDefined(MetastoreDBConnectionPasswordSecret))
             {
                 writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
                 writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
             }
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
             writer.WriteStringValue(MetastoreDBConnectionUriString);
-            if (MetastoreDBConnectionUserName != null)
+            if (Optional.IsDefined(MetastoreDBConnectionUserName))
             {
                 writer.WritePropertyName("metastoreDbConnectionUserName"u8);
                 writer.WriteStringValue(MetastoreDBConnectionUserName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("rangerAdmin"u8);
             writer.WriteObjectValue(RangerAdmin);
-            if (RangerAudit != null)
+            if (Optional.IsDefined(RangerAudit))
             {
                 writer.WritePropertyName("rangerAudit"u8);
                 writer.WriteObjectValue(RangerAudit);

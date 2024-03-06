@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (TargetOssVersion != null)
+            if (Optional.IsDefined(TargetOssVersion))
             {
                 writer.WritePropertyName("targetOssVersion"u8);
                 writer.WriteStringValue(TargetOssVersion);
             }
-            if (TargetClusterVersion != null)
+            if (Optional.IsDefined(TargetClusterVersion))
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
             }
-            if (TargetBuildNumber != null)
+            if (Optional.IsDefined(TargetBuildNumber))
             {
                 writer.WritePropertyName("targetBuildNumber"u8);
                 writer.WriteStringValue(TargetBuildNumber);
             }
-            if (ComponentName != null)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(JobJarDirectory);
             writer.WritePropertyName("jarName"u8);
             writer.WriteStringValue(JarName);
-            if (EntryClass != null)
+            if (Optional.IsDefined(EntryClass))
             {
                 writer.WritePropertyName("entryClass"u8);
                 writer.WriteStringValue(EntryClass);
             }
-            if (Args != null)
+            if (Optional.IsDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
-            if (SavePointName != null)
+            if (Optional.IsDefined(SavePointName))
             {
                 writer.WritePropertyName("savePointName"u8);
                 writer.WriteStringValue(SavePointName);

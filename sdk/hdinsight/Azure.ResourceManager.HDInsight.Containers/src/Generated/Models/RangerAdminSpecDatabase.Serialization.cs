@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Host);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (PasswordSecretRef != null)
+            if (Optional.IsDefined(PasswordSecretRef))
             {
                 writer.WritePropertyName("passwordSecretRef"u8);
                 writer.WriteStringValue(PasswordSecretRef);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
