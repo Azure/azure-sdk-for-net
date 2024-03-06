@@ -74,11 +74,6 @@ public class PipelineSamples
             // Create a message that can be sent via the client pipeline.
             PipelineMessage message = _pipeline.CreateMessage();
 
-            // Set a classifier that will determine whether the response is an
-            // error response based on the response status code.
-            message.ResponseClassifier
-                = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
-
             // Modify the request as needed to invoke the service operation.
             PipelineRequest request = message.Request;
             request.Method = "PATCH";

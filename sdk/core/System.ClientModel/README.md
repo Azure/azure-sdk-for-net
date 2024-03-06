@@ -24,7 +24,7 @@ None needed for `System.ClientModel`.
 
 ## Key concepts
 
-`System.ClientModel` contains types in two major categories: (1) those used to author service clients, and (2) those exposed in the public APIs of clients built using `System.ClientModel` types.  The latter are intended for use by the end-users of service clients to communicate with cloud services.
+`System.ClientModel` contains two major categories of types: (1) types used to author service clients, and (2) types exposed in the public APIs of clients built using `System.ClientModel` types.  The latter are intended for use by the end-users of service clients to communicate with cloud services.
 
 Types used to author service clients appear in the `System.ClientModel.Primitives` namespace.  Key concepts involving these types include:
 
@@ -80,11 +80,6 @@ public class SampleClient
     {
         // Create a message that can be sent via the client pipeline.
         PipelineMessage message = _pipeline.CreateMessage();
-
-        // Set a classifier that will determine whether the response is an
-        // error response based on the response status code.
-        message.ResponseClassifier
-            = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         // Modify the request as needed to invoke the service operation.
         PipelineRequest request = message.Request;
