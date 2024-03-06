@@ -60,8 +60,7 @@ namespace Azure.Provisioning.PostgreSql
                 storage: storage ?? new PostgreSqlFlexibleServerStorage(),
                 backup: backup ?? new PostgreSqlFlexibleServerBackupProperties(),
                 network: network ?? new PostgreSqlFlexibleServerNetwork(),
-                // there is no parameterless constructor for PostgreSqlFlexibleServerSku so we can't create an empty instance
-                sku: sku,
+                sku: sku ?? new PostgreSqlFlexibleServerSku("Standard_D4s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 dataEncryption: encryption ?? new PostgreSqlFlexibleServerDataEncryption(),
                 availabilityZone: availabilityZone,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))

@@ -266,8 +266,6 @@ namespace Azure.Provisioning.Tests
             var adminPassword = new Parameter("adminPassword", "Administrator password", isSecure: true);
             var server = new PostgreSqlFlexibleServer(
                 infrastructure,
-                // will be overriden by parameter - workaround due to the fact that there is no parameterless ctor available for Sku
-                sku: new PostgreSqlFlexibleServerSku("dummy", PostgreSqlFlexibleServerSkuTier.MemoryOptimized),
                 administratorLogin: adminLogin,
                 administratorPassword: adminPassword,
                 highAvailability: new PostgreSqlFlexibleServerHighAvailability { Mode = "haMode" },
