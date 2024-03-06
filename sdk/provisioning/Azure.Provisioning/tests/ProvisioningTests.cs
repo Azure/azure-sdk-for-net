@@ -19,10 +19,12 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -272,6 +274,8 @@ namespace Azure.Provisioning.Tests
                     BackupRetentionDays = 7,
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
                 });
+            server.AssignProperty(data => data.Sku.Name, new Parameter("dbInstanceType"));
+            server.AssignProperty(data => data.Sku.Tier, new Parameter("serverEdition"));
             var kv = infrastructure.AddKeyVault();
             // verify we can assign a property that is already assigned automatically by the CDK
             var p = new Parameter("p", defaultValue: "name");
@@ -285,7 +289,39 @@ namespace Azure.Provisioning.Tests
                     new
                     {
                         adminLogin = new { value = "password" },
-                        adminPassword = new { value = "password" }
+                        adminPassword = new { value = "password" },
+                        dbInstanceType = new { value = "Standard_B1ms" },
+                        serverEdition = new { value = "Burstable" }
+                    }),
+                interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task CosmosDB()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            infrastructure.AddParameter(new Parameter("keyVaultName"));
+            var account = new CosmosDBAccount(
+                infrastructure,
+                accountLocations: new CosmosDBAccountLocation[]
+                {
+                    new CosmosDBAccountLocation
+                    {
+                        FailoverPriority = 0
+                    }
+                });
+            account.AssignProperty(data => data.Locations[0].LocationName, "location");
+            _ = new CosmosDBSqlDatabase(infrastructure, account);
+            var kv = KeyVault.FromExisting(infrastructure, name: "keyVaultName");
+            _ = new KeyVaultSecret(infrastructure, "connectionString", account.GetConnectionString(), kv);
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(
+                BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        keyVaultName = new { value = "vault" },
                     }),
                 interactiveMode: true);
         }
@@ -579,11 +615,12 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
-        public void ExistingResources()
+        public async Task ExistingResources()
         {
             var infra = new TestInfrastructure();
             var rg = infra.AddResourceGroup();
-            infra.AddResource(AppConfigurationStore.FromExisting(infra, "'existingAppConfig'", rg));
+            infra.AddParameter(new Parameter("existingAppConfig"));
+            infra.AddResource(AppConfigurationStore.FromExisting(infra, "existingAppConfig", rg));
             var kv = KeyVault.FromExisting(infra, "'existingVault'", rg);
             infra.AddResource(kv);
             var sa = StorageAccount.FromExisting(infra, "'existingStorage'", rg);
@@ -595,16 +632,26 @@ namespace Azure.Provisioning.Tests
             var sql = SqlServer.FromExisting(infra, "'existingSqlServer'", rg);
             infra.AddResource(sql);
             infra.AddResource(Redis.RedisCache.FromExisting(infra, "'existingRedis'", rg));
+            var cosmosDB = CosmosDBAccount.FromExisting(infra, "'cosmosDb'", rg);
+            infra.AddResource(cosmosDB);
+            infra.AddResource(CosmosDBSqlDatabase.FromExisting(infra, "'cosmosDb'", cosmosDB));
             infra.AddResource(DeploymentScript.FromExisting(infra, "'existingDeploymentScript'", rg));
-            infra.AddResource(SqlDatabase.FromExisting(infra, "'existingSqlDatabase'", sql));
+            infra.AddParameter(new Parameter("existingSqlDatabase"));
+            infra.AddResource(SqlDatabase.FromExisting(infra, "existingSqlDatabase", sql));
             infra.AddResource(SqlFirewallRule.FromExisting(infra, "'existingSqlFirewallRule'", sql));
             infra.AddResource(BlobService.FromExisting(infra, "'existingBlobService'", sa));
             infra.AddResource(AppServicePlan.FromExisting(infra, "'existingAppServicePlan'", rg));
             infra.AddResource(WebSiteConfigLogs.FromExisting(infra, "'existingWebSiteConfigLogs'", web));
             infra.AddResource(WebSitePublishingCredentialPolicy.FromExisting(infra, "'existingWebSitePublishingCredentialPolicy'", web));
+
             infra.Build(GetOutputPath());
-            //these resources can't be verified since they won't exist.
-            //await ValidateBicepAsync();
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    existingAppConfig = new { value = "appConfig" },
+                    existingSqlDatabase = new { value = "sqlDatabase" },
+                }));
         }
 
         public async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)

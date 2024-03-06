@@ -44,7 +44,7 @@ namespace Azure.Provisioning.Sql
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
         /// <returns>The KeyVault instance.</returns>
-        public static SqlFirewallRule FromExisting(IConstruct scope, string name, SqlServer? parent = null)
+        public static SqlFirewallRule FromExisting(IConstruct scope, string name, SqlServer parent)
             => new SqlFirewallRule(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>

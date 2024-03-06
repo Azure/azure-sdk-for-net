@@ -145,6 +145,7 @@ resource sqlServer_dQT7Agxxb 'Microsoft.Sql/servers@2022-08-01-preview' = {
 resource sqlDatabase_xPxoW7iwr 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
   parent: sqlServer_dQT7Agxxb
   name: 'db'
+  location: 'westus'
   properties: {
   }
 }

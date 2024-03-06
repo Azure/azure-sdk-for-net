@@ -27,7 +27,8 @@ namespace Azure.Provisioning.Sql
         public SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default)
             : this(scope, parent, name, version, location, false, (name) => ArmSqlModelFactory.SqlDatabaseData(
                 name: name,
-                resourceType: ResourceTypeName))
+                resourceType: ResourceTypeName,
+                location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
 
@@ -52,7 +53,7 @@ namespace Azure.Provisioning.Sql
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
         /// <returns>The KeyVault instance.</returns>
-        public static SqlDatabase FromExisting(IConstruct scope, string name, SqlServer? parent = null)
+        public static SqlDatabase FromExisting(IConstruct scope, string name, SqlServer parent)
             => new SqlDatabase(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>

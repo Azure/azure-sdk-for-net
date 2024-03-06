@@ -147,7 +147,18 @@ namespace Azure.Provisioning
             {
                 stream.WriteLine();
                 stream.WriteLine($"resource {resource.Name} '{resource.Id.ResourceType}@{resource.Version}' existing = {{");
-                stream.WriteLine($"  name: {resource.Id.Name}");
+
+                var name = resource.Parent is not ResourceManager.ResourceGroup && resource.Id.Name.StartsWith("'")
+                    // child resource with a literal name
+                    ? $"'${{{resource.Parent!.Name}}}/{resource.Id.Name.Substring(1, resource.Id.Name.Length - 2)}'"
+                    : resource.Parent is not ResourceManager.ResourceGroup
+                        // child resource with a parameterized name
+                        ? $"'${{{resource.Parent!.Name}}}/${{{resource.Id.Name}}}'"
+                        // parent resource with literal or parameterized name
+                        : resource.Id.Name;
+
+                stream.WriteLine($"  name: {name}");
+
                 stream.WriteLine($"}}");
             }
         }

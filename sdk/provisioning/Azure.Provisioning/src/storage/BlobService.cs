@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Storage
         /// <param name="name">The resource name.</param>
         /// <param name="parent">The resource group.</param>
         /// <returns>The KeyVault instance.</returns>
-        public static BlobService FromExisting(IConstruct scope, string name, StorageAccount? parent = null)
+        public static BlobService FromExisting(IConstruct scope, string name, StorageAccount parent)
             => new BlobService(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>
