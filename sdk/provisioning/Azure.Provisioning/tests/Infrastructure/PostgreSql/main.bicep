@@ -11,15 +11,26 @@ param adminLogin string
 param adminPassword string
 
 @description('')
+param dbInstanceType string
+
+@description('')
+param serverEdition string
+
+@description('')
 param p string = 'name'
 
 
 resource postgreSqlFlexibleServer_mZ8PC2Gce 'Microsoft.DBforPostgreSQL/flexibleServers@2020-06-01' = {
   name: toLower(take(concat('postgres', uniqueString(resourceGroup().id)), 24))
   location: location
+  sku: {
+    name: dbInstanceType
+    tier: serverEdition
+  }
   properties: {
     administratorLogin: adminLogin
     administratorLoginPassword: adminPassword
+    version: ''
     backup: {
       backupRetentionDays: 7
       geoRedundantBackup: 'Disabled'

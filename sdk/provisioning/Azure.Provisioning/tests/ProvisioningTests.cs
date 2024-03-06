@@ -266,6 +266,8 @@ namespace Azure.Provisioning.Tests
             var adminPassword = new Parameter("adminPassword", "Administrator password", isSecure: true);
             var server = new PostgreSqlFlexibleServer(
                 infrastructure,
+                // will be overriden by parameter - workaround due to the fact that there is no parameterless ctor available for Sku
+                sku: new PostgreSqlFlexibleServerSku("dummy", PostgreSqlFlexibleServerSkuTier.MemoryOptimized),
                 administratorLogin: adminLogin,
                 administratorPassword: adminPassword,
                 highAvailability: new PostgreSqlFlexibleServerHighAvailability { Mode = "haMode" },
@@ -274,6 +276,8 @@ namespace Azure.Provisioning.Tests
                     BackupRetentionDays = 7,
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled
                 });
+            server.AssignProperty(data => data.Sku.Name, new Parameter("dbInstanceType"));
+            server.AssignProperty(data => data.Sku.Tier, new Parameter("serverEdition"));
             var kv = infrastructure.AddKeyVault();
             // verify we can assign a property that is already assigned automatically by the CDK
             var p = new Parameter("p", defaultValue: "name");
@@ -287,7 +291,8 @@ namespace Azure.Provisioning.Tests
                     new
                     {
                         adminLogin = new { value = "password" },
-                        adminPassword = new { value = "password" }
+                        adminPassword = new { value = "password" },
+                        dbInstanceType = new { value = "Standard_B1ms" },
                     }),
                 interactiveMode: true);
         }

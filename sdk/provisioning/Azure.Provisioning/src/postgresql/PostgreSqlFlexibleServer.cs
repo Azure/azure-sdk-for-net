@@ -25,8 +25,10 @@ namespace Azure.Provisioning.PostgreSql
         /// <param name="administratorLogin">The administrator login.</param>
         /// <param name="administratorPassword">The administrator password.</param>
         /// <param name="sku">The Sku.</param>
+        /// <param name="serverVersion">The version.</param>
         /// <param name="highAvailability">The high availability.</param>
         /// <param name="storage">The storage.</param>
+        /// <param name="encryption"></param>
         /// <param name="backup">The backup.</param>
         /// <param name="network">The network.</param>
         /// <param name="availabilityZone">The availability zone.</param>
@@ -39,8 +41,10 @@ namespace Azure.Provisioning.PostgreSql
             Parameter administratorLogin,
             Parameter administratorPassword,
             PostgreSqlFlexibleServerSku? sku = default,
+            PostgreSqlFlexibleServerVersion? serverVersion = default,
             PostgreSqlFlexibleServerHighAvailability? highAvailability = default,
             PostgreSqlFlexibleServerStorage? storage = default,
+            PostgreSqlFlexibleServerDataEncryption? encryption = default,
             PostgreSqlFlexibleServerBackupProperties? backup = default,
             PostgreSqlFlexibleServerNetwork? network = default,
             string? availabilityZone = default,
@@ -50,12 +54,15 @@ namespace Azure.Provisioning.PostgreSql
             AzureLocation? location = default)
         : this(scope, administratorLogin, administratorPassword, sku, highAvailability, storage, backup, network, availabilityZone, parent, name, version, location, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
                 name: name,
-                sku: sku,
                 // create new instances so the properties can be overriden by user if needed
+                version: serverVersion ?? new PostgreSqlFlexibleServerVersion(),
                 highAvailability: highAvailability ?? new PostgreSqlFlexibleServerHighAvailability(),
                 storage: storage ?? new PostgreSqlFlexibleServerStorage(),
                 backup: backup ?? new PostgreSqlFlexibleServerBackupProperties(),
                 network: network ?? new PostgreSqlFlexibleServerNetwork(),
+                // there is no parameterless constructor for PostgreSqlFlexibleServerSku so we can't create an empty instance
+                sku: sku,
+                dataEncryption: encryption ?? new PostgreSqlFlexibleServerDataEncryption(),
                 availabilityZone: availabilityZone,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
