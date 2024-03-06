@@ -99,14 +99,21 @@ public class ConfigurationSamples
     public void ConfigurationCustomHttpClient()
     {
         #region Snippet:ConfigurationCustomHttpClient
+        using HttpClientHandler handler = new()
+        {
+            // Reduce the max connections per server, which defaults to 50.
+            MaxConnectionsPerServer = 25,
 
-        using HttpClient httpClient = new();
+            // Preserve default System.ClientModel redirect behavior.
+            AllowAutoRedirect = false,
+        };
+
+        using HttpClient httpClient = new(handler);
 
         MapsClientOptions options = new()
         {
             Transport = new HttpClientPipelineTransport(httpClient)
         };
-
         #endregion
     }
 }

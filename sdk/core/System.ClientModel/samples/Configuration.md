@@ -80,7 +80,16 @@ public class StopwatchPolicy : PipelinePolicy
 In some cases, users may want to provide a custom instance of the `HttpClient` used by a client's transport to send and receive HTTP messages.  To provide a custom `HttpClient`, create a new instance of `HttpClientPipelineTransport` and pass the custom `HttpClient` instance to its constructor.
 
 ```C# Snippet:ConfigurationCustomHttpClient
-using HttpClient httpClient = new();
+using HttpClientHandler handler = new()
+{
+    // Reduce the max connections per server, which defaults to 50.
+    MaxConnectionsPerServer = 25,
+
+    // Preserve default System.ClientModel redirect behavior.
+    AllowAutoRedirect = false,
+};
+
+using HttpClient httpClient = new(handler);
 
 MapsClientOptions options = new()
 {
