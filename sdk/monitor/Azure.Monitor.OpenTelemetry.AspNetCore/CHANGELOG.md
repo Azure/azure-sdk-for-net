@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
+  for the details.
+  ([#42374](https://github.com/Azure/azure-sdk-for-net/pull/42374))
+
 ### Breaking Changes
 
 ### Bugs Fixed
