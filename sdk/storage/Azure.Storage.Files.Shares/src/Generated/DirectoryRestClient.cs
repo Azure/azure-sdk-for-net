@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
@@ -488,7 +489,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
-            if (include != null && !(include is ChangeTrackingList<ListFilesIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (include != null && !(include is Common.ChangeTrackingList<ListFilesIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

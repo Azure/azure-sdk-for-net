@@ -7,7 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -16,31 +16,31 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
-            if (Optional.IsDefined(ColumnSeparator))
+            if (Common.Optional.IsDefined(ColumnSeparator))
             {
                 writer.WriteStartElement("ColumnSeparator");
                 writer.WriteValue(ColumnSeparator);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(FieldQuote))
+            if (Common.Optional.IsDefined(FieldQuote))
             {
                 writer.WriteStartElement("FieldQuote");
                 writer.WriteValue(FieldQuote);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RecordSeparator))
+            if (Common.Optional.IsDefined(RecordSeparator))
             {
                 writer.WriteStartElement("RecordSeparator");
                 writer.WriteValue(RecordSeparator);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (Common.Optional.IsDefined(EscapeChar))
             {
                 writer.WriteStartElement("EscapeChar");
                 writer.WriteValue(EscapeChar);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(HeadersPresent))
+            if (Common.Optional.IsDefined(HeadersPresent))
             {
                 writer.WriteStartElement("HasHeaders");
                 writer.WriteValue(HeadersPresent.Value);

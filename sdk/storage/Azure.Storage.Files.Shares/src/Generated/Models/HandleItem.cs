@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Files.Shares;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
