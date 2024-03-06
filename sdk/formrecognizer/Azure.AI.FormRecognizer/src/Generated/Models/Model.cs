@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {

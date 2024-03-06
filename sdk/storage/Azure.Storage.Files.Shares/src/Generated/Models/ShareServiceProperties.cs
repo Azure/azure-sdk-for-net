@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {

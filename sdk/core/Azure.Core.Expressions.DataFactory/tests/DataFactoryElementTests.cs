@@ -623,7 +623,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfUnknownType()
         {
-            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecretBase(null));
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(null));
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(UnknownTypeJson, actual);
             Assert.IsNull(dfe.ToString());
@@ -633,7 +633,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfOtherType()
         {
-            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecretBase(OtherSecretType));
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(OtherSecretType));
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(OtherTypeJson, actual);
             Assert.IsNull(dfe.ToString());
