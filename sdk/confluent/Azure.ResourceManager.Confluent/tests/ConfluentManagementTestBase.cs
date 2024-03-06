@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Confluent.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetSubscriptions().GetAsync("ff9490e3-e714-4d26-b33b-4deefb0d5ffa");
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             _resourceGroup = await CreateResourceGroupAsync();
             Console.WriteLine("DefaultSubscription: " + DefaultSubscription.GetAsync().Status);
         }

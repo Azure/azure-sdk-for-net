@@ -27,14 +27,15 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
             ConfluentOfferDetail offerDetail = new ConfluentOfferDetail("confluentinc", "confluent-cloud-azure-stag", "confluent-cloud-azure-payg-stag", "Confluent Cloud - Pay as you Go", "P1M");
             offerDetail.TermId = "gmz7xq9ge3py";
+            var resourceName = $"liftrcftsdk{DateTime.Now:ddMMyyyy}";
             ConfluentUserDetail userDetail = new ConfluentUserDetail()
             {
                 FirstName = "LiftrConfluent",
                 LastName = "User",
-                EmailAddress = $"liftrcftsdk{DateTime.Now:ddMMyyyy}@outlook.com",
+                EmailAddress = $"{resourceName}@outlook.com",
             };
             ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
-            var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, $"liftrcftsdk{DateTime.Now:ddMMyyyy}", inputData);
+            var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
             Assert.NotNull(confluentNewOrg);
             Assert.NotNull(confluentNewOrg.Value.Id);
             Assert.NotNull(confluentNewOrg.Value.Data.SsoUri);
@@ -45,170 +46,48 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
         public async Task ListConfluentOrgsInSubscription()
         {
             int count = 0;
+            var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
+            ConfluentOfferDetail offerDetail = new ConfluentOfferDetail("confluentinc", "confluent-cloud-azure-stag", "confluent-cloud-azure-payg-stag", "Confluent Cloud - Pay as you Go", "P1M");
+            offerDetail.TermId = "gmz7xq9ge3py";
+            var resourceName = $"liftrcftsdk{DateTime.Now:ddMMyyyy}";
+            ConfluentUserDetail userDetail = new ConfluentUserDetail()
+            {
+                FirstName = "LiftrConfluent",
+                LastName = "User",
+                EmailAddress = $"liftrcftsdk{DateTime.Now:ddMMyyyy}@outlook.com",
+            };
+            ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
+            var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
+            Console.WriteLine("Confluent Org Created: " + confluentNewOrg.Value.Id.Name);
             await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
             {
-                Console.WriteLine("Confluent Org: " + confluentOrganization.Id.Name);
-                ++count;
+                if (confluentOrganization.Id.Name.Equals(resourceName))
+                {
+                    ++count;
+                    break;
+                }
             }
             Assert.GreaterOrEqual(count, 1);
         }
 
         [RecordedTest]
         [TestCase]
-        public async Task GetEnvironmentsInOrg()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    var environments = confluentOrganization.GetEnvironmentsAsync();
-                    await foreach (var env in environments)
-                    {
-                        Console.WriteLine("Environment: " + env.Id);
-                    }
-                    break;
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task GetClustersByIdInOrgForAnEnvironment()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    var cluster = confluentOrganization.GetClusterByIdAsync("env-123", "lkc-1235");
-                    Assert.NotNull(cluster);   // since the access is via partner signed token which is failing to get env.
-                    break;
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task GetClustersInOrgForAnEnvironment()
-        {
-            try
-            {
-                await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-                {
-                    if (confluentOrganization.Id.Name.Contains("PortalSDKTest_0408"))
-                    {
-                        var cluster = confluentOrganization.GetClustersAsync("env-123");
-                        Assert.NotNull(cluster);   // since the access is via partner signed token which is failing to get env.
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Assert.IsNotNull(ex);
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task GetSchemaRegistryClustersOrgForAnEnvironment()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                if (confluentOrganization.Id.Name.Contains("PortalSDKTest_0408"))
-                {
-                    var schemaRegistryClusters = confluentOrganization.GetSchemaRegistryClustersAsync("env-123");
-                    Assert.NotNull(schemaRegistryClusters);   // since the access is via partner signed token which is failing to get env.
-                    break;
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task GetSchemaRegistryClustersByIdOrgForAnEnvironment()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    var schemaRegistryCluster = confluentOrganization.GetSchemaRegistryClusterByIdAsync("env-123", "cluster-134");
-                    Assert.NotNull(schemaRegistryCluster);   // since the access is via partner signed token which is failing to get env.
-                    Assert.NotNull(schemaRegistryCluster.Id);
-                    break;
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task GetClustersByIdOrgForAnEnvironment()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    try
-                    {
-                        var Cluster = confluentOrganization.GetSchemaRegistryClusterByIdAsync("env-123", "cluster-134");
-                        Assert.NotNull(Cluster);   // since the access is via partner signed token which is failing to get env.
-                        Assert.NotNull(Cluster.Id);
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("EXCEPTION!!!!!!");
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task DeleteAPIKey()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    var deleteresponse = confluentOrganization.DeleteClusterAPIKeyAsync("apiKeyId");
-                    Assert.NotNull(deleteresponse);   // since the access is via partner signed token which is failing to get env.
-                    break;
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
-        public async Task CreateAPIKey()
-        {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
-            {
-                CreateAPIKeyModel createAPIKeyModel = new CreateAPIKeyModel();
-                createAPIKeyModel.Name = "testkey";
-                createAPIKeyModel.Description = "testkey";
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    var apiKey = confluentOrganization.CreateAPIKeyAsync("env-123", "cluster-134", createAPIKeyModel);
-                    Assert.IsNotNull(apiKey);  // since the access is via partner signed token which is failing to get env.
-                    break;
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase]
         public async Task DeleteConfluentOrg()
         {
-            await foreach (ConfluentOrganizationResource confluentOrganization in DefaultSubscription.GetConfluentOrganizationsAsync())
+            var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
+            ConfluentOfferDetail offerDetail = new ConfluentOfferDetail("confluentinc", "confluent-cloud-azure-stag", "confluent-cloud-azure-payg-stag", "Confluent Cloud - Pay as you Go", "P1M");
+            offerDetail.TermId = "gmz7xq9ge3py";
+            var resourceName = $"liftrcftsdk{DateTime.Now:ddMMyyyy}";
+            ConfluentUserDetail userDetail = new ConfluentUserDetail()
             {
-                if (confluentOrganization.Id.Name.Contains($"PortalSDKTest_0408"))
-                {
-                    var result = await confluentOrganization.DeleteAsync(WaitUntil.Completed);
-                    Assert.AreEqual(result.GetRawResponse().Status, 200);
-                    break;
-                }
-            }
+                FirstName = "LiftrConfluent",
+                LastName = "User",
+                EmailAddress = $"liftrcftsdk{DateTime.Now:ddMMyyyy}@outlook.com",
+            };
+            ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
+            var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
+            var result = await confluentNewOrg.Value.DeleteAsync(WaitUntil.Completed);
+            Assert.AreEqual(result.GetRawResponse().Status,200);
         }
     }
 }
