@@ -93,14 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual async Task<Response<SubscriptionLongTermRetentionBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Get");
             scope.Start();
@@ -145,14 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<SubscriptionLongTermRetentionBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Get");
             scope.Start();
@@ -261,14 +247,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Exists");
             scope.Start();
@@ -311,14 +290,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.Exists");
             scope.Start();
@@ -361,14 +333,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubscriptionLongTermRetentionBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.GetIfExists");
             scope.Start();
@@ -413,14 +378,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         public virtual NullableResponse<SubscriptionLongTermRetentionBackupResource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var scope = _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionBackupCollection.GetIfExists");
             scope.Start();

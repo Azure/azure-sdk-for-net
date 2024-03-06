@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual async Task<Response<SecurityConnectorGitLabProjectResource>> GetAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _securityConnectorGitLabProjectGitLabProjectsClientDiagnostics.CreateScope("SecurityConnectorGitLabProjectCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual Response<SecurityConnectorGitLabProjectResource> Get(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _securityConnectorGitLabProjectGitLabProjectsClientDiagnostics.CreateScope("SecurityConnectorGitLabProjectCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _securityConnectorGitLabProjectGitLabProjectsClientDiagnostics.CreateScope("SecurityConnectorGitLabProjectCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual Response<bool> Exists(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _securityConnectorGitLabProjectGitLabProjectsClientDiagnostics.CreateScope("SecurityConnectorGitLabProjectCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityConnectorGitLabProjectResource>> GetIfExistsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _securityConnectorGitLabProjectGitLabProjectsClientDiagnostics.CreateScope("SecurityConnectorGitLabProjectCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         public virtual NullableResponse<SecurityConnectorGitLabProjectResource> GetIfExists(string projectName, CancellationToken cancellationToken = default)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = _securityConnectorGitLabProjectGitLabProjectsClientDiagnostics.CreateScope("SecurityConnectorGitLabProjectCollection.GetIfExists");
             scope.Start();

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
         public JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessRequestPort> ports)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (ports == null)
-            {
-                throw new ArgumentNullException(nameof(ports));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(ports, nameof(ports));
 
             Id = id;
             Ports = ports.ToList();

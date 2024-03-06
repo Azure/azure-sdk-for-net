@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
         public SuppressionAlertsScope(IEnumerable<SuppressionAlertsScopeElement> allOf)
         {
-            if (allOf == null)
-            {
-                throw new ArgumentNullException(nameof(allOf));
-            }
+            Argument.AssertNotNull(allOf, nameof(allOf));
 
             AllOf = allOf.ToList();
         }
