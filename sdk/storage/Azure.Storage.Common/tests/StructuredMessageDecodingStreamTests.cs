@@ -200,14 +200,21 @@ namespace Azure.Storage.Tests
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
-        [Test]
-        public void BadStreamWrongSegmentCount()
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void BadStreamWrongSegmentCount(int difference)
         {
-            byte[] originalData = new byte[1024];
-            new Random().NextBytes(originalData);
-            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+            const int dataSize = 1024;
+            const int segmentSize = 256;
+            const int numSegments = 4;
 
-            BinaryPrimitives.WriteInt16LittleEndian(new Span<byte>(encodedData, V1_0.StreamHeaderSegmentCountOffset, 2), 123);
+            byte[] originalData = new byte[dataSize];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentSize, Flags.StorageCrc64);
+
+            // rewrite the segment count to be different than the actual number of segments
+            BinaryPrimitives.WriteInt16LittleEndian(
+                new Span<byte>(encodedData, V1_0.StreamHeaderSegmentCountOffset, 2), (short)(numSegments + difference));
 
             Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());

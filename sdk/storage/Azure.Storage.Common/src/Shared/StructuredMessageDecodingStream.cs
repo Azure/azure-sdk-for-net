@@ -190,7 +190,7 @@ internal class StructuredMessageDecodingStream : Stream
     {
         if (_streamFooterLength > 0 && !_processedFooter)
         {
-            throw Errors.InvalidStructuredMessage("Missing or incomplete trailer.");
+            throw Errors.InvalidStructuredMessage("Premature end of stream.");
         }
         _processedFooter = true;
     }
