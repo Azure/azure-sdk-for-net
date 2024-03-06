@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScalingPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData data, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScalingPlanResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData data, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
         public virtual async Task<Response<ScalingPlanResource>> GetAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
         public virtual Response<ScalingPlanResource> Get(string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.Get");
             scope.Start();
@@ -369,14 +335,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.Exists");
             scope.Start();
@@ -419,14 +378,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
         public virtual Response<bool> Exists(string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.Exists");
             scope.Start();
@@ -469,14 +421,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScalingPlanResource>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetIfExists");
             scope.Start();
@@ -521,14 +466,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
         public virtual NullableResponse<ScalingPlanResource> GetIfExists(string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            if (scalingPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(scalingPlanName));
-            }
-            if (scalingPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scalingPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
             using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetIfExists");
             scope.Start();

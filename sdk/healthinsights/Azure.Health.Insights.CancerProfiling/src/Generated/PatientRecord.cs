@@ -50,10 +50,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PatientRecord(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             Data = new ChangeTrackingList<PatientDocument>();
