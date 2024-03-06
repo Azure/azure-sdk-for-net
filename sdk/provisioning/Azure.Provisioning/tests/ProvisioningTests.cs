@@ -19,6 +19,7 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
+using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.ResourceManager;
@@ -288,6 +289,20 @@ namespace Azure.Provisioning.Tests
                         adminPassword = new { value = "password" }
                     }),
                 interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task CosmosDB()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var account = new CosmosDBAccount(infrastructure);
+            _ = new CosmosDBSqlDatabase(infrastructure, account);
+            _ = infrastructure.AddKeyVault();
+            _ = new KeyVaultSecret(infrastructure, "connectionString", account.GetConnectionString());
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
         }
 
         [RecordedTest]
