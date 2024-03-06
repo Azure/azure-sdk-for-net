@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
+#nullable enable
+
 namespace Azure.Core.Shared
 {
-    internal readonly struct EventSourceEvent: IReadOnlyList<KeyValuePair<string, object>>
+    internal readonly struct EventSourceEvent : IReadOnlyList<KeyValuePair<string, object?>>
     {
         public EventWrittenEventArgs EventData { get; }
 
@@ -16,11 +19,16 @@ namespace Azure.Core.Shared
             EventData = eventData;
         }
 
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
         {
+            if (EventData.PayloadNames == null || EventData.Payload == null)
+            {
+                yield break;
+            }
+
             for (int i = 0; i < Count; i++)
             {
-                yield return new KeyValuePair<string, object>(EventData.PayloadNames[i], EventData.Payload[i]);
+                yield return new KeyValuePair<string, object?>(EventData.PayloadNames[i], EventData.Payload[i]);
             }
         }
 
@@ -29,13 +37,24 @@ namespace Azure.Core.Shared
             return GetEnumerator();
         }
 
-        public int Count => EventData.PayloadNames.Count;
+        public int Count => EventData.PayloadNames?.Count ?? 0;
 
         public string Format()
         {
             return EventSourceEventFormatting.Format(EventData);
         }
 
-        public KeyValuePair<string, object> this[int index] => new KeyValuePair<string, object>(EventData.PayloadNames[index], EventData.Payload[index]);
+        public KeyValuePair<string, object?> this[int index]
+        {
+            get
+            {
+                if (EventData.PayloadNames == null || EventData.Payload == null || index >= EventData.PayloadNames.Count)
+                {
+                    throw new IndexOutOfRangeException("Index was out of range.");
+                }
+
+                return new KeyValuePair<string, object?>(EventData.PayloadNames[index], EventData.Payload[index]);
+            }
+        }
     }
 }
