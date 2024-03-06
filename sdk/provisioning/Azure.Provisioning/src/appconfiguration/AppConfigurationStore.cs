@@ -35,7 +35,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         private AppConfigurationStore(IConstruct scope, string name = "store", string version = "2023-03-01", AzureLocation? location = default, ResourceGroup? parent = null, bool isExisting = false, Func<string, AppConfigurationStoreData>? creator = null)
-            : base(scope, null, name, ResourceTypeName, version, creator ?? Empty, isExisting)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
 

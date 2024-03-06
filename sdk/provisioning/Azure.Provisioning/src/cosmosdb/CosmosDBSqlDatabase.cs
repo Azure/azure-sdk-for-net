@@ -9,11 +9,12 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.Provisioning.CosmosDB
 {
     /// <summary>
-    ///
+    /// Represents a CosmosDBSqlDatabase.
     /// </summary>
     public class CosmosDBSqlDatabase : Resource<CosmosDBSqlDatabaseData>
     {
         private const string ResourceTypeName = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases";
+        private static readonly Func<string, CosmosDBSqlDatabaseData> Empty = (name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CosmosDBSqlDatabase"/>.
@@ -33,7 +34,7 @@ namespace Azure.Provisioning.CosmosDB
             string name = "db",
             string version = "2022-05-15",
             AzureLocation? location = default)
-            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData(
+            : this(scope, parent, name, version, location, false, (name) => ArmCosmosDBModelFactory.CosmosDBSqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -41,5 +42,27 @@ namespace Azure.Provisioning.CosmosDB
                 options: propertiesConfig ?? new CosmosDBSqlDatabasePropertiesConfig()))
         {
         }
+
+        private CosmosDBSqlDatabase(
+            IConstruct scope,
+            CosmosDBAccount? parent = default,
+            string name = "db",
+            string version = "2023-04-15",
+            AzureLocation? location = default,
+            bool isExisting = false,
+            Func<string, CosmosDBSqlDatabaseData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CosmosDBAccount"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static CosmosDBSqlDatabase FromExisting(IConstruct scope, string name, CosmosDBAccount? parent = null)
+            => new CosmosDBSqlDatabase(scope, parent: parent, name: name, isExisting: true);
     }
 }

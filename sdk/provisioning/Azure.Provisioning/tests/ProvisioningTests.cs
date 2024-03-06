@@ -615,11 +615,12 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
-        public void ExistingResources()
+        public async Task ExistingResources()
         {
             var infra = new TestInfrastructure();
             var rg = infra.AddResourceGroup();
-            infra.AddResource(AppConfigurationStore.FromExisting(infra, "'existingAppConfig'", rg));
+            infra.AddParameter(new Parameter("existingAppConfig"));
+            infra.AddResource(AppConfigurationStore.FromExisting(infra, "existingAppConfig", rg));
             var kv = KeyVault.FromExisting(infra, "'existingVault'", rg);
             infra.AddResource(kv);
             var sa = StorageAccount.FromExisting(infra, "'existingStorage'", rg);
@@ -631,16 +632,26 @@ namespace Azure.Provisioning.Tests
             var sql = SqlServer.FromExisting(infra, "'existingSqlServer'", rg);
             infra.AddResource(sql);
             infra.AddResource(Redis.RedisCache.FromExisting(infra, "'existingRedis'", rg));
+            var cosmosDB = CosmosDBAccount.FromExisting(infra, "'cosmosDb'", rg);
+            infra.AddResource(cosmosDB);
+            infra.AddResource(CosmosDBSqlDatabase.FromExisting(infra, "'cosmosDb'", cosmosDB));
             infra.AddResource(DeploymentScript.FromExisting(infra, "'existingDeploymentScript'", rg));
-            infra.AddResource(SqlDatabase.FromExisting(infra, "'existingSqlDatabase'", sql));
+            infra.AddParameter(new Parameter("existingSqlDatabase"));
+            infra.AddResource(SqlDatabase.FromExisting(infra, "existingSqlDatabase", sql));
             infra.AddResource(SqlFirewallRule.FromExisting(infra, "'existingSqlFirewallRule'", sql));
             infra.AddResource(BlobService.FromExisting(infra, "'existingBlobService'", sa));
             infra.AddResource(AppServicePlan.FromExisting(infra, "'existingAppServicePlan'", rg));
             infra.AddResource(WebSiteConfigLogs.FromExisting(infra, "'existingWebSiteConfigLogs'", web));
             infra.AddResource(WebSitePublishingCredentialPolicy.FromExisting(infra, "'existingWebSitePublishingCredentialPolicy'", web));
+
             infra.Build(GetOutputPath());
-            //these resources can't be verified since they won't exist.
-            //await ValidateBicepAsync();
+
+            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
+                new
+                {
+                    existingAppConfig = new { value = "appConfig" },
+                    existingSqlDatabase = new { value = "sqlDatabase" },
+                }));
         }
 
         public async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
