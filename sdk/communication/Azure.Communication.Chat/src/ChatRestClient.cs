@@ -49,6 +49,12 @@ namespace Azure.Communication.Chat
                     createChatThreadRequest.Metadata.Add(value);
                 }
             }
+
+            if (options.RetentionPolicy != null)
+            {
+                createChatThreadRequest.RetentionPolicy = options.RetentionPolicy;
+            }
+
             var model = createChatThreadRequest;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
