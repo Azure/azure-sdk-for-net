@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
@@ -30,10 +30,12 @@
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj" />-->
   </ItemGroup>
-  
-  <!-- Shared source from Exporter -->
+
+  <!-- Shared sources -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs"  LinkBase="Shared\Core" />
   </ItemGroup>
-  
+
 </Project>
