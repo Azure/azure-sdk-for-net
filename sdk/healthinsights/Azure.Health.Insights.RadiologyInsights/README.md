@@ -7,7 +7,7 @@ Use the client library for to:
 
 * [Get secret](https://docs.microsoft.com/azure)
 
-Source code (available soon) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -65,7 +65,7 @@ Radiology Insights currently supports one document from one patient. Please take
 
 ## Examples
 
-- Working samples available in the samples folder.(available soon)
+- Working samples available in the [samples folder][sample_folder].
 
 ## Troubleshooting
 
@@ -106,3 +106,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [coc_contact]: mailto:opencode@microsoft.com
 [here]: https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/inferences
+[sample_folder]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/samples
