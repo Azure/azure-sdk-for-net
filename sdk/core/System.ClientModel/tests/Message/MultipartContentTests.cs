@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
@@ -28,63 +27,65 @@ internal class MultipartContentTests : SyncAsyncTestBase
     public void SettingInvalidBoundariesFail()
     {
         // Ends in a space
-        Assert.Throws<ArgumentException>(() => new MultipartContent("     "));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "     "));
 
         // Has an invalid character
-        Assert.Throws<ArgumentException>(() => new MultipartContent("their*"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("12<20"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("[bracket]"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("@email.com"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("{text}"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("happyBirthday!"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("#sunny"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("ye$"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("100%"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("cake&iceCream"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("this^"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("~text"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("`code`"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("\\"));
-        Assert.Throws<ArgumentException>(() => new MultipartContent("\"boundary\""));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "their*"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "12<20"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "[bracket]"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "@email.com"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "{text}"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "happyBirthday!"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "#sunny"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "ye$"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "100%"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "cake&iceCream"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "this^"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "~text"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "`code`"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "\\"));
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("mixed", "\"boundary\""));
 
         // Too long
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-        new MultipartContent("12345678910111213141516171819202122232425262728293031323334353637383940414243454546"));
+        new MultipartBinaryContent("mixed", "12345678910111213141516171819202122232425262728293031323334353637383940414243454546"));
     }
 
     [Test]
     public void CanSetBoundaryWithColon()
     {
         var boundary = "aaaaaaaaaaaaaaa:bbbbbbbbbbbbbbb";
-        var content = new MultipartContent(boundary);
-        var contentType = new ContentType("multipart/form-data");
-        var contentTypeString = content.GetContentType(contentType).ToString();
+        var content = new MultipartBinaryContent("mixed", boundary);
 
-        Assert.True(contentTypeString.Contains($"\"{boundary}\""));
+        Assert.True(content.ContentType.Contains($"\"{boundary}\""));
     }
 
     [Test]
     public void CanSetBoundary()
     {
         var boundary = " passWORD123'(+,_-./:=? ending";
-        var content = new MultipartContent(boundary);
-        var contentType = new ContentType("multipart/form-data");
-        var contentTypeString = content.GetContentType(contentType).ToString();
+        var content = new MultipartBinaryContent("mixed", boundary);
 
-        Assert.True(contentTypeString.Contains($"\"{boundary}\""));
+        Assert.True(content.ContentType.Contains($"\"{boundary}\""));
     }
 
     [Test]
     public void RandomBoundaryIsGenerated()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
         Assert.IsNotNull(content.Boundary);
+    }
+
+    [Test]
+    public void SettingInvalidSubtypeThrows()
+    {
+        Assert.Throws<ArgumentException>(() => new MultipartBinaryContent("invalid"));
     }
 
     [Test]
     public void DisposeDisposesInnerBinaryContents()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
         var binaryContentMock = new Mock<BinaryContent>();
         binaryContentMock.Setup(b => b.Dispose()).Verifiable();
 
@@ -100,51 +101,48 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void DisposeOnEmptyDoesNotThrow()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
         content.Dispose();
         content.Dispose();
     }
 
     [Test]
-    public void GetContentTypeAddsBoundaryFormData()
+    public void ContentTypeAddsBoundaryFormData()
     {
-        MultipartContent content = new MultipartContent();
-        var contentType = new ContentType("multipart/form-data");
-        Assert.AreEqual($"multipart/form-data; boundary={content.Boundary}", content.GetContentType(contentType).ToString());
+        MultipartBinaryContent content = new MultipartBinaryContent("form-data");
+        Assert.AreEqual($"multipart/form-data; boundary={content.Boundary}", content.ContentType);
     }
 
     [Test]
-    public void GetContentTypeAddsBoundaryMixed()
+    public void ContentTypeAddsBoundaryMixed()
     {
-        MultipartContent content = new MultipartContent();
-        var contentType = new ContentType("multipart/mixed");
-        Assert.AreEqual($"multipart/mixed; boundary={content.Boundary}", content.GetContentType(contentType).ToString());
+        MultipartBinaryContent content = new MultipartBinaryContent("mixed");
+        Assert.AreEqual($"multipart/mixed; boundary={content.Boundary}", content.ContentType);
     }
 
     [Test]
     public void CanGetLengthFromMultipartTextContent()
     {
-        MultipartContent content = new();
+        MultipartBinaryContent content = new();
         var bodyPart1 = "Hello, World!";
         var bodyPart2 = "Goodbye, World!";
 
         var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
-        var headers1 = new Dictionary<string, string> { { "Content-Disposition", new ContentDispositionHeaderValue("field1").ToString() } };
+        var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"" ) };
 
         var binaryContent2 = BinaryContent.Create(BinaryData.FromString(bodyPart2));
-        var headers2 = new Dictionary<string, string> { { "Content-Disposition", new ContentDispositionHeaderValue("field2").ToString() } };
+        var headers2 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field2\"" ) };
 
         content.Add(binaryContent1, headers1);
         content.Add(binaryContent2, headers2);
 
-        var binaryContent = content.ToBinaryContent();
-        var couldCompute = binaryContent.TryComputeLength(out long binaryContentLength);
+        var couldCompute = content.TryComputeLength(out long binaryContentLength);
 
         Assert.That(couldCompute, Is.True);
 
         var bodyLengths = bodyPart1.Length + bodyPart2.Length;
-        var headersLength1 = headers1.Sum(h => h.Key.Length + h.Value.Length + "\r\n".Length + ": ".Length) + ("\r\n".Length * 2);
-        var headersLength2 = headers2.Sum(h => h.Key.Length + h.Value.Length + "\r\n".Length + ": ".Length) + ("\r\n".Length * 2);
+        var headersLength1 = headers1.Sum(h => h.Name.Length + h.Value.Length + "\r\n".Length + ": ".Length) + ("\r\n".Length * 2);
+        var headersLength2 = headers2.Sum(h => h.Name.Length + h.Value.Length + "\r\n".Length + ": ".Length) + ("\r\n".Length * 2);
         var boundaryBytes = Encoding.UTF8.GetBytes($"\r\n--{content.Boundary}").Length;
         var footerLength = boundaryBytes + "--".Length;
         var expectedLength = headersLength1 + headersLength2 + bodyLengths + (boundaryBytes*2) + footerLength;
@@ -155,22 +153,21 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void TextContentIsFormattedCorrectly()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
         var bodyPart1 = "Hello, World!";
         var bodyPart2 = "Goodbye, World!";
 
         var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
-        var headers1 = new Dictionary<string, string> { { "Content-Disposition", new ContentDispositionHeaderValue("field1").ToString() } };
+        var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"") };
 
         var binaryContent2 = BinaryContent.Create(BinaryData.FromString(bodyPart2));
-        var headers2 = new Dictionary<string, string> { { "Content-Disposition", new ContentDispositionHeaderValue("field2").ToString() } };
+        var headers2 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field2\"") };
 
         content.Add(binaryContent1, headers1);
         content.Add(binaryContent2, headers2);
 
-        var binaryContent = content.ToBinaryContent();
         var stream = new MemoryStream();
-        binaryContent.WriteTo(stream, CancellationToken.None);
+        content.WriteTo(stream, CancellationToken.None);
 
         var expected = $"--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{content.Boundary}--";
         var actual = Encoding.UTF8.GetString(stream.ToArray());
@@ -181,10 +178,9 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void EmptyRequestIsFormattedCorrectly()
     {
-        MultipartContent content = new MultipartContent();
-        var binaryContent = content.ToBinaryContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
         var stream = new MemoryStream();
-        binaryContent.WriteTo(stream, CancellationToken.None);
+        content.WriteTo(stream, CancellationToken.None);
 
         var expected = $"\r\n--{content.Boundary}--";
         var actual = Encoding.UTF8.GetString(stream.ToArray());
@@ -195,17 +191,16 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void SinglePartRequestIsFormattedCorrectly()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
         var bodyPart1 = "Hello, World!";
 
         var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
-        var headers1 = new Dictionary<string, string> { { "Content-Disposition", new ContentDispositionHeaderValue("field1").ToString() } };
+        var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"") };
 
         content.Add(binaryContent1, headers1);
 
-        var binaryContent = content.ToBinaryContent();
         var stream = new MemoryStream();
-        binaryContent.WriteTo(stream, CancellationToken.None);
+        content.WriteTo(stream, CancellationToken.None);
 
         var expected = $"--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\n\r\n{bodyPart1}\r\n--{content.Boundary}--";
         var actual = Encoding.UTF8.GetString(stream.ToArray());
@@ -216,16 +211,16 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void MixOfPartsIsFormattedCorrectly()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
 
         // Text
         string bodyPart1 = "aBcDeFgHiJkLmNoPqRsTuVwXyZ012345678910!!!!!!!!!!!!!!!!!!!!!!!!!!";
         var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
-        var headers1 = new Dictionary<string, string>
+        var headers1 = new (string Name, string Value)[]
         {
-            { "Content-Disposition", new ContentDispositionHeaderValue("field1").ToString() },
-            { "Content-Type", "text/plain" },
-            { "Content-Language", "en-AU" }
+            ("Content-Disposition", "form-data; name=\"field1\""),
+            ("Content-Type", "text/plain"),
+            ("Content-Language", "en-AU")
         };
 
         content.Add(binaryContent1, headers1);
@@ -237,16 +232,15 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var stream2 = new MemoryStream();
         binaryContent3.WriteTo(stream2, CancellationToken.None);
         var expectedJsonText = Encoding.UTF8.GetString(stream2.ToArray());
-        var headers3 = new Dictionary<string, string>
+        var headers3 = new (string Name, string Value)[]
         {
-            { "Content-Disposition", new ContentDispositionHeaderValue("field3").ToString() },
-            { "Content-Type", "application/json" }
+            ("Content-Disposition", "form-data; name=\"field3\""),
+            ("Content-Type", "application/json")
         };
         content.Add(binaryContent3, headers3);
 
-        var binaryContent = content.ToBinaryContent();
         var stream = new MemoryStream();
-        binaryContent.WriteTo(stream, CancellationToken.None);
+        content.WriteTo(stream, CancellationToken.None);
         var actual = Encoding.UTF8.GetString(stream.ToArray());
 
         var expected = $"--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\nContent-Type: text/plain\r\nContent-Language: en-AU\r\n\r\n{bodyPart1}\r\n--{content.Boundary}\r\nContent-Disposition: form-data; name=\"field3\"\r\nContent-Type: application/json\r\n\r\n{expectedJsonText}\r\n--{content.Boundary}--";
@@ -255,15 +249,15 @@ internal class MultipartContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void WeirdCharactersAreHandled()
+    public void ByteArraysAreHandled()
     {
-        MultipartContent content = new MultipartContent();
+        MultipartBinaryContent content = new MultipartBinaryContent();
 
         var fileBytes = new byte[1024];
-        var headers2 = new Dictionary<string, string>
+        var headers2 = new (string, string)[]
         {
-            { "Content-Disposition", new ContentDispositionHeaderValue("field2").ToString() },
-            { "Content-Type", "application/octet-stream" }
+            ("Content-Disposition", "form-data; name=\"field1\"" ),
+            ("Content-Type", "application/octet-stream" )
         };
         var binaryContent2 = BinaryContent.Create(BinaryData.FromBytes(fileBytes));
         content.Add(binaryContent2, headers2);
@@ -272,37 +266,36 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void NestedMultipartIsHandledCorrectly()
     {
-        MultipartContent innerContent = new();
+        MultipartBinaryContent innerContent = new("form-data");
         string bodyPart1 = "aBcDeFgHiJkLmNoPqRsTuVwXyZ012345678910!!!!!!!!!!!!!!!!!!!!!!!!!!";
         var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
-        var headers1 = new Dictionary<string, string>
+        var headers1 = new (string, string)[]
         {
-            { "Content-Disposition", new ContentDispositionHeaderValue("field1").ToString() },
-            { "Content-Type", "text/plain" },
-            { "Content-Language", "en-AU" }
+            ("Content-Disposition", "form-data; name=\"field1\""),
+            ("Content-Type", "text/plain"),
+            ("Content-Language", "en-AU")
         };
         innerContent.Add(binaryContent1, headers1);
 
         string bodyPart2 = "This is another - inner content -...$$$$";
         var binaryContent2 = BinaryContent.Create(BinaryData.FromString(bodyPart2));
-        var headers2 = new Dictionary<string, string>
+        var headers2 = new (string, string)[]
         {
-            { "Content-Disposition", new ContentDispositionHeaderValue("field2").ToString() },
+            ("Content-Disposition", "form-data; name=\"field2\""),
         };
         innerContent.Add(binaryContent2, headers2);
 
-        MultipartContent outerContent = new();
-        var headers3 = new Dictionary<string, string>
+        MultipartBinaryContent outerContent = new();
+        var headers3 = new (string, string)[]
         {
-            { "Content-Disposition", new ContentDispositionHeaderValue("field3").ToString() },
-            { "Content-Type", (innerContent.GetContentType(new ContentType("multipart/form-data"))).ToString() }
+            ("Content-Disposition", "form-data; name=\"field3\""),
+            ("Content-Type",(innerContent.ContentType))
         };
 
-        outerContent.Add(innerContent.ToBinaryContent(), headers3);
+        outerContent.Add(innerContent, headers3);
 
-        var binaryContent = outerContent.ToBinaryContent();
         var stream = new MemoryStream();
-        binaryContent.WriteTo(stream, CancellationToken.None);
+        outerContent.WriteTo(stream, CancellationToken.None);
         var actual = Encoding.UTF8.GetString(stream.ToArray());
 
         var expected = $"--{outerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field3\"\r\nContent-Type: multipart/form-data; boundary={innerContent.Boundary}\r\n\r\n--{innerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field1\"\r\nContent-Type: text/plain\r\nContent-Language: en-AU\r\n\r\n{bodyPart1}\r\n--{innerContent.Boundary}\r\nContent-Disposition: form-data; name=\"field2\"\r\n\r\n{bodyPart2}\r\n--{innerContent.Boundary}--\r\n--{outerContent.Boundary}--";
@@ -312,7 +305,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
     [Test]
     public void CanHandleLargeByteArrays()
     {
-        var content = new MultipartContent();
+        var content = new MultipartBinaryContent();
 
         const long subPartSize = 8192;
         const long numSubParts = 100;
@@ -323,17 +316,17 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var bytes = new byte[subPartSize];
         for (int i = 0; i < numSubParts; i++)
         {
-            var headers = new Dictionary<string, string>
+            var headers = new (string, string)[]
             {
-                { contentDisposition, new ContentDispositionHeaderValue($"field").ToString() },
-                { contentType, applicationOctetStream }
+                (contentDisposition, "form-data; name=\"field\""),
+                (contentType, applicationOctetStream)
             };
             content.Add(BinaryContent.Create(new BinaryData(bytes)), headers);
         }
 
         using (Stream stream = new MemoryStream())
         {
-            content.ToBinaryContent().WriteTo(stream, CancellationToken.None);
+            content.WriteTo(stream, CancellationToken.None);
             var expectedSize = subPartSize * numSubParts; // bodies
             expectedSize += (content.Boundary.Length + 6) * numSubParts; // new line + -- + boundary + new line
             expectedSize += (contentDisposition.Length + ": ".Length + "form-data; name=\"field\"".Length + "\r\n".Length + contentType.Length + ": ".Length + applicationOctetStream.Length + "\r\n\r\n".Length)*numSubParts; // headers
