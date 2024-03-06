@@ -60,10 +60,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
+        /// <param name="isOnHold"> Is participant on hold. </param>
         /// <returns> A new <see cref="CallAutomation.CallParticipant"/> instance for mocking. </returns>
-        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default)
+        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default, bool isOnHold = default)
         {
-            return new CallParticipant(identifier, isMuted);
+            return new CallParticipant(identifier, isMuted, isOnHold);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -187,7 +188,7 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);
@@ -297,6 +298,18 @@ namespace Azure.Communication.CallAutomation
             var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
 
             return new SendDtmfTonesFailed(internalObject);
+        }
+
+        /// <summary> Initializes a new instance of HoldFailed. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
+        public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new HoldFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
     }
 }

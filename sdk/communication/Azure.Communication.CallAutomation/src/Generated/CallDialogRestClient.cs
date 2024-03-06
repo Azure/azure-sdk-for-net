@@ -157,7 +157,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Stop a dialog. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
-        /// <param name="operationCallbackUri"> Opeation callback URI. </param>
+        /// <param name="operationCallbackUri"> Operation callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
         public async Task<Response> StopDialogAsync(string callConnectionId, string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
@@ -185,7 +185,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Stop a dialog. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
-        /// <param name="operationCallbackUri"> Opeation callback URI. </param>
+        /// <param name="operationCallbackUri"> Operation callback URI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
         public Response StopDialog(string callConnectionId, string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
