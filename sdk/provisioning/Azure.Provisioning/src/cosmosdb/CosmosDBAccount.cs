@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
@@ -22,6 +23,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <param name="kind"></param>
         /// <param name="consistencyPolicy"></param>
         /// <param name="accountOfferType"></param>
+        /// <param name="accountLocations"></param>
         /// <param name="parent"></param>
         /// <param name="name"></param>
         /// <param name="version"></param>
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.CosmosDB
             CosmosDBAccountKind? kind = default,
             ConsistencyPolicy? consistencyPolicy = default,
             CosmosDBAccountOfferType? accountOfferType = default,
+            IEnumerable<CosmosDBAccountLocation>? accountLocations = default,
             ResourceGroup? parent = default,
             string name = "cosmosDB",
             string version = "2023-04-15",
@@ -40,9 +43,9 @@ namespace Azure.Provisioning.CosmosDB
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 kind: kind ?? CosmosDBAccountKind.GlobalDocumentDB,
                 consistencyPolicy: consistencyPolicy ?? new ConsistencyPolicy(DefaultConsistencyLevel.Session),
-                locations: new CosmosDBAccountLocation[]
+                locations: accountLocations ?? new CosmosDBAccountLocation[]
                 {
-                    ArmCosmosDBModelFactory.CosmosDBAccountLocation(location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS)
+                    ArmCosmosDBModelFactory.CosmosDBAccountLocation(locationName: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS)
                 },
                 databaseAccountOfferType: accountOfferType ?? "Standard"))
         {

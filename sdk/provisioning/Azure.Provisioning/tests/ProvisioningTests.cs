@@ -24,6 +24,7 @@ using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -296,7 +297,16 @@ namespace Azure.Provisioning.Tests
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             infrastructure.AddParameter(new Parameter("keyVaultName"));
-            var account = new CosmosDBAccount(infrastructure);
+            var account = new CosmosDBAccount(
+                infrastructure,
+                accountLocations: new CosmosDBAccountLocation[]
+                {
+                    new CosmosDBAccountLocation
+                    {
+                        FailoverPriority = 0
+                    }
+                });
+            account.AssignProperty(data => data.Locations[0].LocationName, "location");
             _ = new CosmosDBSqlDatabase(infrastructure, account);
             var kv = KeyVault.FromExisting(infrastructure, name: "keyVaultName");
             _ = new KeyVaultSecret(infrastructure, "connectionString", account.GetConnectionString(), kv);

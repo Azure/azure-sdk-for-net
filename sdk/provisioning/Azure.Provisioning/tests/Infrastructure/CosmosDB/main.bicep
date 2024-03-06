@@ -22,7 +22,8 @@ resource cosmosDBAccount_20A3gDQya 'Microsoft.DocumentDB/databaseAccounts@2023-0
     }
     locations: [
       {
-        id: 'westus'
+        locationName: location
+        failoverPriority: 0
       }
     ]
   }
