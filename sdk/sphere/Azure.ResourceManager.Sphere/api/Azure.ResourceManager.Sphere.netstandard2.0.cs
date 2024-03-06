@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResponse> CountDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>> CountDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResult> CountDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResult>> CountDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -232,8 +232,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation ClaimDevices(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ClaimDevicesAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResponse> CountDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>> CountDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResult> CountDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResult>> CountDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -362,8 +362,8 @@ namespace Azure.ResourceManager.Sphere
         protected SphereProductResource() { }
         public virtual Azure.ResourceManager.Sphere.SphereProductData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResponse> CountDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>> CountDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResult> CountDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.Models.CountDevicesResult>> CountDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string productName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public static partial class ArmSphereModelFactory
     {
-        public static Azure.ResourceManager.Sphere.Models.CountDevicesResponse CountDevicesResponse(int value = 0) { throw null; }
+        public static Azure.ResourceManager.Sphere.Models.CountDevicesResult CountDevicesResult(int value = 0) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.CountElementsResult CountElementsResult(int value = 0) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.ProofOfPossessionNonceResponse ProofOfPossessionNonceResponse(string certificate = null, Azure.ResourceManager.Sphere.Models.SphereCertificateStatus? status = default(Azure.ResourceManager.Sphere.Models.SphereCertificateStatus?), string subject = null, string thumbprint = null, System.DateTimeOffset? expiryUtc = default(System.DateTimeOffset?), System.DateTimeOffset? notBeforeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.Sphere.Models.SphereProvisioningState? provisioningState = default(Azure.ResourceManager.Sphere.Models.SphereProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Sphere.Models.SignedCapabilityImageResponse SignedCapabilityImageResponse(string image = null) { throw null; }
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.Sphere.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CountDevicesResponse : Azure.ResourceManager.Sphere.Models.CountElementsResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>
+    public partial class CountDevicesResult : Azure.ResourceManager.Sphere.Models.CountElementsResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>
     {
-        internal CountDevicesResponse() { }
-        Azure.ResourceManager.Sphere.Models.CountDevicesResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Sphere.Models.CountDevicesResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal CountDevicesResult() { }
+        Azure.ResourceManager.Sphere.Models.CountDevicesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Sphere.Models.CountDevicesResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountDevicesResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CountElementsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sphere.Models.CountElementsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sphere.Models.CountElementsResult>
     {

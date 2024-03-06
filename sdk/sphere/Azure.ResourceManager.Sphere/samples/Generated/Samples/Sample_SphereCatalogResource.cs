@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             SphereCatalogResource sphereCatalog = client.GetSphereCatalogResource(sphereCatalogResourceId);
 
             // invoke the operation
-            CountDevicesResponse result = await sphereCatalog.CountDevicesAsync();
+            CountDevicesResult result = await sphereCatalog.CountDevicesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

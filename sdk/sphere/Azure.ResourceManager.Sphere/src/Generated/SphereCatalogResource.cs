@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CountDevicesResponse>> CountDevicesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CountDevicesResult>> CountDevicesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.CountDevices");
             scope.Start();
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CountDevicesResponse> CountDevices(CancellationToken cancellationToken = default)
+        public virtual Response<CountDevicesResult> CountDevices(CancellationToken cancellationToken = default)
         {
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.CountDevices");
             scope.Start();

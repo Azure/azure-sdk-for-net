@@ -8,6 +8,7 @@ csharp: true
 library-name: Sphere
 namespace: Azure.ResourceManager.Sphere
 require: https://github.com/Azure/azure-rest-api-specs/blob/12457329527160696e47221e2078929834e9f60c/specification/sphere/resource-manager/readme.md
+tag: package-2024-04-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,8 +18,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-tag: package-2024-04-01
 
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -72,5 +74,6 @@ rename-mapping:
   UpdatePolicy: SphereUpdatePolicy
   ClaimDevicesRequest: ClaimSphereDevicesContent
   ListDeviceGroupsRequest: ListSphereDeviceGroupsContent
+  CountDevicesResponse: CountDevicesResult
 
 ```

@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CountDevicesResponse>> CountDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
+        public async Task<Response<CountDevicesResult>> CountDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -800,9 +800,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CountDevicesResponse value = default;
+                        CountDevicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CountDevicesResponse.DeserializeCountDevicesResponse(document.RootElement);
+                        value = CountDevicesResult.DeserializeCountDevicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CountDevicesResponse> CountDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
+        public Response<CountDevicesResult> CountDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -859,9 +859,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CountDevicesResponse value = default;
+                        CountDevicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CountDevicesResponse.DeserializeCountDevicesResponse(document.RootElement);
+                        value = CountDevicesResult.DeserializeCountDevicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

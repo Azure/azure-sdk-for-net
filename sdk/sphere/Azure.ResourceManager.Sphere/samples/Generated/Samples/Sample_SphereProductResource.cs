@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             SphereProductResource sphereProduct = client.GetSphereProductResource(sphereProductResourceId);
 
             // invoke the operation
-            CountDevicesResponse result = await sphereProduct.CountDevicesAsync();
+            CountDevicesResult result = await sphereProduct.CountDevicesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

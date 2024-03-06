@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sphere.Samples
             SphereDeviceGroupResource sphereDeviceGroup = client.GetSphereDeviceGroupResource(sphereDeviceGroupResourceId);
 
             // invoke the operation
-            CountDevicesResponse result = await sphereDeviceGroup.CountDevicesAsync();
+            CountDevicesResult result = await sphereDeviceGroup.CountDevicesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

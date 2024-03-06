@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CountDevicesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CountDevicesResult"/>. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
-        /// <returns> A new <see cref="Models.CountDevicesResponse"/> instance for mocking. </returns>
-        public static CountDevicesResponse CountDevicesResponse(int value = default)
+        /// <returns> A new <see cref="Models.CountDevicesResult"/> instance for mocking. </returns>
+        public static CountDevicesResult CountDevicesResult(int value = default)
         {
-            return new CountDevicesResponse(value, serializedAdditionalRawData: null);
+            return new CountDevicesResult(value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CountElementsResult"/>. </summary>
