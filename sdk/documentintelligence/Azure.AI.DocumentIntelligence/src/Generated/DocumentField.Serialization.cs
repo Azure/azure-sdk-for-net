@@ -49,15 +49,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (Optional.IsDefined(ValueNumber))
+            if (Optional.IsDefined(ValueDouble))
             {
                 writer.WritePropertyName("valueNumber"u8);
-                writer.WriteNumberValue(ValueNumber.Value);
+                writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (Optional.IsDefined(ValueInteger))
+            if (Optional.IsDefined(ValueLong))
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueInteger.Value);
+                writer.WriteNumberValue(ValueLong.Value);
             }
             if (Optional.IsDefined(ValueSelectionMark))
             {
@@ -74,21 +74,21 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (Optional.IsCollectionDefined(ValueArray))
+            if (Optional.IsCollectionDefined(ValueList))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueArray)
+                foreach (var item in ValueList)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueObject))
+            if (Optional.IsCollectionDefined(ValueDictionary))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueObject)
+                foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);
@@ -109,6 +109,16 @@ namespace Azure.AI.DocumentIntelligence
             {
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
+            }
+            if (Optional.IsCollectionDefined(ValueSelectionGroup))
+            {
+                writer.WritePropertyName("valueSelectionGroup"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValueSelectionGroup)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Content))
             {
@@ -193,6 +203,7 @@ namespace Azure.AI.DocumentIntelligence
             CurrencyValue valueCurrency = default;
             AddressValue valueAddress = default;
             bool? valueBoolean = default;
+            IReadOnlyList<string> valueSelectionGroup = default;
             string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -330,6 +341,20 @@ namespace Azure.AI.DocumentIntelligence
                     valueBoolean = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("valueSelectionGroup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    valueSelectionGroup = array;
+                    continue;
+                }
                 if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
@@ -394,6 +419,7 @@ namespace Azure.AI.DocumentIntelligence
                 valueCurrency,
                 valueAddress,
                 valueBoolean,
+                valueSelectionGroup ?? new ChangeTrackingList<string>(),
                 content,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans ?? new ChangeTrackingList<DocumentSpan>(),

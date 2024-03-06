@@ -4,11 +4,11 @@
 namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> The UnknownSecretBase. </summary>
-    internal partial class UnknownSecretBase : DataFactorySecretBaseDefinition
+    internal partial class UnknownSecret : DataFactorySecretDefinition
     {
         /// <summary> Initializes a new instance of UnknownSecretBase. </summary>
         /// <param name="secretBaseType"> Type of the secret. </param>
-        internal UnknownSecretBase(string? secretBaseType) : base(secretBaseType)
+        internal UnknownSecret(string? secretBaseType) : base(secretBaseType)
         {
             SecretBaseType = secretBaseType ?? "Unknown";
         }
