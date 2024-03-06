@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     internal partial class Manager
     {
         internal readonly DoubleBuffer _documentBuffer = new();
-        internal static bool? s_isAzureWebApp = null;
+        internal readonly bool _isAzureWebApp;
 
         private readonly int _processorCount = Environment.ProcessorCount;
         private readonly Process _process = Process.GetCurrentProcess();
@@ -35,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = IsWebAppRunningInAzure(),
+                IsWebApp = _isAzureWebApp,
                 PerformanceCollectionSupported = true,
                 // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
                 // Follow up with service team to get this removed for OTEL based live metrics.
@@ -131,38 +131,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     Weight = 1
                 };
             }
-        }
-
-        /// <summary>
-        /// Searches for the environment variable specific to Azure Web App.
-        /// </summary>
-        /// <returns>Boolean, which is true if the current application is an Azure Web App.</returns>
-        internal static bool? IsWebAppRunningInAzure()
-        {
-            const string WebSiteEnvironmentVariable = "WEBSITE_SITE_NAME";
-            const string WebSiteIsolationEnvironmentVariable = "WEBSITE_ISOLATION";
-            const string WebSiteIsolationHyperV = "hyperv";
-
-            if (!s_isAzureWebApp.HasValue)
-            {
-                try
-                {
-                    // Presence of "WEBSITE_SITE_NAME" indicate web apps.
-                    // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
-                    // can be read using regular mechanism and hence this method returns false for
-                    // premium containers.
-                    // TODO: switch to platform. Not necessary for POC.
-                    s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
-                                    Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
-                }
-                catch (System.Exception ex)
-                {
-                    LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
-                    return false;
-                }
-            }
-
-            return s_isAzureWebApp;
         }
 
         private void ResetCachedValues()
