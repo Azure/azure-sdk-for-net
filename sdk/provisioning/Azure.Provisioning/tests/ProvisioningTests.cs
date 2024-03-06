@@ -293,6 +293,7 @@ namespace Azure.Provisioning.Tests
                         adminLogin = new { value = "password" },
                         adminPassword = new { value = "password" },
                         dbInstanceType = new { value = "Standard_B1ms" },
+                        serverEdition = new { value = "Burstable" }
                     }),
                 interactiveMode: true);
         }
