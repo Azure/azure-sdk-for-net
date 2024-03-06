@@ -24,7 +24,7 @@ None needed for `System.ClientModel`.
 
 ## Key concepts
 
-`System.ClientModel` contains types in two major categories: those used to author service clients and those exposed in the public APIs of clients built using `System.ClientModel` types, and those used by the end-users of service clients to communicate with a cloud service.
+`System.ClientModel` contains types in two major categories: (1) those used to author service clients, and (2) those exposed in the public APIs of clients built using `System.ClientModel` types.  The latter are intended for use by the end-users of service clients to communicate with cloud services.
 
 Types used to author service clients appear in the `System.ClientModel.Primitives` namespace.  Key concepts involving these types include:
 
