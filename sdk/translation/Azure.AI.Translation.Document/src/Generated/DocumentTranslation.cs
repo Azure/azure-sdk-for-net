@@ -1574,7 +1574,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1591,7 +1591,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
                 uri.AppendQuery("$top", maxCount.Value, true);
@@ -1641,7 +1641,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath(id, true);
             uri.AppendPath("/documents/", false);
             uri.AppendPath(documentId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1657,7 +1657,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1673,7 +1673,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1690,7 +1690,7 @@ namespace Azure.AI.Translation.Document
             uri.AppendPath("/batches/", false);
             uri.AppendPath(id, true);
             uri.AppendPath("/documents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
                 uri.AppendQuery("$top", maxCount.Value, true);
@@ -1737,7 +1737,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/documents/formats", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1752,7 +1752,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/glossaries/formats", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1767,7 +1767,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator/text/batch/v1.0", false);
             uri.AppendPath("/storagesources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            // uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
