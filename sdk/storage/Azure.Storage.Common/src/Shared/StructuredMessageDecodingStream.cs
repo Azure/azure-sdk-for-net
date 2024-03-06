@@ -89,9 +89,12 @@ internal class StructuredMessageDecodingStream : Stream
     }
 
     public StructuredMessageDecodingStream(
-        Stream innerStream)
+        Stream innerStream,
+        long? expectedStreamLength = default)
     {
         Argument.AssertNotNull(innerStream, nameof(innerStream));
+
+        _innerStreamLength = expectedStreamLength ?? -1;
         _innerBufferedStream = new BufferedStream(innerStream);
 
         // Assumes stream will be structured message 1.0. Will validate this when consuming stream.
@@ -366,9 +369,19 @@ internal class StructuredMessageDecodingStream : Stream
     {
         StructuredMessage.V1_0.ReadStreamHeader(
             span.Slice(0, _streamHeaderLength),
-            out _innerStreamLength,
+            out long streamLength,
             out _flags,
             out _totalSegments);
+
+        if (_innerStreamLength > 0 && streamLength != _innerStreamLength)
+        {
+            throw Errors.InvalidStructuredMessage("Unexpected message size.");
+        }
+        else
+        {
+            _innerStreamLength = streamLength;
+        }
+
         if (_flags.HasFlag(StructuredMessage.Flags.StorageCrc64))
         {
             _segmentFooterLength = _flags.HasFlag(StructuredMessage.Flags.StorageCrc64) ? StructuredMessage.Crc64Length : 0;
