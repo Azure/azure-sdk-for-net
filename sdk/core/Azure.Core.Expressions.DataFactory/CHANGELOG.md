@@ -8,7 +8,9 @@
 
 ### Other Changes
 
-- `DataFactorySecretBaseDefinition` has been renamed to `DataFactorySecretDefinition`.
+- `DataFactorySecretBaseDefinition` has been renamed to `DataFactorySecret`.
+- `DataFactoryKeyVaultSecretReference` has been renamed to `DataFactoryKeyVaultSecret`.
+- `DataFactoryLinkedServiceReferenceType` has been renamed to `DataFactoryLinkedServiceReferenceKind`.
 - `DataFactoryModelFactory` has been removed.
 - The `keyVaultSecretReference` parameter of the `DataFactoryElement<T>.FromKeyVaultSecretReference` method  has been renamed to `secretReference`.
 
