@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabResource"/> object. </returns>
         public static DevTestLabResource GetDevTestLabResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource"/> object. </returns>
         public static DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabGlobalScheduleResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabScheduleResource"/> object. </returns>
         public static DevTestLabScheduleResource GetDevTestLabScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabScheduleResource(id);
         }
@@ -105,7 +114,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource"/> object. </returns>
         public static DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabServiceFabricScheduleResource(id);
         }
@@ -124,7 +136,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabVmScheduleResource"/> object. </returns>
         public static DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabVmScheduleResource(id);
         }
@@ -143,7 +158,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabArtifactSourceResource"/> object. </returns>
         public static DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabArtifactSourceResource(id);
         }
@@ -162,7 +180,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabArmTemplateResource"/> object. </returns>
         public static DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabArmTemplateResource(id);
         }
@@ -181,7 +202,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabArtifactResource"/> object. </returns>
         public static DevTestLabArtifactResource GetDevTestLabArtifactResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabArtifactResource(id);
         }
@@ -200,7 +224,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabCostResource"/> object. </returns>
         public static DevTestLabCostResource GetDevTestLabCostResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabCostResource(id);
         }
@@ -219,7 +246,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabCustomImageResource"/> object. </returns>
         public static DevTestLabCustomImageResource GetDevTestLabCustomImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabCustomImageResource(id);
         }
@@ -238,7 +268,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabFormulaResource"/> object. </returns>
         public static DevTestLabFormulaResource GetDevTestLabFormulaResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabFormulaResource(id);
         }
@@ -257,7 +290,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabNotificationChannelResource"/> object. </returns>
         public static DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabNotificationChannelResource(id);
         }
@@ -276,7 +312,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabPolicyResource"/> object. </returns>
         public static DevTestLabPolicyResource GetDevTestLabPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabPolicyResource(id);
         }
@@ -295,7 +334,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabServiceRunnerResource"/> object. </returns>
         public static DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabServiceRunnerResource(id);
         }
@@ -314,7 +356,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabUserResource"/> object. </returns>
         public static DevTestLabUserResource GetDevTestLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabUserResource(id);
         }
@@ -333,7 +378,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabDiskResource"/> object. </returns>
         public static DevTestLabDiskResource GetDevTestLabDiskResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabDiskResource(id);
         }
@@ -352,7 +400,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabEnvironmentResource"/> object. </returns>
         public static DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabEnvironmentResource(id);
         }
@@ -371,7 +422,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabSecretResource"/> object. </returns>
         public static DevTestLabSecretResource GetDevTestLabSecretResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabSecretResource(id);
         }
@@ -390,7 +444,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabServiceFabricResource"/> object. </returns>
         public static DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabServiceFabricResource(id);
         }
@@ -409,7 +466,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabVmResource"/> object. </returns>
         public static DevTestLabVmResource GetDevTestLabVmResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabVmResource(id);
         }
@@ -428,7 +488,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabVirtualNetworkResource"/> object. </returns>
         public static DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDevTestLabsArmClient(client).GetDevTestLabVirtualNetworkResource(id);
         }
@@ -445,7 +508,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
         public static DevTestLabCollection GetDevTestLabs(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabs();
         }
@@ -484,7 +550,10 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static async Task<Response<DevTestLabResource>> GetDevTestLabAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -523,7 +592,10 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static Response<DevTestLabResource> GetDevTestLab(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLab(name, expand, cancellationToken);
         }
@@ -540,7 +612,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
         public static DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabGlobalSchedules();
         }
@@ -579,7 +654,10 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static async Task<Response<DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabGlobalScheduleAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -618,7 +696,10 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static Response<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDevTestLabsResourceGroupResource(resourceGroupResource).GetDevTestLabGlobalSchedule(name, expand, cancellationToken);
         }
@@ -658,7 +739,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetDevTestLabsAsync(expand, filter, top, orderby, cancellationToken);
         }
@@ -698,7 +782,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevTestLabResource> GetDevTestLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetDevTestLabs(expand, filter, top, orderby, cancellationToken);
         }
@@ -738,7 +825,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
         }
@@ -778,7 +868,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDevTestLabsSubscriptionResource(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AttestationPrivateLinkResource>> value = default;
+            IReadOnlyList<AttestationPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationPrivateLinkResource> array = new List<AttestationPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(item));
+                        array.Add(AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AttestationPrivateLinkResourceListResult(value ?? new ChangeTrackingList<AttestationPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

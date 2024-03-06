@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningResourceName> name = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningResourceName name = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value);
+                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new MachineLearningResourceQuota(
+                id,
+                amlWorkspaceLocation,
+                type,
+                name,
+                limit,
+                unit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningResourceQuota>.Write(ModelReaderWriterOptions options)

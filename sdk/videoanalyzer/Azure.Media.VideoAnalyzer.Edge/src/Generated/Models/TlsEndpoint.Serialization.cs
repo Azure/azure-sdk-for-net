@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -43,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<CertificateSource> trustedCertificates = default;
-            Optional<TlsValidationOptions> validationOptions = default;
+            CertificateSource trustedCertificates = default;
+            TlsValidationOptions validationOptions = default;
             string type = default;
-            Optional<CredentialsBase> credentials = default;
+            CredentialsBase credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +89,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new TlsEndpoint(type, credentials.Value, url, trustedCertificates.Value, validationOptions.Value);
+            return new TlsEndpoint(type, credentials, url, trustedCertificates, validationOptions);
         }
     }
 }

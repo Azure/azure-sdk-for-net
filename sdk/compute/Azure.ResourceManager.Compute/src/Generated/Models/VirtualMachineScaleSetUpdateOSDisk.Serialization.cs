@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<CachingType> caching = default;
-            Optional<bool> writeAcceleratorEnabled = default;
-            Optional<int> diskSizeGB = default;
-            Optional<VirtualHardDisk> image = default;
-            Optional<IList<string>> vhdContainers = default;
-            Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
-            Optional<DiskDeleteOptionType> deleteOption = default;
+            CachingType? caching = default;
+            bool? writeAcceleratorEnabled = default;
+            int? diskSizeGB = default;
+            VirtualHardDisk image = default;
+            IList<string> vhdContainers = default;
+            VirtualMachineScaleSetManagedDisk managedDisk = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
+                    image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vhdContainers"u8))
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value);
+                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deleteOption"u8))
@@ -189,7 +190,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateOSDisk(Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), Optional.ToNullable(diskSizeGB), image.Value, Optional.ToList(vhdContainers), managedDisk.Value, Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetUpdateOSDisk(
+                caching,
+                writeAcceleratorEnabled,
+                diskSizeGB,
+                image,
+                vhdContainers ?? new ChangeTrackingList<string>(),
+                managedDisk,
+                deleteOption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateOSDisk>.Write(ModelReaderWriterOptions options)

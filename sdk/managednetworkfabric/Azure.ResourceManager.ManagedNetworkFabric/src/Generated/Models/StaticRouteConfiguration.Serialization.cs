@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<BfdConfiguration> bfdConfiguration = default;
-            Optional<IList<StaticRouteProperties>> ipv4Routes = default;
-            Optional<IList<StaticRouteProperties>> ipv6Routes = default;
+            BfdConfiguration bfdConfiguration = default;
+            IList<StaticRouteProperties> ipv4Routes = default;
+            IList<StaticRouteProperties> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipv4Routes"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
                     ipv4Routes = array;
                     continue;
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item, options));
                     }
                     ipv6Routes = array;
                     continue;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticRouteConfiguration(bfdConfiguration.Value, Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes), serializedAdditionalRawData);
+            return new StaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticRouteConfiguration>.Write(ModelReaderWriterOptions options)

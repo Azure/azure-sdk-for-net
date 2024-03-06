@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<BackupDay>> daysOfTheMonth = default;
+            IList<BackupDay> daysOfTheMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupDay> array = new List<BackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDay.DeserializeBackupDay(item));
+                        array.Add(BackupDay.DeserializeBackupDay(item, options));
                     }
                     daysOfTheMonth = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DailyRetentionFormat(Optional.ToList(daysOfTheMonth), serializedAdditionalRawData);
+            return new DailyRetentionFormat(daysOfTheMonth ?? new ChangeTrackingList<BackupDay>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DailyRetentionFormat>.Write(ModelReaderWriterOptions options)

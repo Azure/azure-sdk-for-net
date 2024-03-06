@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public DataBoxDiskJobDetails(DataBoxContactDetails contactDetails) : base(contactDetails)
         {
-            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+            if (contactDetails == null)
+            {
+                throw new ArgumentNullException(nameof(contactDetails));
+            }
 
             PreferredDisks = new ChangeTrackingDictionary<string, int>();
             CopyProgress = new ChangeTrackingList<DataBoxDiskCopyProgress>();

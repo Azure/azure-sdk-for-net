@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
-            Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
+            IList<FlowEndpointIPAddress> outgoingIPAddresses = default;
+            IList<FlowEndpointIPAddress> accessEndpointIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item, options));
                     }
                     outgoingIPAddresses = array;
                     continue;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item, options));
                     }
                     accessEndpointIPAddresses = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowEndpoints(Optional.ToList(outgoingIPAddresses), Optional.ToList(accessEndpointIPAddresses), serializedAdditionalRawData);
+            return new FlowEndpoints(outgoingIPAddresses ?? new ChangeTrackingList<FlowEndpointIPAddress>(), accessEndpointIPAddresses ?? new ChangeTrackingList<FlowEndpointIPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowEndpoints>.Write(ModelReaderWriterOptions options)

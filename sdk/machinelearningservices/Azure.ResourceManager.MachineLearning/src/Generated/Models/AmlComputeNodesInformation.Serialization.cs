@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AmlComputeNodeInformation>> nodes = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AmlComputeNodeInformation> nodes = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<AmlComputeNodeInformation> array = new List<AmlComputeNodeInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(item));
+                        array.Add(AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(item, options));
                     }
                     nodes = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeNodesInformation(Optional.ToList(nodes), nextLink.Value, serializedAdditionalRawData);
+            return new AmlComputeNodesInformation(nodes ?? new ChangeTrackingList<AmlComputeNodeInformation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeNodesInformation>.Write(ModelReaderWriterOptions options)

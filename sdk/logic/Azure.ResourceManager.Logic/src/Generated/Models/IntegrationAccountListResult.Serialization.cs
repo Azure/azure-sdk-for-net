@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IntegrationAccountData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountData> array = new List<IntegrationAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountData.DeserializeIntegrationAccountData(item));
+                        array.Add(IntegrationAccountData.DeserializeIntegrationAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IntegrationAccountListResult(value ?? new ChangeTrackingList<IntegrationAccountData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountListResult>.Write(ModelReaderWriterOptions options)

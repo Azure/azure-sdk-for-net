@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -88,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointThresholdInMinutes = default;
-            Optional<int> recoveryPointHistory = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
-            Optional<int> appConsistentFrequencyInMinutes = default;
+            int? recoveryPointThresholdInMinutes = default;
+            int? recoveryPointHistory = default;
+            int? crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
             SetMultiVmSyncStatus multiVmSyncStatus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +151,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2PolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
+            return new InMageAzureV2PolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointThresholdInMinutes,
+                recoveryPointHistory,
+                crashConsistentFrequencyInMinutes,
+                appConsistentFrequencyInMinutes,
+                multiVmSyncStatus);
         }
 
         BinaryData IPersistableModel<InMageAzureV2PolicyContent>.Write(ModelReaderWriterOptions options)

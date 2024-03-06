@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<string>> acceptedDataFormats = default;
-            Optional<IReadOnlyList<string>> acceptedContentEncodings = default;
+            string id = default;
+            string name = default;
+            string description = default;
+            IReadOnlyList<string> acceptedDataFormats = default;
+            IReadOnlyList<string> acceptedContentEncodings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,13 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetDescription(id.Value, name.Value, description.Value, Optional.ToList(acceptedDataFormats), Optional.ToList(acceptedContentEncodings), serializedAdditionalRawData);
+            return new TargetDescription(
+                id,
+                name,
+                description,
+                acceptedDataFormats ?? new ChangeTrackingList<string>(),
+                acceptedContentEncodings ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetDescription>.Write(ModelReaderWriterOptions options)

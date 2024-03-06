@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SubAssessmentStatusCode> code = default;
-            Optional<string> cause = default;
-            Optional<string> description = default;
-            Optional<SecurityAssessmentSeverity> severity = default;
+            SubAssessmentStatusCode? code = default;
+            string cause = default;
+            string description = default;
+            SecurityAssessmentSeverity? severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubAssessmentStatus(Optional.ToNullable(code), cause.Value, description.Value, Optional.ToNullable(severity), serializedAdditionalRawData);
+            return new SubAssessmentStatus(code, cause, description, severity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubAssessmentStatus>.Write(ModelReaderWriterOptions options)

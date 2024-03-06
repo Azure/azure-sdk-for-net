@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
+            string domainName = default;
+            IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> array = new List<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(item));
+                        array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, endpointDetails ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)

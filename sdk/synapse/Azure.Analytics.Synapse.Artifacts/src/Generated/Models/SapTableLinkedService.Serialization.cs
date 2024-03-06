@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -155,26 +156,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<object> server = default;
-            Optional<object> systemNumber = default;
-            Optional<object> clientId = default;
-            Optional<object> language = default;
-            Optional<object> systemId = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> messageServer = default;
-            Optional<object> messageServerService = default;
-            Optional<object> sncMode = default;
-            Optional<object> sncMyName = default;
-            Optional<object> sncPartnerName = default;
-            Optional<object> sncLibraryPath = default;
-            Optional<object> sncQop = default;
-            Optional<object> logonGroup = default;
-            Optional<object> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            object server = default;
+            object systemNumber = default;
+            object clientId = default;
+            object language = default;
+            object systemId = default;
+            object userName = default;
+            SecretBase password = default;
+            object messageServer = default;
+            object messageServerService = default;
+            object sncMode = default;
+            object sncMyName = default;
+            object sncPartnerName = default;
+            object sncLibraryPath = default;
+            object sncQop = default;
+            object logonGroup = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -392,7 +393,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapTableLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                sncMode,
+                sncMyName,
+                sncPartnerName,
+                sncLibraryPath,
+                sncQop,
+                logonGroup,
+                encryptedCredential);
         }
 
         internal partial class SapTableLinkedServiceConverter : JsonConverter<SapTableLinkedService>

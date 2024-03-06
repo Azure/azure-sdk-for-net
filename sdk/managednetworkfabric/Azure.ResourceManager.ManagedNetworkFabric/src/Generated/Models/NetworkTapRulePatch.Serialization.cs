@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -113,12 +114,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> annotation = default;
-            Optional<NetworkFabricConfigurationType> configurationType = default;
-            Optional<Uri> tapRulesUrl = default;
-            Optional<IList<NetworkTapRuleMatchConfiguration>> matchConfigurations = default;
-            Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
+            IDictionary<string, string> tags = default;
+            string annotation = default;
+            NetworkFabricConfigurationType? configurationType = default;
+            Uri tapRulesUrl = default;
+            IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
+            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<NetworkTapRuleMatchConfiguration> array = new List<NetworkTapRuleMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item));
+                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item, options));
                             }
                             matchConfigurations = array;
                             continue;
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
                             }
                             dynamicMatchConfigurations = array;
                             continue;
@@ -206,7 +207,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRulePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(configurationType), tapRulesUrl.Value, Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations));
+            return new NetworkTapRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation,
+                configurationType,
+                tapRulesUrl,
+                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>());
         }
 
         BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options)

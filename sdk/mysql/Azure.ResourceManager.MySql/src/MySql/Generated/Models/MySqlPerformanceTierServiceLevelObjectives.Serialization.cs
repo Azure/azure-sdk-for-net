@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> edition = default;
-            Optional<int> vCore = default;
-            Optional<string> hardwareGeneration = default;
-            Optional<int> maxBackupRetentionDays = default;
-            Optional<int> minBackupRetentionDays = default;
-            Optional<int> maxStorageMB = default;
-            Optional<int> minStorageMB = default;
+            string id = default;
+            string edition = default;
+            int? vCore = default;
+            string hardwareGeneration = default;
+            int? maxBackupRetentionDays = default;
+            int? minBackupRetentionDays = default;
+            int? maxStorageMB = default;
+            int? minStorageMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +183,16 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPerformanceTierServiceLevelObjectives(id.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minStorageMB), serializedAdditionalRawData);
+            return new MySqlPerformanceTierServiceLevelObjectives(
+                id,
+                edition,
+                vCore,
+                hardwareGeneration,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageMB,
+                minStorageMB,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>.Write(ModelReaderWriterOptions options)

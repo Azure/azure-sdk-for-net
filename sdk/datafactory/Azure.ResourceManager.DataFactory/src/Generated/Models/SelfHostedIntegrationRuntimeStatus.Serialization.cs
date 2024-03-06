@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -183,25 +184,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<Guid> taskQueueId = default;
-            Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
-            Optional<string> version = default;
-            Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
-            Optional<DateTimeOffset> scheduledUpdateDate = default;
-            Optional<TimeSpan> updateDelayOffset = default;
-            Optional<TimeSpan> localTimeZoneOffset = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<string>> serviceUrls = default;
-            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
-            Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
-            Optional<string> pushedVersion = default;
-            Optional<string> latestVersion = default;
-            Optional<DateTimeOffset> autoUpdateEta = default;
-            Optional<bool> selfContainedInteractiveAuthoringEnabled = default;
+            string dataFactoryName = default;
+            IntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
+            Guid? taskQueueId = default;
+            IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption = default;
+            string version = default;
+            IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes = default;
+            DateTimeOffset? scheduledUpdateDate = default;
+            TimeSpan? updateDelayOffset = default;
+            TimeSpan? localTimeZoneOffset = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
+            IReadOnlyList<string> serviceUrls = default;
+            IntegrationRuntimeAutoUpdateState? autoUpdate = default;
+            string versionStatus = default;
+            IReadOnlyList<LinkedIntegrationRuntime> links = default;
+            string pushedVersion = default;
+            string latestVersion = default;
+            DateTimeOffset? autoUpdateEta = default;
+            bool? selfContainedInteractiveAuthoringEnabled = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SelfHostedIntegrationRuntimeNode> array = new List<SelfHostedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(item));
+                                array.Add(SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<LinkedIntegrationRuntime> array = new List<LinkedIntegrationRuntime>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedIntegrationRuntime.DeserializeLinkedIntegrationRuntime(item));
+                                array.Add(LinkedIntegrationRuntime.DeserializeLinkedIntegrationRuntime(item, options));
                             }
                             links = array;
                             continue;
@@ -397,7 +398,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
+            return new SelfHostedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName,
+                state,
+                additionalProperties,
+                createTime,
+                taskQueueId,
+                internalChannelEncryption,
+                version,
+                nodes ?? new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>(),
+                scheduledUpdateDate,
+                updateDelayOffset,
+                localTimeZoneOffset,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                serviceUrls ?? new ChangeTrackingList<string>(),
+                autoUpdate,
+                versionStatus,
+                links ?? new ChangeTrackingList<LinkedIntegrationRuntime>(),
+                pushedVersion,
+                latestVersion,
+                autoUpdateEta,
+                selfContainedInteractiveAuthoringEnabled);
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

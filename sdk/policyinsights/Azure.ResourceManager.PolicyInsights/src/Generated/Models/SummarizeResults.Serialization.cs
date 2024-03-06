@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
-            Optional<IReadOnlyList<PolicySummary>> value = default;
+            string odataContext = default;
+            int? odataCount = default;
+            IReadOnlyList<PolicySummary> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicySummary> array = new List<PolicySummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySummary.DeserializePolicySummary(item));
+                        array.Add(PolicySummary.DeserializePolicySummary(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SummarizeResults(odataContext.Value, Optional.ToNullable(odataCount), Optional.ToList(value), serializedAdditionalRawData);
+            return new SummarizeResults(odataContext, odataCount, value ?? new ChangeTrackingList<PolicySummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SummarizeResults>.Write(ModelReaderWriterOptions options)

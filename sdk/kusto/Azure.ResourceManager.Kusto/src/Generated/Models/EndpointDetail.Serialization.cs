@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<string> ipAddress = default;
+            int? port = default;
+            string ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDetail(Optional.ToNullable(port), ipAddress.Value, serializedAdditionalRawData);
+            return new EndpointDetail(port, ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDetail>.Write(ModelReaderWriterOptions options)

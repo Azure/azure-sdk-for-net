@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContainerizedNetworkFunction": return ContainerizedNetworkFunctionDefinitionVersion.DeserializeContainerizedNetworkFunctionDefinitionVersion(element);
-                    case "VirtualNetworkFunction": return VirtualNetworkFunctionDefinitionVersion.DeserializeVirtualNetworkFunctionDefinitionVersion(element);
+                    case "ContainerizedNetworkFunction": return ContainerizedNetworkFunctionDefinitionVersion.DeserializeContainerizedNetworkFunctionDefinitionVersion(element, options);
+                    case "VirtualNetworkFunction": return VirtualNetworkFunctionDefinitionVersion.DeserializeVirtualNetworkFunctionDefinitionVersion(element, options);
                 }
             }
-            return UnknownNetworkFunctionDefinitionVersionPropertiesFormat.DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(element);
+            return UnknownNetworkFunctionDefinitionVersionPropertiesFormat.DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(element, options);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

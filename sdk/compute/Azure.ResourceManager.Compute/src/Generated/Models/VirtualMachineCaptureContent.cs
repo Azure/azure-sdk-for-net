@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vhdPrefix"/> or <paramref name="destinationContainerName"/> is null. </exception>
         public VirtualMachineCaptureContent(string vhdPrefix, string destinationContainerName, bool overwriteVhds)
         {
-            Argument.AssertNotNull(vhdPrefix, nameof(vhdPrefix));
-            Argument.AssertNotNull(destinationContainerName, nameof(destinationContainerName));
+            if (vhdPrefix == null)
+            {
+                throw new ArgumentNullException(nameof(vhdPrefix));
+            }
+            if (destinationContainerName == null)
+            {
+                throw new ArgumentNullException(nameof(destinationContainerName));
+            }
 
             VhdPrefix = vhdPrefix;
             DestinationContainerName = destinationContainerName;

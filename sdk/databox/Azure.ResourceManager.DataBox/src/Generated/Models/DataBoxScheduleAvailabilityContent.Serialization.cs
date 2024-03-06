@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
-            Optional<string> country = default;
+            string country = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country.Value, serializedAdditionalRawData);
+            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

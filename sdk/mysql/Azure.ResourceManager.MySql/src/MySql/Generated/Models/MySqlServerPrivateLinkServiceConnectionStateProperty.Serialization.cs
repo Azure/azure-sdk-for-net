@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
             MySqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
-            Optional<MySqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
+            MySqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
+            return new MySqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)

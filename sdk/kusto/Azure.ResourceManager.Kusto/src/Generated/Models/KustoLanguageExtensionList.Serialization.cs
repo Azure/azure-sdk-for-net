@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IList<KustoLanguageExtension>> value = default;
+            IList<KustoLanguageExtension> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoLanguageExtension> array = new List<KustoLanguageExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item));
+                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoLanguageExtensionList(Optional.ToList(value), serializedAdditionalRawData);
+            return new KustoLanguageExtensionList(value ?? new ChangeTrackingList<KustoLanguageExtension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoLanguageExtensionList>.Write(ModelReaderWriterOptions options)

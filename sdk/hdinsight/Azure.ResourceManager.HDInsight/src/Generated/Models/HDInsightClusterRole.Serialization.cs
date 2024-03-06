@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -129,17 +130,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> minInstanceCount = default;
-            Optional<int> targetInstanceCount = default;
-            Optional<string> vmGroupName = default;
-            Optional<HDInsightAutoScaleConfiguration> autoScale = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IList<HDInsightClusterDataDiskGroup>> dataDisksGroups = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
-            Optional<bool> encryptDataDisks = default;
+            string name = default;
+            int? minInstanceCount = default;
+            int? targetInstanceCount = default;
+            string vmGroupName = default;
+            HDInsightAutoScaleConfiguration autoScale = default;
+            HardwareProfile hardwareProfile = default;
+            OSProfile osProfile = default;
+            HDInsightVirtualNetworkProfile virtualNetworkProfile = default;
+            IList<HDInsightClusterDataDiskGroup> dataDisksGroups = default;
+            IList<ScriptAction> scriptActions = default;
+            bool? encryptDataDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value);
+                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfile.DeserializeOSProfile(property.Value);
+                    osProfile = OSProfile.DeserializeOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkProfile"u8))
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value);
+                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisksGroups"u8))
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterDataDiskGroup> array = new List<HDInsightClusterDataDiskGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item));
+                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item, options));
                     }
                     dataDisksGroups = array;
                     continue;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptAction> array = new List<ScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptAction.DeserializeScriptAction(item));
+                        array.Add(ScriptAction.DeserializeScriptAction(item, options));
                     }
                     scriptActions = array;
                     continue;
@@ -251,7 +252,19 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterRole(name.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, Optional.ToList(dataDisksGroups), Optional.ToList(scriptActions), Optional.ToNullable(encryptDataDisks), serializedAdditionalRawData);
+            return new HDInsightClusterRole(
+                name,
+                minInstanceCount,
+                targetInstanceCount,
+                vmGroupName,
+                autoScale,
+                hardwareProfile,
+                osProfile,
+                virtualNetworkProfile,
+                dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(),
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                encryptDataDisks,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterRole>.Write(ModelReaderWriterOptions options)

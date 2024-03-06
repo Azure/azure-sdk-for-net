@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -102,14 +103,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<ReferenceInputDataSource> datasource = default;
+            ReferenceInputDataSource datasource = default;
             string type = default;
-            Optional<StreamAnalyticsDataSerialization> serialization = default;
-            Optional<StreamingJobDiagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
-            Optional<StreamingCompression> compression = default;
-            Optional<string> partitionKey = default;
-            Optional<StreamingJobInputWatermarkProperties> watermarkSettings = default;
+            StreamAnalyticsDataSerialization serialization = default;
+            StreamingJobDiagnostics diagnostics = default;
+            ETag? etag = default;
+            StreamingCompression compression = default;
+            string partitionKey = default;
+            StreamingJobInputWatermarkProperties watermarkSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    datasource = ReferenceInputDataSource.DeserializeReferenceInputDataSource(property.Value);
+                    datasource = ReferenceInputDataSource.DeserializeReferenceInputDataSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value);
+                    diagnostics = StreamingJobDiagnostics.DeserializeStreamingJobDiagnostics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value);
+                    compression = StreamingCompression.DeserializeStreamingCompression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionKey"u8))
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value);
+                    watermarkSettings = StreamingJobInputWatermarkProperties.DeserializeStreamingJobInputWatermarkProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +185,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReferenceInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, serializedAdditionalRawData, datasource.Value);
+            return new ReferenceInputProperties(
+                type,
+                serialization,
+                diagnostics,
+                etag,
+                compression,
+                partitionKey,
+                watermarkSettings,
+                serializedAdditionalRawData,
+                datasource);
         }
 
         BinaryData IPersistableModel<ReferenceInputProperties>.Write(ModelReaderWriterOptions options)

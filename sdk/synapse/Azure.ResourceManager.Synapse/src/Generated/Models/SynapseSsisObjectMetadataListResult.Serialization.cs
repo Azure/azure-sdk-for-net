@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseSsisObjectMetadata>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SynapseSsisObjectMetadata> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisObjectMetadata> array = new List<SynapseSsisObjectMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata(item));
+                        array.Add(SynapseSsisObjectMetadata.DeserializeSynapseSsisObjectMetadata(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisObjectMetadataListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseSsisObjectMetadataListResult(value ?? new ChangeTrackingList<SynapseSsisObjectMetadata>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSsisObjectMetadataListResult>.Write(ModelReaderWriterOptions options)

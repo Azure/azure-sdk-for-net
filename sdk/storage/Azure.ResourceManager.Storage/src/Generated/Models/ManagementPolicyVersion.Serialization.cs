@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateAfterCreation> tierToCool = default;
-            Optional<DateAfterCreation> tierToArchive = default;
-            Optional<DateAfterCreation> tierToCold = default;
-            Optional<DateAfterCreation> tierToHot = default;
-            Optional<DateAfterCreation> delete = default;
+            DateAfterCreation tierToCool = default;
+            DateAfterCreation tierToArchive = default;
+            DateAfterCreation tierToCold = default;
+            DateAfterCreation tierToHot = default;
+            DateAfterCreation delete = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyVersion(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, serializedAdditionalRawData);
+            return new ManagementPolicyVersion(
+                tierToCool,
+                tierToArchive,
+                tierToCold,
+                tierToHot,
+                delete,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyVersion>.Write(ModelReaderWriterOptions options)

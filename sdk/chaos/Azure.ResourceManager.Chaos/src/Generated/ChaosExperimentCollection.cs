@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ChaosExperimentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ChaosExperimentResource> CreateOrUpdate(WaitUntil waitUntil, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<Response<ChaosExperimentResource>> GetAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Get");
             scope.Start();
@@ -210,7 +237,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual Response<ChaosExperimentResource> Get(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Get");
             scope.Start();
@@ -255,7 +289,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +321,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +353,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +367,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Exists");
             scope.Start();
@@ -362,7 +403,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual Response<bool> Exists(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.Exists");
             scope.Start();
@@ -405,7 +453,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,7 +467,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ChaosExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetIfExists");
             scope.Start();
@@ -450,7 +505,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +519,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual NullableResponse<ChaosExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var scope = _chaosExperimentExperimentsClientDiagnostics.CreateScope("ChaosExperimentCollection.GetIfExists");
             scope.Start();

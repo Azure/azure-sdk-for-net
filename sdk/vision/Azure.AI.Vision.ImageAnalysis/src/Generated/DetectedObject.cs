@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -53,8 +52,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> or <paramref name="tags"/> is null. </exception>
         internal DetectedObject(ImageBoundingBox boundingBox, IEnumerable<DetectedTag> tags)
         {
-            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (boundingBox == null)
+            {
+                throw new ArgumentNullException(nameof(boundingBox));
+            }
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             BoundingBox = boundingBox;
             Tags = tags.ToList();

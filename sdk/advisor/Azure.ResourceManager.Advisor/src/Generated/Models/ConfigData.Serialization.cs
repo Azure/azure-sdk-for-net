@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
@@ -111,10 +112,10 @@ namespace Azure.ResourceManager.Advisor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> exclude = default;
-            Optional<CpuThreshold> lowCpuThreshold = default;
-            Optional<IList<DigestConfig>> digests = default;
+            SystemData systemData = default;
+            bool? exclude = default;
+            CpuThreshold? lowCpuThreshold = default;
+            IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             List<DigestConfig> array = new List<DigestConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DigestConfig.DeserializeDigestConfig(item));
+                                array.Add(DigestConfig.DeserializeDigestConfig(item, options));
                             }
                             digests = array;
                             continue;
@@ -193,7 +194,15 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigData(id, name, type, systemData.Value, Optional.ToNullable(exclude), Optional.ToNullable(lowCpuThreshold), Optional.ToList(digests), serializedAdditionalRawData);
+            return new ConfigData(
+                id,
+                name,
+                type,
+                systemData,
+                exclude,
+                lowCpuThreshold,
+                digests ?? new ChangeTrackingList<DigestConfig>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataFlow(document.RootElement, options);
+            return DeserializeDataFactoryDataFlowProperties(document.RootElement, options);
         }
 
         internal static UnknownDataFlow DeserializeUnknownDataFlow(JsonElement element, ModelReaderWriterOptions options = null)
@@ -99,9 +100,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
+            string description = default;
+            IList<BinaryData> annotations = default;
+            DataFlowFolder folder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, serializedAdditionalRawData);
+            return new UnknownDataFlow(type, description, annotations ?? new ChangeTrackingList<BinaryData>(), folder, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowProperties>.Write(ModelReaderWriterOptions options)
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataFlow(document.RootElement, options);
+                        return DeserializeDataFactoryDataFlowProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support '{options.Format}' format.");

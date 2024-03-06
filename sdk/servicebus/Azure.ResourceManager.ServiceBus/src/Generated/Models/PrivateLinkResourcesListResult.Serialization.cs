@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusPrivateLinkResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceBusPrivateLinkResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusPrivateLinkResource> array = new List<ServiceBusPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item));
+                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkResourcesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ServiceBusPrivateLinkResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)

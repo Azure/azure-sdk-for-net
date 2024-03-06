@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> primaryNetworkId = default;
+            ResourceIdentifier primaryNetworkId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AUpdateNetworkMappingContent(instanceType, serializedAdditionalRawData, primaryNetworkId.Value);
+            return new A2AUpdateNetworkMappingContent(instanceType, serializedAdditionalRawData, primaryNetworkId);
         }
 
         BinaryData IPersistableModel<A2AUpdateNetworkMappingContent>.Write(ModelReaderWriterOptions options)

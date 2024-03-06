@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -50,10 +51,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> topologyName = default;
-            Optional<IList<ParameterDefinition>> parameters = default;
-            Optional<LivePipelineState> state = default;
+            string description = default;
+            string topologyName = default;
+            IList<ParameterDefinition> parameters = default;
+            LivePipelineState? state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -90,7 +91,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineProperties(description.Value, topologyName.Value, Optional.ToList(parameters), Optional.ToNullable(state));
+            return new LivePipelineProperties(description, topologyName, parameters ?? new ChangeTrackingList<ParameterDefinition>(), state);
         }
     }
 }

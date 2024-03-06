@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MsixPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string msixPackageFullName, MsixPackageData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MsixPackageResource> CreateOrUpdate(WaitUntil waitUntil, string msixPackageFullName, MsixPackageData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
         public virtual async Task<Response<MsixPackageResource>> GetAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
         public virtual Response<MsixPackageResource> Get(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
         public virtual Response<bool> Exists(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
         public virtual async Task<NullableResponse<MsixPackageResource>> GetIfExistsAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
         public virtual NullableResponse<MsixPackageResource> GetIfExists(string msixPackageFullName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+            if (msixPackageFullName == null)
+            {
+                throw new ArgumentNullException(nameof(msixPackageFullName));
+            }
+            if (msixPackageFullName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(msixPackageFullName));
+            }
 
             using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
             scope.Start();

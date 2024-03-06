@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -23,7 +23,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
         public SpatialAnalysisPersonCountZoneEvents(NamedPolygonBase zone)
         {
-            Argument.AssertNotNull(zone, nameof(zone));
+            if (zone == null)
+            {
+                throw new ArgumentNullException(nameof(zone));
+            }
 
             Zone = zone;
             Events = new ChangeTrackingList<SpatialAnalysisPersonCountEvent>();

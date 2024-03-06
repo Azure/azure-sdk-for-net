@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<Uri> sourceUri = default;
+            string description = default;
+            Uri sourceUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationEvidence(description.Value, sourceUri.Value, serializedAdditionalRawData);
+            return new AttestationEvidence(description, sourceUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationEvidence>.Write(ModelReaderWriterOptions options)

@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             IList<PatientRecord> patients = default;
-            Optional<TrialMatcherModelConfiguration> configuration = default;
+            TrialMatcherModelConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<PatientRecord> array = new List<PatientRecord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientRecord.DeserializePatientRecord(item));
+                        array.Add(PatientRecord.DeserializePatientRecord(item, options));
                     }
                     patients = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    configuration = TrialMatcherModelConfiguration.DeserializeTrialMatcherModelConfiguration(property.Value);
+                    configuration = TrialMatcherModelConfiguration.DeserializeTrialMatcherModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherData(patients, configuration.Value, serializedAdditionalRawData);
+            return new TrialMatcherData(patients, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherData>.Write(ModelReaderWriterOptions options)

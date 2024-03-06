@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -97,8 +98,8 @@ namespace Azure.ResourceManager.Support.Models
             string lastName = default;
             PreferredContactMethod preferredContactMethod = default;
             string primaryEmailAddress = default;
-            Optional<IList<string>> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
+            IList<string> additionalEmailAddresses = default;
+            string phoneNumber = default;
             string preferredTimeZone = default;
             string country = default;
             string preferredSupportLanguage = default;
@@ -166,7 +167,17 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage, serializedAdditionalRawData);
+            return new SupportContactProfile(
+                firstName,
+                lastName,
+                preferredContactMethod,
+                primaryEmailAddress,
+                additionalEmailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumber,
+                preferredTimeZone,
+                country,
+                preferredSupportLanguage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportContactProfile>.Write(ModelReaderWriterOptions options)

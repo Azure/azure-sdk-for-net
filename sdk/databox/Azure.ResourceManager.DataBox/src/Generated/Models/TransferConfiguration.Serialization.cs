@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfigurationType transferConfigurationType = default;
-            Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
-            Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
+            TransferConfigurationTransferFilterDetails transferFilterDetails = default;
+            TransferConfigurationTransferAllDetails transferAllDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
+                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transferAllDetails"u8))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);
+                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferConfiguration(transferConfigurationType, transferFilterDetails.Value, transferAllDetails.Value, serializedAdditionalRawData);
+            return new TransferConfiguration(transferConfigurationType, transferFilterDetails, transferAllDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferConfiguration>.Write(ModelReaderWriterOptions options)

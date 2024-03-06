@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -164,23 +165,23 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> platformUpdateDomain = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<string> computerName = default;
-            Optional<string> osName = default;
-            Optional<string> osVersion = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<string> rdpThumbPrint = default;
-            Optional<VirtualMachineAgentInstanceView> vmAgent = default;
-            Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
-            Optional<IReadOnlyList<DiskInstanceView>> disks = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
-            Optional<VirtualMachineHealthStatus> vmHealth = default;
-            Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
-            Optional<string> assignedHost = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Optional<VirtualMachinePatchStatus> patchStatus = default;
-            Optional<bool> isVmInStandbyPool = default;
+            int? platformUpdateDomain = default;
+            int? platformFaultDomain = default;
+            string computerName = default;
+            string osName = default;
+            string osVersion = default;
+            HyperVGeneration? hyperVGeneration = default;
+            string rdpThumbPrint = default;
+            VirtualMachineAgentInstanceView vmAgent = default;
+            MaintenanceRedeployStatus maintenanceRedeployStatus = default;
+            IReadOnlyList<DiskInstanceView> disks = default;
+            IReadOnlyList<VirtualMachineExtensionInstanceView> extensions = default;
+            VirtualMachineHealthStatus vmHealth = default;
+            BootDiagnosticsInstanceView bootDiagnostics = default;
+            string assignedHost = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
+            VirtualMachinePatchStatus patchStatus = default;
+            bool? isVmInStandbyPool = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value);
+                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maintenanceRedeployStatus"u8))
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value);
+                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disks"u8))
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskInstanceView> array = new List<DiskInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInstanceView.DeserializeDiskInstanceView(item));
+                        array.Add(DiskInstanceView.DeserializeDiskInstanceView(item, options));
                     }
                     disks = array;
                     continue;
@@ -273,7 +274,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineExtensionInstanceView> array = new List<VirtualMachineExtensionInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item));
+                        array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item, options));
                     }
                     extensions = array;
                     continue;
@@ -284,7 +285,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value);
+                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bootDiagnostics"u8))
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value);
+                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("assignedHost"u8))
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    patchStatus = VirtualMachinePatchStatus.DeserializeVirtualMachinePatchStatus(property.Value);
+                    patchStatus = VirtualMachinePatchStatus.DeserializeVirtualMachinePatchStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isVMInStandbyPool"u8))
@@ -339,7 +340,25 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, Optional.ToList(statuses), patchStatus.Value, Optional.ToNullable(isVmInStandbyPool), serializedAdditionalRawData);
+            return new VirtualMachineInstanceView(
+                platformUpdateDomain,
+                platformFaultDomain,
+                computerName,
+                osName,
+                osVersion,
+                hyperVGeneration,
+                rdpThumbPrint,
+                vmAgent,
+                maintenanceRedeployStatus,
+                disks ?? new ChangeTrackingList<DiskInstanceView>(),
+                extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>(),
+                vmHealth,
+                bootDiagnostics,
+                assignedHost,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                patchStatus,
+                isVmInStandbyPool,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceView>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<CosmosDBPathIndexes>> indexes = default;
+            string path = default;
+            IList<CosmosDBPathIndexes> indexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPathIndexes> array = new List<CosmosDBPathIndexes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPathIndexes.DeserializeCosmosDBPathIndexes(item));
+                        array.Add(CosmosDBPathIndexes.DeserializeCosmosDBPathIndexes(item, options));
                     }
                     indexes = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBIncludedPath(path.Value, Optional.ToList(indexes), serializedAdditionalRawData);
+            return new CosmosDBIncludedPath(path, indexes ?? new ChangeTrackingList<CosmosDBPathIndexes>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBIncludedPath>.Write(ModelReaderWriterOptions options)

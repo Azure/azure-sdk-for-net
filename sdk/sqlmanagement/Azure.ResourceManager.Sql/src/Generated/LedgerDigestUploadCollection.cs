@@ -82,7 +82,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LedgerDigestUploadResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LedgerDigestUploadResource> CreateOrUpdate(WaitUntil waitUntil, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.CreateOrUpdate");
             scope.Start();

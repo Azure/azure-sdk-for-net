@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -90,13 +91,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element);
-                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element);
-                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element);
-                    case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element);
+                    case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
+                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
+                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
+                    case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
                 }
             }
-            return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element);
+            return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element, options);
         }
 
         BinaryData IPersistableModel<InventoryItemProperties>.Write(ModelReaderWriterOptions options)

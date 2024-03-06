@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<RedisRebootType> rebootType = default;
-            Optional<int> shardId = default;
-            Optional<IList<int>> ports = default;
+            RedisRebootType? rebootType = default;
+            int? shardId = default;
+            IList<int> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisRebootContent(Optional.ToNullable(rebootType), Optional.ToNullable(shardId), Optional.ToList(ports), serializedAdditionalRawData);
+            return new RedisRebootContent(rebootType, shardId, ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisRebootContent>.Write(ModelReaderWriterOptions options)

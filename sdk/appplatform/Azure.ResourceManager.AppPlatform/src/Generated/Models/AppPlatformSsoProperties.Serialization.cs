@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> scope = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Uri> issuerUri = default;
+            IList<string> scope = default;
+            string clientId = default;
+            string clientSecret = default;
+            Uri issuerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSsoProperties(Optional.ToList(scope), clientId.Value, clientSecret.Value, issuerUri.Value, serializedAdditionalRawData);
+            return new AppPlatformSsoProperties(scope ?? new ChangeTrackingList<string>(), clientId, clientSecret, issuerUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSsoProperties>.Write(ModelReaderWriterOptions options)

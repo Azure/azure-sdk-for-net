@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> instructions = default;
-            Optional<IList<AppServiceNameValuePair>> dataSourceUri = default;
+            IList<string> instructions = default;
+            IList<AppServiceNameValuePair> dataSourceUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     dataSourceUri = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorDataSource(Optional.ToList(instructions), Optional.ToList(dataSourceUri), serializedAdditionalRawData);
+            return new DetectorDataSource(instructions ?? new ChangeTrackingList<string>(), dataSourceUri ?? new ChangeTrackingList<AppServiceNameValuePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorDataSource>.Write(ModelReaderWriterOptions options)

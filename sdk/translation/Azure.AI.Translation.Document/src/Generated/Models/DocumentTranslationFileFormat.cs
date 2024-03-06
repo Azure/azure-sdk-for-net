@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -22,9 +21,18 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="format"/>, <paramref name="fileExtensions"/> or <paramref name="contentTypes"/> is null. </exception>
         internal DocumentTranslationFileFormat(string format, IEnumerable<string> fileExtensions, IEnumerable<string> contentTypes)
         {
-            Argument.AssertNotNull(format, nameof(format));
-            Argument.AssertNotNull(fileExtensions, nameof(fileExtensions));
-            Argument.AssertNotNull(contentTypes, nameof(contentTypes));
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+            if (fileExtensions == null)
+            {
+                throw new ArgumentNullException(nameof(fileExtensions));
+            }
+            if (contentTypes == null)
+            {
+                throw new ArgumentNullException(nameof(contentTypes));
+            }
 
             Format = format;
             FileExtensions = fileExtensions.ToList();

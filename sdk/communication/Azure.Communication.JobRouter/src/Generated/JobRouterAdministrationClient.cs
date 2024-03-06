@@ -49,11 +49,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpsertDistributionPolicyAsync(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
@@ -89,11 +105,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertDistributionPolicy(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertDistributionPolicy");
             scope.Start();
@@ -116,7 +148,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DistributionPolicy>> GetDistributionPolicyAsync(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDistributionPolicyAsync(distributionPolicyId, context).ConfigureAwait(false);
@@ -130,7 +169,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DistributionPolicy> GetDistributionPolicy(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDistributionPolicy(distributionPolicyId, context);
@@ -160,7 +206,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetDistributionPolicyAsync(string distributionPolicyId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetDistributionPolicy");
             scope.Start();
@@ -199,7 +252,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDistributionPolicy(string distributionPolicyId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetDistributionPolicy");
             scope.Start();
@@ -234,7 +294,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteDistributionPolicyAsync(string distributionPolicyId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteDistributionPolicy");
             scope.Start();
@@ -269,7 +336,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteDistributionPolicy(string distributionPolicyId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            if (distributionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(distributionPolicyId));
+            }
+            if (distributionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(distributionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteDistributionPolicy");
             scope.Start();
@@ -305,11 +379,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpsertClassificationPolicyAsync(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
@@ -345,11 +435,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertClassificationPolicy(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertClassificationPolicy");
             scope.Start();
@@ -372,7 +478,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ClassificationPolicy>> GetClassificationPolicyAsync(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetClassificationPolicyAsync(classificationPolicyId, context).ConfigureAwait(false);
@@ -386,7 +499,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ClassificationPolicy> GetClassificationPolicy(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetClassificationPolicy(classificationPolicyId, context);
@@ -416,7 +536,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetClassificationPolicyAsync(string classificationPolicyId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetClassificationPolicy");
             scope.Start();
@@ -455,7 +582,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetClassificationPolicy(string classificationPolicyId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetClassificationPolicy");
             scope.Start();
@@ -490,7 +624,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteClassificationPolicyAsync(string classificationPolicyId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteClassificationPolicy");
             scope.Start();
@@ -525,7 +666,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteClassificationPolicy(string classificationPolicyId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            if (classificationPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(classificationPolicyId));
+            }
+            if (classificationPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(classificationPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteClassificationPolicy");
             scope.Start();
@@ -561,11 +709,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpsertExceptionPolicyAsync(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
@@ -601,11 +765,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertExceptionPolicy(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertExceptionPolicy");
             scope.Start();
@@ -628,7 +808,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ExceptionPolicy>> GetExceptionPolicyAsync(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetExceptionPolicyAsync(exceptionPolicyId, context).ConfigureAwait(false);
@@ -642,7 +829,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ExceptionPolicy> GetExceptionPolicy(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetExceptionPolicy(exceptionPolicyId, context);
@@ -672,7 +866,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetExceptionPolicyAsync(string exceptionPolicyId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetExceptionPolicy");
             scope.Start();
@@ -711,7 +912,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetExceptionPolicy(string exceptionPolicyId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetExceptionPolicy");
             scope.Start();
@@ -746,7 +954,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteExceptionPolicyAsync(string exceptionPolicyId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteExceptionPolicy");
             scope.Start();
@@ -781,7 +996,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteExceptionPolicy(string exceptionPolicyId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            if (exceptionPolicyId == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionPolicyId));
+            }
+            if (exceptionPolicyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(exceptionPolicyId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteExceptionPolicy");
             scope.Start();
@@ -817,11 +1039,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpsertQueueAsync(string queueId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
@@ -857,11 +1095,27 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpsertQueue(string queueId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.UpsertQueue");
             scope.Start();
@@ -884,7 +1138,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RouterQueue>> GetQueueAsync(string queueId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetQueueAsync(queueId, context).ConfigureAwait(false);
@@ -898,7 +1159,14 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RouterQueue> GetQueue(string queueId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetQueue(queueId, context);
@@ -928,7 +1196,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetQueueAsync(string queueId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetQueue");
             scope.Start();
@@ -967,7 +1242,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetQueue(string queueId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.GetQueue");
             scope.Start();
@@ -1002,7 +1284,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteQueueAsync(string queueId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteQueue");
             scope.Start();
@@ -1037,7 +1326,14 @@ namespace Azure.Communication.JobRouter
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteQueue(string queueId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+            if (queueId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(queueId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterAdministrationClient.DeleteQueue");
             scope.Start();

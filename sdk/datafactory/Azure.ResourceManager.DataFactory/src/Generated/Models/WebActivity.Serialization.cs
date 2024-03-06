@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -184,26 +185,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             WebActivityMethod method = default;
             DataFactoryElement<string> url = default;
-            Optional<IDictionary<string, DataFactoryElement<string>>> headers = default;
-            Optional<DataFactoryElement<string>> body = default;
-            Optional<WebActivityAuthentication> authentication = default;
-            Optional<bool> disableCertValidation = default;
-            Optional<DataFactoryElement<string>> httpRequestTimeout = default;
-            Optional<bool> turnOffAsync = default;
-            Optional<IList<DatasetReference>> datasets = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
+            IDictionary<string, DataFactoryElement<string>> headers = default;
+            DataFactoryElement<string> body = default;
+            WebActivityAuthentication authentication = default;
+            bool? disableCertValidation = default;
+            DataFactoryElement<string> httpRequestTimeout = default;
+            bool? turnOffAsync = default;
+            IList<DatasetReference> datasets = default;
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
+            IntegrationRuntimeReference connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
+                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableCertValidation"u8))
@@ -381,7 +382,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DatasetReference> array = new List<DatasetReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatasetReference.DeserializeDatasetReference(item));
+                                array.Add(DatasetReference.DeserializeDatasetReference(item, options));
                             }
                             datasets = array;
                             continue;
@@ -406,7 +407,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                     }
@@ -415,7 +416,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, url, Optional.ToDictionary(headers), body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), httpRequestTimeout.Value, Optional.ToNullable(turnOffAsync), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);
+            return new WebActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                method,
+                url,
+                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                body,
+                authentication,
+                disableCertValidation,
+                httpRequestTimeout,
+                turnOffAsync,
+                datasets ?? new ChangeTrackingList<DatasetReference>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                connectVia);
         }
 
         BinaryData IPersistableModel<WebActivity>.Write(ModelReaderWriterOptions options)

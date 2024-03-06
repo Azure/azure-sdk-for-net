@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicApiOperationAnnotationStatus> status = default;
-            Optional<string> family = default;
-            Optional<int> revision = default;
+            LogicApiOperationAnnotationStatus? status = default;
+            string family = default;
+            int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiOperationAnnotation(Optional.ToNullable(status), family.Value, Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new LogicApiOperationAnnotation(status, family, revision, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiOperationAnnotation>.Write(ModelReaderWriterOptions options)

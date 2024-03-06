@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -51,7 +52,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="issueKey"/> is null. </exception>
         public SecurityHealthReportIssue(string issueKey)
         {
-            Argument.AssertNotNull(issueKey, nameof(issueKey));
+            if (issueKey == null)
+            {
+                throw new ArgumentNullException(nameof(issueKey));
+            }
 
             IssueKey = issueKey;
             SecurityValues = new ChangeTrackingList<string>();

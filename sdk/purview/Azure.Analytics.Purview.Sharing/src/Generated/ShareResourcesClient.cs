@@ -49,8 +49,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ShareResourcesClient(Uri endpoint, TokenCredential credential, PurviewShareClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewShareClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

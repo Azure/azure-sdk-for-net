@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
+            ResourceType? resourceType = default;
+            IReadOnlyList<GlobalCsmSkuDescription> skus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<GlobalCsmSkuDescription> array = new List<GlobalCsmSkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item));
+                        array.Add(GlobalCsmSkuDescription.DeserializeGlobalCsmSkuDescription(item, options));
                     }
                     skus = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceSkuResult(Optional.ToNullable(resourceType), Optional.ToList(skus), serializedAdditionalRawData);
+            return new AppServiceSkuResult(resourceType, skus ?? new ChangeTrackingList<GlobalCsmSkuDescription>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceSkuResult>.Write(ModelReaderWriterOptions options)

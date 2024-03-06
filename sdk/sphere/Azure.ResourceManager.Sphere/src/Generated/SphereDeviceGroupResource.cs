@@ -421,7 +421,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereDeviceGroupResource>> UpdateAsync(WaitUntil waitUntil, SphereDeviceGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupResource.Update");
             scope.Start();
@@ -467,7 +470,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SphereDeviceGroupResource> Update(WaitUntil waitUntil, SphereDeviceGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupResource.Update");
             scope.Start();
@@ -513,7 +519,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ClaimDevicesAsync(WaitUntil waitUntil, ClaimSphereDevicesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupResource.ClaimDevices");
             scope.Start();
@@ -559,7 +568,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ClaimDevices(WaitUntil waitUntil, ClaimSphereDevicesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _sphereDeviceGroupDeviceGroupsClientDiagnostics.CreateScope("SphereDeviceGroupResource.ClaimDevices");
             scope.Start();

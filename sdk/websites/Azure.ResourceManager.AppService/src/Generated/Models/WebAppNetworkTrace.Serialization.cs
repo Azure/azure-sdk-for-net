@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> status = default;
-            Optional<string> message = default;
+            string path = default;
+            string status = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppNetworkTrace(path.Value, status.Value, message.Value, serializedAdditionalRawData);
+            return new WebAppNetworkTrace(path, status, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppNetworkTrace>.Write(ModelReaderWriterOptions options)

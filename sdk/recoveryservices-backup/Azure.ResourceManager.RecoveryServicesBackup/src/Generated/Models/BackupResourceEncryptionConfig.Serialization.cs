@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
-            Optional<Uri> keyUri = default;
-            Optional<string> subscriptionId = default;
-            Optional<LastUpdateStatus> lastUpdateStatus = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryptionState = default;
+            BackupEncryptionAtRestType? encryptionAtRestType = default;
+            Uri keyUri = default;
+            string subscriptionId = default;
+            LastUpdateStatus? lastUpdateStatus = default;
+            InfrastructureEncryptionState? infrastructureEncryptionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfig(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData);
+            return new BackupResourceEncryptionConfig(
+                encryptionAtRestType,
+                keyUri,
+                subscriptionId,
+                lastUpdateStatus,
+                infrastructureEncryptionState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfig>.Write(ModelReaderWriterOptions options)

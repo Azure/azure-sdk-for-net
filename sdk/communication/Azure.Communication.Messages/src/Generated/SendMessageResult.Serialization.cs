@@ -82,7 +82,7 @@ namespace Azure.Communication.Messages
                     List<MessageReceipt> array = new List<MessageReceipt>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageReceipt.DeserializeMessageReceipt(item));
+                        array.Add(MessageReceipt.DeserializeMessageReceipt(item, options));
                     }
                     receipts = array;
                     continue;

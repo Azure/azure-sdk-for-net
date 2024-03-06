@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
-            Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
+            SoftwareUpdateConfigurationTaskProperties preTask = default;
+            SoftwareUpdateConfigurationTaskProperties postTask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    preTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
+                    preTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("postTask"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
+                    postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationTasks(preTask.Value, postTask.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationTasks(preTask, postTask, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationTasks>.Write(ModelReaderWriterOptions options)

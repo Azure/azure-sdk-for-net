@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<TimeSpan> blobDuration = default;
-            Optional<string> logFilterPattern = default;
+            string name = default;
+            string displayName = default;
+            TimeSpan? blobDuration = default;
+            string logFilterPattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value, serializedAdditionalRawData);
+            return new LogSpecification(name, displayName, blobDuration, logFilterPattern, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogSpecification>.Write(ModelReaderWriterOptions options)

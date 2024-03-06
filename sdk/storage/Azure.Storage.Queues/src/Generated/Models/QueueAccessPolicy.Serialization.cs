@@ -9,6 +9,7 @@ using System;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {

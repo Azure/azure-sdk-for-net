@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<ResourceIdentifier> accountId = default;
-            Optional<string> errorLogLink = default;
-            Optional<string> verboseLogLink = default;
+            string serialNumber = default;
+            ResourceIdentifier accountId = default;
+            string errorLogLink = default;
+            string verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +131,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskGranularCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, serialNumber.Value, accountId.Value, errorLogLink.Value, verboseLogLink.Value);
+            return new DataBoxDiskGranularCopyLogDetails(
+                copyLogDetailsType,
+                serializedAdditionalRawData,
+                serialNumber,
+                accountId,
+                errorLogLink,
+                verboseLogLink);
         }
 
         BinaryData IPersistableModel<DataBoxDiskGranularCopyLogDetails>.Write(ModelReaderWriterOptions options)

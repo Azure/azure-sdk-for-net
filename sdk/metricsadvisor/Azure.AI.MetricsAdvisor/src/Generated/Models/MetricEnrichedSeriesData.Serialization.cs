@@ -141,7 +141,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricEnrichedSeriesData(series, timestampList, valueList, isAnomalyList, periodList, expectedValueList, lowerBoundaryList, upperBoundaryList);
+            return new MetricEnrichedSeriesData(
+                series,
+                timestampList,
+                valueList,
+                isAnomalyList,
+                periodList,
+                expectedValueList,
+                lowerBoundaryList,
+                upperBoundaryList);
         }
     }
 }

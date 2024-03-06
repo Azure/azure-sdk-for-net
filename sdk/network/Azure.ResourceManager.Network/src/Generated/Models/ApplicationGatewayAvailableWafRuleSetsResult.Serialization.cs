@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> value = default;
+            IReadOnlyList<ApplicationGatewayFirewallRuleSet> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRuleSet> array = new List<ApplicationGatewayFirewallRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item));
+                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayAvailableWafRuleSetsResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ApplicationGatewayAvailableWafRuleSetsResult(value ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayAvailableWafRuleSetsResult>.Write(ModelReaderWriterOptions options)

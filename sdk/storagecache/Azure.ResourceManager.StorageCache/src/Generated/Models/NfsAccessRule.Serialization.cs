@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             NfsAccessRuleScope scope = default;
-            Optional<string> filter = default;
+            string filter = default;
             NfsAccessRuleAccess access = default;
-            Optional<bool> suid = default;
-            Optional<bool> submountAccess = default;
-            Optional<bool> rootSquash = default;
-            Optional<string> anonymousUID = default;
-            Optional<string> anonymousGID = default;
+            bool? suid = default;
+            bool? submountAccess = default;
+            bool? rootSquash = default;
+            string anonymousUID = default;
+            string anonymousGID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsAccessRule(scope, filter.Value, access, Optional.ToNullable(suid), Optional.ToNullable(submountAccess), Optional.ToNullable(rootSquash), anonymousUID.Value, anonymousGID.Value, serializedAdditionalRawData);
+            return new NfsAccessRule(
+                scope,
+                filter,
+                access,
+                suid,
+                submountAccess,
+                rootSquash,
+                anonymousUID,
+                anonymousGID,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NfsAccessRule>.Write(ModelReaderWriterOptions options)

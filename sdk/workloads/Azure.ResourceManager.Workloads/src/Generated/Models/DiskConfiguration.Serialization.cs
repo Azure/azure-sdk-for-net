@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DiskVolumeConfiguration>> diskVolumeConfigurations = default;
+            IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, DiskVolumeConfiguration> dictionary = new Dictionary<string, DiskVolumeConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value, options));
                     }
                     diskVolumeConfigurations = dictionary;
                     continue;
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskConfiguration(Optional.ToDictionary(diskVolumeConfigurations), serializedAdditionalRawData);
+            return new DiskConfiguration(diskVolumeConfigurations ?? new ChangeTrackingDictionary<string, DiskVolumeConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskConfiguration>.Write(ModelReaderWriterOptions options)

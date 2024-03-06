@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaServicesAccountFilterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string filterName, MediaServicesAccountFilterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaServicesAccountFilterResource> CreateOrUpdate(WaitUntil waitUntil, string filterName, MediaServicesAccountFilterData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         public virtual async Task<Response<MediaServicesAccountFilterResource>> GetAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         public virtual Response<MediaServicesAccountFilterResource> Get(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         public virtual Response<bool> Exists(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaServicesAccountFilterResource>> GetIfExistsAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         public virtual NullableResponse<MediaServicesAccountFilterResource> GetIfExists(string filterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
+            if (filterName == null)
+            {
+                throw new ArgumentNullException(nameof(filterName));
+            }
+            if (filterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(filterName));
+            }
 
             using var scope = _mediaServicesAccountFilterAccountFiltersClientDiagnostics.CreateScope("MediaServicesAccountFilterCollection.GetIfExists");
             scope.Start();

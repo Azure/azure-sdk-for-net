@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             IReadOnlyList<NewRelicResourceMonitorResult> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicResourceMonitorResult> array = new List<NewRelicResourceMonitorResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item));
+                        array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item, options));
                     }
                     value = array;
                     continue;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityMonitoredResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityMonitoredResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityMonitoredResourceListResult>.Write(ModelReaderWriterOptions options)

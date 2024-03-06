@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ActiveConnectivityConfiguration>> value = default;
-            Optional<string> skipToken = default;
+            IReadOnlyList<ActiveConnectivityConfiguration> value = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ActiveConnectivityConfiguration> array = new List<ActiveConnectivityConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(item));
+                        array.Add(ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfigurationsListResult(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new ActiveConnectivityConfigurationsListResult(value ?? new ChangeTrackingList<ActiveConnectivityConfiguration>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfigurationsListResult>.Write(ModelReaderWriterOptions options)

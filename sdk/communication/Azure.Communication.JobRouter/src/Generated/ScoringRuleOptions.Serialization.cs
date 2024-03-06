@@ -90,10 +90,10 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<int> batchSize = default;
-            Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
-            Optional<bool> isBatchScoringEnabled = default;
-            Optional<bool> descendingOrder = default;
+            int? batchSize = default;
+            IList<ScoringRuleParameterSelector> scoringParameters = default;
+            bool? isBatchScoringEnabled = default;
+            bool? descendingOrder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScoringRuleOptions(Optional.ToNullable(batchSize), Optional.ToList(scoringParameters), Optional.ToNullable(isBatchScoringEnabled), Optional.ToNullable(descendingOrder), serializedAdditionalRawData);
+            return new ScoringRuleOptions(batchSize, scoringParameters ?? new ChangeTrackingList<ScoringRuleParameterSelector>(), isBatchScoringEnabled, descendingOrder, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScoringRuleOptions>.Write(ModelReaderWriterOptions options)

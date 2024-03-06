@@ -63,8 +63,14 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleName"/> or <paramref name="condition"/> is null. </exception>
         public AlertRuleData(AzureLocation location, string alertRuleName, bool isEnabled, AlertRuleCondition condition) : base(location)
         {
-            Argument.AssertNotNull(alertRuleName, nameof(alertRuleName));
-            Argument.AssertNotNull(condition, nameof(condition));
+            if (alertRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(alertRuleName));
+            }
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
 
             AlertRuleName = alertRuleName;
             IsEnabled = isEnabled;

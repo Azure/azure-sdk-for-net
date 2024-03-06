@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier functionAppResourceId = default;
             string functionName = default;
             Uri httpTriggerUrl = default;
-            Optional<bool> useCommonAlertSchema = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAzureFunctionReceiver(name, functionAppResourceId, functionName, httpTriggerUrl, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorAzureFunctionReceiver(
+                name,
+                functionAppResourceId,
+                functionName,
+                httpTriggerUrl,
+                useCommonAlertSchema,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorAzureFunctionReceiver>.Write(ModelReaderWriterOptions options)

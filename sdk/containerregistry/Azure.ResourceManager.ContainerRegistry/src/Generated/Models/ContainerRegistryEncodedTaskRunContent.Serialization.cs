@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -121,17 +122,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Optional<int> timeout = default;
+            string encodedValuesContent = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
+            int? timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string sourceLocation = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            bool? isArchiveEnabled = default;
+            string agentPoolName = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("platform"u8))
                 {
-                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value);
+                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentConfiguration"u8))
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value);
+                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
+                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -227,7 +228,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryEncodedTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            return new ContainerRegistryEncodedTaskRunContent(
+                type,
+                isArchiveEnabled,
+                agentPoolName,
+                logTemplate,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                timeout,
+                platform,
+                agentConfiguration,
+                sourceLocation,
+                credentials);
         }
 
         BinaryData IPersistableModel<ContainerRegistryEncodedTaskRunContent>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/> or <paramref name="serialNumber"/> is null. </exception>
         public BareMetalMachineConfiguration(AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, long rackSlot, string serialNumber)
         {
-            Argument.AssertNotNull(bmcCredentials, nameof(bmcCredentials));
-            Argument.AssertNotNull(bmcMacAddress, nameof(bmcMacAddress));
-            Argument.AssertNotNull(bootMacAddress, nameof(bootMacAddress));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            if (bmcCredentials == null)
+            {
+                throw new ArgumentNullException(nameof(bmcCredentials));
+            }
+            if (bmcMacAddress == null)
+            {
+                throw new ArgumentNullException(nameof(bmcMacAddress));
+            }
+            if (bootMacAddress == null)
+            {
+                throw new ArgumentNullException(nameof(bootMacAddress));
+            }
+            if (serialNumber == null)
+            {
+                throw new ArgumentNullException(nameof(serialNumber));
+            }
 
             BmcCredentials = bmcCredentials;
             BmcMacAddress = bmcMacAddress;

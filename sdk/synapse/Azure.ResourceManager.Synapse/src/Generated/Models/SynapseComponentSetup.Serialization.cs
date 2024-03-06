@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             string type = default;
             string componentName = default;
-            Optional<SynapseSecretBase> licenseKey = default;
+            SynapseSecretBase licenseKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
+                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value, options);
                             continue;
                         }
                     }
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseComponentSetup(type, serializedAdditionalRawData, componentName, licenseKey.Value);
+            return new SynapseComponentSetup(type, serializedAdditionalRawData, componentName, licenseKey);
         }
 
         BinaryData IPersistableModel<SynapseComponentSetup>.Write(ModelReaderWriterOptions options)

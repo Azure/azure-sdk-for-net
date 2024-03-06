@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProtectionPolicy(document.RootElement, options);
+            return DeserializeBackupGenericProtectionPolicy(document.RootElement, options);
         }
 
         internal static UnknownProtectionPolicy DeserializeUnknownProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> protectedItemsCount = default;
+            int? protectedItemsCount = default;
             string backupManagementType = "Unknown";
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), serializedAdditionalRawData);
+            return new UnknownProtectionPolicy(protectedItemsCount, backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupGenericProtectionPolicy>.Write(ModelReaderWriterOptions options)
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProtectionPolicy(document.RootElement, options);
+                        return DeserializeBackupGenericProtectionPolicy(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{options.Format}' format.");

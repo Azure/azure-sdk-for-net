@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> routePrefix = default;
-            Optional<IList<string>> community = default;
-            Optional<IList<string>> asPath = default;
+            IList<string> routePrefix = default;
+            IList<string> community = default;
+            IList<string> asPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteMapActionParameter(Optional.ToList(routePrefix), Optional.ToList(community), Optional.ToList(asPath), serializedAdditionalRawData);
+            return new RouteMapActionParameter(routePrefix ?? new ChangeTrackingList<string>(), community ?? new ChangeTrackingList<string>(), asPath ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteMapActionParameter>.Write(ModelReaderWriterOptions options)

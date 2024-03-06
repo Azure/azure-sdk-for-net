@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> enableComputeIsolation = default;
-            Optional<string> hostSku = default;
+            bool? enableComputeIsolation = default;
+            string hostSku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightComputeIsolationProperties(Optional.ToNullable(enableComputeIsolation), hostSku.Value, serializedAdditionalRawData);
+            return new HDInsightComputeIsolationProperties(enableComputeIsolation, hostSku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightComputeIsolationProperties>.Write(ModelReaderWriterOptions options)

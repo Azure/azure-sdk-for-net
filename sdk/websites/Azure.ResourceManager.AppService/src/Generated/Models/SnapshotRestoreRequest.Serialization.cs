@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -123,17 +124,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> snapshotTime = default;
-            Optional<SnapshotRecoverySource> recoverySource = default;
-            Optional<bool> overwrite = default;
-            Optional<bool> recoverConfiguration = default;
-            Optional<bool> ignoreConflictingHostNames = default;
-            Optional<bool> useDRSecondary = default;
+            SystemData systemData = default;
+            string snapshotTime = default;
+            SnapshotRecoverySource recoverySource = default;
+            bool? overwrite = default;
+            bool? recoverConfiguration = default;
+            bool? ignoreConflictingHostNames = default;
+            bool? useDRSecondary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value);
+                            recoverySource = SnapshotRecoverySource.DeserializeSnapshotRecoverySource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("overwrite"u8))
@@ -235,7 +236,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotRestoreRequest(id, name, type, systemData.Value, snapshotTime.Value, recoverySource.Value, Optional.ToNullable(overwrite), Optional.ToNullable(recoverConfiguration), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(useDRSecondary), kind.Value, serializedAdditionalRawData);
+            return new SnapshotRestoreRequest(
+                id,
+                name,
+                type,
+                systemData,
+                snapshotTime,
+                recoverySource,
+                overwrite,
+                recoverConfiguration,
+                ignoreConflictingHostNames,
+                useDRSecondary,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotRestoreRequest>.Write(ModelReaderWriterOptions options)

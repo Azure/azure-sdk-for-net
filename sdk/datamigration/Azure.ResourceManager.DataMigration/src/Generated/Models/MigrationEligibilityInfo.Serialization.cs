@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> isEligibleForMigration = default;
-            Optional<IReadOnlyList<string>> validationMessages = default;
+            bool? isEligibleForMigration = default;
+            IReadOnlyList<string> validationMessages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationEligibilityInfo(Optional.ToNullable(isEligibleForMigration), Optional.ToList(validationMessages), serializedAdditionalRawData);
+            return new MigrationEligibilityInfo(isEligibleForMigration, validationMessages ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationEligibilityInfo>.Write(ModelReaderWriterOptions options)

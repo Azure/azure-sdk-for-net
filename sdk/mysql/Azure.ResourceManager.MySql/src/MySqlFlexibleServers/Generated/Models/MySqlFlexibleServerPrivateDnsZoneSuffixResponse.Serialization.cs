@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> privateDnsZoneSuffix = default;
+            string privateDnsZoneSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Write(ModelReaderWriterOptions options)

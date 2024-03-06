@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<string>> scope = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<QueryTagSettingsProperties> tagSettings = default;
+            IList<string> scope = default;
+            IList<AzureLocation> locations = default;
+            QueryTagSettingsProperties tagSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value);
+                    tagSettings = QueryTagSettingsProperties.DeserializeQueryTagSettingsProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureQueryProperties(Optional.ToList(scope), Optional.ToList(locations), tagSettings.Value, serializedAdditionalRawData);
+            return new AzureQueryProperties(scope ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), tagSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureQueryProperties>.Write(ModelReaderWriterOptions options)

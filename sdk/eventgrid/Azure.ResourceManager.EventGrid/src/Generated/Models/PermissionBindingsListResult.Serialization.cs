@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventGridNamespacePermissionBindingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EventGridNamespacePermissionBindingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridNamespacePermissionBindingData> array = new List<EventGridNamespacePermissionBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(item));
+                        array.Add(EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PermissionBindingsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PermissionBindingsListResult(value ?? new ChangeTrackingList<EventGridNamespacePermissionBindingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PermissionBindingsListResult>.Write(ModelReaderWriterOptions options)

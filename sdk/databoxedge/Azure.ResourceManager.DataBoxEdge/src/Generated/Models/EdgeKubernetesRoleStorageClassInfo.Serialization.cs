@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<PosixComplianceStatus> posixCompliant = default;
+            string name = default;
+            string type = default;
+            PosixComplianceStatus? posixCompliant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleStorageClassInfo(name.Value, type.Value, Optional.ToNullable(posixCompliant), serializedAdditionalRawData);
+            return new EdgeKubernetesRoleStorageClassInfo(name, type, posixCompliant, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleStorageClassInfo>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -154,22 +155,22 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SynapseDataSourceSku> sku = default;
+            IDictionary<string, string> tags = default;
+            SynapseDataSourceSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoPoolState> state = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<Uri> uri = default;
-            Optional<Uri> dataIngestionUri = default;
-            Optional<string> stateReason = default;
-            Optional<SynapseOptimizedAutoscale> optimizedAutoscale = default;
-            Optional<bool> enableStreamingIngest = default;
-            Optional<bool> enablePurge = default;
-            Optional<SynapseLanguageExtensionsList> languageExtensions = default;
-            Optional<Guid> workspaceUID = default;
+            SystemData systemData = default;
+            KustoPoolState? state = default;
+            ResourceProvisioningState? provisioningState = default;
+            Uri uri = default;
+            Uri dataIngestionUri = default;
+            string stateReason = default;
+            SynapseOptimizedAutoscale optimizedAutoscale = default;
+            bool? enableStreamingIngest = default;
+            bool? enablePurge = default;
+            SynapseLanguageExtensionsList languageExtensions = default;
+            Guid? workspaceUID = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
+                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value);
+                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enableStreamingIngest"u8))
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value);
+                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"u8))
@@ -325,7 +326,24 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKustoPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID), serializedAdditionalRawData);
+            return new SynapseKustoPoolPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                state,
+                provisioningState,
+                uri,
+                dataIngestionUri,
+                stateReason,
+                optimizedAutoscale,
+                enableStreamingIngest,
+                enablePurge,
+                languageExtensions,
+                workspaceUID,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKustoPoolPatch>.Write(ModelReaderWriterOptions options)

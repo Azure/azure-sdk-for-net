@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<JsonWebKey> policyCertificate = default;
+            JsonWebKey policyCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyCertificate"u8))
@@ -45,7 +45,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificateModification(policyCertificate.Value);
+            return new PolicyCertificateModification(policyCertificate);
         }
 
         internal partial class PolicyCertificateModificationConverter : JsonConverter<PolicyCertificateModification>

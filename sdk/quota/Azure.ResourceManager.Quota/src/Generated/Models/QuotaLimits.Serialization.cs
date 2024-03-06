@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CurrentQuotaLimitBaseData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CurrentQuotaLimitBaseData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<CurrentQuotaLimitBaseData> array = new List<CurrentQuotaLimitBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(item));
+                        array.Add(CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaLimits(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaLimits(value ?? new ChangeTrackingList<CurrentQuotaLimitBaseData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaLimits>.Write(ModelReaderWriterOptions options)

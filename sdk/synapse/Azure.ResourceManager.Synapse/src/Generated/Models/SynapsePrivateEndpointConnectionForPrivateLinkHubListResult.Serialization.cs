@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapsePrivateEndpointConnectionForPrivateLinkHubData> array = new List<SynapsePrivateEndpointConnectionForPrivateLinkHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapsePrivateEndpointConnectionForPrivateLinkHubData.DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(item));
+                        array.Add(SynapsePrivateEndpointConnectionForPrivateLinkHubData.DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapsePrivateEndpointConnectionForPrivateLinkHubListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapsePrivateEndpointConnectionForPrivateLinkHubListResult(value ?? new ChangeTrackingList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapsePrivateEndpointConnectionForPrivateLinkHubListResult>.Write(ModelReaderWriterOptions options)

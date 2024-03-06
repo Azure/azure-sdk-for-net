@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -37,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> fileMissing = default;
-            Optional<object> dataInconsistency = default;
+            object fileMissing = default;
+            object dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))
@@ -60,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SkipErrorFile(fileMissing.Value, dataInconsistency.Value);
+            return new SkipErrorFile(fileMissing, dataInconsistency);
         }
 
         internal partial class SkipErrorFileConverter : JsonConverter<SkipErrorFile>

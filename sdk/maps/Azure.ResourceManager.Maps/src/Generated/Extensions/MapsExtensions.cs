@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Maps
         /// <returns> Returns a <see cref="MapsAccountResource"/> object. </returns>
         public static MapsAccountResource GetMapsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMapsArmClient(client).GetMapsAccountResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.Maps
         /// <returns> Returns a <see cref="MapsCreatorResource"/> object. </returns>
         public static MapsCreatorResource GetMapsCreatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMapsArmClient(client).GetMapsCreatorResource(id);
         }
@@ -84,7 +90,10 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
         public static MapsAccountCollection GetMapsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMapsResourceGroupResource(resourceGroupResource).GetMapsAccounts();
         }
@@ -122,7 +131,10 @@ namespace Azure.ResourceManager.Maps
         [ForwardsClientCalls]
         public static async Task<Response<MapsAccountResource>> GetMapsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableMapsResourceGroupResource(resourceGroupResource).GetMapsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -160,7 +172,10 @@ namespace Azure.ResourceManager.Maps
         [ForwardsClientCalls]
         public static Response<MapsAccountResource> GetMapsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMapsResourceGroupResource(resourceGroupResource).GetMapsAccount(accountName, cancellationToken);
         }
@@ -196,7 +211,10 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An async collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMapsSubscriptionResource(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
         }
@@ -232,7 +250,10 @@ namespace Azure.ResourceManager.Maps
         /// <returns> A collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MapsAccountResource> GetMapsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMapsSubscriptionResource(subscriptionResource).GetMapsAccounts(cancellationToken);
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public SqlConnectionInfo(string dataSource)
         {
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
+            if (dataSource == null)
+            {
+                throw new ArgumentNullException(nameof(dataSource));
+            }
 
             DataSource = dataSource;
             ConnectionInfoType = "SqlConnectionInfo";

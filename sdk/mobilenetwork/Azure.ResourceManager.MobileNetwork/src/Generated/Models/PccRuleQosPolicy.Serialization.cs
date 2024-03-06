@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<Ambr> guaranteedBitRate = default;
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            Ambr guaranteedBitRate = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
             Ambr maximumBitRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    guaranteedBitRate = Ambr.DeserializeAmbr(property.Value);
+                    guaranteedBitRate = Ambr.DeserializeAmbr(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("5qi"u8))
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("maximumBitRate"u8))
                 {
-                    maximumBitRate = Ambr.DeserializeAmbr(property.Value);
+                    maximumBitRate = Ambr.DeserializeAmbr(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +158,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PccRuleQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate, serializedAdditionalRawData, guaranteedBitRate.Value);
+            return new PccRuleQosPolicy(
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
+                maximumBitRate,
+                serializedAdditionalRawData,
+                guaranteedBitRate);
         }
 
         BinaryData IPersistableModel<PccRuleQosPolicy>.Write(ModelReaderWriterOptions options)

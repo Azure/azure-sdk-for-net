@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<KeyVaultData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultData> array = new List<KeyVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultData.DeserializeKeyVaultData(item));
+                        array.Add(KeyVaultData.DeserializeKeyVaultData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VaultListResult(value ?? new ChangeTrackingList<KeyVaultData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultListResult>.Write(ModelReaderWriterOptions options)

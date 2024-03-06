@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitRecommendationUsageGrain> usageGrain = default;
-            Optional<IReadOnlyList<decimal>> charges = default;
+            BenefitRecommendationUsageGrain? usageGrain = default;
+            IReadOnlyList<decimal> charges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), Optional.ToList(charges), serializedAdditionalRawData);
+            return new RecommendationUsageDetails(usageGrain, charges ?? new ChangeTrackingList<decimal>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationUsageDetails>.Write(ModelReaderWriterOptions options)

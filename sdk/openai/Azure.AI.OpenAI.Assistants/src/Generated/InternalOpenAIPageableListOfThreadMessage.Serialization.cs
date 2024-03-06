@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ThreadMessage> array = new List<ThreadMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadMessage.DeserializeThreadMessage(item));
+                        array.Add(ThreadMessage.DeserializeThreadMessage(item, options));
                     }
                     data = array;
                     continue;
@@ -125,7 +125,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfThreadMessage(@object, data, firstId, lastId, hasMore, serializedAdditionalRawData);
+            return new InternalOpenAIPageableListOfThreadMessage(
+                @object,
+                data,
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalOpenAIPageableListOfThreadMessage>.Write(ModelReaderWriterOptions options)

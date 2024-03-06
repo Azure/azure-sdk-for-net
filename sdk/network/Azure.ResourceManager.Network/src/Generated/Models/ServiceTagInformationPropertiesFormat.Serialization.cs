@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> changeNumber = default;
-            Optional<string> region = default;
-            Optional<string> systemService = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<string> state = default;
+            string changeNumber = default;
+            string region = default;
+            string systemService = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes), state.Value, serializedAdditionalRawData);
+            return new ServiceTagInformationPropertiesFormat(
+                changeNumber,
+                region,
+                systemService,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformationPropertiesFormat>.Write(ModelReaderWriterOptions options)

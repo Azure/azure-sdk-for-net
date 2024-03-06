@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> type = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> message = default;
-            Optional<string> causes = default;
-            Optional<string> recommendation = default;
+            string code = default;
+            string type = default;
+            string severity = default;
+            DateTimeOffset? creationTime = default;
+            string message = default;
+            string causes = default;
+            string recommendation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationErrorInfo(code.Value, type.Value, severity.Value, Optional.ToNullable(creationTime), message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationErrorInfo(
+                code,
+                type,
+                severity,
+                creationTime,
+                message,
+                causes,
+                recommendation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationErrorInfo>.Write(ModelReaderWriterOptions options)

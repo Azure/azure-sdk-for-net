@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<int> date = default;
-            Optional<bool> isLast = default;
+            int? date = default;
+            bool? isLast = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupDay(Optional.ToNullable(date), Optional.ToNullable(isLast), serializedAdditionalRawData);
+            return new DataProtectionBackupDay(date, isLast, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupDay>.Write(ModelReaderWriterOptions options)

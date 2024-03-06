@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<DataFactoryElement<string>> path = default;
-            Optional<DataFactoryElement<bool>> enableCompression = default;
+            DataFactoryElement<string> path = default;
+            DataFactoryElement<bool> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new StagingSettings(linkedServiceName, path.Value, enableCompression.Value, additionalProperties);
+            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
         }
 
         BinaryData IPersistableModel<StagingSettings>.Write(ModelReaderWriterOptions options)

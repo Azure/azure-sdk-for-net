@@ -140,18 +140,18 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IotCentralAppSkuInfo> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IotCentralProvisioningState> provisioningState = default;
-            Optional<Guid> applicationId = default;
-            Optional<string> displayName = default;
-            Optional<string> subdomain = default;
-            Optional<string> template = default;
-            Optional<IotCentralAppState> state = default;
-            Optional<IotCentralPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IotCentralNetworkRuleSets> networkRuleSets = default;
-            Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IDictionary<string, string> tags = default;
+            IotCentralAppSkuInfo sku = default;
+            ManagedServiceIdentity identity = default;
+            IotCentralProvisioningState? provisioningState = default;
+            Guid? applicationId = default;
+            string displayName = default;
+            string subdomain = default;
+            string template = default;
+            IotCentralAppState? state = default;
+            IotCentralPublicNetworkAccess? publicNetworkAccess = default;
+            IotCentralNetworkRuleSets networkRuleSets = default;
+            IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     {
                         continue;
                     }
-                    sku = IotCentralAppSkuInfo.DeserializeIotCentralAppSkuInfo(property.Value);
+                    sku = IotCentralAppSkuInfo.DeserializeIotCentralAppSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                             {
                                 continue;
                             }
-                            networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value);
+                            networkRuleSets = IotCentralNetworkRuleSets.DeserializeIotCentralNetworkRuleSets(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                             List<IotCentralPrivateEndpointConnectionData> array = new List<IotCentralPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(item));
+                                array.Add(IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppPatch(Optional.ToDictionary(tags), sku.Value, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(applicationId), displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new IotCentralAppPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                identity,
+                provisioningState,
+                applicationId,
+                displayName,
+                subdomain,
+                template,
+                state,
+                publicNetworkAccess,
+                networkRuleSets,
+                privateEndpointConnections ?? new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppPatch>.Write(ModelReaderWriterOptions options)

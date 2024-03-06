@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -55,8 +56,14 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="subnetId"/> is null. </exception>
         public DiskPoolCreateOrUpdateContent(StoragePoolSku sku, AzureLocation location, ResourceIdentifier subnetId)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
+            if (subnetId == null)
+            {
+                throw new ArgumentNullException(nameof(subnetId));
+            }
 
             Sku = sku;
             Tags = new ChangeTrackingDictionary<string, string>();

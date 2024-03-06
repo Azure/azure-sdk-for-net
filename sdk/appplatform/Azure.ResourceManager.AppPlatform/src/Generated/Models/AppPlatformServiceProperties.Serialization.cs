@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformServiceProvisioningState> provisioningState = default;
-            Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
-            Optional<ServiceVnetAddons> vnetAddons = default;
-            Optional<int> version = default;
-            Optional<string> serviceId = default;
-            Optional<AppPlatformServicePowerState> powerState = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<string> fqdn = default;
+            AppPlatformServiceProvisioningState? provisioningState = default;
+            AppPlatformServiceNetworkProfile networkProfile = default;
+            ServiceVnetAddons vnetAddons = default;
+            int? version = default;
+            string serviceId = default;
+            AppPlatformServicePowerState? powerState = default;
+            bool? zoneRedundant = default;
+            string fqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value);
+                    networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vnetAddons"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value);
+                    vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -186,7 +187,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceProperties(
+                provisioningState,
+                networkProfile,
+                vnetAddons,
+                version,
+                serviceId,
+                powerState,
+                zoneRedundant,
+                fqdn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceProperties>.Write(ModelReaderWriterOptions options)

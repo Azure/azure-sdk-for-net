@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PortalSettingsContractData>> value = default;
-            Optional<long> count = default;
+            IReadOnlyList<PortalSettingsContractData> value = default;
+            long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PortalSettingsContractData> array = new List<PortalSettingsContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item));
+                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalSettingsListResult(Optional.ToList(value), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new PortalSettingsListResult(value ?? new ChangeTrackingList<PortalSettingsContractData>(), count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalSettingsListResult>.Write(ModelReaderWriterOptions options)

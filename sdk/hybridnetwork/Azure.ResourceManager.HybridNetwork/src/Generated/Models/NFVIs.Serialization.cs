@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -75,12 +76,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element);
-                    case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element);
-                    case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element);
+                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
+                    case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
+                    case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
                 }
             }
-            return UnknownNFVIs.DeserializeUnknownNFVIs(element);
+            return UnknownNFVIs.DeserializeUnknownNFVIs(element, options);
         }
 
         BinaryData IPersistableModel<NFVIs>.Write(ModelReaderWriterOptions options)

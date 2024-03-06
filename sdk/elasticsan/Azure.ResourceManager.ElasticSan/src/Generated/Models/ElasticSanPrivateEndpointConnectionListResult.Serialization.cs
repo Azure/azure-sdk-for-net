@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ElasticSanPrivateEndpointConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanPrivateEndpointConnectionData> array = new List<ElasticSanPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item));
+                        array.Add(ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ElasticSanPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

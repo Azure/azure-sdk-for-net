@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<AzureDevOpsConnectorStatsProperties> properties = default;
+            AzureDevOpsConnectorStatsProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     {
                         continue;
                     }
-                    properties = AzureDevOpsConnectorStatsProperties.DeserializeAzureDevOpsConnectorStatsProperties(property.Value);
+                    properties = AzureDevOpsConnectorStatsProperties.DeserializeAzureDevOpsConnectorStatsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +139,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorStats(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AzureDevOpsConnectorStats(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorStats>.Write(ModelReaderWriterOptions options)

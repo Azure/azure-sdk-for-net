@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkDiagnosticsPackageData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MobileNetworkDiagnosticsPackageData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkDiagnosticsPackageData> array = new List<MobileNetworkDiagnosticsPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(item));
+                        array.Add(MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsPackageListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiagnosticsPackageListResult(value ?? new ChangeTrackingList<MobileNetworkDiagnosticsPackageData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsPackageListResult>.Write(ModelReaderWriterOptions options)

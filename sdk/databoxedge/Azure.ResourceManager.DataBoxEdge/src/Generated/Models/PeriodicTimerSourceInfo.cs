@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         public PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule)
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
+            if (schedule == null)
+            {
+                throw new ArgumentNullException(nameof(schedule));
+            }
 
             StartOn = startOn;
             Schedule = schedule;

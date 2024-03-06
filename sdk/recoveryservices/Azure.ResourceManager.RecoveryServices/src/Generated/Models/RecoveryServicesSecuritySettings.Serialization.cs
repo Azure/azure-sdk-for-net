@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<ImmutabilitySettings> immutabilitySettings = default;
-            Optional<RecoveryServicesSoftDeleteSettings> softDeleteSettings = default;
-            Optional<MultiUserAuthorization> multiUserAuthorization = default;
+            ImmutabilitySettings immutabilitySettings = default;
+            RecoveryServicesSoftDeleteSettings softDeleteSettings = default;
+            MultiUserAuthorization? multiUserAuthorization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softDeleteSettings"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value);
+                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("multiUserAuthorization"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSecuritySettings(immutabilitySettings.Value, softDeleteSettings.Value, Optional.ToNullable(multiUserAuthorization), serializedAdditionalRawData);
+            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSecuritySettings>.Write(ModelReaderWriterOptions options)

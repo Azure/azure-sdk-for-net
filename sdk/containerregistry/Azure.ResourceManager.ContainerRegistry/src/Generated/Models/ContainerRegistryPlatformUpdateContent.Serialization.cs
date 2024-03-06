@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryOS> os = default;
-            Optional<ContainerRegistryOSArchitecture> architecture = default;
-            Optional<ContainerRegistryCpuVariant> variant = default;
+            ContainerRegistryOS? os = default;
+            ContainerRegistryOSArchitecture? architecture = default;
+            ContainerRegistryCpuVariant? variant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPlatformUpdateContent(Optional.ToNullable(os), Optional.ToNullable(architecture), Optional.ToNullable(variant), serializedAdditionalRawData);
+            return new ContainerRegistryPlatformUpdateContent(os, architecture, variant, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPlatformUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -42,9 +43,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object packagePath = default;
-            Optional<string> packageName = default;
+            string packageName = default;
             object packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            string packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
@@ -68,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisChildPackage(packagePath, packageName.Value, packageContent, packageLastModifiedDate.Value);
+            return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate);
         }
 
         internal partial class SsisChildPackageConverter : JsonConverter<SsisChildPackage>

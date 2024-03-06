@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -109,9 +110,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
-            Optional<BinaryData> datasetParameters = default;
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, BinaryData> parameters = default;
+            BinaryData datasetParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFlowSourceSetting> array = new List<DataFlowSourceSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item));
+                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item, options));
                     }
                     sourceSettings = array;
                     continue;
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value, serializedAdditionalRawData);
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), datasetParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFlowDebugPackageDebugSettings>.Write(ModelReaderWriterOptions options)

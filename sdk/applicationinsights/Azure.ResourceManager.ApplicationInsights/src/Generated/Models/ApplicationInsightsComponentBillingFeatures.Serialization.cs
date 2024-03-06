@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<ApplicationInsightsComponentDataVolumeCap> dataVolumeCap = default;
-            Optional<IList<string>> currentBillingFeatures = default;
+            ApplicationInsightsComponentDataVolumeCap dataVolumeCap = default;
+            IList<string> currentBillingFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value);
+                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("CurrentBillingFeatures"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, Optional.ToList(currentBillingFeatures), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentBillingFeatures>.Write(ModelReaderWriterOptions options)

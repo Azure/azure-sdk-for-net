@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> dnsResources = default;
-            Optional<WritableSubResource> targetResource = default;
+            IReadOnlyList<WritableSubResource> dnsResources = default;
+            WritableSubResource targetResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsResourceReference(Optional.ToList(dnsResources), targetResource, serializedAdditionalRawData);
+            return new DnsResourceReference(dnsResources ?? new ChangeTrackingList<WritableSubResource>(), targetResource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResourceReference>.Write(ModelReaderWriterOptions options)

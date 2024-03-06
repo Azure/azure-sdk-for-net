@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -97,13 +98,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> schemaLinkedService = default;
-            Optional<DataFactoryLinkedServiceReference> rejectedDataLinkedService = default;
+            DataFactoryLinkedServiceReference schemaLinkedService = default;
+            DataFactoryLinkedServiceReference rejectedDataLinkedService = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<DatasetReference> dataset = default;
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<DataFlowReference> flowlet = default;
+            string description = default;
+            DatasetReference dataset = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataset = DatasetReference.DeserializeDatasetReference(property.Value);
+                    dataset = DatasetReference.DeserializeDatasetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linkedService"u8))
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
+                    flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +170,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowSink(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService, rejectedDataLinkedService);
+            return new DataFlowSink(
+                name,
+                description,
+                dataset,
+                linkedService,
+                flowlet,
+                serializedAdditionalRawData,
+                schemaLinkedService,
+                rejectedDataLinkedService);
         }
 
         BinaryData IPersistableModel<DataFlowSink>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         protected DataBoxBasicJobDetails(DataBoxContactDetails contactDetails)
         {
-            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
+            if (contactDetails == null)
+            {
+                throw new ArgumentNullException(nameof(contactDetails));
+            }
 
             JobStages = new ChangeTrackingList<DataBoxJobStage>();
             ContactDetails = contactDetails;

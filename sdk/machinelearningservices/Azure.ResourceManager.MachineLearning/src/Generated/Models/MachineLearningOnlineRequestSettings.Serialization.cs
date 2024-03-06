@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxConcurrentRequestsPerInstance = default;
-            Optional<TimeSpan> maxQueueWait = default;
-            Optional<TimeSpan> requestTimeout = default;
+            int? maxConcurrentRequestsPerInstance = default;
+            TimeSpan? maxQueueWait = default;
+            TimeSpan? requestTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOnlineRequestSettings(Optional.ToNullable(maxConcurrentRequestsPerInstance), Optional.ToNullable(maxQueueWait), Optional.ToNullable(requestTimeout), serializedAdditionalRawData);
+            return new MachineLearningOnlineRequestSettings(maxConcurrentRequestsPerInstance, maxQueueWait, requestTimeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineRequestSettings>.Write(ModelReaderWriterOptions options)

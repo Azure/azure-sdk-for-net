@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> value = default;
-            Optional<IDictionary<string, string>> localizedValueNames = default;
+            int? value = default;
+            IDictionary<string, string> localizedValueNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileEnumValidValuesFormat(Optional.ToNullable(value), Optional.ToDictionary(localizedValueNames), serializedAdditionalRawData);
+            return new ProfileEnumValidValuesFormat(value, localizedValueNames ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileEnumValidValuesFormat>.Write(ModelReaderWriterOptions options)

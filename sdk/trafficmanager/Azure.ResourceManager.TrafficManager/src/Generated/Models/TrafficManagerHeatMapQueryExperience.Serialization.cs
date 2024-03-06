@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             int endpointId = default;
             int queryCount = default;
-            Optional<double> latency = default;
+            double? latency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, Optional.ToNullable(latency), serializedAdditionalRawData);
+            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, latency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapQueryExperience>.Write(ModelReaderWriterOptions options)

@@ -82,7 +82,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTextLine> array = new List<DetectedTextLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTextLine.DeserializeDetectedTextLine(item));
+                        array.Add(DetectedTextLine.DeserializeDetectedTextLine(item, options));
                     }
                     lines = array;
                     continue;

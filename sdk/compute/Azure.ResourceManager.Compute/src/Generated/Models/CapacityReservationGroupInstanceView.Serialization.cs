@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
-            Optional<IReadOnlyList<SubResource>> sharedSubscriptionIds = default;
+            IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations = default;
+            IReadOnlyList<SubResource> sharedSubscriptionIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CapacityReservationInstanceViewWithName> array = new List<CapacityReservationInstanceViewWithName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item));
+                        array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item, options));
                     }
                     capacityReservations = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations), Optional.ToList(sharedSubscriptionIds), serializedAdditionalRawData);
+            return new CapacityReservationGroupInstanceView(capacityReservations ?? new ChangeTrackingList<CapacityReservationInstanceViewWithName>(), sharedSubscriptionIds ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupInstanceView>.Write(ModelReaderWriterOptions options)

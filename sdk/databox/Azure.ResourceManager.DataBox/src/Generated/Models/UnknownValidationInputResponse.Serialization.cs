@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownValidationInputResponse(document.RootElement, options);
+            return DeserializeDataBoxValidationInputResult(document.RootElement, options);
         }
 
         internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element, ModelReaderWriterOptions options = null)
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownValidationInputResponse(validationType, error.Value, serializedAdditionalRawData);
+            return new UnknownValidationInputResponse(validationType, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxValidationInputResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownValidationInputResponse(document.RootElement, options);
+                        return DeserializeDataBoxValidationInputResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxValidationInputResult)} does not support '{options.Format}' format.");

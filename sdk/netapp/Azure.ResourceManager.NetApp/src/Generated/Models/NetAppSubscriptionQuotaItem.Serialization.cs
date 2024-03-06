@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -101,9 +102,9 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> current = default;
-            Optional<int> @default = default;
+            SystemData systemData = default;
+            int? current = default;
+            int? @default = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubscriptionQuotaItem(id, name, type, systemData.Value, Optional.ToNullable(current), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new NetAppSubscriptionQuotaItem(
+                id,
+                name,
+                type,
+                systemData,
+                current,
+                @default,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubscriptionQuotaItem>.Write(ModelReaderWriterOptions options)

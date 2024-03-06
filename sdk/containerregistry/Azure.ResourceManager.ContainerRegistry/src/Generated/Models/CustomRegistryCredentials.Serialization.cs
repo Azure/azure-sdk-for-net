@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistrySecretObject> userName = default;
-            Optional<ContainerRegistrySecretObject> password = default;
-            Optional<string> identity = default;
+            ContainerRegistrySecretObject userName = default;
+            ContainerRegistrySecretObject password = default;
+            string identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
+                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
+                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRegistryCredentials(userName.Value, password.Value, identity.Value, serializedAdditionalRawData);
+            return new CustomRegistryCredentials(userName, password, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRegistryCredentials>.Write(ModelReaderWriterOptions options)

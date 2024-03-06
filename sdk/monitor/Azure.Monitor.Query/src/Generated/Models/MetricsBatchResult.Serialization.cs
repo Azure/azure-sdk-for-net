@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricsBatchResultValues>> values = default;
+            IReadOnlyList<MetricsBatchResultValues> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsBatchResult(Optional.ToList(values));
+            return new MetricsBatchResult(values ?? new ChangeTrackingList<MetricsBatchResultValues>());
         }
     }
 }

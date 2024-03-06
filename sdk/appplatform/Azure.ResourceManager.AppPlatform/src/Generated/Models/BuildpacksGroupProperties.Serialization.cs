@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<WritableSubResource>> buildpacks = default;
+            string name = default;
+            IList<WritableSubResource> buildpacks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildpacksGroupProperties(name.Value, Optional.ToList(buildpacks), serializedAdditionalRawData);
+            return new BuildpacksGroupProperties(name, buildpacks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildpacksGroupProperties>.Write(ModelReaderWriterOptions options)

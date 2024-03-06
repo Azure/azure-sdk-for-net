@@ -75,8 +75,8 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> note = default;
-            Optional<string> dispositionCode = default;
+            string note = default;
+            string dispositionCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CancelJobOptions(note.Value, dispositionCode.Value, serializedAdditionalRawData);
+            return new CancelJobOptions(note, dispositionCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CancelJobOptions>.Write(ModelReaderWriterOptions options)

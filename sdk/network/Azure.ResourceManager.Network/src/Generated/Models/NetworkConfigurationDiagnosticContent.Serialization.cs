@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            Optional<VerbosityLevel> verbosityLevel = default;
+            VerbosityLevel? verbosityLevel = default;
             IList<NetworkConfigurationDiagnosticProfile> profiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationDiagnosticProfile> array = new List<NetworkConfigurationDiagnosticProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item));
+                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item, options));
                     }
                     profiles = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConfigurationDiagnosticContent(targetResourceId, Optional.ToNullable(verbosityLevel), profiles, serializedAdditionalRawData);
+            return new NetworkConfigurationDiagnosticContent(targetResourceId, verbosityLevel, profiles, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConfigurationDiagnosticContent>.Write(ModelReaderWriterOptions options)

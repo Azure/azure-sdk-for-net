@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> networkInterface = default;
-            Optional<IList<string>> networkSecurityGroups = default;
+            string networkInterface = default;
+            IList<string> networkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityGroups(networkInterface.Value, Optional.ToList(networkSecurityGroups), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityGroups(networkInterface, networkSecurityGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityGroups>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetCallbackUrlWorkflowVersionTriggerAsync(string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _workflowVersionTriggersClientDiagnostics.CreateScope("LogicWorkflowVersionResource.GetCallbackUrlWorkflowVersionTrigger");
             scope.Start();
@@ -239,7 +246,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<LogicWorkflowTriggerCallbackUri> GetCallbackUrlWorkflowVersionTrigger(string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            if (triggerName == null)
+            {
+                throw new ArgumentNullException(nameof(triggerName));
+            }
+            if (triggerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
+            }
 
             using var scope = _workflowVersionTriggersClientDiagnostics.CreateScope("LogicWorkflowVersionResource.GetCallbackUrlWorkflowVersionTrigger");
             scope.Start();

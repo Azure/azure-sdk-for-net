@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AddressSpace> vpnClientAddressPool = default;
-            Optional<IList<WritableSubResource>> virtualNetworkGatewayPolicyGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AddressSpace vpnClientAddressPool = default;
+            IList<WritableSubResource> virtualNetworkGatewayPolicyGroups = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value);
+                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
@@ -202,7 +203,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VngClientConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnClientAddressPool.Value, Optional.ToList(virtualNetworkGatewayPolicyGroups), Optional.ToNullable(provisioningState));
+            return new VngClientConnectionConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                vpnClientAddressPool,
+                virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VngClientConnectionConfiguration>.Write(ModelReaderWriterOptions options)

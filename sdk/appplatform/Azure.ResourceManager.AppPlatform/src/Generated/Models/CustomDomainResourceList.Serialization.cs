@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformCustomDomainData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformCustomDomainData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformCustomDomainData> array = new List<AppPlatformCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(item));
+                        array.Add(AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomDomainResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CustomDomainResourceList(value ?? new ChangeTrackingList<AppPlatformCustomDomainData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomDomainResourceList>.Write(ModelReaderWriterOptions options)

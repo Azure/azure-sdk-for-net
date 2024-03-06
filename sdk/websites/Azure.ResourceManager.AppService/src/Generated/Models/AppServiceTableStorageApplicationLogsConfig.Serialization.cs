@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<WebAppLogLevel> level = default;
+            WebAppLogLevel? level = default;
             string sasUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceTableStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl, serializedAdditionalRawData);
+            return new AppServiceTableStorageApplicationLogsConfig(level, sasUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceTableStorageApplicationLogsConfig>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GalleryArtifactVersionFullSource> source = default;
-            Optional<GalleryOSDiskImage> osDiskImage = default;
-            Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
+            GalleryArtifactVersionFullSource source = default;
+            GalleryOSDiskImage osDiskImage = default;
+            IList<GalleryDataDiskImage> dataDiskImages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value);
+                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osDiskImage"u8))
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
+                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryDataDiskImage> array = new List<GalleryDataDiskImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryDataDiskImage.DeserializeGalleryDataDiskImage(item));
+                        array.Add(GalleryDataDiskImage.DeserializeGalleryDataDiskImage(item, options));
                     }
                     dataDiskImages = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionStorageProfile(source.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+            return new GalleryImageVersionStorageProfile(source, osDiskImage, dataDiskImages ?? new ChangeTrackingList<GalleryDataDiskImage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options)

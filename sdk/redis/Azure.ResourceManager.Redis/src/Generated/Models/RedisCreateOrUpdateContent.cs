@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -54,7 +55,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public RedisCreateOrUpdateContent(AzureLocation location, RedisSku sku)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Zones = new ChangeTrackingList<string>();
             Location = location;

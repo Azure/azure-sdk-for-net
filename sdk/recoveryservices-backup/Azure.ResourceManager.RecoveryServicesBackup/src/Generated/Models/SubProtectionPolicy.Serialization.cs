@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -95,11 +96,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SubProtectionPolicyType> policyType = default;
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
-            Optional<SnapshotBackupAdditionalDetails> snapshotBackupAdditionalDetails = default;
+            SubProtectionPolicyType? policyType = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
+            IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
+            SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tieringPolicy"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, BackupTieringPolicy> dictionary = new Dictionary<string, BackupTieringPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value));
+                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value, options));
                     }
                     tieringPolicy = dictionary;
                     continue;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotBackupAdditionalDetails = SnapshotBackupAdditionalDetails.DeserializeSnapshotBackupAdditionalDetails(property.Value);
+                    snapshotBackupAdditionalDetails = SnapshotBackupAdditionalDetails.DeserializeSnapshotBackupAdditionalDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +161,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy), snapshotBackupAdditionalDetails.Value, serializedAdditionalRawData);
+            return new SubProtectionPolicy(
+                policyType,
+                schedulePolicy,
+                retentionPolicy,
+                tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
+                snapshotBackupAdditionalDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubProtectionPolicy>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
         internal NotificationStatus(string state)
         {
-            Argument.AssertNotNull(state, nameof(state));
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
 
             State = state;
             ActionDetails = new ChangeTrackingList<NotificationActionDetail>();

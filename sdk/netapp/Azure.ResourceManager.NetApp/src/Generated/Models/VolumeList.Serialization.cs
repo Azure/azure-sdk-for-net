@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetAppVolumeData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeData> array = new List<NetAppVolumeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item));
+                        array.Add(NetAppVolumeData.DeserializeNetAppVolumeData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VolumeList(value ?? new ChangeTrackingList<NetAppVolumeData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeList>.Write(ModelReaderWriterOptions options)

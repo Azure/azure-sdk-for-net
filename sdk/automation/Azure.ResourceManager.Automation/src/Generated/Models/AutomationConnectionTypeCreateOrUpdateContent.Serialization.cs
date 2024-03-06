@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<bool> isGlobal = default;
+            bool? isGlobal = default;
             IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Automation.Models
                             Dictionary<string, AutomationConnectionFieldDefinition> dictionary = new Dictionary<string, AutomationConnectionFieldDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AutomationConnectionFieldDefinition.DeserializeAutomationConnectionFieldDefinition(property1.Value));
+                                dictionary.Add(property1.Name, AutomationConnectionFieldDefinition.DeserializeAutomationConnectionFieldDefinition(property1.Value, options));
                             }
                             fieldDefinitions = dictionary;
                             continue;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionTypeCreateOrUpdateContent(name, Optional.ToNullable(isGlobal), fieldDefinitions, serializedAdditionalRawData);
+            return new AutomationConnectionTypeCreateOrUpdateContent(name, isGlobal, fieldDefinitions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionTypeCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

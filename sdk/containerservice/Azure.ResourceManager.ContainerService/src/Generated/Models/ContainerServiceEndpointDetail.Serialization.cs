@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<string> protocol = default;
-            Optional<string> description = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            string protocol = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceEndpointDetail(ipAddress.Value, Optional.ToNullable(port), protocol.Value, description.Value, serializedAdditionalRawData);
+            return new ContainerServiceEndpointDetail(ipAddress, port, protocol, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceEndpointDetail>.Write(ModelReaderWriterOptions options)

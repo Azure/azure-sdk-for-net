@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<AmlFileSystemHsmSettings> settings = default;
-            Optional<IReadOnlyList<AmlFileSystemArchive>> archiveStatus = default;
+            AmlFileSystemHsmSettings settings = default;
+            IReadOnlyList<AmlFileSystemArchive> archiveStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value);
+                    settings = AmlFileSystemHsmSettings.DeserializeAmlFileSystemHsmSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("archiveStatus"u8))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemArchive> array = new List<AmlFileSystemArchive>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item));
+                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item, options));
                     }
                     archiveStatus = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPropertiesHsm(settings.Value, Optional.ToList(archiveStatus), serializedAdditionalRawData);
+            return new AmlFileSystemPropertiesHsm(settings, archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPropertiesHsm>.Write(ModelReaderWriterOptions options)

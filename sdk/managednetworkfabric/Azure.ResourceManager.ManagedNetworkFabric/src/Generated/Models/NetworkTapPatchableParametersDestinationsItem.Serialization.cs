@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkTapDestinationType> destinationType = default;
-            Optional<ResourceIdentifier> destinationId = default;
-            Optional<IsolationDomainProperties> isolationDomainProperties = default;
-            Optional<ResourceIdentifier> destinationTapRuleId = default;
+            string name = default;
+            NetworkTapDestinationType? destinationType = default;
+            ResourceIdentifier destinationId = default;
+            IsolationDomainProperties isolationDomainProperties = default;
+            ResourceIdentifier destinationTapRuleId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value);
+                    isolationDomainProperties = IsolationDomainProperties.DeserializeIsolationDomainProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destinationTapRuleId"u8))
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapPatchableParametersDestinationsItem(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value, serializedAdditionalRawData);
+            return new NetworkTapPatchableParametersDestinationsItem(
+                name,
+                destinationType,
+                destinationId,
+                isolationDomainProperties,
+                destinationTapRuleId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapPatchableParametersDestinationsItem>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<AppInstanceHttpSchemeType> scheme = default;
+            string path = default;
+            AppInstanceHttpSchemeType? scheme = default;
             ProbeActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInstanceHttpGetAction(type, serializedAdditionalRawData, path.Value, Optional.ToNullable(scheme));
+            return new AppInstanceHttpGetAction(type, serializedAdditionalRawData, path, scheme);
         }
 
         BinaryData IPersistableModel<AppInstanceHttpGetAction>.Write(ModelReaderWriterOptions options)

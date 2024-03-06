@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public OrbitalSpacecraftLink(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalLinkDirection direction, OrbitalLinkPolarization polarization)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             CenterFrequencyMHz = centerFrequencyMHz;

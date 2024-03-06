@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -54,9 +54,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/>, <paramref name="phone"/> or <paramref name="emailList"/> is null. </exception>
         public DataBoxContactDetails(string contactName, string phone, IEnumerable<string> emailList)
         {
-            Argument.AssertNotNull(contactName, nameof(contactName));
-            Argument.AssertNotNull(phone, nameof(phone));
-            Argument.AssertNotNull(emailList, nameof(emailList));
+            if (contactName == null)
+            {
+                throw new ArgumentNullException(nameof(contactName));
+            }
+            if (phone == null)
+            {
+                throw new ArgumentNullException(nameof(phone));
+            }
+            if (emailList == null)
+            {
+                throw new ArgumentNullException(nameof(emailList));
+            }
 
             ContactName = contactName;
             Phone = phone;

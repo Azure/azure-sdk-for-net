@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> communicationInstruction = default;
+            string communicationInstruction = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData, communicationInstruction.Value);
+            return new DataCenterAddressInstructionResult(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData, communicationInstruction);
         }
 
         BinaryData IPersistableModel<DataCenterAddressInstructionResult>.Write(ModelReaderWriterOptions options)

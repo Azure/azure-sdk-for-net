@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsSavingsPlanPatchProperties> properties = default;
+            BillingBenefitsSavingsPlanPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    properties = BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(property.Value);
+                    properties = BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanPatch(properties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanPatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanPatch>.Write(ModelReaderWriterOptions options)

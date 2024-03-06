@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<ResourceProviderResource>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.Get");
             scope.Start();
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Response<ResourceProviderResource> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.Get");
             scope.Start();
@@ -222,7 +236,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.Exists");
             scope.Start();
@@ -266,7 +287,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.Exists");
             scope.Start();
@@ -310,7 +338,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceProviderResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetIfExists");
             scope.Start();
@@ -356,7 +391,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public virtual NullableResponse<ResourceProviderResource> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
+            if (resourceProviderNamespace.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
+            }
 
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetIfExists");
             scope.Start();

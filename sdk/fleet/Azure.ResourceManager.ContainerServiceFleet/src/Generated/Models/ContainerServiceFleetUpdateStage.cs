@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerServiceFleetUpdateStage(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroup>();

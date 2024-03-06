@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkDeviceAdministrativeState> state = default;
-            Optional<IList<ResourceIdentifier>> resourceIds = default;
+            NetworkDeviceAdministrativeState? state = default;
+            IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateDeviceAdministrativeStateContent(Optional.ToList(resourceIds), serializedAdditionalRawData, Optional.ToNullable(state));
+            return new UpdateDeviceAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, state);
         }
 
         BinaryData IPersistableModel<UpdateDeviceAdministrativeStateContent>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -115,15 +116,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceAadProvider> azureActiveDirectory = default;
-            Optional<AppServiceFacebookProvider> facebook = default;
-            Optional<AppServiceGitHubProvider> gitHub = default;
-            Optional<AppServiceGoogleProvider> google = default;
-            Optional<LegacyMicrosoftAccount> legacyMicrosoftAccount = default;
-            Optional<AppServiceTwitterProvider> twitter = default;
-            Optional<AppServiceAppleProvider> apple = default;
-            Optional<AppServiceStaticWebAppsProvider> azureStaticWebApps = default;
-            Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
+            AppServiceAadProvider azureActiveDirectory = default;
+            AppServiceFacebookProvider facebook = default;
+            AppServiceGitHubProvider gitHub = default;
+            AppServiceGoogleProvider google = default;
+            LegacyMicrosoftAccount legacyMicrosoftAccount = default;
+            AppServiceTwitterProvider twitter = default;
+            AppServiceAppleProvider apple = default;
+            AppServiceStaticWebAppsProvider azureStaticWebApps = default;
+            IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value);
+                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("facebook"u8))
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value);
+                    facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHub"u8))
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value);
+                    gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("google"u8))
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value);
+                    google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("legacyMicrosoftAccount"u8))
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value);
+                    legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("twitter"u8))
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value);
+                    twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apple"u8))
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value);
+                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"u8))
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value);
+                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"u8))
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, CustomOpenIdConnectProvider> dictionary = new Dictionary<string, CustomOpenIdConnectProvider>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomOpenIdConnectProvider.DeserializeCustomOpenIdConnectProvider(property0.Value));
+                        dictionary.Add(property0.Name, CustomOpenIdConnectProvider.DeserializeCustomOpenIdConnectProvider(property0.Value, options));
                     }
                     customOpenIdConnectProviders = dictionary;
                     continue;
@@ -220,7 +221,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceIdentityProviders(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, legacyMicrosoftAccount.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders), serializedAdditionalRawData);
+            return new AppServiceIdentityProviders(
+                azureActiveDirectory,
+                facebook,
+                gitHub,
+                google,
+                legacyMicrosoftAccount,
+                twitter,
+                apple,
+                azureStaticWebApps,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceIdentityProviders>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -158,21 +159,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<VirtualMachineRunCommandScriptSource> source = default;
-            Optional<IList<RunCommandInputParameter>> parameters = default;
-            Optional<IList<RunCommandInputParameter>> protectedParameters = default;
-            Optional<bool> asyncExecution = default;
-            Optional<string> runAsUser = default;
-            Optional<string> runAsPassword = default;
-            Optional<int> timeoutInSeconds = default;
-            Optional<Uri> outputBlobUri = default;
-            Optional<Uri> errorBlobUri = default;
-            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
-            Optional<bool> treatFailureAsDeploymentFailure = default;
+            IDictionary<string, string> tags = default;
+            VirtualMachineRunCommandScriptSource source = default;
+            IList<RunCommandInputParameter> parameters = default;
+            IList<RunCommandInputParameter> protectedParameters = default;
+            bool? asyncExecution = default;
+            string runAsUser = default;
+            string runAsPassword = default;
+            int? timeoutInSeconds = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
+            RunCommandManagedIdentity outputBlobManagedIdentity = default;
+            RunCommandManagedIdentity errorBlobManagedIdentity = default;
+            string provisioningState = default;
+            VirtualMachineRunCommandInstanceView instanceView = default;
+            bool? treatFailureAsDeploymentFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value);
+                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             parameters = array;
                             continue;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
                             }
                             protectedParameters = array;
                             continue;
@@ -289,7 +290,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errorBlobManagedIdentity"u8))
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value);
+                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value);
+                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("treatFailureAsDeploymentFailure"u8))
@@ -333,7 +334,23 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandUpdate(Optional.ToDictionary(tags), serializedAdditionalRawData, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure));
+            return new VirtualMachineRunCommandUpdate(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                source,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                asyncExecution,
+                runAsUser,
+                runAsPassword,
+                timeoutInSeconds,
+                outputBlobUri,
+                errorBlobUri,
+                outputBlobManagedIdentity,
+                errorBlobManagedIdentity,
+                provisioningState,
+                instanceView,
+                treatFailureAsDeploymentFailure);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options)

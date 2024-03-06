@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppWorkloadProfileStateProperties> properties = default;
+            ContainerAppWorkloadProfileStateProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    properties = ContainerAppWorkloadProfileStateProperties.DeserializeContainerAppWorkloadProfileStateProperties(property.Value);
+                    properties = ContainerAppWorkloadProfileStateProperties.DeserializeContainerAppWorkloadProfileStateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -138,7 +139,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppWorkloadProfileState(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ContainerAppWorkloadProfileState(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWorkloadProfileState>.Write(ModelReaderWriterOptions options)

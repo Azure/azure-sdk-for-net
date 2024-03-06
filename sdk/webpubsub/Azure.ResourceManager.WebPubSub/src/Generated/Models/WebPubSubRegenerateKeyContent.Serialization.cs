@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<WebPubSubKeyType> keyType = default;
+            WebPubSubKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubRegenerateKeyContent(Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new WebPubSubRegenerateKeyContent(keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubRegenerateKeyContent>.Write(ModelReaderWriterOptions options)

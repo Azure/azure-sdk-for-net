@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorSecretResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorSecretData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorSecretResource> Update(WaitUntil waitUntil, FrontDoorSecretData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretResource.Update");
             scope.Start();

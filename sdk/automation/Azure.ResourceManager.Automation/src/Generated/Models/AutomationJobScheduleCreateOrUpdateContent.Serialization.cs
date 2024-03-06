@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.Automation.Models
             }
             ScheduleAssociationProperty schedule = default;
             RunbookAssociationProperty runbook = default;
-            Optional<string> runOn = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            string runOn = default;
+            IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,12 +107,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("schedule"u8))
                         {
-                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value);
+                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runbook"u8))
                         {
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runOn"u8))
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn, parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

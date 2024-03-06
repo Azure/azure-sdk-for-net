@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AdaptiveApplicationControlEnforcementMode> exe = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> script = default;
-            Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
+            AdaptiveApplicationControlEnforcementMode? exe = default;
+            AdaptiveApplicationControlEnforcementMode? msi = default;
+            AdaptiveApplicationControlEnforcementMode? script = default;
+            AdaptiveApplicationControlEnforcementMode? executable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterFileProtectionMode(Optional.ToNullable(exe), Optional.ToNullable(msi), Optional.ToNullable(script), Optional.ToNullable(executable), serializedAdditionalRawData);
+            return new SecurityCenterFileProtectionMode(exe, msi, script, executable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterFileProtectionMode>.Write(ModelReaderWriterOptions options)

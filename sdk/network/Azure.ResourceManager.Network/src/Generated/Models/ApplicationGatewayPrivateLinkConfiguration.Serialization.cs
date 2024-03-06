@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -103,12 +104,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<ApplicationGatewayPrivateLinkIPConfiguration>> ipConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayPrivateLinkIPConfiguration> array = new List<ApplicationGatewayPrivateLinkIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPrivateLinkIPConfiguration.DeserializeApplicationGatewayPrivateLinkIPConfiguration(item));
+                                array.Add(ApplicationGatewayPrivateLinkIPConfiguration.DeserializeApplicationGatewayPrivateLinkIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -186,7 +187,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayPrivateLinkConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayPrivateLinkConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                ipConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayPrivateLinkConfiguration>.Write(ModelReaderWriterOptions options)

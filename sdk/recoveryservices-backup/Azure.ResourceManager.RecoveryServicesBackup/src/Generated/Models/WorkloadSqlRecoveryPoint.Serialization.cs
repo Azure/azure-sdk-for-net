@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -111,15 +112,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureWorkloadSQLPointInTimeRecoveryPoint": return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element);
+                    case "AzureWorkloadSQLPointInTimeRecoveryPoint": return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element, options);
                 }
             }
-            Optional<WorkloadSqlRecoveryPointExtendedInfo> extendedInfo = default;
-            Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
-            Optional<RestorePointType> type = default;
-            Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
-            Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            WorkloadSqlRecoveryPointExtendedInfo extendedInfo = default;
+            DateTimeOffset? recoveryPointTimeInUTC = default;
+            RestorePointType? type = default;
+            IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
+            IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = "AzureWorkloadSQLRecoveryPoint";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = WorkloadSqlRecoveryPointExtendedInfo.DeserializeWorkloadSqlRecoveryPointExtendedInfo(property.Value);
+                    extendedInfo = WorkloadSqlRecoveryPointExtendedInfo.DeserializeWorkloadSqlRecoveryPointExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryPointTimeInUTC"u8))
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RecoveryPointTierInformationV2> array = new List<RecoveryPointTierInformationV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointTierInformationV2.DeserializeRecoveryPointTierInformationV2(item));
+                        array.Add(RecoveryPointTierInformationV2.DeserializeRecoveryPointTierInformationV2(item, options));
                     }
                     recoveryPointTierDetails = array;
                     continue;
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, RecoveryPointMoveReadinessInfo> dictionary = new Dictionary<string, RecoveryPointMoveReadinessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Models.RecoveryPointMoveReadinessInfo.DeserializeRecoveryPointMoveReadinessInfo(property0.Value));
+                        dictionary.Add(property0.Name, Models.RecoveryPointMoveReadinessInfo.DeserializeRecoveryPointMoveReadinessInfo(property0.Value, options));
                     }
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -200,7 +201,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, extendedInfo.Value);
+            return new WorkloadSqlRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointTimeInUTC,
+                type,
+                recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
+                recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
+                recoveryPointProperties,
+                extendedInfo);
         }
 
         BinaryData IPersistableModel<WorkloadSqlRecoveryPoint>.Write(ModelReaderWriterOptions options)

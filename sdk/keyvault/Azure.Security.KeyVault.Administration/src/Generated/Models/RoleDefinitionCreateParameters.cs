@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleDefinitionCreateParameters(RoleDefinitionProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
         }

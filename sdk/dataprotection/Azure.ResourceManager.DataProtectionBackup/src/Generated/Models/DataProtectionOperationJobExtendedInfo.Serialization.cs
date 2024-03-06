@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
+            string jobId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionOperationJobExtendedInfo(objectType, serializedAdditionalRawData, jobId.Value);
+            return new DataProtectionOperationJobExtendedInfo(objectType, serializedAdditionalRawData, jobId);
         }
 
         BinaryData IPersistableModel<DataProtectionOperationJobExtendedInfo>.Write(ModelReaderWriterOptions options)

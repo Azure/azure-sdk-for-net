@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlMetricName> name = default;
-            Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
-            Optional<string> resourceUri = default;
-            Optional<SqlMetricDefinitionUnitType> unit = default;
-            Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
+            SqlMetricName name = default;
+            SqlMetricPrimaryAggregationType? primaryAggregationType = default;
+            string resourceUri = default;
+            SqlMetricDefinitionUnitType? unit = default;
+            IReadOnlyList<SqlMetricAvailability> metricAvailabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
+                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -155,7 +156,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetricDefinition(name.Value, Optional.ToNullable(primaryAggregationType), resourceUri.Value, Optional.ToNullable(unit), Optional.ToList(metricAvailabilities), serializedAdditionalRawData);
+            return new SqlMetricDefinition(
+                name,
+                primaryAggregationType,
+                resourceUri,
+                unit,
+                metricAvailabilities ?? new ChangeTrackingList<SqlMetricAvailability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetricDefinition>.Write(ModelReaderWriterOptions options)

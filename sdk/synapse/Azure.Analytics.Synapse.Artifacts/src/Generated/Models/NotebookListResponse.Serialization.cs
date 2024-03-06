@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IReadOnlyList<NotebookResource> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookListResponse(value, nextLink.Value);
+            return new NotebookListResponse(value, nextLink);
         }
 
         internal partial class NotebookListResponseConverter : JsonConverter<NotebookListResponse>

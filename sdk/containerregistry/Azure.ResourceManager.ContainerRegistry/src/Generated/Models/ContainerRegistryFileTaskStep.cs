@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskFilePath"/> is null. </exception>
         public ContainerRegistryFileTaskStep(string taskFilePath)
         {
-            Argument.AssertNotNull(taskFilePath, nameof(taskFilePath));
+            if (taskFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(taskFilePath));
+            }
 
             TaskFilePath = taskFilePath;
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();

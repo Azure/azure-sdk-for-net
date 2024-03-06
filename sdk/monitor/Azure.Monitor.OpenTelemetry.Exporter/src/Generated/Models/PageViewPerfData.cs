@@ -21,8 +21,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         public PageViewPerfData(int version, string id, string name) : base(version)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Id = id;
             Name = name;

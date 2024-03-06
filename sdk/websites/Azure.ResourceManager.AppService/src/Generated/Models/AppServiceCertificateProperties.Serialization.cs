@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> keyVaultSecretName = default;
-            Optional<KeyVaultSecretStatus> provisioningState = default;
+            ResourceIdentifier keyVaultId = default;
+            string keyVaultSecretName = default;
+            KeyVaultSecretStatus? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateProperties(keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateProperties>.Write(ModelReaderWriterOptions options)

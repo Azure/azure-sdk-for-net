@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebPubSubHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hubName, WebPubSubHubData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebPubSubHubResource> CreateOrUpdate(WaitUntil waitUntil, string hubName, WebPubSubHubData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual async Task<Response<WebPubSubHubResource>> GetAsync(string hubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual Response<WebPubSubHubResource> Get(string hubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual Response<bool> Exists(string hubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebPubSubHubResource>> GetIfExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual NullableResponse<WebPubSubHubResource> GetIfExists(string hubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            if (hubName == null)
+            {
+                throw new ArgumentNullException(nameof(hubName));
+            }
+            if (hubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
+            }
 
             using var scope = _webPubSubHubClientDiagnostics.CreateScope("WebPubSubHubCollection.GetIfExists");
             scope.Start();

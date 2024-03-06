@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
         public RoutingStorageContainerProperties(string name, string containerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
 
             Name = name;
             ContainerName = containerName;

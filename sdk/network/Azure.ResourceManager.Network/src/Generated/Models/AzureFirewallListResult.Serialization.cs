@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureFirewallData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AzureFirewallData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallData> array = new List<AzureFirewallData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallData.DeserializeAzureFirewallData(item));
+                        array.Add(AzureFirewallData.DeserializeAzureFirewallData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureFirewallListResult(value ?? new ChangeTrackingList<AzureFirewallData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallListResult>.Write(ModelReaderWriterOptions options)

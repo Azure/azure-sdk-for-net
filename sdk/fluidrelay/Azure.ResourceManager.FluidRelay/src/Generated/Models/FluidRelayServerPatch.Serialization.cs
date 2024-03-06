@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FluidRelay;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay.Models
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AzureLocation> location = default;
-            Optional<EncryptionProperties> encryption = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            AzureLocation? location = default;
+            EncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayServerPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(location), encryption.Value, serializedAdditionalRawData);
+            return new FluidRelayServerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, location, encryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayServerPatch>.Write(ModelReaderWriterOptions options)

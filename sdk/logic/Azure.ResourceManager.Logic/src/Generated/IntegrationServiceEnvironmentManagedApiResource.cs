@@ -288,7 +288,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationServiceEnvironmentManagedApiResource>> UpdateAsync(WaitUntil waitUntil, IntegrationServiceEnvironmentManagedApiData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.Update");
             scope.Start();
@@ -334,7 +337,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationServiceEnvironmentManagedApiResource> Update(WaitUntil waitUntil, IntegrationServiceEnvironmentManagedApiData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.Update");
             scope.Start();
@@ -432,8 +438,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentManagedApiResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.AddTag");
             scope.Start();
@@ -489,8 +501,14 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentManagedApiResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.AddTag");
             scope.Start();
@@ -545,7 +563,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentManagedApiResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.SetTags");
             scope.Start();
@@ -601,7 +622,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentManagedApiResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.SetTags");
             scope.Start();
@@ -657,7 +681,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<IntegrationServiceEnvironmentManagedApiResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.RemoveTag");
             scope.Start();
@@ -712,7 +739,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<IntegrationServiceEnvironmentManagedApiResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _integrationServiceEnvironmentManagedApiClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.RemoveTag");
             scope.Start();

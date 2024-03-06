@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxSkuInformation>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataBoxSkuInformation> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxSkuInformation> array = new List<DataBoxSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxSkuInformation.DeserializeDataBoxSkuInformation(item));
+                        array.Add(DataBoxSkuInformation.DeserializeDataBoxSkuInformation(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableSkusResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableSkusResult(value ?? new ChangeTrackingList<DataBoxSkuInformation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableSkusResult>.Write(ModelReaderWriterOptions options)

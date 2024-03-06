@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<SynapseIntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<SynapseIntegrationRuntimeVnetProperties> vNetProperties = default;
+            AzureLocation? location = default;
+            string nodeSize = default;
+            int? numberOfNodes = default;
+            int? maxParallelExecutionsPerNode = default;
+            SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties = default;
+            SynapseIntegrationRuntimeVnetProperties vNetProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value);
+                    dataFlowProperties = SynapseIntegrationRuntimeDataFlowProperties.DeserializeSynapseIntegrationRuntimeDataFlowProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vNetProperties"u8))
@@ -148,13 +149,20 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value);
+                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new SynapseIntegrationRuntimeComputeProperties(
+                location,
+                nodeSize,
+                numberOfNodes,
+                maxParallelExecutionsPerNode,
+                dataFlowProperties,
+                vNetProperties,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> requireHttps = default;
-            Optional<AppServiceHttpSettingsRoutes> routes = default;
-            Optional<AppServiceForwardProxy> forwardProxy = default;
+            bool? requireHttps = default;
+            AppServiceHttpSettingsRoutes routes = default;
+            AppServiceForwardProxy forwardProxy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value);
+                    routes = AppServiceHttpSettingsRoutes.DeserializeAppServiceHttpSettingsRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forwardProxy"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value);
+                    forwardProxy = AppServiceForwardProxy.DeserializeAppServiceForwardProxy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceHttpSettings(Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value, serializedAdditionalRawData);
+            return new AppServiceHttpSettings(requireHttps, routes, forwardProxy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceHttpSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string name = default;
-            Optional<IList<WebPubSubRequestType>> allow = default;
-            Optional<IList<WebPubSubRequestType>> deny = default;
+            IList<WebPubSubRequestType> allow = default;
+            IList<WebPubSubRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData, name);
+            return new PrivateEndpointAcl(allow ?? new ChangeTrackingList<WebPubSubRequestType>(), deny ?? new ChangeTrackingList<WebPubSubRequestType>(), serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<PrivateEndpointAcl>.Write(ModelReaderWriterOptions options)

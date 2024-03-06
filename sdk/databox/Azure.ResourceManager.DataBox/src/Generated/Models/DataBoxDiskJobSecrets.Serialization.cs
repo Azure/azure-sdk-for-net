@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
-            Optional<string> passKey = default;
-            Optional<bool> isPasskeyUserDefined = default;
+            IReadOnlyList<DataBoxDiskSecret> diskSecrets = default;
+            string passKey = default;
+            bool? isPasskeyUserDefined = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskSecret> array = new List<DataBoxDiskSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
+                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item, options));
                     }
                     diskSecrets = array;
                     continue;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(diskSecrets), passKey.Value, Optional.ToNullable(isPasskeyUserDefined));
+            return new DataBoxDiskJobSecrets(
+                jobSecretsType,
+                dcAccessSecurityCode,
+                error,
+                serializedAdditionalRawData,
+                diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
+                passKey,
+                isPasskeyUserDefined);
         }
 
         BinaryData IPersistableModel<DataBoxDiskJobSecrets>.Write(ModelReaderWriterOptions options)

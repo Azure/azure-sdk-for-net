@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
+            int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterManagedOutboundIPProfile(Optional.ToNullable(count), serializedAdditionalRawData);
+            return new ManagedClusterManagedOutboundIPProfile(count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterManagedOutboundIPProfile>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(document.RootElement, options);
+            return DeserializeNetworkFunctionDefinitionVersionPropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownNetworkFunctionDefinitionVersionPropertiesFormat DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> deployParameters = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string deployParameters = default;
             NetworkFunctionType networkFunctionType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +135,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData);
+            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                networkFunctionType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(document.RootElement, options);
+                        return DeserializeNetworkFunctionDefinitionVersionPropertiesFormat(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(NetworkFunctionDefinitionVersionPropertiesFormat)} does not support '{options.Format}' format.");

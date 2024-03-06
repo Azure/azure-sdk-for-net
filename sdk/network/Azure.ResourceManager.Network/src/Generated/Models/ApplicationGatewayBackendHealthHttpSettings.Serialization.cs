@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
-            Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
+            ApplicationGatewayBackendHttpSettings backendHttpSettings = default;
+            IReadOnlyList<ApplicationGatewayBackendHealthServer> servers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value);
+                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servers"u8))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthServer> array = new List<ApplicationGatewayBackendHealthServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item));
+                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item, options));
                     }
                     servers = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Optional.ToList(servers), serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings, servers ?? new ChangeTrackingList<ApplicationGatewayBackendHealthServer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>.Write(ModelReaderWriterOptions options)

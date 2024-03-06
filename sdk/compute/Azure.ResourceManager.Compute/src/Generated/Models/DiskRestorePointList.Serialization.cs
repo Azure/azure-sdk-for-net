@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<DiskRestorePointData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskRestorePointData> array = new List<DiskRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskRestorePointData.DeserializeDiskRestorePointData(item));
+                        array.Add(DiskRestorePointData.DeserializeDiskRestorePointData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskRestorePointList(value, nextLink.Value, serializedAdditionalRawData);
+            return new DiskRestorePointList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskRestorePointList>.Write(ModelReaderWriterOptions options)

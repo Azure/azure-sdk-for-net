@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> timestampString = default;
-            Optional<string> eventTypeString = default;
-            Optional<string> eventText = default;
+            string timestampString = default;
+            string eventTypeString = default;
+            string eventText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncMigrationDatabaseErrorEvent(timestampString.Value, eventTypeString.Value, eventText.Value, serializedAdditionalRawData);
+            return new SyncMigrationDatabaseErrorEvent(timestampString, eventTypeString, eventText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncMigrationDatabaseErrorEvent>.Write(ModelReaderWriterOptions options)

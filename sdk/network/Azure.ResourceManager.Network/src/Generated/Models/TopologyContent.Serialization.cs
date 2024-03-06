@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> targetResourceGroupName = default;
-            Optional<WritableSubResource> targetVirtualNetwork = default;
-            Optional<WritableSubResource> targetSubnet = default;
+            string targetResourceGroupName = default;
+            WritableSubResource targetVirtualNetwork = default;
+            WritableSubResource targetSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyContent(targetResourceGroupName.Value, targetVirtualNetwork, targetSubnet, serializedAdditionalRawData);
+            return new TopologyContent(targetResourceGroupName, targetVirtualNetwork, targetSubnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyContent>.Write(ModelReaderWriterOptions options)

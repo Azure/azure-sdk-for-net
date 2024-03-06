@@ -198,7 +198,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
@@ -240,7 +243,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<HostingEnvironmentWorkerPoolResource> Update(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.Update");
             scope.Start();
@@ -280,7 +286,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+            if (instance.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
@@ -311,7 +324,14 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetWorkerPoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
+            if (instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+            if (instance.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);

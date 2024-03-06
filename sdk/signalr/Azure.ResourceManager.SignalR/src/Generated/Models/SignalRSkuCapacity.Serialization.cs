@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<int> minimum = default;
-            Optional<int> maximum = default;
-            Optional<int> @default = default;
-            Optional<IReadOnlyList<int>> allowedValues = default;
-            Optional<SignalRScaleType> scaleType = default;
+            int? minimum = default;
+            int? maximum = default;
+            int? @default = default;
+            IReadOnlyList<int> allowedValues = default;
+            SignalRScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new SignalRSkuCapacity(
+                minimum,
+                maximum,
+                @default,
+                allowedValues ?? new ChangeTrackingList<int>(),
+                scaleType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSkuCapacity>.Write(ModelReaderWriterOptions options)

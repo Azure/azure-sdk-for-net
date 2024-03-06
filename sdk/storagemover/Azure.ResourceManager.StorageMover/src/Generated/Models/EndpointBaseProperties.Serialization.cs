@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -80,13 +81,13 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element);
-                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element);
-                    case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element);
-                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element);
+                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element, options);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element, options);
+                    case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element, options);
+                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element, options);
                 }
             }
-            return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element);
+            return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element, options);
         }
 
         BinaryData IPersistableModel<EndpointBaseProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> regions = default;
+            IList<AzureLocation> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficRegions(Optional.ToList(regions), serializedAdditionalRawData);
+            return new TrafficRegions(regions ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficRegions>.Write(ModelReaderWriterOptions options)

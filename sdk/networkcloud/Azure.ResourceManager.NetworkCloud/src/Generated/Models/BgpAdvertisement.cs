@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressPools"/> is null. </exception>
         public BgpAdvertisement(IEnumerable<string> ipAddressPools)
         {
-            Argument.AssertNotNull(ipAddressPools, nameof(ipAddressPools));
+            if (ipAddressPools == null)
+            {
+                throw new ArgumentNullException(nameof(ipAddressPools));
+            }
 
             Communities = new ChangeTrackingList<string>();
             IPAddressPools = ipAddressPools.ToList();

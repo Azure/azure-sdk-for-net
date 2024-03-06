@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -96,9 +97,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, ApplianceArtifactProfile>> artifactProfiles = default;
-            Optional<IReadOnlyList<ApplianceCredentialKubeconfig>> kubeconfigs = default;
-            Optional<IReadOnlyDictionary<string, ApplianceSshKey>> sshKeys = default;
+            IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = default;
+            IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs = default;
+            IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     Dictionary<string, ApplianceArtifactProfile> dictionary = new Dictionary<string, ApplianceArtifactProfile>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(property0.Value));
+                        dictionary.Add(property0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(property0.Value, options));
                     }
                     artifactProfiles = dictionary;
                     continue;
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceCredentialKubeconfig> array = new List<ApplianceCredentialKubeconfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     Dictionary<string, ApplianceSshKey> dictionary = new Dictionary<string, ApplianceSshKey>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplianceSshKey.DeserializeApplianceSshKey(property0.Value));
+                        dictionary.Add(property0.Name, ApplianceSshKey.DeserializeApplianceSshKey(property0.Value, options));
                     }
                     sshKeys = dictionary;
                     continue;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceClusterUserKeysResult(Optional.ToDictionary(artifactProfiles), Optional.ToList(kubeconfigs), Optional.ToDictionary(sshKeys), serializedAdditionalRawData);
+            return new ApplianceClusterUserKeysResult(artifactProfiles ?? new ChangeTrackingDictionary<string, ApplianceArtifactProfile>(), kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), sshKeys ?? new ChangeTrackingDictionary<string, ApplianceSshKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceClusterUserKeysResult>.Write(ModelReaderWriterOptions options)

@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="containerName"/> or <paramref name="relativeMountPath"/> is null. </exception>
         public BatchBlobFileSystemConfiguration(string accountName, string containerName, string relativeMountPath)
         {
-            Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
+            if (accountName == null)
+            {
+                throw new ArgumentNullException(nameof(accountName));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
+            if (relativeMountPath == null)
+            {
+                throw new ArgumentNullException(nameof(relativeMountPath));
+            }
 
             AccountName = accountName;
             ContainerName = containerName;

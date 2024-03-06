@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -145,16 +146,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<ForecastingModel>> allowedTrainingAlgorithms = default;
-            Optional<IList<ForecastingModel>> blockedTrainingAlgorithms = default;
-            Optional<bool> enableDnnTraining = default;
-            Optional<bool> enableModelExplainability = default;
-            Optional<bool> enableOnnxCompatibleModels = default;
-            Optional<bool> enableStackEnsemble = default;
-            Optional<bool> enableVoteEnsemble = default;
-            Optional<TimeSpan> ensembleModelDownloadTimeout = default;
-            Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
-            Optional<TrainingMode> trainingMode = default;
+            IList<ForecastingModel> allowedTrainingAlgorithms = default;
+            IList<ForecastingModel> blockedTrainingAlgorithms = default;
+            bool? enableDnnTraining = default;
+            bool? enableModelExplainability = default;
+            bool? enableOnnxCompatibleModels = default;
+            bool? enableStackEnsemble = default;
+            bool? enableVoteEnsemble = default;
+            TimeSpan? ensembleModelDownloadTimeout = default;
+            MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
+            TrainingMode? trainingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trainingMode"u8))
@@ -268,7 +269,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastingTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), serializedAdditionalRawData, Optional.ToList(allowedTrainingAlgorithms), Optional.ToList(blockedTrainingAlgorithms));
+            return new ForecastingTrainingSettings(
+                enableDnnTraining,
+                enableModelExplainability,
+                enableOnnxCompatibleModels,
+                enableStackEnsemble,
+                enableVoteEnsemble,
+                ensembleModelDownloadTimeout,
+                stackEnsembleSettings,
+                trainingMode,
+                serializedAdditionalRawData,
+                allowedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>(),
+                blockedTrainingAlgorithms ?? new ChangeTrackingList<ForecastingModel>());
         }
 
         BinaryData IPersistableModel<ForecastingTrainingSettings>.Write(ModelReaderWriterOptions options)

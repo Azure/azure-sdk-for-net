@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -22,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public OracleServiceCloudLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
+            if (host == null)
+            {
+                throw new ArgumentNullException(nameof(host));
+            }
+            if (username == null)
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
 
             Host = host;
             Username = username;

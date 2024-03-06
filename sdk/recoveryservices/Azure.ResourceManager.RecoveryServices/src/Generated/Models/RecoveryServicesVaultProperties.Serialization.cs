@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -144,21 +145,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<VaultUpgradeDetails> upgradeDetails = default;
-            Optional<IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties>> privateEndpointConnections = default;
-            Optional<VaultPrivateEndpointState> privateEndpointStateForBackup = default;
-            Optional<VaultPrivateEndpointState> privateEndpointStateForSiteRecovery = default;
-            Optional<VaultPropertiesEncryption> encryption = default;
-            Optional<VaultPropertiesMoveDetails> moveDetails = default;
-            Optional<ResourceMoveState> moveState = default;
-            Optional<BackupStorageVersion> backupStorageVersion = default;
-            Optional<VaultPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<VaultMonitoringSettings> monitoringSettings = default;
-            Optional<RestoreSettings> restoreSettings = default;
-            Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
-            Optional<RecoveryServicesSecuritySettings> securitySettings = default;
-            Optional<SecureScoreLevel> secureScore = default;
+            string provisioningState = default;
+            VaultUpgradeDetails upgradeDetails = default;
+            IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default;
+            VaultPrivateEndpointState? privateEndpointStateForBackup = default;
+            VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default;
+            VaultPropertiesEncryption encryption = default;
+            VaultPropertiesMoveDetails moveDetails = default;
+            ResourceMoveState? moveState = default;
+            BackupStorageVersion? backupStorageVersion = default;
+            VaultPublicNetworkAccess? publicNetworkAccess = default;
+            VaultMonitoringSettings monitoringSettings = default;
+            RestoreSettings restoreSettings = default;
+            VaultPropertiesRedundancySettings redundancySettings = default;
+            RecoveryServicesSecuritySettings securitySettings = default;
+            SecureScoreLevel? secureScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value);
+                    upgradeDetails = VaultUpgradeDetails.DeserializeVaultUpgradeDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesPrivateEndpointConnectionVaultProperties> array = new List<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item));
+                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value);
+                    encryption = VaultPropertiesEncryption.DeserializeVaultPropertiesEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveDetails"u8))
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value);
+                    moveDetails = VaultPropertiesMoveDetails.DeserializeVaultPropertiesMoveDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("moveState"u8))
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value);
+                    monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restoreSettings"u8))
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value);
+                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("redundancySettings"u8))
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value);
+                    redundancySettings = VaultPropertiesRedundancySettings.DeserializeVaultPropertiesRedundancySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value);
+                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))
@@ -305,7 +306,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore), serializedAdditionalRawData);
+            return new RecoveryServicesVaultProperties(
+                provisioningState,
+                upgradeDetails,
+                privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>(),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                restoreSettings,
+                redundancySettings,
+                securitySettings,
+                secureScore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultProperties>.Write(ModelReaderWriterOptions options)

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,9 +30,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/> or <paramref name="sink"/> is null. </exception>
         public CopyActivity(string name, CopyActivitySource source, CopySink sink) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(sink, nameof(sink));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (sink == null)
+            {
+                throw new ArgumentNullException(nameof(sink));
+            }
 
             Inputs = new ChangeTrackingList<DatasetReference>();
             Outputs = new ChangeTrackingList<DatasetReference>();

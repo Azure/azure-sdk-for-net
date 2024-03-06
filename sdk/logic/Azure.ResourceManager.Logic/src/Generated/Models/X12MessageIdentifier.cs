@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public X12MessageIdentifier(string messageId)
         {
-            Argument.AssertNotNull(messageId, nameof(messageId));
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
 
             MessageId = messageId;
         }

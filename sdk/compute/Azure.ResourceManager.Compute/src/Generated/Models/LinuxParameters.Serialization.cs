@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationForLinux>> classificationsToInclude = default;
-            Optional<IList<string>> packageNameMasksToInclude = default;
-            Optional<IList<string>> packageNameMasksToExclude = default;
-            Optional<string> maintenanceRunId = default;
+            IList<VmGuestPatchClassificationForLinux> classificationsToInclude = default;
+            IList<string> packageNameMasksToInclude = default;
+            IList<string> packageNameMasksToExclude = default;
+            string maintenanceRunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxParameters(Optional.ToList(classificationsToInclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(packageNameMasksToExclude), maintenanceRunId.Value, serializedAdditionalRawData);
+            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxParameters>.Write(ModelReaderWriterOptions options)

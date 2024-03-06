@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string databaseName = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
+            DataShareProvisioningState? provisioningState = default;
             string schemaName = default;
             ResourceIdentifier sqlServerResourceId = default;
             string tableName = default;
@@ -216,7 +217,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBTableDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, databaseName, dataSetId, Optional.ToNullable(dataSetMappingStatus), Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
+            return new SqlDBTableDataSetMapping(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                databaseName,
+                dataSetId,
+                dataSetMappingStatus,
+                provisioningState,
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDBTableDataSetMapping>.Write(ModelReaderWriterOptions options)

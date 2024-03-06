@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string name = default;
             string workloadProfileType = default;
-            Optional<int> minimumCount = default;
-            Optional<int> maximumCount = default;
+            int? minimumCount = default;
+            int? maximumCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount), serializedAdditionalRawData);
+            return new ContainerAppWorkloadProfile(name, workloadProfileType, minimumCount, maximumCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWorkloadProfile>.Write(ModelReaderWriterOptions options)

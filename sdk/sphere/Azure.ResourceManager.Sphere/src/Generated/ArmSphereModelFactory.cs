@@ -30,7 +30,15 @@ namespace Azure.ResourceManager.Sphere.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SphereCatalogData(id, name, resourceType, systemData, tags, location, provisioningState, serializedAdditionalRawData: null);
+            return new SphereCatalogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sphere.SphereCertificateData"/>. </summary>
@@ -48,7 +56,19 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Sphere.SphereCertificateData"/> instance for mocking. </returns>
         public static SphereCertificateData SphereCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string certificate = null, SphereCertificateStatus? status = null, string subject = null, string thumbprint = null, DateTimeOffset? expiryUtc = null, DateTimeOffset? notBeforeUtc = null, SphereProvisioningState? provisioningState = null)
         {
-            return new SphereCertificateData(id, name, resourceType, systemData, certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, serializedAdditionalRawData: null);
+            return new SphereCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SphereCertificateProperties"/>. </summary>
@@ -62,7 +82,15 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Models.SphereCertificateProperties"/> instance for mocking. </returns>
         public static SphereCertificateProperties SphereCertificateProperties(string certificate = null, SphereCertificateStatus? status = null, string subject = null, string thumbprint = null, DateTimeOffset? expiryUtc = null, DateTimeOffset? notBeforeUtc = null, SphereProvisioningState? provisioningState = null)
         {
-            return new SphereCertificateProperties(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, serializedAdditionalRawData: null);
+            return new SphereCertificateProperties(
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SphereCertificateChainResult"/>. </summary>
@@ -84,7 +112,15 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Models.ProofOfPossessionNonceResponse"/> instance for mocking. </returns>
         public static ProofOfPossessionNonceResponse ProofOfPossessionNonceResponse(string certificate = null, SphereCertificateStatus? status = null, string subject = null, string thumbprint = null, DateTimeOffset? expiryUtc = null, DateTimeOffset? notBeforeUtc = null, SphereProvisioningState? provisioningState = null)
         {
-            return new ProofOfPossessionNonceResponse(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, serializedAdditionalRawData: null);
+            return new ProofOfPossessionNonceResponse(
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CountDeviceResult"/>. </summary>
@@ -120,7 +156,21 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Sphere.SphereImageData"/> instance for mocking. </returns>
         public static SphereImageData SphereImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string image = null, string imageId = null, string imageName = null, RegionalDataBoundary? regionalDataBoundary = null, Uri uri = null, string description = null, string componentId = null, SphereImageType? imageType = null, SphereProvisioningState? provisioningState = null)
         {
-            return new SphereImageData(id, name, resourceType, systemData, image, imageId, imageName, regionalDataBoundary, uri, description, componentId, imageType, provisioningState, serializedAdditionalRawData: null);
+            return new SphereImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                image,
+                imageId,
+                imageName,
+                regionalDataBoundary,
+                uri,
+                description,
+                componentId,
+                imageType,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeploymentData"/>. </summary>
@@ -137,7 +187,16 @@ namespace Azure.ResourceManager.Sphere.Models
         {
             deployedImages ??= new List<SphereImageData>();
 
-            return new SphereDeploymentData(id, name, resourceType, systemData, deploymentId, deployedImages?.ToList(), deploymentDateUtc, provisioningState, serializedAdditionalRawData: null);
+            return new SphereDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                deploymentId,
+                deployedImages?.ToList(),
+                deploymentDateUtc,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeviceGroupData"/>. </summary>
@@ -155,7 +214,19 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Sphere.SphereDeviceGroupData"/> instance for mocking. </returns>
         public static SphereDeviceGroupData SphereDeviceGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, SphereOSFeedType? osFeedType = null, SphereUpdatePolicy? updatePolicy = null, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = null, RegionalDataBoundary? regionalDataBoundary = null, bool? hasDeployment = null, SphereProvisioningState? provisioningState = null)
         {
-            return new SphereDeviceGroupData(id, name, resourceType, systemData, description, osFeedType, updatePolicy, allowCrashDumpsCollection, regionalDataBoundary, hasDeployment, provisioningState, serializedAdditionalRawData: null);
+            return new SphereDeviceGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                osFeedType,
+                updatePolicy,
+                allowCrashDumpsCollection,
+                regionalDataBoundary,
+                hasDeployment,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SphereDeviceInsight"/>. </summary>
@@ -170,7 +241,16 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Models.SphereDeviceInsight"/> instance for mocking. </returns>
         public static SphereDeviceInsight SphereDeviceInsight(string deviceId = null, string description = null, DateTimeOffset startTimestampUtc = default, DateTimeOffset endTimestampUtc = default, string eventCategory = null, string eventClass = null, string eventType = null, int eventCount = default)
         {
-            return new SphereDeviceInsight(deviceId, description, startTimestampUtc, endTimestampUtc, eventCategory, eventClass, eventType, eventCount, serializedAdditionalRawData: null);
+            return new SphereDeviceInsight(
+                deviceId,
+                description,
+                startTimestampUtc,
+                endTimestampUtc,
+                eventCategory,
+                eventClass,
+                eventType,
+                eventCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeviceData"/>. </summary>
@@ -188,7 +268,19 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Sphere.SphereDeviceData"/> instance for mocking. </returns>
         public static SphereDeviceData SphereDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deviceId = null, string chipSku = null, string lastAvailableOSVersion = null, string lastInstalledOSVersion = null, DateTimeOffset? lastOSUpdateUtc = null, DateTimeOffset? lastUpdateRequestUtc = null, SphereProvisioningState? provisioningState = null)
         {
-            return new SphereDeviceData(id, name, resourceType, systemData, deviceId, chipSku, lastAvailableOSVersion, lastInstalledOSVersion, lastOSUpdateUtc, lastUpdateRequestUtc, provisioningState, serializedAdditionalRawData: null);
+            return new SphereDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                deviceId,
+                chipSku,
+                lastAvailableOSVersion,
+                lastInstalledOSVersion,
+                lastOSUpdateUtc,
+                lastUpdateRequestUtc,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sphere.SphereProductData"/>. </summary>
@@ -201,7 +293,14 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <returns> A new <see cref="Sphere.SphereProductData"/> instance for mocking. </returns>
         public static SphereProductData SphereProductData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, SphereProvisioningState? provisioningState = null)
         {
-            return new SphereProductData(id, name, resourceType, systemData, description, provisioningState, serializedAdditionalRawData: null);
+            return new SphereProductData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignedCapabilityImageResponse"/>. </summary>

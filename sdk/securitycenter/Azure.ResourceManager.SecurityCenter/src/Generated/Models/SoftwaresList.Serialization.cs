@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SoftwareInventoryData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SoftwareInventoryData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SoftwareInventoryData> array = new List<SoftwareInventoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item));
+                        array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwaresList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SoftwaresList(value ?? new ChangeTrackingList<SoftwareInventoryData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwaresList>.Write(ModelReaderWriterOptions options)

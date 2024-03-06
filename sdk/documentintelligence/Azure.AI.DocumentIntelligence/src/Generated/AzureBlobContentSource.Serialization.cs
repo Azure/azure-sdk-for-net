@@ -73,7 +73,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             Uri containerUrl = default;
-            Optional<string> prefix = default;
+            string prefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBlobContentSource(containerUrl, prefix.Value, serializedAdditionalRawData);
+            return new AzureBlobContentSource(containerUrl, prefix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureBlobContentSource>.Write(ModelReaderWriterOptions options)

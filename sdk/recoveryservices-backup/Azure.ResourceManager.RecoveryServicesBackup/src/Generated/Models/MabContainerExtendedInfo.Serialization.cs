@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<BackupItemType> backupItemType = default;
-            Optional<IList<string>> backupItems = default;
-            Optional<string> policyName = default;
-            Optional<string> lastBackupStatus = default;
+            DateTimeOffset? lastRefreshedAt = default;
+            BackupItemType? backupItemType = default;
+            IList<string> backupItems = default;
+            string policyName = default;
+            string lastBackupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(backupItemType), Optional.ToList(backupItems), policyName.Value, lastBackupStatus.Value, serializedAdditionalRawData);
+            return new MabContainerExtendedInfo(
+                lastRefreshedAt,
+                backupItemType,
+                backupItems ?? new ChangeTrackingList<string>(),
+                policyName,
+                lastBackupStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

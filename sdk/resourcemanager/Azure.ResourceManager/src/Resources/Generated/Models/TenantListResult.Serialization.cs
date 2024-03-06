@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TenantData>> value = default;
+            IReadOnlyList<TenantData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TenantData> array = new List<TenantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantData.DeserializeTenantData(item));
+                        array.Add(TenantData.DeserializeTenantData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantListResult(Optional.ToList(value), nextLink, serializedAdditionalRawData);
+            return new TenantListResult(value ?? new ChangeTrackingList<TenantData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantListResult>.Write(ModelReaderWriterOptions options)

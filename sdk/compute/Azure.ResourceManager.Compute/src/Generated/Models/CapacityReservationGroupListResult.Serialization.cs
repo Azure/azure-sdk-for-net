@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<CapacityReservationGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CapacityReservationGroupData> array = new List<CapacityReservationGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityReservationGroupData.DeserializeCapacityReservationGroupData(item));
+                        array.Add(CapacityReservationGroupData.DeserializeCapacityReservationGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new CapacityReservationGroupListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupListResult>.Write(ModelReaderWriterOptions options)

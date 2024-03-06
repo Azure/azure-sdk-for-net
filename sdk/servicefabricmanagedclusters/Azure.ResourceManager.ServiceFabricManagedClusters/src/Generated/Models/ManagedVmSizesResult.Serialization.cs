@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedUnsupportedVmSize> array = new List<ServiceFabricManagedUnsupportedVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(item));
+                        array.Add(ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedVmSizesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedVmSizesResult(value ?? new ChangeTrackingList<ServiceFabricManagedUnsupportedVmSize>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedVmSizesResult>.Write(ModelReaderWriterOptions options)

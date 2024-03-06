@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCenterApiCollectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityCenterApiCollectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterApiCollectionData> array = new List<SecurityCenterApiCollectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(item));
+                        array.Add(SecurityCenterApiCollectionData.DeserializeSecurityCenterApiCollectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCollectionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApiCollectionList(value ?? new ChangeTrackingList<SecurityCenterApiCollectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCollectionList>.Write(ModelReaderWriterOptions options)

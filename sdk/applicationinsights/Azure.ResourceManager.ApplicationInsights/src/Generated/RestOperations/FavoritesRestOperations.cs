@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 uri.AppendQuery("canFetchContent", canFetchContent.Value, true);
             }
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }
@@ -88,9 +88,30 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<ApplicationInsightsComponentFavorite>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, favoriteType, sourceType, canFetchContent, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -126,9 +147,30 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<ApplicationInsightsComponentFavorite>> List(string subscriptionId, string resourceGroupName, string resourceName, FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, favoriteType, sourceType, canFetchContent, tags);
             _pipeline.Send(message, cancellationToken);
@@ -183,10 +225,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentFavorite>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -214,10 +284,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentFavorite> Get(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
             _pipeline.Send(message, cancellationToken);
@@ -272,11 +370,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentFavorite>> AddAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var message = CreateAddRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -305,11 +434,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentFavorite> Add(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var message = CreateAddRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
             _pipeline.Send(message, cancellationToken);
@@ -364,11 +524,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentFavorite>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -397,11 +588,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentFavorite> Update(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
+            if (favoriteProperties == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteProperties));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
             _pipeline.Send(message, cancellationToken);
@@ -450,10 +672,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -476,10 +726,38 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (resourceName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceName));
+            }
+            if (resourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
+            }
+            if (favoriteId == null)
+            {
+                throw new ArgumentNullException(nameof(favoriteId));
+            }
+            if (favoriteId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(favoriteId));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
             _pipeline.Send(message, cancellationToken);

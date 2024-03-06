@@ -286,7 +286,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DscNodeResource>> UpdateAsync(DscNodePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DscNodeResource> Update(DscNodePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _dscNodeClientDiagnostics.CreateScope("DscNodeResource.Update");
             scope.Start();
@@ -421,7 +427,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual async Task<Response<DscNodeReport>> GetNodeReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+            if (reportId == null)
+            {
+                throw new ArgumentNullException(nameof(reportId));
+            }
+            if (reportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
+            }
 
             using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetNodeReport");
             scope.Start();
@@ -460,7 +473,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual Response<DscNodeReport> GetNodeReport(string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+            if (reportId == null)
+            {
+                throw new ArgumentNullException(nameof(reportId));
+            }
+            if (reportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
+            }
 
             using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetNodeReport");
             scope.Start();
@@ -499,7 +519,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual async Task<Response<BinaryData>> GetContentNodeReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+            if (reportId == null)
+            {
+                throw new ArgumentNullException(nameof(reportId));
+            }
+            if (reportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
+            }
 
             using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetContentNodeReport");
             scope.Start();
@@ -538,7 +565,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual Response<BinaryData> GetContentNodeReport(string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+            if (reportId == null)
+            {
+                throw new ArgumentNullException(nameof(reportId));
+            }
+            if (reportId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
+            }
 
             using var scope = _nodeReportsClientDiagnostics.CreateScope("DscNodeResource.GetContentNodeReport");
             scope.Start();

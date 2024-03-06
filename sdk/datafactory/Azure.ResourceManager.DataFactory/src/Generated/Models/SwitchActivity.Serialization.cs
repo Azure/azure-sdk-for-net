@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -127,14 +128,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryExpression @on = default;
-            Optional<IList<SwitchCaseActivity>> cases = default;
-            Optional<IList<PipelineActivity>> defaultActivities = default;
+            IList<SwitchCaseActivity> cases = default;
+            IList<PipelineActivity> defaultActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("on"u8))
                         {
-                            @on = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value);
+                            @on = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cases"u8))
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SwitchCaseActivity> array = new List<SwitchCaseActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item));
+                                array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item, options));
                             }
                             cases = array;
                             continue;
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializePipelineActivity(item, options));
                             }
                             defaultActivities = array;
                             continue;
@@ -248,7 +249,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SwitchActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, @on, Optional.ToList(cases), Optional.ToList(defaultActivities));
+            return new SwitchActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                @on,
+                cases ?? new ChangeTrackingList<SwitchCaseActivity>(),
+                defaultActivities ?? new ChangeTrackingList<PipelineActivity>());
         }
 
         BinaryData IPersistableModel<SwitchActivity>.Write(ModelReaderWriterOptions options)

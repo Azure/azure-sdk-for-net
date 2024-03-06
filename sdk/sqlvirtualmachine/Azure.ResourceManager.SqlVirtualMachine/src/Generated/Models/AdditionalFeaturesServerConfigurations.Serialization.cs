@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> isRServicesEnabled = default;
+            bool? isRServicesEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalFeaturesServerConfigurations(Optional.ToNullable(isRServicesEnabled), serializedAdditionalRawData);
+            return new AdditionalFeaturesServerConfigurations(isRServicesEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalFeaturesServerConfigurations>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<HciClusterRawCertificate> properties = default;
+            HciClusterRawCertificate properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = HciClusterRawCertificate.DeserializeHciClusterRawCertificate(property.Value);
+                    properties = HciClusterRawCertificate.DeserializeHciClusterRawCertificate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterCertificateContent(properties.Value, serializedAdditionalRawData);
+            return new HciClusterCertificateContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterCertificateContent>.Write(ModelReaderWriterOptions options)

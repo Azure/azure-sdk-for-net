@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -151,22 +152,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<long> durationInSeconds = default;
-            Optional<MigrationStatus> status = default;
-            Optional<string> statusMessage = default;
-            Optional<string> message = default;
-            Optional<string> databases = default;
-            Optional<string> databaseSummary = default;
-            Optional<MigrationValidationResult> migrationValidationResult = default;
-            Optional<MigrationReportResult> migrationReportResult = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            long? durationInSeconds = default;
+            MigrationStatus? status = default;
+            string statusMessage = default;
+            string message = default;
+            string databases = default;
+            string databaseSummary = default;
+            MigrationValidationResult migrationValidationResult = default;
+            MigrationReportResult migrationReportResult = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationValidationResult = MigrationValidationResult.DeserializeMigrationValidationResult(property.Value);
+                    migrationValidationResult = MigrationValidationResult.DeserializeMigrationValidationResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("migrationReportResult"u8))
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationReportResult = MigrationReportResult.DeserializeMigrationReportResult(property.Value);
+                    migrationReportResult = MigrationReportResult.DeserializeMigrationReportResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceServerVersion"u8))
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -296,7 +297,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(durationInSeconds), Optional.ToNullable(status), statusMessage.Value, message.Value, databases.Value, databaseSummary.Value, migrationValidationResult.Value, migrationReportResult.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                startedOn,
+                endedOn,
+                durationInSeconds,
+                status,
+                statusMessage,
+                message,
+                databases,
+                databaseSummary,
+                migrationValidationResult,
+                migrationReportResult,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> modifiedPath = default;
-            Optional<string> modifiedQueryString = default;
-            Optional<bool> reroute = default;
+            string modifiedPath = default;
+            string modifiedQueryString = default;
+            bool? reroute = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayUrlConfiguration(modifiedPath.Value, modifiedQueryString.Value, Optional.ToNullable(reroute), serializedAdditionalRawData);
+            return new ApplicationGatewayUrlConfiguration(modifiedPath, modifiedQueryString, reroute, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayUrlConfiguration>.Write(ModelReaderWriterOptions options)

@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterMonitoringPolicy(healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, serializedAdditionalRawData);
+            return new ManagedClusterMonitoringPolicy(
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterMonitoringPolicy>.Write(ModelReaderWriterOptions options)

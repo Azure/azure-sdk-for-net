@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -20,7 +20,10 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobHierarchyListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
-            Argument.AssertNotNull(blobItems, nameof(blobItems));
+            if (blobItems == null)
+            {
+                throw new ArgumentNullException(nameof(blobItems));
+            }
 
             BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
             BlobItems = blobItems.ToList();

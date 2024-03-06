@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> minValue = default;
-            Optional<int> maxValue = default;
-            Optional<int> stepSize = default;
-            Optional<int> @default = default;
-            Optional<PauseDelayTimeUnit> unit = default;
-            Optional<int> doNotPauseValue = default;
+            int? minValue = default;
+            int? maxValue = default;
+            int? stepSize = default;
+            int? @default = default;
+            PauseDelayTimeUnit? unit = default;
+            int? doNotPauseValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoPauseDelayTimeRange(Optional.ToNullable(minValue), Optional.ToNullable(maxValue), Optional.ToNullable(stepSize), Optional.ToNullable(@default), Optional.ToNullable(unit), Optional.ToNullable(doNotPauseValue), serializedAdditionalRawData);
+            return new AutoPauseDelayTimeRange(
+                minValue,
+                maxValue,
+                stepSize,
+                @default,
+                unit,
+                doNotPauseValue,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoPauseDelayTimeRange>.Write(ModelReaderWriterOptions options)

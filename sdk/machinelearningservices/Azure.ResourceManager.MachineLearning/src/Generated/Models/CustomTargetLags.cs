@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public CustomTargetLags(IEnumerable<int> values)
         {
-            Argument.AssertNotNull(values, nameof(values));
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
 
             Values = values.ToList();
             Mode = TargetLagsMode.Custom;

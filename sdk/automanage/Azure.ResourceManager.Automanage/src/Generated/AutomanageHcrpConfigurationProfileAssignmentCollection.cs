@@ -87,8 +87,18 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationProfileAssignmentName, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -136,8 +146,18 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomanageHcrpConfigurationProfileAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string configurationProfileAssignmentName, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -183,7 +203,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         public virtual async Task<Response<AutomanageHcrpConfigurationProfileAssignmentResource>> GetAsync(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.Get");
             scope.Start();
@@ -228,7 +255,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         public virtual Response<AutomanageHcrpConfigurationProfileAssignmentResource> Get(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomanageHcrpConfigurationProfileAssignmentResource>> GetIfExistsAsync(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         public virtual NullableResponse<AutomanageHcrpConfigurationProfileAssignmentResource> GetIfExists(string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            if (configurationProfileAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
+            }
+            if (configurationProfileAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
+            }
 
             using var scope = _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsClientDiagnostics.CreateScope("AutomanageHcrpConfigurationProfileAssignmentCollection.GetIfExists");
             scope.Start();

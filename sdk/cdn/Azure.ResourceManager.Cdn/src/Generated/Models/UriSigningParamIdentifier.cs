@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="paramName"/> is null. </exception>
         public UriSigningParamIdentifier(ParamIndicator paramIndicator, string paramName)
         {
-            Argument.AssertNotNull(paramName, nameof(paramName));
+            if (paramName == null)
+            {
+                throw new ArgumentNullException(nameof(paramName));
+            }
 
             ParamIndicator = paramIndicator;
             ParamName = paramName;

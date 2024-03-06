@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StreamAnalyticsClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsClusterData> array = new List<StreamAnalyticsClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(item));
+                        array.Add(StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsClusterListResult(value ?? new ChangeTrackingList<StreamAnalyticsClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsClusterListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -204,27 +205,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraProvisioningState> provisioningState = default;
-            Optional<string> restoreFromBackupId = default;
-            Optional<ResourceIdentifier> delegatedManagementSubnetId = default;
-            Optional<string> cassandraVersion = default;
-            Optional<string> clusterNameOverride = default;
-            Optional<CassandraAuthenticationMethod> authenticationMethod = default;
-            Optional<string> initialCassandraAdminPassword = default;
-            Optional<CassandraDataCenterSeedNode> prometheusEndpoint = default;
-            Optional<bool> repairEnabled = default;
-            Optional<IList<CassandraCertificate>> clientCertificates = default;
-            Optional<IList<CassandraCertificate>> externalGossipCertificates = default;
-            Optional<IReadOnlyList<CassandraCertificate>> gossipCertificates = default;
-            Optional<IList<CassandraDataCenterSeedNode>> externalSeedNodes = default;
-            Optional<IReadOnlyList<CassandraDataCenterSeedNode>> seedNodes = default;
-            Optional<int> hoursBetweenBackups = default;
-            Optional<bool> deallocated = default;
-            Optional<bool> cassandraAuditLoggingEnabled = default;
-            Optional<CassandraClusterType> clusterType = default;
-            Optional<CassandraError> provisionError = default;
-            Optional<IList<string>> extensions = default;
-            Optional<IList<CassandraClusterBackupSchedule>> backupSchedules = default;
+            CassandraProvisioningState? provisioningState = default;
+            string restoreFromBackupId = default;
+            ResourceIdentifier delegatedManagementSubnetId = default;
+            string cassandraVersion = default;
+            string clusterNameOverride = default;
+            CassandraAuthenticationMethod? authenticationMethod = default;
+            string initialCassandraAdminPassword = default;
+            CassandraDataCenterSeedNode prometheusEndpoint = default;
+            bool? repairEnabled = default;
+            IList<CassandraCertificate> clientCertificates = default;
+            IList<CassandraCertificate> externalGossipCertificates = default;
+            IReadOnlyList<CassandraCertificate> gossipCertificates = default;
+            IList<CassandraDataCenterSeedNode> externalSeedNodes = default;
+            IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
+            int? hoursBetweenBackups = default;
+            bool? deallocated = default;
+            bool? cassandraAuditLoggingEnabled = default;
+            CassandraClusterType? clusterType = default;
+            CassandraError provisionError = default;
+            IList<string> extensions = default;
+            IList<CassandraClusterBackupSchedule> backupSchedules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(property.Value);
+                    prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("repairEnabled"u8))
@@ -303,7 +304,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
+                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     clientCertificates = array;
                     continue;
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
+                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     externalGossipCertificates = array;
                     continue;
@@ -331,7 +332,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
+                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     gossipCertificates = array;
                     continue;
@@ -345,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item));
+                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item, options));
                     }
                     externalSeedNodes = array;
                     continue;
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item));
+                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item, options));
                     }
                     seedNodes = array;
                     continue;
@@ -406,7 +407,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    provisionError = CassandraError.DeserializeCassandraError(property.Value);
+                    provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -432,7 +433,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterBackupSchedule> array = new List<CassandraClusterBackupSchedule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterBackupSchedule.DeserializeCassandraClusterBackupSchedule(item));
+                        array.Add(CassandraClusterBackupSchedule.DeserializeCassandraClusterBackupSchedule(item, options));
                     }
                     backupSchedules = array;
                     continue;
@@ -443,7 +444,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), Optional.ToNullable(clusterType), provisionError.Value, Optional.ToList(extensions), Optional.ToList(backupSchedules), serializedAdditionalRawData);
+            return new CassandraClusterProperties(
+                provisioningState,
+                restoreFromBackupId,
+                delegatedManagementSubnetId,
+                cassandraVersion,
+                clusterNameOverride,
+                authenticationMethod,
+                initialCassandraAdminPassword,
+                prometheusEndpoint,
+                repairEnabled,
+                clientCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                externalGossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                gossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                externalSeedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
+                seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
+                hoursBetweenBackups,
+                deallocated,
+                cassandraAuditLoggingEnabled,
+                clusterType,
+                provisionError,
+                extensions ?? new ChangeTrackingList<string>(),
+                backupSchedules ?? new ChangeTrackingList<CassandraClusterBackupSchedule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterProperties>.Write(ModelReaderWriterOptions options)

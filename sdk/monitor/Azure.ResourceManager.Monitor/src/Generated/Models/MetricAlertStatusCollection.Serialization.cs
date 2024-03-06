@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricAlertStatus>> value = default;
+            IReadOnlyList<MetricAlertStatus> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricAlertStatus> array = new List<MetricAlertStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item));
+                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertStatusCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new MetricAlertStatusCollection(value ?? new ChangeTrackingList<MetricAlertStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertStatusCollection>.Write(ModelReaderWriterOptions options)

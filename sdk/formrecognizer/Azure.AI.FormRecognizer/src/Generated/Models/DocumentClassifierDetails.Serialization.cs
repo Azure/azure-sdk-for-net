@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string classifierId = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             string apiVersion = default;
             IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +68,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion, docTypes);
+            return new DocumentClassifierDetails(
+                classifierId,
+                description,
+                createdDateTime,
+                expirationDateTime,
+                apiVersion,
+                docTypes);
         }
     }
 }

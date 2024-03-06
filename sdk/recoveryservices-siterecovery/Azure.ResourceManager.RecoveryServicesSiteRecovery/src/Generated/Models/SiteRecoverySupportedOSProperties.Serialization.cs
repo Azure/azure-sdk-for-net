@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoverySupportedOSProperty>> supportedOSList = default;
+            IReadOnlyList<SiteRecoverySupportedOSProperty> supportedOSList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySupportedOSProperty> array = new List<SiteRecoverySupportedOSProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item));
+                        array.Add(SiteRecoverySupportedOSProperty.DeserializeSiteRecoverySupportedOSProperty(item, options));
                     }
                     supportedOSList = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoverySupportedOSProperties(Optional.ToList(supportedOSList), serializedAdditionalRawData);
+            return new SiteRecoverySupportedOSProperties(supportedOSList ?? new ChangeTrackingList<SiteRecoverySupportedOSProperty>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoverySupportedOSProperties>.Write(ModelReaderWriterOptions options)

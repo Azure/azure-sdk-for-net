@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<string> customWindow = default;
-            Optional<int> startHour = default;
-            Optional<int> startMinute = default;
-            Optional<int> dayOfWeek = default;
+            string customWindow = default;
+            int? startHour = default;
+            int? startMinute = default;
+            int? dayOfWeek = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow, startHour, startMinute, dayOfWeek, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>.Write(ModelReaderWriterOptions options)

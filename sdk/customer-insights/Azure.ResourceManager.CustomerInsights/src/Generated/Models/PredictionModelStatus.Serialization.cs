@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -116,17 +117,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> predictionName = default;
-            Optional<string> predictionGuidId = default;
+            Guid? tenantId = default;
+            string predictionName = default;
+            string predictionGuidId = default;
             PredictionModelLifeCycle status = default;
-            Optional<string> message = default;
-            Optional<int> trainingSetCount = default;
-            Optional<int> testSetCount = default;
-            Optional<int> validationSetCount = default;
-            Optional<decimal> trainingAccuracy = default;
-            Optional<int> signalsUsed = default;
-            Optional<string> modelVersion = default;
+            string message = default;
+            int? trainingSetCount = default;
+            int? testSetCount = default;
+            int? validationSetCount = default;
+            decimal? trainingAccuracy = default;
+            int? signalsUsed = default;
+            string modelVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +217,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value, serializedAdditionalRawData);
+            return new PredictionModelStatus(
+                tenantId,
+                predictionName,
+                predictionGuidId,
+                status,
+                message,
+                trainingSetCount,
+                testSetCount,
+                validationSetCount,
+                trainingAccuracy,
+                signalsUsed,
+                modelVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionModelStatus>.Write(ModelReaderWriterOptions options)

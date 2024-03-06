@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<string> serialNumber = default;
-            Optional<string> thumbprint = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<DateTimeOffset> notAfter = default;
-            Optional<string> signatureAlgorithm = default;
-            Optional<string> issuer = default;
-            Optional<string> rawData = default;
+            int? version = default;
+            string serialNumber = default;
+            string thumbprint = default;
+            string subject = default;
+            DateTimeOffset? notBefore = default;
+            DateTimeOffset? notAfter = default;
+            string signatureAlgorithm = default;
+            string issuer = default;
+            string rawData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +186,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateDetails(
+                version,
+                serialNumber,
+                thumbprint,
+                subject,
+                notBefore,
+                notAfter,
+                signatureAlgorithm,
+                issuer,
+                rawData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateDetails>.Write(ModelReaderWriterOptions options)

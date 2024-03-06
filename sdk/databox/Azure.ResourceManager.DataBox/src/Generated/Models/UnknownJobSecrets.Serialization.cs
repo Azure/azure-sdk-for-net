@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobSecrets(document.RootElement, options);
+            return DeserializeJobSecrets(document.RootElement, options);
         }
 
         internal static UnknownJobSecrets DeserializeUnknownJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
@@ -78,8 +79,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData);
+            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobSecrets>.Write(ModelReaderWriterOptions options)
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobSecrets(document.RootElement, options);
+                        return DeserializeJobSecrets(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(JobSecrets)} does not support '{options.Format}' format.");

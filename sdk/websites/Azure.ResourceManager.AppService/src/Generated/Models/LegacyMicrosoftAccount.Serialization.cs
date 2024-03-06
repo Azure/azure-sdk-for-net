@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ClientRegistration> registration = default;
-            Optional<LoginScopes> login = default;
-            Optional<AllowedAudiencesValidation> validation = default;
+            bool? enabled = default;
+            ClientRegistration registration = default;
+            LoginScopes login = default;
+            AllowedAudiencesValidation validation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = ClientRegistration.DeserializeClientRegistration(property.Value);
+                    registration = ClientRegistration.DeserializeClientRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
+                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value);
+                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegacyMicrosoftAccount(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, serializedAdditionalRawData);
+            return new LegacyMicrosoftAccount(enabled, registration, login, validation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegacyMicrosoftAccount>.Write(ModelReaderWriterOptions options)

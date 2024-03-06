@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoResourceSkuCapabilities(name.Value, value.Value, serializedAdditionalRawData);
+            return new KustoResourceSkuCapabilities(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoResourceSkuCapabilities>.Write(ModelReaderWriterOptions options)

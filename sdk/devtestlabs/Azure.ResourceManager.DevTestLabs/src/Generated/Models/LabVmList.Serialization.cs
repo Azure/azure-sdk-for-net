@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabVmData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevTestLabVmData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabVmData> array = new List<DevTestLabVmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabVmData.DeserializeDevTestLabVmData(item));
+                        array.Add(DevTestLabVmData.DeserializeDevTestLabVmData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVmList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LabVmList(value ?? new ChangeTrackingList<DevTestLabVmData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVmList>.Write(ModelReaderWriterOptions options)

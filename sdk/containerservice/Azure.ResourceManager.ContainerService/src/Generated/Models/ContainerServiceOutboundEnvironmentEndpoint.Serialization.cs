@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<ContainerServiceEndpointDependency>> endpoints = default;
+            string category = default;
+            IReadOnlyList<ContainerServiceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceEndpointDependency> array = new List<ContainerServiceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceEndpointDependency.DeserializeContainerServiceEndpointDependency(item));
+                        array.Add(ContainerServiceEndpointDependency.DeserializeContainerServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new ContainerServiceOutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<ContainerServiceEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)

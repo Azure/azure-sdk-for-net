@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -88,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> publisherUri = default;
+            Uri publisherUri = default;
             string publisherContact = default;
-            Optional<string> eula = default;
+            string eula = default;
             IReadOnlyList<string> publicNames = default;
-            Optional<Uri> privacyStatementUri = default;
+            Uri privacyStatementUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryMetadata(publisherUri.Value, publisherContact, eula.Value, publicNames, privacyStatementUri.Value, serializedAdditionalRawData);
+            return new CommunityGalleryMetadata(
+                publisherUri,
+                publisherContact,
+                eula,
+                publicNames,
+                privacyStatementUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunityGalleryMetadata>.Write(ModelReaderWriterOptions options)

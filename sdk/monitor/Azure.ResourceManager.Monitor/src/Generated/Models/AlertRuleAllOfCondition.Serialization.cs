@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ActivityLogAlertAnyOfOrLeafCondition> array = new List<ActivityLogAlertAnyOfOrLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertAnyOfOrLeafCondition.DeserializeActivityLogAlertAnyOfOrLeafCondition(item));
+                        array.Add(ActivityLogAlertAnyOfOrLeafCondition.DeserializeActivityLogAlertAnyOfOrLeafCondition(item, options));
                     }
                     allOf = array;
                     continue;

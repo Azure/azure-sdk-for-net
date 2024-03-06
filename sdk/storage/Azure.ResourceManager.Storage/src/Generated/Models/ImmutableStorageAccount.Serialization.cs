@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AccountImmutabilityPolicy> immutabilityPolicy = default;
+            bool? enabled = default;
+            AccountImmutabilityPolicy immutabilityPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value);
+                    immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImmutableStorageAccount(Optional.ToNullable(enabled), immutabilityPolicy.Value, serializedAdditionalRawData);
+            return new ImmutableStorageAccount(enabled, immutabilityPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImmutableStorageAccount>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<bool> sendAadLogs = default;
-            Optional<bool> sendSubscriptionLogs = default;
-            Optional<bool> sendResourceLogs = default;
-            Optional<IList<FilteringTag>> filteringTags = default;
+            bool? sendAadLogs = default;
+            bool? sendSubscriptionLogs = default;
+            bool? sendResourceLogs = default;
+            IList<FilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<FilteringTag> array = new List<FilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        array.Add(FilteringTag.DeserializeFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendResourceLogs), Optional.ToList(filteringTags), serializedAdditionalRawData);
+            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendResourceLogs, filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogRules>.Write(ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string name = default;
-            Optional<string> value = default;
+            string value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -46,7 +47,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ParameterDefinition(name, value.Value);
+            return new ParameterDefinition(name, value);
         }
     }
 }

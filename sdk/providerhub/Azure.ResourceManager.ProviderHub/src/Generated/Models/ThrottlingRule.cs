@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="metrics"/> is null. </exception>
         public ThrottlingRule(string action, IEnumerable<ThrottlingMetric> metrics)
         {
-            Argument.AssertNotNull(action, nameof(action));
-            Argument.AssertNotNull(metrics, nameof(metrics));
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             Action = action;
             Metrics = metrics.ToList();

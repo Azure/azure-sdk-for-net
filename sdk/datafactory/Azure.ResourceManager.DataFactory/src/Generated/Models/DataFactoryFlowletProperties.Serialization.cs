@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -147,14 +148,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            Optional<IList<DataFlowSource>> sources = default;
-            Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<DataFlowTransformation>> transformations = default;
-            Optional<string> script = default;
-            Optional<IList<string>> scriptLines = default;
+            string description = default;
+            IList<BinaryData> annotations = default;
+            DataFlowFolder folder = default;
+            IList<DataFlowSource> sources = default;
+            IList<DataFlowSink> sinks = default;
+            IList<DataFlowTransformation> transformations = default;
+            string script = default;
+            IList<string> scriptLines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSource> array = new List<DataFlowSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSource.DeserializeDataFlowSource(item));
+                                array.Add(DataFlowSource.DeserializeDataFlowSource(item, options));
                             }
                             sources = array;
                             continue;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSink> array = new List<DataFlowSink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSink.DeserializeDataFlowSink(item));
+                                array.Add(DataFlowSink.DeserializeDataFlowSink(item, options));
                             }
                             sinks = array;
                             continue;
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowTransformation> array = new List<DataFlowTransformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item));
+                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item, options));
                             }
                             transformations = array;
                             continue;
@@ -278,7 +279,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryFlowletProperties(type, description.Value, Optional.ToList(annotations), folder.Value, serializedAdditionalRawData, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            return new DataFactoryFlowletProperties(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                serializedAdditionalRawData,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<DataFlowTransformation>(),
+                script,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DataFactoryFlowletProperties>.Write(ModelReaderWriterOptions options)

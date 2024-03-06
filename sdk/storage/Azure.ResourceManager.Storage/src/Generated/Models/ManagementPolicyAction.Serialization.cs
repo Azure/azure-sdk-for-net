@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<ManagementPolicyBaseBlob> baseBlob = default;
-            Optional<ManagementPolicySnapShot> snapshot = default;
-            Optional<ManagementPolicyVersion> version = default;
+            ManagementPolicyBaseBlob baseBlob = default;
+            ManagementPolicySnapShot snapshot = default;
+            ManagementPolicyVersion version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value);
+                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value);
+                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value);
+                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyAction(baseBlob.Value, snapshot.Value, version.Value, serializedAdditionalRawData);
+            return new ManagementPolicyAction(baseBlob, snapshot, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyAction>.Write(ModelReaderWriterOptions options)

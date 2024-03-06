@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="managementEndpoints"/> is null. </exception>
         public BackendServiceFabricClusterProperties(IEnumerable<string> managementEndpoints)
         {
-            Argument.AssertNotNull(managementEndpoints, nameof(managementEndpoints));
+            if (managementEndpoints == null)
+            {
+                throw new ArgumentNullException(nameof(managementEndpoints));
+            }
 
             ManagementEndpoints = managementEndpoints.ToList();
             ServerCertificateThumbprints = new ChangeTrackingList<string>();

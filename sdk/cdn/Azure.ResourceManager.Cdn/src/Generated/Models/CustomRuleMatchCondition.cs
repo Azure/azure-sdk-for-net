@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchValue"/> is null. </exception>
         public CustomRuleMatchCondition(WafMatchVariable matchVariable, MatchOperator matchOperator, IEnumerable<string> matchValue)
         {
-            Argument.AssertNotNull(matchValue, nameof(matchValue));
+            if (matchValue == null)
+            {
+                throw new ArgumentNullException(nameof(matchValue));
+            }
 
             MatchVariable = matchVariable;
             MatchOperator = matchOperator;

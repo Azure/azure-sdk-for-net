@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             int maxThroughput = default;
-            Optional<AutoUpgradePolicyResourceInfo> autoUpgradePolicy = default;
-            Optional<int> targetMaxThroughput = default;
+            AutoUpgradePolicyResourceInfo autoUpgradePolicy = default;
+            int? targetMaxThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value);
+                    autoUpgradePolicy = AutoUpgradePolicyResourceInfo.DeserializeAutoUpgradePolicyResourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetMaxThroughput"u8))
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy.Value, Optional.ToNullable(targetMaxThroughput), serializedAdditionalRawData);
+            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradePolicy, targetMaxThroughput, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingsResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedCcfData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedCcfData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ManagedCcfData> array = new List<ManagedCcfData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
+                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCcfList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedCcfList(value ?? new ChangeTrackingList<ManagedCcfData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCcfList>.Write(ModelReaderWriterOptions options)

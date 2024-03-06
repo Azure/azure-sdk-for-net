@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricFriendlyName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> fabricType = default;
-            Optional<int> protectedItemCount = default;
-            Optional<string> pairingStatus = default;
-            Optional<string> role = default;
-            Optional<ProtectionContainerFabricSpecificDetails> fabricSpecificDetails = default;
+            string fabricFriendlyName = default;
+            string friendlyName = default;
+            string fabricType = default;
+            int? protectedItemCount = default;
+            string pairingStatus = default;
+            string role = default;
+            ProtectionContainerFabricSpecificDetails fabricSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificDetails = ProtectionContainerFabricSpecificDetails.DeserializeProtectionContainerFabricSpecificDetails(property.Value);
+                    fabricSpecificDetails = ProtectionContainerFabricSpecificDetails.DeserializeProtectionContainerFabricSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName.Value, friendlyName.Value, fabricType.Value, Optional.ToNullable(protectedItemCount), pairingStatus.Value, role.Value, fabricSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectionContainerProperties(
+                fabricFriendlyName,
+                friendlyName,
+                fabricType,
+                protectedItemCount,
+                pairingStatus,
+                role,
+                fabricSpecificDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectionContainerProperties>.Write(ModelReaderWriterOptions options)

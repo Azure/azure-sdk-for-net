@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> value = default;
-            Optional<MaxSizeCapability> storageLimit = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            int? value = default;
+            MaxSizeCapability storageLimit = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    storageLimit = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    storageLimit = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolVcoresCapability(name.Value, Optional.ToNullable(value), storageLimit.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolVcoresCapability(
+                name,
+                value,
+                storageLimit,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolVcoresCapability>.Write(ModelReaderWriterOptions options)

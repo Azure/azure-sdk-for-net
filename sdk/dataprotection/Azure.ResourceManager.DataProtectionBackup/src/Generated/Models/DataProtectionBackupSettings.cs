@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupType"/> is null. </exception>
         public DataProtectionBackupSettings(string backupType)
         {
-            Argument.AssertNotNull(backupType, nameof(backupType));
+            if (backupType == null)
+            {
+                throw new ArgumentNullException(nameof(backupType));
+            }
 
             BackupType = backupType;
             ObjectType = "AzureBackupParams";

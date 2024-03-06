@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -105,12 +106,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<long> executionCount = default;
-            Optional<float> cpuTimeMs = default;
-            Optional<float> elapsedTimeMs = default;
-            Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
-            Optional<bool> hasErrors = default;
-            Optional<IReadOnlyList<string>> sqlErrors = default;
+            long? executionCount = default;
+            float? cpuTimeMs = default;
+            float? elapsedTimeMs = default;
+            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
+            bool? hasErrors = default;
+            IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value));
+                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value, options));
                     }
                     waitStats = dictionary;
                     continue;
@@ -185,7 +186,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors), serializedAdditionalRawData);
+            return new ExecutionStatistics(
+                executionCount,
+                cpuTimeMs,
+                elapsedTimeMs,
+                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
+                hasErrors,
+                sqlErrors ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)

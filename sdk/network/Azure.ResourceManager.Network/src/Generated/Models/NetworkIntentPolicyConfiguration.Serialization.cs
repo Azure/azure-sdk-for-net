@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> networkIntentPolicyName = default;
-            Optional<NetworkIntentPolicy> sourceNetworkIntentPolicy = default;
+            string networkIntentPolicyName = default;
+            NetworkIntentPolicy sourceNetworkIntentPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value);
+                    sourceNetworkIntentPolicy = NetworkIntentPolicy.DeserializeNetworkIntentPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIntentPolicyConfiguration(networkIntentPolicyName.Value, sourceNetworkIntentPolicy.Value, serializedAdditionalRawData);
+            return new NetworkIntentPolicyConfiguration(networkIntentPolicyName, sourceNetworkIntentPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkIntentPolicyConfiguration>.Write(ModelReaderWriterOptions options)

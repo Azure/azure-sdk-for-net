@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -54,12 +55,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> executionCount = default;
+            string name = default;
+            int? executionCount = default;
             CellOutputType outputType = default;
-            Optional<object> text = default;
-            Optional<object> data = default;
-            Optional<object> metadata = default;
+            object text = default;
+            object data = default;
+            object metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +110,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
+            return new NotebookCellOutputItem(
+                name,
+                executionCount,
+                outputType,
+                text,
+                data,
+                metadata);
         }
 
         internal partial class NotebookCellOutputItemConverter : JsonConverter<NotebookCellOutputItem>

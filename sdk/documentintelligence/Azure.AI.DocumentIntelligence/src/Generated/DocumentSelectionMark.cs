@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -56,7 +55,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="span"/> is null. </exception>
         internal DocumentSelectionMark(DocumentSelectionMarkState state, DocumentSpan span, float confidence)
         {
-            Argument.AssertNotNull(span, nameof(span));
+            if (span == null)
+            {
+                throw new ArgumentNullException(nameof(span));
+            }
 
             State = state;
             Polygon = new ChangeTrackingList<float>();

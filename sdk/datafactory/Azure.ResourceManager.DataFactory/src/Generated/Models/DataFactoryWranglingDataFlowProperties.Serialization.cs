@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -122,12 +123,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            Optional<IList<PowerQuerySource>> sources = default;
-            Optional<string> script = default;
-            Optional<string> documentLocale = default;
+            string description = default;
+            IList<BinaryData> annotations = default;
+            DataFlowFolder folder = default;
+            IList<PowerQuerySource> sources = default;
+            string script = default;
+            string documentLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PowerQuerySource> array = new List<PowerQuerySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item));
+                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item, options));
                             }
                             sources = array;
                             continue;
@@ -214,7 +215,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryWranglingDataFlowProperties(type, description.Value, Optional.ToList(annotations), folder.Value, serializedAdditionalRawData, Optional.ToList(sources), script.Value, documentLocale.Value);
+            return new DataFactoryWranglingDataFlowProperties(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                serializedAdditionalRawData,
+                sources ?? new ChangeTrackingList<PowerQuerySource>(),
+                script,
+                documentLocale);
         }
 
         BinaryData IPersistableModel<DataFactoryWranglingDataFlowProperties>.Write(ModelReaderWriterOptions options)

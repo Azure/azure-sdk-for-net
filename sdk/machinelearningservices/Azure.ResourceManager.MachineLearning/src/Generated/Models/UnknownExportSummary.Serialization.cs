@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExportSummary(document.RootElement, options);
+            return DeserializeExportSummary(document.RootElement, options);
         }
 
         internal static UnknownExportSummary DeserializeUnknownExportSummary(JsonElement element, ModelReaderWriterOptions options = null)
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> endDateTime = default;
-            Optional<long?> exportedRowCount = default;
+            DateTimeOffset? endDateTime = default;
+            long? exportedRowCount = default;
             ExportFormatType format = "Unknown";
-            Optional<string> labelingJobId = default;
-            Optional<DateTimeOffset?> startDateTime = default;
+            string labelingJobId = default;
+            DateTimeOffset? startDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData);
+            return new UnknownExportSummary(
+                endDateTime,
+                exportedRowCount,
+                format,
+                labelingJobId,
+                startDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportSummary>.Write(ModelReaderWriterOptions options)
@@ -199,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownExportSummary(document.RootElement, options);
+                        return DeserializeExportSummary(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ExportSummary)} does not support '{options.Format}' format.");

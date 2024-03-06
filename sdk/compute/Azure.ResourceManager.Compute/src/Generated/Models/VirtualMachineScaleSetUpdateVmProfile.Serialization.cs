@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineScaleSetUpdateOSProfile> osProfile = default;
-            Optional<VirtualMachineScaleSetUpdateStorageProfile> storageProfile = default;
-            Optional<VirtualMachineScaleSetUpdateNetworkProfile> networkProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<VirtualMachineScaleSetExtensionProfile> extensionProfile = default;
-            Optional<string> licenseType = default;
-            Optional<BillingProfile> billingProfile = default;
-            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
-            Optional<string> userData = default;
-            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
+            VirtualMachineScaleSetUpdateOSProfile osProfile = default;
+            VirtualMachineScaleSetUpdateStorageProfile storageProfile = default;
+            VirtualMachineScaleSetUpdateNetworkProfile networkProfile = default;
+            SecurityProfile securityProfile = default;
+            DiagnosticsProfile diagnosticsProfile = default;
+            VirtualMachineScaleSetExtensionProfile extensionProfile = default;
+            string licenseType = default;
+            BillingProfile billingProfile = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
+            string userData = default;
+            VirtualMachineScaleSetHardwareProfile hardwareProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineScaleSetUpdateOSProfile.DeserializeVirtualMachineScaleSetUpdateOSProfile(property.Value);
+                    osProfile = VirtualMachineScaleSetUpdateOSProfile.DeserializeVirtualMachineScaleSetUpdateOSProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageProfile = VirtualMachineScaleSetUpdateStorageProfile.DeserializeVirtualMachineScaleSetUpdateStorageProfile(property.Value);
+                    storageProfile = VirtualMachineScaleSetUpdateStorageProfile.DeserializeVirtualMachineScaleSetUpdateStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    networkProfile = VirtualMachineScaleSetUpdateNetworkProfile.DeserializeVirtualMachineScaleSetUpdateNetworkProfile(property.Value);
+                    networkProfile = VirtualMachineScaleSetUpdateNetworkProfile.DeserializeVirtualMachineScaleSetUpdateNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diagnosticsProfile"u8))
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value);
+                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensionProfile"u8))
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value);
+                    extensionProfile = VirtualMachineScaleSetExtensionProfile.DeserializeVirtualMachineScaleSetExtensionProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    billingProfile = BillingProfile.DeserializeBillingProfile(property.Value);
+                    billingProfile = BillingProfile.DeserializeBillingProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledEventsProfile"u8))
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value);
+                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userData"u8))
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value);
+                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -231,7 +232,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, billingProfile.Value, scheduledEventsProfile.Value, userData.Value, hardwareProfile.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetUpdateVmProfile(
+                osProfile,
+                storageProfile,
+                networkProfile,
+                securityProfile,
+                diagnosticsProfile,
+                extensionProfile,
+                licenseType,
+                billingProfile,
+                scheduledEventsProfile,
+                userData,
+                hardwareProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateVmProfile>.Write(ModelReaderWriterOptions options)

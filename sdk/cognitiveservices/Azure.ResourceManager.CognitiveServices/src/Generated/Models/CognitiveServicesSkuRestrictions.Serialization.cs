@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;
-            Optional<CognitiveServicesSkuRestrictionReasonCode> reasonCode = default;
+            CognitiveServicesSkuRestrictionsType? type = default;
+            IReadOnlyList<string> values = default;
+            CognitiveServicesSkuRestrictionInfo restrictionInfo = default;
+            CognitiveServicesSkuRestrictionReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    restrictionInfo = CognitiveServicesSkuRestrictionInfo.DeserializeCognitiveServicesSkuRestrictionInfo(property.Value);
+                    restrictionInfo = CognitiveServicesSkuRestrictionInfo.DeserializeCognitiveServicesSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new CognitiveServicesSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuRestrictions>.Write(ModelReaderWriterOptions options)

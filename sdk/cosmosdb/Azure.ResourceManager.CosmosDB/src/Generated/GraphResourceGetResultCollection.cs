@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GraphResourceGetResultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string graphName, GraphResourceGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GraphResourceGetResultResource> CreateOrUpdate(WaitUntil waitUntil, string graphName, GraphResourceGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual async Task<Response<GraphResourceGetResultResource>> GetAsync(string graphName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual Response<GraphResourceGetResultResource> Get(string graphName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.Get");
             scope.Start();
@@ -327,7 +361,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string graphName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.Exists");
             scope.Start();
@@ -370,7 +411,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual Response<bool> Exists(string graphName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.Exists");
             scope.Start();
@@ -413,7 +461,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual async Task<NullableResponse<GraphResourceGetResultResource>> GetIfExistsAsync(string graphName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.GetIfExists");
             scope.Start();
@@ -458,7 +513,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public virtual NullableResponse<GraphResourceGetResultResource> GetIfExists(string graphName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(graphName, nameof(graphName));
+            if (graphName == null)
+            {
+                throw new ArgumentNullException(nameof(graphName));
+            }
+            if (graphName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(graphName));
+            }
 
             using var scope = _graphResourceGetResultGraphResourcesClientDiagnostics.CreateScope("GraphResourceGetResultCollection.GetIfExists");
             scope.Start();

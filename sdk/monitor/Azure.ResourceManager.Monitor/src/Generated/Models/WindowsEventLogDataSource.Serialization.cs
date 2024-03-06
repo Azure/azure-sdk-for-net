@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<WindowsEventLogDataSourceStream>> streams = default;
-            Optional<IList<string>> xPathQueries = default;
-            Optional<string> name = default;
+            IList<WindowsEventLogDataSourceStream> streams = default;
+            IList<string> xPathQueries = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsEventLogDataSource(Optional.ToList(streams), Optional.ToList(xPathQueries), name.Value, serializedAdditionalRawData);
+            return new WindowsEventLogDataSource(streams ?? new ChangeTrackingList<WindowsEventLogDataSourceStream>(), xPathQueries ?? new ChangeTrackingList<string>(), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsEventLogDataSource>.Write(ModelReaderWriterOptions options)

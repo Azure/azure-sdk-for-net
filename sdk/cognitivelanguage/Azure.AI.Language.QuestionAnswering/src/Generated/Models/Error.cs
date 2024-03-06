@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -20,7 +19,10 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal Error(ErrorCode code, string message)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Code = code;
             Message = message;

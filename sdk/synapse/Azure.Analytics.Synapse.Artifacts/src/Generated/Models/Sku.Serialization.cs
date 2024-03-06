@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -42,9 +43,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> tier = default;
-            Optional<string> name = default;
-            Optional<int> capacity = default;
+            string tier = default;
+            string name = default;
+            int? capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tier"u8))
@@ -67,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Sku(tier.Value, name.Value, Optional.ToNullable(capacity));
+            return new Sku(tier, name, capacity);
         }
 
         internal partial class SkuConverter : JsonConverter<Sku>

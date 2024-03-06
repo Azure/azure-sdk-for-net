@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppDiagnosticsMetadata> metadata = default;
-            Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
-            Optional<ContainerAppDiagnosticsStatus> status = default;
-            Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
+            ContainerAppDiagnosticsMetadata metadata = default;
+            IList<ContainerAppDiagnosticsDataApiResult> dataset = default;
+            ContainerAppDiagnosticsStatus status = default;
+            ContainerAppDiagnosticDataProviderMetadata dataProviderMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value);
+                    metadata = ContainerAppDiagnosticsMetadata.DeserializeContainerAppDiagnosticsMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticsDataApiResult> array = new List<ContainerAppDiagnosticsDataApiResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticsDataApiResult.DeserializeContainerAppDiagnosticsDataApiResult(item));
+                        array.Add(ContainerAppDiagnosticsDataApiResult.DeserializeContainerAppDiagnosticsDataApiResult(item, options));
                     }
                     dataset = array;
                     continue;
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value);
+                    status = ContainerAppDiagnosticsStatus.DeserializeContainerAppDiagnosticsStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProviderMetadata"u8))
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value);
+                    dataProviderMetadata = ContainerAppDiagnosticDataProviderMetadata.DeserializeContainerAppDiagnosticDataProviderMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsProperties(metadata.Value, Optional.ToList(dataset), status.Value, dataProviderMetadata.Value, serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsProperties(metadata, dataset ?? new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>(), status, dataProviderMetadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsProperties>.Write(ModelReaderWriterOptions options)

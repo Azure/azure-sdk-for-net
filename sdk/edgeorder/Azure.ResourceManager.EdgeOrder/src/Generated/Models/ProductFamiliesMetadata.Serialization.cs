@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -132,15 +133,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<ProductDescription> description = default;
-            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
-            Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Optional<HierarchyInformation> hierarchyInformation = default;
-            Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
-            Optional<IReadOnlyList<ProductLine>> productLines = default;
-            Optional<IReadOnlyList<ResourceProviderDetails>> resourceProviderDetails = default;
+            string displayName = default;
+            ProductDescription description = default;
+            IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
+            EdgeOrderProductCostInformation costInformation = default;
+            ProductAvailabilityInformation availabilityInformation = default;
+            HierarchyInformation hierarchyInformation = default;
+            IReadOnlyList<FilterableProperty> filterableProperties = default;
+            IReadOnlyList<ProductLine> productLines = default;
+            IReadOnlyList<ResourceProviderDetails> resourceProviderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            description = ProductDescription.DeserializeProductDescription(property0.Value);
+                            description = ProductDescription.DeserializeProductDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("imageInformation"u8))
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item));
+                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item, options));
                             }
                             imageInformation = array;
                             continue;
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
+                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityInformation"u8))
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hierarchyInformation"u8))
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
+                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filterableProperties"u8))
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<FilterableProperty> array = new List<FilterableProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                                array.Add(FilterableProperty.DeserializeFilterableProperty(item, options));
                             }
                             filterableProperties = array;
                             continue;
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<ProductLine> array = new List<ProductLine>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProductLine.DeserializeProductLine(item));
+                                array.Add(ProductLine.DeserializeProductLine(item, options));
                             }
                             productLines = array;
                             continue;
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
                             }
                             resourceProviderDetails = array;
                             continue;
@@ -260,7 +261,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamiliesMetadata(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(productLines), Optional.ToList(resourceProviderDetails), serializedAdditionalRawData);
+            return new ProductFamiliesMetadata(
+                displayName,
+                description,
+                imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
+                productLines ?? new ChangeTrackingList<ProductLine>(),
+                resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamiliesMetadata>.Write(ModelReaderWriterOptions options)

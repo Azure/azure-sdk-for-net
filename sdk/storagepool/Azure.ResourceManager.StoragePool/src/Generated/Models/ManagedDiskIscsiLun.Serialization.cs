@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             string name = default;
             ResourceIdentifier managedDiskAzureResourceId = default;
-            Optional<int> lun = default;
+            int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, Optional.ToNullable(lun), serializedAdditionalRawData);
+            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, lun, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskIscsiLun>.Write(ModelReaderWriterOptions options)

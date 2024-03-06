@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -136,14 +137,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> schemaOwners = default;
-            Optional<IList<string>> manifestOwners = default;
-            Optional<string> incidentRoutingService = default;
-            Optional<string> incidentRoutingTeam = default;
-            Optional<string> incidentContactEmail = default;
-            Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
-            Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
-            Optional<IList<BinaryData>> resourceAccessRoles = default;
+            IList<string> schemaOwners = default;
+            IList<string> manifestOwners = default;
+            string incidentRoutingService = default;
+            string incidentRoutingTeam = default;
+            string incidentContactEmail = default;
+            IList<ServiceTreeInfo> serviceTreeInfos = default;
+            ResourceAccessPolicy? resourceAccessPolicy = default;
+            IList<BinaryData> resourceAccessRoles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item));
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
                     }
                     serviceTreeInfos = array;
                     continue;
@@ -241,7 +242,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderManagement(Optional.ToList(schemaOwners), Optional.ToList(manifestOwners), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, Optional.ToList(serviceTreeInfos), Optional.ToNullable(resourceAccessPolicy), Optional.ToList(resourceAccessRoles), serializedAdditionalRawData);
+            return new ResourceProviderManagement(
+                schemaOwners ?? new ChangeTrackingList<string>(),
+                manifestOwners ?? new ChangeTrackingList<string>(),
+                incidentRoutingService,
+                incidentRoutingTeam,
+                incidentContactEmail,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                resourceAccessPolicy,
+                resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderManagement>.Write(ModelReaderWriterOptions options)

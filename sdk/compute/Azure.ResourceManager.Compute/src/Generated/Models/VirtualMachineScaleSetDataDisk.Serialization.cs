@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -108,16 +109,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             int lun = default;
-            Optional<CachingType> caching = default;
-            Optional<bool> writeAcceleratorEnabled = default;
+            CachingType? caching = default;
+            bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
-            Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
-            Optional<long> diskIOPSReadWrite = default;
-            Optional<long> diskMBpsReadWrite = default;
-            Optional<DiskDeleteOptionType> deleteOption = default;
+            int? diskSizeGB = default;
+            VirtualMachineScaleSetManagedDisk managedDisk = default;
+            long? diskIOPSReadWrite = default;
+            long? diskMBpsReadWrite = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value);
+                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskIOPSReadWrite"u8))
@@ -206,7 +207,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetDataDisk(name.Value, lun, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetDataDisk(
+                name,
+                lun,
+                caching,
+                writeAcceleratorEnabled,
+                createOption,
+                diskSizeGB,
+                managedDisk,
+                diskIOPSReadWrite,
+                diskMBpsReadWrite,
+                deleteOption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetDataDisk>.Write(ModelReaderWriterOptions options)

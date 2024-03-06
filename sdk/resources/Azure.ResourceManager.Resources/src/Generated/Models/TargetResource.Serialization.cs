@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> resourceName = default;
-            Optional<ResourceType> resourceType = default;
+            string id = default;
+            string resourceName = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetResource(id.Value, resourceName.Value, Optional.ToNullable(resourceType), serializedAdditionalRawData);
+            return new TargetResource(id, resourceName, resourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetResource>.Write(ModelReaderWriterOptions options)

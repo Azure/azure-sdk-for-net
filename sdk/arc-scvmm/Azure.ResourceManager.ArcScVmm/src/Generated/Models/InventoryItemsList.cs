@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InventoryItemsList(IEnumerable<InventoryItemData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value.ToList();
         }

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PartnerDestinationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PartnerDestinationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<PartnerDestinationData> array = new List<PartnerDestinationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartnerDestinationData.DeserializePartnerDestinationData(item));
+                        array.Add(PartnerDestinationData.DeserializePartnerDestinationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerDestinationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PartnerDestinationsListResult(value ?? new ChangeTrackingList<PartnerDestinationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerDestinationsListResult>.Write(ModelReaderWriterOptions options)

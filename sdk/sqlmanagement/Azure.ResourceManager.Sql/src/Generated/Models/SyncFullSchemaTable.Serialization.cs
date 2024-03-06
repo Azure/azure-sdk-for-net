@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SyncFullSchemaTableColumn>> columns = default;
-            Optional<string> errorId = default;
-            Optional<bool> hasError = default;
-            Optional<string> name = default;
-            Optional<string> quotedName = default;
+            IReadOnlyList<SyncFullSchemaTableColumn> columns = default;
+            string errorId = default;
+            bool? hasError = default;
+            string name = default;
+            string quotedName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncFullSchemaTableColumn> array = new List<SyncFullSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncFullSchemaTableColumn.DeserializeSyncFullSchemaTableColumn(item));
+                        array.Add(SyncFullSchemaTableColumn.DeserializeSyncFullSchemaTableColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -147,7 +148,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaTable(Optional.ToList(columns), errorId.Value, Optional.ToNullable(hasError), name.Value, quotedName.Value, serializedAdditionalRawData);
+            return new SyncFullSchemaTable(
+                columns ?? new ChangeTrackingList<SyncFullSchemaTableColumn>(),
+                errorId,
+                hasError,
+                name,
+                quotedName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaTable>.Write(ModelReaderWriterOptions options)

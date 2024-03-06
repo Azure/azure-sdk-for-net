@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagName = default;
-            Optional<PredefinedTagCount> count = default;
-            Optional<IReadOnlyList<PredefinedTagValue>> values = default;
+            string id = default;
+            string tagName = default;
+            PredefinedTagCount count = default;
+            IReadOnlyList<PredefinedTagValue> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("values"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PredefinedTagValue> array = new List<PredefinedTagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredefinedTagValue.DeserializePredefinedTagValue(item));
+                        array.Add(PredefinedTagValue.DeserializePredefinedTagValue(item, options));
                     }
                     values = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTag(id.Value, tagName.Value, count.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new PredefinedTag(id, tagName, count, values ?? new ChangeTrackingList<PredefinedTagValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredefinedTag>.Write(ModelReaderWriterOptions options)

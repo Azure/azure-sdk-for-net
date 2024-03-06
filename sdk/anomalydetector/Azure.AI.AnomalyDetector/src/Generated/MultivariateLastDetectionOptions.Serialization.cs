@@ -78,7 +78,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             IList<VariableValues> variables = default;
-            Optional<int> topContributorCount = default;
+            int? topContributorCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableValues> array = new List<VariableValues>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableValues.DeserializeVariableValues(item));
+                        array.Add(VariableValues.DeserializeVariableValues(item, options));
                     }
                     variables = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultivariateLastDetectionOptions(variables, Optional.ToNullable(topContributorCount), serializedAdditionalRawData);
+            return new MultivariateLastDetectionOptions(variables, topContributorCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultivariateLastDetectionOptions>.Write(ModelReaderWriterOptions options)

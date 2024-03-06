@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownGroupTaskDetails(document.RootElement, options);
+            return DeserializeSiteRecoveryGroupTaskDetails(document.RootElement, options);
         }
 
         internal static UnknownGroupTaskDetails DeserializeUnknownGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string instanceType = "Unknown";
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     childTasks = array;
                     continue;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownGroupTaskDetails(instanceType, Optional.ToList(childTasks), serializedAdditionalRawData);
+            return new UnknownGroupTaskDetails(instanceType, childTasks ?? new ChangeTrackingList<AsrTask>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryGroupTaskDetails>.Write(ModelReaderWriterOptions options)
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownGroupTaskDetails(document.RootElement, options);
+                        return DeserializeSiteRecoveryGroupTaskDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryGroupTaskDetails)} does not support '{options.Format}' format.");

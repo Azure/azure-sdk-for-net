@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> target = default;
-            Optional<string> usageModel = default;
-            Optional<int> verificationTimer = default;
-            Optional<int> writeBackTimer = default;
+            string target = default;
+            string usageModel = default;
+            int? verificationTimer = default;
+            int? writeBackTimer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Nfs3Target(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer), serializedAdditionalRawData);
+            return new Nfs3Target(target, usageModel, verificationTimer, writeBackTimer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Nfs3Target>.Write(ModelReaderWriterOptions options)

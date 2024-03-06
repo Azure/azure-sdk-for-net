@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             RecoveryPlanPointType recoveryPointType = default;
-            Optional<string> useMultiVmSyncPoint = default;
+            string useMultiVmSyncPoint = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanInMageRcmFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint.Value);
+            return new RecoveryPlanInMageRcmFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint);
         }
 
         BinaryData IPersistableModel<RecoveryPlanInMageRcmFailoverContent>.Write(ModelReaderWriterOptions options)

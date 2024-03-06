@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> updateType = default;
-            Optional<string> version = default;
-            Optional<string> packageName = default;
+            string updateType = default;
+            string version = default;
+            string packageName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdatePrerequisite(updateType.Value, version.Value, packageName.Value, serializedAdditionalRawData);
+            return new UpdatePrerequisite(updateType, version, packageName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdatePrerequisite>.Write(ModelReaderWriterOptions options)

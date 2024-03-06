@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -98,9 +99,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string expression = default;
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
+            string endTime = default;
+            string startTime = default;
+            string timeZone = default;
             MachineLearningTriggerType triggerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +148,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CronTrigger(endTime.Value, startTime.Value, timeZone.Value, triggerType, serializedAdditionalRawData, expression);
+            return new CronTrigger(
+                endTime,
+                startTime,
+                timeZone,
+                triggerType,
+                serializedAdditionalRawData,
+                expression);
         }
 
         BinaryData IPersistableModel<CronTrigger>.Write(ModelReaderWriterOptions options)

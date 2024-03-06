@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             IReadOnlyList<SphereCertificateData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereCertificateData> array = new List<SphereCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereCertificateData.DeserializeSphereCertificateData(item));
+                        array.Add(SphereCertificateData.DeserializeSphereCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new CertificateListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateListResult>.Write(ModelReaderWriterOptions options)

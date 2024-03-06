@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
@@ -107,11 +108,11 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> source = default;
-            Optional<IDictionary<string, BinaryData>> action = default;
-            Optional<string> singular = default;
-            Optional<string> plural = default;
+            string resourceId = default;
+            string source = default;
+            IDictionary<string, BinaryData> action = default;
+            string singular = default;
+            string plural = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,13 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetadata(resourceId.Value, source.Value, Optional.ToDictionary(action), singular.Value, plural.Value, serializedAdditionalRawData);
+            return new ResourceMetadata(
+                resourceId,
+                source,
+                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                singular,
+                plural,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)

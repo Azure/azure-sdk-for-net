@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubUserSubscriptionQuota>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IotHubUserSubscriptionQuota> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubUserSubscriptionQuota> array = new List<IotHubUserSubscriptionQuota>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(item));
+                        array.Add(IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubUserSubscriptionQuotaListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubUserSubscriptionQuotaListResult(value ?? new ChangeTrackingList<IotHubUserSubscriptionQuota>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubUserSubscriptionQuotaListResult>.Write(ModelReaderWriterOptions options)

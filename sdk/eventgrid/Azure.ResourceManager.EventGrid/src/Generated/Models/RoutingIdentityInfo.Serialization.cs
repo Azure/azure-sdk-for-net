@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<RoutingIdentityType> type = default;
-            Optional<string> userAssignedIdentity = default;
+            RoutingIdentityType? type = default;
+            string userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingIdentityInfo(Optional.ToNullable(type), userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new RoutingIdentityInfo(type, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingIdentityInfo>.Write(ModelReaderWriterOptions options)

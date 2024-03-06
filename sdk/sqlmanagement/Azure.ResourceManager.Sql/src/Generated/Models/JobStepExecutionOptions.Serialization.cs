@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> timeoutSeconds = default;
-            Optional<int> retryAttempts = default;
-            Optional<int> initialRetryIntervalSeconds = default;
-            Optional<int> maximumRetryIntervalSeconds = default;
-            Optional<float> retryIntervalBackoffMultiplier = default;
+            int? timeoutSeconds = default;
+            int? retryAttempts = default;
+            int? initialRetryIntervalSeconds = default;
+            int? maximumRetryIntervalSeconds = default;
+            float? retryIntervalBackoffMultiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier), serializedAdditionalRawData);
+            return new JobStepExecutionOptions(
+                timeoutSeconds,
+                retryAttempts,
+                initialRetryIntervalSeconds,
+                maximumRetryIntervalSeconds,
+                retryIntervalBackoffMultiplier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> nameAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            string name = default;
+            ResourceType? type = default;
+            bool? nameAvailable = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerNameAvailabilityResult(name.Value, Optional.ToNullable(type), Optional.ToNullable(nameAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            return new TrafficManagerNameAvailabilityResult(
+                name,
+                type,
+                nameAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

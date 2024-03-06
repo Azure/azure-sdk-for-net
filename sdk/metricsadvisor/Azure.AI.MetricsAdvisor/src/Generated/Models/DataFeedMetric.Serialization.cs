@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -36,10 +37,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> metricId = default;
+            string metricId = default;
             string metricName = default;
-            Optional<string> metricDisplayName = default;
-            Optional<string> metricDescription = default;
+            string metricDisplayName = default;
+            string metricDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricId"u8))
@@ -63,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataFeedMetric(metricId.Value, metricName, metricDisplayName.Value, metricDescription.Value);
+            return new DataFeedMetric(metricId, metricName, metricDisplayName, metricDescription);
         }
     }
 }

@@ -18,26 +18,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string expectedMessage,
             IDictionary<string, string> expectedMessageProperties,
             string? expectedSpanId,
-            string? expectedTraceId)
+            string? expectedTraceId,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
         {
             Assert.Equal("Message", telemetryItem.Name); // telemetry type
             Assert.Equal("MessageData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            var expectedTagsCount = 3;
+            var expectedTagsCount = 4;
 
             if (expectedSpanId != null && expectedTraceId != null)
             {
-                expectedTagsCount = 5;
+                expectedTagsCount += 2;
 
                 Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
                 Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             }
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var messageData = (MessageData)telemetryItem.Data.BaseData;
@@ -63,16 +67,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             TelemetryItem telemetryItem,
             string expectedSeverityLevel,
             string expectedMessage,
-            string expectedTypeName)
+            string expectedTypeName,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
         {
             Assert.Equal("Exception", telemetryItem.Name); // telemetry type
             Assert.Equal("ExceptionData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(3, telemetryItem.Tags.Count);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Equal(4, telemetryItem.Tags.Count);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var telemetryExceptionData = (TelemetryExceptionData)telemetryItem.Data.BaseData;
@@ -94,18 +102,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string? expectedSpanId,
             IDictionary<string, string>? expectedProperties,
             string expectedAuthUserId,
-            bool expectedSuccess = true)
+            bool expectedSuccess = true,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
         {
             Assert.Equal("RemoteDependency", telemetryItem.Name); // telemetry type
             Assert.Equal("RemoteDependencyData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(5, telemetryItem.Tags.Count);
+            Assert.Equal(6, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var remoteDependencyData = (RemoteDependencyData)telemetryItem.Data.BaseData;
@@ -134,20 +146,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             IDictionary<string, string> expectedProperties,
             string? expectedSpanId,
             string expectedAuthUserId,
-            bool expectedSuccess = true)
+            bool expectedSuccess = true,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
             Assert.Equal("RequestData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            var expectedTagsCount = 6;
+            var expectedTagsCount = 7;
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Equal(expectedAuthUserId, telemetryItem.Tags["ai.user.authUserId"]);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var requestData = (RequestData)telemetryItem.Data.BaseData;
@@ -175,18 +191,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string? expectedTraceId,
             string? expectedSpanId,
             IDictionary<string, string>? expectedProperties,
-            Action<TelemetryExceptionData>? additionalChecks = null)
+            Action<TelemetryExceptionData>? additionalChecks = null,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
         {
             Assert.Equal("Exception", telemetryItem.Name); // telemetry type
             Assert.Equal("ExceptionData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(5, telemetryItem.Tags.Count);
+            Assert.Equal(6, telemetryItem.Tags.Count);
             Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
             Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var telemetryExceptionData = (TelemetryExceptionData)telemetryItem.Data.BaseData;
@@ -224,16 +244,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             double? expectedMetricDataPointMax = null,
             double? expectedMetricDataPointMin = null,
             double? expectedMetricDataPointStdDev = null,
-            Dictionary<string, string>? expectedMetricsProperties = null)
+            Dictionary<string, string>? expectedMetricsProperties = null,
+            string expectedCloudRole = "[testNamespace]/testName",
+            string expectedCloudInstance = "testInstance",
+            string expectedApplicationVersion = "testVersion")
         {
             Assert.Equal("Metric", telemetryItem.Name); // telemetry type
             Assert.Equal("MetricData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(3, telemetryItem.Tags.Count);
-            Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
-            Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
+            Assert.Equal(4, telemetryItem.Tags.Count);
+            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
+            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
+            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var metricsData = (MetricsData)telemetryItem.Data.BaseData;

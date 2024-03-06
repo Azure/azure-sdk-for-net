@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
         internal OperationalInsightsWorkspacePurgeResult(string operationStringId)
         {
-            Argument.AssertNotNull(operationStringId, nameof(operationStringId));
+            if (operationStringId == null)
+            {
+                throw new ArgumentNullException(nameof(operationStringId));
+            }
 
             OperationStringId = operationStringId;
         }

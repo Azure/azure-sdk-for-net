@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<ForecastDatasetConfiguration> configuration = default;
+            GranularityType? granularity = default;
+            ForecastDatasetConfiguration configuration = default;
             IDictionary<string, ForecastAggregation> aggregation = default;
-            Optional<ForecastFilter> filter = default;
+            ForecastFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value);
+                    configuration = ForecastDatasetConfiguration.DeserializeForecastDatasetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aggregation"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, ForecastAggregation> dictionary = new Dictionary<string, ForecastAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ForecastAggregation.DeserializeForecastAggregation(property0.Value));
+                        dictionary.Add(property0.Name, ForecastAggregation.DeserializeForecastAggregation(property0.Value, options));
                     }
                     aggregation = dictionary;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    filter = ForecastFilter.DeserializeForecastFilter(property.Value);
+                    filter = ForecastFilter.DeserializeForecastFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastDataset(Optional.ToNullable(granularity), configuration.Value, aggregation, filter.Value, serializedAdditionalRawData);
+            return new ForecastDataset(granularity, configuration, aggregation, filter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastDataset>.Write(ModelReaderWriterOptions options)

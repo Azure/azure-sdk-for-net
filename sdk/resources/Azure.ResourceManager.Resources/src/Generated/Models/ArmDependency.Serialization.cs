@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BasicArmDependency>> dependsOn = default;
-            Optional<string> id = default;
-            Optional<ResourceType> resourceType = default;
-            Optional<string> resourceName = default;
+            IReadOnlyList<BasicArmDependency> dependsOn = default;
+            string id = default;
+            ResourceType? resourceType = default;
+            string resourceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<BasicArmDependency> array = new List<BasicArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item));
+                        array.Add(BasicArmDependency.DeserializeBasicArmDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDependency(Optional.ToList(dependsOn), id.Value, Optional.ToNullable(resourceType), resourceName.Value, serializedAdditionalRawData);
+            return new ArmDependency(dependsOn ?? new ChangeTrackingList<BasicArmDependency>(), id, resourceType, resourceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDependency>.Write(ModelReaderWriterOptions options)

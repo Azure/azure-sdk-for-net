@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -22,7 +21,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
         public HealthcareRelationInternal(HealthcareEntityRelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
         {
-            Argument.AssertNotNull(entities, nameof(entities));
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
 
             RelationType = relationType;
             Entities = entities.ToList();

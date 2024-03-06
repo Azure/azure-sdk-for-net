@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -21,7 +22,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         internal ConsumptionLegacyReservationRecommendation(string scope)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            if (scope == null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
 
             Scope = scope;
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();

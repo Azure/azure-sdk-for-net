@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -82,16 +83,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SqlConnectionInfo targetConnectionInfo = default;
-            Optional<bool> collectLogins = default;
-            Optional<bool> collectAgentJobs = default;
-            Optional<bool> validateSsisCatalogOnly = default;
+            bool? collectLogins = default;
+            bool? collectAgentJobs = default;
+            bool? validateSsisCatalogOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("collectLogins"u8))
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlMITaskInput(targetConnectionInfo, Optional.ToNullable(collectLogins), Optional.ToNullable(collectAgentJobs), Optional.ToNullable(validateSsisCatalogOnly), serializedAdditionalRawData);
+            return new ConnectToTargetSqlMITaskInput(targetConnectionInfo, collectLogins, collectAgentJobs, validateSsisCatalogOnly, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlMITaskInput>.Write(ModelReaderWriterOptions options)

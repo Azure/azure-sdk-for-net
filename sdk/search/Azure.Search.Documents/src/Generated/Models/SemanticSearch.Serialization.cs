@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -40,8 +41,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultConfiguration = default;
-            Optional<IList<SemanticConfiguration>> configurations = default;
+            string defaultConfiguration = default;
+            IList<SemanticConfiguration> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultConfiguration"u8))
@@ -64,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticSearch(defaultConfiguration.Value, Optional.ToList(configurations));
+            return new SemanticSearch(defaultConfiguration, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
         }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -24,11 +23,26 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="matches"/>, <paramref name="language"/>, <paramref name="url"/> or <paramref name="dataSource"/> is null. </exception>
         internal LinkedEntity(string name, IEnumerable<Match> matches, string language, string url, string dataSource)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(matches, nameof(matches));
-            Argument.AssertNotNull(language, nameof(language));
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(dataSource, nameof(dataSource));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (matches == null)
+            {
+                throw new ArgumentNullException(nameof(matches));
+            }
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+            if (dataSource == null)
+            {
+                throw new ArgumentNullException(nameof(dataSource));
+            }
 
             Name = name;
             Matches = matches.ToList();

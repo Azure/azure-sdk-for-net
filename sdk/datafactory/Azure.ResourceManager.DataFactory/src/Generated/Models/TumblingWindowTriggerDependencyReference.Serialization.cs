@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -78,8 +79,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> offset = default;
-            Optional<string> size = default;
+            string offset = default;
+            string size = default;
             DataFactoryTriggerReference referenceTrigger = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceTrigger"u8))
                 {
-                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value);
+                    referenceTrigger = DataFactoryTriggerReference.DeserializeDataFactoryTriggerReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TumblingWindowTriggerDependencyReference(type, serializedAdditionalRawData, referenceTrigger, offset.Value, size.Value);
+            return new TumblingWindowTriggerDependencyReference(type, serializedAdditionalRawData, referenceTrigger, offset, size);
         }
 
         BinaryData IPersistableModel<TumblingWindowTriggerDependencyReference>.Write(ModelReaderWriterOptions options)

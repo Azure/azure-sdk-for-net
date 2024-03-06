@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> hvHostVmId = default;
-            Optional<string> vmName = default;
-            Optional<string> osType = default;
-            Optional<string> vhdId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
+            string hvHostVmId = default;
+            string vmName = default;
+            string osType = default;
+            string vhdId = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier logStorageAccountId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +157,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureReprotectContent(instanceType, serializedAdditionalRawData, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, storageAccountId.Value, logStorageAccountId.Value);
+            return new HyperVReplicaAzureReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                hvHostVmId,
+                vmName,
+                osType,
+                vhdId,
+                storageAccountId,
+                logStorageAccountId);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureReprotectContent>.Write(ModelReaderWriterOptions options)

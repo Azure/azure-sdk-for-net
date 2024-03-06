@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<string> streams = default;
-            Optional<string> name = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlatformTelemetryDataSource(streams, name.Value, serializedAdditionalRawData);
+            return new PlatformTelemetryDataSource(streams, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlatformTelemetryDataSource>.Write(ModelReaderWriterOptions options)

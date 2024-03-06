@@ -64,7 +64,10 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> PostAsync(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreatePostRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -85,7 +88,10 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response Post(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreatePostRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);

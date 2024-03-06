@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<KekDetails> kekDetails = default;
-            Optional<BekDetails> bekDetails = default;
-            Optional<string> encryptionMechanism = default;
+            KekDetails kekDetails = default;
+            BekDetails bekDetails = default;
+            string encryptionMechanism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    kekDetails = KekDetails.DeserializeKekDetails(property.Value);
+                    kekDetails = KekDetails.DeserializeKekDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bekDetails"u8))
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    bekDetails = BekDetails.DeserializeBekDetails(property.Value);
+                    bekDetails = BekDetails.DeserializeBekDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionMechanism"u8))
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyAndSecretDetails(kekDetails.Value, bekDetails.Value, encryptionMechanism.Value, serializedAdditionalRawData);
+            return new KeyAndSecretDetails(kekDetails, bekDetails, encryptionMechanism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyAndSecretDetails>.Write(ModelReaderWriterOptions options)

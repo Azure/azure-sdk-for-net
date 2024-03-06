@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> name = default;
-            Optional<LocationType> type = default;
-            Optional<string> displayName = default;
-            Optional<string> regionalDisplayName = default;
-            Optional<LocationMetadata> metadata = default;
-            Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
+            string id = default;
+            string subscriptionId = default;
+            string name = default;
+            LocationType? type = default;
+            string displayName = default;
+            string regionalDisplayName = default;
+            LocationMetadata metadata = default;
+            IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value);
+                    metadata = LocationMetadata.DeserializeLocationMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZoneMappings"u8))
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<AvailabilityZoneMappings> array = new List<AvailabilityZoneMappings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item));
+                        array.Add(Models.AvailabilityZoneMappings.DeserializeAvailabilityZoneMappings(item, options));
                     }
                     availabilityZoneMappings = array;
                     continue;
@@ -184,7 +185,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
+            return new LocationExpanded(
+                id,
+                subscriptionId,
+                name,
+                type,
+                displayName,
+                regionalDisplayName,
+                metadata,
+                availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocationExpanded>.Write(ModelReaderWriterOptions options)

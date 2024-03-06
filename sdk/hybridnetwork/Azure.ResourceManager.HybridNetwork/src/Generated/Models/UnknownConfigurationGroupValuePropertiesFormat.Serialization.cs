@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownConfigurationGroupValuePropertiesFormat DeserializeUnknownConfigurationGroupValuePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> publisherName = default;
-            Optional<PublisherScope> publisherScope = default;
-            Optional<string> configurationGroupSchemaName = default;
-            Optional<string> configurationGroupSchemaOfferingLocation = default;
-            Optional<DeploymentResourceIdReference> configurationGroupSchemaResourceReference = default;
+            ProvisioningState? provisioningState = default;
+            string publisherName = default;
+            PublisherScope? publisherScope = default;
+            string configurationGroupSchemaName = default;
+            string configurationGroupSchemaOfferingLocation = default;
+            DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -160,7 +161,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownConfigurationGroupValuePropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType, serializedAdditionalRawData);
+            return new UnknownConfigurationGroupValuePropertiesFormat(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
+                configurationType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Write(ModelReaderWriterOptions options)
@@ -185,7 +194,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+                        return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");

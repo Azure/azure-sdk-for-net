@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiRevisionContract>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiRevisionContract> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiRevisionContract> array = new List<ApiRevisionContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiRevisionContract.DeserializeApiRevisionContract(item));
+                        array.Add(ApiRevisionContract.DeserializeApiRevisionContract(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiRevisionListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new ApiRevisionListResult(value ?? new ChangeTrackingList<ApiRevisionContract>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiRevisionListResult>.Write(ModelReaderWriterOptions options)

@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> Returns a <see cref="ConnectedClusterResource"/> object. </returns>
         public static ConnectedClusterResource GetConnectedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableKubernetesArmClient(client).GetConnectedClusterResource(id);
         }
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> An object representing collection of ConnectedClusterResources and their operations over a ConnectedClusterResource. </returns>
         public static ConnectedClusterCollection GetConnectedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedClusters();
         }
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.Kubernetes
         [ForwardsClientCalls]
         public static async Task<Response<ConnectedClusterResource>> GetConnectedClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -141,7 +150,10 @@ namespace Azure.ResourceManager.Kubernetes
         [ForwardsClientCalls]
         public static Response<ConnectedClusterResource> GetConnectedCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableKubernetesResourceGroupResource(resourceGroupResource).GetConnectedCluster(clusterName, cancellationToken);
         }
@@ -177,7 +189,10 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> An async collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableKubernetesSubscriptionResource(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
         }
@@ -213,7 +228,10 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConnectedClusterResource> GetConnectedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableKubernetesSubscriptionResource(subscriptionResource).GetConnectedClusters(cancellationToken);
         }

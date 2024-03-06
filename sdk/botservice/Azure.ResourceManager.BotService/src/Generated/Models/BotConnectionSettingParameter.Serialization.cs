@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> value = default;
+            string key = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotConnectionSettingParameter(key.Value, value.Value, serializedAdditionalRawData);
+            return new BotConnectionSettingParameter(key, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotConnectionSettingParameter>.Write(ModelReaderWriterOptions options)

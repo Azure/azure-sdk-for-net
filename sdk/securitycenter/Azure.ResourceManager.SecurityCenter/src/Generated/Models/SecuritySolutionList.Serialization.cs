@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecuritySolution>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecuritySolution> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecuritySolution> array = new List<SecuritySolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySolution.DeserializeSecuritySolution(item));
+                        array.Add(SecuritySolution.DeserializeSecuritySolution(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolutionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SecuritySolutionList(value ?? new ChangeTrackingList<SecuritySolution>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolutionList>.Write(ModelReaderWriterOptions options)

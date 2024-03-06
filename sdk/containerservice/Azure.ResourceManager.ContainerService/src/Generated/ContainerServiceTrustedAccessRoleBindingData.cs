@@ -58,8 +58,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="roles"/> is null. </exception>
         public ContainerServiceTrustedAccessRoleBindingData(ResourceIdentifier sourceResourceId, IEnumerable<string> roles)
         {
-            Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
-            Argument.AssertNotNull(roles, nameof(roles));
+            if (sourceResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(sourceResourceId));
+            }
+            if (roles == null)
+            {
+                throw new ArgumentNullException(nameof(roles));
+            }
 
             SourceResourceId = sourceResourceId;
             Roles = roles.ToList();

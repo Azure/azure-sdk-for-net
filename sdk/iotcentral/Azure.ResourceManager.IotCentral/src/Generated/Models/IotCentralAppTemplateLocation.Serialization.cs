@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<AzureLocation> id = default;
-            Optional<string> displayName = default;
+            AzureLocation? id = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppTemplateLocation(Optional.ToNullable(id), displayName.Value, serializedAdditionalRawData);
+            return new IotCentralAppTemplateLocation(id, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppTemplateLocation>.Write(ModelReaderWriterOptions options)

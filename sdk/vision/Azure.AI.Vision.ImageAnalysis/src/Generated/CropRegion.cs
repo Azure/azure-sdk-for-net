@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -60,7 +59,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         internal CropRegion(float aspectRatio, ImageBoundingBox boundingBox)
         {
-            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
+            if (boundingBox == null)
+            {
+                throw new ArgumentNullException(nameof(boundingBox));
+            }
 
             AspectRatio = aspectRatio;
             BoundingBox = boundingBox;

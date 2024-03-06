@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitUtilizationSummariesContent> input = default;
-            Optional<OperationStatusType> status = default;
-            Optional<AsyncOperationStatusProperties> properties = default;
+            BenefitUtilizationSummariesContent input = default;
+            OperationStatusType? status = default;
+            AsyncOperationStatusProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value);
+                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value);
+                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesOperationStatus(input.Value, Optional.ToNullable(status), properties.Value, serializedAdditionalRawData);
+            return new BenefitUtilizationSummariesOperationStatus(input, status, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesOperationStatus>.Write(ModelReaderWriterOptions options)

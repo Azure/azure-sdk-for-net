@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +137,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MqttD2CMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
+            return new MqttD2CMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
 
         BinaryData IPersistableModel<MqttD2CMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options)

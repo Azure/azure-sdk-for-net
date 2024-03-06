@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
         {
-            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+            if (targetParticipant == null)
+            {
+                throw new ArgumentNullException(nameof(targetParticipant));
+            }
 
             TargetParticipant = targetParticipant;
             Choices = new ChangeTrackingList<RecognitionChoice>();

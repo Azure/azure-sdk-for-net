@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -15,20 +14,26 @@ namespace Azure.Communication.Messages
     public partial class MessageTemplateImage : MessageTemplateValue
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateImage"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
         public MessageTemplateImage(string name, Uri uri) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(uri, nameof(uri));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
 
             Kind = "image";
             Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateImage"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The (public) URL of the media. </param>

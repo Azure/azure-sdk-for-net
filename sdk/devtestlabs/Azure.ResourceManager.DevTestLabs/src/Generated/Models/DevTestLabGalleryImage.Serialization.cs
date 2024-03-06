@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -141,20 +142,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> author = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> description = default;
-            Optional<DevTestLabGalleryImageReference> imageReference = default;
-            Optional<string> icon = default;
-            Optional<bool> enabled = default;
-            Optional<string> planId = default;
-            Optional<bool> isPlanAuthorized = default;
+            SystemData systemData = default;
+            string author = default;
+            DateTimeOffset? createdDate = default;
+            string description = default;
+            DevTestLabGalleryImageReference imageReference = default;
+            string icon = default;
+            bool? enabled = default;
+            string planId = default;
+            bool? isPlanAuthorized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
+                            imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("icon"u8))
@@ -276,7 +277,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImage(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, author.Value, Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Optional.ToNullable(enabled), planId.Value, Optional.ToNullable(isPlanAuthorized), serializedAdditionalRawData);
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                author,
+                createdDate,
+                description,
+                imageReference,
+                icon,
+                enabled,
+                planId,
+                isPlanAuthorized,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImage>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="manifestFile"/>, <paramref name="manifestHash"/> or <paramref name="bitLockerKey"/> is null. </exception>
         public ImportDiskDetails(string manifestFile, string manifestHash, string bitLockerKey)
         {
-            Argument.AssertNotNull(manifestFile, nameof(manifestFile));
-            Argument.AssertNotNull(manifestHash, nameof(manifestHash));
-            Argument.AssertNotNull(bitLockerKey, nameof(bitLockerKey));
+            if (manifestFile == null)
+            {
+                throw new ArgumentNullException(nameof(manifestFile));
+            }
+            if (manifestHash == null)
+            {
+                throw new ArgumentNullException(nameof(manifestHash));
+            }
+            if (bitLockerKey == null)
+            {
+                throw new ArgumentNullException(nameof(bitLockerKey));
+            }
 
             ManifestFile = manifestFile;
             ManifestHash = manifestHash;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> packageSid = default;
-            Optional<string> secretKey = default;
-            Optional<Uri> windowsLiveEndpoint = default;
+            string packageSid = default;
+            string secretKey = default;
+            Uri windowsLiveEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubWnsCredential(packageSid.Value, secretKey.Value, windowsLiveEndpoint.Value, serializedAdditionalRawData);
+            return new NotificationHubWnsCredential(packageSid, secretKey, windowsLiveEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubWnsCredential>.Write(ModelReaderWriterOptions options)

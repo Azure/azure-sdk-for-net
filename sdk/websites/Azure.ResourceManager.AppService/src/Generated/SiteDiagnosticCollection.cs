@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual async Task<Response<SiteDiagnosticResource>> GetAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
+            if (diagnosticCategory == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticCategory));
+            }
+            if (diagnosticCategory.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticCategory));
+            }
 
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual Response<SiteDiagnosticResource> Get(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
+            if (diagnosticCategory == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticCategory));
+            }
+            if (diagnosticCategory.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticCategory));
+            }
 
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
+            if (diagnosticCategory == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticCategory));
+            }
+            if (diagnosticCategory.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticCategory));
+            }
 
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual Response<bool> Exists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
+            if (diagnosticCategory == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticCategory));
+            }
+            if (diagnosticCategory.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticCategory));
+            }
 
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteDiagnosticResource>> GetIfExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
+            if (diagnosticCategory == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticCategory));
+            }
+            if (diagnosticCategory.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticCategory));
+            }
 
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
         public virtual NullableResponse<SiteDiagnosticResource> GetIfExists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
+            if (diagnosticCategory == null)
+            {
+                throw new ArgumentNullException(nameof(diagnosticCategory));
+            }
+            if (diagnosticCategory.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticCategory));
+            }
 
             using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticCollection.GetIfExists");
             scope.Start();

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorResponse(string code, string message)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(message, nameof(message));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Code = code;
             Message = message;

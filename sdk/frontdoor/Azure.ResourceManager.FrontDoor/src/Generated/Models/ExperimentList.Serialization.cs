@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorExperimentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FrontDoorExperimentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontDoorExperimentData> array = new List<FrontDoorExperimentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorExperimentData.DeserializeFrontDoorExperimentData(item));
+                        array.Add(FrontDoorExperimentData.DeserializeFrontDoorExperimentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExperimentList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExperimentList(value ?? new ChangeTrackingList<FrontDoorExperimentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentList>.Write(ModelReaderWriterOptions options)

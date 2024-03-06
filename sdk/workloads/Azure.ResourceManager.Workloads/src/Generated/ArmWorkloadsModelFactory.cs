@@ -32,7 +32,17 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SapSizingRecommendationContent"/> instance for mocking. </returns>
         public static SapSizingRecommendationContent SapSizingRecommendationContent(AzureLocation appLocation = default, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, long saps = default, long dbMemory = default, SapDatabaseType databaseType = default, SapDatabaseScaleMethod? dbScaleMethod = null, SapHighAvailabilityType? highAvailabilityType = null)
         {
-            return new SapSizingRecommendationContent(appLocation, environment, sapProduct, deploymentType, saps, dbMemory, databaseType, dbScaleMethod, highAvailabilityType, serializedAdditionalRawData: null);
+            return new SapSizingRecommendationContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                saps,
+                dbMemory,
+                databaseType,
+                dbScaleMethod,
+                highAvailabilityType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SapSupportedSkusContent"/>. </summary>
@@ -45,7 +55,14 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SapSupportedSkusContent"/> instance for mocking. </returns>
         public static SapSupportedSkusContent SapSupportedSkusContent(AzureLocation appLocation = default, SapEnvironmentType environment = default, SapProductType sapProduct = default, SapDeploymentType deploymentType = default, SapDatabaseType databaseType = default, SapHighAvailabilityType? highAvailabilityType = null)
         {
-            return new SapSupportedSkusContent(appLocation, environment, sapProduct, deploymentType, databaseType, highAvailabilityType, serializedAdditionalRawData: null);
+            return new SapSupportedSkusContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                databaseType,
+                highAvailabilityType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SapSupportedResourceSkusResult"/>. </summary>
@@ -100,7 +117,15 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SupportedConfigurationsDiskDetails"/> instance for mocking. </returns>
         public static SupportedConfigurationsDiskDetails SupportedConfigurationsDiskDetails(DiskDetailsDiskSkuName? skuName = null, long? sizeInGB = null, long? minimumSupportedDiskCount = null, long? maximumSupportedDiskCount = null, long? iopsReadWrite = null, long? mbpsReadWrite = null, string diskTier = null)
         {
-            return new SupportedConfigurationsDiskDetails(skuName != null ? new SapDiskSku(skuName, serializedAdditionalRawData: null) : null, sizeInGB, minimumSupportedDiskCount, maximumSupportedDiskCount, iopsReadWrite, mbpsReadWrite, diskTier, serializedAdditionalRawData: null);
+            return new SupportedConfigurationsDiskDetails(
+                skuName != null ? new SapDiskSku(skuName, serializedAdditionalRawData: null) : null,
+                sizeInGB,
+                minimumSupportedDiskCount,
+                maximumSupportedDiskCount,
+                iopsReadWrite,
+                mbpsReadWrite,
+                diskTier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SapAvailabilityZoneDetailsResult"/>. </summary>
@@ -148,7 +173,24 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SapVirtualInstanceData(id, name, resourceType, systemData, tags, location, identity, environment, sapProduct, configuration, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName, serializedAdditionalRawData: null) : null, status, health, state, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new SapVirtualInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                environment,
+                sapProduct,
+                configuration,
+                managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName, serializedAdditionalRawData: null) : null,
+                status,
+                health,
+                state,
+                provisioningState,
+                errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SapVirtualInstanceErrorDetail"/>. </summary>
@@ -190,7 +232,28 @@ namespace Azure.ResourceManager.Workloads.Models
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<CentralServerVmDetails>();
 
-            return new SapCentralServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, messageServerProperties, enqueueServerProperties, gatewayServerProperties, enqueueReplicationServerProperties, kernelVersion, kernelPatch, loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null, vmDetails?.ToList(), status, health, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new SapCentralServerInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                instanceNo,
+                subnetId,
+                messageServerProperties,
+                enqueueServerProperties,
+                gatewayServerProperties,
+                enqueueReplicationServerProperties,
+                kernelVersion,
+                kernelPatch,
+                loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null,
+                vmDetails?.ToList(),
+                status,
+                health,
+                provisioningState,
+                errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MessageServerProperties"/>. </summary>
@@ -204,7 +267,15 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.MessageServerProperties"/> instance for mocking. </returns>
         public static MessageServerProperties MessageServerProperties(long? msPort = null, long? internalMsPort = null, long? httpPort = null, long? httpsPort = null, string hostname = null, string ipAddress = null, SapHealthState? health = null)
         {
-            return new MessageServerProperties(msPort, internalMsPort, httpPort, httpsPort, hostname, ipAddress, health, serializedAdditionalRawData: null);
+            return new MessageServerProperties(
+                msPort,
+                internalMsPort,
+                httpPort,
+                httpsPort,
+                hostname,
+                ipAddress,
+                health,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EnqueueServerProperties"/>. </summary>
@@ -238,7 +309,15 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.EnqueueReplicationServerProperties"/> instance for mocking. </returns>
         public static EnqueueReplicationServerProperties EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion = null, string instanceNo = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, string ipAddress = null, SapHealthState? health = null)
         {
-            return new EnqueueReplicationServerProperties(ersVersion, instanceNo, hostname, kernelVersion, kernelPatch, ipAddress, health, serializedAdditionalRawData: null);
+            return new EnqueueReplicationServerProperties(
+                ersVersion,
+                instanceNo,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                health,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CentralServerVmDetails"/>. </summary>
@@ -275,7 +354,23 @@ namespace Azure.ResourceManager.Workloads.Models
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<DatabaseVmDetails>();
 
-            return new SapDatabaseInstanceData(id, name, resourceType, systemData, tags, location, subnetId, databaseSid, databaseType, ipAddress, loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null, vmDetails?.ToList(), status, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new SapDatabaseInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                subnetId,
+                databaseSid,
+                databaseType,
+                ipAddress,
+                loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null,
+                vmDetails?.ToList(),
+                status,
+                provisioningState,
+                errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseVmDetails"/>. </summary>
@@ -318,7 +413,29 @@ namespace Azure.ResourceManager.Workloads.Models
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<ApplicationServerVmDetails>();
 
-            return new SapApplicationServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, hostname, kernelVersion, kernelPatch, ipAddress, gatewayPort, icmHttpPort, icmHttpsPort, loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null, vmDetails?.ToList(), status, health, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new SapApplicationServerInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                instanceNo,
+                subnetId,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                gatewayPort,
+                icmHttpPort,
+                icmHttpsPort,
+                loadBalancerDetailsId != null ? ResourceManagerModelFactory.SubResource(loadBalancerDetailsId) : null,
+                vmDetails?.ToList(),
+                status,
+                health,
+                provisioningState,
+                errorsProperties != null ? new SapVirtualInstanceError(errorsProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationServerVmDetails"/>. </summary>
@@ -356,7 +473,25 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SapMonitorData(id, name, resourceType, systemData, tags, location, identity, provisioningState, errors, appLocation, routingPreference, zoneRedundancyPreference, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName, serializedAdditionalRawData: null) : null, logAnalyticsWorkspaceArmId, monitorSubnetId, msiArmId, storageAccountArmId, serializedAdditionalRawData: null);
+            return new SapMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                errors,
+                appLocation,
+                routingPreference,
+                zoneRedundancyPreference,
+                managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName, serializedAdditionalRawData: null) : null,
+                logAnalyticsWorkspaceArmId,
+                monitorSubnetId,
+                msiArmId,
+                storageAccountArmId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Workloads.SapProviderInstanceData"/>. </summary>
@@ -375,7 +510,16 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Workloads.SapProviderInstanceData"/> instance for mocking. </returns>
         public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, UserAssignedServiceIdentity identity = null, WorkloadMonitorProvisioningState? provisioningState = null, ResponseError errors = null, ProviderSpecificProperties providerSettings = null)
         {
-            return new SapProviderInstanceData(id, name, resourceType, systemData, identity, provisioningState, errors, providerSettings, serializedAdditionalRawData: null);
+            return new SapProviderInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                provisioningState,
+                errors,
+                providerSettings,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Workloads.SapLandscapeMonitorData"/>. </summary>
@@ -391,7 +535,15 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             topMetricsThresholds ??= new List<SapLandscapeMonitorMetricThresholds>();
 
-            return new SapLandscapeMonitorData(id, name, resourceType, systemData, provisioningState, grouping, topMetricsThresholds?.ToList(), serializedAdditionalRawData: null);
+            return new SapLandscapeMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                grouping,
+                topMetricsThresholds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SingleServerRecommendationResult"/>. </summary>
@@ -412,7 +564,15 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.ThreeTierRecommendationResult"/> instance for mocking. </returns>
         public static ThreeTierRecommendationResult ThreeTierRecommendationResult(string dbVmSku = null, long? databaseInstanceCount = null, string centralServerVmSku = null, long? centralServerInstanceCount = null, string applicationServerVmSku = null, long? applicationServerInstanceCount = null)
         {
-            return new ThreeTierRecommendationResult(SapDeploymentType.ThreeTier, serializedAdditionalRawData: null, dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
+            return new ThreeTierRecommendationResult(
+                SapDeploymentType.ThreeTier,
+                serializedAdditionalRawData: null,
+                dbVmSku,
+                databaseInstanceCount,
+                centralServerVmSku,
+                centralServerInstanceCount,
+                applicationServerVmSku,
+                applicationServerInstanceCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiscoveryConfiguration"/>. </summary>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Guid> actionTrackingId = default;
-            Optional<string> clientTrackingId = default;
-            Optional<IList<string>> clientKeywords = default;
+            Guid? actionTrackingId = default;
+            string clientTrackingId = default;
+            IList<string> clientKeywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), serializedAdditionalRawData, Optional.ToNullable(actionTrackingId));
+            return new LogicWorkflowRunActionCorrelation(clientTrackingId, clientKeywords ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, actionTrackingId);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionCorrelation>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -88,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element);
-                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element);
+                    case "FactoryGitHubConfiguration": return FactoryGitHubConfiguration.DeserializeFactoryGitHubConfiguration(element, options);
+                    case "FactoryVSTSConfiguration": return FactoryVstsConfiguration.DeserializeFactoryVstsConfiguration(element, options);
                 }
             }
-            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element);
+            return UnknownFactoryRepoConfiguration.DeserializeUnknownFactoryRepoConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<FactoryRepoConfiguration>.Write(ModelReaderWriterOptions options)

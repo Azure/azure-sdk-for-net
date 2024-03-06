@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
-            Optional<int> mtu = default;
-            Optional<int> vlanId = default;
-            Optional<long> peerAsn = default;
-            Optional<BfdConfiguration> bfdConfiguration = default;
+            string primaryIPv4Prefix = default;
+            string primaryIPv6Prefix = default;
+            string secondaryIPv4Prefix = default;
+            string secondaryIPv6Prefix = default;
+            int? mtu = default;
+            int? vlanId = default;
+            long? peerAsn = default;
+            BfdConfiguration bfdConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +179,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConfigurationPatchableOptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value, serializedAdditionalRawData, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new VpnConfigurationPatchableOptionAProperties(
+                mtu,
+                vlanId,
+                peerAsn,
+                bfdConfiguration,
+                serializedAdditionalRawData,
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix);
         }
 
         BinaryData IPersistableModel<VpnConfigurationPatchableOptionAProperties>.Write(ModelReaderWriterOptions options)

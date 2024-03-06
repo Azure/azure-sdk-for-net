@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 return null;
             }
             IReadOnlyList<VoiceServicesCommunicationsGatewayData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     List<VoiceServicesCommunicationsGatewayData> array = new List<VoiceServicesCommunicationsGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(item));
+                        array.Add(VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VoiceServicesCommunicationsGatewayListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new VoiceServicesCommunicationsGatewayListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VoiceServicesCommunicationsGatewayListResult>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> location = default;
-            Optional<int> destinationPort = default;
-            Optional<int> publicPort = default;
-            Optional<IPAddress> privateIPAddress = default;
+            string location = default;
+            int? destinationPort = default;
+            int? publicPort = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationEndpoint(location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, serializedAdditionalRawData);
+            return new HDInsightApplicationEndpoint(location, destinationPort, publicPort, privateIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationEndpoint>.Write(ModelReaderWriterOptions options)

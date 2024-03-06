@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlRecommendationActionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MySqlRecommendationActionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlRecommendationActionData> array = new List<MySqlRecommendationActionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(item));
+                        array.Add(MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlRecommendationActionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlRecommendationActionListResult(value ?? new ChangeTrackingList<MySqlRecommendationActionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlRecommendationActionListResult>.Write(ModelReaderWriterOptions options)

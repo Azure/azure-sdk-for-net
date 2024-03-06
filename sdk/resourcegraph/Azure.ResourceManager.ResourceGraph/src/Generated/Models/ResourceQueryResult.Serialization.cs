@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -97,9 +98,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             BinaryData data = default;
-            Optional<IReadOnlyList<Facet>> facets = default;
+            IReadOnlyList<Facet> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<Facet> array = new List<Facet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Facet.DeserializeFacet(item));
+                        array.Add(Facet.DeserializeFacet(item, options));
                     }
                     facets = array;
                     continue;
@@ -149,7 +150,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets), serializedAdditionalRawData);
+            return new ResourceQueryResult(
+                totalRecords,
+                count,
+                resultTruncated,
+                skipToken,
+                data,
+                facets ?? new ChangeTrackingList<Facet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> ruleSequence = default;
-            Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
-            Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
+            string name = default;
+            int? ruleSequence = default;
+            IList<ApplicationGatewayRewriteRuleCondition> conditions = default;
+            ApplicationGatewayRewriteRuleActionSet actionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item));
+                        array.Add(ApplicationGatewayRewriteRuleCondition.DeserializeApplicationGatewayRewriteRuleCondition(item, options));
                     }
                     conditions = array;
                     continue;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);
+                    actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRewriteRule(name.Value, Optional.ToNullable(ruleSequence), Optional.ToList(conditions), actionSet.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayRewriteRule(name, ruleSequence, conditions ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>(), actionSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRewriteRule>.Write(ModelReaderWriterOptions options)

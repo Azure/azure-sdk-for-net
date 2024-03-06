@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -53,10 +54,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<object> rejectValue = default;
-            Optional<object> rejectSampleValue = default;
-            Optional<object> useTypeDefault = default;
+            PolybaseSettingsRejectType? rejectType = default;
+            object rejectValue = default;
+            object rejectSampleValue = default;
+            object useTypeDefault = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
 
         internal partial class PolybaseSettingsConverter : JsonConverter<PolybaseSettings>

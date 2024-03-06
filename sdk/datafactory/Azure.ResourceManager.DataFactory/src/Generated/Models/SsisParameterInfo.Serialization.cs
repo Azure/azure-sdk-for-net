@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -124,18 +125,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> dataType = default;
-            Optional<bool> required = default;
-            Optional<bool> sensitive = default;
-            Optional<string> designDefaultValue = default;
-            Optional<string> defaultValue = default;
-            Optional<string> sensitiveDefaultValue = default;
-            Optional<string> valueType = default;
-            Optional<bool> valueSet = default;
-            Optional<string> variable = default;
+            long? id = default;
+            string name = default;
+            string description = default;
+            string dataType = default;
+            bool? required = default;
+            bool? sensitive = default;
+            string designDefaultValue = default;
+            string defaultValue = default;
+            string sensitiveDefaultValue = default;
+            string valueType = default;
+            bool? valueSet = default;
+            string variable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +223,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisParameterInfo(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, serializedAdditionalRawData);
+            return new SsisParameterInfo(
+                id,
+                name,
+                description,
+                dataType,
+                required,
+                sensitive,
+                designDefaultValue,
+                defaultValue,
+                sensitiveDefaultValue,
+                valueType,
+                valueSet,
+                variable,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisParameterInfo>.Write(ModelReaderWriterOptions options)

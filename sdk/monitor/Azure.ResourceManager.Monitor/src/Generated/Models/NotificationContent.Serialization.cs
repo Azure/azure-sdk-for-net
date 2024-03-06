@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -177,17 +178,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string alertType = default;
-            Optional<IList<MonitorEmailReceiver>> emailReceivers = default;
-            Optional<IList<MonitorSmsReceiver>> smsReceivers = default;
-            Optional<IList<MonitorWebhookReceiver>> webhookReceivers = default;
-            Optional<IList<MonitorItsmReceiver>> itsmReceivers = default;
-            Optional<IList<MonitorAzureAppPushReceiver>> azureAppPushReceivers = default;
-            Optional<IList<MonitorAutomationRunbookReceiver>> automationRunbookReceivers = default;
-            Optional<IList<MonitorVoiceReceiver>> voiceReceivers = default;
-            Optional<IList<MonitorLogicAppReceiver>> logicAppReceivers = default;
-            Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
-            Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
-            Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
+            IList<MonitorEmailReceiver> emailReceivers = default;
+            IList<MonitorSmsReceiver> smsReceivers = default;
+            IList<MonitorWebhookReceiver> webhookReceivers = default;
+            IList<MonitorItsmReceiver> itsmReceivers = default;
+            IList<MonitorAzureAppPushReceiver> azureAppPushReceivers = default;
+            IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers = default;
+            IList<MonitorVoiceReceiver> voiceReceivers = default;
+            IList<MonitorLogicAppReceiver> logicAppReceivers = default;
+            IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
+            IList<MonitorArmRoleReceiver> armRoleReceivers = default;
+            IList<MonitorEventHubReceiver> eventHubReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorEmailReceiver> array = new List<MonitorEmailReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorEmailReceiver.DeserializeMonitorEmailReceiver(item));
+                        array.Add(MonitorEmailReceiver.DeserializeMonitorEmailReceiver(item, options));
                     }
                     emailReceivers = array;
                     continue;
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorSmsReceiver> array = new List<MonitorSmsReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorSmsReceiver.DeserializeMonitorSmsReceiver(item));
+                        array.Add(MonitorSmsReceiver.DeserializeMonitorSmsReceiver(item, options));
                     }
                     smsReceivers = array;
                     continue;
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorWebhookReceiver> array = new List<MonitorWebhookReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWebhookReceiver.DeserializeMonitorWebhookReceiver(item));
+                        array.Add(MonitorWebhookReceiver.DeserializeMonitorWebhookReceiver(item, options));
                     }
                     webhookReceivers = array;
                     continue;
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorItsmReceiver> array = new List<MonitorItsmReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorItsmReceiver.DeserializeMonitorItsmReceiver(item));
+                        array.Add(MonitorItsmReceiver.DeserializeMonitorItsmReceiver(item, options));
                     }
                     itsmReceivers = array;
                     continue;
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorAzureAppPushReceiver> array = new List<MonitorAzureAppPushReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorAzureAppPushReceiver.DeserializeMonitorAzureAppPushReceiver(item));
+                        array.Add(MonitorAzureAppPushReceiver.DeserializeMonitorAzureAppPushReceiver(item, options));
                     }
                     azureAppPushReceivers = array;
                     continue;
@@ -276,7 +277,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorAutomationRunbookReceiver> array = new List<MonitorAutomationRunbookReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorAutomationRunbookReceiver.DeserializeMonitorAutomationRunbookReceiver(item));
+                        array.Add(MonitorAutomationRunbookReceiver.DeserializeMonitorAutomationRunbookReceiver(item, options));
                     }
                     automationRunbookReceivers = array;
                     continue;
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorVoiceReceiver> array = new List<MonitorVoiceReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorVoiceReceiver.DeserializeMonitorVoiceReceiver(item));
+                        array.Add(MonitorVoiceReceiver.DeserializeMonitorVoiceReceiver(item, options));
                     }
                     voiceReceivers = array;
                     continue;
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorLogicAppReceiver> array = new List<MonitorLogicAppReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorLogicAppReceiver.DeserializeMonitorLogicAppReceiver(item));
+                        array.Add(MonitorLogicAppReceiver.DeserializeMonitorLogicAppReceiver(item, options));
                     }
                     logicAppReceivers = array;
                     continue;
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorAzureFunctionReceiver> array = new List<MonitorAzureFunctionReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorAzureFunctionReceiver.DeserializeMonitorAzureFunctionReceiver(item));
+                        array.Add(MonitorAzureFunctionReceiver.DeserializeMonitorAzureFunctionReceiver(item, options));
                     }
                     azureFunctionReceivers = array;
                     continue;
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorArmRoleReceiver> array = new List<MonitorArmRoleReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorArmRoleReceiver.DeserializeMonitorArmRoleReceiver(item));
+                        array.Add(MonitorArmRoleReceiver.DeserializeMonitorArmRoleReceiver(item, options));
                     }
                     armRoleReceivers = array;
                     continue;
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorEventHubReceiver> array = new List<MonitorEventHubReceiver>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorEventHubReceiver.DeserializeMonitorEventHubReceiver(item));
+                        array.Add(MonitorEventHubReceiver.DeserializeMonitorEventHubReceiver(item, options));
                     }
                     eventHubReceivers = array;
                     continue;
@@ -357,7 +358,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationContent(alertType, Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), serializedAdditionalRawData);
+            return new NotificationContent(
+                alertType,
+                emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
+                smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(),
+                webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(),
+                itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(),
+                azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(),
+                automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(),
+                voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(),
+                logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(),
+                azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
+                armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
+                eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)

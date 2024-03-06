@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadProtectableItemResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<WorkloadProtectableItemResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadProtectableItemResource> array = new List<WorkloadProtectableItemResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(item));
+                        array.Add(WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadProtectableItemResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadProtectableItemResourceList(value ?? new ChangeTrackingList<WorkloadProtectableItemResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadProtectableItemResourceList>.Write(ModelReaderWriterOptions options)

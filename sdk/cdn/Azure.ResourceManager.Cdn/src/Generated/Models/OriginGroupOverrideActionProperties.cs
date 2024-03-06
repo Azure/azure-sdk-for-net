@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
         public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup)
         {
-            Argument.AssertNotNull(originGroup, nameof(originGroup));
+            if (originGroup == null)
+            {
+                throw new ArgumentNullException(nameof(originGroup));
+            }
 
             ActionType = actionType;
             OriginGroup = originGroup;

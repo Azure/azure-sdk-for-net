@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> countryName = default;
-            Optional<IReadOnlyList<string>> providers = default;
-            Optional<IReadOnlyList<AvailableProvidersListState>> states = default;
+            string countryName = default;
+            IReadOnlyList<string> providers = default;
+            IReadOnlyList<AvailableProvidersListState> states = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableProvidersListState> array = new List<AvailableProvidersListState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableProvidersListState.DeserializeAvailableProvidersListState(item));
+                        array.Add(AvailableProvidersListState.DeserializeAvailableProvidersListState(item, options));
                     }
                     states = array;
                     continue;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListCountry(countryName.Value, Optional.ToList(providers), Optional.ToList(states), serializedAdditionalRawData);
+            return new AvailableProvidersListCountry(countryName, providers ?? new ChangeTrackingList<string>(), states ?? new ChangeTrackingList<AvailableProvidersListState>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListCountry>.Write(ModelReaderWriterOptions options)

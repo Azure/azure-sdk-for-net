@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseWorkloadClassifierResource>> UpdateAsync(WaitUntil waitUntil, SynapseWorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseWorkloadClassifierResource> Update(WaitUntil waitUntil, SynapseWorkloadClassifierData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics.CreateScope("SynapseWorkloadClassifierResource.Update");
             scope.Start();

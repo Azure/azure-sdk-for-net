@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<int> configurationModeFrequencyMins = default;
-            Optional<bool> rebootNodeIfNeeded = default;
-            Optional<string> configurationMode = default;
-            Optional<string> actionAfterReboot = default;
-            Optional<string> certificateId = default;
-            Optional<int> refreshFrequencyMins = default;
-            Optional<bool> allowModuleOverwrite = default;
+            int? configurationModeFrequencyMins = default;
+            bool? rebootNodeIfNeeded = default;
+            string configurationMode = default;
+            string actionAfterReboot = default;
+            string certificateId = default;
+            int? refreshFrequencyMins = default;
+            bool? allowModuleOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite), serializedAdditionalRawData);
+            return new DscMetaConfiguration(
+                configurationModeFrequencyMins,
+                rebootNodeIfNeeded,
+                configurationMode,
+                actionAfterReboot,
+                certificateId,
+                refreshFrequencyMins,
+                allowModuleOverwrite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options)

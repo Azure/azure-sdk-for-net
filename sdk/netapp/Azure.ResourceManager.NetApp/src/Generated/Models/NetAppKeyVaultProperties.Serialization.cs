@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -80,11 +81,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> keyVaultId = default;
+            string keyVaultId = default;
             Uri keyVaultUri = default;
             string keyName = default;
             string keyVaultResourceId = default;
-            Optional<NetAppKeyVaultStatus> status = default;
+            NetAppKeyVaultStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppKeyVaultProperties(keyVaultId.Value, keyVaultUri, keyName, keyVaultResourceId, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new NetAppKeyVaultProperties(
+                keyVaultId,
+                keyVaultUri,
+                keyName,
+                keyVaultResourceId,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppKeyVaultProperties>.Write(ModelReaderWriterOptions options)

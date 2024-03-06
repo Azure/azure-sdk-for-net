@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Batch.Models
             int priority = default;
             BatchNetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;
-            Optional<IList<string>> sourcePortRanges = default;
+            IList<string> sourcePortRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Optional.ToList(sourcePortRanges), serializedAdditionalRawData);
+            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, sourcePortRanges ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchNetworkSecurityGroupRule>.Write(ModelReaderWriterOptions options)

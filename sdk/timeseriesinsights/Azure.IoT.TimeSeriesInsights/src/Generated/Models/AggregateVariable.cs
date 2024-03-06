@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,7 +17,10 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public AggregateVariable(TimeSeriesExpression aggregation)
         {
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            if (aggregation == null)
+            {
+                throw new ArgumentNullException(nameof(aggregation));
+            }
 
             Aggregation = aggregation;
             Kind = "aggregate";

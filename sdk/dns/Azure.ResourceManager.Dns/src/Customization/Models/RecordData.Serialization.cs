@@ -203,26 +203,26 @@ namespace Azure.ResourceManager.Dns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<string> provisioningState = default;
-            Optional<WritableSubResource> targetResource = default;
-            Optional<IList<DnsARecordInfo>> aRecords = default;
-            Optional<IList<DnsAaaaRecordInfo>> aaaaRecords = default;
-            Optional<IList<DnsMXRecordInfo>> mxRecords = default;
-            Optional<IList<DnsNSRecordInfo>> nsRecords = default;
-            Optional<IList<DnsPtrRecordInfo>> ptrRecords = default;
-            Optional<IList<DnsSrvRecordInfo>> srvRecords = default;
-            Optional<IList<DnsTxtRecordInfo>> txtRecords = default;
-            Optional<DnsCnameRecordInfo> cnameRecord = default;
-            Optional<DnsSoaRecordInfo> soaRecord = default;
-            Optional<IList<DnsCaaRecordInfo>> caaRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            string provisioningState = default;
+            WritableSubResource targetResource = default;
+            IList<DnsARecordInfo> aRecords = default;
+            IList<DnsAaaaRecordInfo> aaaaRecords = default;
+            IList<DnsMXRecordInfo> mxRecords = default;
+            IList<DnsNSRecordInfo> nsRecords = default;
+            IList<DnsPtrRecordInfo> ptrRecords = default;
+            IList<DnsSrvRecordInfo> srvRecords = default;
+            IList<DnsTxtRecordInfo> txtRecords = default;
+            DnsCnameRecordInfo cnameRecord = default;
+            DnsSoaRecordInfo soaRecord = default;
+            IList<DnsCaaRecordInfo> caaRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,6 @@ namespace Azure.ResourceManager.Dns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -256,7 +255,6 @@ namespace Azure.ResourceManager.Dns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
@@ -266,7 +264,6 @@ namespace Azure.ResourceManager.Dns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -452,7 +449,28 @@ namespace Azure.ResourceManager.Dns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords), serializedAdditionalRawData);
+            return new DnsRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                provisioningState,
+                targetResource,
+                aRecords ?? new ChangeTrackingList<DnsARecordInfo>(),
+                aaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>(),
+                mxRecords ?? new ChangeTrackingList<DnsMXRecordInfo>(),
+                nsRecords ?? new ChangeTrackingList<DnsNSRecordInfo>(),
+                ptrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>(),
+                srvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>(),
+                txtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>(),
+                cnameRecord,
+                soaRecord,
+                caaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>(),
+                serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<DnsRecordData>.Write(ModelReaderWriterOptions options)
         {

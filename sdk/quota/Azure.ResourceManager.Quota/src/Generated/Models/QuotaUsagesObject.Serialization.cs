@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             int value = default;
-            Optional<QuotaUsagesType> usagesType = default;
+            QuotaUsagesType? usagesType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsagesObject(value, Optional.ToNullable(usagesType), serializedAdditionalRawData);
+            return new QuotaUsagesObject(value, usagesType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsagesObject>.Write(ModelReaderWriterOptions options)

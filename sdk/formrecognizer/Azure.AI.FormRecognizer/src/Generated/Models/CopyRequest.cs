@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -20,9 +19,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/> or <paramref name="copyAuthorization"/> is null. </exception>
         public CopyRequest(string targetResourceId, string targetResourceRegion, CopyAuthorizationResult copyAuthorization)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(targetResourceRegion, nameof(targetResourceRegion));
-            Argument.AssertNotNull(copyAuthorization, nameof(copyAuthorization));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+            if (targetResourceRegion == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceRegion));
+            }
+            if (copyAuthorization == null)
+            {
+                throw new ArgumentNullException(nameof(copyAuthorization));
+            }
 
             TargetResourceId = targetResourceId;
             TargetResourceRegion = targetResourceRegion;

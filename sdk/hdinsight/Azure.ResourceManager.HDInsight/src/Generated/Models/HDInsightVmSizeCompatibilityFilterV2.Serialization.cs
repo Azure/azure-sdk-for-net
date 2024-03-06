@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -139,15 +140,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<HDInsightFilterMode> filterMode = default;
-            Optional<IReadOnlyList<string>> regions = default;
-            Optional<IReadOnlyList<string>> clusterFlavors = default;
-            Optional<IReadOnlyList<string>> nodeTypes = default;
-            Optional<IReadOnlyList<string>> clusterVersions = default;
-            Optional<IReadOnlyList<HDInsightOSType>> osType = default;
-            Optional<IReadOnlyList<string>> vmSizes = default;
-            Optional<string> espApplied = default;
-            Optional<string> computeIsolationSupported = default;
+            HDInsightFilterMode? filterMode = default;
+            IReadOnlyList<string> regions = default;
+            IReadOnlyList<string> clusterFlavors = default;
+            IReadOnlyList<string> nodeTypes = default;
+            IReadOnlyList<string> clusterVersions = default;
+            IReadOnlyList<HDInsightOSType> osType = default;
+            IReadOnlyList<string> vmSizes = default;
+            string espApplied = default;
+            string computeIsolationSupported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +262,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), Optional.ToList(regions), Optional.ToList(clusterFlavors), Optional.ToList(nodeTypes), Optional.ToList(clusterVersions), Optional.ToList(osType), Optional.ToList(vmSizes), espApplied.Value, computeIsolationSupported.Value, serializedAdditionalRawData);
+            return new HDInsightVmSizeCompatibilityFilterV2(
+                filterMode,
+                regions ?? new ChangeTrackingList<string>(),
+                clusterFlavors ?? new ChangeTrackingList<string>(),
+                nodeTypes ?? new ChangeTrackingList<string>(),
+                clusterVersions ?? new ChangeTrackingList<string>(),
+                osType ?? new ChangeTrackingList<HDInsightOSType>(),
+                vmSizes ?? new ChangeTrackingList<string>(),
+                espApplied,
+                computeIsolationSupported,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Write(ModelReaderWriterOptions options)

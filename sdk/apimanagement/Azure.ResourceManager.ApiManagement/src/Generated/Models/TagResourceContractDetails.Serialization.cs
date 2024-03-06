@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -82,16 +83,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             AssociatedTagProperties tag = default;
-            Optional<AssociatedApiProperties> api = default;
-            Optional<AssociatedOperationProperties> operation = default;
-            Optional<AssociatedProductProperties> product = default;
+            AssociatedApiProperties api = default;
+            AssociatedOperationProperties operation = default;
+            AssociatedProductProperties product = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"u8))
                 {
-                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value);
+                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("api"u8))
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value);
+                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operation"u8))
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value);
+                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("product"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value);
+                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagResourceContractDetails(tag, api.Value, operation.Value, product.Value, serializedAdditionalRawData);
+            return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagResourceContractDetails>.Write(ModelReaderWriterOptions options)

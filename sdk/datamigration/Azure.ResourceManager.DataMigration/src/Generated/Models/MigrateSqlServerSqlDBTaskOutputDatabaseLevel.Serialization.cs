@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -146,21 +147,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationState> state = default;
-            Optional<DatabaseMigrationStage> stage = default;
-            Optional<string> statusMessage = default;
-            Optional<string> message = default;
-            Optional<long> numberOfObjects = default;
-            Optional<long> numberOfObjectsCompleted = default;
-            Optional<long> errorCount = default;
-            Optional<string> errorPrefix = default;
-            Optional<string> resultPrefix = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> objectSummary = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            MigrationState? state = default;
+            DatabaseMigrationStage? stage = default;
+            string statusMessage = default;
+            string message = default;
+            long? numberOfObjects = default;
+            long? numberOfObjectsCompleted = default;
+            long? errorCount = default;
+            string errorPrefix = default;
+            string resultPrefix = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string objectSummary = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -289,7 +290,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), objectSummary.Value);
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                startedOn,
+                endedOn,
+                state,
+                stage,
+                statusMessage,
+                message,
+                numberOfObjects,
+                numberOfObjectsCompleted,
+                errorCount,
+                errorPrefix,
+                resultPrefix,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                objectSummary);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

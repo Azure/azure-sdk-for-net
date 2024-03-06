@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 return null;
             }
             IReadOnlyList<QumuloFileSystemResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     List<QumuloFileSystemResourceData> array = new List<QumuloFileSystemResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(item));
+                        array.Add(QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QumuloFileSystemResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new QumuloFileSystemResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QumuloFileSystemResourceListResult>.Write(ModelReaderWriterOptions options)

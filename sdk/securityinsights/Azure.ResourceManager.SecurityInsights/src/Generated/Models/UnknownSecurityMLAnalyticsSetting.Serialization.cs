@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+            return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
         }
 
         internal static UnknownSecurityMLAnalyticsSetting DeserializeUnknownSecurityMLAnalyticsSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             SecurityMLAnalyticsSettingsKind kind = "Unknown";
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSecurityMLAnalyticsSetting(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new UnknownSecurityMLAnalyticsSetting(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityMLAnalyticsSettingData>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+                        return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingData)} does not support '{options.Format}' format.");

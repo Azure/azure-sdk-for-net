@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -49,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<TokenFilterName>> tokenFilters = default;
-            Optional<IList<CharFilterName>> charFilters = default;
+            IList<TokenFilterName> tokenFilters = default;
+            IList<CharFilterName> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomNormalizer(odataType, name, Optional.ToList(tokenFilters), Optional.ToList(charFilters));
+            return new CustomNormalizer(odataType, name, tokenFilters ?? new ChangeTrackingList<TokenFilterName>(), charFilters ?? new ChangeTrackingList<CharFilterName>());
         }
     }
 }

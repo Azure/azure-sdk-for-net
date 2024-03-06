@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -37,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeEntityReferenceType> type = default;
-            Optional<string> referenceName = default;
+            IntegrationRuntimeEntityReferenceType? type = default;
+            string referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -56,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EntityReference(Optional.ToNullable(type), referenceName.Value);
+            return new EntityReference(type, referenceName);
         }
 
         internal partial class EntityReferenceConverter : JsonConverter<EntityReference>

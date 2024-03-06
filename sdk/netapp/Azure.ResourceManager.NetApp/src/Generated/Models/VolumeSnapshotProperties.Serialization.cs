@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> snapshotPolicyId = default;
+            ResourceIdentifier snapshotPolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeSnapshotProperties(snapshotPolicyId.Value, serializedAdditionalRawData);
+            return new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeSnapshotProperties>.Write(ModelReaderWriterOptions options)

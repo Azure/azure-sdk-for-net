@@ -53,9 +53,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="msiResourceId"/>, <paramref name="msiClientId"/> or <paramref name="msiObjectId"/> is null. </exception>
         public HDInsightIdentityProfile(ResourceIdentifier msiResourceId, string msiClientId, string msiObjectId)
         {
-            Argument.AssertNotNull(msiResourceId, nameof(msiResourceId));
-            Argument.AssertNotNull(msiClientId, nameof(msiClientId));
-            Argument.AssertNotNull(msiObjectId, nameof(msiObjectId));
+            if (msiResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(msiResourceId));
+            }
+            if (msiClientId == null)
+            {
+                throw new ArgumentNullException(nameof(msiClientId));
+            }
+            if (msiObjectId == null)
+            {
+                throw new ArgumentNullException(nameof(msiObjectId));
+            }
 
             MsiResourceId = msiResourceId;
             MsiClientId = msiClientId;

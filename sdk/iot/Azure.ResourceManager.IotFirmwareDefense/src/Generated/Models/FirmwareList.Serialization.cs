@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FirmwareData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IotFirmwareData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FirmwareData> array = new List<FirmwareData>();
+                    List<IotFirmwareData> array = new List<IotFirmwareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareData.DeserializeFirmwareData(item));
+                        array.Add(IotFirmwareData.DeserializeIotFirmwareData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FirmwareList(value ?? new ChangeTrackingList<IotFirmwareData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareList>.Write(ModelReaderWriterOptions options)

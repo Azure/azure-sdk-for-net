@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IList<PrivateAccessSubnet>> subnets = default;
+            string name = default;
+            int? key = default;
+            ResourceIdentifier resourceId = default;
+            IList<PrivateAccessSubnet> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PrivateAccessSubnet> array = new List<PrivateAccessSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item));
+                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item, options));
                     }
                     subnets = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateAccessVirtualNetwork(name.Value, Optional.ToNullable(key), resourceId.Value, Optional.ToList(subnets), serializedAdditionalRawData);
+            return new PrivateAccessVirtualNetwork(name, key, resourceId, subnets ?? new ChangeTrackingList<PrivateAccessSubnet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateAccessVirtualNetwork>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ChangeAnalysis;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<IReadOnlyList<string>> initiatedByList = default;
-            Optional<ChangeType> changeType = default;
-            Optional<IReadOnlyList<PropertyChange>> propertyChanges = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? timeStamp = default;
+            IReadOnlyList<string> initiatedByList = default;
+            ChangeType? changeType = default;
+            IReadOnlyList<PropertyChange> propertyChanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<PropertyChange> array = new List<PropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PropertyChange.DeserializePropertyChange(item));
+                        array.Add(PropertyChange.DeserializePropertyChange(item, options));
                     }
                     propertyChanges = array;
                     continue;
@@ -169,7 +170,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), Optional.ToList(initiatedByList), Optional.ToNullable(changeType), Optional.ToList(propertyChanges), serializedAdditionalRawData);
+            return new ChangeProperties(
+                resourceId,
+                timeStamp,
+                initiatedByList ?? new ChangeTrackingList<string>(),
+                changeType,
+                propertyChanges ?? new ChangeTrackingList<PropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeProperties>.Write(ModelReaderWriterOptions options)

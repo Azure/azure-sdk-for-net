@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<int> days = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<ContainerRegistryPolicyStatus> status = default;
+            int? days = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            ContainerRegistryPolicyStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryRetentionPolicy(Optional.ToNullable(days), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ContainerRegistryRetentionPolicy(days, lastUpdatedTime, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRetentionPolicy>.Write(ModelReaderWriterOptions options)

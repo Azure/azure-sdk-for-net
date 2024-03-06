@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BlobReferenceForConsumptionDto> blobReferenceForConsumption = default;
-            Optional<string> pendingUploadId = default;
-            Optional<PendingUploadType> pendingUploadType = default;
+            BlobReferenceForConsumptionDto blobReferenceForConsumption = default;
+            string pendingUploadId = default;
+            PendingUploadType? pendingUploadType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         blobReferenceForConsumption = null;
                         continue;
                     }
-                    blobReferenceForConsumption = BlobReferenceForConsumptionDto.DeserializeBlobReferenceForConsumptionDto(property.Value);
+                    blobReferenceForConsumption = BlobReferenceForConsumptionDto.DeserializeBlobReferenceForConsumptionDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pendingUploadId"u8))
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PendingUploadResponseDto(blobReferenceForConsumption.Value, pendingUploadId.Value, Optional.ToNullable(pendingUploadType), serializedAdditionalRawData);
+            return new PendingUploadResponseDto(blobReferenceForConsumption, pendingUploadId, pendingUploadType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PendingUploadResponseDto>.Write(ModelReaderWriterOptions options)

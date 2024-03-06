@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<SqlMetricUnitType> unit = default;
-            Optional<SqlMetricName> name = default;
-            Optional<IReadOnlyList<SqlMetricValue>> metricValues = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string timeGrain = default;
+            SqlMetricUnitType? unit = default;
+            SqlMetricName name = default;
+            IReadOnlyList<SqlMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricValues"u8))
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricValue> array = new List<SqlMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item));
+                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item, options));
                     }
                     metricValues = array;
                     continue;
@@ -170,7 +171,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), serializedAdditionalRawData);
+            return new SqlMetric(
+                startTime,
+                endTime,
+                timeGrain,
+                unit,
+                name,
+                metricValues ?? new ChangeTrackingList<SqlMetricValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetric>.Write(ModelReaderWriterOptions options)
