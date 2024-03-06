@@ -324,9 +324,9 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        public async Task MetricsBatchQueryAsync()
+        public async Task MetricsQueryResourcesAsync()
         {
-            // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
+            // MetricsQueryResources endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
             if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
             {
                 MetricsClient client = CreateMetricsClient();
@@ -340,7 +340,7 @@ namespace Azure.Monitor.Query.Tests
 
                 MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
                 Assert.AreEqual(1, metricsQueryResults.Values.Count);
-                Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].Metrics[0].Id);
+                Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
                 Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
                 for (int i = 0; i < metricsQueryResults.Values.Count; i++)
                 {
@@ -357,7 +357,7 @@ namespace Azure.Monitor.Query.Tests
 
         [Test]
         [SyncOnly]
-        public void MetricsBatchInvalid()
+        public void MetricsQueryResourcesInvalid()
         {
             // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
             if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
