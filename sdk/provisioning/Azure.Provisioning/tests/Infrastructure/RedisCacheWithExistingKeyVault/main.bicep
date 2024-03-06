@@ -4,7 +4,7 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource keyVault_gudpA4XUx 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+resource keyVault_vxw9QYjTK 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
   name: 'existingVault'
 }
 
@@ -22,8 +22,8 @@ resource redisCache_YE3v6ym48 'Microsoft.Cache/Redis@2020-06-01' = {
   }
 }
 
-resource keyVaultSecret_BjriHg4Dh 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_gudpA4XUx
+resource keyVaultSecret_PGXfP6Z9q 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_vxw9QYjTK
   name: 'primaryConnectionString'
   location: location
   properties: {
@@ -31,8 +31,8 @@ resource keyVaultSecret_BjriHg4Dh 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource keyVaultSecret_pekkgeXRu 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_gudpA4XUx
+resource keyVaultSecret_bTFii2gaH 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_vxw9QYjTK
   name: 'secondaryConnectionStrin'
   location: location
   properties: {
@@ -40,4 +40,4 @@ resource keyVaultSecret_pekkgeXRu 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-output vaultUri string = keyVault_gudpA4XUx.properties.vaultUri
+output vaultUri string = keyVault_vxw9QYjTK.properties.vaultUri

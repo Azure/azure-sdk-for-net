@@ -147,7 +147,7 @@ namespace Azure.Provisioning
             {
                 stream.WriteLine();
                 stream.WriteLine($"resource {resource.Name} '{resource.Id.ResourceType}@{resource.Version}' existing = {{");
-                stream.WriteLine($"  name: '{resource.Id.Name}'");
+                stream.WriteLine($"  name: {resource.Id.Name}");
                 stream.WriteLine($"}}");
             }
         }

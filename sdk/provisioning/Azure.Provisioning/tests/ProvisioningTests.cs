@@ -240,7 +240,7 @@ namespace Azure.Provisioning.Tests
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
-            var kv = KeyVault.FromExisting(infrastructure, name: "existingVault");
+            var kv = KeyVault.FromExisting(infrastructure, name: "'existingVault'");
             kv.AddOutput(data => data.Properties.VaultUri, "vaultUri");
 
             // can't mutate existing resource
@@ -576,6 +576,35 @@ namespace Azure.Provisioning.Tests
             Assert.AreEqual(1, testFrontEndWebSite.GetOutputs().Count());
 
             await ValidateBicepAsync();
+        }
+
+        [RecordedTest]
+        public void ExistingResources()
+        {
+            var infra = new TestInfrastructure();
+            var rg = infra.AddResourceGroup();
+            infra.AddResource(AppConfigurationStore.FromExisting(infra, "'existingAppConfig'", rg));
+            var kv = KeyVault.FromExisting(infra, "'existingVault'", rg);
+            infra.AddResource(kv);
+            var sa = StorageAccount.FromExisting(infra, "'existingStorage'", rg);
+            infra.AddResource(sa);
+            var web = WebSite.FromExisting(infra, "'existingWebSite'", rg);
+            infra.AddResource(web);
+            infra.AddResource(KeyVaultSecret.FromExisting(infra, "'existingSecret'", kv));
+            infra.AddResource(PostgreSqlFlexibleServer.FromExisting(infra, "'existingPostgreSql'", rg));
+            var sql = SqlServer.FromExisting(infra, "'existingSqlServer'", rg);
+            infra.AddResource(sql);
+            infra.AddResource(Redis.RedisCache.FromExisting(infra, "'existingRedis'", rg));
+            infra.AddResource(DeploymentScript.FromExisting(infra, "'existingDeploymentScript'", rg));
+            infra.AddResource(SqlDatabase.FromExisting(infra, "'existingSqlDatabase'", sql));
+            infra.AddResource(SqlFirewallRule.FromExisting(infra, "'existingSqlFirewallRule'", sql));
+            infra.AddResource(BlobService.FromExisting(infra, "'existingBlobService'", sa));
+            infra.AddResource(AppServicePlan.FromExisting(infra, "'existingAppServicePlan'", rg));
+            infra.AddResource(WebSiteConfigLogs.FromExisting(infra, "'existingWebSiteConfigLogs'", web));
+            infra.AddResource(WebSitePublishingCredentialPolicy.FromExisting(infra, "'existingWebSitePublishingCredentialPolicy'", web));
+            infra.Build(GetOutputPath());
+            //these resources can't be verified since they won't exist.
+            //await ValidateBicepAsync();
         }
 
         public async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)

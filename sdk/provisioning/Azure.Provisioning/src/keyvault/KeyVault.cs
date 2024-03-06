@@ -16,9 +16,10 @@ namespace Azure.Provisioning.KeyVaults
     public class KeyVault : Resource<KeyVaultData>
     {
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults";
+        private static readonly Func<string, KeyVaultData> Empty = (name) => ArmKeyVaultModelFactory.KeyVaultData();
 
         /// <summary>
-        /// Creates a new instance of the <see cref="KeyVault"/> class referencing an existing KeyVault.
+        /// Creates a new instance of the <see cref="KeyVault"/> class referencing an existing instance.
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="name">The resource name.</param>
@@ -36,12 +37,7 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="location">The location.</param>
         /// <param name="parent"></param>
         public KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default)
-            : this(scope, parent, name, version, location, false)
-        {
-        }
-
-        private KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default, bool isExisting = false)
-            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultData(
+            : this(scope, parent, name, version, location, false, (name) => ArmKeyVaultModelFactory.KeyVaultData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -58,18 +54,19 @@ namespace Azure.Provisioning.KeyVaults
                             }
                         })
                     } : default,
-                    enableRbacAuthorization: true)),
-                isExisting: isExisting)
+                    enableRbacAuthorization: true)))
         {
-            if (!isExisting)
-            {
-                AssignProperty(data => data.Name, GetAzureName(scope, name));
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
 
-                if (scope.Root.Properties.TenantId == Guid.Empty)
-                {
-                    AssignProperty(kv => kv.Properties.TenantId, Tenant.TenantIdExpression);
-                }
+            if (scope.Root.Properties.TenantId == Guid.Empty)
+            {
+                AssignProperty(kv => kv.Properties.TenantId, Tenant.TenantIdExpression);
             }
+        }
+
+        private KeyVault(IConstruct scope, ResourceGroup? parent = default, string name = "kv", string version = "2023-02-01", AzureLocation? location = default, bool isExisting = false, Func<string, KeyVaultData>? creator = null)
+            : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting: isExisting)
+        {
         }
 
         /// <summary>
