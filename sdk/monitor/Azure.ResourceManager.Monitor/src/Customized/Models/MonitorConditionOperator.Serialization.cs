@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorConditionOperator.GreaterThanOrEqual => "GreaterThanOrEqual",
             MonitorConditionOperator.LessThan => "LessThan",
             MonitorConditionOperator.LessThanOrEqual => "LessThanOrEqual",
+            // Original enum value is `Equals`, changed to actual service response `Equal`
             MonitorConditionOperator.EqualsValue => "Equal",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorConditionOperator value.")
         };
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThanOrEqual")) return MonitorConditionOperator.GreaterThanOrEqual;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan")) return MonitorConditionOperator.LessThan;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThanOrEqual")) return MonitorConditionOperator.LessThanOrEqual;
+            // Original enum value is `Equals`, changed to actual service response `Equal`
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equal")) return MonitorConditionOperator.EqualsValue;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorConditionOperator value.");
         }
