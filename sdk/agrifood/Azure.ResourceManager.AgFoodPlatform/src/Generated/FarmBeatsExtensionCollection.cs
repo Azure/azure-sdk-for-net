@@ -81,14 +81,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
         public virtual async Task<Response<FarmBeatsExtensionResource>> GetAsync(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.Get");
             scope.Start();
@@ -133,14 +126,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
         public virtual Response<FarmBeatsExtensionResource> Get(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.Get");
             scope.Start();
@@ -261,14 +247,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.Exists");
             scope.Start();
@@ -311,14 +290,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
         public virtual Response<bool> Exists(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.Exists");
             scope.Start();
@@ -361,14 +333,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
         public virtual async Task<NullableResponse<FarmBeatsExtensionResource>> GetIfExistsAsync(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.GetIfExists");
             scope.Start();
@@ -413,14 +378,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="farmBeatsExtensionId"/> is null. </exception>
         public virtual NullableResponse<FarmBeatsExtensionResource> GetIfExists(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var scope = _farmBeatsExtensionClientDiagnostics.CreateScope("FarmBeatsExtensionCollection.GetIfExists");
             scope.Start();

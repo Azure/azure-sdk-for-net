@@ -51,14 +51,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new ConversationsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -88,18 +82,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CreateProjectAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CreateProject");
             scope.Start();
@@ -135,18 +119,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CreateProject(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CreateProject");
             scope.Start();
@@ -181,14 +155,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProject");
             scope.Start();
@@ -223,14 +190,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProject");
             scope.Start();
@@ -266,22 +226,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeploymentAsync(string projectName, string deploymentName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeployment");
             scope.Start();
@@ -317,22 +263,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployment(string,string,RequestContext)']/*" />
         public virtual Response GetDeployment(string projectName, string deploymentName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeployment");
             scope.Start();
@@ -369,30 +301,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetDeploymentJobStatusAsync(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeploymentJobStatus");
             scope.Start();
@@ -429,30 +340,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentJobStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetDeploymentJobStatus(string projectName, string deploymentName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetDeploymentJobStatus");
             scope.Start();
@@ -488,22 +378,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSwapDeploymentsJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetSwapDeploymentsJobStatus");
             scope.Start();
@@ -539,22 +415,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSwapDeploymentsJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetSwapDeploymentsJobStatus(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetSwapDeploymentsJobStatus");
             scope.Start();
@@ -590,22 +452,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetExportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetExportProjectJobStatus");
             scope.Start();
@@ -641,22 +489,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetExportProjectJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetExportProjectJobStatus(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetExportProjectJobStatus");
             scope.Start();
@@ -692,22 +526,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetImportProjectJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetImportProjectJobStatus");
             scope.Start();
@@ -743,22 +563,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetImportProjectJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetImportProjectJobStatus(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetImportProjectJobStatus");
             scope.Start();
@@ -794,22 +600,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainedModel");
             scope.Start();
@@ -845,22 +637,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModel(string,string,RequestContext)']/*" />
         public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainedModel");
             scope.Start();
@@ -896,22 +674,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteTrainedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteTrainedModel");
             scope.Start();
@@ -947,22 +711,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteTrainedModel(string,string,RequestContext)']/*" />
         public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteTrainedModel");
             scope.Start();
@@ -998,22 +748,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetModelEvaluationSummary");
             scope.Start();
@@ -1049,22 +785,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,RequestContext)']/*" />
         public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetModelEvaluationSummary");
             scope.Start();
@@ -1101,30 +823,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotJobStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetLoadSnapshotJobStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotJobStatus");
             scope.Start();
@@ -1161,30 +862,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetLoadSnapshotJobStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetLoadSnapshotJobStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetLoadSnapshotJobStatus");
             scope.Start();
@@ -1220,22 +900,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainingJobStatusAsync(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainingJobStatus");
             scope.Start();
@@ -1271,22 +937,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobStatus(string,string,RequestContext)']/*" />
         public virtual Response GetTrainingJobStatus(string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetTrainingJobStatus");
             scope.Start();
@@ -1321,14 +973,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectDeletionJobStatusAsync(string jobId, RequestContext context = null)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProjectDeletionJobStatus");
             scope.Start();
@@ -1363,14 +1008,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetProjectDeletionJobStatus(string,RequestContext)']/*" />
         public virtual Response GetProjectDeletionJobStatus(string jobId, RequestContext context = null)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.GetProjectDeletionJobStatus");
             scope.Start();
@@ -1447,14 +1085,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDeploymentsAsync(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
@@ -1480,14 +1111,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDeployments(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
@@ -1513,14 +1137,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
@@ -1546,14 +1163,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModels(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainedModels(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, context);
@@ -1581,26 +1191,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
-            if (stringIndexType == null)
-            {
-                throw new ArgumentNullException(nameof(stringIndexType));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
@@ -1628,26 +1221,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
-            if (stringIndexType == null)
-            {
-                throw new ArgumentNullException(nameof(stringIndexType));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, context);
@@ -1673,14 +1249,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainingJobsAsync(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
@@ -1706,14 +1275,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobs(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainingJobs(string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, context);
@@ -1738,10 +1300,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSupportedLanguagesAsync(string projectKind, RequestContext context = null)
         {
-            if (projectKind == null)
-            {
-                throw new ArgumentNullException(nameof(projectKind));
-            }
+            Argument.AssertNotNull(projectKind, nameof(projectKind));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
@@ -1766,10 +1325,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSupportedLanguages(string projectKind, RequestContext context = null)
         {
-            if (projectKind == null)
-            {
-                throw new ArgumentNullException(nameof(projectKind));
-            }
+            Argument.AssertNotNull(projectKind, nameof(projectKind));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, context);
@@ -1840,10 +1396,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, RequestContext context = null)
         {
-            if (projectKind == null)
-            {
-                throw new ArgumentNullException(nameof(projectKind));
-            }
+            Argument.AssertNotNull(projectKind, nameof(projectKind));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
@@ -1868,10 +1421,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersions(string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, RequestContext context = null)
         {
-            if (projectKind == null)
-            {
-                throw new ArgumentNullException(nameof(projectKind));
-            }
+            Argument.AssertNotNull(projectKind, nameof(projectKind));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, context);
@@ -1898,14 +1448,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteProject");
             scope.Start();
@@ -1941,14 +1484,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteProject");
             scope.Start();
@@ -1988,18 +1524,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProjectAsync(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (stringIndexType == null)
-            {
-                throw new ArgumentNullException(nameof(stringIndexType));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ExportProject");
             scope.Start();
@@ -2039,18 +1565,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProject(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (stringIndexType == null)
-            {
-                throw new ArgumentNullException(nameof(stringIndexType));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ExportProject");
             scope.Start();
@@ -2088,18 +1604,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ImportProjectAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ImportProjectAsync(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ImportProject");
             scope.Start();
@@ -2137,18 +1643,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ImportProject(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> ImportProject(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.ImportProject");
             scope.Start();
@@ -2185,18 +1681,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> TrainAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.Train");
             scope.Start();
@@ -2233,18 +1719,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='Train(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> Train(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.Train");
             scope.Start();
@@ -2281,18 +1757,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='SwapDeploymentsAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.SwapDeployments");
             scope.Start();
@@ -2329,18 +1795,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='SwapDeployments(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> SwapDeployments(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.SwapDeployments");
             scope.Start();
@@ -2378,26 +1834,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeployProject");
             scope.Start();
@@ -2435,26 +1874,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeployProject(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeployProject");
             scope.Start();
@@ -2491,22 +1913,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeploymentAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteDeploymentAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteDeployment");
             scope.Start();
@@ -2543,22 +1951,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='DeleteDeployment(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteDeployment(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
-            if (deploymentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentName));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.DeleteDeployment");
             scope.Start();
@@ -2595,22 +1989,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='LoadSnapshotAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.LoadSnapshot");
             scope.Start();
@@ -2647,22 +2027,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='LoadSnapshot(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (trainedModelLabel == null)
-            {
-                throw new ArgumentNullException(nameof(trainedModelLabel));
-            }
-            if (trainedModelLabel.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(trainedModelLabel));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.LoadSnapshot");
             scope.Start();
@@ -2699,22 +2065,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJobAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CancelTrainingJobAsync(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CancelTrainingJob");
             scope.Start();
@@ -2751,22 +2103,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='CancelTrainingJob(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CancelTrainingJob(WaitUntil waitUntil, string projectName, string jobId, RequestContext context = null)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringClient.CancelTrainingJob");
             scope.Start();

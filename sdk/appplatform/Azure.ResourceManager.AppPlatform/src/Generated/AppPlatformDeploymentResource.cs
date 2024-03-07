@@ -283,10 +283,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformDeploymentResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformDeploymentResource> Update(WaitUntil waitUntil, AppPlatformDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.Update");
             scope.Start();
@@ -955,10 +949,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> GenerateHeapDumpAsync(WaitUntil waitUntil, ApplicationDiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.GenerateHeapDump");
             scope.Start();
@@ -1004,10 +995,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation GenerateHeapDump(WaitUntil waitUntil, ApplicationDiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.GenerateHeapDump");
             scope.Start();
@@ -1053,10 +1041,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> GenerateThreadDumpAsync(WaitUntil waitUntil, ApplicationDiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.GenerateThreadDump");
             scope.Start();
@@ -1102,10 +1087,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation GenerateThreadDump(WaitUntil waitUntil, ApplicationDiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.GenerateThreadDump");
             scope.Start();
@@ -1151,10 +1133,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> StartJfrAsync(WaitUntil waitUntil, ApplicationDiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.StartJfr");
             scope.Start();
@@ -1200,10 +1179,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation StartJfr(WaitUntil waitUntil, ApplicationDiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appPlatformDeploymentDeploymentsClientDiagnostics.CreateScope("AppPlatformDeploymentResource.StartJfr");
             scope.Start();
