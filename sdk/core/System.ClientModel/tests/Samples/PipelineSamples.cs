@@ -69,6 +69,9 @@ public class PipelineSamples
                 beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         }
 
+        // Service method takes an input model representing a service resource
+        // and returns `ClientResult<T>` holding an output model representing
+        // the value returned in the service response.
         public ClientResult<SampleResource> UpdateResource(SampleResource resource)
         {
             // Create a message that can be sent via the client pipeline.
