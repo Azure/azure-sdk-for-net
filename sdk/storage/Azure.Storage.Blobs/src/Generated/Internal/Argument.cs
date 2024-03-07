@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Common
 {
     internal static class Argument
     {

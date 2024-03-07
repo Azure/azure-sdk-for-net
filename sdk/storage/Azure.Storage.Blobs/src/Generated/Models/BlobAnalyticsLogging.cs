@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {

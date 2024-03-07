@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.MixedReality.Authentication
+namespace Azure.MixedReality.Common
 {
     internal static class Argument
     {

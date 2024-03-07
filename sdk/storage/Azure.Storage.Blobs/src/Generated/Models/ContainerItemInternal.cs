@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -21,8 +21,8 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ContainerItemInternal(string name, ContainerPropertiesInternal properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Common.Argument.AssertNotNull(name, nameof(name));
+            Common.Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Properties = properties;
