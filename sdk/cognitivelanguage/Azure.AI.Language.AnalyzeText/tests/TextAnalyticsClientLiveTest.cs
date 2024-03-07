@@ -205,8 +205,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        [SyncOnly]
-        public void RecognizePii()
+        public async Task AnalyzeText_RecognizePii()
         {
             string documentA =
                 "Parker Doe has repaid all of their loans as of 2020-04-25. Their SSN is 859-98-0987. To contact them,"
@@ -224,7 +223,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 }
             };
 
-            Response<AnalyzeTextTaskResult> response = Client.AnalyzeText(body);
+            Response<AnalyzeTextTaskResult> response = await Client.AnalyzeTextAsync(body);
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
             PIITaskResult piiTaskResult = (PIITaskResult)response.Value;
@@ -249,7 +248,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeLinkedEntities()
+        public async Task AnalyzeText_RecognizeLinkedEntities()
         {
             string documentA =
                 "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
@@ -304,7 +303,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        public void HealthcareLROTask()
+        public async Task AnalyzeText_HealthcareLROTask()
         {
             string documentA = "Prescribed 100mg ibuprofen, taken twice daily.";
 
@@ -321,7 +320,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 new HealthcareLROTask()
             });
 
-            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -378,7 +377,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        public void CustomEntitiesLROTask()
+        public async Task AnalyzeText_CustomEntitiesLROTask()
         {
             string documentA =
                 "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
@@ -404,7 +403,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Parameters = new CustomEntitiesTaskContent(projectName, deploymentName)
                 }
             });
-            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -440,7 +439,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        public void CustomSingleLabelClassificationLROTask()
+        public async Task AnalyzeText_CustomSingleLabelClassificationLROTask()
         {
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
@@ -464,7 +463,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Parameters = new CustomSingleLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
-            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -496,7 +495,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        public void CustomMultiLabelClassificationLROTask()
+        public async Task AnalyzeText_CustomMultiLabelClassificationLROTask()
         {
             string documentA =
                 "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
@@ -520,7 +519,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Parameters = new CustomMultiLabelClassificationTaskContent(projectName, deploymentName)
                 }
             });
-            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -552,9 +551,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         }
 
         [Test]
-        [SyncOnly]
         [ServiceVersion(Min = AnalyzeTextClientOptions.ServiceVersion.V2023_04_01)]
-        public void ExtractiveSummarizationLROTask()
+        public async Task AnalyzeText_ExtractiveSummarizationLROTaskAsync()
         {
             string documentA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
@@ -606,7 +604,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 new ExtractiveSummarizationLROTask()
             });
 
-            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
@@ -640,7 +638,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
         [Test]
         [ServiceVersion(Min = AnalyzeTextClientOptions.ServiceVersion.V2023_04_01)]
-        public void AbstractiveSummarizationLROTask()
+        public async Task AnalyzeText_AbstractiveSummarizationLROTaskAsync()
         {
             string documentA =
                 "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure"
@@ -692,7 +690,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 new AbstractiveSummarizationLROTask()
             });
 
-            Operation operation = Client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+            Operation operation = await Client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
             Assert.IsNotNull(operation);
             AnalyzeTextJobState analyzeTextJobState = AnalyzeTextJobState.FromResponse(operation.GetRawResponse());
             Assert.IsNotNull(analyzeTextJobState);
