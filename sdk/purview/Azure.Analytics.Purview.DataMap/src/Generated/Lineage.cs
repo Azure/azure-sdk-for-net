@@ -60,14 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetLineageAsync(string,LineageDirection,int?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasLineageInfo>> GetLineageAsync(string guid, LineageDirection direction, int? depth = null, CancellationToken cancellationToken = default)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetLineageAsync(guid, direction.ToString(), depth, context).ConfigureAwait(false);
@@ -84,14 +77,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetLineage(string,LineageDirection,int?,CancellationToken)']/*" />
         public virtual Response<AtlasLineageInfo> GetLineage(string guid, LineageDirection direction, int? depth = null, CancellationToken cancellationToken = default)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetLineage(guid, direction.ToString(), depth, context);
@@ -124,18 +110,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetLineageAsync(string,string,int?,RequestContext)']/*" />
         public virtual async Task<Response> GetLineageAsync(string guid, string direction, int? depth = null, RequestContext context = null)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
-            if (direction == null)
-            {
-                throw new ArgumentNullException(nameof(direction));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
 
             using var scope = ClientDiagnostics.CreateScope("Lineage.GetLineage");
             scope.Start();
@@ -177,18 +153,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetLineage(string,string,int?,RequestContext)']/*" />
         public virtual Response GetLineage(string guid, string direction, int? depth = null, RequestContext context = null)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
-            if (direction == null)
-            {
-                throw new ArgumentNullException(nameof(direction));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
 
             using var scope = ClientDiagnostics.CreateScope("Lineage.GetLineage");
             scope.Start();
@@ -215,14 +181,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetNextPageAsync(string,LineageDirection,int?,int?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasLineageInfo>> GetNextPageAsync(string guid, LineageDirection direction, int? offset = null, int? limit = null, CancellationToken cancellationToken = default)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetNextPageAsync(guid, direction.ToString(), offset, limit, context).ConfigureAwait(false);
@@ -240,14 +199,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetNextPage(string,LineageDirection,int?,int?,CancellationToken)']/*" />
         public virtual Response<AtlasLineageInfo> GetNextPage(string guid, LineageDirection direction, int? offset = null, int? limit = null, CancellationToken cancellationToken = default)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetNextPage(guid, direction.ToString(), offset, limit, context);
@@ -281,18 +233,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetNextPageAsync(string,string,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> GetNextPageAsync(string guid, string direction, int? offset = null, int? limit = null, RequestContext context = null)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
-            if (direction == null)
-            {
-                throw new ArgumentNullException(nameof(direction));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
 
             using var scope = ClientDiagnostics.CreateScope("Lineage.GetNextPage");
             scope.Start();
@@ -335,18 +277,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetNextPage(string,string,int?,int?,RequestContext)']/*" />
         public virtual Response GetNextPage(string guid, string direction, int? offset = null, int? limit = null, RequestContext context = null)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
-            if (direction == null)
-            {
-                throw new ArgumentNullException(nameof(direction));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(direction, nameof(direction));
 
             using var scope = ClientDiagnostics.CreateScope("Lineage.GetNextPage");
             scope.Start();
@@ -393,14 +325,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,LineageDirection,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasLineageInfo>> GetByUniqueAttributeAsync(string typeName, LineageDirection direction, int? depth = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
-            }
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetByUniqueAttributeAsync(typeName, direction.ToString(), depth, attribute, context).ConfigureAwait(false);
@@ -438,14 +363,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,LineageDirection,int?,string,CancellationToken)']/*" />
         public virtual Response<AtlasLineageInfo> GetByUniqueAttribute(string typeName, LineageDirection direction, int? depth = null, string attribute = null, CancellationToken cancellationToken = default)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
-            }
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetByUniqueAttribute(typeName, direction.ToString(), depth, attribute, context);
@@ -497,18 +415,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,string,int?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetByUniqueAttributeAsync(string typeName, string direction, int? depth = null, string attribute = null, RequestContext context = null)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
-            }
-            if (direction == null)
-            {
-                throw new ArgumentNullException(nameof(direction));
-            }
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(direction, nameof(direction));
 
             using var scope = ClientDiagnostics.CreateScope("Lineage.GetByUniqueAttribute");
             scope.Start();
@@ -569,18 +477,8 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,string,int?,string,RequestContext)']/*" />
         public virtual Response GetByUniqueAttribute(string typeName, string direction, int? depth = null, string attribute = null, RequestContext context = null)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
-            if (typeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(typeName));
-            }
-            if (direction == null)
-            {
-                throw new ArgumentNullException(nameof(direction));
-            }
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(direction, nameof(direction));
 
             using var scope = ClientDiagnostics.CreateScope("Lineage.GetByUniqueAttribute");
             scope.Start();

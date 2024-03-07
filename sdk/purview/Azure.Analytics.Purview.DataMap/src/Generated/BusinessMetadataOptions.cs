@@ -50,10 +50,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public BusinessMetadataOptions(BinaryData file)
         {
-            if (file == null)
-            {
-                throw new ArgumentNullException(nameof(file));
-            }
+            Argument.AssertNotNull(file, nameof(file));
 
             File = file;
         }

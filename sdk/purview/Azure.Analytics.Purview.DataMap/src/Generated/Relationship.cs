@@ -54,10 +54,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            if (atlasRelationship == null)
-            {
-                throw new ArgumentNullException(nameof(atlasRelationship));
-            }
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
@@ -72,10 +69,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
         public virtual Response<AtlasRelationship> Create(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            if (atlasRelationship == null)
-            {
-                throw new ArgumentNullException(nameof(atlasRelationship));
-            }
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
@@ -106,10 +100,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.Create");
             scope.Start();
@@ -148,10 +139,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.Create");
             scope.Start();
@@ -174,10 +162,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            if (atlasRelationship == null)
-            {
-                throw new ArgumentNullException(nameof(atlasRelationship));
-            }
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
@@ -192,10 +177,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />
         public virtual Response<AtlasRelationship> Update(AtlasRelationship atlasRelationship, CancellationToken cancellationToken = default)
         {
-            if (atlasRelationship == null)
-            {
-                throw new ArgumentNullException(nameof(atlasRelationship));
-            }
+            Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
@@ -226,10 +208,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.Update");
             scope.Start();
@@ -268,10 +247,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
         public virtual Response Update(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.Update");
             scope.Start();
@@ -296,14 +272,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationshipAsync(string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = null, CancellationToken cancellationToken = default)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetRelationshipAsync(guid, extendedInfo, context).ConfigureAwait(false);
@@ -319,14 +288,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationship(string,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = null, CancellationToken cancellationToken = default)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetRelationship(guid, extendedInfo, context);
@@ -358,14 +320,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationshipAsync(string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
@@ -406,14 +361,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationship(string,bool?,RequestContext)']/*" />
         public virtual Response GetRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.GetRelationship");
             scope.Start();
@@ -449,14 +397,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.Delete");
             scope.Start();
@@ -492,14 +433,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string guid, RequestContext context = null)
         {
-            if (guid == null)
-            {
-                throw new ArgumentNullException(nameof(guid));
-            }
-            if (guid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
-            }
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
             using var scope = ClientDiagnostics.CreateScope("Relationship.Delete");
             scope.Start();

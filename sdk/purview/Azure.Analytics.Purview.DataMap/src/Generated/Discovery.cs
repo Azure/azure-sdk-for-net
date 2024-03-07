@@ -57,10 +57,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryConfig,CancellationToken)']/*" />
         public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig queryConfig, CancellationToken cancellationToken = default)
         {
-            if (queryConfig == null)
-            {
-                throw new ArgumentNullException(nameof(queryConfig));
-            }
+            Argument.AssertNotNull(queryConfig, nameof(queryConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = queryConfig.ToRequestContent();
@@ -75,10 +72,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryConfig,CancellationToken)']/*" />
         public virtual Response<QueryResult> Query(QueryConfig queryConfig, CancellationToken cancellationToken = default)
         {
-            if (queryConfig == null)
-            {
-                throw new ArgumentNullException(nameof(queryConfig));
-            }
+            Argument.AssertNotNull(queryConfig, nameof(queryConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = queryConfig.ToRequestContent();
@@ -109,10 +103,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> QueryAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Discovery.Query");
             scope.Start();
@@ -151,10 +142,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(RequestContent,RequestContext)']/*" />
         public virtual Response Query(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Discovery.Query");
             scope.Start();
@@ -177,10 +165,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestConfig,CancellationToken)']/*" />
         public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig suggestConfig, CancellationToken cancellationToken = default)
         {
-            if (suggestConfig == null)
-            {
-                throw new ArgumentNullException(nameof(suggestConfig));
-            }
+            Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = suggestConfig.ToRequestContent();
@@ -195,10 +180,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestConfig,CancellationToken)']/*" />
         public virtual Response<SuggestResult> Suggest(SuggestConfig suggestConfig, CancellationToken cancellationToken = default)
         {
-            if (suggestConfig == null)
-            {
-                throw new ArgumentNullException(nameof(suggestConfig));
-            }
+            Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = suggestConfig.ToRequestContent();
@@ -229,10 +211,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Discovery.Suggest");
             scope.Start();
@@ -271,10 +250,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(RequestContent,RequestContext)']/*" />
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Discovery.Suggest");
             scope.Start();
@@ -297,10 +273,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteConfig,CancellationToken)']/*" />
         public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig autoCompleteConfig, CancellationToken cancellationToken = default)
         {
-            if (autoCompleteConfig == null)
-            {
-                throw new ArgumentNullException(nameof(autoCompleteConfig));
-            }
+            Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = autoCompleteConfig.ToRequestContent();
@@ -315,10 +288,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteConfig,CancellationToken)']/*" />
         public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig autoCompleteConfig, CancellationToken cancellationToken = default)
         {
-            if (autoCompleteConfig == null)
-            {
-                throw new ArgumentNullException(nameof(autoCompleteConfig));
-            }
+            Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = autoCompleteConfig.ToRequestContent();
@@ -349,10 +319,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Discovery.AutoComplete");
             scope.Start();
@@ -391,10 +358,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(RequestContent,RequestContext)']/*" />
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Discovery.AutoComplete");
             scope.Start();
