@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -144,12 +145,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation?> location = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<RegistryPrivateEndpoint> privateEndpoint = default;
-            Optional<RegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            IList<string> groupIds = default;
+            RegistryPrivateEndpoint privateEndpoint = default;
+            RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 privateEndpoint = null;
                                 continue;
                             }
-                            privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value);
+                            privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                                 privateLinkServiceConnectionState = null;
                                 continue;
                             }
-                            privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -237,7 +238,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryPrivateEndpointConnection(id.Value, Optional.ToNullable(location), Optional.ToList(groupIds), privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new RegistryPrivateEndpointConnection(
+                id,
+                location,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

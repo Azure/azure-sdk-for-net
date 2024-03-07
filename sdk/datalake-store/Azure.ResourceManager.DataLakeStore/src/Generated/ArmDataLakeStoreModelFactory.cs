@@ -36,7 +36,20 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataLakeStoreAccountBasicData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags, serializedAdditionalRawData: null);
+            return new DataLakeStoreAccountBasicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                accountId,
+                provisioningState,
+                state,
+                createdOn,
+                lastModifiedOn,
+                endpoint,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreAccountCreateOrUpdateContent"/>. </summary>
@@ -61,7 +74,21 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             virtualNetworkRules ??= new List<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>();
             trustedIdProviders ??= new List<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
 
-            return new DataLakeStoreAccountCreateOrUpdateContent(location, tags, identity, defaultGroup, encryptionConfig, encryptionState, firewallRules?.ToList(), virtualNetworkRules?.ToList(), firewallState, firewallAllowAzureIPs, trustedIdProviders?.ToList(), trustedIdProviderState, newTier, serializedAdditionalRawData: null);
+            return new DataLakeStoreAccountCreateOrUpdateContent(
+                location,
+                tags,
+                identity,
+                defaultGroup,
+                encryptionConfig,
+                encryptionState,
+                firewallRules?.ToList(),
+                virtualNetworkRules?.ToList(),
+                firewallState,
+                firewallAllowAzureIPs,
+                trustedIdProviders?.ToList(),
+                trustedIdProviderState,
+                newTier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreAccountData"/>. </summary>
@@ -98,7 +125,33 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             trustedIdProviders ??= new List<DataLakeStoreTrustedIdProviderData>();
             tags ??= new Dictionary<string, string>();
 
-            return new DataLakeStoreAccountData(id, name, resourceType, systemData, identity, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, defaultGroup, encryptionConfig, encryptionState, encryptionProvisioningState, firewallRules?.ToList(), virtualNetworkRules?.ToList(), firewallState, firewallAllowAzureIPs, trustedIdProviders?.ToList(), trustedIdProviderState, newTier, currentTier, location, tags, serializedAdditionalRawData: null);
+            return new DataLakeStoreAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                accountId,
+                provisioningState,
+                state,
+                createdOn,
+                lastModifiedOn,
+                endpoint,
+                defaultGroup,
+                encryptionConfig,
+                encryptionState,
+                encryptionProvisioningState,
+                firewallRules?.ToList(),
+                virtualNetworkRules?.ToList(),
+                firewallState,
+                firewallAllowAzureIPs,
+                trustedIdProviders?.ToList(),
+                trustedIdProviderState,
+                newTier,
+                currentTier,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreFirewallRuleData"/>. </summary>
@@ -111,7 +164,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <returns> A new <see cref="DataLakeStore.DataLakeStoreFirewallRuleData"/> instance for mocking. </returns>
         public static DataLakeStoreFirewallRuleData DataLakeStoreFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new DataLakeStoreFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
+            return new DataLakeStoreFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreVirtualNetworkRuleData"/>. </summary>
@@ -123,7 +183,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <returns> A new <see cref="DataLakeStore.DataLakeStoreVirtualNetworkRuleData"/> instance for mocking. </returns>
         public static DataLakeStoreVirtualNetworkRuleData DataLakeStoreVirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier subnetId = null)
         {
-            return new DataLakeStoreVirtualNetworkRuleData(id, name, resourceType, systemData, subnetId, serializedAdditionalRawData: null);
+            return new DataLakeStoreVirtualNetworkRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                subnetId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeStore.DataLakeStoreTrustedIdProviderData"/>. </summary>
@@ -135,7 +201,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <returns> A new <see cref="DataLakeStore.DataLakeStoreTrustedIdProviderData"/> instance for mocking. </returns>
         public static DataLakeStoreTrustedIdProviderData DataLakeStoreTrustedIdProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri idProvider = null)
         {
-            return new DataLakeStoreTrustedIdProviderData(id, name, resourceType, systemData, idProvider, serializedAdditionalRawData: null);
+            return new DataLakeStoreTrustedIdProviderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                idProvider,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FirewallRuleForDataLakeStoreAccountUpdateContent"/>. </summary>
@@ -175,7 +247,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <returns> A new <see cref="Models.DataLakeStoreCapabilityInformation"/> instance for mocking. </returns>
         public static DataLakeStoreCapabilityInformation DataLakeStoreCapabilityInformation(Guid? subscriptionId = null, DataLakeStoreSubscriptionState? state = null, int? maxAccountCount = null, int? accountCount = null, bool? isUnderMigrationState = null)
         {
-            return new DataLakeStoreCapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, isUnderMigrationState, serializedAdditionalRawData: null);
+            return new DataLakeStoreCapabilityInformation(
+                subscriptionId,
+                state,
+                maxAccountCount,
+                accountCount,
+                isUnderMigrationState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreUsage"/>. </summary>
@@ -187,7 +265,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <returns> A new <see cref="Models.DataLakeStoreUsage"/> instance for mocking. </returns>
         public static DataLakeStoreUsage DataLakeStoreUsage(DataLakeStoreUsageUnit? unit = null, ResourceIdentifier id = null, int? currentValue = null, int? limit = null, DataLakeStoreUsageName name = null)
         {
-            return new DataLakeStoreUsage(unit, id, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new DataLakeStoreUsage(
+                unit,
+                id,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLakeStoreUsageName"/>. </summary>

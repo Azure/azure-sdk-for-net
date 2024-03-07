@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<bool> valid = default;
-            Optional<string> message = default;
-            Optional<string> absCode = default;
+            bool? valid = default;
+            string message = default;
+            string absCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceNameAvailabilityResult(Optional.ToNullable(valid), message.Value, absCode.Value, serializedAdditionalRawData);
+            return new BotServiceNameAvailabilityResult(valid, message, absCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

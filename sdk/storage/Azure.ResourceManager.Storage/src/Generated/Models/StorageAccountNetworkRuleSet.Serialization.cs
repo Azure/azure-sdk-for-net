@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageNetworkBypass> bypass = default;
-            Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
-            Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IList<StorageAccountIPRule>> ipRules = default;
+            StorageNetworkBypass? bypass = default;
+            IList<StorageAccountResourceAccessRule> resourceAccessRules = default;
+            IList<StorageAccountVirtualNetworkRule> virtualNetworkRules = default;
+            IList<StorageAccountIPRule> ipRules = default;
             StorageNetworkDefaultAction defaultAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountResourceAccessRule> array = new List<StorageAccountResourceAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountResourceAccessRule.DeserializeStorageAccountResourceAccessRule(item));
+                        array.Add(StorageAccountResourceAccessRule.DeserializeStorageAccountResourceAccessRule(item, options));
                     }
                     resourceAccessRules = array;
                     continue;
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountVirtualNetworkRule> array = new List<StorageAccountVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountVirtualNetworkRule.DeserializeStorageAccountVirtualNetworkRule(item));
+                        array.Add(StorageAccountVirtualNetworkRule.DeserializeStorageAccountVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountIPRule> array = new List<StorageAccountIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item));
+                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -172,7 +173,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToList(resourceAccessRules), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), defaultAction, serializedAdditionalRawData);
+            return new StorageAccountNetworkRuleSet(
+                bypass,
+                resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(),
+                virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(),
+                ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(),
+                defaultAction,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountNetworkRuleSet>.Write(ModelReaderWriterOptions options)

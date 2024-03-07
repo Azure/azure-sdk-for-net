@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<DeletedSiteData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DeletedSiteData> array = new List<DeletedSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedSiteData.DeserializeDeletedSiteData(item));
+                        array.Add(DeletedSiteData.DeserializeDeletedSiteData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedWebAppListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new DeletedWebAppListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedWebAppListResult>.Write(ModelReaderWriterOptions options)

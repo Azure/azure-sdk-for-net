@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageContainerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StorageContainerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<StorageContainerData> array = new List<StorageContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageContainerData.DeserializeStorageContainerData(item));
+                        array.Add(StorageContainerData.DeserializeStorageContainerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainersListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StorageContainersListResult(value ?? new ChangeTrackingList<StorageContainerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainersListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<int> min = default;
-            Optional<int> max = default;
+            int? min = default;
+            int? max = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterResourceRange(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
+            return new DevCenterResourceRange(min, max, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterResourceRange>.Write(ModelReaderWriterOptions options)

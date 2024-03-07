@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -126,18 +127,18 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> firstConsumptionDate = default;
-            Optional<DateTimeOffset> lastConsumptionDate = default;
-            Optional<LookBackPeriod> lookBackPeriod = default;
-            Optional<int> totalHours = default;
-            Optional<RecommendationUsageDetails> usage = default;
-            Optional<string> armSkuName = default;
-            Optional<BenefitRecommendationPeriodTerm> term = default;
-            Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
-            Optional<string> currencyCode = default;
-            Optional<decimal> costWithoutBenefit = default;
-            Optional<AllSavingsBenefitDetails> recommendationDetails = default;
-            Optional<AllSavingsList> allRecommendationDetails = default;
+            DateTimeOffset? firstConsumptionDate = default;
+            DateTimeOffset? lastConsumptionDate = default;
+            LookBackPeriod? lookBackPeriod = default;
+            int? totalHours = default;
+            RecommendationUsageDetails usage = default;
+            string armSkuName = default;
+            BenefitRecommendationPeriodTerm? term = default;
+            BenefitRecommendationUsageGrain? commitmentGranularity = default;
+            string currencyCode = default;
+            decimal? costWithoutBenefit = default;
+            AllSavingsBenefitDetails recommendationDetails = default;
+            AllSavingsList allRecommendationDetails = default;
             BenefitRecommendationScope scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    usage = RecommendationUsageDetails.DeserializeRecommendationUsageDetails(property.Value);
+                    usage = RecommendationUsageDetails.DeserializeRecommendationUsageDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("armSkuName"u8))
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recommendationDetails = AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(property.Value);
+                    recommendationDetails = AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allRecommendationDetails"u8))
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value);
+                    allRecommendationDetails = AllSavingsList.DeserializeAllSavingsList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -254,7 +255,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, serializedAdditionalRawData);
+            return new SharedScopeBenefitRecommendationProperties(
+                firstConsumptionDate,
+                lastConsumptionDate,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedScopeBenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)

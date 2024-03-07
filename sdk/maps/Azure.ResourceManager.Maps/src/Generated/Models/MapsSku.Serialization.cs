@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Maps.Models
                 return null;
             }
             MapsSkuName name = default;
-            Optional<string> tier = default;
+            string tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsSku(name, tier.Value, serializedAdditionalRawData);
+            return new MapsSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsSku>.Write(ModelReaderWriterOptions options)

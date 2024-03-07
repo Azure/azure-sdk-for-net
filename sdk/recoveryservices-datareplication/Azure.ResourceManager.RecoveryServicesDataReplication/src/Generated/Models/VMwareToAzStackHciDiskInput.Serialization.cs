@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             string diskId = default;
-            Optional<string> storageContainerId = default;
-            Optional<bool> isDynamic = default;
+            string storageContainerId = default;
+            bool? isDynamic = default;
             long diskSizeGB = default;
             string diskFileFormat = default;
             bool isOSDisk = default;
@@ -132,7 +133,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciDiskInput(diskId, storageContainerId.Value, Optional.ToNullable(isDynamic), diskSizeGB, diskFileFormat, isOSDisk, serializedAdditionalRawData);
+            return new VMwareToAzStackHciDiskInput(
+                diskId,
+                storageContainerId,
+                isDynamic,
+                diskSizeGB,
+                diskFileFormat,
+                isOSDisk,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciDiskInput>.Write(ModelReaderWriterOptions options)

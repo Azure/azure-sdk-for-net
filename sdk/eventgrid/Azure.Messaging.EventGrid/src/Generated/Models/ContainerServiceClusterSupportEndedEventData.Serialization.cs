@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> kubernetesVersion = default;
+            string kubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -30,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerServiceClusterSupportEndedEventData(kubernetesVersion.Value);
+            return new ContainerServiceClusterSupportEndedEventData(kubernetesVersion);
         }
 
         internal partial class ContainerServiceClusterSupportEndedEventDataConverter : JsonConverter<ContainerServiceClusterSupportEndedEventData>

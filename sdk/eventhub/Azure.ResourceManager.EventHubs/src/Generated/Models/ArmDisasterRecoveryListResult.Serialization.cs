@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsDisasterRecoveryData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EventHubsDisasterRecoveryData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsDisasterRecoveryData> array = new List<EventHubsDisasterRecoveryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(item));
+                        array.Add(EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDisasterRecoveryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmDisasterRecoveryListResult(value ?? new ChangeTrackingList<EventHubsDisasterRecoveryData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDisasterRecoveryListResult>.Write(ModelReaderWriterOptions options)

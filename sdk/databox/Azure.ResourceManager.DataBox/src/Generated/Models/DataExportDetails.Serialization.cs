@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfiguration transferConfiguration = default;
-            Optional<LogCollectionLevel> logCollectionLevel = default;
+            LogCollectionLevel? logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("transferConfiguration"u8))
                 {
-                    transferConfiguration = TransferConfiguration.DeserializeTransferConfiguration(property.Value);
+                    transferConfiguration = TransferConfiguration.DeserializeTransferConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
+                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails, serializedAdditionalRawData);
+            return new DataExportDetails(transferConfiguration, logCollectionLevel, accountDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataExportDetails>.Write(ModelReaderWriterOptions options)

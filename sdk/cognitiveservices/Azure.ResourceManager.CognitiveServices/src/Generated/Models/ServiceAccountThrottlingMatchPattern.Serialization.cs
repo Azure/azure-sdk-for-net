@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> method = default;
+            string path = default;
+            string method = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountThrottlingMatchPattern(path.Value, method.Value, serializedAdditionalRawData);
+            return new ServiceAccountThrottlingMatchPattern(path, method, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountThrottlingMatchPattern>.Write(ModelReaderWriterOptions options)

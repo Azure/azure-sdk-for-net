@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> version = default;
-            Optional<string> podSubnet = default;
-            Optional<string> serviceSubnet = default;
+            string type = default;
+            string version = default;
+            string podSubnet = default;
+            string serviceSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CniConfig(type.Value, version.Value, podSubnet.Value, serviceSubnet.Value, serializedAdditionalRawData);
+            return new CniConfig(type, version, podSubnet, serviceSubnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CniConfig>.Write(ModelReaderWriterOptions options)

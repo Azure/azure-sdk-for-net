@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MongoClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MongoClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoClusterData> array = new List<MongoClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoClusterData.DeserializeMongoClusterData(item));
+                        array.Add(MongoClusterData.DeserializeMongoClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MongoClusterListResult(value ?? new ChangeTrackingList<MongoClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterListResult>.Write(ModelReaderWriterOptions options)

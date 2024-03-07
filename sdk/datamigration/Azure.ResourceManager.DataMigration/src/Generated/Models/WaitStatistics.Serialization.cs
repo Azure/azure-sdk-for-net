@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> waitType = default;
-            Optional<float> waitTimeMs = default;
-            Optional<long> waitCount = default;
+            string waitType = default;
+            float? waitTimeMs = default;
+            long? waitCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WaitStatistics(waitType.Value, Optional.ToNullable(waitTimeMs), Optional.ToNullable(waitCount), serializedAdditionalRawData);
+            return new WaitStatistics(waitType, waitTimeMs, waitCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WaitStatistics>.Write(ModelReaderWriterOptions options)

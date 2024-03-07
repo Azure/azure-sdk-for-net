@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<int> count = default;
-            Optional<string> message = default;
-            Optional<MongoDBErrorType> type = default;
+            string code = default;
+            int? count = default;
+            string message = default;
+            MongoDBErrorType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBError(code.Value, Optional.ToNullable(count), message.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MongoDBError(code, count, message, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBError>.Write(ModelReaderWriterOptions options)

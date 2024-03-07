@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<AllowDnsProxyType> enableDnsProxy = default;
-            Optional<EnabledDnsType> enabledDnsType = default;
-            Optional<IList<IPAddressInfo>> dnsServers = default;
+            AllowDnsProxyType? enableDnsProxy = default;
+            EnabledDnsType? enabledDnsType = default;
+            IList<IPAddressInfo> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     dnsServers = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), Optional.ToList(dnsServers), serializedAdditionalRawData);
+            return new FirewallDnsSettings(enableDnsProxy, enabledDnsType, dnsServers ?? new ChangeTrackingList<IPAddressInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallDnsSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+            return DeserializeSsisObjectMetadata(document.RootElement, options);
         }
 
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             SsisObjectMetadataType type = "Unknown";
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSsisObjectMetadata(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData);
+            return new UnknownSsisObjectMetadata(type, id, name, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisObjectMetadata>.Write(ModelReaderWriterOptions options)
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+                        return DeserializeSsisObjectMetadata(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SsisObjectMetadata)} does not support '{options.Format}' format.");

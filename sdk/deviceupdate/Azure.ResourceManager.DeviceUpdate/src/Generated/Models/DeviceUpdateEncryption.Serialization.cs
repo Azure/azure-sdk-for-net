@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<Uri> keyVaultKeyUri = default;
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
+            Uri keyVaultKeyUri = default;
+            ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateEncryption(keyVaultKeyUri.Value, userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new DeviceUpdateEncryption(keyVaultKeyUri, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateEncryption>.Write(ModelReaderWriterOptions options)

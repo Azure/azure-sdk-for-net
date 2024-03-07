@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IList<SapSshPublicKey>> publicKeys = default;
+            IList<SapSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSshPublicKey> array = new List<SapSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item));
+                        array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSshConfiguration(Optional.ToList(publicKeys), serializedAdditionalRawData);
+            return new SapSshConfiguration(publicKeys ?? new ChangeTrackingList<SapSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSshConfiguration>.Write(ModelReaderWriterOptions options)

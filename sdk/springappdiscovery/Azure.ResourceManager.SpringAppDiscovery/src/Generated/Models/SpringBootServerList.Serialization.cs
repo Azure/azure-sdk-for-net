@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SpringBootServerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SpringBootServerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootServerData> array = new List<SpringBootServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootServerData.DeserializeSpringBootServerData(item));
+                        array.Add(SpringBootServerData.DeserializeSpringBootServerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SpringBootServerList(value ?? new ChangeTrackingList<SpringBootServerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool checkCertificateRevocationListOnSend = default;
             bool checkCertificateRevocationListOnReceive = default;
             AS2EncryptionAlgorithm encryptionAlgorithm = default;
-            Optional<AS2SigningAlgorithm> signingAlgorithm = default;
+            AS2SigningAlgorithm? signingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Optional.ToNullable(signingAlgorithm), serializedAdditionalRawData);
+            return new AS2ValidationSettings(
+                overrideMessageProperties,
+                encryptMessage,
+                signMessage,
+                compressMessage,
+                checkDuplicateMessage,
+                interchangeDuplicatesValidityDays,
+                checkCertificateRevocationListOnSend,
+                checkCertificateRevocationListOnReceive,
+                encryptionAlgorithm,
+                signingAlgorithm,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2ValidationSettings>.Write(ModelReaderWriterOptions options)

@@ -47,7 +47,22 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             timing ??= new List<string>();
             pipeline ??= new List<SparkJob>();
 
-            return new SparkJob(state, name, submitter, compute, sparkApplicationId, livyId, timing?.ToList(), sparkJobDefinition, pipeline?.ToList(), jobType, submitTime, endTime, queuedDuration, runningDuration, totalDuration);
+            return new SparkJob(
+                state,
+                name,
+                submitter,
+                compute,
+                sparkApplicationId,
+                livyId,
+                timing?.ToList(),
+                sparkJobDefinition,
+                pipeline?.ToList(),
+                jobType,
+                submitTime,
+                endTime,
+                queuedDuration,
+                runningDuration,
+                totalDuration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlQueryStringDataModel"/>. </summary>

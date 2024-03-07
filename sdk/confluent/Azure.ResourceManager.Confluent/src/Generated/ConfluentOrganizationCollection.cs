@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfluentOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConfluentOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> GetAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
             scope.Start();
@@ -210,7 +237,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> Get(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
             scope.Start();
@@ -255,7 +289,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +319,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +349,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
             scope.Start();
@@ -358,7 +399,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual Response<bool> Exists(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
             scope.Start();
@@ -401,7 +449,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConfluentOrganizationResource>> GetIfExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
             scope.Start();
@@ -446,7 +501,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual NullableResponse<ConfluentOrganizationResource> GetIfExists(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            if (organizationName == null)
+            {
+                throw new ArgumentNullException(nameof(organizationName));
+            }
+            if (organizationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
+            }
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
             scope.Start();

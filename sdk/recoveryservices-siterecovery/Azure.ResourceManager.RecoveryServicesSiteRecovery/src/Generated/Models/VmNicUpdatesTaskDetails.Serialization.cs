@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmId = default;
-            Optional<string> nicId = default;
-            Optional<string> name = default;
+            string vmId = default;
+            string nicId = default;
+            string name = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmNicUpdatesTaskDetails(instanceType, serializedAdditionalRawData, vmId.Value, nicId.Value, name.Value);
+            return new VmNicUpdatesTaskDetails(instanceType, serializedAdditionalRawData, vmId, nicId, name);
         }
 
         BinaryData IPersistableModel<VmNicUpdatesTaskDetails>.Write(ModelReaderWriterOptions options)

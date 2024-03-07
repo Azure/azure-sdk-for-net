@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
+            IReadOnlyList<AffectedMoverResourceInfo> moveResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item));
+                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item, options));
                     }
                     moveResources = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveErrorInfo(Optional.ToList(moveResources), serializedAdditionalRawData);
+            return new MoveErrorInfo(moveResources ?? new ChangeTrackingList<AffectedMoverResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveErrorInfo>.Write(ModelReaderWriterOptions options)

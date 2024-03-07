@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -97,12 +98,12 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<SubscriptionWorkload> workload = default;
-            Optional<string> billingScope = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resellerId = default;
-            Optional<SubscriptionAliasAdditionalProperties> additionalProperties = default;
+            string displayName = default;
+            SubscriptionWorkload? workload = default;
+            string billingScope = default;
+            string subscriptionId = default;
+            string resellerId = default;
+            SubscriptionAliasAdditionalProperties additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Subscription.Models
                             {
                                 continue;
                             }
-                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value);
+                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -163,7 +164,14 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasCreateOrUpdateContent(displayName.Value, Optional.ToNullable(workload), billingScope.Value, subscriptionId.Value, resellerId.Value, additionalProperties.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasCreateOrUpdateContent(
+                displayName,
+                workload,
+                billingScope,
+                subscriptionId,
+                resellerId,
+                additionalProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PacketCoreControlPlaneVersionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PacketCoreControlPlaneVersionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<PacketCoreControlPlaneVersionData> array = new List<PacketCoreControlPlaneVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(item));
+                        array.Add(PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCoreControlPlaneVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PacketCoreControlPlaneVersionListResult(value ?? new ChangeTrackingList<PacketCoreControlPlaneVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCoreControlPlaneVersionListResult>.Write(ModelReaderWriterOptions options)

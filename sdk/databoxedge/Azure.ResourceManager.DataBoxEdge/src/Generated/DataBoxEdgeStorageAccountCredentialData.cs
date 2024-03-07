@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public DataBoxEdgeStorageAccountCredentialData(string @alias, DataBoxEdgeStorageAccountSslStatus sslStatus, DataBoxEdgeStorageAccountType accountType)
         {
-            Argument.AssertNotNull(@alias, nameof(@alias));
+            if (@alias == null)
+            {
+                throw new ArgumentNullException(nameof(@alias));
+            }
 
             Alias = @alias;
             SslStatus = sslStatus;

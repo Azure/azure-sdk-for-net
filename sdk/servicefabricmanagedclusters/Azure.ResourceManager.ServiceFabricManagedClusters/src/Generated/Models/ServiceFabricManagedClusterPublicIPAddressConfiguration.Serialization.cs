@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<IList<ServiceFabricManagedClusterIPTag>> ipTags = default;
-            Optional<ServiceFabricManagedClusterPublicIPAddressVersion> publicIPAddressVersion = default;
+            IList<ServiceFabricManagedClusterIPTag> ipTags = default;
+            ServiceFabricManagedClusterPublicIPAddressVersion? publicIPAddressVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedClusterIPTag> array = new List<ServiceFabricManagedClusterIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item));
+                        array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterPublicIPAddressConfiguration(name, Optional.ToList(ipTags), Optional.ToNullable(publicIPAddressVersion), serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterPublicIPAddressConfiguration(name, ipTags ?? new ChangeTrackingList<ServiceFabricManagedClusterIPTag>(), publicIPAddressVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

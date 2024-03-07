@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DdosSettingsProtectionMode> protectionMode = default;
-            Optional<WritableSubResource> ddosProtectionPlan = default;
+            DdosSettingsProtectionMode? protectionMode = default;
+            WritableSubResource ddosProtectionPlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DdosSettings(Optional.ToNullable(protectionMode), ddosProtectionPlan, serializedAdditionalRawData);
+            return new DdosSettings(protectionMode, ddosProtectionPlan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DdosSettings>.Write(ModelReaderWriterOptions options)

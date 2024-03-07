@@ -198,7 +198,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="customHttpsConfiguration"/> is null. </exception>
         public virtual async Task<ArmOperation> EnableHttpsAsync(WaitUntil waitUntil, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+            if (customHttpsConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(customHttpsConfiguration));
+            }
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointResource.EnableHttps");
             scope.Start();
@@ -244,7 +247,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="customHttpsConfiguration"/> is null. </exception>
         public virtual ArmOperation EnableHttps(WaitUntil waitUntil, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+            if (customHttpsConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(customHttpsConfiguration));
+            }
 
             using var scope = _frontendEndpointClientDiagnostics.CreateScope("FrontendEndpointResource.EnableHttps");
             scope.Start();

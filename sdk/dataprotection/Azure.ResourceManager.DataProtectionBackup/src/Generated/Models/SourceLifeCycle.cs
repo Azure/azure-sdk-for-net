@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -56,8 +56,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deleteAfter"/> or <paramref name="sourceDataStore"/> is null. </exception>
         public SourceLifeCycle(DataProtectionBackupDeleteSetting deleteAfter, DataStoreInfoBase sourceDataStore)
         {
-            Argument.AssertNotNull(deleteAfter, nameof(deleteAfter));
-            Argument.AssertNotNull(sourceDataStore, nameof(sourceDataStore));
+            if (deleteAfter == null)
+            {
+                throw new ArgumentNullException(nameof(deleteAfter));
+            }
+            if (sourceDataStore == null)
+            {
+                throw new ArgumentNullException(nameof(sourceDataStore));
+            }
 
             DeleteAfter = deleteAfter;
             SourceDataStore = sourceDataStore;

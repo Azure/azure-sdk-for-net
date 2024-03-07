@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            ResourceIdentifier resourceId = default;
+            int? maxEventsPerBatch = default;
+            int? preferredBatchSizeInKilobytes = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
                             }
                             deliveryAttributeMappings = array;
                             continue;
@@ -167,7 +168,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFunctionEventSubscriptionDestination(endpointType, serializedAdditionalRawData, resourceId.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToList(deliveryAttributeMappings));
+            return new AzureFunctionEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                resourceId,
+                maxEventsPerBatch,
+                preferredBatchSizeInKilobytes,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
         }
 
         BinaryData IPersistableModel<AzureFunctionEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
         public PendingField(string field)
         {
-            Argument.AssertNotNull(field, nameof(field));
+            if (field == null)
+            {
+                throw new ArgumentNullException(nameof(field));
+            }
 
             Field = field;
             Values = new ChangeTrackingList<string>();

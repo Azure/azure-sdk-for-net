@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Guid processServerId = default;
-            Optional<string> runAsAccountId = default;
+            string runAsAccountId = default;
             ResourceIdentifier policyId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackReprotectContent(instanceType, serializedAdditionalRawData, processServerId, runAsAccountId.Value, policyId);
+            return new InMageRcmFailbackReprotectContent(instanceType, serializedAdditionalRawData, processServerId, runAsAccountId, policyId);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackReprotectContent>.Write(ModelReaderWriterOptions options)

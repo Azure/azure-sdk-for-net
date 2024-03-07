@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> matchConfigurationName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
-            Optional<IList<AccessControlListMatchCondition>> matchConditions = default;
-            Optional<IList<AccessControlListAction>> actions = default;
+            string matchConfigurationName = default;
+            long? sequenceNumber = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
+            IList<AccessControlListMatchCondition> matchConditions = default;
+            IList<AccessControlListAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListMatchCondition> array = new List<AccessControlListMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item));
+                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListAction> array = new List<AccessControlListAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item));
+                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -165,7 +166,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), Optional.ToList(matchConditions), Optional.ToList(actions), serializedAdditionalRawData);
+            return new AccessControlListMatchConfiguration(
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
+                matchConditions ?? new ChangeTrackingList<AccessControlListMatchCondition>(),
+                actions ?? new ChangeTrackingList<AccessControlListAction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchConfiguration>.Write(ModelReaderWriterOptions options)

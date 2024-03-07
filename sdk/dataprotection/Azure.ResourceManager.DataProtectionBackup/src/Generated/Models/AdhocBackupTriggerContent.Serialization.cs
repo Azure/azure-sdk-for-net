@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (property.NameEquals("backupRuleOptions"u8))
                 {
-                    backupRuleOptions = AdhocBackupRules.DeserializeAdhocBackupRules(property.Value);
+                    backupRuleOptions = AdhocBackupRules.DeserializeAdhocBackupRules(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyList<MonitorWorkspaceResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorWorkspaceResourceData> array = new List<MonitorWorkspaceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item));
+                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new MonitorWorkspaceResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceResourceListResult>.Write(ModelReaderWriterOptions options)

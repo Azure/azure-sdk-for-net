@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -114,12 +115,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<StorageCacheSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<StorageCacheSkuLocationInfo>> locationInfo = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<StorageCacheRestriction>> restrictions = default;
+            string resourceType = default;
+            IReadOnlyList<StorageCacheSkuCapability> capabilities = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<StorageCacheSkuLocationInfo> locationInfo = default;
+            string name = default;
+            IReadOnlyList<StorageCacheRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuCapability> array = new List<StorageCacheSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item));
+                        array.Add(StorageCacheSkuCapability.DeserializeStorageCacheSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSkuLocationInfo> array = new List<StorageCacheSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item));
+                        array.Add(StorageCacheSkuLocationInfo.DeserializeStorageCacheSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheRestriction> array = new List<StorageCacheRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item));
+                        array.Add(StorageCacheRestriction.DeserializeStorageCacheRestriction(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -196,7 +197,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheSku(resourceType.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(locationInfo), name.Value, Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new StorageCacheSku(
+                resourceType,
+                capabilities ?? new ChangeTrackingList<StorageCacheSkuCapability>(),
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<StorageCacheSkuLocationInfo>(),
+                name,
+                restrictions ?? new ChangeTrackingList<StorageCacheRestriction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheSku>.Write(ModelReaderWriterOptions options)

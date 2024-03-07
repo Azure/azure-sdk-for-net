@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedAppConfigurationStoreData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeletedAppConfigurationStoreData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<DeletedAppConfigurationStoreData> array = new List<DeletedAppConfigurationStoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(item));
+                        array.Add(DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedConfigurationStoreListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DeletedConfigurationStoreListResult(value ?? new ChangeTrackingList<DeletedAppConfigurationStoreData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedConfigurationStoreListResult>.Write(ModelReaderWriterOptions options)

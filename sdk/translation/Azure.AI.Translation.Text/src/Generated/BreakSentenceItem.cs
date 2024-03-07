@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -55,7 +54,10 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="sentLen"/> is null. </exception>
         internal BreakSentenceItem(IEnumerable<int> sentLen)
         {
-            Argument.AssertNotNull(sentLen, nameof(sentLen));
+            if (sentLen == null)
+            {
+                throw new ArgumentNullException(nameof(sentLen));
+            }
 
             SentLen = sentLen.ToList();
         }

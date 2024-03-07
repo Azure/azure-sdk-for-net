@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<VirtualMachineInstanceUpdateProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            VirtualMachineInstanceUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = VirtualMachineInstanceUpdateProperties.DeserializeVirtualMachineInstanceUpdateProperties(property.Value);
+                    properties = VirtualMachineInstanceUpdateProperties.DeserializeVirtualMachineInstanceUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePatch(properties.Value, identity, serializedAdditionalRawData);
+            return new VirtualMachineInstancePatch(properties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePatch>.Write(ModelReaderWriterOptions options)

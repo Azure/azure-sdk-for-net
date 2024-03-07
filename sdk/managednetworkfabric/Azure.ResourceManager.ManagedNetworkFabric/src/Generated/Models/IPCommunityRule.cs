@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="communityMembers"/> is null. </exception>
         public IPCommunityRule(CommunityActionType action, long sequenceNumber, IEnumerable<string> communityMembers)
         {
-            Argument.AssertNotNull(communityMembers, nameof(communityMembers));
+            if (communityMembers == null)
+            {
+                throw new ArgumentNullException(nameof(communityMembers));
+            }
 
             Action = action;
             SequenceNumber = sequenceNumber;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<long> availableSizeMB = default;
-            Optional<long> containerSizeMB = default;
-            Optional<StorageContainerStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            long? availableSizeMB = default;
+            long? containerSizeMB = default;
+            StorageContainerStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value);
+                    provisioningStatus = StorageContainerStatusProvisioningStatus.DeserializeStorageContainerStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerStatus(errorCode.Value, errorMessage.Value, Optional.ToNullable(availableSizeMB), Optional.ToNullable(containerSizeMB), provisioningStatus.Value, serializedAdditionalRawData);
+            return new StorageContainerStatus(
+                errorCode,
+                errorMessage,
+                availableSizeMB,
+                containerSizeMB,
+                provisioningStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerStatus>.Write(ModelReaderWriterOptions options)

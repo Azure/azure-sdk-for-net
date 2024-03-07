@@ -54,8 +54,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> or <paramref name="diskFileFormat"/> is null. </exception>
         public HyperVToAzStackHciDiskInput(string diskId, long diskSizeGB, string diskFileFormat, bool isOSDisk)
         {
-            Argument.AssertNotNull(diskId, nameof(diskId));
-            Argument.AssertNotNull(diskFileFormat, nameof(diskFileFormat));
+            if (diskId == null)
+            {
+                throw new ArgumentNullException(nameof(diskId));
+            }
+            if (diskFileFormat == null)
+            {
+                throw new ArgumentNullException(nameof(diskFileFormat));
+            }
 
             DiskId = diskId;
             DiskSizeGB = diskSizeGB;

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,15 +20,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> ingestUrl = default;
-            Optional<string> trackType = default;
-            Optional<string> trackName = default;
-            Optional<long> bitrate = default;
-            Optional<string> encoderIp = default;
-            Optional<string> encoderPort = default;
-            Optional<string> timestamp = default;
-            Optional<string> duration = default;
-            Optional<string> timescale = default;
+            string ingestUrl = default;
+            string trackType = default;
+            string trackName = default;
+            long? bitrate = default;
+            string encoderIp = default;
+            string encoderPort = default;
+            string timestamp = default;
+            string duration = default;
+            string timescale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestUrl"u8))
@@ -82,7 +81,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamReceivedEventData(ingestUrl.Value, trackType.Value, trackName.Value, Optional.ToNullable(bitrate), encoderIp.Value, encoderPort.Value, timestamp.Value, duration.Value, timescale.Value);
+            return new MediaLiveEventIncomingStreamReceivedEventData(
+                ingestUrl,
+                trackType,
+                trackName,
+                bitrate,
+                encoderIp,
+                encoderPort,
+                timestamp,
+                duration,
+                timescale);
         }
 
         internal partial class MediaLiveEventIncomingStreamReceivedEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamReceivedEventData>

@@ -50,8 +50,14 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewAccountClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -138,7 +144,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='UpdateAccountPropertiesAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAccountPropertiesAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
@@ -172,7 +181,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='UpdateAccountProperties(RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAccountProperties(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.UpdateAccountProperties");
             scope.Start();
@@ -266,7 +278,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='RegenerateAccessKeyAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RegenerateAccessKeyAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
@@ -300,7 +315,10 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='RegenerateAccessKey(RequestContent,RequestContext)']/*" />
         public virtual Response RegenerateAccessKey(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.RegenerateAccessKey");
             scope.Start();
@@ -412,7 +430,14 @@ namespace Azure.Analytics.Purview.Administration
         /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+            if (collectionName == null)
+            {
+                throw new ArgumentNullException(nameof(collectionName));
+            }
+            if (collectionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(collectionName));
+            }
 
             return new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName);
         }

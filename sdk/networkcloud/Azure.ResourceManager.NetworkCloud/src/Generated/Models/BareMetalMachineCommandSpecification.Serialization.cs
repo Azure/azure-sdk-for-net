@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<string>> arguments = default;
+            IList<string> arguments = default;
             string command = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineCommandSpecification(Optional.ToList(arguments), command, serializedAdditionalRawData);
+            return new BareMetalMachineCommandSpecification(arguments ?? new ChangeTrackingList<string>(), command, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineCommandSpecification>.Write(ModelReaderWriterOptions options)

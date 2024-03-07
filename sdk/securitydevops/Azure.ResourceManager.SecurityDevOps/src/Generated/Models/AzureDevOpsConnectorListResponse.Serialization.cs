@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureDevOpsConnectorData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AzureDevOpsConnectorData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsConnectorData> array = new List<AzureDevOpsConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(item));
+                        array.Add(AzureDevOpsConnectorData.DeserializeAzureDevOpsConnectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureDevOpsConnectorListResponse(value ?? new ChangeTrackingList<AzureDevOpsConnectorData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorListResponse>.Write(ModelReaderWriterOptions options)

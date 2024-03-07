@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<SignalRNetworkAclAction> defaultAction = default;
-            Optional<SignalRNetworkAcl> publicNetwork = default;
-            Optional<IList<SignalRPrivateEndpointAcl>> privateEndpoints = default;
+            SignalRNetworkAclAction? defaultAction = default;
+            SignalRNetworkAcl publicNetwork = default;
+            IList<SignalRPrivateEndpointAcl> privateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    publicNetwork = SignalRNetworkAcl.DeserializeSignalRNetworkAcl(property.Value);
+                    publicNetwork = SignalRNetworkAcl.DeserializeSignalRNetworkAcl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpoints"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRPrivateEndpointAcl> array = new List<SignalRPrivateEndpointAcl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRPrivateEndpointAcl.DeserializeSignalRPrivateEndpointAcl(item));
+                        array.Add(SignalRPrivateEndpointAcl.DeserializeSignalRPrivateEndpointAcl(item, options));
                     }
                     privateEndpoints = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints), serializedAdditionalRawData);
+            return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<SignalRPrivateEndpointAcl>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRNetworkAcls>.Write(ModelReaderWriterOptions options)

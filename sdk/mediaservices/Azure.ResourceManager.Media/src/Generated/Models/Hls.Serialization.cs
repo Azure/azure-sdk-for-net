@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> fragmentsPerTsSegment = default;
+            int? fragmentsPerTsSegment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Hls(Optional.ToNullable(fragmentsPerTsSegment), serializedAdditionalRawData);
+            return new Hls(fragmentsPerTsSegment, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Hls>.Write(ModelReaderWriterOptions options)

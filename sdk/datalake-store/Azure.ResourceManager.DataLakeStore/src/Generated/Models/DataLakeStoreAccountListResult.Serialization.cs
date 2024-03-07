@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreAccountBasicData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataLakeStoreAccountBasicData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreAccountBasicData> array = new List<DataLakeStoreAccountBasicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item));
+                        array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeStoreAccountListResult(value ?? new ChangeTrackingList<DataLakeStoreAccountBasicData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountListResult>.Write(ModelReaderWriterOptions options)

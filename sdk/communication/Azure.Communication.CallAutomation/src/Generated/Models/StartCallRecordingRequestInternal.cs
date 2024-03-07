@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
         public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
         {
-            Argument.AssertNotNull(callLocator, nameof(callLocator));
+            if (callLocator == null)
+            {
+                throw new ArgumentNullException(nameof(callLocator));
+            }
 
             CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();

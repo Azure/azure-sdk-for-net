@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -103,12 +104,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<WebAppMSDeployLogEntry>> entries = default;
+            SystemData systemData = default;
+            IReadOnlyList<WebAppMSDeployLogEntry> entries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMSDeployLogEntry> array = new List<WebAppMSDeployLogEntry>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item));
+                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item, options));
                             }
                             entries = array;
                             continue;
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeployLog(id, name, type, systemData.Value, Optional.ToList(entries), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeployLog(
+                id,
+                name,
+                type,
+                systemData,
+                entries ?? new ChangeTrackingList<WebAppMSDeployLogEntry>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeployLog>.Write(ModelReaderWriterOptions options)

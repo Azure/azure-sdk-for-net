@@ -21,9 +21,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
         public DataLakeAnalyticsUsqlActivity(string name, object scriptPath, LinkedServiceReference scriptLinkedService) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(scriptPath, nameof(scriptPath));
-            Argument.AssertNotNull(scriptLinkedService, nameof(scriptLinkedService));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (scriptPath == null)
+            {
+                throw new ArgumentNullException(nameof(scriptPath));
+            }
+            if (scriptLinkedService == null)
+            {
+                throw new ArgumentNullException(nameof(scriptLinkedService));
+            }
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;

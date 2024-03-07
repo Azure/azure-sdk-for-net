@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeServiceStatus> extensionService = default;
-            Optional<HybridComputeServiceStatus> guestConfigurationService = default;
+            HybridComputeServiceStatus extensionService = default;
+            HybridComputeServiceStatus guestConfigurationService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
+                    extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("guestConfigurationService"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
+                    guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeServiceStatuses(extensionService.Value, guestConfigurationService.Value, serializedAdditionalRawData);
+            return new HybridComputeServiceStatuses(extensionService, guestConfigurationService, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeServiceStatuses>.Write(ModelReaderWriterOptions options)

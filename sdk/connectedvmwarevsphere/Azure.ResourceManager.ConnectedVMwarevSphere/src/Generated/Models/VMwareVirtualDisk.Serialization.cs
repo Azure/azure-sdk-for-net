@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -114,16 +115,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> label = default;
-            Optional<string> diskObjectId = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> deviceKey = default;
-            Optional<VMwareDiskMode> diskMode = default;
-            Optional<int> controllerKey = default;
-            Optional<int> unitNumber = default;
-            Optional<string> deviceName = default;
-            Optional<VMwareDiskType> diskType = default;
+            string name = default;
+            string label = default;
+            string diskObjectId = default;
+            int? diskSizeGB = default;
+            int? deviceKey = default;
+            VMwareDiskMode? diskMode = default;
+            int? controllerKey = default;
+            int? unitNumber = default;
+            string deviceName = default;
+            VMwareDiskType? diskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +209,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVirtualDisk(name.Value, label.Value, diskObjectId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType), serializedAdditionalRawData);
+            return new VMwareVirtualDisk(
+                name,
+                label,
+                diskObjectId,
+                diskSizeGB,
+                deviceKey,
+                diskMode,
+                controllerKey,
+                unitNumber,
+                deviceName,
+                diskType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVirtualDisk>.Write(ModelReaderWriterOptions options)

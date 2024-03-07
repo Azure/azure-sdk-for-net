@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -95,14 +96,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<string> billingAccountId = default;
-            Optional<string> billingProfileId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<string> benefitId = default;
+            string billingAccountId = default;
+            string billingProfileId = default;
+            string benefitOrderId = default;
+            string benefitId = default;
             BenefitRecommendationUsageGrain grain = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
-            Optional<BillingAccountBenefitKind> kind = default;
+            BillingAccountBenefitKind? kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesContent(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new BenefitUtilizationSummariesContent(
+                billingAccountId,
+                billingProfileId,
+                benefitOrderId,
+                benefitId,
+                grain,
+                startDate,
+                endDate,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesContent>.Write(ModelReaderWriterOptions options)

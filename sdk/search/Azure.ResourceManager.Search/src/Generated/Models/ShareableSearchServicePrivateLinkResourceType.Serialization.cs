@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareableSearchServicePrivateLinkResourceProperties> properties = default;
+            string name = default;
+            ShareableSearchServicePrivateLinkResourceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value);
+                    properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareableSearchServicePrivateLinkResourceType(name.Value, properties.Value, serializedAdditionalRawData);
+            return new ShareableSearchServicePrivateLinkResourceType(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareableSearchServicePrivateLinkResourceType>.Write(ModelReaderWriterOptions options)

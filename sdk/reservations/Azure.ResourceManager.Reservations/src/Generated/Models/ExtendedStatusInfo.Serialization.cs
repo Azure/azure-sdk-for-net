@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationStatusCode> statusCode = default;
-            Optional<string> message = default;
+            ReservationStatusCode? statusCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedStatusInfo(Optional.ToNullable(statusCode), message.Value, serializedAdditionalRawData);
+            return new ExtendedStatusInfo(statusCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedStatusInfo>.Write(ModelReaderWriterOptions options)

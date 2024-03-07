@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public ForecastDataset(IDictionary<string, ForecastAggregation> aggregation)
         {
-            Argument.AssertNotNull(aggregation, nameof(aggregation));
+            if (aggregation == null)
+            {
+                throw new ArgumentNullException(nameof(aggregation));
+            }
 
             Aggregation = aggregation;
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> result = default;
-            Optional<AutomatedCheckResultType> type = default;
+            string result = default;
+            AutomatedCheckResultType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomatedCheckResult(result.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new AutomatedCheckResult(result, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomatedCheckResult>.Write(ModelReaderWriterOptions options)

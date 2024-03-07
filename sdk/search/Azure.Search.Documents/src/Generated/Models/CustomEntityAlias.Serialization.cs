@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -63,9 +64,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string text = default;
-            Optional<bool?> caseSensitive = default;
-            Optional<bool?> accentSensitive = default;
-            Optional<int?> fuzzyEditDistance = default;
+            bool? caseSensitive = default;
+            bool? accentSensitive = default;
+            int? fuzzyEditDistance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -104,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityAlias(text, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance));
+            return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance);
         }
     }
 }

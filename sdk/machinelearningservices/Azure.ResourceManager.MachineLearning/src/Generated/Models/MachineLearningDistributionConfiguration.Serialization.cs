@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element);
-                    case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element);
-                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element);
-                    case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element);
+                    case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element, options);
+                    case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element, options);
+                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element, options);
+                    case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element, options);
                 }
             }
-            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element);
+            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDistributionConfiguration>.Write(ModelReaderWriterOptions options)

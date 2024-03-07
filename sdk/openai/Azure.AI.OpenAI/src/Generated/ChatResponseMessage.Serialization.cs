@@ -98,9 +98,9 @@ namespace Azure.AI.OpenAI
             }
             ChatRole role = default;
             string content = default;
-            Optional<IReadOnlyList<ChatCompletionsToolCall>> toolCalls = default;
-            Optional<FunctionCall> functionCall = default;
-            Optional<AzureChatExtensionsMessageContext> context = default;
+            IReadOnlyList<ChatCompletionsToolCall> toolCalls = default;
+            FunctionCall functionCall = default;
+            AzureChatExtensionsMessageContext context = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolCall> array = new List<ChatCompletionsToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item));
+                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item, options));
                     }
                     toolCalls = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
+                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    context = AzureChatExtensionsMessageContext.DeserializeAzureChatExtensionsMessageContext(property.Value);
+                    context = AzureChatExtensionsMessageContext.DeserializeAzureChatExtensionsMessageContext(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +158,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatResponseMessage(role, content, Optional.ToList(toolCalls), functionCall.Value, context.Value, serializedAdditionalRawData);
+            return new ChatResponseMessage(
+                role,
+                content,
+                toolCalls ?? new ChangeTrackingList<ChatCompletionsToolCall>(),
+                functionCall,
+                context,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatResponseMessage>.Write(ModelReaderWriterOptions options)

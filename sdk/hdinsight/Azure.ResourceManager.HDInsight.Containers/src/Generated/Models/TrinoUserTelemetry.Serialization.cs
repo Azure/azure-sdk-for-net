@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<TrinoTelemetryConfig> storage = default;
+            TrinoTelemetryConfig storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value);
+                    storage = TrinoTelemetryConfig.DeserializeTrinoTelemetryConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoUserTelemetry(storage.Value, serializedAdditionalRawData);
+            return new TrinoUserTelemetry(storage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoUserTelemetry>.Write(ModelReaderWriterOptions options)

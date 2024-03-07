@@ -7,7 +7,6 @@
 
 using System;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public TrainRequest(string source)
         {
-            Argument.AssertNotNull(source, nameof(source));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
             Source = source;
         }

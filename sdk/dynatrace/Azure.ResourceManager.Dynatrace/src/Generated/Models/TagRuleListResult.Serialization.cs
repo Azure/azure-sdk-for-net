@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 return null;
             }
             IReadOnlyList<DynatraceTagRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceTagRuleData> array = new List<DynatraceTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item));
+                        array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagRuleListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new TagRuleListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagRuleListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<ContainerRegistryWebhookEventTarget> target = default;
-            Optional<ContainerRegistryWebhookEventRequestContent> request = default;
-            Optional<ContainerRegistryWebhookEventActor> actor = default;
-            Optional<ContainerRegistryWebhookEventSource> source = default;
+            Guid? id = default;
+            DateTimeOffset? timestamp = default;
+            string action = default;
+            ContainerRegistryWebhookEventTarget target = default;
+            ContainerRegistryWebhookEventRequestContent request = default;
+            ContainerRegistryWebhookEventActor actor = default;
+            ContainerRegistryWebhookEventSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value);
+                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value);
+                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value);
+                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value);
+                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventContent(Optional.ToNullable(id), Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventContent(
+                id,
+                timestamp,
+                action,
+                target,
+                request,
+                actor,
+                source,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventContent>.Write(ModelReaderWriterOptions options)

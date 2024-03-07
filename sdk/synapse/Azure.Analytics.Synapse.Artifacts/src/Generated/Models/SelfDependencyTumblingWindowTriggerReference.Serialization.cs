@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -37,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string offset = default;
-            Optional<string> size = default;
+            string size = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SelfDependencyTumblingWindowTriggerReference(type, offset, size.Value);
+            return new SelfDependencyTumblingWindowTriggerReference(type, offset, size);
         }
 
         internal partial class SelfDependencyTumblingWindowTriggerReferenceConverter : JsonConverter<SelfDependencyTumblingWindowTriggerReference>

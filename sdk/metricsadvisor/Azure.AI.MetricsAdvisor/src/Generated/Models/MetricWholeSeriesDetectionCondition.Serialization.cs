@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -44,10 +45,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<DetectionConditionOperator> conditionOperator = default;
-            Optional<SmartDetectionCondition> smartDetectionCondition = default;
-            Optional<HardThresholdCondition> hardThresholdCondition = default;
-            Optional<ChangeThresholdCondition> changeThresholdCondition = default;
+            DetectionConditionOperator? conditionOperator = default;
+            SmartDetectionCondition smartDetectionCondition = default;
+            HardThresholdCondition hardThresholdCondition = default;
+            ChangeThresholdCondition changeThresholdCondition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionOperator"u8))
@@ -87,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricWholeSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value);
+            return new MetricWholeSeriesDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition);
         }
     }
 }

@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AdditionalInfoErrorResponseErrorAdditionalInfoItem>> additionalInfo = default;
+            IReadOnlyList<AdditionalInfoErrorResponseErrorAdditionalInfoItem> additionalInfo = default;
             string code = default;
             string message = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +49,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new AdditionalInfoErrorResponseError(Optional.ToList(additionalInfo), code, message);
+            return new AdditionalInfoErrorResponseError(additionalInfo ?? new ChangeTrackingList<AdditionalInfoErrorResponseErrorAdditionalInfoItem>(), code, message);
         }
     }
 }

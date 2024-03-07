@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -80,10 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element);
+                    case "HelmPackage": return AzureArcKubernetesHelmApplication.DeserializeAzureArcKubernetesHelmApplication(element, options);
                 }
             }
-            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element);
+            return UnknownAzureArcKubernetesNetworkFunctionApplication.DeserializeUnknownAzureArcKubernetesNetworkFunctionApplication(element, options);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)

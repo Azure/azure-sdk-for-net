@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> uniqueId = default;
+            string name = default;
+            AzureLocation? location = default;
+            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PirSharedGalleryResourceData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData, uniqueId.Value);
+            return new PirSharedGalleryResourceData(name, location, serializedAdditionalRawData, uniqueId);
         }
 
         BinaryData IPersistableModel<PirSharedGalleryResourceData>.Write(ModelReaderWriterOptions options)

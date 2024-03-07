@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> sender = default;
-            Optional<string> recipient = default;
-            Optional<string> messageId = default;
-            Optional<DateTimeOffset> userActionTimeStamp = default;
-            Optional<string> engagementContext = default;
-            Optional<string> userAgent = default;
-            Optional<AcsUserEngagement> engagementType = default;
+            string sender = default;
+            string recipient = default;
+            string messageId = default;
+            DateTimeOffset? userActionTimeStamp = default;
+            string engagementContext = default;
+            string userAgent = default;
+            AcsUserEngagement? engagementType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -74,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType));
+            return new AcsEmailEngagementTrackingReportReceivedEventData(
+                sender,
+                recipient,
+                messageId,
+                userActionTimeStamp,
+                engagementContext,
+                userAgent,
+                engagementType);
         }
 
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>

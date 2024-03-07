@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CachedImages>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CachedImages> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<CachedImages> array = new List<CachedImages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CachedImages.DeserializeCachedImages(item));
+                        array.Add(CachedImages.DeserializeCachedImages(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CachedImagesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CachedImagesListResult(value ?? new ChangeTrackingList<CachedImages>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CachedImagesListResult>.Write(ModelReaderWriterOptions options)

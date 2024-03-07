@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<InMageVolumeExclusionOptions>> volumeOptions = default;
-            Optional<IList<InMageDiskSignatureExclusionOptions>> diskSignatureOptions = default;
+            IList<InMageVolumeExclusionOptions> volumeOptions = default;
+            IList<InMageDiskSignatureExclusionOptions> diskSignatureOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageVolumeExclusionOptions> array = new List<InMageVolumeExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item));
+                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item, options));
                     }
                     volumeOptions = array;
                     continue;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageDiskSignatureExclusionOptions> array = new List<InMageDiskSignatureExclusionOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item));
+                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item, options));
                     }
                     diskSignatureOptions = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDiskExclusionContent(Optional.ToList(volumeOptions), Optional.ToList(diskSignatureOptions), serializedAdditionalRawData);
+            return new InMageDiskExclusionContent(volumeOptions ?? new ChangeTrackingList<InMageVolumeExclusionOptions>(), diskSignatureOptions ?? new ChangeTrackingList<InMageDiskSignatureExclusionOptions>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageDiskExclusionContent>.Write(ModelReaderWriterOptions options)

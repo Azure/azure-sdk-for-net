@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -114,12 +115,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> caller = default;
-            Optional<IList<string>> operations = default;
-            Optional<RoleManagementAssignmentLevel> level = default;
-            Optional<IList<string>> targetObjects = default;
-            Optional<IList<string>> inheritableSettings = default;
-            Optional<IList<string>> enforcedSettings = default;
+            string caller = default;
+            IList<string> operations = default;
+            RoleManagementAssignmentLevel? level = default;
+            IList<string> targetObjects = default;
+            IList<string> inheritableSettings = default;
+            IList<string> enforcedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), Optional.ToNullable(level), Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings), serializedAdditionalRawData);
+            return new RoleManagementPolicyRuleTarget(
+                caller,
+                operations ?? new ChangeTrackingList<string>(),
+                level,
+                targetObjects ?? new ChangeTrackingList<string>(),
+                inheritableSettings ?? new ChangeTrackingList<string>(),
+                enforcedSettings ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyRuleTarget>.Write(ModelReaderWriterOptions options)

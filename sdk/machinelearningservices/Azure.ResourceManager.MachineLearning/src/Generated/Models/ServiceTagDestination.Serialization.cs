@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<NetworkingRuleAction> action = default;
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<string> portRanges = default;
-            Optional<string> protocol = default;
-            Optional<string> serviceTag = default;
+            NetworkingRuleAction? action = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            string portRanges = default;
+            string protocol = default;
+            string serviceTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +148,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagDestination(Optional.ToNullable(action), Optional.ToList(addressPrefixes), portRanges.Value, protocol.Value, serviceTag.Value, serializedAdditionalRawData);
+            return new ServiceTagDestination(
+                action,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                portRanges,
+                protocol,
+                serviceTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagDestination>.Write(ModelReaderWriterOptions options)

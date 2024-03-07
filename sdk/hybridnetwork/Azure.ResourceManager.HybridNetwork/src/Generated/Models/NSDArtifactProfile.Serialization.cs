@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> artifactStoreReference = default;
-            Optional<string> artifactName = default;
-            Optional<string> artifactVersion = default;
+            WritableSubResource artifactStoreReference = default;
+            string artifactName = default;
+            string artifactVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NSDArtifactProfile(artifactStoreReference, artifactName.Value, artifactVersion.Value, serializedAdditionalRawData);
+            return new NSDArtifactProfile(artifactStoreReference, artifactName, artifactVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NSDArtifactProfile>.Write(ModelReaderWriterOptions options)

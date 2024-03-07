@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -92,9 +93,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string name = default;
-            Optional<string> instance = default;
-            Optional<IList<DataBoxEdgeMetricDimension>> dimensionFilter = default;
-            Optional<IList<DataBoxEdgeMetricDimension>> additionalDimensions = default;
+            string instance = default;
+            IList<DataBoxEdgeMetricDimension> dimensionFilter = default;
+            IList<DataBoxEdgeMetricDimension> additionalDimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item, options));
                     }
                     dimensionFilter = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item, options));
                     }
                     additionalDimensions = array;
                     continue;
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeMetricCounter(name, instance.Value, Optional.ToList(dimensionFilter), Optional.ToList(additionalDimensions), serializedAdditionalRawData);
+            return new DataBoxEdgeMetricCounter(name, instance, dimensionFilter ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), additionalDimensions ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeMetricCounter>.Write(ModelReaderWriterOptions options)

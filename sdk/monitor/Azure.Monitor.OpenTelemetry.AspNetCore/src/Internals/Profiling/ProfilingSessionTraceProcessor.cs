@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 #nullable enable
 
+using System.Diagnostics.Tracing;
 using OpenTelemetry;
+using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
 {
@@ -23,14 +25,84 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// </remarks>
         internal const string TagName = "profile_id_experimental";
 
+        private readonly ProfilingSessionEventSource _eventSource = ProfilingSessionEventSource.Current;
+
+        /// <summary>
+        /// Indicates if we should write resource attributes, when available.
+        /// </summary>
+        private bool _writeResourceAttributesPending;
+
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        public ProfilingSessionTraceProcessor()
+        {
+            _eventSource.SessionIdChanged += OnSessionIdChanged;
+        }
+
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
+        {
+            _eventSource.SessionIdChanged -= OnSessionIdChanged;
+
+            if (_writeResourceAttributesPending)
+            {
+                TryWriteResourceAttributes();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Callback from the <see cref="ProfilingSessionEventSource"/> when a profiling
+        /// session starts or stops.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="sessionId">The new session ID. Null if the session has stopped.</param>
+        private void OnSessionIdChanged(object? sender, string? sessionId)
+        {
+            // We don't write the resource attributes here because this may be
+            // called early in startup, before the ParentProvider has been
+            // initialized. Instead, we defer writing the resource until the
+            // first activity. If there are no activities, we'll also try to
+            // write the resource attributes in Dispose.
+            _writeResourceAttributesPending = sessionId != null &&
+                _eventSource.IsEnabled(EventLevel.Informational, ProfilingSessionEventSource.Keywords.ResourceAttributes);
+        }
+
+        /// <inheritdoc/>
+        public override void OnStart(Activity activity)
+        {
+            if (_writeResourceAttributesPending && TryWriteResourceAttributes())
+            {
+                _writeResourceAttributesPending = false;
+            }
+        }
+
         /// <inheritdoc/>
         public override void OnEnd(Activity activity)
         {
-            string? sessionId = ProfilingSessionEventSource.Current.SessionId;
+            string? sessionId = _eventSource.SessionId;
             if (!string.IsNullOrEmpty(sessionId))
             {
                 activity.SetTag(TagName, sessionId);
             }
+        }
+
+        /// <summary>
+        /// Try to write the resource attributes to the event source.
+        /// </summary>
+        /// <returns>True if the resource attributes were written.</returns>
+        private bool TryWriteResourceAttributes()
+        {
+            Resource? resource = ParentProvider?.GetResource();
+            if (resource == null)
+            {
+                return false;
+            }
+
+            _eventSource.WriteResourceAttributes(resource);
+            return true;
         }
     }
 }

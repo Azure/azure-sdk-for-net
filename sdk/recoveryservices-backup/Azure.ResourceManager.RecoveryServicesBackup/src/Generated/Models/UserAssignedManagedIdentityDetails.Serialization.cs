@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -80,9 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> identityArmId = default;
-            Optional<string> identityName = default;
-            Optional<UserAssignedIdentity> userAssignedIdentityProperties = default;
+            string identityArmId = default;
+            string identityName = default;
+            UserAssignedIdentity userAssignedIdentityProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserAssignedManagedIdentityDetails(identityArmId.Value, identityName.Value, userAssignedIdentityProperties, serializedAdditionalRawData);
+            return new UserAssignedManagedIdentityDetails(identityArmId, identityName, userAssignedIdentityProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserAssignedManagedIdentityDetails>.Write(ModelReaderWriterOptions options)

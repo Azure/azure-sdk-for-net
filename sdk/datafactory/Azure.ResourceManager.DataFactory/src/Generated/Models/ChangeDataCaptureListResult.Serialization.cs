@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<DataFactoryChangeDataCaptureData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryChangeDataCaptureData> array = new List<DataFactoryChangeDataCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(item));
+                        array.Add(DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDataCaptureListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ChangeDataCaptureListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDataCaptureListResult>.Write(ModelReaderWriterOptions options)

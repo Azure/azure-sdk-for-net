@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -133,16 +134,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IList<AbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<AnalysisDetectorEvidences>> payload = default;
-            Optional<IList<DetectorDefinition>> nonCorrelatedDetectors = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IList<AbnormalTimePeriod> abnormalTimePeriods = default;
+            IList<AnalysisDetectorEvidences> payload = default;
+            IList<DetectorDefinition> nonCorrelatedDetectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AbnormalTimePeriod> array = new List<AbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item));
+                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item, options));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
+                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item, options));
                             }
                             payload = array;
                             continue;
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorDefinition> array = new List<DetectorDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item));
+                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item, options));
                             }
                             nonCorrelatedDetectors = array;
                             continue;
@@ -254,7 +255,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticAnalysis(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(abnormalTimePeriods), Optional.ToList(payload), Optional.ToList(nonCorrelatedDetectors), kind.Value, serializedAdditionalRawData);
+            return new DiagnosticAnalysis(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(),
+                payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(),
+                nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticAnalysis>.Write(ModelReaderWriterOptions options)

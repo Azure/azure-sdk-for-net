@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServerTrustCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServerTrustCertificateData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServerTrustCertificateData> array = new List<ServerTrustCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item));
+                        array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerTrustCertificatesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServerTrustCertificatesListResult(value ?? new ChangeTrackingList<ServerTrustCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerTrustCertificatesListResult>.Write(ModelReaderWriterOptions options)

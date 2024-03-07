@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<double> tokenRefreshExtensionHours = default;
-            Optional<FileSystemTokenStore> fileSystem = default;
-            Optional<AppServiceBlobStorageTokenStore> azureBlobStorage = default;
+            bool? enabled = default;
+            double? tokenRefreshExtensionHours = default;
+            FileSystemTokenStore fileSystem = default;
+            AppServiceBlobStorageTokenStore azureBlobStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value);
+                    fileSystem = FileSystemTokenStore.DeserializeFileSystemTokenStore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobStorage"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value);
+                    azureBlobStorage = AppServiceBlobStorageTokenStore.DeserializeAppServiceBlobStorageTokenStore(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceTokenStore(Optional.ToNullable(enabled), Optional.ToNullable(tokenRefreshExtensionHours), fileSystem.Value, azureBlobStorage.Value, serializedAdditionalRawData);
+            return new AppServiceTokenStore(enabled, tokenRefreshExtensionHours, fileSystem, azureBlobStorage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceTokenStore>.Write(ModelReaderWriterOptions options)

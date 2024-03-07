@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
-            Optional<string> path = default;
+            string host = default;
+            IList<ContainerAppHttpHeaderInfo> httpHeaders = default;
+            string path = default;
             int port = default;
-            Optional<ContainerAppHttpScheme> scheme = default;
+            ContainerAppHttpScheme? scheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppHttpHeaderInfo> array = new List<ContainerAppHttpHeaderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item));
+                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item, options));
                     }
                     httpHeaders = array;
                     continue;
@@ -144,7 +145,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpRequestInfo(host.Value, Optional.ToList(httpHeaders), path.Value, port, Optional.ToNullable(scheme), serializedAdditionalRawData);
+            return new ContainerAppHttpRequestInfo(
+                host,
+                httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(),
+                path,
+                port,
+                scheme,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpRequestInfo>.Write(ModelReaderWriterOptions options)

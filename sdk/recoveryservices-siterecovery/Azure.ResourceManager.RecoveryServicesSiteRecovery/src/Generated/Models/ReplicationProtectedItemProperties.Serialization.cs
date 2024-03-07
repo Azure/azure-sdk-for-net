@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -224,36 +225,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectedItemType = default;
-            Optional<ResourceIdentifier> protectableItemId = default;
-            Optional<string> recoveryServicesProviderId = default;
-            Optional<string> primaryFabricFriendlyName = default;
-            Optional<string> primaryFabricProvider = default;
-            Optional<string> recoveryFabricFriendlyName = default;
-            Optional<ResourceIdentifier> recoveryFabricId = default;
-            Optional<string> primaryProtectionContainerFriendlyName = default;
-            Optional<string> recoveryProtectionContainerFriendlyName = default;
-            Optional<string> protectionState = default;
-            Optional<string> protectionStateDescription = default;
-            Optional<string> activeLocation = default;
-            Optional<string> testFailoverState = default;
-            Optional<string> testFailoverStateDescription = default;
-            Optional<string> switchProviderState = default;
-            Optional<string> switchProviderStateDescription = default;
-            Optional<IReadOnlyList<string>> allowedOperations = default;
-            Optional<string> replicationHealth = default;
-            Optional<string> failoverHealth = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<string> policyFriendlyName = default;
-            Optional<DateTimeOffset> lastSuccessfulFailoverTime = default;
-            Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
-            Optional<CurrentScenarioDetails> currentScenario = default;
-            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
-            Optional<ReplicationProviderSpecificSettings> providerSpecificDetails = default;
-            Optional<ResourceIdentifier> recoveryContainerId = default;
-            Optional<Guid> eventCorrelationId = default;
+            string friendlyName = default;
+            string protectedItemType = default;
+            ResourceIdentifier protectableItemId = default;
+            string recoveryServicesProviderId = default;
+            string primaryFabricFriendlyName = default;
+            string primaryFabricProvider = default;
+            string recoveryFabricFriendlyName = default;
+            ResourceIdentifier recoveryFabricId = default;
+            string primaryProtectionContainerFriendlyName = default;
+            string recoveryProtectionContainerFriendlyName = default;
+            string protectionState = default;
+            string protectionStateDescription = default;
+            string activeLocation = default;
+            string testFailoverState = default;
+            string testFailoverStateDescription = default;
+            string switchProviderState = default;
+            string switchProviderStateDescription = default;
+            IReadOnlyList<string> allowedOperations = default;
+            string replicationHealth = default;
+            string failoverHealth = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            ResourceIdentifier policyId = default;
+            string policyFriendlyName = default;
+            DateTimeOffset? lastSuccessfulFailoverTime = default;
+            DateTimeOffset? lastSuccessfulTestFailoverTime = default;
+            CurrentScenarioDetails currentScenario = default;
+            ResourceIdentifier failoverRecoveryPointId = default;
+            ReplicationProviderSpecificSettings providerSpecificDetails = default;
+            ResourceIdentifier recoveryContainerId = default;
+            Guid? eventCorrelationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -384,7 +385,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -427,7 +428,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value);
+                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failoverRecoveryPointId"u8))
@@ -445,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationProviderSpecificSettings.DeserializeReplicationProviderSpecificSettings(property.Value);
+                    providerSpecificDetails = ReplicationProviderSpecificSettings.DeserializeReplicationProviderSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryContainerId"u8))
@@ -472,7 +473,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId), serializedAdditionalRawData);
+            return new ReplicationProtectedItemProperties(
+                friendlyName,
+                protectedItemType,
+                protectableItemId,
+                recoveryServicesProviderId,
+                primaryFabricFriendlyName,
+                primaryFabricProvider,
+                recoveryFabricFriendlyName,
+                recoveryFabricId,
+                primaryProtectionContainerFriendlyName,
+                recoveryProtectionContainerFriendlyName,
+                protectionState,
+                protectionStateDescription,
+                activeLocation,
+                testFailoverState,
+                testFailoverStateDescription,
+                switchProviderState,
+                switchProviderStateDescription,
+                allowedOperations ?? new ChangeTrackingList<string>(),
+                replicationHealth,
+                failoverHealth,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                policyId,
+                policyFriendlyName,
+                lastSuccessfulFailoverTime,
+                lastSuccessfulTestFailoverTime,
+                currentScenario,
+                failoverRecoveryPointId,
+                providerSpecificDetails,
+                recoveryContainerId,
+                eventCorrelationId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

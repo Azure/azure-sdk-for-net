@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public FacebookChannelProperties(string appId, bool isEnabled)
         {
-            Argument.AssertNotNull(appId, nameof(appId));
+            if (appId == null)
+            {
+                throw new ArgumentNullException(nameof(appId));
+            }
 
             Pages = new ChangeTrackingList<FacebookPage>();
             AppId = appId;

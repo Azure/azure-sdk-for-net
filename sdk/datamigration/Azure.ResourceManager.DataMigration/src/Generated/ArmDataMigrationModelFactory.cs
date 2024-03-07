@@ -27,7 +27,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlDBData"/> instance for mocking. </returns>
         public static DatabaseMigrationSqlDBData DatabaseMigrationSqlDBData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, DatabaseMigrationSqlDBProperties properties = null)
         {
-            return new DatabaseMigrationSqlDBData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DatabaseMigrationSqlDBData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlDBProperties"/>. </summary>
@@ -53,7 +59,26 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             tableList ??= new List<string>();
 
-            return new DatabaseMigrationSqlDBProperties(ResourceType.SqlDB, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, serializedAdditionalRawData: null, migrationStatusDetails, targetSqlConnection, offline != null ? new SqlDBOfflineConfiguration(offline, serializedAdditionalRawData: null) : null, tableList?.ToList());
+            return new DatabaseMigrationSqlDBProperties(
+                ResourceType.SqlDB,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData: null,
+                migrationStatusDetails,
+                targetSqlConnection,
+                offline != null ? new SqlDBOfflineConfiguration(offline, serializedAdditionalRawData: null) : null,
+                tableList?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlDBMigrationStatusDetails"/>. </summary>
@@ -84,7 +109,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.CopyProgressDetails"/> instance for mocking. </returns>
         public static CopyProgressDetails CopyProgressDetails(string tableName = null, string status = null, string parallelCopyType = null, int? usedParallelCopies = null, long? dataRead = null, long? dataWritten = null, long? rowsRead = null, long? rowsCopied = null, DateTimeOffset? copyStart = null, double? copyThroughput = null, int? copyDuration = null)
         {
-            return new CopyProgressDetails(tableName, status, parallelCopyType, usedParallelCopies, dataRead, dataWritten, rowsRead, rowsCopied, copyStart, copyThroughput, copyDuration, serializedAdditionalRawData: null);
+            return new CopyProgressDetails(
+                tableName,
+                status,
+                parallelCopyType,
+                usedParallelCopies,
+                dataRead,
+                dataWritten,
+                rowsRead,
+                rowsCopied,
+                copyStart,
+                copyThroughput,
+                copyDuration,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationProperties"/>. </summary>
@@ -105,7 +142,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
         public static DatabaseMigrationProperties DatabaseMigrationProperties(string kind = "Unknown", string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null)
         {
-            return new UnknownDatabaseMigrationProperties(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, serializedAdditionalRawData: null);
+            return new UnknownDatabaseMigrationProperties(
+                kind,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorInfo"/>. </summary>
@@ -126,7 +178,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlMIData"/> instance for mocking. </returns>
         public static DatabaseMigrationSqlMIData DatabaseMigrationSqlMIData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, DatabaseMigrationSqlMIProperties properties = null)
         {
-            return new DatabaseMigrationSqlMIData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DatabaseMigrationSqlMIData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlMIProperties"/>. </summary>
@@ -149,7 +207,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlMIProperties"/> instance for mocking. </returns>
         public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
         {
-            return new DatabaseMigrationSqlMIProperties(ResourceType.SqlMI, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, serializedAdditionalRawData: null, migrationStatusDetails, backupConfiguration, offlineConfiguration);
+            return new DatabaseMigrationSqlMIProperties(
+                ResourceType.SqlMI,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData: null,
+                migrationStatusDetails,
+                backupConfiguration,
+                offlineConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrationStatusDetails"/>. </summary>
@@ -173,7 +249,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             invalidFiles ??= new List<string>();
             fileUploadBlockingErrors ??= new List<string>();
 
-            return new MigrationStatusDetails(migrationState, fullBackupSetInfo, lastRestoredBackupSetInfo, activeBackupSets?.ToList(), invalidFiles?.ToList(), blobContainerName, isFullBackupRestored, restoreBlockingReason, completeRestoreErrorMessage, fileUploadBlockingErrors?.ToList(), currentRestoringFilename, lastRestoredFilename, pendingLogBackupsCount, serializedAdditionalRawData: null);
+            return new MigrationStatusDetails(
+                migrationState,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
+                activeBackupSets?.ToList(),
+                invalidFiles?.ToList(),
+                blobContainerName,
+                isFullBackupRestored,
+                restoreBlockingReason,
+                completeRestoreErrorMessage,
+                fileUploadBlockingErrors?.ToList(),
+                currentRestoringFilename,
+                lastRestoredFilename,
+                pendingLogBackupsCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlBackupSetInfo"/>. </summary>
@@ -194,7 +284,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             listOfBackupFiles ??= new List<SqlBackupFileInfo>();
             ignoreReasons ??= new List<string>();
 
-            return new SqlBackupSetInfo(backupSetId, firstLSN, lastLSN, backupType, listOfBackupFiles?.ToList(), backupStartOn, backupFinishOn, isBackupRestored, hasBackupChecksums, familyCount, ignoreReasons?.ToList(), serializedAdditionalRawData: null);
+            return new SqlBackupSetInfo(
+                backupSetId,
+                firstLSN,
+                lastLSN,
+                backupType,
+                listOfBackupFiles?.ToList(),
+                backupStartOn,
+                backupFinishOn,
+                isBackupRestored,
+                hasBackupChecksums,
+                familyCount,
+                ignoreReasons?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlBackupFileInfo"/>. </summary>
@@ -209,7 +311,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.SqlBackupFileInfo"/> instance for mocking. </returns>
         public static SqlBackupFileInfo SqlBackupFileInfo(string fileName = null, string status = null, long? totalSize = null, long? dataRead = null, long? dataWritten = null, double? copyThroughput = null, int? copyDuration = null, int? familySequenceNumber = null)
         {
-            return new SqlBackupFileInfo(fileName, status, totalSize, dataRead, dataWritten, copyThroughput, copyDuration, familySequenceNumber, serializedAdditionalRawData: null);
+            return new SqlBackupFileInfo(
+                fileName,
+                status,
+                totalSize,
+                dataRead,
+                dataWritten,
+                copyThroughput,
+                copyDuration,
+                familySequenceNumber,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceLocation"/>. </summary>
@@ -231,7 +342,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlVmData"/> instance for mocking. </returns>
         public static DatabaseMigrationSqlVmData DatabaseMigrationSqlVmData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, DatabaseMigrationSqlVmProperties properties = null)
         {
-            return new DatabaseMigrationSqlVmData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DatabaseMigrationSqlVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlVmProperties"/>. </summary>
@@ -254,7 +371,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlVmProperties"/> instance for mocking. </returns>
         public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
         {
-            return new DatabaseMigrationSqlVmProperties(ResourceType.SqlVm, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, serializedAdditionalRawData: null, migrationStatusDetails, backupConfiguration, offlineConfiguration);
+            return new DatabaseMigrationSqlVmProperties(
+                ResourceType.SqlVm,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData: null,
+                migrationStatusDetails,
+                backupConfiguration,
+                offlineConfiguration);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.SqlMigrationServiceData"/>. </summary>
@@ -271,7 +406,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SqlMigrationServiceData(id, name, resourceType, systemData, tags, location, provisioningState, integrationRuntimeState, serializedAdditionalRawData: null);
+            return new SqlMigrationServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                integrationRuntimeState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AuthenticationKeys"/>. </summary>
@@ -296,7 +440,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.DatabaseMigration"/> instance for mocking. </returns>
         public static DatabaseMigration DatabaseMigration(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, DatabaseMigrationProperties properties = null)
         {
-            return new DatabaseMigration(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new DatabaseMigration(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationRuntimeMonitoringData"/>. </summary>
@@ -325,7 +475,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new NodeMonitoringData(additionalProperties, nodeName, availableMemoryInMB, cpuUtilization, concurrentJobsLimit, concurrentJobsRunning, maxConcurrentJobs, sentBytes, receivedBytes, serializedAdditionalRawData: null);
+            return new NodeMonitoringData(
+                additionalProperties,
+                nodeName,
+                availableMemoryInMB,
+                cpuUtilization,
+                concurrentJobsLimit,
+                concurrentJobsRunning,
+                maxConcurrentJobs,
+                sentBytes,
+                receivedBytes,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceSku"/>. </summary>
@@ -350,7 +510,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             capabilities ??= new List<ResourceSkuCapabilities>();
             restrictions ??= new List<ResourceSkuRestrictions>();
 
-            return new ResourceSku(resourceType, name, tier, size, family, kind, capacity, locations?.ToList(), apiVersions?.ToList(), costs?.ToList(), capabilities?.ToList(), restrictions?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                capacity,
+                locations?.ToList(),
+                apiVersions?.ToList(),
+                costs?.ToList(),
+                capabilities?.ToList(),
+                restrictions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapacity"/>. </summary>
@@ -428,7 +601,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataMigrationServiceData(id, name, resourceType, systemData, tags, location, etag, kind, sku, provisioningState, publicKey, virtualSubnetId, virtualNicId, autoStopDelay, deleteResourcesOnStop, serializedAdditionalRawData: null);
+            return new DataMigrationServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                kind,
+                sku,
+                provisioningState,
+                publicKey,
+                virtualSubnetId,
+                virtualNicId,
+                autoStopDelay,
+                deleteResourcesOnStop,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataMigrationServiceStatusResponse"/>. </summary>
@@ -442,7 +631,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             supportedTaskTypes ??= new List<string>();
 
-            return new DataMigrationServiceStatusResponse(agentVersion, agentConfiguration, status, vmSize, supportedTaskTypes?.ToList(), serializedAdditionalRawData: null);
+            return new DataMigrationServiceStatusResponse(
+                agentVersion,
+                agentConfiguration,
+                status,
+                vmSize,
+                supportedTaskTypes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableServiceSku"/>. </summary>
@@ -491,7 +686,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="DataMigration.ProjectTaskData"/> instance for mocking. </returns>
         public static ProjectTaskData ProjectTaskData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ProjectTaskProperties properties = null)
         {
-            return new ProjectTaskData(id, name, resourceType, systemData, etag, properties, serializedAdditionalRawData: null);
+            return new ProjectTaskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProjectTaskProperties"/>. </summary>
@@ -511,7 +713,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             commands ??= new List<CommandProperties>();
             clientData ??= new Dictionary<string, string>();
 
-            return new UnknownProjectTaskProperties(taskType, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null);
+            return new UnknownProjectTaskProperties(
+                taskType,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommandProperties"/>. </summary>
@@ -566,7 +774,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             tags ??= new Dictionary<string, string>();
             databasesInfo ??= new List<DatabaseInfo>();
 
-            return new ProjectData(id, name, resourceType, systemData, tags, location, etag, sourcePlatform, azureAuthenticationInfo, targetPlatform, createdOn, sourceConnectionInfo, targetConnectionInfo, databasesInfo?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                sourcePlatform,
+                azureAuthenticationInfo,
+                targetPlatform,
+                createdOn,
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                databasesInfo?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Quota"/>. </summary>
@@ -578,7 +802,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.Quota"/> instance for mocking. </returns>
         public static Quota Quota(double? currentValue = null, string id = null, double? limit = null, QuotaName name = null, string unit = null)
         {
-            return new Quota(currentValue, id, limit, name, unit, serializedAdditionalRawData: null);
+            return new Quota(
+                currentValue,
+                id,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaName"/>. </summary>
@@ -600,7 +830,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="DataMigration.ProjectFileData"/> instance for mocking. </returns>
         public static ProjectFileData ProjectFileData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ProjectFileProperties properties = null)
         {
-            return new ProjectFileData(id, name, resourceType, systemData, etag, properties, serializedAdditionalRawData: null);
+            return new ProjectFileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProjectFileProperties"/>. </summary>
@@ -612,7 +849,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.ProjectFileProperties"/> instance for mocking. </returns>
         public static ProjectFileProperties ProjectFileProperties(string extension = null, string filePath = null, DateTimeOffset? lastModified = null, string mediaType = null, long? size = null)
         {
-            return new ProjectFileProperties(extension, filePath, lastModified, mediaType, size, serializedAdditionalRawData: null);
+            return new ProjectFileProperties(
+                extension,
+                filePath,
+                lastModified,
+                mediaType,
+                size,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileStorageInfo"/>. </summary>
@@ -637,7 +880,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new List<ODataError>();
 
-            return new MigrateSyncCompleteCommandProperties(CommandType.MigrateSyncCompleteDatabase, errors?.ToList(), state, serializedAdditionalRawData: null, input, output, commandId);
+            return new MigrateSyncCompleteCommandProperties(
+                CommandType.MigrateSyncCompleteDatabase,
+                errors?.ToList(),
+                state,
+                serializedAdditionalRawData: null,
+                input,
+                output,
+                commandId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSyncCompleteCommandOutput"/>. </summary>
@@ -661,7 +911,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.ReportableException"/> instance for mocking. </returns>
         public static ReportableException ReportableException(string message = null, string actionableMessage = null, string filePath = null, string lineNumber = null, int? hResult = null, string stackTrace = null)
         {
-            return new ReportableException(message, actionableMessage, filePath, lineNumber, hResult, stackTrace, serializedAdditionalRawData: null);
+            return new ReportableException(
+                message,
+                actionableMessage,
+                filePath,
+                lineNumber,
+                hResult,
+                stackTrace,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMISyncCompleteCommandProperties"/>. </summary>
@@ -675,7 +932,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new List<ODataError>();
             outputErrors ??= new List<ReportableException>();
 
-            return new MigrateMISyncCompleteCommandProperties(CommandType.MigrateSqlServerAzureDBSqlMIComplete, errors?.ToList(), state, serializedAdditionalRawData: null, inputSourceDatabaseName != null ? new MigrateMISyncCompleteCommandInput(inputSourceDatabaseName, serializedAdditionalRawData: null) : null, outputErrors != null ? new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList(), serializedAdditionalRawData: null) : null);
+            return new MigrateMISyncCompleteCommandProperties(
+                CommandType.MigrateSqlServerAzureDBSqlMIComplete,
+                errors?.ToList(),
+                state,
+                serializedAdditionalRawData: null,
+                inputSourceDatabaseName != null ? new MigrateMISyncCompleteCommandInput(inputSourceDatabaseName, serializedAdditionalRawData: null) : null,
+                outputErrors != null ? new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList(), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupSetInfo"/>. </summary>
@@ -694,7 +957,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             listOfBackupFiles ??= new List<BackupFileInfo>();
 
-            return new BackupSetInfo(backupSetId, firstLsn, lastLsn, lastModifiedOn, backupType, listOfBackupFiles?.ToList(), databaseName, backupStartOn, backupFinishedOn, isBackupRestored, serializedAdditionalRawData: null);
+            return new BackupSetInfo(
+                backupSetId,
+                firstLsn,
+                lastLsn,
+                lastModifiedOn,
+                backupType,
+                listOfBackupFiles?.ToList(),
+                databaseName,
+                backupStartOn,
+                backupFinishedOn,
+                isBackupRestored,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupFileInfo"/>. </summary>
@@ -739,7 +1013,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id, "TaskLevelOutput", serializedAdditionalRawData: null, databases, logins, agentJobs, databaseTdeCertificateMapping, sourceServerVersion, sourceServerBrandVersion, validationErrors?.ToList());
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(
+                id,
+                "TaskLevelOutput",
+                serializedAdditionalRawData: null,
+                databases,
+                logins,
+                agentJobs,
+                databaseTdeCertificateMapping,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                validationErrors?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>. </summary>
@@ -754,7 +1038,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             databaseFiles ??= new List<DatabaseFileInfo>();
 
-            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, name, sizeMB, databaseFiles?.ToList(), compatibilityLevel, databaseState);
+            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                name,
+                sizeMB,
+                databaseFiles?.ToList(),
+                compatibilityLevel,
+                databaseState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseFileInfo"/>. </summary>
@@ -768,7 +1060,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.DatabaseFileInfo"/> instance for mocking. </returns>
         public static DatabaseFileInfo DatabaseFileInfo(string databaseName = null, string id = null, string logicalName = null, string physicalFullName = null, string restoreFullName = null, DatabaseFileType? fileType = null, double? sizeMB = null)
         {
-            return new DatabaseFileInfo(databaseName, id, logicalName, physicalFullName, restoreFullName, fileType, sizeMB, serializedAdditionalRawData: null);
+            return new DatabaseFileInfo(
+                databaseName,
+                id,
+                logicalName,
+                physicalFullName,
+                restoreFullName,
+                fileType,
+                sizeMB,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/>. </summary>
@@ -781,7 +1081,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/> instance for mocking. </returns>
         public static ConnectToSourceSqlServerTaskOutputLoginLevel ConnectToSourceSqlServerTaskOutputLoginLevel(string id = null, string name = null, LoginType? loginType = null, string defaultDatabase = null, bool? isEnabled = null, MigrationEligibilityInfo migrationEligibility = null)
         {
-            return new ConnectToSourceSqlServerTaskOutputLoginLevel(id, "LoginLevelOutput", serializedAdditionalRawData: null, name, loginType, defaultDatabase, isEnabled, migrationEligibility);
+            return new ConnectToSourceSqlServerTaskOutputLoginLevel(
+                id,
+                "LoginLevelOutput",
+                serializedAdditionalRawData: null,
+                name,
+                loginType,
+                defaultDatabase,
+                isEnabled,
+                migrationEligibility);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrationEligibilityInfo"/>. </summary>
@@ -809,7 +1117,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(id, "AgentJobLevelOutput", serializedAdditionalRawData: null, name, jobCategory, isEnabled, jobOwner, lastExecutedOn, validationErrors?.ToList(), migrationEligibility);
+            return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(
+                id,
+                "AgentJobLevelOutput",
+                serializedAdditionalRawData: null,
+                name,
+                jobCategory,
+                isEnabled,
+                jobOwner,
+                lastExecutedOn,
+                validationErrors?.ToList(),
+                migrationEligibility);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourcePostgreSqlSyncTaskOutput"/>. </summary>
@@ -824,7 +1142,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             databases ??= new List<string>();
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToSourcePostgreSqlSyncTaskOutput(id, sourceServerVersion, databases?.ToList(), sourceServerBrandVersion, validationErrors?.ToList(), serializedAdditionalRawData: null);
+            return new ConnectToSourcePostgreSqlSyncTaskOutput(
+                id,
+                sourceServerVersion,
+                databases?.ToList(),
+                sourceServerBrandVersion,
+                validationErrors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForMySqlTaskOutput"/>. </summary>
@@ -839,7 +1163,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             databases ??= new List<string>();
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToTargetAzureDBForMySqlTaskOutput(id, serverVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList(), serializedAdditionalRawData: null);
+            return new ConnectToTargetAzureDBForMySqlTaskOutput(
+                id,
+                serverVersion,
+                databases?.ToList(),
+                targetServerBrandVersion,
+                validationErrors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlDBTaskOutput"/>. </summary>
@@ -879,7 +1209,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             agentJobs ??= new List<string>();
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToTargetSqlMITaskOutput(id, targetServerVersion, targetServerBrandVersion, logins?.ToList(), agentJobs?.ToList(), validationErrors?.ToList(), serializedAdditionalRawData: null);
+            return new ConnectToTargetSqlMITaskOutput(
+                id,
+                targetServerVersion,
+                targetServerBrandVersion,
+                logins?.ToList(),
+                agentJobs?.ToList(),
+                validationErrors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
@@ -894,7 +1231,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             databases ??= new List<string>();
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(id, targetServerVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList(), serializedAdditionalRawData: null);
+            return new ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(
+                id,
+                targetServerVersion,
+                databases?.ToList(),
+                targetServerBrandVersion,
+                validationErrors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesMySqlTaskOutput"/>. </summary>
@@ -980,7 +1323,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSchemaSqlServerSqlDBTaskOutput>();
 
-            return new MigrateSchemaSqlServerSqlDBTaskProperties(TaskType.MigrateSchemaSqlServerSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), createdOn, taskId, isCloneable);
+            return new MigrateSchemaSqlServerSqlDBTaskProperties(
+                TaskType.MigrateSchemaSqlServerSqlDB,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                createdOn,
+                taskId,
+                isCloneable);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutput"/>. </summary>
@@ -1004,7 +1358,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/> instance for mocking. </returns>
         public static MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id = null, MigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerVersion = null, string targetServerBrandVersion = null)
         {
-            return new MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, state, startedOn, endedOn, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                state,
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
@@ -1022,7 +1386,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/> instance for mocking. </returns>
         public static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id = null, string databaseName = null, MigrationState? state = null, SchemaMigrationStage? stage = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string databaseErrorResultPrefix = null, string schemaErrorResultPrefix = null, long? numberOfSuccessfulOperations = null, long? numberOfFailedOperations = null, string fileId = null)
         {
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, state, stage, startedOn, endedOn, databaseErrorResultPrefix, schemaErrorResultPrefix, numberOfSuccessfulOperations, numberOfFailedOperations, fileId);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                databaseErrorResultPrefix,
+                schemaErrorResultPrefix,
+                numberOfSuccessfulOperations,
+                numberOfFailedOperations,
+                fileId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputError"/>. </summary>
@@ -1064,7 +1441,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
         public static MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServer = null, string targetServerVersion = null, string targetServer = null)
         {
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer);
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServer,
+                targetServerVersion,
+                targetServer);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>. </summary>
@@ -1087,7 +1473,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
         public static MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
         {
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                startedOn,
+                endedOn,
+                migrationState,
+                incomingChanges,
+                appliedChanges,
+                cdcInsertCounter,
+                cdcDeleteCounter,
+                cdcUpdateCounter,
+                fullLoadCompletedTables,
+                fullLoadLoadingTables,
+                fullLoadQueuedTables,
+                fullLoadErroredTables,
+                initializationCompleted,
+                latency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>. </summary>
@@ -1108,7 +1512,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/> instance for mocking. </returns>
         public static MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, string cdcInsertCounter = null, string cdcUpdateCounter = null, string cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(id, "TableLevelOutput", serializedAdditionalRawData: null, tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(
+                id,
+                "TableLevelOutput",
+                serializedAdditionalRawData: null,
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishOn,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>. </summary>
@@ -1153,7 +1573,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             selectedDatabases ??= new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>();
 
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(selectedDatabases?.ToList(), targetConnectionInfo, sourceConnectionInfo, encryptedKeyForSecureFields, startedOn, serializedAdditionalRawData: null);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(
+                selectedDatabases?.ToList(),
+                targetConnectionInfo,
+                sourceConnectionInfo,
+                encryptedKeyForSecureFields,
+                startedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput"/>. </summary>
@@ -1172,7 +1598,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             targetSetting ??= new Dictionary<string, string>();
             selectedTables ??= new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
 
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(name, id, targetDatabaseName, migrationSetting, sourceSetting, targetSetting, selectedTables?.ToList(), serializedAdditionalRawData: null);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(
+                name,
+                id,
+                targetDatabaseName,
+                migrationSetting,
+                sourceSetting,
+                targetSetting,
+                selectedTables?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
@@ -1199,7 +1633,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
         public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServer = null, string targetServerVersion = null, string targetServer = null, ScenarioSource? sourceServerType = null, ScenarioTarget? targetServerType = null, ReplicateMigrationState? state = null, float? databaseCount = null)
         {
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer, sourceServerType, targetServerType, state, databaseCount);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServer,
+                targetServerVersion,
+                targetServer,
+                sourceServerType,
+                targetServerType,
+                state,
+                databaseCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>. </summary>
@@ -1222,7 +1669,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
         public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
         {
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                startedOn,
+                endedOn,
+                migrationState,
+                incomingChanges,
+                appliedChanges,
+                cdcInsertCounter,
+                cdcDeleteCounter,
+                cdcUpdateCounter,
+                fullLoadCompletedTables,
+                fullLoadLoadingTables,
+                fullLoadQueuedTables,
+                fullLoadErroredTables,
+                initializationCompleted,
+                latency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
@@ -1243,7 +1708,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/> instance for mocking. </returns>
         public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(id, "TableLevelOutput", serializedAdditionalRawData: null, tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel(
+                id,
+                "TableLevelOutput",
+                serializedAdditionalRawData: null,
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishOn,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>. </summary>
@@ -1291,7 +1772,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServer = null, string targetServerVersion = null, string targetServer = null, int? databaseCount = null)
         {
-            return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer, databaseCount);
+            return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServer,
+                targetServerVersion,
+                targetServer,
+                databaseCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>. </summary>
@@ -1314,7 +1805,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
         {
-            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
+            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                startedOn,
+                endedOn,
+                migrationState,
+                incomingChanges,
+                appliedChanges,
+                cdcInsertCounter,
+                cdcDeleteCounter,
+                cdcUpdateCounter,
+                fullLoadCompletedTables,
+                fullLoadLoadingTables,
+                fullLoadQueuedTables,
+                fullLoadErroredTables,
+                initializationCompleted,
+                latency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>. </summary>
@@ -1335,7 +1844,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlDBSyncTaskOutputTableLevel MigrateSqlServerSqlDBSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(id, "TableLevelOutput", serializedAdditionalRawData: null, tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
+            return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(
+                id,
+                "TableLevelOutput",
+                serializedAdditionalRawData: null,
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishOn,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/>. </summary>
@@ -1390,7 +1915,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, durationInSeconds, status, statusMessage, message, databases, databaseSummary, migrationValidationResult, migrationReportResult, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList());
+            return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                durationInSeconds,
+                status,
+                statusMessage,
+                message,
+                databases,
+                databaseSummary,
+                migrationValidationResult,
+                migrationReportResult,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrationValidationResult"/>. </summary>
@@ -1417,7 +1960,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrationValidationDatabaseSummaryResult"/> instance for mocking. </returns>
         public static MigrationValidationDatabaseSummaryResult MigrationValidationDatabaseSummaryResult(string id = null, string migrationId = null, string sourceDatabaseName = null, string targetDatabaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ValidationStatus? status = null)
         {
-            return new MigrationValidationDatabaseSummaryResult(id, migrationId, sourceDatabaseName, targetDatabaseName, startedOn, endedOn, status, serializedAdditionalRawData: null);
+            return new MigrationValidationDatabaseSummaryResult(
+                id,
+                migrationId,
+                sourceDatabaseName,
+                targetDatabaseName,
+                startedOn,
+                endedOn,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrationReportResult"/>. </summary>
@@ -1450,7 +2001,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, startedOn, endedOn, state, stage, statusMessage, message, numberOfObjects, numberOfObjectsCompleted, errorCount, errorPrefix, resultPrefix, exceptionsAndWarnings?.ToList(), objectSummary);
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                startedOn,
+                endedOn,
+                state,
+                stage,
+                statusMessage,
+                message,
+                numberOfObjects,
+                numberOfObjectsCompleted,
+                errorCount,
+                errorPrefix,
+                resultPrefix,
+                exceptionsAndWarnings?.ToList(),
+                objectSummary);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/>. </summary>
@@ -1467,7 +2035,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlDBTaskOutputTableLevel MigrateSqlServerSqlDBTaskOutputTableLevel(string id = null, string objectName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationState? state = null, string statusMessage = null, long? itemsCount = null, long? itemsCompletedCount = null, string errorPrefix = null, string resultPrefix = null)
         {
-            return new MigrateSqlServerSqlDBTaskOutputTableLevel(id, "TableLevelOutput", serializedAdditionalRawData: null, objectName, startedOn, endedOn, state, statusMessage, itemsCount, itemsCompletedCount, errorPrefix, resultPrefix);
+            return new MigrateSqlServerSqlDBTaskOutputTableLevel(
+                id,
+                "TableLevelOutput",
+                serializedAdditionalRawData: null,
+                objectName,
+                startedOn,
+                endedOn,
+                state,
+                statusMessage,
+                itemsCount,
+                itemsCompletedCount,
+                errorPrefix,
+                resultPrefix);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/>. </summary>
@@ -1489,7 +2069,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             summaryResults ??= new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
 
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id, "MigrationValidationOutput", serializedAdditionalRawData: null, migrationId, summaryResults, status);
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(
+                id,
+                "MigrationValidationOutput",
+                serializedAdditionalRawData: null,
+                migrationId,
+                summaryResults,
+                status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>. </summary>
@@ -1506,7 +2092,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id = null, string migrationId = null, string sourceDatabaseName = null, string targetDatabaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataIntegrityValidationResult dataIntegrityValidationResult = null, SchemaComparisonValidationResult schemaValidationResult = null, QueryAnalysisValidationResult queryAnalysisValidationResult = null, ValidationStatus? status = null)
         {
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id, "MigrationDatabaseLevelValidationOutput", serializedAdditionalRawData: null, migrationId, sourceDatabaseName, targetDatabaseName, startedOn, endedOn, dataIntegrityValidationResult, schemaValidationResult, queryAnalysisValidationResult, status);
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(
+                id,
+                "MigrationDatabaseLevelValidationOutput",
+                serializedAdditionalRawData: null,
+                migrationId,
+                sourceDatabaseName,
+                targetDatabaseName,
+                startedOn,
+                endedOn,
+                dataIntegrityValidationResult,
+                schemaValidationResult,
+                queryAnalysisValidationResult,
+                status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataIntegrityValidationResult"/>. </summary>
@@ -1586,7 +2184,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             waitStats ??= new Dictionary<string, WaitStatistics>();
             sqlErrors ??= new List<string>();
 
-            return new ExecutionStatistics(executionCount, cpuTimeMs, elapsedTimeMs, waitStats, hasErrors, sqlErrors?.ToList(), serializedAdditionalRawData: null);
+            return new ExecutionStatistics(
+                executionCount,
+                cpuTimeMs,
+                elapsedTimeMs,
+                waitStats,
+                hasErrors,
+                sqlErrors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WaitStatistics"/>. </summary>
@@ -1624,7 +2229,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlMISyncTaskOutputMigrationLevel MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id = null, int? databaseCount = null, MigrationState? state = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerName = null, string sourceServerVersion = null, string sourceServerBrandVersion = null, string targetServerName = null, string targetServerVersion = null, string targetServerBrandVersion = null, int? databaseErrorCount = null)
         {
-            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, databaseCount, state, startedOn, endedOn, sourceServerName, sourceServerVersion, sourceServerBrandVersion, targetServerName, targetServerVersion, targetServerBrandVersion, databaseErrorCount);
+            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseCount,
+                state,
+                startedOn,
+                endedOn,
+                sourceServerName,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerName,
+                targetServerVersion,
+                targetServerBrandVersion,
+                databaseErrorCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
@@ -1646,7 +2265,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             activeBackupSets ??= new List<BackupSetInfo>();
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, sourceDatabaseName, migrationState, startedOn, endedOn, fullBackupSetInfo, lastRestoredBackupSetInfo, activeBackupSets?.ToList(), containerName, errorPrefix, isFullBackupRestored, exceptionsAndWarnings?.ToList());
+            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                sourceDatabaseName,
+                migrationState,
+                startedOn,
+                endedOn,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
+                activeBackupSets?.ToList(),
+                containerName,
+                errorPrefix,
+                isFullBackupRestored,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/>. </summary>
@@ -1690,7 +2323,25 @@ namespace Azure.ResourceManager.DataMigration.Models
             orphanedUsersInfo ??= new List<OrphanedUserInfo>();
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, status, state, agentJobs, logins, message, serverRoleResults, orphanedUsersInfo?.ToList(), databases, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList());
+            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                status,
+                state,
+                agentJobs,
+                logins,
+                message,
+                serverRoleResults,
+                orphanedUsersInfo?.ToList(),
+                databases,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>. </summary>
@@ -1708,7 +2359,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, sizeMB, state, stage, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
+            return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                sizeMB,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>. </summary>
@@ -1725,7 +2387,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(id, "AgentJobLevelOutput", serializedAdditionalRawData: null, name, isEnabled, state, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
+            return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(
+                id,
+                "AgentJobLevelOutput",
+                serializedAdditionalRawData: null,
+                name,
+                isEnabled,
+                state,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputLoginLevel"/>. </summary>
@@ -1742,7 +2414,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id, "LoginLevelOutput", serializedAdditionalRawData: null, loginName, state, stage, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
+            return new MigrateSqlServerSqlMITaskOutputLoginLevel(
+                id,
+                "LoginLevelOutput",
+                serializedAdditionalRawData: null,
+                loginName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/>. </summary>
@@ -1780,7 +2462,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSsisTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, status, message, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList(), stage);
+            return new MigrateSsisTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                status,
+                message,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings?.ToList(),
+                stage);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSsisTaskOutputProjectLevel"/>. </summary>
@@ -1798,7 +2493,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateSsisTaskOutputProjectLevel(id, "SsisProjectLevelOutput", serializedAdditionalRawData: null, folderName, projectName, state, stage, startedOn, endedOn, message, exceptionsAndWarnings?.ToList());
+            return new MigrateSsisTaskOutputProjectLevel(
+                id,
+                "SsisProjectLevelOutput",
+                serializedAdditionalRawData: null,
+                folderName,
+                projectName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBCancelCommand"/>. </summary>
@@ -1839,7 +2545,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             collections ??= new List<MongoDBCollectionInfo>();
 
-            return new MongoDBDatabaseInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData: null, collections?.ToList(), supportsSharding);
+            return new MongoDBDatabaseInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData: null,
+                collections?.ToList(),
+                supportsSharding);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionInfo"/>. </summary>
@@ -1858,7 +2572,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MongoDBCollectionInfo"/> instance for mocking. </returns>
         public static MongoDBCollectionInfo MongoDBCollectionInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, string databaseName = null, bool isCapped = default, bool isSystemCollection = default, bool isView = default, MongoDBShardKeyInfo shardKey = null, bool supportsSharding = default, string viewOf = null)
         {
-            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData: null, databaseName, isCapped, isSystemCollection, isView, shardKey, supportsSharding, viewOf);
+            return new MongoDBCollectionInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData: null,
+                databaseName,
+                isCapped,
+                isSystemCollection,
+                isView,
+                shardKey,
+                supportsSharding,
+                viewOf);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBShardKeyInfo"/>. </summary>
@@ -1881,7 +2608,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MongoDBObjectInfo"/> instance for mocking. </returns>
         public static MongoDBObjectInfo MongoDBObjectInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null)
         {
-            return new MongoDBObjectInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData: null);
+            return new MongoDBObjectInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionProgress"/>. </summary>
@@ -1903,7 +2636,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new Dictionary<string, MongoDBError>();
 
-            return new MongoDBCollectionProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Collection, state, totalBytes, totalDocuments, serializedAdditionalRawData: null);
+            return new MongoDBCollectionProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventOn,
+                lastReplayOn,
+                name,
+                qualifiedName,
+                MongoDBProgressResultType.Collection,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBProgress"/>. </summary>
@@ -1926,7 +2674,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new Dictionary<string, MongoDBError>();
 
-            return new UnknownMongoDBProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData: null);
+            return new UnknownMongoDBProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventOn,
+                lastReplayOn,
+                name,
+                qualifiedName,
+                resultType,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBError"/>. </summary>
@@ -1961,7 +2724,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new Dictionary<string, MongoDBError>();
             collections ??= new Dictionary<string, MongoDBCollectionProgress>();
 
-            return new MongoDBDatabaseProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Database, state, totalBytes, totalDocuments, serializedAdditionalRawData: null, collections);
+            return new MongoDBDatabaseProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventOn,
+                lastReplayOn,
+                name,
+                qualifiedName,
+                MongoDBProgressResultType.Database,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData: null,
+                collections);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBFinishCommand"/>. </summary>
@@ -1997,7 +2776,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new Dictionary<string, MongoDBError>();
             databases ??= new Dictionary<string, MongoDBDatabaseProgress>();
 
-            return new MongoDBMigrationProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, lastEventOn, lastReplayOn, name, qualifiedName, MongoDBProgressResultType.Migration, state, totalBytes, totalDocuments, serializedAdditionalRawData: null, databases);
+            return new MongoDBMigrationProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventOn,
+                lastReplayOn,
+                name,
+                qualifiedName,
+                MongoDBProgressResultType.Migration,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData: null,
+                databases);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoDBRestartCommand"/>. </summary>
@@ -2039,7 +2834,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             validationErrors ??= new List<ReportableException>();
             databaseSchemaMap ??= new List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem>();
 
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(targetServerVersion, databases?.ToList(), targetServerBrandVersion, validationErrors?.ToList(), databaseSchemaMap?.ToList(), serializedAdditionalRawData: null);
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(
+                targetServerVersion,
+                databases?.ToList(),
+                targetServerBrandVersion,
+                validationErrors?.ToList(),
+                databaseSchemaMap?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem"/>. </summary>
@@ -2109,7 +2910,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/> instance for mocking. </returns>
         public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(string id = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, string sourceServerVersion = null, string sourceServer = null, string targetServerVersion = null, string targetServer = null)
         {
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, sourceServerVersion, sourceServer, targetServerVersion, targetServer);
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServer,
+                targetServerVersion,
+                targetServer);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>. </summary>
@@ -2132,7 +2942,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
         public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
         {
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, startedOn, endedOn, migrationState, incomingChanges, appliedChanges, cdcInsertCounter, cdcDeleteCounter, cdcUpdateCounter, fullLoadCompletedTables, fullLoadLoadingTables, fullLoadQueuedTables, fullLoadErroredTables, initializationCompleted, latency);
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                startedOn,
+                endedOn,
+                migrationState,
+                incomingChanges,
+                appliedChanges,
+                cdcInsertCounter,
+                cdcDeleteCounter,
+                cdcUpdateCounter,
+                fullLoadCompletedTables,
+                fullLoadLoadingTables,
+                fullLoadQueuedTables,
+                fullLoadErroredTables,
+                initializationCompleted,
+                latency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>. </summary>
@@ -2153,7 +2981,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/> instance for mocking. </returns>
         public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(string id = null, string tableName = null, string databaseName = null, long? cdcInsertCounter = null, long? cdcUpdateCounter = null, long? cdcDeleteCounter = null, DateTimeOffset? fullLoadEstFinishOn = null, DateTimeOffset? fullLoadStartedOn = null, DateTimeOffset? fullLoadEndedOn = null, long? fullLoadTotalRows = null, SyncTableMigrationState? state = null, long? totalChangesApplied = null, long? dataErrorsCounter = null, DateTimeOffset? lastModifiedOn = null)
         {
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(id, "TableLevelOutput", serializedAdditionalRawData: null, tableName, databaseName, cdcInsertCounter, cdcUpdateCounter, cdcDeleteCounter, fullLoadEstFinishOn, fullLoadStartedOn, fullLoadEndedOn, fullLoadTotalRows, state, totalChangesApplied, dataErrorsCounter, lastModifiedOn);
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(
+                id,
+                "TableLevelOutput",
+                serializedAdditionalRawData: null,
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishOn,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>. </summary>
@@ -2189,7 +3033,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             supportedOracleVersions ??= new List<string>();
 
-            return new OracleOciDriverInfo(driverName, driverSize, archiveChecksum, oracleChecksum, assemblyVersion, supportedOracleVersions?.ToList(), serializedAdditionalRawData: null);
+            return new OracleOciDriverInfo(
+                driverName,
+                driverSize,
+                archiveChecksum,
+                oracleChecksum,
+                assemblyVersion,
+                supportedOracleVersions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckOciDriverTaskOutput"/>. </summary>
@@ -2243,7 +3094,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<CheckOciDriverTaskOutput>();
 
-            return new CheckOciDriverTaskProperties(TaskType.ServiceCheckOci, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, inputServerVersion != null ? new CheckOciDriverTaskInput(inputServerVersion, serializedAdditionalRawData: null) : null, output?.ToList());
+            return new CheckOciDriverTaskProperties(
+                TaskType.ServiceCheckOci,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                inputServerVersion != null ? new CheckOciDriverTaskInput(inputServerVersion, serializedAdditionalRawData: null) : null,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UploadOciDriverTaskProperties"/>. </summary>
@@ -2265,7 +3124,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<UploadOciDriverTaskOutput>();
 
-            return new UploadOciDriverTaskProperties(TaskType.ServiceUploadOci, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, inputDriverShare != null ? new UploadOciDriverTaskInput(inputDriverShare, serializedAdditionalRawData: null) : null, output?.ToList());
+            return new UploadOciDriverTaskProperties(
+                TaskType.ServiceUploadOci,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                inputDriverShare != null ? new UploadOciDriverTaskInput(inputDriverShare, serializedAdditionalRawData: null) : null,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InstallOciDriverTaskProperties"/>. </summary>
@@ -2287,7 +3154,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<InstallOciDriverTaskOutput>();
 
-            return new InstallOciDriverTaskProperties(TaskType.ServiceInstallOci, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, inputDriverPackageName != null ? new InstallOciDriverTaskInput(inputDriverPackageName, serializedAdditionalRawData: null) : null, output?.ToList());
+            return new InstallOciDriverTaskProperties(
+                TaskType.ServiceInstallOci,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                inputDriverPackageName != null ? new InstallOciDriverTaskInput(inputDriverPackageName, serializedAdditionalRawData: null) : null,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToMongoDBTaskProperties"/>. </summary>
@@ -2309,7 +3184,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MongoDBClusterInfo>();
 
-            return new ConnectToMongoDBTaskProperties(TaskType.ConnectMongoDB, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToMongoDBTaskProperties(
+                TaskType.ConnectMongoDB,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerTaskProperties"/>. </summary>
@@ -2336,7 +3219,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceSqlServerTaskOutput>();
 
-            return new ConnectToSourceSqlServerTaskProperties(TaskType.ConnectToSourceSqlServer, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), taskId);
+            return new ConnectToSourceSqlServerTaskProperties(
+                TaskType.ConnectToSourceSqlServer,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                taskId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/>. </summary>
@@ -2362,7 +3254,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceSqlServerTaskOutput>();
 
-            return new ConnectToSourceSqlServerSyncTaskProperties(TaskType.ConnectToSourceSqlServerSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToSourceSqlServerSyncTaskProperties(
+                TaskType.ConnectToSourceSqlServerSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/>. </summary>
@@ -2384,7 +3284,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourcePostgreSqlSyncTaskOutput>();
 
-            return new ConnectToSourcePostgreSqlSyncTaskProperties(TaskType.ConnectToSourcePostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, inputSourceConnectionInfo != null ? new ConnectToSourcePostgreSqlSyncTaskInput(inputSourceConnectionInfo, serializedAdditionalRawData: null) : null, output?.ToList());
+            return new ConnectToSourcePostgreSqlSyncTaskProperties(
+                TaskType.ConnectToSourcePostgreSqlSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                inputSourceConnectionInfo != null ? new ConnectToSourcePostgreSqlSyncTaskInput(inputSourceConnectionInfo, serializedAdditionalRawData: null) : null,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceMySqlTaskProperties"/>. </summary>
@@ -2406,7 +3314,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceNonSqlTaskOutput>();
 
-            return new ConnectToSourceMySqlTaskProperties(TaskType.ConnectToSourceMySql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToSourceMySqlTaskProperties(
+                TaskType.ConnectToSourceMySql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceNonSqlTaskOutput"/>. </summary>
@@ -2421,7 +3337,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             databases ??= new List<string>();
             validationErrors ??= new List<ReportableException>();
 
-            return new ConnectToSourceNonSqlTaskOutput(id, sourceServerBrandVersion, serverProperties, databases?.ToList(), validationErrors?.ToList(), serializedAdditionalRawData: null);
+            return new ConnectToSourceNonSqlTaskOutput(
+                id,
+                sourceServerBrandVersion,
+                serverProperties,
+                databases?.ToList(),
+                validationErrors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerProperties"/>. </summary>
@@ -2434,7 +3356,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.ServerProperties"/> instance for mocking. </returns>
         public static ServerProperties ServerProperties(string serverPlatform = null, string serverName = null, string serverVersion = null, string serverEdition = null, string serverOperatingSystemVersion = null, int? serverDatabaseCount = null)
         {
-            return new ServerProperties(serverPlatform, serverName, serverVersion, serverEdition, serverOperatingSystemVersion, serverDatabaseCount, serializedAdditionalRawData: null);
+            return new ServerProperties(
+                serverPlatform,
+                serverName,
+                serverVersion,
+                serverEdition,
+                serverOperatingSystemVersion,
+                serverDatabaseCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/>. </summary>
@@ -2456,7 +3385,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceOracleSyncTaskOutput>();
 
-            return new ConnectToSourceOracleSyncTaskProperties(TaskType.ConnectToSourceOracleSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, inputSourceConnectionInfo != null ? new ConnectToSourceOracleSyncTaskInput(inputSourceConnectionInfo, serializedAdditionalRawData: null) : null, output?.ToList());
+            return new ConnectToSourceOracleSyncTaskProperties(
+                TaskType.ConnectToSourceOracleSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                inputSourceConnectionInfo != null ? new ConnectToSourceOracleSyncTaskInput(inputSourceConnectionInfo, serializedAdditionalRawData: null) : null,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlDBTaskProperties"/>. </summary>
@@ -2479,7 +3416,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlDBTaskOutput>();
 
-            return new ConnectToTargetSqlDBTaskProperties(TaskType.ConnectToTargetSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), createdOn);
+            return new ConnectToTargetSqlDBTaskProperties(
+                TaskType.ConnectToTargetSqlDB,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                createdOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/>. </summary>
@@ -2501,7 +3447,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlDBTaskOutput>();
 
-            return new ConnectToTargetSqlDBSyncTaskProperties(TaskType.ConnectToTargetSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToTargetSqlDBSyncTaskProperties(
+                TaskType.ConnectToTargetSqlDBSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
@@ -2523,7 +3477,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>();
 
-            return new ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(TaskType.ConnectToTargetAzureDBForPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties(
+                TaskType.ConnectToTargetAzureDBForPostgreSqlSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
@@ -2545,7 +3507,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>();
 
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, inputTargetConnectionInfo != null ? new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(inputTargetConnectionInfo, serializedAdditionalRawData: null) : null, output?.ToList());
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(
+                TaskType.ConnectToTargetOracleAzureDBForPostgreSqlSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                inputTargetConnectionInfo != null ? new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(inputTargetConnectionInfo, serializedAdditionalRawData: null) : null,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesSqlTaskProperties"/>. </summary>
@@ -2568,7 +3538,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesSqlTaskOutput>();
 
-            return new GetUserTablesSqlTaskProperties(TaskType.GetUserTablesSql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), taskId);
+            return new GetUserTablesSqlTaskProperties(
+                TaskType.GetUserTablesSql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                taskId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesSqlSyncTaskProperties"/>. </summary>
@@ -2590,7 +3569,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesSqlSyncTaskOutput>();
 
-            return new GetUserTablesSqlSyncTaskProperties(TaskType.GetUserTablesAzureSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new GetUserTablesSqlSyncTaskProperties(
+                TaskType.GetUserTablesAzureSqlDBSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesOracleTaskProperties"/>. </summary>
@@ -2612,7 +3599,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesOracleTaskOutput>();
 
-            return new GetUserTablesOracleTaskProperties(TaskType.GetUserTablesOracle, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new GetUserTablesOracleTaskProperties(
+                TaskType.GetUserTablesOracle,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/>. </summary>
@@ -2634,7 +3629,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesPostgreSqlTaskOutput>();
 
-            return new GetUserTablesPostgreSqlTaskProperties(TaskType.GetUserTablesPostgreSql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new GetUserTablesPostgreSqlTaskProperties(
+                TaskType.GetUserTablesPostgreSql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetUserTablesMySqlTaskProperties"/>. </summary>
@@ -2656,7 +3659,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetUserTablesMySqlTaskOutput>();
 
-            return new GetUserTablesMySqlTaskProperties(TaskType.GetUserTablesMySql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new GetUserTablesMySqlTaskProperties(
+                TaskType.GetUserTablesMySql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlMITaskProperties"/>. </summary>
@@ -2678,7 +3689,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlMITaskOutput>();
 
-            return new ConnectToTargetSqlMITaskProperties(TaskType.ConnectToTargetAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToTargetSqlMITaskProperties(
+                TaskType.ConnectToTargetAzureSqlDBMI,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/>. </summary>
@@ -2700,7 +3719,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetSqlMISyncTaskOutput>();
 
-            return new ConnectToTargetSqlMISyncTaskProperties(TaskType.ConnectToTargetAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToTargetSqlMISyncTaskProperties(
+                TaskType.ConnectToTargetAzureSqlDBMISyncLRS,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/>. </summary>
@@ -2722,7 +3749,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetAzureDBForMySqlTaskOutput>();
 
-            return new ConnectToTargetAzureDBForMySqlTaskProperties(TaskType.ConnectToTargetAzureDBForMySql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ConnectToTargetAzureDBForMySqlTaskProperties(
+                TaskType.ConnectToTargetAzureDBForMySql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMongoDBTaskProperties"/>. </summary>
@@ -2747,7 +3782,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MongoDBProgress>();
 
-            return new MigrateMongoDBTaskProperties(TaskType.MigrateMongoDB, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new MigrateMongoDBTaskProperties(
+                TaskType.MigrateMongoDB,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMITaskProperties"/>. </summary>
@@ -2777,7 +3820,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlMITaskOutput>();
 
-            return new MigrateSqlServerSqlMITaskProperties(TaskType.MigrateSqlServerAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), taskId, createdOn, parentTaskId, isCloneable);
+            return new MigrateSqlServerSqlMITaskProperties(
+                TaskType.MigrateSqlServerAzureSqlDBMI,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                taskId,
+                createdOn,
+                parentTaskId,
+                isCloneable);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
@@ -2804,7 +3859,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlMISyncTaskOutput>();
 
-            return new MigrateSqlServerSqlMISyncTaskProperties(TaskType.MigrateSqlServerAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), createdOn);
+            return new MigrateSqlServerSqlMISyncTaskProperties(
+                TaskType.MigrateSqlServerAzureSqlDBMISyncLRS,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                createdOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/>. </summary>
@@ -2833,7 +3897,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlDBTaskOutput>();
 
-            return new MigrateSqlServerSqlDBTaskProperties(TaskType.MigrateSqlServerSqlDB, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), taskId, isCloneable, createdOn);
+            return new MigrateSqlServerSqlDBTaskProperties(
+                TaskType.MigrateSqlServerSqlDB,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                taskId,
+                isCloneable,
+                createdOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/>. </summary>
@@ -2859,7 +3934,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSqlServerSqlDBSyncTaskOutput>();
 
-            return new MigrateSqlServerSqlDBSyncTaskProperties(TaskType.MigrateSqlServerAzureSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new MigrateSqlServerSqlDBSyncTaskProperties(
+                TaskType.MigrateSqlServerAzureSqlDBSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>. </summary>
@@ -2885,7 +3968,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateMySqlAzureDBForMySqlSyncTaskOutput>();
 
-            return new MigrateMySqlAzureDBForMySqlSyncTaskProperties(TaskType.MigrateMySqlAzureDBForMySqlSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new MigrateMySqlAzureDBForMySqlSyncTaskProperties(
+                TaskType.MigrateMySqlAzureDBForMySqlSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>. </summary>
@@ -2913,7 +4004,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>();
 
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(TaskType.MigrateMySqlAzureDBForMySql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), isCloneable, taskId);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(
+                TaskType.MigrateMySqlAzureDBForMySql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                isCloneable,
+                taskId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/>. </summary>
@@ -2951,7 +4052,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>();
 
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(TaskType.MigratePostgreSqlAzureDBForPostgreSqlSyncV2, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList(), taskId, createdOn, isCloneable);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(
+                TaskType.MigratePostgreSqlAzureDBForPostgreSqlSyncV2,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList(),
+                taskId,
+                createdOn,
+                isCloneable);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
@@ -2977,7 +4089,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
 
-            return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType.MigrateOracleAzureDBForPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(
+                TaskType.MigrateOracleAzureDBForPostgreSqlSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>. </summary>
@@ -2999,7 +4119,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateSyncMigrationInputSqlServerTaskOutput>();
 
-            return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(TaskType.ValidateMigrationInputSqlServerSqlDBSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(
+                TaskType.ValidateMigrationInputSqlServerSqlDBSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateSyncMigrationInputSqlServerTaskOutput"/>. </summary>
@@ -3033,7 +4161,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateMigrationInputSqlServerSqlMITaskOutput>();
 
-            return new ValidateMigrationInputSqlServerSqlMITaskProperties(TaskType.ValidateMigrationInputSqlServerAzureSqlDBMI, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ValidateMigrationInputSqlServerSqlMITaskProperties(
+                TaskType.ValidateMigrationInputSqlServerAzureSqlDBMI,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
@@ -3054,7 +4190,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             backupStorageAccountErrors ??= new List<ReportableException>();
             existingBackupErrors ??= new List<ReportableException>();
 
-            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id, name, restoreDatabaseNameErrors?.ToList(), backupFolderErrors?.ToList(), backupShareCredentialsErrors?.ToList(), backupStorageAccountErrors?.ToList(), existingBackupErrors?.ToList(), databaseBackupInfo, serializedAdditionalRawData: null);
+            return new ValidateMigrationInputSqlServerSqlMITaskOutput(
+                id,
+                name,
+                restoreDatabaseNameErrors?.ToList(),
+                backupFolderErrors?.ToList(),
+                backupShareCredentialsErrors?.ToList(),
+                backupStorageAccountErrors?.ToList(),
+                existingBackupErrors?.ToList(),
+                databaseBackupInfo,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseBackupInfo"/>. </summary>
@@ -3071,7 +4216,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             backupFiles ??= new List<string>();
 
-            return new DatabaseBackupInfo(databaseName, backupType, backupFiles?.ToList(), position, isDamaged, isCompressed, familyCount, backupFinishOn, serializedAdditionalRawData: null);
+            return new DatabaseBackupInfo(
+                databaseName,
+                backupType,
+                backupFiles?.ToList(),
+                position,
+                isDamaged,
+                isCompressed,
+                familyCount,
+                backupFinishOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/>. </summary>
@@ -3093,7 +4247,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateMigrationInputSqlServerSqlMISyncTaskOutput>();
 
-            return new ValidateMigrationInputSqlServerSqlMISyncTaskProperties(TaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ValidateMigrationInputSqlServerSqlMISyncTaskProperties(
+                TaskType.ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskOutput"/>. </summary>
@@ -3127,7 +4289,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MongoDBMigrationProgress>();
 
-            return new ValidateMongoDBTaskProperties(TaskType.ValidateMongoDB, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ValidateMongoDBTaskProperties(
+                TaskType.ValidateMongoDB,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
@@ -3149,7 +4319,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
 
-            return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType.ValidateOracleAzureDBPostgreSqlSync, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(
+                TaskType.ValidateOracleAzureDBPostgreSqlSync,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetTdeCertificatesSqlTaskProperties"/>. </summary>
@@ -3171,7 +4349,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<GetTdeCertificatesSqlTaskOutput>();
 
-            return new GetTdeCertificatesSqlTaskProperties(TaskType.GetTDECertificatesSql, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new GetTdeCertificatesSqlTaskProperties(
+                TaskType.GetTDECertificatesSql,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateSsisTaskProperties"/>. </summary>
@@ -3197,7 +4383,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<MigrateSsisTaskOutput>();
 
-            return new MigrateSsisTaskProperties(TaskType.MigrateSsis, errors?.ToList(), state, commands?.ToList(), clientData, serializedAdditionalRawData: null, input, output?.ToList());
+            return new MigrateSsisTaskProperties(
+                TaskType.MigrateSsis,
+                errors?.ToList(),
+                state,
+                commands?.ToList(),
+                clientData,
+                serializedAdditionalRawData: null,
+                input,
+                output?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/>. </summary>
@@ -3222,7 +4416,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(id, "MigrationLevelOutput", serializedAdditionalRawData: null, startedOn, endedOn, durationInSeconds, status, statusMessage, message, databases, databaseSummary, migrationReportResult, sourceServerVersion, sourceServerBrandVersion, targetServerVersion, targetServerBrandVersion, exceptionsAndWarnings?.ToList(), lastStorageUpdate);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel(
+                id,
+                "MigrationLevelOutput",
+                serializedAdditionalRawData: null,
+                startedOn,
+                endedOn,
+                durationInSeconds,
+                status,
+                statusMessage,
+                message,
+                databases,
+                databaseSummary,
+                migrationReportResult,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings?.ToList(),
+                lastStorageUpdate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>. </summary>
@@ -3247,7 +4459,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             exceptionsAndWarnings ??= new List<ReportableException>();
 
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(id, "DatabaseLevelOutput", serializedAdditionalRawData: null, databaseName, startedOn, endedOn, state, stage, statusMessage, message, numberOfObjects, numberOfObjectsCompleted, errorCount, errorPrefix, resultPrefix, exceptionsAndWarnings?.ToList(), lastStorageUpdate, objectSummary);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(
+                id,
+                "DatabaseLevelOutput",
+                serializedAdditionalRawData: null,
+                databaseName,
+                startedOn,
+                endedOn,
+                state,
+                stage,
+                statusMessage,
+                message,
+                numberOfObjects,
+                numberOfObjectsCompleted,
+                errorCount,
+                errorPrefix,
+                resultPrefix,
+                exceptionsAndWarnings?.ToList(),
+                lastStorageUpdate,
+                objectSummary);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>. </summary>
@@ -3265,7 +4495,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/> instance for mocking. </returns>
         public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(string id = null, string objectName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, MigrationState? state = null, string statusMessage = null, long? itemsCount = null, long? itemsCompletedCount = null, string errorPrefix = null, string resultPrefix = null, DateTimeOffset? lastStorageUpdate = null)
         {
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(id, "TableLevelOutput", serializedAdditionalRawData: null, objectName, startedOn, endedOn, state, statusMessage, itemsCount, itemsCompletedCount, errorPrefix, resultPrefix, lastStorageUpdate);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(
+                id,
+                "TableLevelOutput",
+                serializedAdditionalRawData: null,
+                objectName,
+                startedOn,
+                endedOn,
+                state,
+                statusMessage,
+                itemsCount,
+                itemsCompletedCount,
+                errorPrefix,
+                resultPrefix,
+                lastStorageUpdate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>. </summary>

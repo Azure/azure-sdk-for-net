@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<StorageMoverCopyMode> copyMode = default;
-            Optional<string> agentName = default;
+            string description = default;
+            StorageMoverCopyMode? copyMode = default;
+            string agentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobDefinitionPatch(description.Value, Optional.ToNullable(copyMode), agentName.Value, serializedAdditionalRawData);
+            return new JobDefinitionPatch(description, copyMode, agentName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobDefinitionPatch>.Write(ModelReaderWriterOptions options)

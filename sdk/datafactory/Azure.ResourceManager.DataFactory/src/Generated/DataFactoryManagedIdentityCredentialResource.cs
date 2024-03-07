@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryManagedIdentityCredentialResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryManagedIdentityCredentialData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialResource.Update");
             scope.Start();
@@ -331,7 +334,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryManagedIdentityCredentialResource> Update(WaitUntil waitUntil, DataFactoryManagedIdentityCredentialData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialResource.Update");
             scope.Start();

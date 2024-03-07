@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -20,8 +19,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inferencingComputeBinding"/> or <paramref name="trainingComputeBinding"/> is null. </exception>
         public MachineLearningAssistEnabledConfiguration(string inferencingComputeBinding, string trainingComputeBinding)
         {
-            Argument.AssertNotNull(inferencingComputeBinding, nameof(inferencingComputeBinding));
-            Argument.AssertNotNull(trainingComputeBinding, nameof(trainingComputeBinding));
+            if (inferencingComputeBinding == null)
+            {
+                throw new ArgumentNullException(nameof(inferencingComputeBinding));
+            }
+            if (trainingComputeBinding == null)
+            {
+                throw new ArgumentNullException(nameof(trainingComputeBinding));
+            }
 
             InferencingComputeBinding = inferencingComputeBinding;
             TrainingComputeBinding = trainingComputeBinding;

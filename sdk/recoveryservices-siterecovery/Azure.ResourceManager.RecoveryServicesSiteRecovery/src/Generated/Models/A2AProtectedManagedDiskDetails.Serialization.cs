@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -209,34 +210,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
-            Optional<ResourceIdentifier> recoveryTargetDiskId = default;
-            Optional<ResourceIdentifier> recoveryReplicaDiskId = default;
-            Optional<ResourceIdentifier> recoveryOrignalTargetDiskId = default;
-            Optional<string> recoveryReplicaDiskAccountType = default;
-            Optional<string> recoveryTargetDiskAccountType = default;
-            Optional<ResourceIdentifier> recoveryDiskEncryptionSetId = default;
-            Optional<ResourceIdentifier> primaryDiskEncryptionSetId = default;
-            Optional<string> diskName = default;
-            Optional<long> diskCapacityInBytes = default;
-            Optional<ResourceIdentifier> primaryStagingAzureStorageAccountId = default;
-            Optional<string> diskType = default;
-            Optional<bool> resyncRequired = default;
-            Optional<int> monitoringPercentageCompletion = default;
-            Optional<string> monitoringJobType = default;
-            Optional<double> dataPendingInStagingStorageAccountInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> diskState = default;
-            Optional<IReadOnlyList<string>> allowedDiskLevelOperation = default;
-            Optional<bool> isDiskEncrypted = default;
-            Optional<string> secretIdentifier = default;
-            Optional<ResourceIdentifier> dekKeyVaultArmId = default;
-            Optional<bool> isDiskKeyEncrypted = default;
-            Optional<string> keyIdentifier = default;
-            Optional<ResourceIdentifier> kekKeyVaultArmId = default;
-            Optional<string> failoverDiskName = default;
-            Optional<string> tfoDiskName = default;
+            string diskId = default;
+            ResourceIdentifier recoveryResourceGroupId = default;
+            ResourceIdentifier recoveryTargetDiskId = default;
+            ResourceIdentifier recoveryReplicaDiskId = default;
+            ResourceIdentifier recoveryOrignalTargetDiskId = default;
+            string recoveryReplicaDiskAccountType = default;
+            string recoveryTargetDiskAccountType = default;
+            ResourceIdentifier recoveryDiskEncryptionSetId = default;
+            ResourceIdentifier primaryDiskEncryptionSetId = default;
+            string diskName = default;
+            long? diskCapacityInBytes = default;
+            ResourceIdentifier primaryStagingAzureStorageAccountId = default;
+            string diskType = default;
+            bool? resyncRequired = default;
+            int? monitoringPercentageCompletion = default;
+            string monitoringJobType = default;
+            double? dataPendingInStagingStorageAccountInMB = default;
+            double? dataPendingAtSourceAgentInMB = default;
+            string diskState = default;
+            IReadOnlyList<string> allowedDiskLevelOperation = default;
+            bool? isDiskEncrypted = default;
+            string secretIdentifier = default;
+            ResourceIdentifier dekKeyVaultArmId = default;
+            bool? isDiskKeyEncrypted = default;
+            string keyIdentifier = default;
+            ResourceIdentifier kekKeyVaultArmId = default;
+            string failoverDiskName = default;
+            string tfoDiskName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -460,7 +461,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AProtectedManagedDiskDetails(diskId.Value, recoveryResourceGroupId.Value, recoveryTargetDiskId.Value, recoveryReplicaDiskId.Value, recoveryOrignalTargetDiskId.Value, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, primaryDiskEncryptionSetId.Value, diskName.Value, Optional.ToNullable(diskCapacityInBytes), primaryStagingAzureStorageAccountId.Value, diskType.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(monitoringPercentageCompletion), monitoringJobType.Value, Optional.ToNullable(dataPendingInStagingStorageAccountInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), diskState.Value, Optional.ToList(allowedDiskLevelOperation), Optional.ToNullable(isDiskEncrypted), secretIdentifier.Value, dekKeyVaultArmId.Value, Optional.ToNullable(isDiskKeyEncrypted), keyIdentifier.Value, kekKeyVaultArmId.Value, failoverDiskName.Value, tfoDiskName.Value, serializedAdditionalRawData);
+            return new A2AProtectedManagedDiskDetails(
+                diskId,
+                recoveryResourceGroupId,
+                recoveryTargetDiskId,
+                recoveryReplicaDiskId,
+                recoveryOrignalTargetDiskId,
+                recoveryReplicaDiskAccountType,
+                recoveryTargetDiskAccountType,
+                recoveryDiskEncryptionSetId,
+                primaryDiskEncryptionSetId,
+                diskName,
+                diskCapacityInBytes,
+                primaryStagingAzureStorageAccountId,
+                diskType,
+                resyncRequired,
+                monitoringPercentageCompletion,
+                monitoringJobType,
+                dataPendingInStagingStorageAccountInMB,
+                dataPendingAtSourceAgentInMB,
+                diskState,
+                allowedDiskLevelOperation ?? new ChangeTrackingList<string>(),
+                isDiskEncrypted,
+                secretIdentifier,
+                dekKeyVaultArmId,
+                isDiskKeyEncrypted,
+                keyIdentifier,
+                kekKeyVaultArmId,
+                failoverDiskName,
+                tfoDiskName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AProtectedManagedDiskDetails>.Write(ModelReaderWriterOptions options)

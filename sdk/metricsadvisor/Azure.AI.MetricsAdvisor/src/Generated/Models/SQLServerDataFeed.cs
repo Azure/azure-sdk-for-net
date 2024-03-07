@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -23,9 +22,18 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/> or <paramref name="dataSourceParameter"/> is null. </exception>
         public SQLServerDataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, SqlSourceParameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
-            Argument.AssertNotNull(dataFeedName, nameof(dataFeedName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(dataSourceParameter, nameof(dataSourceParameter));
+            if (dataFeedName == null)
+            {
+                throw new ArgumentNullException(nameof(dataFeedName));
+            }
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
+            if (dataSourceParameter == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceParameter));
+            }
 
             DataSourceParameter = dataSourceParameter;
             DataSourceType = DataFeedSourceKind.SqlServer;

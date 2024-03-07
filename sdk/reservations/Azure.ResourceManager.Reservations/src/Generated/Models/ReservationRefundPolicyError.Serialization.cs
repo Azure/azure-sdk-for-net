@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationErrorResponseCode> code = default;
-            Optional<string> message = default;
+            ReservationErrorResponseCode? code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRefundPolicyError(Optional.ToNullable(code), message.Value, serializedAdditionalRawData);
+            return new ReservationRefundPolicyError(code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRefundPolicyError>.Write(ModelReaderWriterOptions options)

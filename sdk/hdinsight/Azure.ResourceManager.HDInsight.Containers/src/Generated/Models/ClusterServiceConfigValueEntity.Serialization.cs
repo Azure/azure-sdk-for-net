@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string value = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServiceConfigValueEntity(value, description.Value, serializedAdditionalRawData);
+            return new ClusterServiceConfigValueEntity(value, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigValueEntity>.Write(ModelReaderWriterOptions options)

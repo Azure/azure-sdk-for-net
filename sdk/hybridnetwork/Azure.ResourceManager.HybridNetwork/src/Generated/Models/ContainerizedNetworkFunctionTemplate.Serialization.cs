@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureArcKubernetes": return AzureArcKubernetesNetworkFunctionTemplate.DeserializeAzureArcKubernetesNetworkFunctionTemplate(element);
+                    case "AzureArcKubernetes": return AzureArcKubernetesNetworkFunctionTemplate.DeserializeAzureArcKubernetesNetworkFunctionTemplate(element, options);
                 }
             }
-            return UnknownContainerizedNetworkFunctionTemplate.DeserializeUnknownContainerizedNetworkFunctionTemplate(element);
+            return UnknownContainerizedNetworkFunctionTemplate.DeserializeUnknownContainerizedNetworkFunctionTemplate(element, options);
         }
 
         BinaryData IPersistableModel<ContainerizedNetworkFunctionTemplate>.Write(ModelReaderWriterOptions options)

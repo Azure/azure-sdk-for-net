@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string clientId = default;
-            Optional<string> secret = default;
+            string secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterServicePrincipalProfile(clientId, secret.Value, serializedAdditionalRawData);
+            return new ManagedClusterServicePrincipalProfile(clientId, secret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterServicePrincipalProfile>.Write(ModelReaderWriterOptions options)

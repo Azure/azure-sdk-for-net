@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> minifiedTemplate = default;
-            Optional<string> templateHash = default;
+            string minifiedTemplate = default;
+            string templateHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateHashResult(minifiedTemplate.Value, templateHash.Value, serializedAdditionalRawData);
+            return new TemplateHashResult(minifiedTemplate, templateHash, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateHashResult>.Write(ModelReaderWriterOptions options)

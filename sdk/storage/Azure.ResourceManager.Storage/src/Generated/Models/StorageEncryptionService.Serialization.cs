@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<StorageEncryptionKeyType> keyType = default;
+            bool? enabled = default;
+            DateTimeOffset? lastEnabledTime = default;
+            StorageEncryptionKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageEncryptionService(Optional.ToNullable(enabled), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new StorageEncryptionService(enabled, lastEnabledTime, keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageEncryptionService>.Write(ModelReaderWriterOptions options)

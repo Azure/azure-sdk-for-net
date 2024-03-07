@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> importIPv4RouteTargets = default;
-            Optional<IList<string>> importIPv6RouteTargets = default;
-            Optional<IList<string>> exportIPv4RouteTargets = default;
-            Optional<IList<string>> exportIPv6RouteTargets = default;
+            IList<string> importIPv4RouteTargets = default;
+            IList<string> importIPv6RouteTargets = default;
+            IList<string> exportIPv4RouteTargets = default;
+            IList<string> exportIPv6RouteTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTargetInformation(Optional.ToList(importIPv4RouteTargets), Optional.ToList(importIPv6RouteTargets), Optional.ToList(exportIPv4RouteTargets), Optional.ToList(exportIPv6RouteTargets), serializedAdditionalRawData);
+            return new RouteTargetInformation(importIPv4RouteTargets ?? new ChangeTrackingList<string>(), importIPv6RouteTargets ?? new ChangeTrackingList<string>(), exportIPv4RouteTargets ?? new ChangeTrackingList<string>(), exportIPv6RouteTargets ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteTargetInformation>.Write(ModelReaderWriterOptions options)

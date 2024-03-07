@@ -56,11 +56,11 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             IList<string> inputIds = default;
-            Optional<bool> highlightDominantSpeaker = default;
+            bool? highlightDominantSpeaker = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputIds"u8))
@@ -111,7 +111,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), inputIds, Optional.ToNullable(highlightDominantSpeaker));
+            return new AutoGridLayout(
+                kind,
+                resolution,
+                placeholderImageUri,
+                scalingMode,
+                inputIds,
+                highlightDominantSpeaker);
         }
     }
 }

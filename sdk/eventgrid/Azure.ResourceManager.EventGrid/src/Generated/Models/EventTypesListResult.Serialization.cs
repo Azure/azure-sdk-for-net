@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventTypeUnderTopic>> value = default;
+            IReadOnlyList<EventTypeUnderTopic> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventTypeUnderTopic> array = new List<EventTypeUnderTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item));
+                        array.Add(EventTypeUnderTopic.DeserializeEventTypeUnderTopic(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTypesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new EventTypesListResult(value ?? new ChangeTrackingList<EventTypeUnderTopic>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTypesListResult>.Write(ModelReaderWriterOptions options)

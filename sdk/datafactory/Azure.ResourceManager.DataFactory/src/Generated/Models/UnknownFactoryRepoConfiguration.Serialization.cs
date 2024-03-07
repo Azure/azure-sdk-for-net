@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFactoryRepoConfiguration(document.RootElement, options);
+            return DeserializeFactoryRepoConfiguration(document.RootElement, options);
         }
 
         internal static UnknownFactoryRepoConfiguration DeserializeUnknownFactoryRepoConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string repositoryName = default;
             string collaborationBranch = default;
             string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<bool> disablePublish = default;
+            string lastCommitId = default;
+            bool? disablePublish = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownFactoryRepoConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData);
+            return new UnknownFactoryRepoConfiguration(
+                type,
+                accountName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                disablePublish,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FactoryRepoConfiguration>.Write(ModelReaderWriterOptions options)
@@ -165,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFactoryRepoConfiguration(document.RootElement, options);
+                        return DeserializeFactoryRepoConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FactoryRepoConfiguration)} does not support '{options.Format}' format.");

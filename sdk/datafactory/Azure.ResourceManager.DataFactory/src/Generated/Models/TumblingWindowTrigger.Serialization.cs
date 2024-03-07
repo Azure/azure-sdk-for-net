@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -136,24 +137,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
+            IList<BinaryData> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DataFactoryElement<string>> delay = default;
+            DateTimeOffset? endTime = default;
+            DataFactoryElement<string> delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
-            Optional<IList<DependencyReference>> dependsOn = default;
+            RetryPolicy retryPolicy = default;
+            IList<DependencyReference> dependsOn = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipeline"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value);
+                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value);
+                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dependsOn"u8))
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DependencyReference> array = new List<DependencyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DependencyReference.DeserializeDependencyReference(item));
+                                array.Add(DependencyReference.DeserializeDependencyReference(item, options));
                             }
                             dependsOn = array;
                             continue;
@@ -272,7 +273,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
+            return new TumblingWindowTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
 
         BinaryData IPersistableModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options)

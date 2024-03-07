@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -48,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
-            Optional<IList<DatasetReference>> datasets = default;
+            IList<LinkedServiceReference> linkedServices = default;
+            IList<DatasetReference> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -81,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>());
         }
 
         internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>

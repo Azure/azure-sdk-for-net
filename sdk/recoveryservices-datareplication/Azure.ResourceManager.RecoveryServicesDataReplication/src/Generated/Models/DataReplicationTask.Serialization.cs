@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> taskName = default;
-            Optional<DataReplicationTaskState> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<TaskModelCustomProperties> customProperties = default;
-            Optional<IReadOnlyList<DataReplicationWorkflowData>> childrenWorkflows = default;
+            string taskName = default;
+            DataReplicationTaskState? state = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TaskModelCustomProperties customProperties = default;
+            IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value);
+                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("childrenWorkflows"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item));
+                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item, options));
                     }
                     childrenWorkflows = array;
                     continue;
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationTask(taskName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), customProperties.Value, Optional.ToList(childrenWorkflows), serializedAdditionalRawData);
+            return new DataReplicationTask(
+                taskName,
+                state,
+                startTime,
+                endTime,
+                customProperties,
+                childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationTask>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Communication.Email
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public EmailRecipients(IEnumerable<EmailAddress> to)
         {
-            Argument.AssertNotNull(to, nameof(to));
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
 
             To = to.ToList();
             CC = new ChangeTrackingList<EmailAddress>();

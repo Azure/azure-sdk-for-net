@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
+            IPAddress ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeNodeIPAddress(ipAddress.Value, serializedAdditionalRawData);
+            return new IntegrationRuntimeNodeIPAddress(ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeNodeIPAddress>.Write(ModelReaderWriterOptions options)

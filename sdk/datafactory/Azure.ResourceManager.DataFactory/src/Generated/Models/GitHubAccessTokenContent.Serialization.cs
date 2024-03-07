@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string gitHubAccessCode = default;
-            Optional<string> gitHubClientId = default;
-            Optional<FactoryGitHubClientSecret> gitHubClientSecret = default;
+            string gitHubClientId = default;
+            FactoryGitHubClientSecret gitHubClientSecret = default;
             Uri gitHubAccessTokenBaseUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    gitHubClientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value);
+                    gitHubClientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHubAccessTokenBaseUrl"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubAccessTokenContent(gitHubAccessCode, gitHubClientId.Value, gitHubClientSecret.Value, gitHubAccessTokenBaseUrl, serializedAdditionalRawData);
+            return new GitHubAccessTokenContent(gitHubAccessCode, gitHubClientId, gitHubClientSecret, gitHubAccessTokenBaseUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubAccessTokenContent>.Write(ModelReaderWriterOptions options)

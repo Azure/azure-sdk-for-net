@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -101,14 +102,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string serverName = default;
-            Optional<string> dataSource = default;
+            string dataSource = default;
             int port = default;
-            Optional<bool> encryptConnection = default;
-            Optional<AuthenticationType> authentication = default;
-            Optional<string> additionalSettings = default;
+            bool? encryptConnection = default;
+            AuthenticationType? authentication = default;
+            string additionalSettings = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +173,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(authentication), additionalSettings.Value);
+            return new MySqlConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource,
+                port,
+                encryptConnection,
+                authentication,
+                additionalSettings);
         }
 
         BinaryData IPersistableModel<MySqlConnectionInfo>.Write(ModelReaderWriterOptions options)

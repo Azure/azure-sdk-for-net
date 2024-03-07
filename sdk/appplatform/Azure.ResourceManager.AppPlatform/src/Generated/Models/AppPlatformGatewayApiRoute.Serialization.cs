@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
-            Optional<bool> ssoEnabled = default;
-            Optional<bool> tokenRelay = default;
-            Optional<IList<string>> predicates = default;
-            Optional<IList<string>> filters = default;
-            Optional<int> order = default;
-            Optional<IList<string>> tags = default;
+            string title = default;
+            string description = default;
+            Uri uri = default;
+            bool? ssoEnabled = default;
+            bool? tokenRelay = default;
+            IList<string> predicates = default;
+            IList<string> filters = default;
+            int? order = default;
+            IList<string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +232,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags), serializedAdditionalRawData);
+            return new AppPlatformGatewayApiRoute(
+                title,
+                description,
+                uri,
+                ssoEnabled,
+                tokenRelay,
+                predicates ?? new ChangeTrackingList<string>(),
+                filters ?? new ChangeTrackingList<string>(),
+                order,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayApiRoute>.Write(ModelReaderWriterOptions options)

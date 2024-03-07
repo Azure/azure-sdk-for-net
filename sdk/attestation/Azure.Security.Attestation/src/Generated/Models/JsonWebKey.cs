@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -25,7 +24,10 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
         public JsonWebKey(string kty)
         {
-            Argument.AssertNotNull(kty, nameof(kty));
+            if (kty == null)
+            {
+                throw new ArgumentNullException(nameof(kty));
+            }
 
             Kty = kty;
             X5C = new ChangeTrackingList<string>();

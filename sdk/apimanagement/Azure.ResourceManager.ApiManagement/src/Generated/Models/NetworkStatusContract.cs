@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServers"/> or <paramref name="connectivityStatus"/> is null. </exception>
         internal NetworkStatusContract(IEnumerable<string> dnsServers, IEnumerable<ConnectivityStatusContract> connectivityStatus)
         {
-            Argument.AssertNotNull(dnsServers, nameof(dnsServers));
-            Argument.AssertNotNull(connectivityStatus, nameof(connectivityStatus));
+            if (dnsServers == null)
+            {
+                throw new ArgumentNullException(nameof(dnsServers));
+            }
+            if (connectivityStatus == null)
+            {
+                throw new ArgumentNullException(nameof(connectivityStatus));
+            }
 
             DnsServers = dnsServers.ToList();
             ConnectivityStatus = connectivityStatus.ToList();

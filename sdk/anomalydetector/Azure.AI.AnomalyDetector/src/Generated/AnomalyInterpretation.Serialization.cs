@@ -80,9 +80,9 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<float> contributionScore = default;
-            Optional<CorrelationChanges> correlationChanges = default;
+            string variable = default;
+            float? contributionScore = default;
+            CorrelationChanges correlationChanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value);
+                    correlationChanges = CorrelationChanges.DeserializeCorrelationChanges(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalyInterpretation(variable.Value, Optional.ToNullable(contributionScore), correlationChanges.Value, serializedAdditionalRawData);
+            return new AnomalyInterpretation(variable, contributionScore, correlationChanges, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnomalyInterpretation>.Write(ModelReaderWriterOptions options)

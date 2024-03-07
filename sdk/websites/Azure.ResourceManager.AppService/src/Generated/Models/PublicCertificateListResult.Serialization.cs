@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<PublicCertificateData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PublicCertificateData> array = new List<PublicCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicCertificateData.DeserializePublicCertificateData(item));
+                        array.Add(PublicCertificateData.DeserializePublicCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicCertificateListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new PublicCertificateListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicCertificateListResult>.Write(ModelReaderWriterOptions options)

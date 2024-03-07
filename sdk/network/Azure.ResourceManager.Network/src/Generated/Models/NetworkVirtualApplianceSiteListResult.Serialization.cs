@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualApplianceSiteData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualApplianceSiteData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualApplianceSiteData> array = new List<VirtualApplianceSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(item));
+                        array.Add(VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceSiteListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkVirtualApplianceSiteListResult(value ?? new ChangeTrackingList<VirtualApplianceSiteData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceSiteListResult>.Write(ModelReaderWriterOptions options)

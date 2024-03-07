@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 return null;
             }
             DiagnosticStorageAuthenticationType authenticationType = default;
-            Optional<string> connectionString = default;
+            string connectionString = default;
             ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticStorageProperties(authenticationType, connectionString.Value, resourceId, serializedAdditionalRawData);
+            return new DiagnosticStorageProperties(authenticationType, connectionString, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticStorageProperties>.Write(ModelReaderWriterOptions options)

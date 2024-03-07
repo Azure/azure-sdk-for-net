@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedNetworkData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedNetworkData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkData> array = new List<ManagedNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkData.DeserializeManagedNetworkData(item));
+                        array.Add(ManagedNetworkData.DeserializeManagedNetworkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedNetworkListResult(value ?? new ChangeTrackingList<ManagedNetworkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -117,14 +118,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IList<ParameterContract>> templateParameters = default;
-            Optional<string> description = default;
-            Optional<RequestContract> request = default;
-            Optional<IList<ResponseContract>> responses = default;
-            Optional<string> policies = default;
-            Optional<string> displayName = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            IList<ParameterContract> templateParameters = default;
+            string description = default;
+            RequestContract request = default;
+            IList<ResponseContract> responses = default;
+            string policies = default;
+            string displayName = default;
+            string method = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ParameterContract> array = new List<ParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParameterContract.DeserializeParameterContract(item));
+                                array.Add(ParameterContract.DeserializeParameterContract(item, options));
                             }
                             templateParameters = array;
                             continue;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            request = RequestContract.DeserializeRequestContract(property0.Value);
+                            request = RequestContract.DeserializeRequestContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("responses"u8))
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ResponseContract> array = new List<ResponseContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseContract.DeserializeResponseContract(item));
+                                array.Add(ResponseContract.DeserializeResponseContract(item, options));
                             }
                             responses = array;
                             continue;
@@ -209,7 +210,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiOperationPatch(Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new ApiOperationPatch(
+                templateParameters ?? new ChangeTrackingList<ParameterContract>(),
+                description,
+                request,
+                responses ?? new ChangeTrackingList<ResponseContract>(),
+                policies,
+                displayName,
+                method,
+                uriTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiOperationPatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -102,10 +103,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IList<string>> zones = default;
-            Optional<IList<ResourceTypeSkuZoneDetail>> zoneDetails = default;
-            Optional<IList<string>> extendedLocations = default;
-            Optional<ProviderHubExtendedLocationType> type = default;
+            IList<string> zones = default;
+            IList<ResourceTypeSkuZoneDetail> zoneDetails = default;
+            IList<string> extendedLocations = default;
+            ProviderHubExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuZoneDetail> array = new List<ResourceTypeSkuZoneDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item));
+                        array.Add(ResourceTypeSkuZoneDetail.DeserializeResourceTypeSkuZoneDetail(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -172,7 +173,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuLocationInfo(location, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ResourceTypeSkuLocationInfo(
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ResourceTypeSkuZoneDetail>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuLocationInfo>.Write(ModelReaderWriterOptions options)

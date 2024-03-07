@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public InMageRcmApplyRecoveryPointContent(ResourceIdentifier recoveryPointId)
         {
-            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
+            if (recoveryPointId == null)
+            {
+                throw new ArgumentNullException(nameof(recoveryPointId));
+            }
 
             RecoveryPointId = recoveryPointId;
             InstanceType = "InMageRcm";

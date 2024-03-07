@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverResourceData>> value = default;
-            Optional<string> nextLink = default;
-            Optional<MoverSummaryList> summaryCollection = default;
-            Optional<long> totalCount = default;
+            IReadOnlyList<MoverResourceData> value = default;
+            string nextLink = default;
+            MoverSummaryList summaryCollection = default;
+            long? totalCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceData> array = new List<MoverResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceData.DeserializeMoverResourceData(item));
+                        array.Add(MoverResourceData.DeserializeMoverResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         summaryCollection = null;
                         continue;
                     }
-                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value);
+                    summaryCollection = MoverSummaryList.DeserializeMoverSummaryList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("totalCount"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
+            return new MoverResourceList(value ?? new ChangeTrackingList<MoverResourceData>(), nextLink, summaryCollection, totalCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceList>.Write(ModelReaderWriterOptions options)

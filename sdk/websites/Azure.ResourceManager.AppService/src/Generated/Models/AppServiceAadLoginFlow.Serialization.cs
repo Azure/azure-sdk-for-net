@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginParameters = default;
-            Optional<bool> disableWWWAuthenticate = default;
+            IList<string> loginParameters = default;
+            bool? disableWWWAuthenticate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadLoginFlow(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate), serializedAdditionalRawData);
+            return new AppServiceAadLoginFlow(loginParameters ?? new ChangeTrackingList<string>(), disableWWWAuthenticate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadLoginFlow>.Write(ModelReaderWriterOptions options)

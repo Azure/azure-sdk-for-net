@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<Uri> webSocketUri = default;
-            Optional<string> password = default;
+            Uri webSocketUri = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerExecResult(webSocketUri.Value, password.Value, serializedAdditionalRawData);
+            return new ContainerExecResult(webSocketUri, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerExecResult>.Write(ModelReaderWriterOptions options)

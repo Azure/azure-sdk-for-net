@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> primary = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
+            ResourceIdentifier id = default;
+            bool? primary = default;
+            ComputeDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkInterfaceReference(id.Value, serializedAdditionalRawData, Optional.ToNullable(primary), Optional.ToNullable(deleteOption));
+            return new VirtualMachineNetworkInterfaceReference(id, serializedAdditionalRawData, primary, deleteOption);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkInterfaceReference>.Write(ModelReaderWriterOptions options)

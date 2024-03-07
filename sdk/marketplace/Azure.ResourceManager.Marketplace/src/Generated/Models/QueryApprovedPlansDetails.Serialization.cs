@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<IReadOnlyList<string>> subscriptionIds = default;
-            Optional<bool> allSubscriptions = default;
+            string planId = default;
+            IReadOnlyList<string> subscriptionIds = default;
+            bool? allSubscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovedPlansDetails(planId.Value, Optional.ToList(subscriptionIds), Optional.ToNullable(allSubscriptions), serializedAdditionalRawData);
+            return new QueryApprovedPlansDetails(planId, subscriptionIds ?? new ChangeTrackingList<string>(), allSubscriptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovedPlansDetails>.Write(ModelReaderWriterOptions options)

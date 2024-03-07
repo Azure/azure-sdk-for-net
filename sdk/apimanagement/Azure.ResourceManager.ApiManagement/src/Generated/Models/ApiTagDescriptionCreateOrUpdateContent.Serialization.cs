@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<Uri> externalDocsUri = default;
-            Optional<string> externalDocsDescription = default;
+            string description = default;
+            Uri externalDocsUri = default;
+            string externalDocsDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiTagDescriptionCreateOrUpdateContent(description.Value, externalDocsUri.Value, externalDocsDescription.Value, serializedAdditionalRawData);
+            return new ApiTagDescriptionCreateOrUpdateContent(description, externalDocsUri, externalDocsDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiTagDescriptionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

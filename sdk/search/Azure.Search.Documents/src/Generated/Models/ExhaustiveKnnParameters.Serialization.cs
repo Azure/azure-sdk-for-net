@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<VectorSearchAlgorithmMetric?> metric = default;
+            VectorSearchAlgorithmMetric? metric = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ExhaustiveKnnParameters(Optional.ToNullable(metric));
+            return new ExhaustiveKnnParameters(metric);
         }
     }
 }

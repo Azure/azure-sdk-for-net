@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> workspaceId = default;
-            Optional<string> primaryKey = default;
+            string workspaceId = default;
+            string primaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreateExtensionContent(workspaceId.Value, primaryKey.Value, serializedAdditionalRawData);
+            return new HDInsightClusterCreateExtensionContent(workspaceId, primaryKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreateExtensionContent>.Write(ModelReaderWriterOptions options)

@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
         public BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, DateTimeOffset lastKeySyncedOn) : base(storageAccountId)
         {
-            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            if (storageAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountId));
+            }
 
             LastKeySyncedOn = lastKeySyncedOn;
         }

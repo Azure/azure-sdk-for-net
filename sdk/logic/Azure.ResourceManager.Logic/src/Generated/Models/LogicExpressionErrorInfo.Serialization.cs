@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string message = default;
-            Optional<IReadOnlyList<LogicExpressionErrorInfo>> details = default;
+            IReadOnlyList<LogicExpressionErrorInfo> details = default;
             string code = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicExpressionErrorInfo> array = new List<LogicExpressionErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLogicExpressionErrorInfo(item));
+                        array.Add(DeserializeLogicExpressionErrorInfo(item, options));
                     }
                     details = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpressionErrorInfo(code, serializedAdditionalRawData, message, Optional.ToList(details));
+            return new LogicExpressionErrorInfo(code, serializedAdditionalRawData, message, details ?? new ChangeTrackingList<LogicExpressionErrorInfo>());
         }
 
         BinaryData IPersistableModel<LogicExpressionErrorInfo>.Write(ModelReaderWriterOptions options)

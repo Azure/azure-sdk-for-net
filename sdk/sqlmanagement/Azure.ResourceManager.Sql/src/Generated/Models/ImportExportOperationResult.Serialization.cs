@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -146,17 +147,17 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> requestId = default;
-            Optional<string> requestType = default;
-            Optional<string> queuedTime = default;
-            Optional<string> lastModifiedTime = default;
-            Optional<Uri> blobUri = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> status = default;
-            Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionRequestStatus>> privateEndpointConnections = default;
+            SystemData systemData = default;
+            Guid? requestId = default;
+            string requestType = default;
+            string queuedTime = default;
+            string lastModifiedTime = default;
+            Uri blobUri = default;
+            string serverName = default;
+            string databaseName = default;
+            string status = default;
+            string errorMessage = default;
+            IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<PrivateEndpointConnectionRequestStatus> array = new List<PrivateEndpointConnectionRequestStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionRequestStatus.DeserializePrivateEndpointConnectionRequestStatus(item));
+                                array.Add(PrivateEndpointConnectionRequestStatus.DeserializePrivateEndpointConnectionRequestStatus(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -270,7 +271,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportExportOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new ImportExportOperationResult(
+                id,
+                name,
+                type,
+                systemData,
+                requestId,
+                requestType,
+                queuedTime,
+                lastModifiedTime,
+                blobUri,
+                serverName,
+                databaseName,
+                status,
+                errorMessage,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportExportOperationResult>.Write(ModelReaderWriterOptions options)

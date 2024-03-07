@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<string> emailAddress = default;
-            Optional<string> displayName = default;
+            Guid? principalId = default;
+            string emailAddress = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationRecipient(Optional.ToNullable(principalId), emailAddress.Value, displayName.Value, serializedAdditionalRawData);
+            return new NotificationRecipient(principalId, emailAddress, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationRecipient>.Write(ModelReaderWriterOptions options)

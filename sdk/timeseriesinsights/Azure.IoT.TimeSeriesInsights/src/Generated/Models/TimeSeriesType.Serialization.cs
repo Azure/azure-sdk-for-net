@@ -45,9 +45,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, TimeSeriesVariable> variables = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,7 +77,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesType(id.Value, name, description.Value, variables);
+            return new TimeSeriesType(id, name, description, variables);
         }
     }
 }

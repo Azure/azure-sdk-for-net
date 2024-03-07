@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<WafPolicyManagedRuleSet>> managedRuleSets = default;
+            IList<WafPolicyManagedRuleSet> managedRuleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafPolicyManagedRuleSet> array = new List<WafPolicyManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item));
+                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item, options));
                     }
                     managedRuleSets = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetList(Optional.ToList(managedRuleSets), serializedAdditionalRawData);
+            return new ManagedRuleSetList(managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetList>.Write(ModelReaderWriterOptions options)

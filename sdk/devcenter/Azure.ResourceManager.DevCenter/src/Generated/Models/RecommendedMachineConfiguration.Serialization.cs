@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<DevCenterResourceRange> memory = default;
-            Optional<DevCenterResourceRange> vCpus = default;
+            DevCenterResourceRange memory = default;
+            DevCenterResourceRange vCpus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
+                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vCPUs"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
+                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedMachineConfiguration(memory.Value, vCpus.Value, serializedAdditionalRawData);
+            return new RecommendedMachineConfiguration(memory, vCpus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedMachineConfiguration>.Write(ModelReaderWriterOptions options)

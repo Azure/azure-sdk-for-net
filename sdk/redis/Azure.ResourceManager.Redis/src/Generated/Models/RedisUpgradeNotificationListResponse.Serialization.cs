@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisUpgradeNotification>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RedisUpgradeNotification> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisUpgradeNotification> array = new List<RedisUpgradeNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item));
+                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisUpgradeNotificationListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisUpgradeNotificationListResponse(value ?? new ChangeTrackingList<RedisUpgradeNotification>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisUpgradeNotificationListResponse>.Write(ModelReaderWriterOptions options)

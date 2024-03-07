@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -143,14 +144,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string publisher = default;
             string type = default;
             string typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<IList<VmssExtensionSetupOrder>> setupOrder = default;
+            bool? autoUpgradeMinorVersion = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            string forceUpdateTag = default;
+            IList<string> provisionAfterExtensions = default;
+            string provisioningState = default;
+            bool? enableAutomaticUpgrade = default;
+            IList<VmssExtensionSetupOrder> setupOrder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +268,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToList(setupOrder), serializedAdditionalRawData);
+            return new NodeTypeVmssExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                settings,
+                protectedSettings,
+                forceUpdateTag,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                enableAutomaticUpgrade,
+                setupOrder ?? new ChangeTrackingList<VmssExtensionSetupOrder>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeVmssExtension>.Write(ModelReaderWriterOptions options)

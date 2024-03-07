@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<PerfMonSet> data = default;
+            string code = default;
+            string message = default;
+            PerfMonSet data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    data = PerfMonSet.DeserializePerfMonSet(property.Value);
+                    data = PerfMonSet.DeserializePerfMonSet(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfMonResponseInfo(code.Value, message.Value, data.Value, serializedAdditionalRawData);
+            return new PerfMonResponseInfo(code, message, data, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfMonResponseInfo>.Write(ModelReaderWriterOptions options)

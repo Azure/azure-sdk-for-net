@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FlowLogFormatType> type = default;
-            Optional<int> version = default;
+            FlowLogFormatType? type = default;
+            int? version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowLogProperties(Optional.ToNullable(type), Optional.ToNullable(version), serializedAdditionalRawData);
+            return new FlowLogProperties(type, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowLogProperties>.Write(ModelReaderWriterOptions options)

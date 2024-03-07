@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NodeTypeAvailableSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NodeTypeAvailableSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeAvailableSku> array = new List<NodeTypeAvailableSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item));
+                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeListSkuResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NodeTypeListSkuResult(value ?? new ChangeTrackingList<NodeTypeAvailableSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeListSkuResult>.Write(ModelReaderWriterOptions options)

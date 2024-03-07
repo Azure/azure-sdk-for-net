@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
-            Optional<string> description = default;
-            Optional<CosmosDBKind> keyKind = default;
-            Optional<CosmosDBType> type = default;
+            string connectionString = default;
+            string description = default;
+            CosmosDBKind? keyKind = default;
+            CosmosDBType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountConnectionString(connectionString.Value, description.Value, Optional.ToNullable(keyKind), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new CosmosDBAccountConnectionString(connectionString, description, keyKind, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountConnectionString>.Write(ModelReaderWriterOptions options)

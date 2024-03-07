@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<ServerProperties> serverProperties = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            string id = default;
+            string sourceServerBrandVersion = default;
+            ServerProperties serverProperties = default;
+            IReadOnlyList<string> databases = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    serverProperties = ServerProperties.DeserializeServerProperties(property.Value);
+                    serverProperties = ServerProperties.DeserializeServerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databases"u8))
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Optional.ToList(databases), Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new ConnectToSourceNonSqlTaskOutput(
+                id,
+                sourceServerBrandVersion,
+                serverProperties,
+                databases ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceNonSqlTaskOutput>.Write(ModelReaderWriterOptions options)

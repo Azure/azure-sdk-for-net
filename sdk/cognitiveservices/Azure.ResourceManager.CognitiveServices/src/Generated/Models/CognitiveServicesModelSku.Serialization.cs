@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> usageName = default;
-            Optional<DateTimeOffset> deprecationDate = default;
-            Optional<CognitiveServicesCapacityConfig> capacity = default;
-            Optional<IReadOnlyList<ServiceAccountCallRateLimit>> rateLimits = default;
+            string name = default;
+            string usageName = default;
+            DateTimeOffset? deprecationDate = default;
+            CognitiveServicesCapacityConfig capacity = default;
+            IReadOnlyList<ServiceAccountCallRateLimit> rateLimits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capacity = CognitiveServicesCapacityConfig.DeserializeCognitiveServicesCapacityConfig(property.Value);
+                    capacity = CognitiveServicesCapacityConfig.DeserializeCognitiveServicesCapacityConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rateLimits"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountCallRateLimit> array = new List<ServiceAccountCallRateLimit>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(item));
+                        array.Add(ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(item, options));
                     }
                     rateLimits = array;
                     continue;
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesModelSku(name.Value, usageName.Value, Optional.ToNullable(deprecationDate), capacity.Value, Optional.ToList(rateLimits), serializedAdditionalRawData);
+            return new CognitiveServicesModelSku(
+                name,
+                usageName,
+                deprecationDate,
+                capacity,
+                rateLimits ?? new ChangeTrackingList<ServiceAccountCallRateLimit>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesModelSku>.Write(ModelReaderWriterOptions options)

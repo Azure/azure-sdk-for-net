@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -629,7 +629,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
         public async Task RoundtripAllSkills()
         {
             // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/15108

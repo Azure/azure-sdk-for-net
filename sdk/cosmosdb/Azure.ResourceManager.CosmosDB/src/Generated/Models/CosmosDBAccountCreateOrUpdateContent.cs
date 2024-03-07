@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -54,7 +55,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
         public CosmosDBAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<CosmosDBAccountLocation> locations) : base(location)
         {
-            Argument.AssertNotNull(locations, nameof(locations));
+            if (locations == null)
+            {
+                throw new ArgumentNullException(nameof(locations));
+            }
 
             Locations = locations.ToList();
             DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<SubscriptionScopeProperties> properties = default;
+            SubscriptionScopeProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = SubscriptionScopeProperties.DeserializeSubscriptionScopeProperties(property.Value);
+                    properties = SubscriptionScopeProperties.DeserializeSubscriptionScopeProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableScopesProperties(properties.Value, serializedAdditionalRawData);
+            return new AvailableScopesProperties(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableScopesProperties>.Write(ModelReaderWriterOptions options)

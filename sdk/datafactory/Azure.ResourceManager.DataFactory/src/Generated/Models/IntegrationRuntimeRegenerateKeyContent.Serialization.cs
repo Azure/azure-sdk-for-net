@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeAuthKeyName> keyName = default;
+            IntegrationRuntimeAuthKeyName? keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeRegenerateKeyContent(Optional.ToNullable(keyName), serializedAdditionalRawData);
+            return new IntegrationRuntimeRegenerateKeyContent(keyName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeRegenerateKeyContent>.Write(ModelReaderWriterOptions options)

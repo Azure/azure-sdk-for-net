@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeLicense> assignedLicense = default;
-            Optional<LicenseAssignmentState> licenseAssignmentState = default;
-            Optional<EsuServerType> serverType = default;
-            Optional<EsuEligibility> esuEligibility = default;
-            Optional<EsuKeyState> esuKeyState = default;
-            Optional<Guid> assignedLicenseImmutableId = default;
-            Optional<IReadOnlyList<EsuKey>> esuKeys = default;
+            HybridComputeLicense assignedLicense = default;
+            LicenseAssignmentState? licenseAssignmentState = default;
+            EsuServerType? serverType = default;
+            EsuEligibility? esuEligibility = default;
+            EsuKeyState? esuKeyState = default;
+            Guid? assignedLicenseImmutableId = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    assignedLicense = HybridComputeLicense.DeserializeHybridComputeLicense(property.Value);
+                    assignedLicense = HybridComputeLicense.DeserializeHybridComputeLicense(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseAssignmentState"u8))
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;
@@ -189,7 +190,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileMachineInstanceViewEsuProperties(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), serializedAdditionalRawData, Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState), assignedLicense.Value, Optional.ToNullable(licenseAssignmentState));
+            return new LicenseProfileMachineInstanceViewEsuProperties(
+                assignedLicenseImmutableId,
+                esuKeys ?? new ChangeTrackingList<EsuKey>(),
+                serializedAdditionalRawData,
+                serverType,
+                esuEligibility,
+                esuKeyState,
+                assignedLicense,
+                licenseAssignmentState);
         }
 
         BinaryData IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(ModelReaderWriterOptions options)

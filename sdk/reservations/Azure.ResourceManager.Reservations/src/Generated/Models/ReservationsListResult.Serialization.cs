@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReservationDetailData>> value = default;
-            Optional<string> nextLink = default;
-            Optional<ReservationSummary> summary = default;
+            IReadOnlyList<ReservationDetailData> value = default;
+            string nextLink = default;
+            ReservationSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationDetailData> array = new List<ReservationDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                        array.Add(ReservationDetailData.DeserializeReservationDetailData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    summary = ReservationSummary.DeserializeReservationSummary(property.Value);
+                    summary = ReservationSummary.DeserializeReservationSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationsListResult(Optional.ToList(value), nextLink.Value, summary.Value, serializedAdditionalRawData);
+            return new ReservationsListResult(value ?? new ChangeTrackingList<ReservationDetailData>(), nextLink, summary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationsListResult>.Write(ModelReaderWriterOptions options)

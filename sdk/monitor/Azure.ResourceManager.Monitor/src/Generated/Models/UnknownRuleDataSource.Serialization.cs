@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRuleDataSource(document.RootElement, options);
+            return DeserializeRuleDataSource(document.RootElement, options);
         }
 
         internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData);
+            return new UnknownRuleDataSource(
+                odataType,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuleDataSource>.Write(ModelReaderWriterOptions options)
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRuleDataSource(document.RootElement, options);
+                        return DeserializeRuleDataSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RuleDataSource)} does not support '{options.Format}' format.");

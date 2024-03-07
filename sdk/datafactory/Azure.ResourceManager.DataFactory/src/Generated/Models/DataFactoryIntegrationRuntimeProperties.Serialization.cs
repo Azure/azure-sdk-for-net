@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -72,11 +73,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed": return ManagedIntegrationRuntime.DeserializeManagedIntegrationRuntime(element);
-                    case "SelfHosted": return SelfHostedIntegrationRuntime.DeserializeSelfHostedIntegrationRuntime(element);
+                    case "Managed": return ManagedIntegrationRuntime.DeserializeManagedIntegrationRuntime(element, options);
+                    case "SelfHosted": return SelfHostedIntegrationRuntime.DeserializeSelfHostedIntegrationRuntime(element, options);
                 }
             }
-            return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element);
+            return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element, options);
         }
 
         BinaryData IPersistableModel<DataFactoryIntegrationRuntimeProperties>.Write(ModelReaderWriterOptions options)

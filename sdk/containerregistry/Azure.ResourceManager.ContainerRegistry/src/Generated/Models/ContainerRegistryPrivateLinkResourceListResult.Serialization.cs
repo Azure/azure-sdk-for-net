@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerRegistryPrivateLinkResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerRegistryPrivateLinkResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryPrivateLinkResourceData> array = new List<ContainerRegistryPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(item));
+                        array.Add(ContainerRegistryPrivateLinkResourceData.DeserializeContainerRegistryPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerRegistryPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ContainerRegistryPrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streamName"/> is null. </exception>
         public DataFlowDebugCommandPayload(string streamName)
         {
-            Argument.AssertNotNull(streamName, nameof(streamName));
+            if (streamName == null)
+            {
+                throw new ArgumentNullException(nameof(streamName));
+            }
 
             StreamName = streamName;
             Columns = new ChangeTrackingList<string>();

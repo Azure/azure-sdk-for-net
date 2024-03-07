@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<AacAudioProfile> profile = default;
-            Optional<int> channels = default;
-            Optional<int> samplingRate = default;
-            Optional<int> bitrate = default;
+            AacAudioProfile? profile = default;
+            int? channels = default;
+            int? samplingRate = default;
+            int? bitrate = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AacAudio(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate), Optional.ToNullable(profile));
+            return new AacAudio(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                channels,
+                samplingRate,
+                bitrate,
+                profile);
         }
 
         BinaryData IPersistableModel<AacAudio>.Write(ModelReaderWriterOptions options)

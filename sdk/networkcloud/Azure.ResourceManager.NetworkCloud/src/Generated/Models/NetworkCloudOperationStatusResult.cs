@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -52,7 +53,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal NetworkCloudOperationStatusResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
 
             Status = status;
             Operations = new ChangeTrackingList<NetworkCloudOperationStatusResult>();

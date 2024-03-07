@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubOwnerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<GitHubOwnerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubOwnerData> array = new List<GitHubOwnerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubOwnerData.DeserializeGitHubOwnerData(item));
+                        array.Add(GitHubOwnerData.DeserializeGitHubOwnerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubOwnerListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GitHubOwnerListResponse(value ?? new ChangeTrackingList<GitHubOwnerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubOwnerListResponse>.Write(ModelReaderWriterOptions options)

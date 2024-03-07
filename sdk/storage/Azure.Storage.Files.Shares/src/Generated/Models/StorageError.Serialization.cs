@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -29,7 +28,7 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 return null;
             }
-            Optional<string> message = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Message"u8))
@@ -38,7 +37,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new StorageError(message.Value);
+            return new StorageError(message);
         }
     }
 }

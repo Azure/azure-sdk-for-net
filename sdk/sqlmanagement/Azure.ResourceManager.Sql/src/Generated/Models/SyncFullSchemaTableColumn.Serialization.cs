@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> dataSize = default;
-            Optional<string> dataType = default;
-            Optional<string> errorId = default;
-            Optional<bool> hasError = default;
-            Optional<bool> isPrimaryKey = default;
-            Optional<string> name = default;
-            Optional<string> quotedName = default;
+            string dataSize = default;
+            string dataType = default;
+            string errorId = default;
+            bool? hasError = default;
+            bool? isPrimaryKey = default;
+            string name = default;
+            string quotedName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Optional.ToNullable(hasError), Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value, serializedAdditionalRawData);
+            return new SyncFullSchemaTableColumn(
+                dataSize,
+                dataType,
+                errorId,
+                hasError,
+                isPrimaryKey,
+                name,
+                quotedName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaTableColumn>.Write(ModelReaderWriterOptions options)

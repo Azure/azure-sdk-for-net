@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -114,15 +115,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> questionId = default;
-            Optional<string> questionType = default;
-            Optional<string> questionContent = default;
-            Optional<QuestionContentType> questionContentType = default;
-            Optional<string> responseHint = default;
-            Optional<string> recommendedOption = default;
-            Optional<string> selectedOptionValue = default;
-            Optional<ResponseValidationProperties> responseValidationProperties = default;
-            Optional<IReadOnlyList<ResponseConfig>> responseOptions = default;
+            string questionId = default;
+            string questionType = default;
+            string questionContent = default;
+            QuestionContentType? questionContentType = default;
+            string responseHint = default;
+            string recommendedOption = default;
+            string selectedOptionValue = default;
+            ResponseValidationProperties responseValidationProperties = default;
+            IReadOnlyList<ResponseConfig> responseOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(property.Value);
+                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("responseOptions"u8))
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<ResponseConfig> array = new List<ResponseConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResponseConfig.DeserializeResponseConfig(item));
+                        array.Add(ResponseConfig.DeserializeResponseConfig(item, options));
                     }
                     responseOptions = array;
                     continue;
@@ -195,7 +196,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StepInput(questionId.Value, questionType.Value, questionContent.Value, Optional.ToNullable(questionContentType), responseHint.Value, recommendedOption.Value, selectedOptionValue.Value, responseValidationProperties.Value, Optional.ToList(responseOptions), serializedAdditionalRawData);
+            return new StepInput(
+                questionId,
+                questionType,
+                questionContent,
+                questionContentType,
+                responseHint,
+                recommendedOption,
+                selectedOptionValue,
+                responseValidationProperties,
+                responseOptions ?? new ChangeTrackingList<ResponseConfig>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StepInput>.Write(ModelReaderWriterOptions options)

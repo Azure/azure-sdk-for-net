@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -100,10 +101,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<string> planDisplayName = default;
+            IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            string planDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item));
+                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item));
+                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item, options));
                     }
                     eligibleAuthorizations = array;
                     continue;
@@ -158,7 +159,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value, serializedAdditionalRawData);
+            return new ManagedServicesMarketplaceRegistrationProperties(
+                managedByTenantId,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                offerDisplayName,
+                publisherDisplayName,
+                planDisplayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>.Write(ModelReaderWriterOptions options)

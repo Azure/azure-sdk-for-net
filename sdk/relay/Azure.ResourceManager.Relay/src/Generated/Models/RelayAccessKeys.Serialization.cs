@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> keyName = default;
+            string primaryConnectionString = default;
+            string secondaryConnectionString = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            string keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,13 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
+            return new RelayAccessKeys(
+                primaryConnectionString,
+                secondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayAccessKeys>.Write(ModelReaderWriterOptions options)

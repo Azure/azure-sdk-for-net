@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ClientCredentialMethod> method = default;
-            Optional<string> clientSecretSettingName = default;
+            ClientCredentialMethod? method = default;
+            string clientSecretSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value, serializedAdditionalRawData);
+            return new OpenIdConnectClientCredential(method, clientSecretSettingName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdConnectClientCredential>.Write(ModelReaderWriterOptions options)

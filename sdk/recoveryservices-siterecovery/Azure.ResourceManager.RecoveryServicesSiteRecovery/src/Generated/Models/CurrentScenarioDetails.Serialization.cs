@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> scenarioName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<DateTimeOffset> startTime = default;
+            string scenarioName = default;
+            ResourceIdentifier jobId = default;
+            DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CurrentScenarioDetails(scenarioName.Value, jobId.Value, Optional.ToNullable(startTime), serializedAdditionalRawData);
+            return new CurrentScenarioDetails(scenarioName, jobId, startTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CurrentScenarioDetails>.Write(ModelReaderWriterOptions options)

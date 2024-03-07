@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             OwaspCrsExclusionEntryMatchVariable matchVariable = default;
             OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator = default;
             string selector = default;
-            Optional<IList<ExclusionManagedRuleSet>> exclusionManagedRuleSets = default;
+            IList<ExclusionManagedRuleSet> exclusionManagedRuleSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRuleSet> array = new List<ExclusionManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item));
+                        array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item, options));
                     }
                     exclusionManagedRuleSets = array;
                     continue;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, Optional.ToList(exclusionManagedRuleSets), serializedAdditionalRawData);
+            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, exclusionManagedRuleSets ?? new ChangeTrackingList<ExclusionManagedRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OwaspCrsExclusionEntry>.Write(ModelReaderWriterOptions options)

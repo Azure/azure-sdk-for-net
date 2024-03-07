@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<MapperTable>> sourceEntities = default;
-            Optional<MapperConnection> connection = default;
+            IList<MapperTable> sourceEntities = default;
+            MapperConnection connection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperTable> array = new List<MapperTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperTable.DeserializeMapperTable(item));
+                        array.Add(MapperTable.DeserializeMapperTable(item, options));
                     }
                     sourceEntities = array;
                     continue;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connection = MapperConnection.DeserializeMapperConnection(property.Value);
+                    connection = MapperConnection.DeserializeMapperConnection(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperSourceConnectionsInfo(Optional.ToList(sourceEntities), connection.Value, serializedAdditionalRawData);
+            return new MapperSourceConnectionsInfo(sourceEntities ?? new ChangeTrackingList<MapperTable>(), connection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperSourceConnectionsInfo>.Write(ModelReaderWriterOptions options)

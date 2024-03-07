@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<bool> restartWithFailover = default;
-            Optional<PostgreSqlFlexibleServerFailoverMode> failoverMode = default;
+            bool? restartWithFailover = default;
+            PostgreSqlFlexibleServerFailoverMode? failoverMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerRestartParameter(Optional.ToNullable(restartWithFailover), Optional.ToNullable(failoverMode), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerRestartParameter(restartWithFailover, failoverMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerRestartParameter>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -105,12 +106,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<long> effectiveAvailableMemoryMbOnHost = default;
-            Optional<int> availableGpuCount = default;
-            Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
-            Optional<string> gpuType = default;
-            Optional<IList<NumaNodeInfo>> numaNodesData = default;
+            string hostName = default;
+            long? effectiveAvailableMemoryMbOnHost = default;
+            int? availableGpuCount = default;
+            IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory = default;
+            string gpuType = default;
+            IList<NumaNodeInfo> numaNodesData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
+                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value, options));
                     }
                     vmUsedMemory = dictionary;
                     continue;
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
+                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item, options));
                     }
                     numaNodesData = array;
                     continue;
@@ -177,7 +178,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostCapacity(hostName.Value, Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Optional.ToNullable(availableGpuCount), Optional.ToDictionary(vmUsedMemory), gpuType.Value, Optional.ToList(numaNodesData), serializedAdditionalRawData);
+            return new HostCapacity(
+                hostName,
+                effectiveAvailableMemoryMbOnHost,
+                availableGpuCount,
+                vmUsedMemory ?? new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>(),
+                gpuType,
+                numaNodesData ?? new ChangeTrackingList<NumaNodeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostCapacity>.Write(ModelReaderWriterOptions options)

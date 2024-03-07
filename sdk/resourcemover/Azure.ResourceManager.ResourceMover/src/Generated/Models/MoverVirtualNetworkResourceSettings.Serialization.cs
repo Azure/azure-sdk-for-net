@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -157,14 +158,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool?> enableDdosProtection = default;
-            Optional<IList<string>> addressSpace = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<SubnetResourceSettings>> subnets = default;
+            IDictionary<string, string> tags = default;
+            bool? enableDdosProtection = default;
+            IList<string> addressSpace = default;
+            IList<string> dnsServers = default;
+            IList<SubnetResourceSettings> subnets = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item));
+                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item, options));
                     }
                     subnets = array;
                     continue;
@@ -260,7 +261,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverVirtualNetworkResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(enableDdosProtection), Optional.ToList(addressSpace), Optional.ToList(dnsServers), Optional.ToList(subnets));
+            return new MoverVirtualNetworkResourceSettings(
+                resourceType,
+                targetResourceName,
+                targetResourceGroupName,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                enableDdosProtection,
+                addressSpace ?? new ChangeTrackingList<string>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                subnets ?? new ChangeTrackingList<SubnetResourceSettings>());
         }
 
         BinaryData IPersistableModel<MoverVirtualNetworkResourceSettings>.Write(ModelReaderWriterOptions options)

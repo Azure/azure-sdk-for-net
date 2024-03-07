@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicWorkflowParameterType> type = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
+            LogicWorkflowParameterType? type = default;
+            BinaryData value = default;
+            BinaryData metadata = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowParameterInfo(Optional.ToNullable(type), value.Value, metadata.Value, description.Value, serializedAdditionalRawData);
+            return new LogicWorkflowParameterInfo(type, value, metadata, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowParameterInfo>.Write(ModelReaderWriterOptions options)

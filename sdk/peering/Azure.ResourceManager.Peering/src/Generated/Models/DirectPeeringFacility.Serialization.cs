@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<DirectPeeringType> directPeeringType = default;
-            Optional<int> peeringDBFacilityId = default;
-            Optional<string> peeringDBFacilityLink = default;
+            string address = default;
+            DirectPeeringType? directPeeringType = default;
+            int? peeringDBFacilityId = default;
+            string peeringDBFacilityLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectPeeringFacility(address.Value, Optional.ToNullable(directPeeringType), Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value, serializedAdditionalRawData);
+            return new DirectPeeringFacility(address, directPeeringType, peeringDBFacilityId, peeringDBFacilityLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectPeeringFacility>.Write(ModelReaderWriterOptions options)

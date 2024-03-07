@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteMapData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RouteMapData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapData> array = new List<RouteMapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapData.DeserializeRouteMapData(item));
+                        array.Add(RouteMapData.DeserializeRouteMapData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListRouteMapsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListRouteMapsResult(value ?? new ChangeTrackingList<RouteMapData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListRouteMapsResult>.Write(ModelReaderWriterOptions options)

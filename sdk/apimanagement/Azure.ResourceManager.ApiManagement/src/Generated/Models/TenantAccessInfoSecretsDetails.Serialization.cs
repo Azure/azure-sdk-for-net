@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> principalId = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<bool> enabled = default;
+            string id = default;
+            string principalId = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantAccessInfoSecretsDetails(id.Value, principalId.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new TenantAccessInfoSecretsDetails(
+                id,
+                principalId,
+                primaryKey,
+                secondaryKey,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantAccessInfoSecretsDetails>.Write(ModelReaderWriterOptions options)

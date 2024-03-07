@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<IReadOnlyList<DtmfTone>> tones = default;
+            IReadOnlyList<DtmfTone> tones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tones"u8))
@@ -37,7 +36,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CollectTonesResult(Optional.ToList(tones));
+            return new CollectTonesResult(tones ?? new ChangeTrackingList<DtmfTone>());
         }
     }
 }

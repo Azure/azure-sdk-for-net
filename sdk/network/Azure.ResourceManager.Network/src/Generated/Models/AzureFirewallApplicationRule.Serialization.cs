@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -124,13 +125,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<AzureFirewallApplicationRuleProtocol>> protocols = default;
-            Optional<IList<string>> targetFqdns = default;
-            Optional<IList<string>> fqdnTags = default;
-            Optional<IList<string>> sourceIPGroups = default;
+            string name = default;
+            string description = default;
+            IList<string> sourceAddresses = default;
+            IList<AzureFirewallApplicationRuleProtocol> protocols = default;
+            IList<string> targetFqdns = default;
+            IList<string> fqdnTags = default;
+            IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureFirewallApplicationRuleProtocol> array = new List<AzureFirewallApplicationRuleProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureFirewallApplicationRuleProtocol.DeserializeAzureFirewallApplicationRuleProtocol(item));
+                        array.Add(AzureFirewallApplicationRuleProtocol.DeserializeAzureFirewallApplicationRuleProtocol(item, options));
                     }
                     protocols = array;
                     continue;
@@ -221,7 +222,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallApplicationRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), serializedAdditionalRawData);
+            return new AzureFirewallApplicationRule(
+                name,
+                description,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<AzureFirewallApplicationRuleProtocol>(),
+                targetFqdns ?? new ChangeTrackingList<string>(),
+                fqdnTags ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallApplicationRule>.Write(ModelReaderWriterOptions options)

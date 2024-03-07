@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -93,9 +94,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> annotation = default;
-            Optional<IList<IPPrefixRule>> ipPrefixRules = default;
+            IDictionary<string, string> tags = default;
+            string annotation = default;
+            IList<IPPrefixRule> ipPrefixRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<IPPrefixRule> array = new List<IPPrefixRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item));
+                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item, options));
                             }
                             ipPrefixRules = array;
                             continue;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricIPPrefixPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToList(ipPrefixRules));
+            return new NetworkFabricIPPrefixPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>());
         }
 
         BinaryData IPersistableModel<NetworkFabricIPPrefixPatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Batch.Models
             string userName = default;
             string source = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +118,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password, serializedAdditionalRawData);
+            return new BatchCifsMountConfiguration(
+                userName,
+                source,
+                relativeMountPath,
+                mountOptions,
+                password,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCifsMountConfiguration>.Write(ModelReaderWriterOptions options)

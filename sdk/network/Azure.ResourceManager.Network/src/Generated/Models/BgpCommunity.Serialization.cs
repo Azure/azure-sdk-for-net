@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceSupportedRegion = default;
-            Optional<string> communityName = default;
-            Optional<string> communityValue = default;
-            Optional<IList<string>> communityPrefixes = default;
-            Optional<bool> isAuthorizedToUse = default;
-            Optional<string> serviceGroup = default;
+            string serviceSupportedRegion = default;
+            string communityName = default;
+            string communityValue = default;
+            IList<string> communityPrefixes = default;
+            bool? isAuthorizedToUse = default;
+            string serviceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value, serializedAdditionalRawData);
+            return new BgpCommunity(
+                serviceSupportedRegion,
+                communityName,
+                communityValue,
+                communityPrefixes ?? new ChangeTrackingList<string>(),
+                isAuthorizedToUse,
+                serviceGroup,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpCommunity>.Write(ModelReaderWriterOptions options)

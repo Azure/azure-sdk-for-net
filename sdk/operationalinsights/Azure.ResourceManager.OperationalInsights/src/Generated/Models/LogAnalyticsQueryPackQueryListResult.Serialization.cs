@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             IReadOnlyList<LogAnalyticsQueryData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<LogAnalyticsQueryData> array = new List<LogAnalyticsQueryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(item));
+                        array.Add(LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQueryPackQueryListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new LogAnalyticsQueryPackQueryListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQueryPackQueryListResult>.Write(ModelReaderWriterOptions options)

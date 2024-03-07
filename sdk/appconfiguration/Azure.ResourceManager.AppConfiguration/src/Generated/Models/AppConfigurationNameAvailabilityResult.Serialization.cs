@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
+            bool? nameAvailable = default;
+            string message = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationNameAvailabilityResult(Optional.ToNullable(nameAvailable), message.Value, reason.Value, serializedAdditionalRawData);
+            return new AppConfigurationNameAvailabilityResult(nameAvailable, message, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

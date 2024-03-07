@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryDuration = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<int> replicationInterval = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<IList<string>> storageAccounts = default;
+            int? recoveryPointHistoryDuration = default;
+            int? applicationConsistentSnapshotFrequencyInHours = default;
+            int? replicationInterval = default;
+            string onlineReplicationStartTime = default;
+            IList<string> storageAccounts = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzurePolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryDuration), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, Optional.ToList(storageAccounts));
+            return new HyperVReplicaAzurePolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointHistoryDuration,
+                applicationConsistentSnapshotFrequencyInHours,
+                replicationInterval,
+                onlineReplicationStartTime,
+                storageAccounts ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzurePolicyContent>.Write(ModelReaderWriterOptions options)

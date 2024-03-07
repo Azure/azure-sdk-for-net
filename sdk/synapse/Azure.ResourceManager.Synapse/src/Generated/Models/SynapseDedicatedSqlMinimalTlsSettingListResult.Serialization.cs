@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDedicatedSqlMinimalTlsSettingData> array = new List<SynapseDedicatedSqlMinimalTlsSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(item));
+                        array.Add(SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDedicatedSqlMinimalTlsSettingListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseDedicatedSqlMinimalTlsSettingListResult(value ?? new ChangeTrackingList<SynapseDedicatedSqlMinimalTlsSettingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingListResult>.Write(ModelReaderWriterOptions options)

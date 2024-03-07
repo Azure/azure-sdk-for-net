@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> sendToSubscriptionAdministrator = default;
-            Optional<bool> sendToSubscriptionCoAdministrators = default;
-            Optional<IList<string>> customEmails = default;
+            bool? sendToSubscriptionAdministrator = default;
+            bool? sendToSubscriptionCoAdministrators = default;
+            IList<string> customEmails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), Optional.ToList(customEmails), serializedAdditionalRawData);
+            return new EmailNotification(sendToSubscriptionAdministrator, sendToSubscriptionCoAdministrators, customEmails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailNotification>.Write(ModelReaderWriterOptions options)

@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                        array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (property.NameEquals("output"u8))
                 {
-                    output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property.Value);
+                    output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryFunction(name, type, bindingType, inputs, output, serializedAdditionalRawData);
+            return new StreamAnalyticsQueryFunction(
+                name,
+                type,
+                bindingType,
+                inputs,
+                output,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryFunction>.Write(ModelReaderWriterOptions options)

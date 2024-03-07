@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -86,13 +87,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataTransfer": return DataTransferServiceProperties.DeserializeDataTransferServiceProperties(element);
-                    case "GraphAPICompute": return GraphApiComputeServiceProperties.DeserializeGraphApiComputeServiceProperties(element);
-                    case "MaterializedViewsBuilder": return MaterializedViewsBuilderServiceProperties.DeserializeMaterializedViewsBuilderServiceProperties(element);
-                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element);
+                    case "DataTransfer": return DataTransferServiceProperties.DeserializeDataTransferServiceProperties(element, options);
+                    case "GraphAPICompute": return GraphApiComputeServiceProperties.DeserializeGraphApiComputeServiceProperties(element, options);
+                    case "MaterializedViewsBuilder": return MaterializedViewsBuilderServiceProperties.DeserializeMaterializedViewsBuilderServiceProperties(element, options);
+                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element, options);
                 }
             }
-            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element);
+            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceProperties>.Write(ModelReaderWriterOptions options)

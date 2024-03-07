@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<CustomRule>> rules = default;
+            IList<CustomRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CustomRule> array = new List<CustomRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRule.DeserializeCustomRule(item));
+                        array.Add(CustomRule.DeserializeCustomRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRuleList(Optional.ToList(rules), serializedAdditionalRawData);
+            return new CustomRuleList(rules ?? new ChangeTrackingList<CustomRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRuleList>.Write(ModelReaderWriterOptions options)

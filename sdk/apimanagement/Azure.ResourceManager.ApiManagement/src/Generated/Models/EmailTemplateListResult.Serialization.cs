@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementEmailTemplateData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementEmailTemplateData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementEmailTemplateData> array = new List<ApiManagementEmailTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(item));
+                        array.Add(ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(item, options));
                     }
                     value = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailTemplateListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new EmailTemplateListResult(value ?? new ChangeTrackingList<ApiManagementEmailTemplateData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailTemplateListResult>.Write(ModelReaderWriterOptions options)

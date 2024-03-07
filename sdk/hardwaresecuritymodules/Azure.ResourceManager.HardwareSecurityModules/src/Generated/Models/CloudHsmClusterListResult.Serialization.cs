@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CloudHsmClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CloudHsmClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<CloudHsmClusterData> array = new List<CloudHsmClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item));
+                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CloudHsmClusterListResult(value ?? new ChangeTrackingList<CloudHsmClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmClusterListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMeterDetails(document.RootElement, options);
+            return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
         }
 
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             BillingType billingType = "Unknown";
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            double? multiplier = default;
+            EdgeOrderProductChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), serializedAdditionalRawData);
+            return new UnknownMeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductMeterDetails>.Write(ModelReaderWriterOptions options)
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMeterDetails(document.RootElement, options);
+                        return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support '{options.Format}' format.");

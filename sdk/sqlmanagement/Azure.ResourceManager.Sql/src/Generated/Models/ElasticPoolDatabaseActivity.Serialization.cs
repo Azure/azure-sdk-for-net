@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -168,26 +169,26 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> errorSeverity = default;
-            Optional<string> operation = default;
-            Optional<Guid> operationId = default;
-            Optional<int> percentComplete = default;
-            Optional<string> requestedElasticPoolName = default;
-            Optional<string> currentElasticPoolName = default;
-            Optional<string> currentServiceObjective = default;
-            Optional<string> requestedServiceObjective = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> state = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            DateTimeOffset? endTime = default;
+            int? errorCode = default;
+            string errorMessage = default;
+            int? errorSeverity = default;
+            string operation = default;
+            Guid? operationId = default;
+            int? percentComplete = default;
+            string requestedElasticPoolName = default;
+            string currentElasticPoolName = default;
+            string currentServiceObjective = default;
+            string requestedServiceObjective = default;
+            string serverName = default;
+            DateTimeOffset? startTime = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -342,7 +343,28 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolDatabaseActivity(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), requestedElasticPoolName.Value, currentElasticPoolName.Value, currentServiceObjective.Value, requestedServiceObjective.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, serializedAdditionalRawData);
+            return new ElasticPoolDatabaseActivity(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                databaseName,
+                endTime,
+                errorCode,
+                errorMessage,
+                errorSeverity,
+                operation,
+                operationId,
+                percentComplete,
+                requestedElasticPoolName,
+                currentElasticPoolName,
+                currentServiceObjective,
+                requestedServiceObjective,
+                serverName,
+                startTime,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolDatabaseActivity>.Write(ModelReaderWriterOptions options)

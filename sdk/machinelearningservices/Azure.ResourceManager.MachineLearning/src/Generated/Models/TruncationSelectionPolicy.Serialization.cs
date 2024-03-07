@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> truncationPercentage = default;
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
+            int? truncationPercentage = default;
+            int? delayEvaluation = default;
+            int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TruncationSelectionPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, serializedAdditionalRawData, Optional.ToNullable(truncationPercentage));
+            return new TruncationSelectionPolicy(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData, truncationPercentage);
         }
 
         BinaryData IPersistableModel<TruncationSelectionPolicy>.Write(ModelReaderWriterOptions options)

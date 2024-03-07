@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("vaultRetention"u8))
                 {
-                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    vaultRetention = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshotRetentionInDays"u8))

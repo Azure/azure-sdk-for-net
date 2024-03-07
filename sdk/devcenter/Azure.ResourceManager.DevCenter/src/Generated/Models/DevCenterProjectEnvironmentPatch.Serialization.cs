@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
@@ -110,12 +111,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceIdentifier> deploymentTargetId = default;
-            Optional<EnvironmentTypeEnableStatus> status = default;
-            Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
-            Optional<IDictionary<string, DevCenterUserRoleAssignments>> userRoleAssignments = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            ResourceIdentifier deploymentTargetId = default;
+            EnvironmentTypeEnableStatus? status = default;
+            ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
+            IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +177,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             {
                                 continue;
                             }
-                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value);
+                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRoleAssignments"u8))
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                             Dictionary<string, DevCenterUserRoleAssignments> dictionary = new Dictionary<string, DevCenterUserRoleAssignments>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
+                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value, options));
                             }
                             userRoleAssignments = dictionary;
                             continue;
@@ -202,7 +203,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectEnvironmentPatch(Optional.ToDictionary(tags), identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), serializedAdditionalRawData);
+            return new DevCenterProjectEnvironmentPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                deploymentTargetId,
+                status,
+                creatorRoleAssignment,
+                userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectEnvironmentPatch>.Write(ModelReaderWriterOptions options)

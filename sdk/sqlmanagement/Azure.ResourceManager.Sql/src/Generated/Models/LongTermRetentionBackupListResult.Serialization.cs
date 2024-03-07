@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LongTermRetentionBackupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LongTermRetentionBackupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LongTermRetentionBackupData> array = new List<LongTermRetentionBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(item));
+                        array.Add(LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LongTermRetentionBackupListResult(value ?? new ChangeTrackingList<LongTermRetentionBackupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionBackupListResult>.Write(ModelReaderWriterOptions options)

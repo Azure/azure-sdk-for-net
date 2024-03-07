@@ -12,13 +12,16 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public class ModelWithPersistableOnly : IPersistableModel<ModelWithPersistableOnly>
     {
-        private Dictionary<string, BinaryData> _rawData;
+        private readonly Dictionary<string, BinaryData> _rawData;
 
         public ModelWithPersistableOnly()
         {
+            _rawData = new Dictionary<string, BinaryData>();
+            Fields = new List<string>();
+            KeyValuePairs = new Dictionary<string, string>();
         }
 
-        internal ModelWithPersistableOnly(string name, int xProperty, int? nullProperty, IList<string> fields, IDictionary<string, string> keyValuePairs, Dictionary<string, BinaryData> rawData)
+        internal ModelWithPersistableOnly(string? name, int xProperty, int? nullProperty, IList<string> fields, IDictionary<string, string> keyValuePairs, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             XProperty = xProperty;
@@ -28,8 +31,25 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             _rawData = rawData;
         }
 
-        public string Name { get; }
-        public int XProperty { get; }
+        private void AssertHasValue<T>(T? value, string name)
+        {
+            if (value is null)
+                throw new ArgumentNullException(name);
+        }
+
+        public string? Name { get; }
+
+        private int? _xProperty;
+        public int XProperty
+        {
+            get
+            {
+                AssertHasValue(_xProperty, nameof(XProperty));
+                return _xProperty!.Value;
+            }
+            set => _xProperty = value;
+        }
+
         public IList<string> Fields { get; }
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
@@ -55,7 +75,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             if (OptionalProperty.IsDefined(NullProperty))
             {
                 writer.WritePropertyName("nullProperty"u8);
-                writer.WriteNumberValue(NullProperty.Value);
+                writer.WriteNumberValue(NullProperty!.Value);
             }
             if (OptionalProperty.IsCollectionDefined(KeyValuePairs))
             {
@@ -100,14 +120,15 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
         }
 
-        internal static ModelWithPersistableOnly DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static ModelWithPersistableOnly DeserializeModelX(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(ModelWithPersistableOnly)}'");
             }
+
             OptionalProperty<string> name = default;
             int xProperty = default;
             OptionalProperty<int> nullProperty = default;
@@ -115,7 +136,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             OptionalProperty<IDictionary<string, string>> keyValuePairs = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
 
-            foreach (var property in element.EnumerateObject())
+            foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
                 {
@@ -124,7 +145,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("fields"u8))
                 {
-                    fields = property.Value.EnumerateArray().Select(element => element.GetString()).ToList();
+                    fields = property.Value.EnumerateArray().Select(element => element.GetString()!).ToList();
                     continue;
                 }
                 if (property.NameEquals("nullProperty"u8))
@@ -139,9 +160,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 if (property.NameEquals("keyValuePairs"u8))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (JsonProperty property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        dictionary.Add(property0.Name, property0.Value.GetString()!);
                     }
                     keyValuePairs = dictionary;
                     continue;
@@ -157,6 +178,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+
             return new ModelWithPersistableOnly(name, xProperty, OptionalProperty.ToNullable(nullProperty), OptionalProperty.ToList(fields), OptionalProperty.ToDictionary(keyValuePairs), rawData);
         }
 

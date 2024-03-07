@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<BackupSupportedFeatureType> featureType = default;
-            Optional<IReadOnlyList<BackupSupportedFeature>> features = default;
+            BackupSupportedFeatureType? featureType = default;
+            IReadOnlyList<BackupSupportedFeature> features = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupSupportedFeature> array = new List<BackupSupportedFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSupportedFeature.DeserializeBackupSupportedFeature(item));
+                        array.Add(BackupSupportedFeature.DeserializeBackupSupportedFeature(item, options));
                     }
                     features = array;
                     continue;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, Optional.ToNullable(featureType), Optional.ToList(features));
+            return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, featureType, features ?? new ChangeTrackingList<BackupSupportedFeature>());
         }
 
         BinaryData IPersistableModel<BackupFeatureValidationResult>.Write(ModelReaderWriterOptions options)

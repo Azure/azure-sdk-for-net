@@ -64,8 +64,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AssignmentOperationList>> ListAsync(string resourceScope, string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (resourceScope == null)
+            {
+                throw new ArgumentNullException(nameof(resourceScope));
+            }
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var message = CreateListRequest(resourceScope, assignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -91,8 +101,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AssignmentOperationList> List(string resourceScope, string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (resourceScope == null)
+            {
+                throw new ArgumentNullException(nameof(resourceScope));
+            }
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var message = CreateListRequest(resourceScope, assignmentName);
             _pipeline.Send(message, cancellationToken);
@@ -139,9 +159,26 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> or <paramref name="assignmentOperationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AssignmentOperationData>> GetAsync(string resourceScope, string assignmentName, string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
-            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
+            if (resourceScope == null)
+            {
+                throw new ArgumentNullException(nameof(resourceScope));
+            }
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
+            if (assignmentOperationName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentOperationName));
+            }
+            if (assignmentOperationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
+            }
 
             using var message = CreateGetRequest(resourceScope, assignmentName, assignmentOperationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -170,9 +207,26 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> or <paramref name="assignmentOperationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AssignmentOperationData> Get(string resourceScope, string assignmentName, string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
-            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
+            if (resourceScope == null)
+            {
+                throw new ArgumentNullException(nameof(resourceScope));
+            }
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
+            if (assignmentOperationName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentOperationName));
+            }
+            if (assignmentOperationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
+            }
 
             using var message = CreateGetRequest(resourceScope, assignmentName, assignmentOperationName);
             _pipeline.Send(message, cancellationToken);
@@ -215,9 +269,22 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AssignmentOperationList>> ListNextPageAsync(string nextLink, string resourceScope, string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceScope == null)
+            {
+                throw new ArgumentNullException(nameof(resourceScope));
+            }
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, assignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -244,9 +311,22 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AssignmentOperationList> ListNextPage(string nextLink, string resourceScope, string assignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
-            Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (resourceScope == null)
+            {
+                throw new ArgumentNullException(nameof(resourceScope));
+            }
+            if (assignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentName));
+            }
+            if (assignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, assignmentName);
             _pipeline.Send(message, cancellationToken);

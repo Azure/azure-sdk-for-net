@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -137,18 +138,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> rackSlot = default;
-            Optional<BootstrapProtocol> bootstrapProtocol = default;
-            Optional<long> cpuCores = default;
-            Optional<long> cpuSockets = default;
-            Optional<IReadOnlyList<MachineDisk>> disks = default;
-            Optional<string> generation = default;
-            Optional<string> hardwareVersion = default;
-            Optional<long> memoryCapacityGB = default;
-            Optional<string> model = default;
-            Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
-            Optional<long> totalThreads = default;
-            Optional<string> vendor = default;
+            long? rackSlot = default;
+            BootstrapProtocol? bootstrapProtocol = default;
+            long? cpuCores = default;
+            long? cpuSockets = default;
+            IReadOnlyList<MachineDisk> disks = default;
+            string generation = default;
+            string hardwareVersion = default;
+            long? memoryCapacityGB = default;
+            string model = default;
+            IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces = default;
+            long? totalThreads = default;
+            string vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<MachineDisk> array = new List<MachineDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineDisk.DeserializeMachineDisk(item));
+                                array.Add(MachineDisk.DeserializeMachineDisk(item, options));
                             }
                             disks = array;
                             continue;
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<NetworkCloudNetworkInterface> array = new List<NetworkCloudNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item));
+                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -273,7 +274,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value, serializedAdditionalRawData);
+            return new MachineSkuSlot(
+                rackSlot,
+                bootstrapProtocol,
+                cpuCores,
+                cpuSockets,
+                disks ?? new ChangeTrackingList<MachineDisk>(),
+                generation,
+                hardwareVersion,
+                memoryCapacityGB,
+                model,
+                networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
+                totalThreads,
+                vendor,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineSkuSlot>.Write(ModelReaderWriterOptions options)

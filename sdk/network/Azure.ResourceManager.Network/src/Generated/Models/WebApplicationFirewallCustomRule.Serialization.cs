@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ETag> etag = default;
+            string name = default;
+            ETag? etag = default;
             int priority = default;
-            Optional<WebApplicationFirewallState> state = default;
-            Optional<ApplicationGatewayFirewallRateLimitDuration> rateLimitDuration = default;
-            Optional<int> rateLimitThreshold = default;
+            WebApplicationFirewallState? state = default;
+            ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration = default;
+            int? rateLimitThreshold = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
-            Optional<IList<GroupByUserSession>> groupByUserSession = default;
+            IList<GroupByUserSession> groupByUserSession = default;
             WebApplicationFirewallAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchCondition> array = new List<MatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        array.Add(MatchCondition.DeserializeMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByUserSession> array = new List<GroupByUserSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item, options));
                     }
                     groupByUserSession = array;
                     continue;
@@ -213,7 +214,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Optional.ToList(groupByUserSession), action, serializedAdditionalRawData);
+            return new WebApplicationFirewallCustomRule(
+                name,
+                etag,
+                priority,
+                state,
+                rateLimitDuration,
+                rateLimitThreshold,
+                ruleType,
+                matchConditions,
+                groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallCustomRule>.Write(ModelReaderWriterOptions options)

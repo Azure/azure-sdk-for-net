@@ -82,7 +82,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("content_filter_results"u8))
                 {
-                    contentFilterResults = ContentFilterResultDetailsForPrompt.DeserializeContentFilterResultDetailsForPrompt(property.Value);
+                    contentFilterResults = ContentFilterResultDetailsForPrompt.DeserializeContentFilterResultDetailsForPrompt(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

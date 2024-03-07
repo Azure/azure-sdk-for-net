@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
-            Optional<NetworkConnectionStatus> connectionStatus = default;
-            Optional<int> avgLatencyInMs = default;
-            Optional<int> minLatencyInMs = default;
-            Optional<int> maxLatencyInMs = default;
-            Optional<int> probesSent = default;
-            Optional<int> probesFailed = default;
+            IReadOnlyList<ConnectivityHopInfo> hops = default;
+            NetworkConnectionStatus? connectionStatus = default;
+            int? avgLatencyInMs = default;
+            int? minLatencyInMs = default;
+            int? maxLatencyInMs = default;
+            int? probesSent = default;
+            int? probesFailed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item, options));
                     }
                     hops = array;
                     continue;
@@ -189,7 +190,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityInformation(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), serializedAdditionalRawData);
+            return new ConnectivityInformation(
+                hops ?? new ChangeTrackingList<ConnectivityHopInfo>(),
+                connectionStatus,
+                avgLatencyInMs,
+                minLatencyInMs,
+                maxLatencyInMs,
+                probesSent,
+                probesFailed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityInformation>.Write(ModelReaderWriterOptions options)

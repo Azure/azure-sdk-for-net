@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
             string fairPlayPfx = default;
             ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType = default;
             long rentalDuration = default;
-            Optional<ContentKeyPolicyFairPlayOfflineRentalConfiguration> offlineRentalConfiguration = default;
+            ContentKeyPolicyFairPlayOfflineRentalConfiguration offlineRentalConfiguration = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value);
+                    offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -173,7 +174,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyFairPlayConfiguration(odataType, serializedAdditionalRawData, ask, fairPlayPfxPassword, fairPlayPfx, rentalAndLeaseKeyType, rentalDuration, offlineRentalConfiguration.Value);
+            return new ContentKeyPolicyFairPlayConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                ask,
+                fairPlayPfxPassword,
+                fairPlayPfx,
+                rentalAndLeaseKeyType,
+                rentalDuration,
+                offlineRentalConfiguration);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeKubernetesRoleStorage> storage = default;
+            EdgeKubernetesRoleStorage storage = default;
             EdgeKubernetesRoleCompute compute = default;
-            Optional<EdgeKubernetesRoleNetwork> network = default;
+            EdgeKubernetesRoleNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value);
+                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("compute"u8))
                 {
-                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value);
+                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("network"u8))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value);
+                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleResources(storage.Value, compute, network.Value, serializedAdditionalRawData);
+            return new EdgeKubernetesRoleResources(storage, compute, network, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleResources>.Write(ModelReaderWriterOptions options)

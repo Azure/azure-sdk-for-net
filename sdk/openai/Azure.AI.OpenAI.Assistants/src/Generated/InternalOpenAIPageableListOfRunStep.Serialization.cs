@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RunStep> array = new List<RunStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunStep.DeserializeRunStep(item));
+                        array.Add(RunStep.DeserializeRunStep(item, options));
                     }
                     data = array;
                     continue;
@@ -125,7 +125,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalOpenAIPageableListOfRunStep(@object, data, firstId, lastId, hasMore, serializedAdditionalRawData);
+            return new InternalOpenAIPageableListOfRunStep(
+                @object,
+                data,
+                firstId,
+                lastId,
+                hasMore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InternalOpenAIPageableListOfRunStep>.Write(ModelReaderWriterOptions options)

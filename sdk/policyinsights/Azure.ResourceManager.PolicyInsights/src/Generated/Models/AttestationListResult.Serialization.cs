@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyAttestationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PolicyAttestationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyAttestationData> array = new List<PolicyAttestationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAttestationData.DeserializePolicyAttestationData(item));
+                        array.Add(PolicyAttestationData.DeserializePolicyAttestationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AttestationListResult(value ?? new ChangeTrackingList<PolicyAttestationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationListResult>.Write(ModelReaderWriterOptions options)

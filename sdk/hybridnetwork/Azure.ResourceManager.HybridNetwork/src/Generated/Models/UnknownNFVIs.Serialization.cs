@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNFVIs(document.RootElement, options);
+            return DeserializeNFVIs(document.RootElement, options);
         }
 
         internal static UnknownNFVIs DeserializeUnknownNFVIs(JsonElement element, ModelReaderWriterOptions options = null)
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             NfviType nfviType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownNFVIs(name.Value, nfviType, serializedAdditionalRawData);
+            return new UnknownNFVIs(name, nfviType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NFVIs>.Write(ModelReaderWriterOptions options)
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownNFVIs(document.RootElement, options);
+                        return DeserializeNFVIs(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(NFVIs)} does not support '{options.Format}' format.");

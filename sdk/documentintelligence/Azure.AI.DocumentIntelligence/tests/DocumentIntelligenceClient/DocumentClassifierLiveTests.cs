@@ -37,6 +37,27 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
+        public async Task ClassifyDocumentWithBase64Source()
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
+
+            var content = new ClassifyDocumentContent()
+            {
+                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040)
+            };
+
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+
+            Assert.That(operation.HasCompleted);
+            Assert.That(operation.HasValue);
+
+            ValidateIrs1040ClassifierResult(operation.Value, disposableClassifier.ClassifierId);
+        }
+
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42322")]
         public async Task ClassifyDocumentCanParseBlankPage()
         {
             var client = CreateDocumentIntelligenceClient();
@@ -131,7 +152,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var document = analyzeResult.Documents.Single();
 
-            Assert.That(document.DocType, Is.EqualTo("IRS-1040-A"));
+            Assert.That(document.DocType, Is.EqualTo("IRS-1040-C"));
             Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
         }
 

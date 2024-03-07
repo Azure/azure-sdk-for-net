@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> invokedByType = default;
-            Optional<string> pipelineName = default;
-            Optional<Guid> pipelineRunId = default;
+            string name = default;
+            string id = default;
+            string invokedByType = default;
+            string pipelineName = default;
+            Guid? pipelineRunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunEntityInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, Optional.ToNullable(pipelineRunId), serializedAdditionalRawData);
+            return new DataFactoryPipelineRunEntityInfo(
+                name,
+                id,
+                invokedByType,
+                pipelineName,
+                pipelineRunId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunEntityInfo>.Write(ModelReaderWriterOptions options)

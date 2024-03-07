@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> usageType = default;
-            Optional<string> billingCycle = default;
-            Optional<string> planDetails = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            string usageType = default;
+            string billingCycle = default;
+            string planDetails = default;
+            DateTimeOffset? effectiveDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceBillingPlanInfo(usageType.Value, billingCycle.Value, planDetails.Value, Optional.ToNullable(effectiveDate), serializedAdditionalRawData);
+            return new DynatraceBillingPlanInfo(usageType, billingCycle, planDetails, effectiveDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceBillingPlanInfo>.Write(ModelReaderWriterOptions options)

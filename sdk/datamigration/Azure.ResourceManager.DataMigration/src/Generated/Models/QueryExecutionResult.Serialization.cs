@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> queryText = default;
-            Optional<long> statementsInBatch = default;
-            Optional<ExecutionStatistics> sourceResult = default;
-            Optional<ExecutionStatistics> targetResult = default;
+            string queryText = default;
+            long? statementsInBatch = default;
+            ExecutionStatistics sourceResult = default;
+            ExecutionStatistics targetResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
+                    sourceResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResult"u8))
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value);
+                    targetResult = ExecutionStatistics.DeserializeExecutionStatistics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryExecutionResult(queryText.Value, Optional.ToNullable(statementsInBatch), sourceResult.Value, targetResult.Value, serializedAdditionalRawData);
+            return new QueryExecutionResult(queryText, statementsInBatch, sourceResult, targetResult, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryExecutionResult>.Write(ModelReaderWriterOptions options)

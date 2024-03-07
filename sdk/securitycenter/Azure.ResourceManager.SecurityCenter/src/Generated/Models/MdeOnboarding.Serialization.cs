@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -101,9 +102,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<byte[]> onboardingPackageWindows = default;
-            Optional<byte[]> onboardingPackageLinux = default;
+            SystemData systemData = default;
+            byte[] onboardingPackageWindows = default;
+            byte[] onboardingPackageLinux = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MdeOnboarding(id, name, type, systemData.Value, onboardingPackageWindows.Value, onboardingPackageLinux.Value, serializedAdditionalRawData);
+            return new MdeOnboarding(
+                id,
+                name,
+                type,
+                systemData,
+                onboardingPackageWindows,
+                onboardingPackageLinux,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MdeOnboarding>.Write(ModelReaderWriterOptions options)

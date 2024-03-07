@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProxyArtifactListOverview>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProxyArtifactListOverview> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ProxyArtifactListOverview> array = new List<ProxyArtifactListOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item));
+                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactOverviewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProxyArtifactOverviewListResult(value ?? new ChangeTrackingList<ProxyArtifactListOverview>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactOverviewListResult>.Write(ModelReaderWriterOptions options)

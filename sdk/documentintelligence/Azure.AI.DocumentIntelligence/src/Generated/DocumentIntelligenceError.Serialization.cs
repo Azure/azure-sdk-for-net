@@ -91,9 +91,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<DocumentIntelligenceError>> details = default;
-            Optional<InnerError> innererror = default;
+            string target = default;
+            IReadOnlyList<DocumentIntelligenceError> details = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentIntelligenceError> array = new List<DocumentIntelligenceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeDocumentIntelligenceError(item));
+                        array.Add(DeserializeDocumentIntelligenceError(item, options));
                     }
                     details = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +142,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentIntelligenceError(code, message, target.Value, Optional.ToList(details), innererror.Value, serializedAdditionalRawData);
+            return new DocumentIntelligenceError(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<DocumentIntelligenceError>(),
+                innererror,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentIntelligenceError>.Write(ModelReaderWriterOptions options)

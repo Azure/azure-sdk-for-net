@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationWebhookCreateOrUpdateContent(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             Parameters = new ChangeTrackingDictionary<string, string>();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityContent(ConnectivitySource source, ConnectivityDestination destination)
         {
-            Argument.AssertNotNull(source, nameof(source));
-            Argument.AssertNotNull(destination, nameof(destination));
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if (destination == null)
+            {
+                throw new ArgumentNullException(nameof(destination));
+            }
 
             Source = source;
             Destination = destination;

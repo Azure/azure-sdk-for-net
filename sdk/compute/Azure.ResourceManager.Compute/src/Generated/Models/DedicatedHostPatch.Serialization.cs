@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -134,17 +135,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<bool> autoReplaceOnFailure = default;
-            Optional<string> hostId = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachines = default;
-            Optional<DedicatedHostLicenseType> licenseType = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DedicatedHostInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            ComputeSku sku = default;
+            IDictionary<string, string> tags = default;
+            int? platformFaultDomain = default;
+            bool? autoReplaceOnFailure = default;
+            string hostId = default;
+            IReadOnlyList<SubResource> virtualMachines = default;
+            DedicatedHostLicenseType? licenseType = default;
+            DateTimeOffset? provisioningTime = default;
+            string provisioningState = default;
+            DedicatedHostInstanceView instanceView = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value);
+                            instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))
@@ -268,7 +269,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new DedicatedHostPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku,
+                platformFaultDomain,
+                autoReplaceOnFailure,
+                hostId,
+                virtualMachines ?? new ChangeTrackingList<SubResource>(),
+                licenseType,
+                provisioningTime,
+                provisioningState,
+                instanceView,
+                timeCreated);
         }
 
         BinaryData IPersistableModel<DedicatedHostPatch>.Write(ModelReaderWriterOptions options)

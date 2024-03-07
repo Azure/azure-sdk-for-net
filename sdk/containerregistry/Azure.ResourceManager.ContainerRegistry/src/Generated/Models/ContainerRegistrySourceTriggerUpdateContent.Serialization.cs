@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceCodeRepoUpdateContent> sourceRepository = default;
-            Optional<IList<ContainerRegistrySourceTriggerEvent>> sourceTriggerEvents = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            SourceCodeRepoUpdateContent sourceRepository = default;
+            IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value);
+                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository.Value, Optional.ToList(sourceTriggerEvents), Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>(), status, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>.Write(ModelReaderWriterOptions options)

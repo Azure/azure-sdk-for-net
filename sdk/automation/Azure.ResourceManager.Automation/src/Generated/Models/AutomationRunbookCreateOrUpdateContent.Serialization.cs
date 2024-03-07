@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -120,16 +121,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> logVerbose = default;
-            Optional<bool> logProgress = default;
+            string name = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            bool? logVerbose = default;
+            bool? logProgress = default;
             AutomationRunbookType runbookType = default;
-            Optional<AutomationRunbookDraft> draft = default;
-            Optional<AutomationContentLink> publishContentLink = default;
-            Optional<string> description = default;
-            Optional<int> logActivityTrace = default;
+            AutomationRunbookDraft draft = default;
+            AutomationContentLink publishContentLink = default;
+            string description = default;
+            int? logActivityTrace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value);
+                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publishContentLink"u8))
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -235,7 +236,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), runbookType, draft.Value, publishContentLink.Value, description.Value, Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new AutomationRunbookCreateOrUpdateContent(
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                logVerbose,
+                logProgress,
+                runbookType,
+                draft,
+                publishContentLink,
+                description,
+                logActivityTrace,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

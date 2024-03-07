@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<FeatureDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
+            FeatureDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            string name = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureStatus(Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, name.Value, version.Value, serializedAdditionalRawData);
+            return new FeatureStatus(detailedStatus, detailedStatusMessage, name, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureStatus>.Write(ModelReaderWriterOptions options)

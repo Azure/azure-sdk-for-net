@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public BatchRequest(IEnumerable<BatchQueryRequest> requests)
         {
-            Argument.AssertNotNull(requests, nameof(requests));
+            if (requests == null)
+            {
+                throw new ArgumentNullException(nameof(requests));
+            }
 
             Requests = requests.ToList();
         }

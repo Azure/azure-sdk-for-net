@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> extension = default;
-            Optional<string> filePath = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
+            string extension = default;
+            string filePath = default;
+            DateTimeOffset? lastModified = default;
+            string mediaType = default;
+            long? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectFileProperties(extension.Value, filePath.Value, Optional.ToNullable(lastModified), mediaType.Value, Optional.ToNullable(size), serializedAdditionalRawData);
+            return new ProjectFileProperties(
+                extension,
+                filePath,
+                lastModified,
+                mediaType,
+                size,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectFileProperties>.Write(ModelReaderWriterOptions options)

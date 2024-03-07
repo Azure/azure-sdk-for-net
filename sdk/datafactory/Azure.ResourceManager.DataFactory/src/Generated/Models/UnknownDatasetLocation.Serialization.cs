@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatasetLocation(document.RootElement, options);
+            return DeserializeDatasetLocation(document.RootElement, options);
         }
 
         internal static UnknownDatasetLocation DeserializeUnknownDatasetLocation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownDatasetLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+            return new UnknownDatasetLocation(type, folderPath, fileName, additionalProperties);
         }
 
         BinaryData IPersistableModel<DatasetLocation>.Write(ModelReaderWriterOptions options)
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatasetLocation(document.RootElement, options);
+                        return DeserializeDatasetLocation(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");

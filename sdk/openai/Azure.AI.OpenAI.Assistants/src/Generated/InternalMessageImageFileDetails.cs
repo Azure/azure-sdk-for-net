@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -49,9 +48,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="InternalMessageImageFileDetails"/>. </summary>
         /// <param name="internalDetails"> The ID for the file associated with this image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
-        internal InternalMessageImageFileDetails(InternalMessageImageFileIdDetails internalDetails)
+        internal InternalMessageImageFileDetails(string internalDetails)
         {
-            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
+            if (internalDetails == null)
+            {
+                throw new ArgumentNullException(nameof(internalDetails));
+            }
 
             InternalDetails = internalDetails;
         }
@@ -59,7 +61,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="InternalMessageImageFileDetails"/>. </summary>
         /// <param name="internalDetails"> The ID for the file associated with this image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalMessageImageFileDetails(InternalMessageImageFileIdDetails internalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalMessageImageFileDetails(string internalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +73,6 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> The ID for the file associated with this image. </summary>
-        public InternalMessageImageFileIdDetails InternalDetails { get; }
+        public string InternalDetails { get; }
     }
 }

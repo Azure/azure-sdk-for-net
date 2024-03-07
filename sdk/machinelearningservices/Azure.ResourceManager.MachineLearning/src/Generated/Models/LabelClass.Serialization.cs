@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -94,8 +95,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<IDictionary<string, LabelClass>> subclasses = default;
+            string displayName = default;
+            IDictionary<string, LabelClass> subclasses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelClass> dictionary = new Dictionary<string, LabelClass>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeLabelClass(property0.Value, options));
                     }
                     subclasses = dictionary;
                     continue;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelClass(displayName.Value, Optional.ToDictionary(subclasses), serializedAdditionalRawData);
+            return new LabelClass(displayName, subclasses ?? new ChangeTrackingDictionary<string, LabelClass>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelClass>.Write(ModelReaderWriterOptions options)

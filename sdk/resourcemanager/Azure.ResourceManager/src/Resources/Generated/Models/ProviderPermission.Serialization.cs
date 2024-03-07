@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<AzureRoleDefinition> roleDefinition = default;
-            Optional<AzureRoleDefinition> managedByRoleDefinition = default;
-            Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
+            string applicationId = default;
+            AzureRoleDefinition roleDefinition = default;
+            AzureRoleDefinition managedByRoleDefinition = default;
+            ProviderAuthorizationConsentState? providerAuthorizationConsentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
+                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedByRoleDefinition"u8))
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
+                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizationConsentState"u8))
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
+            return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderPermission>.Write(ModelReaderWriterOptions options)

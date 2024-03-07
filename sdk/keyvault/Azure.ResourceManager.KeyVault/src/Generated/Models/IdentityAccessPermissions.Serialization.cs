@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IList<IdentityAccessKeyPermission>> keys = default;
-            Optional<IList<IdentityAccessSecretPermission>> secrets = default;
-            Optional<IList<IdentityAccessCertificatePermission>> certificates = default;
-            Optional<IList<IdentityAccessStoragePermission>> storage = default;
+            IList<IdentityAccessKeyPermission> keys = default;
+            IList<IdentityAccessSecretPermission> secrets = default;
+            IList<IdentityAccessCertificatePermission> certificates = default;
+            IList<IdentityAccessStoragePermission> storage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityAccessPermissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage), serializedAdditionalRawData);
+            return new IdentityAccessPermissions(keys ?? new ChangeTrackingList<IdentityAccessKeyPermission>(), secrets ?? new ChangeTrackingList<IdentityAccessSecretPermission>(), certificates ?? new ChangeTrackingList<IdentityAccessCertificatePermission>(), storage ?? new ChangeTrackingList<IdentityAccessStoragePermission>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityAccessPermissions>.Write(ModelReaderWriterOptions options)

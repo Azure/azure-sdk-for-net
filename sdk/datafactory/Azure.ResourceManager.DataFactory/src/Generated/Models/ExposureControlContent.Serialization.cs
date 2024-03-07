@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<string> featureType = default;
+            string featureName = default;
+            string featureType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExposureControlContent(featureName.Value, featureType.Value, serializedAdditionalRawData);
+            return new ExposureControlContent(featureName, featureType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExposureControlContent>.Write(ModelReaderWriterOptions options)

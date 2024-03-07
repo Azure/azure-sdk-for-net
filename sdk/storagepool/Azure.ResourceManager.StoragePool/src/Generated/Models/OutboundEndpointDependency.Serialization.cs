@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<OutboundEndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            IReadOnlyList<OutboundEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<OutboundEndpointDetail> array = new List<OutboundEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEndpointDetail.DeserializeOutboundEndpointDetail(item));
+                        array.Add(OutboundEndpointDetail.DeserializeOutboundEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundEndpointDependency(domainName.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new OutboundEndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<OutboundEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundEndpointDependency>.Write(ModelReaderWriterOptions options)

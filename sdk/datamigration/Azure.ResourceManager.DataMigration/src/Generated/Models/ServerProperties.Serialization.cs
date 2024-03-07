@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> serverPlatform = default;
-            Optional<string> serverName = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverEdition = default;
-            Optional<string> serverOperatingSystemVersion = default;
-            Optional<int> serverDatabaseCount = default;
+            string serverPlatform = default;
+            string serverName = default;
+            string serverVersion = default;
+            string serverEdition = default;
+            string serverOperatingSystemVersion = default;
+            int? serverDatabaseCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerProperties(serverPlatform.Value, serverName.Value, serverVersion.Value, serverEdition.Value, serverOperatingSystemVersion.Value, Optional.ToNullable(serverDatabaseCount), serializedAdditionalRawData);
+            return new ServerProperties(
+                serverPlatform,
+                serverName,
+                serverVersion,
+                serverEdition,
+                serverOperatingSystemVersion,
+                serverDatabaseCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerProperties>.Write(ModelReaderWriterOptions options)

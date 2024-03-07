@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<VCenterInventoryItemData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VCenterInventoryItemData> array = new List<VCenterInventoryItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VCenterInventoryItemData.DeserializeVCenterInventoryItemData(item));
+                        array.Add(VCenterInventoryItemData.DeserializeVCenterInventoryItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInventoryItemListResult(nextLink.Value, value, serializedAdditionalRawData);
+            return new VCenterInventoryItemListResult(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInventoryItemListResult>.Write(ModelReaderWriterOptions options)

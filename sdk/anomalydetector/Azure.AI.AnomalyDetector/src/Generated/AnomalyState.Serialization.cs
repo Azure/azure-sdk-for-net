@@ -83,8 +83,8 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             DateTimeOffset timestamp = default;
-            Optional<AnomalyValue> value = default;
-            Optional<IReadOnlyList<ErrorResponse>> errors = default;
+            AnomalyValue value = default;
+            IReadOnlyList<ErrorResponse> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.AI.AnomalyDetector
                     {
                         continue;
                     }
-                    value = AnomalyValue.DeserializeAnomalyValue(property.Value);
+                    value = AnomalyValue.DeserializeAnomalyValue(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -112,7 +112,7 @@ namespace Azure.AI.AnomalyDetector
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
                     }
                     errors = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalyState(timestamp, value.Value, Optional.ToList(errors), serializedAdditionalRawData);
+            return new AnomalyState(timestamp, value, errors ?? new ChangeTrackingList<ErrorResponse>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnomalyState>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>
         public EdifactAgreementContent(EdifactOneWayAgreement receiveAgreement, EdifactOneWayAgreement sendAgreement)
         {
-            Argument.AssertNotNull(receiveAgreement, nameof(receiveAgreement));
-            Argument.AssertNotNull(sendAgreement, nameof(sendAgreement));
+            if (receiveAgreement == null)
+            {
+                throw new ArgumentNullException(nameof(receiveAgreement));
+            }
+            if (sendAgreement == null)
+            {
+                throw new ArgumentNullException(nameof(sendAgreement));
+            }
 
             ReceiveAgreement = receiveAgreement;
             SendAgreement = sendAgreement;

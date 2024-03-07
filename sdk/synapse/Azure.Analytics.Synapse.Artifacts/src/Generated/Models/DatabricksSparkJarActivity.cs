@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,8 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mainClassName"/> is null. </exception>
         public DatabricksSparkJarActivity(string name, object mainClassName) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(mainClassName, nameof(mainClassName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (mainClassName == null)
+            {
+                throw new ArgumentNullException(nameof(mainClassName));
+            }
 
             MainClassName = mainClassName;
             Parameters = new ChangeTrackingList<object>();

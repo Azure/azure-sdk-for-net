@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceGuardProtectedObjectData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ResourceGuardProtectedObjectData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardProtectedObjectData> array = new List<ResourceGuardProtectedObjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item));
+                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DppBaseResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DppBaseResourceList(value ?? new ChangeTrackingList<ResourceGuardProtectedObjectData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DppBaseResourceList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> type = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
-            Optional<MachineLearningWorkspaceQuotaStatus> status = default;
+            string id = default;
+            string type = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
+            MachineLearningWorkspaceQuotaStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceQuotaUpdate(id.Value, type.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MachineLearningWorkspaceQuotaUpdate(
+                id,
+                type,
+                limit,
+                unit,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceQuotaUpdate>.Write(ModelReaderWriterOptions options)

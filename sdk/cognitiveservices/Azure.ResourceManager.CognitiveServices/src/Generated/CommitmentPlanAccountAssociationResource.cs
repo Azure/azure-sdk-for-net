@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CommitmentPlanAccountAssociationResource>> UpdateAsync(WaitUntil waitUntil, CommitmentPlanAccountAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CommitmentPlanAccountAssociationResource> Update(WaitUntil waitUntil, CommitmentPlanAccountAssociationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationResource.Update");
             scope.Start();

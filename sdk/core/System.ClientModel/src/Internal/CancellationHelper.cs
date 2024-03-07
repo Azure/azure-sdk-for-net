@@ -15,7 +15,7 @@ internal static class CancellationHelper
     /// <summary>Determines whether to wrap an <see cref="Exception"/> in a cancellation exception.</summary>
     /// <param name="exception">The exception.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> that may have triggered the exception.</param>
-    /// <returns>true if the exception should be wrapped; otherwise, false.</returns>
+    /// <returns><c>true</c> if the exception should be wrapped; otherwise, <c>false</c>.</returns>
     internal static bool ShouldWrapInOperationCanceledException(Exception exception, CancellationToken cancellationToken) =>
         !(exception is OperationCanceledException) && cancellationToken.IsCancellationRequested;
 
@@ -41,11 +41,32 @@ internal static class CancellationHelper
 
     /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="cancellationToken"/>.</summary>
     /// <param name="cancellationToken">The token to check for a cancellation request.</param>
-    internal static void ThrowIfCancellationRequested(CancellationToken cancellationToken)
+    /// <param name="innerException">The inner exception to wrap. May be null.</param>
+    internal static void ThrowIfCancellationRequested(CancellationToken cancellationToken, Exception? innerException = default)
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            ThrowOperationCanceledException(innerException: null, cancellationToken);
+            ThrowOperationCanceledException(innerException, cancellationToken);
+        }
+    }
+
+    /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="messageToken"/> or <paramref name="timeoutToken"/>.</summary>
+    /// <param name="messageToken">The user-provided token.</param>
+    /// <param name="timeoutToken">The linked token that is cancelled on timeout provided token.</param>
+    /// <param name="innerException">The inner exception to use.</param>
+    /// <param name="timeout">The timeout used for the operation.</param>
+#pragma warning disable CA1068 // Cancellation token has to be the last parameter
+    internal static void ThrowIfCancellationRequestedOrTimeout(CancellationToken messageToken, CancellationToken timeoutToken, Exception? innerException, TimeSpan timeout)
+#pragma warning restore CA1068
+    {
+        ThrowIfCancellationRequested(messageToken, innerException);
+
+        if (timeoutToken.IsCancellationRequested)
+        {
+            throw CreateOperationCanceledException(
+                innerException,
+                timeoutToken,
+                $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
         }
     }
 }

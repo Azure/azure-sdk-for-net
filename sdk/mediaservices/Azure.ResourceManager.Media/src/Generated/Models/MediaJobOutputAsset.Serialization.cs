@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -119,13 +120,13 @@ namespace Azure.ResourceManager.Media.Models
             }
             string assetName = default;
             string odataType = default;
-            Optional<MediaJobError> error = default;
-            Optional<MediaTransformPreset> presetOverride = default;
-            Optional<MediaJobState> state = default;
-            Optional<int> progress = default;
-            Optional<string> label = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            MediaJobError error = default;
+            MediaTransformPreset presetOverride = default;
+            MediaJobState? state = default;
+            int? progress = default;
+            string label = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    error = MediaJobError.DeserializeMediaJobError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetOverride"u8))
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -207,7 +208,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobOutputAsset(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData, assetName);
+            return new MediaJobOutputAsset(
+                odataType,
+                error,
+                presetOverride,
+                state,
+                progress,
+                label,
+                startTime,
+                endTime,
+                serializedAdditionalRawData,
+                assetName);
         }
 
         BinaryData IPersistableModel<MediaJobOutputAsset>.Write(ModelReaderWriterOptions options)

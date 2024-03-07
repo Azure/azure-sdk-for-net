@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudClusterMetricsConfigurationResource>> GetAsync(string metricsConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
         public virtual Response<NetworkCloudClusterMetricsConfigurationResource> Get(string metricsConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string metricsConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string metricsConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudClusterMetricsConfigurationResource>> GetIfExistsAsync(string metricsConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudClusterMetricsConfigurationResource> GetIfExists(string metricsConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(metricsConfigurationName, nameof(metricsConfigurationName));
+            if (metricsConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(metricsConfigurationName));
+            }
+            if (metricsConfigurationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(metricsConfigurationName));
+            }
 
             using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationCollection.GetIfExists");
             scope.Start();

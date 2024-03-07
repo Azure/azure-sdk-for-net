@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, ContainerServiceOSType osType)
         {
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
+            if (kubernetesVersion == null)
+            {
+                throw new ArgumentNullException(nameof(kubernetesVersion));
+            }
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;

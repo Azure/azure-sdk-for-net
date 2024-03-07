@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<float> green = default;
-            Optional<float> yellow = default;
-            Optional<float> red = default;
+            string name = default;
+            float? green = default;
+            float? yellow = default;
+            float? red = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorMetricThresholds(name.Value, Optional.ToNullable(green), Optional.ToNullable(yellow), Optional.ToNullable(red), serializedAdditionalRawData);
+            return new SapLandscapeMonitorMetricThresholds(name, green, yellow, red, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorMetricThresholds>.Write(ModelReaderWriterOptions options)

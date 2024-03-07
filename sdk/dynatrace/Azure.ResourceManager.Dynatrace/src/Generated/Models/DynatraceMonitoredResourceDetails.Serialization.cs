@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<MetricsSendingStatus> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<LogsSendingStatus> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            ResourceIdentifier id = default;
+            MetricsSendingStatus? sendingMetrics = default;
+            string reasonForMetricsStatus = default;
+            LogsSendingStatus? sendingLogs = default;
+            string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitoredResourceDetails(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new DynatraceMonitoredResourceDetails(
+                id,
+                sendingMetrics,
+                reasonForMetricsStatus,
+                sendingLogs,
+                reasonForLogsStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitoredResourceDetails>.Write(ModelReaderWriterOptions options)

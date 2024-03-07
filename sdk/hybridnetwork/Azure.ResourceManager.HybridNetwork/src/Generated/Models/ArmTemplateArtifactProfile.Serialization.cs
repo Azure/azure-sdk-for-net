@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> templateName = default;
-            Optional<string> templateVersion = default;
+            string templateName = default;
+            string templateVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmTemplateArtifactProfile(templateName.Value, templateVersion.Value, serializedAdditionalRawData);
+            return new ArmTemplateArtifactProfile(templateName, templateVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmTemplateArtifactProfile>.Write(ModelReaderWriterOptions options)

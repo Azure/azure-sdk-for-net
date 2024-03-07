@@ -3,44 +3,71 @@
 
 namespace System.ClientModel.Primitives;
 
+/// <summary>
+/// Represents an HTTP request to be sent to a cloud service.
+/// The type of a <see cref="PipelineRequest"/> is specific to the type of the
+/// <see cref="PipelineTransport"/> used by the <see cref="ClientPipeline"/>
+/// that sends the request.  Because of this,
+/// <see cref="ClientPipeline.CreateMessage"/> is used to create an instance of
+/// <see cref="PipelineRequest"/> for a given pipeline.
+/// </summary>
 public abstract class PipelineRequest : IDisposable
 {
     /// <summary>
-    /// Gets or sets the request HTTP method.
+    /// Gets or sets the HTTP method used by the HTTP request.
     /// </summary>
     public string Method
     {
-        get => GetMethodCore();
-        set => SetMethodCore(value);
+        get => MethodCore;
+        set => MethodCore = value;
     }
 
-    protected abstract string GetMethodCore();
+    /// <summary>
+    /// Gets or sets the derived-type's value of the request's
+    /// <see cref="Method"/>.
+    /// </summary>
+    protected abstract string MethodCore { get; set; }
 
-    protected abstract void SetMethodCore(string method);
-
-    public Uri Uri
+    /// <summary>
+    /// Gets or sets the <see cref="System.Uri"/> used for the HTTP request.
+    /// </summary>
+    public Uri? Uri
     {
-        get => GetUriCore();
-        set => SetUriCore(value);
+        get => UriCore;
+        set => UriCore = value;
     }
 
-    protected abstract Uri GetUriCore();
+    /// <summary>
+    /// Gets or sets the derived-type's value of the request's <see cref="Uri"/>.
+    /// </summary>
+    protected abstract Uri? UriCore { get; set; }
 
-    protected abstract void SetUriCore(Uri uri);
+    /// <summary>
+    /// Gets the collection of HTTP request headers.
+    /// </summary>
+    public PipelineRequestHeaders Headers => HeadersCore;
 
-    public PipelineRequestHeaders Headers { get => GetHeadersCore(); }
+    /// <summary>
+    /// Gets or sets the derived-type's value of the request's
+    /// <see cref="Headers"/> collection.
+    /// </summary>
+    protected abstract PipelineRequestHeaders HeadersCore { get; }
 
-    protected abstract PipelineRequestHeaders GetHeadersCore();
-
+    /// <summary>
+    /// Gets or sets the contents of the HTTP request.
+    /// </summary>
     public BinaryContent? Content
     {
-        get => GetContentCore();
-        set => SetContentCore(value);
+        get => ContentCore;
+        set => ContentCore = value;
     }
 
-    protected abstract BinaryContent? GetContentCore();
+    /// <summary>
+    /// Gets or sets the derived-type's value of the request's
+    /// <see cref="Content"/>.
+    /// </summary>
+    protected abstract BinaryContent? ContentCore { get; set; }
 
-    protected abstract void SetContentCore(BinaryContent? content);
-
+    /// <inheritdoc/>
     public abstract void Dispose();
 }

@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<TimeSeriesDatabaseConnectionData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<TimeSeriesDatabaseConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<TimeSeriesDatabaseConnectionData> array = new List<TimeSeriesDatabaseConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(item));
+                        array.Add(TimeSeriesDatabaseConnectionData.DeserializeTimeSeriesDatabaseConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TimeSeriesDatabaseConnectionListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new TimeSeriesDatabaseConnectionListResult(nextLink, value ?? new ChangeTrackingList<TimeSeriesDatabaseConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeSeriesDatabaseConnectionListResult>.Write(ModelReaderWriterOptions options)

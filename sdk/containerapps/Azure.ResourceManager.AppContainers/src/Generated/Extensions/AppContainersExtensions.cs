@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppAuthConfigResource"/> object. </returns>
         public static ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppAuthConfigResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource"/> object. </returns>
         public static ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> object. </returns>
         public static ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentCertificateResource(id);
         }
@@ -106,7 +115,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> object. </returns>
         public static ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentCertificateResource(id);
         }
@@ -125,7 +137,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
         public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
         }
@@ -144,7 +159,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
         public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
         }
@@ -163,7 +181,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> object. </returns>
         public static ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentStorageResource(id);
         }
@@ -182,7 +203,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppResource"/> object. </returns>
         public static ContainerAppResource GetContainerAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppResource(id);
         }
@@ -201,7 +225,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
         public static ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppDetectorPropertyResource(id);
         }
@@ -220,7 +247,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
         public static ContainerAppRevisionResource GetContainerAppRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppRevisionResource(id);
         }
@@ -239,7 +269,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyRevisionResource"/> object. </returns>
         public static ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppDetectorPropertyRevisionResource(id);
         }
@@ -258,7 +291,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppReplicaResource"/> object. </returns>
         public static ContainerAppReplicaResource GetContainerAppReplicaResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppReplicaResource(id);
         }
@@ -277,7 +313,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorResource"/> object. </returns>
         public static ContainerAppDetectorResource GetContainerAppDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppDetectorResource(id);
         }
@@ -296,7 +335,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> object. </returns>
         public static ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDetectorResource(id);
         }
@@ -315,7 +357,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
         public static ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(id);
         }
@@ -334,7 +379,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource"/> object. </returns>
         public static ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentResource(id);
         }
@@ -353,7 +401,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
         public static ContainerAppJobResource GetContainerAppJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppJobResource(id);
         }
@@ -372,7 +423,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppJobExecutionResource"/> object. </returns>
         public static ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppJobExecutionResource(id);
         }
@@ -391,7 +445,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource"/> object. </returns>
         public static ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedCertificateResource(id);
         }
@@ -410,7 +467,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource"/> object. </returns>
         public static ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentStorageResource(id);
         }
@@ -429,7 +489,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppSourceControlResource"/> object. </returns>
         public static ContainerAppSourceControlResource GetContainerAppSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableAppContainersArmClient(client).GetContainerAppSourceControlResource(id);
         }
@@ -446,7 +509,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
         public static ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppConnectedEnvironments();
         }
@@ -484,7 +550,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppConnectedEnvironmentResource>> GetContainerAppConnectedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppConnectedEnvironmentAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -522,7 +591,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppConnectedEnvironment(connectedEnvironmentName, cancellationToken);
         }
@@ -539,7 +611,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
         public static ContainerAppCollection GetContainerApps(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerApps();
         }
@@ -577,7 +652,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppResource>> GetContainerAppAsync(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppAsync(containerAppName, cancellationToken).ConfigureAwait(false);
         }
@@ -615,7 +693,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppResource> GetContainerApp(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerApp(containerAppName, cancellationToken);
         }
@@ -632,7 +713,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
         public static ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppManagedEnvironments();
         }
@@ -670,7 +754,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppManagedEnvironmentAsync(environmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -708,7 +795,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppManagedEnvironment(environmentName, cancellationToken);
         }
@@ -725,7 +815,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
         public static ContainerAppJobCollection GetContainerAppJobs(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJobs();
         }
@@ -763,7 +856,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJobAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
@@ -801,7 +897,10 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppJobResource> GetContainerAppJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJob(jobName, cancellationToken);
         }
@@ -834,7 +933,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
         }
@@ -867,7 +969,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
         }
@@ -900,7 +1005,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppBillingMeter"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
         }
@@ -933,7 +1041,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppBillingMeter"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBillingMeters(location, cancellationToken);
         }
@@ -969,7 +1080,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
         }
@@ -1005,7 +1119,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
         }
@@ -1041,7 +1158,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppResource> GetContainerAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppsAsync(cancellationToken);
         }
@@ -1077,7 +1197,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppResource> GetContainerApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerApps(cancellationToken);
         }
@@ -1113,7 +1236,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
         }
@@ -1149,7 +1275,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppJobResource> GetContainerAppJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppJobs(cancellationToken);
         }
@@ -1185,7 +1314,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
         }
@@ -1221,7 +1353,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
         }

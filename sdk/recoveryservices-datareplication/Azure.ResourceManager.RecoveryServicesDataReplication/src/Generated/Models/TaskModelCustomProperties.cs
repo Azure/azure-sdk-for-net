@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="instanceType"/> is null. </exception>
         internal TaskModelCustomProperties(string instanceType)
         {
-            Argument.AssertNotNull(instanceType, nameof(instanceType));
+            if (instanceType == null)
+            {
+                throw new ArgumentNullException(nameof(instanceType));
+            }
 
             InstanceType = instanceType;
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LocationExpanded>> value = default;
+            IReadOnlyList<LocationExpanded> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<LocationExpanded> array = new List<LocationExpanded>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocationExpanded.DeserializeLocationExpanded(item));
+                        array.Add(LocationExpanded.DeserializeLocationExpanded(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new LocationListResult(value ?? new ChangeTrackingList<LocationExpanded>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocationListResult>.Write(ModelReaderWriterOptions options)

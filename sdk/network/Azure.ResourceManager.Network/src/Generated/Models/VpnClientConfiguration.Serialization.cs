@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -164,19 +165,19 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AddressSpace> vpnClientAddressPool = default;
-            Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
-            Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
-            Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
-            Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
-            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
-            Optional<string> radiusServerAddress = default;
-            Optional<string> radiusServerSecret = default;
-            Optional<IList<RadiusServer>> radiusServers = default;
-            Optional<string> aadTenant = default;
-            Optional<string> aadAudience = default;
-            Optional<string> aadIssuer = default;
-            Optional<IList<VngClientConnectionConfiguration>> vngClientConnectionConfigurations = default;
+            AddressSpace vpnClientAddressPool = default;
+            IList<VpnClientRootCertificate> vpnClientRootCertificates = default;
+            IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
+            IList<VpnClientProtocol> vpnClientProtocols = default;
+            IList<VpnAuthenticationType> vpnAuthenticationTypes = default;
+            IList<IPsecPolicy> vpnClientIPsecPolicies = default;
+            string radiusServerAddress = default;
+            string radiusServerSecret = default;
+            IList<RadiusServer> radiusServers = default;
+            string aadTenant = default;
+            string aadAudience = default;
+            string aadIssuer = default;
+            IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value);
+                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vpnClientRootCertificates"u8))
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnClientRootCertificate> array = new List<VpnClientRootCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnClientRootCertificate.DeserializeVpnClientRootCertificate(item));
+                        array.Add(VpnClientRootCertificate.DeserializeVpnClientRootCertificate(item, options));
                     }
                     vpnClientRootCertificates = array;
                     continue;
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnClientRevokedCertificate> array = new List<VpnClientRevokedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnClientRevokedCertificate.DeserializeVpnClientRevokedCertificate(item));
+                        array.Add(VpnClientRevokedCertificate.DeserializeVpnClientRevokedCertificate(item, options));
                     }
                     vpnClientRevokedCertificates = array;
                     continue;
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IPsecPolicy> array = new List<IPsecPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                        array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
                     vpnClientIPsecPolicies = array;
                     continue;
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<RadiusServer> array = new List<RadiusServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RadiusServer.DeserializeRadiusServer(item));
+                        array.Add(RadiusServer.DeserializeRadiusServer(item, options));
                     }
                     radiusServers = array;
                     continue;
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<VngClientConnectionConfiguration> array = new List<VngClientConnectionConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VngClientConnectionConfiguration.DeserializeVngClientConnectionConfiguration(item));
+                        array.Add(VngClientConnectionConfiguration.DeserializeVngClientConnectionConfiguration(item, options));
                     }
                     vngClientConnectionConfigurations = array;
                     continue;
@@ -319,7 +320,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value, Optional.ToList(vngClientConnectionConfigurations), serializedAdditionalRawData);
+            return new VpnClientConfiguration(
+                vpnClientAddressPool,
+                vpnClientRootCertificates ?? new ChangeTrackingList<VpnClientRootCertificate>(),
+                vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnClientRevokedCertificate>(),
+                vpnClientProtocols ?? new ChangeTrackingList<VpnClientProtocol>(),
+                vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
+                vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                radiusServerAddress,
+                radiusServerSecret,
+                radiusServers ?? new ChangeTrackingList<RadiusServer>(),
+                aadTenant,
+                aadAudience,
+                aadIssuer,
+                vngClientConnectionConfigurations ?? new ChangeTrackingList<VngClientConnectionConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConfiguration>.Write(ModelReaderWriterOptions options)

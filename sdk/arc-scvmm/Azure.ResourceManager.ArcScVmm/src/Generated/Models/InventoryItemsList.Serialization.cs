@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<InventoryItemData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<InventoryItemData> array = new List<InventoryItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InventoryItemData.DeserializeInventoryItemData(item));
+                        array.Add(InventoryItemData.DeserializeInventoryItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InventoryItemsList(nextLink.Value, value, serializedAdditionalRawData);
+            return new InventoryItemsList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InventoryItemsList>.Write(ModelReaderWriterOptions options)

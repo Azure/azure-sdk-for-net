@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -131,20 +132,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> parentName = default;
-            Optional<string> parentUniqueName = default;
-            Optional<string> serverName = default;
-            Optional<bool> isAutoProtectable = default;
-            Optional<bool> isAutoProtected = default;
-            Optional<int> subinquireditemcount = default;
-            Optional<int> subprotectableitemcount = default;
-            Optional<PreBackupValidation> prebackupvalidation = default;
-            Optional<bool> isProtectable = default;
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            string parentName = default;
+            string parentUniqueName = default;
+            string serverName = default;
+            bool? isAutoProtectable = default;
+            bool? isAutoProtected = default;
+            int? subinquireditemcount = default;
+            int? subprotectableitemcount = default;
+            PreBackupValidation prebackupvalidation = default;
+            bool? isProtectable = default;
+            string backupManagementType = default;
+            string workloadType = default;
             string protectableItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
+                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))
@@ -253,7 +254,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadSapHanaHsrProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, Optional.ToNullable(isProtectable));
+            return new VmWorkloadSapHanaHsrProtectableItem(
+                backupManagementType,
+                workloadType,
+                protectableItemType,
+                friendlyName,
+                protectionState,
+                serializedAdditionalRawData,
+                parentName,
+                parentUniqueName,
+                serverName,
+                isAutoProtectable,
+                isAutoProtected,
+                subinquireditemcount,
+                subprotectableitemcount,
+                prebackupvalidation,
+                isProtectable);
         }
 
         BinaryData IPersistableModel<VmWorkloadSapHanaHsrProtectableItem>.Write(ModelReaderWriterOptions options)

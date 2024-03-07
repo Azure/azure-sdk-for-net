@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EntityData>> value = default;
-            Optional<int> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EntityData> value = default;
+            int? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<EntityData> array = new List<EntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityData.DeserializeEntityData(item));
+                        array.Add(EntityData.DeserializeEntityData(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new EntityListResult(value ?? new ChangeTrackingList<EntityData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EntityListResult>.Write(ModelReaderWriterOptions options)

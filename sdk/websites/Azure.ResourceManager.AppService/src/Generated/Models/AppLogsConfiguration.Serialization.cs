@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> destination = default;
-            Optional<LogAnalyticsConfiguration> logAnalyticsConfiguration = default;
+            string destination = default;
+            LogAnalyticsConfiguration logAnalyticsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppLogsConfiguration(destination.Value, logAnalyticsConfiguration.Value, serializedAdditionalRawData);
+            return new AppLogsConfiguration(destination, logAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppLogsConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseIntegrationRuntimeEntityReferenceType> type = default;
-            Optional<string> referenceName = default;
+            SynapseIntegrationRuntimeEntityReferenceType? type = default;
+            string referenceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEntityReference(Optional.ToNullable(type), referenceName.Value, serializedAdditionalRawData);
+            return new SynapseEntityReference(type, referenceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEntityReference>.Write(ModelReaderWriterOptions options)

@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public OperationalInsightsDataSourceData(BinaryData properties, OperationalInsightsDataSourceKind kind)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Properties = properties;
             Kind = kind;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(document.RootElement, options);
+            return DeserializeMigrateSqlServerSqlDBSyncTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateSqlServerSqlDBSyncTaskOutput DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string resultType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMigrateSqlServerSqlDBSyncTaskOutput(id.Value, resultType, serializedAdditionalRawData);
+            return new UnknownMigrateSqlServerSqlDBSyncTaskOutput(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(document.RootElement, options);
+                        return DeserializeMigrateSqlServerSqlDBSyncTaskOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support '{options.Format}' format.");

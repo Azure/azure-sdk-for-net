@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobTargetType> type = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
+            JobTargetType? type = default;
+            string serverName = default;
+            string databaseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobExecutionTarget(Optional.ToNullable(type), serverName.Value, databaseName.Value, serializedAdditionalRawData);
+            return new JobExecutionTarget(type, serverName, databaseName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobExecutionTarget>.Write(ModelReaderWriterOptions options)

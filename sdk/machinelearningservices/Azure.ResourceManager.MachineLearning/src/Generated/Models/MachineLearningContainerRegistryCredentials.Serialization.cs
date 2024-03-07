@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<MachineLearningPasswordDetail>> passwords = default;
-            Optional<string> username = default;
+            AzureLocation? location = default;
+            IReadOnlyList<MachineLearningPasswordDetail> passwords = default;
+            string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningPasswordDetail> array = new List<MachineLearningPasswordDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item));
+                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item, options));
                     }
                     passwords = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningContainerRegistryCredentials(Optional.ToNullable(location), Optional.ToList(passwords), username.Value, serializedAdditionalRawData);
+            return new MachineLearningContainerRegistryCredentials(location, passwords ?? new ChangeTrackingList<MachineLearningPasswordDetail>(), username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

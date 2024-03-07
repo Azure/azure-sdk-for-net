@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> emailAddress = default;
-            Optional<string> id = default;
-            Optional<Uri> elasticCloudSsoDefaultUrl = default;
+            string emailAddress = default;
+            string id = default;
+            Uri elasticCloudSsoDefaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticCloudUser(emailAddress.Value, id.Value, elasticCloudSsoDefaultUrl.Value, serializedAdditionalRawData);
+            return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticCloudUser>.Write(ModelReaderWriterOptions options)

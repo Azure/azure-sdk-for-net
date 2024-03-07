@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -103,14 +104,14 @@ namespace Azure.ResourceManager.Monitor.Models
             DynamicThresholdOperator @operator = default;
             DynamicThresholdSensitivity alertSensitivity = default;
             DynamicThresholdFailingPeriods failingPeriods = default;
-            Optional<DateTimeOffset> ignoreDataBefore = default;
+            DateTimeOffset? ignoreDataBefore = default;
             CriterionType criterionType = default;
             string name = default;
             string metricName = default;
-            Optional<string> metricNamespace = default;
+            string metricNamespace = default;
             MetricCriteriaTimeAggregationType timeAggregation = default;
-            Optional<IList<MetricDimension>> dimensions = default;
-            Optional<bool> skipMetricValidation = default;
+            IList<MetricDimension> dimensions = default;
+            bool? skipMetricValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("failingPeriods"u8))
                 {
-                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value);
+                    failingPeriods = DynamicThresholdFailingPeriods.DeserializeDynamicThresholdFailingPeriods(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ignoreDataBefore"u8))
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -190,7 +191,19 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, Optional.ToList(dimensions), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, alertSensitivity, failingPeriods, Optional.ToNullable(ignoreDataBefore));
+            return new DynamicMetricCriteria(
+                criterionType,
+                name,
+                metricName,
+                metricNamespace,
+                timeAggregation,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                skipMetricValidation,
+                additionalProperties,
+                @operator,
+                alertSensitivity,
+                failingPeriods,
+                ignoreDataBefore);
         }
 
         BinaryData IPersistableModel<DynamicMetricCriteria>.Write(ModelReaderWriterOptions options)

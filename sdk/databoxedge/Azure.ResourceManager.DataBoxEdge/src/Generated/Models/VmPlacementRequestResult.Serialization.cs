@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IList<string>> vmSize = default;
-            Optional<bool> isFeasible = default;
-            Optional<string> messageCode = default;
-            Optional<string> message = default;
+            IList<string> vmSize = default;
+            bool? isFeasible = default;
+            string messageCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmPlacementRequestResult(Optional.ToList(vmSize), Optional.ToNullable(isFeasible), messageCode.Value, message.Value, serializedAdditionalRawData);
+            return new VmPlacementRequestResult(vmSize ?? new ChangeTrackingList<string>(), isFeasible, messageCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmPlacementRequestResult>.Write(ModelReaderWriterOptions options)

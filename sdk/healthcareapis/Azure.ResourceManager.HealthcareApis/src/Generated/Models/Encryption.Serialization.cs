@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<EncryptionCustomerManagedKeyEncryption> customerManagedKeyEncryption = default;
+            EncryptionCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = EncryptionCustomerManagedKeyEncryption.DeserializeEncryptionCustomerManagedKeyEncryption(property.Value);
+                    customerManagedKeyEncryption = EncryptionCustomerManagedKeyEncryption.DeserializeEncryptionCustomerManagedKeyEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Encryption(customerManagedKeyEncryption.Value, serializedAdditionalRawData);
+            return new Encryption(customerManagedKeyEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Encryption>.Write(ModelReaderWriterOptions options)

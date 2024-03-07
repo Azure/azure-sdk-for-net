@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> key = default;
+            string name = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServiceQueryKey(name.Value, key.Value, serializedAdditionalRawData);
+            return new SearchServiceQueryKey(name, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServiceQueryKey>.Write(ModelReaderWriterOptions options)

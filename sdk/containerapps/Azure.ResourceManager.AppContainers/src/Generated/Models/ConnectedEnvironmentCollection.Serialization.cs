@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerAppConnectedEnvironmentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerAppConnectedEnvironmentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppConnectedEnvironmentData> array = new List<ContainerAppConnectedEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(item));
+                        array.Add(ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedEnvironmentCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConnectedEnvironmentCollection(value ?? new ChangeTrackingList<ContainerAppConnectedEnvironmentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedEnvironmentCollection>.Write(ModelReaderWriterOptions options)

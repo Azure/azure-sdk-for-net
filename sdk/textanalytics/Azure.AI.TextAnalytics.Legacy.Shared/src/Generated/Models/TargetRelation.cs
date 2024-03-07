@@ -7,7 +7,6 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -20,7 +19,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>
         internal TargetRelation(TargetRelationType relationType, string @ref)
         {
-            Argument.AssertNotNull(@ref, nameof(@ref));
+            if (@ref == null)
+            {
+                throw new ArgumentNullException(nameof(@ref));
+            }
 
             RelationType = relationType;
             Ref = @ref;

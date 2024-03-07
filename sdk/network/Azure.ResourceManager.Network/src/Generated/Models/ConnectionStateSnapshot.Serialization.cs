@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkConnectionState> connectionState = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<EvaluationState> evaluationState = default;
-            Optional<long> avgLatencyInMs = default;
-            Optional<long> minLatencyInMs = default;
-            Optional<long> maxLatencyInMs = default;
-            Optional<long> probesSent = default;
-            Optional<long> probesFailed = default;
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            NetworkConnectionState? connectionState = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            EvaluationState? evaluationState = default;
+            long? avgLatencyInMs = default;
+            long? minLatencyInMs = default;
+            long? maxLatencyInMs = default;
+            long? probesSent = default;
+            long? probesFailed = default;
+            IReadOnlyList<ConnectivityHopInfo> hops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item, options));
                     }
                     hops = array;
                     continue;
@@ -234,7 +235,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops), serializedAdditionalRawData);
+            return new ConnectionStateSnapshot(
+                connectionState,
+                startTime,
+                endTime,
+                evaluationState,
+                avgLatencyInMs,
+                minLatencyInMs,
+                maxLatencyInMs,
+                probesSent,
+                probesFailed,
+                hops ?? new ChangeTrackingList<ConnectivityHopInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionStateSnapshot>.Write(ModelReaderWriterOptions options)

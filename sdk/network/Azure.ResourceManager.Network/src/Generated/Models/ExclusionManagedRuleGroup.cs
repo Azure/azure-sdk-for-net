@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ExclusionManagedRuleGroup(string ruleGroupName)
         {
-            Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
+            if (ruleGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(ruleGroupName));
+            }
 
             RuleGroupName = ruleGroupName;
             Rules = new ChangeTrackingList<ExclusionManagedRule>();

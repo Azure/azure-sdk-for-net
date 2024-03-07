@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> maxBatchInstancePercent = default;
-            Optional<int> maxUnhealthyInstancePercent = default;
-            Optional<int> maxUnhealthyUpgradedInstancePercent = default;
-            Optional<string> pauseTimeBetweenBatches = default;
-            Optional<bool> enableCrossZoneUpgrade = default;
-            Optional<bool> prioritizeUnhealthyInstances = default;
-            Optional<bool> rollbackFailedInstancesOnPolicyBreach = default;
-            Optional<bool> maxSurge = default;
+            int? maxBatchInstancePercent = default;
+            int? maxUnhealthyInstancePercent = default;
+            int? maxUnhealthyUpgradedInstancePercent = default;
+            string pauseTimeBetweenBatches = default;
+            bool? enableCrossZoneUpgrade = default;
+            bool? prioritizeUnhealthyInstances = default;
+            bool? rollbackFailedInstancesOnPolicyBreach = default;
+            bool? maxSurge = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +191,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Optional.ToNullable(maxSurge), serializedAdditionalRawData);
+            return new RollingUpgradePolicy(
+                maxBatchInstancePercent,
+                maxUnhealthyInstancePercent,
+                maxUnhealthyUpgradedInstancePercent,
+                pauseTimeBetweenBatches,
+                enableCrossZoneUpgrade,
+                prioritizeUnhealthyInstances,
+                rollbackFailedInstancesOnPolicyBreach,
+                maxSurge,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<Uri> gcmEndpoint = default;
-            Optional<string> googleApiKey = default;
+            Uri gcmEndpoint = default;
+            string googleApiKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubGcmCredential(gcmEndpoint.Value, googleApiKey.Value, serializedAdditionalRawData);
+            return new NotificationHubGcmCredential(gcmEndpoint, googleApiKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubGcmCredential>.Write(ModelReaderWriterOptions options)

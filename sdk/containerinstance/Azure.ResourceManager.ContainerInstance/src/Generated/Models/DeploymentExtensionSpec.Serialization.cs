@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<string> extensionType = default;
-            Optional<string> version = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
+            string extensionType = default;
+            string version = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentExtensionSpec(name, extensionType.Value, version.Value, settings.Value, protectedSettings.Value, serializedAdditionalRawData);
+            return new DeploymentExtensionSpec(
+                name,
+                extensionType,
+                version,
+                settings,
+                protectedSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentExtensionSpec>.Write(ModelReaderWriterOptions options)

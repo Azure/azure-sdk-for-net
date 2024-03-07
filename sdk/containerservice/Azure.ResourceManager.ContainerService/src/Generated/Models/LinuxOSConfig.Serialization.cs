@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<SysctlConfig> sysctls = default;
-            Optional<string> transparentHugePageEnabled = default;
-            Optional<string> transparentHugePageDefrag = default;
-            Optional<int> swapFileSizeMB = default;
+            SysctlConfig sysctls = default;
+            string transparentHugePageEnabled = default;
+            string transparentHugePageDefrag = default;
+            int? swapFileSizeMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value);
+                    sysctls = SysctlConfig.DeserializeSysctlConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transparentHugePageEnabled"u8))
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxOSConfig(sysctls.Value, transparentHugePageEnabled.Value, transparentHugePageDefrag.Value, Optional.ToNullable(swapFileSizeMB), serializedAdditionalRawData);
+            return new LinuxOSConfig(sysctls, transparentHugePageEnabled, transparentHugePageDefrag, swapFileSizeMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxOSConfig>.Write(ModelReaderWriterOptions options)

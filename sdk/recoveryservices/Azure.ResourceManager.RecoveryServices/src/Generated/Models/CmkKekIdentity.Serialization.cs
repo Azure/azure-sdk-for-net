@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<bool> useSystemAssignedIdentity = default;
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
+            bool? useSystemAssignedIdentity = default;
+            ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CmkKekIdentity(Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentity.Value, serializedAdditionalRawData);
+            return new CmkKekIdentity(useSystemAssignedIdentity, userAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CmkKekIdentity>.Write(ModelReaderWriterOptions options)

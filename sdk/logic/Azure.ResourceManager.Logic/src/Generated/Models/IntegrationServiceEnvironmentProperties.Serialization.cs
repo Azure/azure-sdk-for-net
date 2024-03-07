@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<string> integrationServiceEnvironmentId = default;
-            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
-            Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicWorkflowState? state = default;
+            string integrationServiceEnvironmentId = default;
+            FlowEndpointsConfiguration endpointsConfiguration = default;
+            IntegrationServiceNetworkConfiguration networkConfiguration = default;
+            IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value);
+                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value);
+                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionConfiguration"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value);
+                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentProperties(
+                provisioningState,
+                state,
+                integrationServiceEnvironmentId,
+                endpointsConfiguration,
+                networkConfiguration,
+                encryptionConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)

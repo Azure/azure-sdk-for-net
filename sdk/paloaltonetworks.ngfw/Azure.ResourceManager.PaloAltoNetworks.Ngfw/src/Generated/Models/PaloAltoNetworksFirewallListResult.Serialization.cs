@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             IReadOnlyList<PaloAltoNetworksFirewallData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<PaloAltoNetworksFirewallData> array = new List<PaloAltoNetworksFirewallData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(item));
+                        array.Add(PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaloAltoNetworksFirewallListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new PaloAltoNetworksFirewallListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaloAltoNetworksFirewallListResult>.Write(ModelReaderWriterOptions options)
