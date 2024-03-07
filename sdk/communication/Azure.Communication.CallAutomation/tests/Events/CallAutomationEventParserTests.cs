@@ -364,8 +364,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var callConnectionId = "callConnectionId";
             var serverCallId = "serverCallId";
             var correlationId = "correlationId";
-            var participant1 = new CallParticipant(new CommunicationUserIdentifier("8:acs:12345"), false);
-            var participant2 = new CallParticipant(new PhoneNumberIdentifier("+123456789"), false);
+            var participant1 = new CallParticipant(new CommunicationUserIdentifier("8:acs:12345"), false, false);
+            var participant2 = new CallParticipant(new PhoneNumberIdentifier("+123456789"), false, true);
             var participants = new CallParticipant[] { participant1, participant2 };
             var @event = CallAutomationModelFactory.ParticipantsUpdated(callConnectionId, serverCallId, correlationId, participants);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
@@ -385,8 +385,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(2, participantsUpdated.Participants.Count);
                 Assert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].Identifier.RawId);
                 Assert.IsFalse(participantsUpdated.Participants[0].IsMuted);
+                Assert.IsFalse(participantsUpdated.Participants[0].IsOnHold);
                 Assert.IsTrue(participantsUpdated.Participants[1].Identifier.RawId.EndsWith("123456789"));
                 Assert.IsFalse(participantsUpdated.Participants[1].IsMuted);
+                Assert.IsTrue(participantsUpdated.Participants[1].IsOnHold);
             }
             else
             {
@@ -934,6 +936,32 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", cancelAddParticipantFailed.ServerCallId);
                 Assert.AreEqual("invitationId", cancelAddParticipantFailed.InvitationId);
                 Assert.AreEqual(400, cancelAddParticipantFailed.ResultInformation?.Code);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void HoldFailedEventParsed_Test()
+        {
+            HoldFailed @event = CallAutomationModelFactory.HoldFailed(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 400, subCode: 8536, message: "Action failed, file could not be downloaded."));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.HoldFailed");
+            if (parsedEvent is HoldFailed holdFailed)
+            {
+                Assert.AreEqual("correlationId", holdFailed.CorrelationId);
+                Assert.AreEqual("serverCallId", holdFailed.ServerCallId);
+                Assert.AreEqual(400, holdFailed.ResultInformation?.Code);
+                Assert.AreEqual(MediaEventReasonCode.PlayDownloadFailed, holdFailed.ReasonCode);
+                Assert.AreEqual(8536, holdFailed.ReasonCode.GetReasonCodeValue());
             }
             else
             {
