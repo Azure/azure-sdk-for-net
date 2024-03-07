@@ -149,8 +149,8 @@ stages:
                   dependsOn: PublishPackage
 
                   pool:
-                    name: $(WINDOWSPOOL)
-                    image: $(WINDOWSVMIMAGE)
+                    name: azsdk-pool-mms-win-2022-general
+                    image: azsdk-pool-mms-win-2022-1espt
                     os: windows
 
                   strategy:
@@ -177,8 +177,8 @@ stages:
                   dependsOn: PublishPackage
 
                   pool:
-                    name: $(LINUXPOOL)
-                    image: $(LINUXVMIMAGE)
+                    name: azsdk-pool-mms-ubuntu-2004-general
+                    image: azsdk-pool-mms-ubuntu-2004-1espt
                     os: linux
 
                   strategy:
@@ -208,8 +208,8 @@ stages:
                   dependsOn: PublishPackage
 
                   pool:
-                    name: $(WINDOWSPOOL)
-                    image: $(WINDOWSVMIMAGE)
+                    name: azsdk-pool-mms-win-2022-general
+                    image: azsdk-pool-mms-win-2022-1espt
                     os: windows
 
                   strategy:
@@ -236,8 +236,8 @@ stages:
                   dependsOn: PublishPackage
 
                   pool:
-                    name: $(WINDOWSPOOL)
-                    image: $(WINDOWSVMIMAGE)
+                    name: azsdk-pool-mms-win-2022-general
+                    image: azsdk-pool-mms-win-2022-1espt
                     os: windows
 
                   strategy:
