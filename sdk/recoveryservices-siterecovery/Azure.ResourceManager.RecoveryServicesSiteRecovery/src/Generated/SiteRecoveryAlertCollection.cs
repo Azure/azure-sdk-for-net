@@ -89,18 +89,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryAlertResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string alertSettingName, SiteRecoveryAlertCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.CreateOrUpdate");
             scope.Start();
@@ -148,18 +138,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryAlertResource> CreateOrUpdate(WaitUntil waitUntil, string alertSettingName, SiteRecoveryAlertCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.CreateOrUpdate");
             scope.Start();
@@ -205,14 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryAlertResource>> GetAsync(string alertSettingName, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.Get");
             scope.Start();
@@ -257,14 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
         public virtual Response<SiteRecoveryAlertResource> Get(string alertSettingName, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.Get");
             scope.Start();
@@ -369,14 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertSettingName, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.Exists");
             scope.Start();
@@ -419,14 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string alertSettingName, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.Exists");
             scope.Start();
@@ -469,14 +421,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryAlertResource>> GetIfExistsAsync(string alertSettingName, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.GetIfExists");
             scope.Start();
@@ -521,14 +466,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="alertSettingName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryAlertResource> GetIfExists(string alertSettingName, CancellationToken cancellationToken = default)
         {
-            if (alertSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(alertSettingName));
-            }
-            if (alertSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(alertSettingName, nameof(alertSettingName));
 
             using var scope = _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics.CreateScope("SiteRecoveryAlertCollection.GetIfExists");
             scope.Start();

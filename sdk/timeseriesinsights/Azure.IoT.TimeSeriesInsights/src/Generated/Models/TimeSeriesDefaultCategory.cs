@@ -17,10 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> is null. </exception>
         public TimeSeriesDefaultCategory(string label)
         {
-            if (label == null)
-            {
-                throw new ArgumentNullException(nameof(label));
-            }
+            Argument.AssertNotNull(label, nameof(label));
 
             Label = label;
         }

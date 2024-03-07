@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Maps.Routing
+namespace Azure.Maps.Common
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

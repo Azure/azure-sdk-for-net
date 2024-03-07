@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementOpenIdConnectProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementOpenIdConnectProviderResource> CreateOrUpdate(WaitUntil waitUntil, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetAsync(string openId, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         public virtual Response<ApiManagementOpenIdConnectProviderResource> Get(string openId, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.Get");
             scope.Start();
@@ -370,14 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string openId, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.Exists");
             scope.Start();
@@ -420,14 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         public virtual Response<bool> Exists(string openId, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.Exists");
             scope.Start();
@@ -470,14 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementOpenIdConnectProviderResource>> GetIfExistsAsync(string openId, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.GetIfExists");
             scope.Start();
@@ -522,14 +467,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementOpenIdConnectProviderResource> GetIfExists(string openId, CancellationToken cancellationToken = default)
         {
-            if (openId == null)
-            {
-                throw new ArgumentNullException(nameof(openId));
-            }
-            if (openId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(openId));
-            }
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
             using var scope = _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics.CreateScope("ApiManagementOpenIdConnectProviderCollection.GetIfExists");
             scope.Start();

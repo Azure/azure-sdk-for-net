@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SapDatabaseInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseInstanceName, SapDatabaseInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SapDatabaseInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string databaseInstanceName, SapDatabaseInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
         public virtual async Task<Response<SapDatabaseInstanceResource>> GetAsync(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
         public virtual Response<SapDatabaseInstanceResource> Get(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SapDatabaseInstanceResource>> GetIfExistsAsync(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="databaseInstanceName"/> is null. </exception>
         public virtual NullableResponse<SapDatabaseInstanceResource> GetIfExists(string databaseInstanceName, CancellationToken cancellationToken = default)
         {
-            if (databaseInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseInstanceName));
-            }
-            if (databaseInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseInstanceName, nameof(databaseInstanceName));
 
             using var scope = _sapDatabaseInstanceSapDatabaseInstancesClientDiagnostics.CreateScope("SapDatabaseInstanceCollection.GetIfExists");
             scope.Start();

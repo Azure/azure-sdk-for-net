@@ -51,14 +51,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RadiologyInsightsClient(Uri endpoint, AzureKeyCredential credential, RadiologyInsightsClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new RadiologyInsightsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -77,10 +71,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
         public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, RadiologyInsightsData radiologyInsightsData, CancellationToken cancellationToken = default)
         {
-            if (radiologyInsightsData == null)
-            {
-                throw new ArgumentNullException(nameof(radiologyInsightsData));
-            }
+            Argument.AssertNotNull(radiologyInsightsData, nameof(radiologyInsightsData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = radiologyInsightsData.ToRequestContent();
@@ -97,10 +88,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,RadiologyInsightsData,CancellationToken)']/*" />
         public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, RadiologyInsightsData radiologyInsightsData, CancellationToken cancellationToken = default)
         {
-            if (radiologyInsightsData == null)
-            {
-                throw new ArgumentNullException(nameof(radiologyInsightsData));
-            }
+            Argument.AssertNotNull(radiologyInsightsData, nameof(radiologyInsightsData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = radiologyInsightsData.ToRequestContent();
@@ -132,10 +120,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> InferRadiologyInsightsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("RadiologyInsightsClient.InferRadiologyInsights");
             scope.Start();
@@ -175,10 +160,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> InferRadiologyInsights(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("RadiologyInsightsClient.InferRadiologyInsights");
             scope.Start();

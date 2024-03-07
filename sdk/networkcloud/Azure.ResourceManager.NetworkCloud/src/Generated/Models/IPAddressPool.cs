@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="addresses"/> or <paramref name="name"/> is null. </exception>
         public IPAddressPool(IEnumerable<string> addresses, string name)
         {
-            if (addresses == null)
-            {
-                throw new ArgumentNullException(nameof(addresses));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(addresses, nameof(addresses));
+            Argument.AssertNotNull(name, nameof(name));
 
             Addresses = addresses.ToList();
             Name = name;

@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="summaryName"/> is null. </exception>
         public virtual async Task<Response<SpringBootSiteSummaryResource>> GetAsync(string summaryName, CancellationToken cancellationToken = default)
         {
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var scope = _springBootSiteSummarySummariesClientDiagnostics.CreateScope("SpringBootSiteSummaryCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="summaryName"/> is null. </exception>
         public virtual Response<SpringBootSiteSummaryResource> Get(string summaryName, CancellationToken cancellationToken = default)
         {
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var scope = _springBootSiteSummarySummariesClientDiagnostics.CreateScope("SpringBootSiteSummaryCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="summaryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string summaryName, CancellationToken cancellationToken = default)
         {
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var scope = _springBootSiteSummarySummariesClientDiagnostics.CreateScope("SpringBootSiteSummaryCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="summaryName"/> is null. </exception>
         public virtual Response<bool> Exists(string summaryName, CancellationToken cancellationToken = default)
         {
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var scope = _springBootSiteSummarySummariesClientDiagnostics.CreateScope("SpringBootSiteSummaryCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="summaryName"/> is null. </exception>
         public virtual async Task<NullableResponse<SpringBootSiteSummaryResource>> GetIfExistsAsync(string summaryName, CancellationToken cancellationToken = default)
         {
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var scope = _springBootSiteSummarySummariesClientDiagnostics.CreateScope("SpringBootSiteSummaryCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="summaryName"/> is null. </exception>
         public virtual NullableResponse<SpringBootSiteSummaryResource> GetIfExists(string summaryName, CancellationToken cancellationToken = default)
         {
-            if (summaryName == null)
-            {
-                throw new ArgumentNullException(nameof(summaryName));
-            }
-            if (summaryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(summaryName));
-            }
+            Argument.AssertNotNullOrEmpty(summaryName, nameof(summaryName));
 
             using var scope = _springBootSiteSummarySummariesClientDiagnostics.CreateScope("SpringBootSiteSummaryCollection.GetIfExists");
             scope.Start();

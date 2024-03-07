@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vhub"/> is null. </exception>
         public FirewallVwanConfiguration(IPAddressSpaceInfo vhub)
         {
-            if (vhub == null)
-            {
-                throw new ArgumentNullException(nameof(vhub));
-            }
+            Argument.AssertNotNull(vhub, nameof(vhub));
 
             Vhub = vhub;
         }

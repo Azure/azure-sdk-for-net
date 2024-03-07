@@ -212,10 +212,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationAsync(ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClassificationsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServicesServiceClassification");
             scope.Start();
@@ -253,10 +250,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ServiceClassificationOutput> ClassifyServicesServiceClassification(ServiceClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClassificationsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServicesServiceClassification");
             scope.Start();
@@ -300,18 +294,8 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (problemServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(problemServiceName));
-            }
-            if (problemServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServiceProblem");
             scope.Start();
@@ -355,18 +339,8 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (problemServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(problemServiceName));
-            }
-            if (problemServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ProblemClassificationClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.ClassifyServiceProblem");
             scope.Start();
@@ -408,10 +382,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SubscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
             scope.Start();
@@ -453,10 +424,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SubscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
             scope.Start();
