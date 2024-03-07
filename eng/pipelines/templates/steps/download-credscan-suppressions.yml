@@ -1,3 +1,8 @@
+parameters:
+  - name: WorkingDirectory
+    type: string
+    default: $(Pipeline.Workspace)/azure-sdk-build-tools
+
 # 1es PT credscan step will fail if the suppression file path we use in other stages does not exist here.
 # Checking out the repo via sparse checkout changes the devops path structure so that can't be used instead.
 steps:
@@ -6,5 +11,5 @@ steps:
       New-Item -ItemType Directory -Force eng
       $req = Invoke-WebRequest https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/eng/CredScanSuppression.json
       $req.RawContent | Out-File eng/CredScanSuppression.json
-    workingDirectory: $(Pipeline.Workspace)/azure-sdk-build-tools
+    workingDirectory: ${{ parameters.WorkingDirectory }}
     displayName: Set credscan suppression file
