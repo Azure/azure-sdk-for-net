@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MoverResource>> UpdateAsync(WaitUntil waitUntil, MoverResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MoverResource> Update(WaitUntil waitUntil, MoverResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResource.Update");
             scope.Start();

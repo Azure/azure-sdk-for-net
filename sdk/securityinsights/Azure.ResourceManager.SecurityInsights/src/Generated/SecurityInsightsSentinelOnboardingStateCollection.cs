@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsSentinelOnboardingStateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sentinelOnboardingStateName, SecurityInsightsSentinelOnboardingStateData data, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsSentinelOnboardingStateResource> CreateOrUpdate(WaitUntil waitUntil, string sentinelOnboardingStateName, SecurityInsightsSentinelOnboardingStateData data, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsSentinelOnboardingStateResource>> GetAsync(string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
         public virtual Response<SecurityInsightsSentinelOnboardingStateResource> Get(string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
         public virtual Response<bool> Exists(string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsSentinelOnboardingStateResource>> GetIfExistsAsync(string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsSentinelOnboardingStateResource> GetIfExists(string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
-            if (sentinelOnboardingStateName == null)
-            {
-                throw new ArgumentNullException(nameof(sentinelOnboardingStateName));
-            }
-            if (sentinelOnboardingStateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sentinelOnboardingStateName));
-            }
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
 
             using var scope = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesClientDiagnostics.CreateScope("SecurityInsightsSentinelOnboardingStateCollection.GetIfExists");
             scope.Start();

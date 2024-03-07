@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="performShutdown"/> is null. </exception>
         public InMageRcmUnplannedFailoverContent(string performShutdown)
         {
-            if (performShutdown == null)
-            {
-                throw new ArgumentNullException(nameof(performShutdown));
-            }
+            Argument.AssertNotNull(performShutdown, nameof(performShutdown));
 
             PerformShutdown = performShutdown;
             InstanceType = "InMageRcm";
