@@ -1,3 +1,4 @@
+// <copyright file="AppServiceResourceDetector.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -69,7 +70,11 @@ internal sealed class AppServiceResourceDetector : IResourceDetector
         string? websiteResourceGroup = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceResourceGroupEnvVar);
         string websiteOwnerName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceOwnerNameEnvVar) ?? string.Empty;
 
+#if NET6_0_OR_GREATER
+        int idx = websiteOwnerName.IndexOf('+', StringComparison.Ordinal);
+#else
         int idx = websiteOwnerName.IndexOf("+", StringComparison.Ordinal);
+#endif
         string subscriptionId = idx > 0 ? websiteOwnerName.Substring(0, idx) : websiteOwnerName;
 
         if (string.IsNullOrEmpty(websiteResourceGroup) || string.IsNullOrEmpty(subscriptionId))
