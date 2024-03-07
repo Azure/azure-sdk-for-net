@@ -12,8 +12,5 @@ namespace Azure.Analytics.Purview.DataMap.Tests
         {
         }
         public Uri Endpoint => new(GetRecordedVariable("PURVIEW_ENDPOINT"));
-        public String clientId => GetRecordedVariable("PURVIEW_CLIENT_ID");
-        public String clientSecret => GetRecordedVariable("PURVIEW_CLIENT_SECRET", options => options.IsSecret());
-        public String tenantId => GetRecordedVariable("PURVIEW_TENANT_ID");
     }
 }
