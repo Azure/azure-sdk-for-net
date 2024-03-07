@@ -20,7 +20,7 @@ param serverEdition string
 param p string = 'name'
 
 
-resource postgreSqlFlexibleServer_mZ8PC2Gce 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview' = {
+resource postgreSqlFlexibleServer_mZ8PC2Gce 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: toLower(take(concat('postgres', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
@@ -41,7 +41,7 @@ resource postgreSqlFlexibleServer_mZ8PC2Gce 'Microsoft.DBforPostgreSQL/flexibleS
   }
 }
 
-resource postgreSqlFlexibleServerDatabase_GXcWWJhWh 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2023-03-01-preview' = {
+resource postgreSqlFlexibleServerDatabase_GXcWWJhWh 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2022-12-01' = {
   parent: postgreSqlFlexibleServer_mZ8PC2Gce
   name: 'db'
   properties: {

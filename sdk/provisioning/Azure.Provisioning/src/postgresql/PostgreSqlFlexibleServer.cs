@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql
     public class PostgreSqlFlexibleServer : Resource<PostgreSqlFlexibleServerData>
     {
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers";
-        private const string DefaultVersion = "2023-03-01-preview";
+        internal const string DefaultVersion = "2022-12-01";
         private static readonly Func<string, PostgreSqlFlexibleServerData> Empty = (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData();
 
         /// <summary>
