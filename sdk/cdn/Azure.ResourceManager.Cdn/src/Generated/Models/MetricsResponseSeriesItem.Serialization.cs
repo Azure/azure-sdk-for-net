@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string metric = default;
-            MetricsResponseSeriesItemUnit? unit = default;
+            MetricsSeriesUnit? unit = default;
             IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> groups = default;
             IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    unit = new MetricsResponseSeriesItemUnit(property.Value.GetString());
+                    unit = new MetricsSeriesUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("groups"u8))

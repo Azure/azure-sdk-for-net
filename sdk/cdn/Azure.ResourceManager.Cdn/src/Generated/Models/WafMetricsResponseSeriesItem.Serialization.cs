@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string metric = default;
-            WafMetricsResponseSeriesItemUnit? unit = default;
+            WafMetricsSeriesUnit? unit = default;
             IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups = default;
             IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    unit = new WafMetricsResponseSeriesItemUnit(property.Value.GetString());
+                    unit = new WafMetricsSeriesUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("groups"u8))

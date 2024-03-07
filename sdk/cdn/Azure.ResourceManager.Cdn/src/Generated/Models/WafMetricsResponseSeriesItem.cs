@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groups"></param>
         /// <param name="data"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WafMetricsResponseSeriesItem(string metric, WafMetricsResponseSeriesItemUnit? unit, IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WafMetricsResponseSeriesItem(string metric, WafMetricsSeriesUnit? unit, IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metric = metric;
             Unit = unit;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the metric. </summary>
         public string Metric { get; }
         /// <summary> Gets the unit. </summary>
-        public WafMetricsResponseSeriesItemUnit? Unit { get; }
+        public WafMetricsSeriesUnit? Unit { get; }
         /// <summary> Gets the groups. </summary>
         public IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> Groups { get; }
         /// <summary> Gets the data. </summary>
