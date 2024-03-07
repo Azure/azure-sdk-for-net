@@ -12,10 +12,10 @@ Azure.Data.Tables does not support session consistency.  If you use Azure.Data.T
 effectively experience eventual consistency.
 
 To achieve session consistency, other CosmosDB SDKs (including Microsoft.Azure.CosmosDB.Table) kept a cache of session tokens.  The result was a default behavior
-that provided "read your own writes" gauruntees for each SDK instance.  Azure.Data.Tables neither retrieves nor sends session tokens to the CosmosDB Table API
+that provided "read your own writes" guaruntees for each SDK instance.  Azure.Data.Tables neither retrieves nor sends session tokens to the CosmosDB Table API
 account.  The result is that Azure.Data.Tables SDK instances will experience eventual consistency.
 
-Options available to you if your app depends on "read your own writes" gauruntees include:
+Options available to you if your app depends on "read your own writes" guaruntees include:
 1. Update the CosmosDB Tables API account to use strong consistency.
 2. Update the logic in your app to handle eventually consistency.
 3. Migrate your app and CosmosDB account to use the latest SQL API.
