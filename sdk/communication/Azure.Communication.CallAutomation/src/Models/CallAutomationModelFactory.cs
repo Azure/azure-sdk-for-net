@@ -60,6 +60,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
+        /// <returns> A new <see cref="CallAutomation.CallParticipant"/> instance for mocking. </returns>
+        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default)
+        {
+            return CallParticipant(identifier, isMuted, default);
+        }
+
+        /// <summary> Initializes a new instance of CallParticipant. </summary>
+        /// <param name="identifier"> The communication identifier. </param>
+        /// <param name="isMuted"> Is participant muted. </param>
         /// <param name="isOnHold"> Is participant on hold. </param>
         /// <returns> A new <see cref="CallAutomation.CallParticipant"/> instance for mocking. </returns>
         public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default, bool isOnHold = default)
@@ -309,7 +318,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
         public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
     }
 }
