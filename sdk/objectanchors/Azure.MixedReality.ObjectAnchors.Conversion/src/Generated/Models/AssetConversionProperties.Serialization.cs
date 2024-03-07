@@ -17,22 +17,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConversionStatus.HasValue)
+            if (Optional.IsDefined(ConversionStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
             }
-            if (AssetFileTypeString != null)
+            if (Optional.IsDefined(AssetFileTypeString))
             {
                 writer.WritePropertyName("assetFileType"u8);
                 writer.WriteStringValue(AssetFileTypeString);
             }
-            if (InputAssetUriString != null)
+            if (Optional.IsDefined(InputAssetUriString))
             {
                 writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
-            if (ConversionConfiguration != null)
+            if (Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
                 writer.WriteObjectValue(ConversionConfiguration);

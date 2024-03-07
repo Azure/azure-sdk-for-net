@@ -15,15 +15,15 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerPolicyResultTotalSummary DeserializePersonalizerPolicyResultTotalSummary(JsonElement element)
         {
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<float> ipsEstimatorNumerator = default;
-            Optional<float> ipsEstimatorDenominator = default;
-            Optional<float> snipsEstimatorDenominator = default;
-            Optional<TimeSpan> aggregateTimeWindow = default;
-            Optional<float> nonZeroProbability = default;
-            Optional<float> sumOfSquares = default;
-            Optional<float> confidenceInterval = default;
-            Optional<float> averageReward = default;
+            DateTimeOffset? timeStamp = default;
+            float? ipsEstimatorNumerator = default;
+            float? ipsEstimatorDenominator = default;
+            float? snipsEstimatorDenominator = default;
+            TimeSpan? aggregateTimeWindow = default;
+            float? nonZeroProbability = default;
+            float? sumOfSquares = default;
+            float? confidenceInterval = default;
+            float? averageReward = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeStamp"))
@@ -117,7 +117,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerPolicyResultTotalSummary(Optional.ToNullable(timeStamp), Optional.ToNullable(ipsEstimatorNumerator), Optional.ToNullable(ipsEstimatorDenominator), Optional.ToNullable(snipsEstimatorDenominator), Optional.ToNullable(aggregateTimeWindow), Optional.ToNullable(nonZeroProbability), Optional.ToNullable(sumOfSquares), Optional.ToNullable(confidenceInterval), Optional.ToNullable(averageReward));
+            return new PersonalizerPolicyResultTotalSummary(timeStamp, ipsEstimatorNumerator, ipsEstimatorDenominator, snipsEstimatorDenominator, aggregateTimeWindow, nonZeroProbability, sumOfSquares, confidenceInterval, averageReward);
         }
     }
 }

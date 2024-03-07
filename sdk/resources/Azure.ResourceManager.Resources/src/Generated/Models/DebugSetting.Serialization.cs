@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (DetailLevel != null)
+            if (Optional.IsDefined(DetailLevel))
             {
                 writer.WritePropertyName("detailLevel"u8);
                 writer.WriteStringValue(DetailLevel);

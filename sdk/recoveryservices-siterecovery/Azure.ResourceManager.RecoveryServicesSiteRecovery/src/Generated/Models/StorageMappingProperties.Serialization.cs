@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TargetStorageClassificationId != null)
+            if (Optional.IsDefined(TargetStorageClassificationId))
             {
                 writer.WritePropertyName("targetStorageClassificationId"u8);
                 writer.WriteStringValue(TargetStorageClassificationId);

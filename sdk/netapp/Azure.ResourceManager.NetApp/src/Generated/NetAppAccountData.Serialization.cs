@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.NetApp
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (!(ActiveDirectories is ChangeTrackingList<NetAppAccountActiveDirectory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ActiveDirectories))
             {
                 writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && DisableShowmount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
                 if (DisableShowmount != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("disableShowmount");
                 }
             }
-            if (NfsV4IdDomain != null)
+            if (Optional.IsDefined(NfsV4IdDomain))
             {
                 if (NfsV4IdDomain != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("nfsV4IDDomain");
                 }
             }
-            if (options.Format != "W" && IsMultiAdEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsMultiAdEnabled))
             {
                 if (IsMultiAdEnabled != null)
                 {

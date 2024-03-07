@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (!(Contexts is ChangeTrackingList<SummaryContextInternal> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Contexts))
             {
                 writer.WritePropertyName("contexts"u8);
                 writer.WriteStartArray();

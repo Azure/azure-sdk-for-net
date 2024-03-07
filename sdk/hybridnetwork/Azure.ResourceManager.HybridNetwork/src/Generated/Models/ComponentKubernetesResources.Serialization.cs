@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(Deployments is ChangeTrackingList<KubernetesDeployment> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Deployments))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Pods is ChangeTrackingList<KubernetesPod> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Pods))
             {
                 writer.WritePropertyName("pods"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReplicaSets is ChangeTrackingList<KubernetesReplicaSet> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplicaSets))
             {
                 writer.WritePropertyName("replicaSets"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StatefulSets is ChangeTrackingList<KubernetesStatefulSet> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(StatefulSets))
             {
                 writer.WritePropertyName("statefulSets"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DaemonSets is ChangeTrackingList<KubernetesDaemonSet> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(DaemonSets))
             {
                 writer.WritePropertyName("daemonSets"u8);
                 writer.WriteStartArray();

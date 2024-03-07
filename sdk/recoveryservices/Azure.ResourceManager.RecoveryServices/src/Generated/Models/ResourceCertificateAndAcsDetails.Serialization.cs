@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -34,32 +35,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStringValue(GlobalAcsRPRealm);
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType);
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteBase64StringValue(Certificate, "D");
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (ResourceId.HasValue)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteNumberValue(ResourceId.Value);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
 #endif
             }
-            if (ValidStartOn.HasValue)
+            if (Optional.IsDefined(ValidStartOn))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidStartOn.Value, "O");
             }
-            if (ValidEndOn.HasValue)
+            if (Optional.IsDefined(ValidEndOn))
             {
                 writer.WritePropertyName("validTo"u8);
                 writer.WriteStringValue(ValidEndOn.Value, "O");

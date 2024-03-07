@@ -1,3 +1,4 @@
+// <copyright file="AzureVmMetaDataRequestor.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
@@ -22,13 +23,17 @@ internal static class AzureVmMetaDataRequestor
         httpClient.DefaultRequestHeaders.Add("Metadata", "True");
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
 #pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-        var res = httpClient.GetStringAsync(AzureVmMetadataEndpointURL).ConfigureAwait(false).GetAwaiter().GetResult();
+        var res = httpClient.GetStringAsync(new Uri(AzureVmMetadataEndpointURL)).ConfigureAwait(false).GetAwaiter().GetResult();
 #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
         if (res != null)
         {
+#if NET6_0_OR_GREATER
+            return JsonSerializer.Deserialize(res, SourceGenerationContext.Default.AzureVmMetadataResponse);
+#else
             return JsonSerializer.Deserialize<AzureVmMetadataResponse>(res);
+#endif
         }
 
         return null;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,64 +50,64 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SoftDeletePeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SoftDeletePeriod))
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
-            if (HotCachePeriod.HasValue)
+            if (Optional.IsDefined(HotCachePeriod))
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
-            if (options.Format != "W" && Statistics != null)
+            if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
-            if (options.Format != "W" && LeaderClusterResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
                 writer.WritePropertyName("leaderClusterResourceId"u8);
                 writer.WriteStringValue(LeaderClusterResourceId);
             }
-            if (options.Format != "W" && AttachedDatabaseConfigurationName != null)
+            if (options.Format != "W" && Optional.IsDefined(AttachedDatabaseConfigurationName))
             {
                 writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
                 writer.WriteStringValue(AttachedDatabaseConfigurationName);
             }
-            if (options.Format != "W" && PrincipalsModificationKind.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalsModificationKind))
             {
                 writer.WritePropertyName("principalsModificationKind"u8);
                 writer.WriteStringValue(PrincipalsModificationKind.Value.ToString());
             }
-            if (options.Format != "W" && TableLevelSharingProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
-            if (options.Format != "W" && OriginalDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(OriginalDatabaseName))
             {
                 writer.WritePropertyName("originalDatabaseName"u8);
                 writer.WriteStringValue(OriginalDatabaseName);
             }
-            if (options.Format != "W" && DatabaseShareOrigin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
                 writer.WritePropertyName("databaseShareOrigin"u8);
                 writer.WriteStringValue(DatabaseShareOrigin.Value.ToString());
             }
-            if (options.Format != "W" && SuspensionDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
                 writer.WriteObjectValue(SuspensionDetails);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(CategoryConfigurations is ChangeTrackingList<CategoryConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CategoryConfigurations))
             {
                 writer.WritePropertyName("categoryConfigurations"u8);
                 writer.WriteStartArray();
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BranchConfiguration != null)
+            if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);
             }
-            if (InheritFromParentState.HasValue)
+            if (Optional.IsDefined(InheritFromParentState))
             {
                 writer.WritePropertyName("inheritFromParentState"u8);
                 writer.WriteStringValue(InheritFromParentState.Value.ToString());

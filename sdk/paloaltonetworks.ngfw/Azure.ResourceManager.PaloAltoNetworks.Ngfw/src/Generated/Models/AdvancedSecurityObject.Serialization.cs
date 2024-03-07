@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (AdvSecurityObjectModelType != null)
+            if (Optional.IsDefined(AdvSecurityObjectModelType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AdvSecurityObjectModelType);

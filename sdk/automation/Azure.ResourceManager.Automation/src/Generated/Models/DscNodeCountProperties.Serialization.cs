@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (NameCount.HasValue)
+            if (Optional.IsDefined(NameCount))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(NameCount.Value);

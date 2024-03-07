@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastSyncResult.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncResult))
             {
                 writer.WritePropertyName("lastSyncResult"u8);
                 writer.WriteNumberValue(LastSyncResult.Value);
             }
-            if (options.Format != "W" && LastSyncTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncTimestamp))
             {
                 writer.WritePropertyName("lastSyncTimestamp"u8);
                 writer.WriteStringValue(LastSyncTimestamp.Value, "O");
             }
-            if (options.Format != "W" && LastSyncSuccessTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncSuccessTimestamp))
             {
                 writer.WritePropertyName("lastSyncSuccessTimestamp"u8);
                 writer.WriteStringValue(LastSyncSuccessTimestamp.Value, "O");
             }
-            if (options.Format != "W" && LastSyncPerItemErrorCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncPerItemErrorCount))
             {
                 writer.WritePropertyName("lastSyncPerItemErrorCount"u8);
                 writer.WriteNumberValue(LastSyncPerItemErrorCount.Value);
             }
-            if (options.Format != "W" && PersistentFilesNotSyncingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PersistentFilesNotSyncingCount))
             {
                 writer.WritePropertyName("persistentFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(PersistentFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && TransientFilesNotSyncingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransientFilesNotSyncingCount))
             {
                 writer.WritePropertyName("transientFilesNotSyncingCount"u8);
                 writer.WriteNumberValue(TransientFilesNotSyncingCount.Value);
             }
-            if (options.Format != "W" && !(FilesNotSyncingErrors is ChangeTrackingList<ServerEndpointFilesNotSyncingError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FilesNotSyncingErrors))
             {
                 writer.WritePropertyName("filesNotSyncingErrors"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastSyncMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncMode))
             {
                 writer.WritePropertyName("lastSyncMode"u8);
                 writer.WriteStringValue(LastSyncMode.Value.ToString());

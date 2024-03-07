@@ -31,17 +31,17 @@ namespace Azure.AI.Translation.Text
             writer.WriteStringValue(To);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Transliteration != null)
+            if (Optional.IsDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteObjectValue(Transliteration);
             }
-            if (Alignment != null)
+            if (Optional.IsDefined(Alignment))
             {
                 writer.WritePropertyName("alignment"u8);
                 writer.WriteObjectValue(Alignment);
             }
-            if (SentLen != null)
+            if (Optional.IsDefined(SentLen))
             {
                 writer.WritePropertyName("sentLen"u8);
                 writer.WriteObjectValue(SentLen);

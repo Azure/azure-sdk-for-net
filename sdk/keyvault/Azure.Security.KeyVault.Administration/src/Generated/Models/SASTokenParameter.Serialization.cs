@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -17,12 +18,12 @@ namespace Azure.Security.KeyVault.Administration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("storageResourceUri"u8);
             writer.WriteStringValue(StorageResourceUri);
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (UseManagedIdentity.HasValue)
+            if (Optional.IsDefined(UseManagedIdentity))
             {
                 writer.WritePropertyName("useManagedIdentity"u8);
                 writer.WriteBooleanValue(UseManagedIdentity.Value);

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -20,12 +21,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (RerankWithOriginalVectors.HasValue)
+            if (Optional.IsDefined(RerankWithOriginalVectors))
             {
                 writer.WritePropertyName("rerankWithOriginalVectors"u8);
                 writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
             }
-            if (DefaultOversampling.HasValue)
+            if (Optional.IsDefined(DefaultOversampling))
             {
                 if (DefaultOversampling != null)
                 {

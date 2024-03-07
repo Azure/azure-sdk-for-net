@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,62 +27,62 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VpnConnectionId != null)
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionId))
             {
                 writer.WritePropertyName("vpnConnectionId"u8);
                 writer.WriteStringValue(VpnConnectionId);
             }
-            if (options.Format != "W" && VpnConnectionDurationInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionDurationInSeconds))
             {
                 writer.WritePropertyName("vpnConnectionDuration"u8);
                 writer.WriteNumberValue(VpnConnectionDurationInSeconds.Value);
             }
-            if (options.Format != "W" && VpnConnectionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionOn))
             {
                 writer.WritePropertyName("vpnConnectionTime"u8);
                 writer.WriteStringValue(VpnConnectionOn.Value, "O");
             }
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && VpnUserName != null)
+            if (options.Format != "W" && Optional.IsDefined(VpnUserName))
             {
                 writer.WritePropertyName("vpnUserName"u8);
                 writer.WriteStringValue(VpnUserName);
             }
-            if (options.Format != "W" && MaxBandwidth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxBandwidth))
             {
                 writer.WritePropertyName("maxBandwidth"u8);
                 writer.WriteNumberValue(MaxBandwidth.Value);
             }
-            if (options.Format != "W" && EgressPacketsTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressPacketsTransferred))
             {
                 writer.WritePropertyName("egressPacketsTransferred"u8);
                 writer.WriteNumberValue(EgressPacketsTransferred.Value);
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && IngressPacketsTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressPacketsTransferred))
             {
                 writer.WritePropertyName("ingressPacketsTransferred"u8);
                 writer.WriteNumberValue(IngressPacketsTransferred.Value);
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && MaxPacketsPerSecond.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxPacketsPerSecond))
             {
                 writer.WritePropertyName("maxPacketsPerSecond"u8);
                 writer.WriteNumberValue(MaxPacketsPerSecond.Value);

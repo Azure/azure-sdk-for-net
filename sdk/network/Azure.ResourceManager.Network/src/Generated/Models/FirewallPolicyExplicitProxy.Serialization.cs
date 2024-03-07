@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (EnableExplicitProxy.HasValue)
+            if (Optional.IsDefined(EnableExplicitProxy))
             {
                 if (EnableExplicitProxy != null)
                 {
@@ -38,17 +39,17 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("enableExplicitProxy");
                 }
             }
-            if (HttpPort.HasValue)
+            if (Optional.IsDefined(HttpPort))
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (HttpsPort.HasValue)
+            if (Optional.IsDefined(HttpsPort))
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (EnablePacFile.HasValue)
+            if (Optional.IsDefined(EnablePacFile))
             {
                 if (EnablePacFile != null)
                 {
@@ -60,12 +61,12 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("enablePacFile");
                 }
             }
-            if (PacFilePort.HasValue)
+            if (Optional.IsDefined(PacFilePort))
             {
                 writer.WritePropertyName("pacFilePort"u8);
                 writer.WriteNumberValue(PacFilePort.Value);
             }
-            if (PacFile != null)
+            if (Optional.IsDefined(PacFile))
             {
                 writer.WritePropertyName("pacFile"u8);
                 writer.WriteStringValue(PacFile);

@@ -29,22 +29,22 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Example != null)
+            if (Optional.IsDefined(Example))
             {
                 writer.WritePropertyName("example"u8);
                 writer.WriteStringValue(Example);
             }
-            if (Items != null)
+            if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteObjectValue(Items);
             }
-            if (!(Properties is ChangeTrackingDictionary<string, DocumentFieldSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();

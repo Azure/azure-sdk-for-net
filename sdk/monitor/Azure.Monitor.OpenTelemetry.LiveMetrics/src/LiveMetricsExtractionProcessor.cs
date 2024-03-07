@@ -53,7 +53,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
                     foreach (ref readonly var tag in @event.EnumerateTagObjects())
                     {
-                        // TODO: see if these can be cached
                         if (tag.Value == null)
                         {
                             continue;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskSerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskSerialNumber))
             {
                 writer.WritePropertyName("diskSerialNumber"u8);
                 writer.WriteStringValue(DiskSerialNumber);
             }
-            if (options.Format != "W" && BitLockerKey != null)
+            if (options.Format != "W" && Optional.IsDefined(BitLockerKey))
             {
                 writer.WritePropertyName("bitLockerKey"u8);
                 writer.WriteStringValue(BitLockerKey);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(CountryCode);
             writer.WritePropertyName("phoneNumber"u8);
             writer.WriteStringValue(PhoneNumber);
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());

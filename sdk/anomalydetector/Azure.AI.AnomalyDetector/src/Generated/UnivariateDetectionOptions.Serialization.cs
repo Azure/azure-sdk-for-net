@@ -34,37 +34,37 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (CustomInterval.HasValue)
+            if (Optional.IsDefined(CustomInterval))
             {
                 writer.WritePropertyName("customInterval"u8);
                 writer.WriteNumberValue(CustomInterval.Value);
             }
-            if (Period.HasValue)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (MaxAnomalyRatio.HasValue)
+            if (Optional.IsDefined(MaxAnomalyRatio))
             {
                 writer.WritePropertyName("maxAnomalyRatio"u8);
                 writer.WriteNumberValue(MaxAnomalyRatio.Value);
             }
-            if (Sensitivity.HasValue)
+            if (Optional.IsDefined(Sensitivity))
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteNumberValue(Sensitivity.Value);
             }
-            if (ImputeMode.HasValue)
+            if (Optional.IsDefined(ImputeMode))
             {
                 writer.WritePropertyName("imputeMode"u8);
                 writer.WriteStringValue(ImputeMode.Value.ToString());
             }
-            if (ImputeFixedValue.HasValue)
+            if (Optional.IsDefined(ImputeFixedValue))
             {
                 writer.WritePropertyName("imputeFixedValue"u8);
                 writer.WriteNumberValue(ImputeFixedValue.Value);

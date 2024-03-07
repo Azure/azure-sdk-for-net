@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactStoreReference != null)
+            if (Optional.IsDefined(ArtifactStoreReference))
             {
                 writer.WritePropertyName("artifactStoreReference"u8);
                 JsonSerializer.Serialize(writer, ArtifactStoreReference);
             }
-            if (ArtifactName != null)
+            if (Optional.IsDefined(ArtifactName))
             {
                 writer.WritePropertyName("artifactName"u8);
                 writer.WriteStringValue(ArtifactName);
             }
-            if (ArtifactVersion != null)
+            if (Optional.IsDefined(ArtifactVersion))
             {
                 writer.WritePropertyName("artifactVersion"u8);
                 writer.WriteStringValue(ArtifactVersion);

@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (TopContributorCount.HasValue)
+            if (Optional.IsDefined(TopContributorCount))
             {
                 writer.WritePropertyName("topContributorCount"u8);
                 writer.WriteNumberValue(TopContributorCount.Value);

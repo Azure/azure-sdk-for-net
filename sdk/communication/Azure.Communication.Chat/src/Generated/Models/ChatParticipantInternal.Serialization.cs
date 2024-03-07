@@ -19,12 +19,12 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
             writer.WriteObjectValue(CommunicationIdentifier);
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ShareHistoryTime.HasValue)
+            if (Optional.IsDefined(ShareHistoryTime))
             {
                 writer.WritePropertyName("shareHistoryTime"u8);
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");

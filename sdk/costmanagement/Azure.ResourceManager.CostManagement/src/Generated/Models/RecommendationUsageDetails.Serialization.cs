@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (UsageGrain.HasValue)
+            if (Optional.IsDefined(UsageGrain))
             {
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain.Value.ToString());
             }
-            if (options.Format != "W" && !(Charges is ChangeTrackingList<decimal> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Charges))
             {
                 writer.WritePropertyName("charges"u8);
                 writer.WriteStartArray();

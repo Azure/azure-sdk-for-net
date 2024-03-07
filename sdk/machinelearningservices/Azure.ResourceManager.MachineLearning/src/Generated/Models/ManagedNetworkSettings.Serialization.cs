@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IsolationMode.HasValue)
+            if (Optional.IsDefined(IsolationMode))
             {
                 writer.WritePropertyName("isolationMode"u8);
                 writer.WriteStringValue(IsolationMode.Value.ToString());
             }
-            if (options.Format != "W" && NetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (!(OutboundRules is ChangeTrackingDictionary<string, MachineLearningOutboundRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundRules))
             {
                 if (OutboundRules != null)
                 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outboundRules");
                 }
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
