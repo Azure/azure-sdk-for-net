@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
         {
-            if (remoteVolumeResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(remoteVolumeResourceId));
-            }
+            Argument.AssertNotNull(remoteVolumeResourceId, nameof(remoteVolumeResourceId));
 
             RemoteVolumeResourceId = remoteVolumeResourceId;
         }

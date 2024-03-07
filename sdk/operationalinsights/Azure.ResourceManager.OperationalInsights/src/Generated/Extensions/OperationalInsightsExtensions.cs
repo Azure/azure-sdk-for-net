@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource"/> object. </returns>
         public static LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetLogAnalyticsQueryPackResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="LogAnalyticsQueryResource"/> object. </returns>
         public static LogAnalyticsQueryResource GetLogAnalyticsQueryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetLogAnalyticsQueryResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsDataExportResource"/> object. </returns>
         public static OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsDataExportResource(id);
         }
@@ -114,10 +105,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource"/> object. </returns>
         public static OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsDataSourceResource(id);
         }
@@ -136,10 +124,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource"/> object. </returns>
         public static OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsLinkedServiceResource(id);
         }
@@ -158,10 +143,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource"/> object. </returns>
         public static OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsLinkedStorageAccountsResource(id);
         }
@@ -180,10 +162,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="StorageInsightResource"/> object. </returns>
         public static StorageInsightResource GetStorageInsightResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetStorageInsightResource(id);
         }
@@ -202,10 +181,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource"/> object. </returns>
         public static OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsSavedSearchResource(id);
         }
@@ -224,10 +200,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsClusterResource"/> object. </returns>
         public static OperationalInsightsClusterResource GetOperationalInsightsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsClusterResource(id);
         }
@@ -246,10 +219,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource"/> object. </returns>
         public static OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsWorkspaceResource(id);
         }
@@ -268,10 +238,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsTableResource"/> object. </returns>
         public static OperationalInsightsTableResource GetOperationalInsightsTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsTableResource(id);
         }
@@ -288,10 +255,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of LogAnalyticsQueryPackResources and their operations over a LogAnalyticsQueryPackResource. </returns>
         public static LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPacks();
         }
@@ -329,10 +293,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static async Task<Response<LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(this ResourceGroupResource resourceGroupResource, string queryPackName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPackAsync(queryPackName, cancellationToken).ConfigureAwait(false);
         }
@@ -370,10 +331,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static Response<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(this ResourceGroupResource resourceGroupResource, string queryPackName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPack(queryPackName, cancellationToken);
         }
@@ -390,10 +348,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
         public static OperationalInsightsClusterCollection GetOperationalInsightsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsClusters();
         }
@@ -431,10 +386,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static async Task<Response<OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -472,10 +424,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static Response<OperationalInsightsClusterResource> GetOperationalInsightsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsCluster(clusterName, cancellationToken);
         }
@@ -492,10 +441,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
         public static OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspaces();
         }
@@ -533,10 +479,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static async Task<Response<OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -574,10 +517,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static Response<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspace(workspaceName, cancellationToken);
         }
@@ -613,10 +553,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPackAsync(data, cancellationToken).ConfigureAwait(false);
         }
@@ -652,10 +589,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="data"/> is null. </exception>
         public static Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPack(data, cancellationToken);
         }
@@ -687,10 +621,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
@@ -722,10 +653,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
         }
@@ -761,10 +689,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetLogAnalyticsQueryPacksAsync(cancellationToken);
         }
@@ -800,10 +725,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetLogAnalyticsQueryPacks(cancellationToken);
         }
@@ -839,10 +761,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsClustersAsync(cancellationToken);
         }
@@ -878,10 +797,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsClusters(cancellationToken);
         }
@@ -917,10 +833,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsWorkspacesAsync(cancellationToken);
         }
@@ -956,10 +869,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsWorkspaces(cancellationToken);
         }
@@ -991,10 +901,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
@@ -1026,10 +933,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
         }

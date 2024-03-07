@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SubnetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string subnetName, SubnetData data, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SubnetResource> CreateOrUpdate(WaitUntil waitUntil, string subnetName, SubnetData data, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual async Task<Response<SubnetResource>> GetAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<SubnetResource> Get(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual Response<bool> Exists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.Exists");
             scope.Start();
@@ -467,14 +419,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubnetResource>> GetIfExistsAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
         public virtual NullableResponse<SubnetResource> GetIfExists(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subnetName == null)
-            {
-                throw new ArgumentNullException(nameof(subnetName));
-            }
-            if (subnetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subnetName));
-            }
+            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetCollection.GetIfExists");
             scope.Start();

@@ -54,10 +54,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal ChatTokenLogProbabilityResult(string token, float logProbability, IEnumerable<int> utf8ByteValues, IEnumerable<ChatTokenLogProbabilityInfo> topLogProbabilityEntries)
         {
-            if (token == null)
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
+            Argument.AssertNotNull(token, nameof(token));
 
             Token = token;
             LogProbability = logProbability;

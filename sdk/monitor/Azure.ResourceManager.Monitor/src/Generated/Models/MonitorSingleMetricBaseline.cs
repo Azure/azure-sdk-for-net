@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -55,14 +56,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="baselines"/> is null. </exception>
         internal MonitorSingleMetricBaseline(string timespan, TimeSpan interval, IEnumerable<MonitorTimeSeriesBaseline> baselines)
         {
-            if (timespan == null)
-            {
-                throw new ArgumentNullException(nameof(timespan));
-            }
-            if (baselines == null)
-            {
-                throw new ArgumentNullException(nameof(baselines));
-            }
+            Argument.AssertNotNull(timespan, nameof(timespan));
+            Argument.AssertNotNull(baselines, nameof(baselines));
 
             Timespan = timespan;
             Interval = interval;
