@@ -94,15 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                 if (Response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    try
-                    {
-                        Response.Validate();
-                        Response.Invalidate();
-                    }
-                    catch (ValidationException exception)
-                    {
-                        throw new AuthenticationEventTriggerResponseValidationException(exception.Message);
-                    }
+                    Response.Validate();
                 }
             }
             catch (Exception ex)

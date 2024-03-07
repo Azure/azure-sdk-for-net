@@ -96,11 +96,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             Body = payload.ToString();
         }
 
-        /// <summary>Validates the current Json body payload against it's associated Json schema.</summary>
-        /// <exception cref="AggregateException">An aggregation of the errors within the Json if the payload fails the validation.</exception>
+        /// <summary>
+        /// Performs the validation and throws an exception if it fails.
+        /// </summary>
+        /// <exception cref="AuthenticationEventTriggerResponseValidationException">
+        /// The exception that is thrown when a validation exception is thrown
+        /// </exception>
         internal void Validate()
         {
-            Helpers.ValidateGraph(this);
+            try
+            {
+                Helpers.ValidateGraph(this);
+                Invalidate();
+            }
+            catch (ValidationException exception)
+            {
+                throw new AuthenticationEventTriggerResponseValidationException(exception.Message);
+            }
         }
     }
 }

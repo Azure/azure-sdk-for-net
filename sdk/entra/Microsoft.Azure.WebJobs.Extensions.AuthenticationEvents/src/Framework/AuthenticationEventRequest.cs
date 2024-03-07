@@ -42,15 +42,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 if (RequestStatus == RequestStatusType.Failed || RequestStatus == RequestStatusType.ValidationError)
                 {
-                    // Response.MarkAsFailed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage));
                     return await Failed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage)).ConfigureAwait(false);
                 }
                 else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
-                    // Set response as unauthorized when token is invalid
-                    Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
-                    Response.ReasonPhrase = string.Empty;
-                    Response.Body = string.Empty;
+                    Unauthorized();
                 }
             }
             catch (Exception ex)
@@ -64,8 +60,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>
         /// Sets the response statuscode, reason phrase and body when we want to return failed.
         /// </summary>
-        /// <param name="exception"></param>
-        /// <returns></returns>
+        /// <param name="exception">The exception that is thrown</param>
+        /// <returns>An authenticationeventresponse task</returns>
         public override Task<AuthenticationEventResponse> Failed(Exception exception)
         {
             if (Response == null)
@@ -77,9 +73,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 ex.ExceptionStatusCode
                 : System.Net.HttpStatusCode.InternalServerError;
             Response.ReasonPhrase = string.Empty;
-            Response.Body = Helpers.GetFailedRequestPayload(exception);
+            Response.Body = Helpers.GetFailedResponsePayload(exception);
 
             return Task.FromResult<AuthenticationEventResponse>(Response);
+        }
+
+        /// <summary>
+        /// Sets the response statuscode to unauthorized and the reasonphrase and body to empty.
+        /// </summary>
+        private void Unauthorized()
+        {
+            // Set response as unauthorized when token is invalid
+            Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+            Response.ReasonPhrase = string.Empty;
+            Response.Body = string.Empty;
         }
     }
 }
