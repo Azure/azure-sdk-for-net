@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Tags is ChangeTrackingDictionary<string, string> collection)
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
