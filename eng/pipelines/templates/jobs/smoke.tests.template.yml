@@ -11,6 +11,9 @@ parameters:
   - name: TimeoutInMinutes
     type: number
     default: 60
+  - name: DependsOn
+    type: string
+    default: ''
   - name: Matrix
     type: string
   - name: OSName
@@ -22,16 +25,15 @@ parameters:
   - name: CloudConfig
     type: object
     default: {}
-  - name: DependsOn
-    type: string
-    default: ''
 
 jobs:
   - job:
     displayName: Smoke Test
     timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
     ${{ if eq(parameters.Daily, false) }}:
-      dependsOn: smoke_test_eligibility
+      dependsOn:
+        - ${{ parameters.DependsOn }}
+        - smoke_test_eligibility
       condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]
