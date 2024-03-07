@@ -21,18 +21,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="keyPhrases"/> is null. </exception>
         public KeyPhraseResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<string> keyPhrases) : base(id, warnings, keyPhrases)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (keyPhrases == null)
-            {
-                throw new ArgumentNullException(nameof(keyPhrases));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(keyPhrases, nameof(keyPhrases));
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyPhraseResultDocumentsItem"/>. </summary>

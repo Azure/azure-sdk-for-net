@@ -79,26 +79,11 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="normalizedTarget"/>, <paramref name="displayTarget"/>, <paramref name="posTag"/>, <paramref name="prefixWord"/> or <paramref name="backTranslations"/> is null. </exception>
         internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IEnumerable<BackTranslation> backTranslations)
         {
-            if (normalizedTarget == null)
-            {
-                throw new ArgumentNullException(nameof(normalizedTarget));
-            }
-            if (displayTarget == null)
-            {
-                throw new ArgumentNullException(nameof(displayTarget));
-            }
-            if (posTag == null)
-            {
-                throw new ArgumentNullException(nameof(posTag));
-            }
-            if (prefixWord == null)
-            {
-                throw new ArgumentNullException(nameof(prefixWord));
-            }
-            if (backTranslations == null)
-            {
-                throw new ArgumentNullException(nameof(backTranslations));
-            }
+            Argument.AssertNotNull(normalizedTarget, nameof(normalizedTarget));
+            Argument.AssertNotNull(displayTarget, nameof(displayTarget));
+            Argument.AssertNotNull(posTag, nameof(posTag));
+            Argument.AssertNotNull(prefixWord, nameof(prefixWord));
+            Argument.AssertNotNull(backTranslations, nameof(backTranslations));
 
             NormalizedTarget = normalizedTarget;
             DisplayTarget = displayTarget;
