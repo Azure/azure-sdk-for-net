@@ -50,7 +50,7 @@ namespace Azure.Provisioning.PostgreSql
             string? availabilityZone = default,
             ResourceGroup? parent = default,
             string name = "postgres",
-            string version = "2020-06-01",
+            string version = "2021-06-01",
             AzureLocation? location = default)
         : this(scope, parent, name, version, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
                 name: name,
