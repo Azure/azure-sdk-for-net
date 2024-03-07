@@ -267,10 +267,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureDevOpsProjectResource>> UpdateAsync(WaitUntil waitUntil, AzureDevOpsProjectData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsProjectClientDiagnostics.CreateScope("AzureDevOpsProjectResource.Update");
             scope.Start();
@@ -316,10 +313,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureDevOpsProjectResource> Update(WaitUntil waitUntil, AzureDevOpsProjectData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsProjectClientDiagnostics.CreateScope("AzureDevOpsProjectResource.Update");
             scope.Start();

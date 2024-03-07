@@ -84,18 +84,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -144,18 +134,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +181,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<Response<KustoDatabaseResource>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Get");
             scope.Start();
@@ -253,14 +226,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<KustoDatabaseResource> Get(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Get");
             scope.Start();
@@ -305,14 +271,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Exists");
             scope.Start();
@@ -355,14 +314,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Exists");
             scope.Start();
@@ -405,14 +357,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<NullableResponse<KustoDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
             scope.Start();
@@ -457,14 +402,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual NullableResponse<KustoDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
             scope.Start();

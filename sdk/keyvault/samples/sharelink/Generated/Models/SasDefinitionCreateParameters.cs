@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="templateUri"/> or <paramref name="validityPeriod"/> is null. </exception>
         public SasDefinitionCreateParameters(string templateUri, SasTokenType sasType, string validityPeriod)
         {
-            if (templateUri == null)
-            {
-                throw new ArgumentNullException(nameof(templateUri));
-            }
-            if (validityPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(validityPeriod));
-            }
+            Argument.AssertNotNull(templateUri, nameof(templateUri));
+            Argument.AssertNotNull(validityPeriod, nameof(validityPeriod));
 
             TemplateUri = templateUri;
             SasType = sasType;

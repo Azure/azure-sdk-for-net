@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -55,10 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileNameTemplate"/> is null. </exception>
         public AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName)
         {
-            if (fileNameTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(fileNameTemplate));
-            }
+            Argument.AssertNotNull(fileNameTemplate, nameof(fileNameTemplate));
 
             MessageContentType = messageContentType;
             TransmitFileNameInMimeHeader = transmitFileNameInMimeHeader;

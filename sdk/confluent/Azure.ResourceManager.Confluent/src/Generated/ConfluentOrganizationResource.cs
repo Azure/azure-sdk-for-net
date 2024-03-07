@@ -287,10 +287,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> UpdateAsync(ConfluentOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.Update");
             scope.Start();
@@ -332,10 +329,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> Update(ConfluentOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.Update");
             scope.Start();
@@ -442,14 +436,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         public virtual async Task<Response<SCEnvironmentRecord>> GetEnvironmentAsync(string environmentId, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironment");
             scope.Start();
@@ -492,14 +479,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         public virtual Response<SCEnvironmentRecord> GetEnvironment(string environmentId, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironment");
             scope.Start();
@@ -545,14 +525,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="SCClusterRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SCClusterRecord> GetClustersAsync(string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
@@ -589,14 +562,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="SCClusterRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SCClusterRecord> GetClusters(string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
@@ -633,14 +599,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="SchemaRegistryClusterRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SchemaRegistryClusterRecord> GetSchemaRegistryClustersAsync(string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
@@ -677,14 +636,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="SchemaRegistryClusterRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SchemaRegistryClusterRecord> GetSchemaRegistryClusters(string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
@@ -717,10 +669,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ConfluentRegionListResult>> GetRegionsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRegions");
             scope.Start();
@@ -762,10 +711,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ConfluentRegionListResult> GetRegions(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetRegions");
             scope.Start();
@@ -810,26 +756,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ConfluentApiKeyRecord>> CreateApiKeyAsync(string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateApiKey");
             scope.Start();
@@ -874,26 +803,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<ConfluentApiKeyRecord> CreateApiKey(string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateApiKey");
             scope.Start();
@@ -936,14 +848,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
         public virtual async Task<Response> DeleteClusterApiKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterApiKey");
             scope.Start();
@@ -986,14 +891,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
         public virtual Response DeleteClusterApiKey(string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterApiKey");
             scope.Start();
@@ -1036,14 +934,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
         public virtual async Task<Response<ConfluentApiKeyRecord>> GetClusterApiKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterApiKey");
             scope.Start();
@@ -1086,14 +977,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
         public virtual Response<ConfluentApiKeyRecord> GetClusterApiKey(string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterApiKey");
             scope.Start();
@@ -1137,22 +1021,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
         public virtual async Task<Response<SchemaRegistryClusterRecord>> GetSchemaRegistryClusterAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetSchemaRegistryCluster");
             scope.Start();
@@ -1196,22 +1066,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
         public virtual Response<SchemaRegistryClusterRecord> GetSchemaRegistryCluster(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetSchemaRegistryCluster");
             scope.Start();
@@ -1255,22 +1111,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
         public virtual async Task<Response<SCClusterRecord>> GetClusterAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetCluster");
             scope.Start();
@@ -1314,22 +1156,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
         public virtual Response<SCClusterRecord> GetCluster(string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetCluster");
             scope.Start();
@@ -1367,10 +1195,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessUserListResult>> GetAccessUsersAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessUsers");
             scope.Start();
@@ -1408,10 +1233,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessUserListResult> GetAccessUsers(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessUsers");
             scope.Start();
@@ -1449,10 +1271,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessServiceAccountListResult>> GetAccessServiceAccountsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessServiceAccounts");
             scope.Start();
@@ -1490,10 +1309,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessServiceAccountListResult> GetAccessServiceAccounts(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessServiceAccounts");
             scope.Start();
@@ -1531,10 +1347,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessInvitationListResult>> GetAccessInvitationsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessInvitations");
             scope.Start();
@@ -1572,10 +1385,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessInvitationListResult> GetAccessInvitations(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessInvitations");
             scope.Start();
@@ -1613,10 +1423,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessInvitationRecord>> InviteUserAsync(AccessInvitationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.InviteUser");
             scope.Start();
@@ -1654,10 +1461,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessInvitationRecord> InviteUser(AccessInvitationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.InviteUser");
             scope.Start();
@@ -1695,10 +1499,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessEnvironmentListResult>> GetAccessEnvironmentsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessEnvironments");
             scope.Start();
@@ -1736,10 +1537,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessEnvironmentListResult> GetAccessEnvironments(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessEnvironments");
             scope.Start();
@@ -1777,10 +1575,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessClusterListResult>> GetAccessClustersAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessClusters");
             scope.Start();
@@ -1818,10 +1613,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessClusterListResult> GetAccessClusters(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessClusters");
             scope.Start();
@@ -1859,10 +1651,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessRoleBindingListResult>> GetAccessRoleBindingsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindings");
             scope.Start();
@@ -1900,10 +1689,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessRoleBindingListResult> GetAccessRoleBindings(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindings");
             scope.Start();
@@ -1941,10 +1727,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessRoleBindingRecord>> CreateAccessRoleBindingAsync(AccessRoleBindingCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateAccessRoleBinding");
             scope.Start();
@@ -1982,10 +1765,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessRoleBindingRecord> CreateAccessRoleBinding(AccessRoleBindingCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.CreateAccessRoleBinding");
             scope.Start();
@@ -2024,14 +1804,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="roleBindingId"/> is null. </exception>
         public virtual async Task<Response> DeleteAccessRoleBindingAsync(string roleBindingId, CancellationToken cancellationToken = default)
         {
-            if (roleBindingId == null)
-            {
-                throw new ArgumentNullException(nameof(roleBindingId));
-            }
-            if (roleBindingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleBindingId));
-            }
+            Argument.AssertNotNullOrEmpty(roleBindingId, nameof(roleBindingId));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteAccessRoleBinding");
             scope.Start();
@@ -2070,14 +1843,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="roleBindingId"/> is null. </exception>
         public virtual Response DeleteAccessRoleBinding(string roleBindingId, CancellationToken cancellationToken = default)
         {
-            if (roleBindingId == null)
-            {
-                throw new ArgumentNullException(nameof(roleBindingId));
-            }
-            if (roleBindingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleBindingId));
-            }
+            Argument.AssertNotNullOrEmpty(roleBindingId, nameof(roleBindingId));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteAccessRoleBinding");
             scope.Start();
@@ -2115,10 +1881,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccessRoleBindingNameListResult>> GetAccessRoleBindingNamesAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindingNames");
             scope.Start();
@@ -2156,10 +1919,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccessRoleBindingNameListResult> GetAccessRoleBindingNames(AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _accessClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessRoleBindingNames");
             scope.Start();
@@ -2202,14 +1962,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.AddTag");
             scope.Start();
@@ -2270,14 +2024,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.AddTag");
             scope.Start();
@@ -2337,10 +2085,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.SetTags");
             scope.Start();
@@ -2397,10 +2142,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.SetTags");
             scope.Start();
@@ -2457,10 +2199,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.RemoveTag");
             scope.Start();
@@ -2520,10 +2259,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.RemoveTag");
             scope.Start();

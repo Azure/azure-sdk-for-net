@@ -54,10 +54,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         internal AzureChatExtensionDataSourceResponseCitation(string content)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
         }

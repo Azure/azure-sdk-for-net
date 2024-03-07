@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePropertyName"/> or <paramref name="targetPropertyName"/> is null. </exception>
         public ParticipantPropertyReference(string sourcePropertyName, string targetPropertyName)
         {
-            if (sourcePropertyName == null)
-            {
-                throw new ArgumentNullException(nameof(sourcePropertyName));
-            }
-            if (targetPropertyName == null)
-            {
-                throw new ArgumentNullException(nameof(targetPropertyName));
-            }
+            Argument.AssertNotNull(sourcePropertyName, nameof(sourcePropertyName));
+            Argument.AssertNotNull(targetPropertyName, nameof(targetPropertyName));
 
             SourcePropertyName = sourcePropertyName;
             TargetPropertyName = targetPropertyName;

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsDataConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataConnectorId, SecurityInsightsDataConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsDataConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string dataConnectorId, SecurityInsightsDataConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsDataConnectorResource>> GetAsync(string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
         public virtual Response<SecurityInsightsDataConnectorResource> Get(string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
         public virtual Response<bool> Exists(string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsDataConnectorResource>> GetIfExistsAsync(string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsDataConnectorResource> GetIfExists(string dataConnectorId, CancellationToken cancellationToken = default)
         {
-            if (dataConnectorId == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectorId));
-            }
-            if (dataConnectorId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectorId));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorCollection.GetIfExists");
             scope.Start();

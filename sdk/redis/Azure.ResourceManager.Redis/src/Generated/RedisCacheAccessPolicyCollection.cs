@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisCacheAccessPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accessPolicyName, RedisCacheAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RedisCacheAccessPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string accessPolicyName, RedisCacheAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public virtual async Task<Response<RedisCacheAccessPolicyResource>> GetAsync(string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public virtual Response<RedisCacheAccessPolicyResource> Get(string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<RedisCacheAccessPolicyResource>> GetIfExistsAsync(string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public virtual NullableResponse<RedisCacheAccessPolicyResource> GetIfExists(string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var scope = _redisCacheAccessPolicyAccessPolicyClientDiagnostics.CreateScope("RedisCacheAccessPolicyCollection.GetIfExists");
             scope.Start();

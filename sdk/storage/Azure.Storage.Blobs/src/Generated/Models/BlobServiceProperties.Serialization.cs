@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -18,33 +18,33 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Optional.IsDefined(Logging))
+            if (Common.Optional.IsDefined(Logging))
             {
                 writer.WriteObjectValue(Logging, "Logging");
             }
-            if (Optional.IsDefined(HourMetrics))
+            if (Common.Optional.IsDefined(HourMetrics))
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (Optional.IsDefined(MinuteMetrics))
+            if (Common.Optional.IsDefined(MinuteMetrics))
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (Optional.IsDefined(DefaultServiceVersion))
+            if (Common.Optional.IsDefined(DefaultServiceVersion))
             {
                 writer.WriteStartElement("DefaultServiceVersion");
                 writer.WriteValue(DefaultServiceVersion);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
+            if (Common.Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WriteObjectValue(DeleteRetentionPolicy, "DeleteRetentionPolicy");
             }
-            if (Optional.IsDefined(StaticWebsite))
+            if (Common.Optional.IsDefined(StaticWebsite))
             {
                 writer.WriteObjectValue(StaticWebsite, "StaticWebsite");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Common.Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

@@ -486,22 +486,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public virtual async Task<Response> DeletePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.DeletePredefinedTagValue");
             scope.Start();
@@ -541,22 +527,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public virtual Response DeletePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.DeletePredefinedTagValue");
             scope.Start();
@@ -596,22 +568,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public virtual async Task<Response<PredefinedTagValue>> CreateOrUpdatePredefinedTagValueAsync(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.CreateOrUpdatePredefinedTagValue");
             scope.Start();
@@ -651,22 +609,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> or <paramref name="tagValue"/> is null. </exception>
         public virtual Response<PredefinedTagValue> CreateOrUpdatePredefinedTagValue(string tagName, string tagValue, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
-            if (tagValue == null)
-            {
-                throw new ArgumentNullException(nameof(tagValue));
-            }
-            if (tagValue.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagValue));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
+            Argument.AssertNotNullOrEmpty(tagValue, nameof(tagValue));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.CreateOrUpdatePredefinedTagValue");
             scope.Start();
@@ -705,14 +649,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public virtual async Task<Response<PredefinedTag>> CreateOrUpdatePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.CreateOrUpdatePredefinedTag");
             scope.Start();
@@ -751,14 +688,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public virtual Response<PredefinedTag> CreateOrUpdatePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.CreateOrUpdatePredefinedTag");
             scope.Start();
@@ -797,14 +727,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public virtual async Task<Response> DeletePredefinedTagAsync(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.DeletePredefinedTag");
             scope.Start();
@@ -843,14 +766,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public virtual Response DeletePredefinedTag(string tagName, CancellationToken cancellationToken = default)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
-            if (tagName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tagName));
-            }
+            Argument.AssertNotNullOrEmpty(tagName, nameof(tagName));
 
             using var scope = _subscriptionTagsClientDiagnostics.CreateScope("SubscriptionResource.DeletePredefinedTag");
             scope.Start();

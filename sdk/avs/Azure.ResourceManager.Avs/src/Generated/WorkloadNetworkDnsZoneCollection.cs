@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkDnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkDnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string dnsZoneId, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkDnsZoneResource>> GetAsync(string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         public virtual Response<WorkloadNetworkDnsZoneResource> Get(string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         public virtual Response<bool> Exists(string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkDnsZoneResource>> GetIfExistsAsync(string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkDnsZoneResource> GetIfExists(string dnsZoneId, CancellationToken cancellationToken = default)
         {
-            if (dnsZoneId == null)
-            {
-                throw new ArgumentNullException(nameof(dnsZoneId));
-            }
-            if (dnsZoneId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsZoneId));
-            }
+            Argument.AssertNotNullOrEmpty(dnsZoneId, nameof(dnsZoneId));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneCollection.GetIfExists");
             scope.Start();

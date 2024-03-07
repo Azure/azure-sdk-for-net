@@ -69,26 +69,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceProblemClassificationListResult>> ClassifyProblemsAsync(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (problemServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(problemServiceName));
-            }
-            if (problemServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,26 +98,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceProblemClassificationListResult> ClassifyProblems(string subscriptionId, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (problemServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(problemServiceName));
-            }
-            if (problemServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateClassifyProblemsRequest(subscriptionId, problemServiceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -176,14 +142,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProblemClassificationsListResult>> ListAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateListRequest(serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -208,14 +167,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProblemClassificationsListResult> List(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateListRequest(serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -259,22 +211,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProblemClassificationData>> GetAsync(string serviceName, string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (problemClassificationName == null)
-            {
-                throw new ArgumentNullException(nameof(problemClassificationName));
-            }
-            if (problemClassificationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
             using var message = CreateGetRequest(serviceName, problemClassificationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -302,22 +240,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> or <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProblemClassificationData> Get(string serviceName, string problemClassificationName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (problemClassificationName == null)
-            {
-                throw new ArgumentNullException(nameof(problemClassificationName));
-            }
-            if (problemClassificationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemClassificationName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
             using var message = CreateGetRequest(serviceName, problemClassificationName);
             _pipeline.Send(message, cancellationToken);

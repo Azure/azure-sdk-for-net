@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowTriggerHistoryResource>> GetAsync(string historyName, CancellationToken cancellationToken = default)
         {
-            if (historyName == null)
-            {
-                throw new ArgumentNullException(nameof(historyName));
-            }
-            if (historyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(historyName));
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
             using var scope = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics.CreateScope("LogicWorkflowTriggerHistoryCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
         public virtual Response<LogicWorkflowTriggerHistoryResource> Get(string historyName, CancellationToken cancellationToken = default)
         {
-            if (historyName == null)
-            {
-                throw new ArgumentNullException(nameof(historyName));
-            }
-            if (historyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(historyName));
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
             using var scope = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics.CreateScope("LogicWorkflowTriggerHistoryCollection.Get");
             scope.Start();
@@ -248,14 +234,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string historyName, CancellationToken cancellationToken = default)
         {
-            if (historyName == null)
-            {
-                throw new ArgumentNullException(nameof(historyName));
-            }
-            if (historyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(historyName));
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
             using var scope = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics.CreateScope("LogicWorkflowTriggerHistoryCollection.Exists");
             scope.Start();
@@ -298,14 +277,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
         public virtual Response<bool> Exists(string historyName, CancellationToken cancellationToken = default)
         {
-            if (historyName == null)
-            {
-                throw new ArgumentNullException(nameof(historyName));
-            }
-            if (historyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(historyName));
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
             using var scope = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics.CreateScope("LogicWorkflowTriggerHistoryCollection.Exists");
             scope.Start();
@@ -348,14 +320,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowTriggerHistoryResource>> GetIfExistsAsync(string historyName, CancellationToken cancellationToken = default)
         {
-            if (historyName == null)
-            {
-                throw new ArgumentNullException(nameof(historyName));
-            }
-            if (historyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(historyName));
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
             using var scope = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics.CreateScope("LogicWorkflowTriggerHistoryCollection.GetIfExists");
             scope.Start();
@@ -400,14 +365,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowTriggerHistoryResource> GetIfExists(string historyName, CancellationToken cancellationToken = default)
         {
-            if (historyName == null)
-            {
-                throw new ArgumentNullException(nameof(historyName));
-            }
-            if (historyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(historyName));
-            }
+            Argument.AssertNotNullOrEmpty(historyName, nameof(historyName));
 
             using var scope = _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesClientDiagnostics.CreateScope("LogicWorkflowTriggerHistoryCollection.GetIfExists");
             scope.Start();

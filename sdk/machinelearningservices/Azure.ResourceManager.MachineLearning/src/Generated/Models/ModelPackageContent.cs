@@ -57,14 +57,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="inferencingServer"/> or <paramref name="targetEnvironmentId"/> is null. </exception>
         public ModelPackageContent(InferencingServer inferencingServer, string targetEnvironmentId)
         {
-            if (inferencingServer == null)
-            {
-                throw new ArgumentNullException(nameof(inferencingServer));
-            }
-            if (targetEnvironmentId == null)
-            {
-                throw new ArgumentNullException(nameof(targetEnvironmentId));
-            }
+            Argument.AssertNotNull(inferencingServer, nameof(inferencingServer));
+            Argument.AssertNotNull(targetEnvironmentId, nameof(targetEnvironmentId));
 
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             InferencingServer = inferencingServer;

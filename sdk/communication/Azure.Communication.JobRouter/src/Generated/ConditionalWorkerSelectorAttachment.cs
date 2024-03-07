@@ -20,14 +20,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="workerSelectors"/> is null. </exception>
         internal ConditionalWorkerSelectorAttachment(RouterRule condition, IEnumerable<RouterWorkerSelector> workerSelectors)
         {
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
-            if (workerSelectors == null)
-            {
-                throw new ArgumentNullException(nameof(workerSelectors));
-            }
+            Argument.AssertNotNull(condition, nameof(condition));
+            Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
 
             Kind = WorkerSelectorAttachmentKind.Conditional;
             Condition = condition;

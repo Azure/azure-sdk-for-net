@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -56,10 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         internal DataReplicationRecoveryPointProperties(DateTimeOffset recoveryPointOn, DataReplicationRecoveryPointType recoveryPointType, RecoveryPointModelCustomProperties customProperties)
         {
-            if (customProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customProperties));
-            }
+            Argument.AssertNotNull(customProperties, nameof(customProperties));
 
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointType = recoveryPointType;

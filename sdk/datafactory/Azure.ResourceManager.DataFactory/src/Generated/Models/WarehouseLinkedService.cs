@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="artifactId"/> or <paramref name="endpoint"/> is null. </exception>
         public WarehouseLinkedService(DataFactoryElement<string> artifactId, DataFactoryElement<string> endpoint)
         {
-            if (artifactId == null)
-            {
-                throw new ArgumentNullException(nameof(artifactId));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(artifactId, nameof(artifactId));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             ArtifactId = artifactId;
             Endpoint = endpoint;

@@ -201,7 +201,6 @@
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />

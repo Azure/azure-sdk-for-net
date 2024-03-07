@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Files.DataLake;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {

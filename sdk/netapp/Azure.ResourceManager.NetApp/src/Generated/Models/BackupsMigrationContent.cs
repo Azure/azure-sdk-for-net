@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupVaultId"/> is null. </exception>
         public BackupsMigrationContent(string backupVaultId)
         {
-            if (backupVaultId == null)
-            {
-                throw new ArgumentNullException(nameof(backupVaultId));
-            }
+            Argument.AssertNotNull(backupVaultId, nameof(backupVaultId));
 
             BackupVaultId = backupVaultId;
         }

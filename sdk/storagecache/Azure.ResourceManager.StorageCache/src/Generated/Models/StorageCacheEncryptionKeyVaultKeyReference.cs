@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
         public StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault)
         {
-            if (keyUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyUri));
-            }
-            if (sourceVault == null)
-            {
-                throw new ArgumentNullException(nameof(sourceVault));
-            }
+            Argument.AssertNotNull(keyUri, nameof(keyUri));
+            Argument.AssertNotNull(sourceVault, nameof(sourceVault));
 
             KeyUri = keyUri;
             SourceVault = sourceVault;

@@ -75,10 +75,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("MockableCommunicationSubscriptionResource.CheckCommunicationNameAvailability");
             scope.Start();
@@ -120,10 +117,7 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("MockableCommunicationSubscriptionResource.CheckCommunicationNameAvailability");
             scope.Start();
