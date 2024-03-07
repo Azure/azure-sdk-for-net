@@ -49,10 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
         public static BackupResourceConfigResource GetBackupResourceConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupResourceConfigResource(id);
         }
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupProtectionIntentResource"/> object. </returns>
         public static BackupProtectionIntentResource GetBackupProtectionIntentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupProtectionIntentResource(id);
         }
@@ -93,10 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
         public static BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupResourceVaultConfigResource(id);
         }
@@ -115,10 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupResourceEncryptionConfigExtendedResource"/> object. </returns>
         public static BackupResourceEncryptionConfigExtendedResource GetBackupResourceEncryptionConfigExtendedResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupResourceEncryptionConfigExtendedResource(id);
         }
@@ -137,10 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupPrivateEndpointConnectionResource"/> object. </returns>
         public static BackupPrivateEndpointConnectionResource GetBackupPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupPrivateEndpointConnectionResource(id);
         }
@@ -159,10 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupProtectedItemResource"/> object. </returns>
         public static BackupProtectedItemResource GetBackupProtectedItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupProtectedItemResource(id);
         }
@@ -181,10 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupRecoveryPointResource"/> object. </returns>
         public static BackupRecoveryPointResource GetBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupRecoveryPointResource(id);
         }
@@ -203,10 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupProtectionPolicyResource"/> object. </returns>
         public static BackupProtectionPolicyResource GetBackupProtectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupProtectionPolicyResource(id);
         }
@@ -225,10 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupJobResource"/> object. </returns>
         public static BackupJobResource GetBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupJobResource(id);
         }
@@ -247,10 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupEngineResource"/> object. </returns>
         public static BackupEngineResource GetBackupEngineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupEngineResource(id);
         }
@@ -269,10 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="BackupProtectionContainerResource"/> object. </returns>
         public static BackupProtectionContainerResource GetBackupProtectionContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetBackupProtectionContainerResource(id);
         }
@@ -291,10 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> Returns a <see cref="ResourceGuardProxyResource"/> object. </returns>
         public static ResourceGuardProxyResource GetResourceGuardProxyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesBackupArmClient(client).GetResourceGuardProxyResource(id);
         }
@@ -311,10 +275,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
         public static BackupResourceConfigCollection GetBackupResourceConfigs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceConfigs();
         }
@@ -352,10 +313,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupResourceConfigResource>> GetBackupResourceConfigAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceConfigAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -393,10 +351,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupResourceConfigResource> GetBackupResourceConfig(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceConfig(vaultName, cancellationToken);
         }
@@ -413,10 +368,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectionIntentResources and their operations over a BackupProtectionIntentResource. </returns>
         public static BackupProtectionIntentCollection GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntents();
         }
@@ -457,10 +409,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupProtectionIntentResource>> GetBackupProtectionIntentAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntentAsync(vaultName, fabricName, intentObjectName, cancellationToken).ConfigureAwait(false);
         }
@@ -501,10 +450,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupProtectionIntentResource> GetBackupProtectionIntent(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntent(vaultName, fabricName, intentObjectName, cancellationToken);
         }
@@ -521,10 +467,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
         public static BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceVaultConfigs();
         }
@@ -562,10 +505,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupResourceVaultConfigResource>> GetBackupResourceVaultConfigAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceVaultConfigAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -603,10 +543,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupResourceVaultConfigResource> GetBackupResourceVaultConfig(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceVaultConfig(vaultName, cancellationToken);
         }
@@ -623,10 +560,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
         public static BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceEncryptionConfigExtendeds();
         }
@@ -664,10 +598,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupResourceEncryptionConfigExtendedResource>> GetBackupResourceEncryptionConfigExtendedAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceEncryptionConfigExtendedAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -705,10 +636,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupResourceEncryptionConfigExtendedResource> GetBackupResourceEncryptionConfigExtended(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupResourceEncryptionConfigExtended(vaultName, cancellationToken);
         }
@@ -725,10 +653,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
         public static BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupPrivateEndpointConnections();
         }
@@ -767,10 +692,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupPrivateEndpointConnectionResource>> GetBackupPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupPrivateEndpointConnectionAsync(vaultName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
@@ -809,10 +731,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupPrivateEndpointConnectionResource> GetBackupPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupPrivateEndpointConnection(vaultName, privateEndpointConnectionName, cancellationToken);
         }
@@ -831,10 +750,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectionPolicyResources and their operations over a BackupProtectionPolicyResource. </returns>
         public static BackupProtectionPolicyCollection GetBackupProtectionPolicies(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionPolicies(vaultName);
         }
@@ -874,10 +790,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupProtectionPolicyResource>> GetBackupProtectionPolicyAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionPolicyAsync(vaultName, policyName, cancellationToken).ConfigureAwait(false);
         }
@@ -917,10 +830,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupProtectionPolicyResource> GetBackupProtectionPolicy(this ResourceGroupResource resourceGroupResource, string vaultName, string policyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionPolicy(vaultName, policyName, cancellationToken);
         }
@@ -939,10 +849,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupJobResources and their operations over a BackupJobResource. </returns>
         public static BackupJobCollection GetBackupJobs(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupJobs(vaultName);
         }
@@ -981,10 +888,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupJobResource>> GetBackupJobAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupJobAsync(vaultName, jobName, cancellationToken).ConfigureAwait(false);
         }
@@ -1023,10 +927,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupJobResource> GetBackupJob(this ResourceGroupResource resourceGroupResource, string vaultName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupJob(vaultName, jobName, cancellationToken);
         }
@@ -1045,10 +946,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupEngineResources and their operations over a BackupEngineResource. </returns>
         public static BackupEngineCollection GetBackupEngines(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupEngines(vaultName);
         }
@@ -1089,10 +987,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupEngineResource>> GetBackupEngineAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupEngineAsync(vaultName, backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
         }
@@ -1133,10 +1028,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupEngineResource> GetBackupEngine(this ResourceGroupResource resourceGroupResource, string vaultName, string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupEngine(vaultName, backupEngineName, filter, skipToken, cancellationToken);
         }
@@ -1153,10 +1045,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectionContainerResources and their operations over a BackupProtectionContainerResource. </returns>
         public static BackupProtectionContainerCollection GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainers();
         }
@@ -1196,10 +1085,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<BackupProtectionContainerResource>> GetBackupProtectionContainerAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainerAsync(vaultName, fabricName, containerName, cancellationToken).ConfigureAwait(false);
         }
@@ -1239,10 +1125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<BackupProtectionContainerResource> GetBackupProtectionContainer(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainer(vaultName, fabricName, containerName, cancellationToken);
         }
@@ -1261,10 +1144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of ResourceGuardProxyResources and their operations over a ResourceGuardProxyResource. </returns>
         public static ResourceGuardProxyCollection GetResourceGuardProxies(this ResourceGroupResource resourceGroupResource, string vaultName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetResourceGuardProxies(vaultName);
         }
@@ -1303,10 +1183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGuardProxyResource>> GetResourceGuardProxyAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetResourceGuardProxyAsync(vaultName, resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
         }
@@ -1345,10 +1222,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         [ForwardsClientCalls]
         public static Response<ResourceGuardProxyResource> GetResourceGuardProxy(this ResourceGroupResource resourceGroupResource, string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetResourceGuardProxy(vaultName, resourceGuardProxyName, cancellationToken);
         }
@@ -1384,10 +1258,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntentsAsync(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1423,10 +1294,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionIntents(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1462,10 +1330,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BackupManagementUsage> GetBackupUsageSummariesAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupUsageSummariesAsync(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1501,10 +1366,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BackupManagementUsage> GetBackupUsageSummaries(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupUsageSummaries(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1538,10 +1400,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         public static async Task<Response> ExportJobAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).ExportJobAsync(vaultName, filter, cancellationToken).ConfigureAwait(false);
         }
@@ -1575,10 +1434,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         public static Response ExportJob(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).ExportJob(vaultName, filter, cancellationToken);
         }
@@ -1614,10 +1470,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectedItemsAsync(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1653,10 +1506,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BackupProtectedItemResource> GetBackupProtectedItems(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectedItems(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1692,10 +1542,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProtectableContainerResource> GetProtectableContainersAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetProtectableContainersAsync(vaultName, fabricName, filter, cancellationToken);
         }
@@ -1731,10 +1578,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProtectableContainerResource> GetProtectableContainers(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetProtectableContainers(vaultName, fabricName, filter, cancellationToken);
         }
@@ -1774,10 +1618,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
         public static async Task<Response> RefreshProtectionContainerAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).RefreshProtectionContainerAsync(vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
         }
@@ -1817,10 +1658,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
         public static Response RefreshProtectionContainer(this ResourceGroupResource resourceGroupResource, string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).RefreshProtectionContainer(vaultName, fabricName, filter, cancellationToken);
         }
@@ -1857,10 +1695,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WorkloadProtectableItemResource> GetBackupProtectableItemsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectableItemsAsync(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1897,10 +1732,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WorkloadProtectableItemResource> GetBackupProtectableItems(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectableItems(vaultName, filter, skipToken, cancellationToken);
         }
@@ -1935,10 +1767,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainersAsync(vaultName, filter, cancellationToken);
         }
@@ -1973,10 +1802,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetBackupProtectionContainers(vaultName, filter, cancellationToken);
         }
@@ -2011,10 +1837,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSoftDeletedProtectionContainersAsync(vaultName, filter, cancellationToken);
         }
@@ -2049,10 +1872,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSoftDeletedProtectionContainers(vaultName, filter, cancellationToken);
         }
@@ -2086,10 +1906,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         public static async Task<Response<TokenInformation>> GetSecurityPinAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPinAsync(vaultName, content, cancellationToken).ConfigureAwait(false);
         }
@@ -2123,10 +1940,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
         public static Response<TokenInformation> GetSecurityPin(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPin(vaultName, content, cancellationToken);
         }
@@ -2162,10 +1976,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<TieringCostInfo>> PostFetchTieringCostAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).PostFetchTieringCostAsync(waitUntil, vaultName, content, cancellationToken).ConfigureAwait(false);
         }
@@ -2201,10 +2012,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<TieringCostInfo> PostFetchTieringCost(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).PostFetchTieringCost(waitUntil, vaultName, content, cancellationToken);
         }
@@ -2238,10 +2046,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<TieringCostInfo>> GetGetTieringCostOperationResultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string operationId, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetGetTieringCostOperationResultAsync(vaultName, operationId, cancellationToken).ConfigureAwait(false);
         }
@@ -2275,10 +2080,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
         public static Response<TieringCostInfo> GetGetTieringCostOperationResult(this ResourceGroupResource resourceGroupResource, string vaultName, string operationId, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetGetTieringCostOperationResult(vaultName, operationId, cancellationToken);
         }
@@ -2318,10 +2120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<PreValidateEnableBackupResult>> ValidateProtectionIntentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateProtectionIntentAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -2361,10 +2160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<PreValidateEnableBackupResult> ValidateProtectionIntent(this SubscriptionResource subscriptionResource, AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateProtectionIntent(location, content, cancellationToken);
         }
@@ -2397,10 +2193,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BackupStatusResult>> GetBackupStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).GetBackupStatusAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -2433,10 +2226,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BackupStatusResult> GetBackupStatus(this SubscriptionResource subscriptionResource, AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).GetBackupStatus(location, content, cancellationToken);
         }
@@ -2469,10 +2259,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<VmResourceFeatureSupportResult>> ValidateFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -2505,10 +2292,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<VmResourceFeatureSupportResult> ValidateFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesBackupSubscriptionResource(subscriptionResource).ValidateFeatureSupport(location, content, cancellationToken);
         }

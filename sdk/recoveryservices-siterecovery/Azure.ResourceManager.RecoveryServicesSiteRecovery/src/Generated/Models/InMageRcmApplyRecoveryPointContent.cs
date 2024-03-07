@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         public InMageRcmApplyRecoveryPointContent(ResourceIdentifier recoveryPointId)
         {
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
+            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
 
             RecoveryPointId = recoveryPointId;
             InstanceType = "InMageRcm";

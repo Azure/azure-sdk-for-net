@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRSharedPrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SignalRSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRSharedPrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SignalRSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<SignalRSharedPrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual Response<SignalRSharedPrivateLinkResource> Get(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SignalRSharedPrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<SignalRSharedPrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

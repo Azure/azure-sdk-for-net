@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerDevOpsAuditingSettingResource>> UpdateAsync(WaitUntil waitUntil, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingResource.Update");
             scope.Start();
@@ -246,10 +243,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerDevOpsAuditingSettingResource> Update(WaitUntil waitUntil, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingResource.Update");
             scope.Start();

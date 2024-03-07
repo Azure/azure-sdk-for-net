@@ -292,10 +292,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
@@ -334,10 +331,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
@@ -378,10 +372,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(scope, filter, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, scope, filter, skiptoken);
@@ -413,10 +404,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionRestClient.CreateListRequest(scope, filter, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DiscoverySolutionRestClient.CreateListNextPageRequest(nextLink, scope, filter, skiptoken);

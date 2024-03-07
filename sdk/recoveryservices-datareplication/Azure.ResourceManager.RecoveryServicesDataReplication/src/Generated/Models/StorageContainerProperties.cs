@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="clusterSharedVolumePath"/> is null. </exception>
         public StorageContainerProperties(string name, string clusterSharedVolumePath)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (clusterSharedVolumePath == null)
-            {
-                throw new ArgumentNullException(nameof(clusterSharedVolumePath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(clusterSharedVolumePath, nameof(clusterSharedVolumePath));
 
             Name = name;
             ClusterSharedVolumePath = clusterSharedVolumePath;
