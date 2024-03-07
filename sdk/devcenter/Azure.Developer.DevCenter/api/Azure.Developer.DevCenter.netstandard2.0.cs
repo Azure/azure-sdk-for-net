@@ -341,9 +341,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxSchedule : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>
     {
         internal DevBoxSchedule() { }
-        public Azure.Developer.DevCenter.Models.ScheduleFrequency Frequency { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Developer.DevCenter.Models.ScheduledType ScheduledType { get { throw null; } }
+        public Azure.Developer.DevCenter.Models.ScheduleFrequency ScheduleFrequency { get { throw null; } }
+        public Azure.Developer.DevCenter.Models.ScheduleType ScheduleType { get { throw null; } }
         public string Time { get { throw null; } }
         public string TimeZone { get { throw null; } }
         Azure.Developer.DevCenter.Models.DevBoxSchedule System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -411,7 +411,7 @@ namespace Azure.Developer.DevCenter.Models
         public static Azure.Developer.DevCenter.Models.DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, System.DateTimeOffset? publishedDate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxNextAction DevBoxNextAction(System.DateTimeOffset scheduledTime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxPool DevBoxPool(string name = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Developer.DevCenter.Models.DevBoxOSType? osType = default(Azure.Developer.DevCenter.Models.DevBoxOSType?), Azure.Developer.DevCenter.Models.DevBoxHardwareProfile hardwareProfile = null, Azure.Developer.DevCenter.Models.HibernateSupport? hibernateSupport = default(Azure.Developer.DevCenter.Models.HibernateSupport?), Azure.Developer.DevCenter.Models.DevBoxStorageProfile storageProfile = null, Azure.Developer.DevCenter.Models.DevBoxImageReference imageReference = null, Azure.Developer.DevCenter.Models.LocalAdministratorStatus? localAdministratorStatus = default(Azure.Developer.DevCenter.Models.LocalAdministratorStatus?), Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration stopOnDisconnect = null, Azure.Developer.DevCenter.Models.PoolHealthStatus healthStatus = default(Azure.Developer.DevCenter.Models.PoolHealthStatus)) { throw null; }
-        public static Azure.Developer.DevCenter.Models.DevBoxSchedule DevBoxSchedule(string name = null, Azure.Developer.DevCenter.Models.ScheduledType scheduledType = default(Azure.Developer.DevCenter.Models.ScheduledType), Azure.Developer.DevCenter.Models.ScheduleFrequency frequency = default(Azure.Developer.DevCenter.Models.ScheduleFrequency), string time = null, string timeZone = null) { throw null; }
+        public static Azure.Developer.DevCenter.Models.DevBoxSchedule DevBoxSchedule(string name = null, Azure.Developer.DevCenter.Models.ScheduleType scheduleType = default(Azure.Developer.DevCenter.Models.ScheduleType), Azure.Developer.DevCenter.Models.ScheduleFrequency scheduleFrequency = default(Azure.Developer.DevCenter.Models.ScheduleFrequency), string time = null, string timeZone = null) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevBoxStorageProfile DevBoxStorageProfile(Azure.Developer.DevCenter.Models.OSDisk osDisk = null) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevCenterCatalog DevCenterCatalog(string name = null) { throw null; }
         public static Azure.Developer.DevCenter.Models.DevCenterEnvironment DevCenterEnvironment(System.Collections.Generic.IDictionary<string, System.BinaryData> parameters = null, string name = null, string environmentTypeName = null, System.Guid? userId = default(System.Guid?), Azure.Developer.DevCenter.Models.EnvironmentProvisioningState? provisioningState = default(Azure.Developer.DevCenter.Models.EnvironmentProvisioningState?), Azure.Core.ResourceIdentifier resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, Azure.ResponseError error = null) { throw null; }
@@ -638,23 +638,6 @@ namespace Azure.Developer.DevCenter.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.RemoteConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScheduledType : System.IEquatable<Azure.Developer.DevCenter.Models.ScheduledType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScheduledType(string value) { throw null; }
-        public static Azure.Developer.DevCenter.Models.ScheduledType StopDevBox { get { throw null; } }
-        public bool Equals(Azure.Developer.DevCenter.Models.ScheduledType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Developer.DevCenter.Models.ScheduledType left, Azure.Developer.DevCenter.Models.ScheduledType right) { throw null; }
-        public static implicit operator Azure.Developer.DevCenter.Models.ScheduledType (string value) { throw null; }
-        public static bool operator !=(Azure.Developer.DevCenter.Models.ScheduledType left, Azure.Developer.DevCenter.Models.ScheduledType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduleFrequency : System.IEquatable<Azure.Developer.DevCenter.Models.ScheduleFrequency>
     {
         private readonly object _dummy;
@@ -669,6 +652,23 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(Azure.Developer.DevCenter.Models.ScheduleFrequency left, Azure.Developer.DevCenter.Models.ScheduleFrequency right) { throw null; }
         public static implicit operator Azure.Developer.DevCenter.Models.ScheduleFrequency (string value) { throw null; }
         public static bool operator !=(Azure.Developer.DevCenter.Models.ScheduleFrequency left, Azure.Developer.DevCenter.Models.ScheduleFrequency right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduleType : System.IEquatable<Azure.Developer.DevCenter.Models.ScheduleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduleType(string value) { throw null; }
+        public static Azure.Developer.DevCenter.Models.ScheduleType StopDevBox { get { throw null; } }
+        public bool Equals(Azure.Developer.DevCenter.Models.ScheduleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Developer.DevCenter.Models.ScheduleType left, Azure.Developer.DevCenter.Models.ScheduleType right) { throw null; }
+        public static implicit operator Azure.Developer.DevCenter.Models.ScheduleType (string value) { throw null; }
+        public static bool operator !=(Azure.Developer.DevCenter.Models.ScheduleType left, Azure.Developer.DevCenter.Models.ScheduleType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
