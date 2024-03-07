@@ -76,6 +76,9 @@ public class SampleClient
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
     }
 
+    // Service method takes an input model representing a service resource
+    // and returns `ClientResult<T>` holding an output model representing
+    // the value returned in the service response.
     public ClientResult<SampleResource> UpdateResource(SampleResource resource)
     {
         // Create a message that can be sent via the client pipeline.
@@ -169,33 +172,32 @@ public class SampleResource : IJsonModel<SampleResource>
 
 For more information on reading and writing persistable models, see [Model reader writer samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ModelReaderWriter.md).
 
-### Accessing HTTP response details
+### Accessing the service response
 
-Service clients have methods that are used to call cloud services to invoke service operations.  These methods on a client are called **service methods**. Service clients expose two types of service methods: [convenience methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods) and [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods).
+Service clients have methods that are used to call cloud services to invoke service operations.  These methods on a client are called **service methods**, and they send a request to the service and return a representation of its response to the caller.  Service clients expose two types of service methods: [convenience methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods) and [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods).
 
-**Convenience methods** provide a convenient way to invoke a service operation.  They are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response may also be obtained from the return value.
+**Convenience methods** provide a [convenient](https://devblogs.microsoft.com/dotnet/the-convenience-of-dotnet/) way to invoke a service operation.  They are methods that take a strongly-typed model as input and return a `ClientResult<T>` that holds a strongly-typed representation of the service response.  Details from the HTTP response may also be obtained from the return value.
 
 **Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return a `ClientResult` holding only the raw HTTP response details.  These methods also take an optional `RequestOptions` parameter that allows the client pipeline and the request to be configured for the duration of the call.
 
-The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
+The following sample illustrates how to call a convenience method and access the strongly-typed output model from the service response.
 
-```C# Snippet:ClientResultTReadme
-// Create a client
-string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
-ApiKeyCredential credential = new(key!);
+```C# Snippet:ReadmeClientResultT
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-// Call a service method, which returns ClientResult<T>
+// Call a convenience method, which returns ClientResult<T>
 IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
-// ClientResult<T> has two members:
-//
-// (1) A Value property to access the strongly-typed output
+// Access the output model from the service response.
 IPAddressCountryPair value = result.Value;
 Console.WriteLine($"Country is {value.CountryRegion.IsoCode}.");
+```
 
-// (2) A GetRawResponse method for accessing the details of the HTTP response
+If needed, callers can obtain the details of the HTTP response by calling the result's `GetRawResponse` method.
+
+```C# Snippet:ReadmeGetRawResponse
+// Access the HTTP response details.
 PipelineResponse response = result.GetRawResponse();
 
 Console.WriteLine($"Response status code: '{response.Status}'.");

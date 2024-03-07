@@ -14,25 +14,24 @@ In service clients, there are two ways to expose the schematized body in the req
 
 **Convenience methods** provide a convenient way to invoke a service operation.  They are service methods that take a strongly-typed model representing schematized data sent to the service as input, and return a strongly-typed model representing the payload from the service response as output. Having strongly-typed models that represent service concepts provides a layer of convenience over working with the raw payload format. This is because these models unify the client user experience when cloud services differ in payload formats.  That is, a client-user can learn the patterns for strongly-typed models that `System.ClientModel`-based clients provide, and use them together without having to reason about whether a cloud service represents resources using, for example, JSON or XML formats.
 
-The following sample illustrates how to call a convenience method and access both the strongly-typed output model and the details of the HTTP response.
+The following sample illustrates how to call a convenience method and access the strongly-typed output model from the service response.
 
-```C# Snippet:ClientResultTReadme
-// Create a client
-string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
-ApiKeyCredential credential = new(key!);
+```C# Snippet:ReadmeClientResultT
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-// Call a service method, which returns ClientResult<T>
+// Call a convenience method, which returns ClientResult<T>
 IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
-// ClientResult<T> has two members:
-//
-// (1) A Value property to access the strongly-typed output
+// Access the output model from the service response.
 IPAddressCountryPair value = result.Value;
 Console.WriteLine($"Country is {value.CountryRegion.IsoCode}.");
+```
 
-// (2) A GetRawResponse method for accessing the details of the HTTP response
+If needed, callers can obtain the details of the HTTP response by calling the result's `GetRawResponse` method.
+
+```C# Snippet:ReadmeGetRawResponse
+// Access the HTTP response details.
 PipelineResponse response = result.GetRawResponse();
 
 Console.WriteLine($"Response status code: '{response.Status}'.");

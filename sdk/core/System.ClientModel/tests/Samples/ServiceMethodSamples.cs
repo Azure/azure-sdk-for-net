@@ -18,23 +18,24 @@ public class ServiceMethodSamples
     [Ignore("Used for README")]
     public async Task ClientResultTReadme()
     {
-        #region Snippet:ClientResultTReadme
         // Create a client
         string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
         ApiKeyCredential credential = new(key!);
+
+        #region Snippet:ReadmeClientResultT
         MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 
-        // Call a service method, which returns ClientResult<T>
+        // Call a convenience method, which returns ClientResult<T>
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         ClientResult<IPAddressCountryPair> result = await client.GetCountryCodeAsync(ipAddress);
 
-        // ClientResult<T> has two members:
-        //
-        // (1) A Value property to access the strongly-typed output
+        // Access the output model from the service response.
         IPAddressCountryPair value = result.Value;
         Console.WriteLine($"Country is {value.CountryRegion.IsoCode}.");
+        #endregion
 
-        // (2) A GetRawResponse method for accessing the details of the HTTP response
+        #region Snippet:ReadmeGetRawResponse
+        // Access the HTTP response details.
         PipelineResponse response = result.GetRawResponse();
 
         Console.WriteLine($"Response status code: '{response.Status}'.");
