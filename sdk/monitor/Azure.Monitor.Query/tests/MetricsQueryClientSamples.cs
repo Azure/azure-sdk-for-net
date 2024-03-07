@@ -209,5 +209,35 @@ namespace Azure.Monitor.Query.Tests
             }
             #endregion
         }
+
+        [Test]
+        public async Task QueryResourcesMetricsWithOptions()
+        {
+            #region Snippet:QueryResourcesMetricsWithOptions
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+#endif
+            MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+            MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
+            {
+                OrderBy = "sum asc",
+                RollUpBy = new List<string> { "RollUpBy=City" },
+            };
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options).ConfigureAwait(false);
+
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            foreach (var value in metricsQueryResults.Values)
+            {
+                Console.WriteLine(value.Metrics.Count);
+            }
+            #endregion
+        }
     }
 }

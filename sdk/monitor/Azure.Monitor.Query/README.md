@@ -628,6 +628,30 @@ foreach (var value in metricsQueryResults.Values)
 
 For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
+The `QueryResources` method also has an Options bag `MetricsQueryResourcesOptions` in which the user can specify extra properties to filter the results. An example below shows the `RollUpBy` and `OrderBy` properties.
+
+```C# Snippet:QueryResourcesMetricsWithOptions
+string resourceId =
+    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
+{
+    OrderBy = "sum asc",
+    RollUpBy = new List<string> { "RollUpBy=City" },
+};
+Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts",
+    options).ConfigureAwait(false);
+
+MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+foreach (var value in metricsQueryResults.Values)
+{
+    Console.WriteLine(value.Metrics.Count);
+}
+```
+
 #### Register the client with dependency injection
 
 To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
