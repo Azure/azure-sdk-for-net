@@ -1,10 +1,9 @@
 # Azure Purview DataMap client library for .NET
 
-Microsoft Purview Data Map provides the foundation for data discovery and data governance. Microsoft Purview Data Map is a cloud native PaaS service that captures metadata about enterprise data present in analytics and operation systems on-premises and cloud. Azure PurviewDataMap client provides a set of APIs in Purview Data Map Data Plane. For a full list of APIs, please refer to [Data Map API](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01)..
+Microsoft Purview Data Map provides the foundation for data discovery and data governance. Microsoft Purview Data Map is a cloud native PaaS service that captures metadata about enterprise data present in analytics and operation systems on-premises and cloud. Azure PurviewDataMap client provides a set of APIs in Purview Data Map Data Plane. For a full list of APIs, please refer to [Data Map API](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01).
 
-Use the client library for to:
+**Please rely heavily on the [service's documentation][catalog_service_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
 
-* [Get secret](https://docs.microsoft.com/azure)
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
 
@@ -36,6 +35,17 @@ If your library requires authentication for use, such as for Azure services, inc
 
 For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
+#### Using Azure Active Directory
+
+This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate via Azure Active Directory. However, any of the credentials offered by the [Azure.Identity][azure_identity] will be accepted.  See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
+
+Once you have chosen and configured your credential, you can create instances of the `DataMapClient`.
+
+```C#
+var credential = new DefaultAzureCredential();
+var client = new DataMapClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
+```
+
 ## Key concepts
 
 The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
@@ -59,6 +69,17 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
+The following section shows you how to initialize and authenticate your client, then get type definition by name.
+
+### Get Type Definitions By Name
+
+```C#
+var credential = new DefaultAzureCredential();
+var client = new DataMapClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
+
+Response<AtlasTypeDef> response = client.GetTypeDefinitionClient().GetByName("AtlasGlossary");
+```
+
 ## Troubleshooting
 
 Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
@@ -80,5 +101,10 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[default_cred_ref]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
+[catalog_service_documentation]: https://azure.microsoft.com/services/purview/
+[catalog_product_documentation]: https://docs.microsoft.com/azure/purview/
+[protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.DataMap/README.png)
