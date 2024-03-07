@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
         public virtual async Task<Response<FluidRelayContainerResource>> GetAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
         public virtual Response<FluidRelayContainerResource> Get(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
         public virtual Response<bool> Exists(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
         public virtual async Task<NullableResponse<FluidRelayContainerResource>> GetIfExistsAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
         public virtual NullableResponse<FluidRelayContainerResource> GetIfExists(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
-            if (fluidRelayContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(fluidRelayContainerName));
-            }
-            if (fluidRelayContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluidRelayContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
 
             using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetIfExists");
             scope.Start();
