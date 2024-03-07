@@ -14,7 +14,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
 {
     public class DataMapClientTest : DataMapClientTestBase
     {
-        public DataMapClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public DataMapClientTest(bool isAsync) : base(isAsync)
         {
         }
 
