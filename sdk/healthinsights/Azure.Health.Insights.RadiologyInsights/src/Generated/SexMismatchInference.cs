@@ -18,10 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="sexIndication"/> is null. </exception>
         internal SexMismatchInference(FhirR4CodeableConcept sexIndication)
         {
-            if (sexIndication == null)
-            {
-                throw new ArgumentNullException(nameof(sexIndication));
-            }
+            Argument.AssertNotNull(sexIndication, nameof(sexIndication));
 
             Kind = "sexMismatch";
             SexIndication = sexIndication;

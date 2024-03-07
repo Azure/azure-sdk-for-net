@@ -18,10 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal GenericProcedureRecommendation(FhirR4CodeableConcept code)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
+            Argument.AssertNotNull(code, nameof(code));
 
             Kind = "genericProcedureRecommendation";
             Code = code;
