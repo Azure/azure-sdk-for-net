@@ -195,10 +195,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesVaultExtendedInfoResource>> UpdateAsync(RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Update");
             scope.Start();
@@ -240,10 +237,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<RecoveryServicesVaultExtendedInfoResource> Update(RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.Update");
             scope.Start();
@@ -286,10 +280,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<RecoveryServicesVaultExtendedInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.CreateOrUpdate");
             scope.Start();
@@ -335,10 +326,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<RecoveryServicesVaultExtendedInfoResource> CreateOrUpdate(WaitUntil waitUntil, RecoveryServicesVaultExtendedInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _recoveryServicesVaultExtendedInfoVaultExtendedInfoClientDiagnostics.CreateScope("RecoveryServicesVaultExtendedInfoResource.CreateOrUpdate");
             scope.Start();

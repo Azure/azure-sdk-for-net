@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudClusterManagerResource>> GetAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual Response<NetworkCloudClusterManagerResource> Get(string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudClusterManagerResource>> GetIfExistsAsync(string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudClusterManagerResource> GetIfExists(string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            if (clusterManagerName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterManagerName));
-            }
-            if (clusterManagerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterManagerName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterManagerName, nameof(clusterManagerName));
 
             using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerCollection.GetIfExists");
             scope.Start();

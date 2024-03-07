@@ -66,18 +66,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceProblemClassificationListResult>> ClassifyProblemsAsync(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (problemServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(problemServiceName));
-            }
-            if (problemServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateClassifyProblemsRequest(problemServiceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -103,18 +93,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceProblemClassificationListResult> ClassifyProblems(string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
         {
-            if (problemServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(problemServiceName));
-            }
-            if (problemServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(problemServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(problemServiceName, nameof(problemServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateClassifyProblemsRequest(problemServiceName, content);
             _pipeline.Send(message, cancellationToken);

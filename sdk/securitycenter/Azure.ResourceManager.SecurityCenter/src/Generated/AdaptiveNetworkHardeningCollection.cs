@@ -92,14 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         public virtual async Task<Response<AdaptiveNetworkHardeningResource>> GetAsync(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
-            if (adaptiveNetworkHardeningResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(adaptiveNetworkHardeningResourceName));
-            }
-            if (adaptiveNetworkHardeningResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adaptiveNetworkHardeningResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.Get");
             scope.Start();
@@ -144,14 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         public virtual Response<AdaptiveNetworkHardeningResource> Get(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
-            if (adaptiveNetworkHardeningResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(adaptiveNetworkHardeningResourceName));
-            }
-            if (adaptiveNetworkHardeningResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adaptiveNetworkHardeningResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.Get");
             scope.Start();
@@ -256,14 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
-            if (adaptiveNetworkHardeningResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(adaptiveNetworkHardeningResourceName));
-            }
-            if (adaptiveNetworkHardeningResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adaptiveNetworkHardeningResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.Exists");
             scope.Start();
@@ -306,14 +285,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
-            if (adaptiveNetworkHardeningResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(adaptiveNetworkHardeningResourceName));
-            }
-            if (adaptiveNetworkHardeningResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adaptiveNetworkHardeningResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.Exists");
             scope.Start();
@@ -356,14 +328,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<AdaptiveNetworkHardeningResource>> GetIfExistsAsync(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
-            if (adaptiveNetworkHardeningResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(adaptiveNetworkHardeningResourceName));
-            }
-            if (adaptiveNetworkHardeningResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adaptiveNetworkHardeningResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetIfExists");
             scope.Start();
@@ -408,14 +373,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="adaptiveNetworkHardeningResourceName"/> is null. </exception>
         public virtual NullableResponse<AdaptiveNetworkHardeningResource> GetIfExists(string adaptiveNetworkHardeningResourceName, CancellationToken cancellationToken = default)
         {
-            if (adaptiveNetworkHardeningResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(adaptiveNetworkHardeningResourceName));
-            }
-            if (adaptiveNetworkHardeningResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adaptiveNetworkHardeningResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(adaptiveNetworkHardeningResourceName, nameof(adaptiveNetworkHardeningResourceName));
 
             using var scope = _adaptiveNetworkHardeningClientDiagnostics.CreateScope("AdaptiveNetworkHardeningCollection.GetIfExists");
             scope.Start();

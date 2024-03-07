@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppRevisionResource>> GetAsync(string revisionName, CancellationToken cancellationToken = default)
         {
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         public virtual Response<ContainerAppRevisionResource> Get(string revisionName, CancellationToken cancellationToken = default)
         {
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Get");
             scope.Start();
@@ -246,14 +232,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string revisionName, CancellationToken cancellationToken = default)
         {
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Exists");
             scope.Start();
@@ -296,14 +275,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         public virtual Response<bool> Exists(string revisionName, CancellationToken cancellationToken = default)
         {
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.Exists");
             scope.Start();
@@ -346,14 +318,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppRevisionResource>> GetIfExistsAsync(string revisionName, CancellationToken cancellationToken = default)
         {
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetIfExists");
             scope.Start();
@@ -398,14 +363,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppRevisionResource> GetIfExists(string revisionName, CancellationToken cancellationToken = default)
         {
-            if (revisionName == null)
-            {
-                throw new ArgumentNullException(nameof(revisionName));
-            }
-            if (revisionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(revisionName));
-            }
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             using var scope = _containerAppRevisionContainerAppsRevisionsClientDiagnostics.CreateScope("ContainerAppRevisionCollection.GetIfExists");
             scope.Start();

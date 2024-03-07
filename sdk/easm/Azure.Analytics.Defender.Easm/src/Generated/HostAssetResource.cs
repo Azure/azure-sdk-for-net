@@ -18,10 +18,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="asset"/> is null. </exception>
         internal HostAssetResource(HostAsset asset)
         {
-            if (asset == null)
-            {
-                throw new ArgumentNullException(nameof(asset));
-            }
+            Argument.AssertNotNull(asset, nameof(asset));
 
             Kind = "host";
             Asset = asset;

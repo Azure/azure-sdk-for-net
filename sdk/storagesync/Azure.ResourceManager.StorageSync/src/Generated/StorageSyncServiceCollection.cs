@@ -84,18 +84,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageSyncServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageSyncServiceName, StorageSyncServiceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StorageSyncServiceResource> CreateOrUpdate(WaitUntil waitUntil, string storageSyncServiceName, StorageSyncServiceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
         public virtual async Task<Response<StorageSyncServiceResource>> GetAsync(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
         public virtual Response<StorageSyncServiceResource> Get(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageSyncServiceResource>> GetIfExistsAsync(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
         public virtual NullableResponse<StorageSyncServiceResource> GetIfExists(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
 
             using var scope = _storageSyncServiceClientDiagnostics.CreateScope("StorageSyncServiceCollection.GetIfExists");
             scope.Start();

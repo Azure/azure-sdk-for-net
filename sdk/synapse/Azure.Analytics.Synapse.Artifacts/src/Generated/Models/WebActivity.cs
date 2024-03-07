@@ -21,14 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="url"/> is null. </exception>
         public WebActivity(string name, WebActivityMethod method, object url) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(url, nameof(url));
 
             Method = method;
             Url = url;

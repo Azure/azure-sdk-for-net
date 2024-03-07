@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="taskStatus"/> is null. </exception>
         internal BackupJobSubTask(int taskId, string taskName, string taskStatus)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskStatus == null)
-            {
-                throw new ArgumentNullException(nameof(taskStatus));
-            }
+            Argument.AssertNotNull(taskName, nameof(taskName));
+            Argument.AssertNotNull(taskStatus, nameof(taskStatus));
 
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             TaskId = taskId;

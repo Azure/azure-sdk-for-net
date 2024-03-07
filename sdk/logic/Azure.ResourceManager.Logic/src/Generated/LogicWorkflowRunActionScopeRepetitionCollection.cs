@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowRunActionScopeRepetitionResource>> GetAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
-            if (repetitionName == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionName));
-            }
-            if (repetitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(repetitionName));
-            }
+            Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
             using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         public virtual Response<LogicWorkflowRunActionScopeRepetitionResource> Get(string repetitionName, CancellationToken cancellationToken = default)
         {
-            if (repetitionName == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionName));
-            }
-            if (repetitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(repetitionName));
-            }
+            Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
             using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.Get");
             scope.Start();
@@ -242,14 +228,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
-            if (repetitionName == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionName));
-            }
-            if (repetitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(repetitionName));
-            }
+            Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
             using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.Exists");
             scope.Start();
@@ -292,14 +271,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string repetitionName, CancellationToken cancellationToken = default)
         {
-            if (repetitionName == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionName));
-            }
-            if (repetitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(repetitionName));
-            }
+            Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
             using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.Exists");
             scope.Start();
@@ -342,14 +314,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowRunActionScopeRepetitionResource>> GetIfExistsAsync(string repetitionName, CancellationToken cancellationToken = default)
         {
-            if (repetitionName == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionName));
-            }
-            if (repetitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(repetitionName));
-            }
+            Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
             using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.GetIfExists");
             scope.Start();
@@ -394,14 +359,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="repetitionName"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowRunActionScopeRepetitionResource> GetIfExists(string repetitionName, CancellationToken cancellationToken = default)
         {
-            if (repetitionName == null)
-            {
-                throw new ArgumentNullException(nameof(repetitionName));
-            }
-            if (repetitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(repetitionName));
-            }
+            Argument.AssertNotNullOrEmpty(repetitionName, nameof(repetitionName));
 
             using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.GetIfExists");
             scope.Start();

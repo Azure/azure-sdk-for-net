@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationConnectionTypeResource>> UpdateAsync(WaitUntil waitUntil, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationConnectionTypeResource> Update(WaitUntil waitUntil, AutomationConnectionTypeCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationConnectionTypeConnectionTypeClientDiagnostics.CreateScope("AutomationConnectionTypeResource.Update");
             scope.Start();

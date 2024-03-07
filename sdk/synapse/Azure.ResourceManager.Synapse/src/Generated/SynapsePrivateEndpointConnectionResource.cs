@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapsePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SynapsePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SynapsePrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapsePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SynapsePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapsePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SynapsePrivateEndpointConnectionResource.Update");
             scope.Start();

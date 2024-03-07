@@ -21,10 +21,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public OnYourDataDeploymentNameVectorizationSource(string deploymentName)
         {
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             Type = OnYourDataVectorizationSourceType.DeploymentName;
             DeploymentName = deploymentName;

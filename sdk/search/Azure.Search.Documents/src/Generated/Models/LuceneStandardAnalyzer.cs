@@ -19,10 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LuceneStandardAnalyzer(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.StandardAnalyzer";
