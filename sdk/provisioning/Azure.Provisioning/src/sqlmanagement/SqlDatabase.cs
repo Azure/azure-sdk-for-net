@@ -59,7 +59,7 @@ namespace Azure.Provisioning.Sql
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
         {
-            return scope.GetSingleResource<SqlServer>() ?? new SqlServer(scope, "sql");
+            return scope.GetSingleResource<SqlServer>() ?? throw new InvalidOperationException("A SQL server was not found in the construct.");
         }
     }
 }

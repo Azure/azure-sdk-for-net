@@ -22,19 +22,18 @@ namespace Azure.Provisioning.Sql
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="name">The name.</param>
-        /// <param name="parent">The parent.</param>
-        /// <param name="adminLogin">The administrator login.</param>
-        /// <param name="adminPassword">The administrator password.</param>
+        /// <param name="administratorLogin">The administrator login.</param>
+        /// <param name="administratorPassword">The administrator password.</param>
         /// <param name="administrator">The administrator when using Entra.</param>
+        /// <param name="parent">The parent.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public SqlServer(
-            IConstruct scope,
+        public SqlServer(IConstruct scope,
             string name,
-            ResourceGroup? parent = null,
-            Parameter? adminLogin = default,
-            Parameter? adminPassword = default,
+            Parameter? administratorLogin = default,
+            Parameter? administratorPassword = default,
             SqlServerAdministrator? administrator = default,
+            ResourceGroup? parent = null,
             string version = "2022-08-01-preview",
             AzureLocation? location = default)
             : this(scope, name, parent, version, false, (name) => ArmSqlModelFactory.SqlServerData(
@@ -47,13 +46,13 @@ namespace Azure.Provisioning.Sql
                 administrators: new ServerExternalAdministrator()))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
-            if (adminLogin != null)
+            if (administratorLogin != null)
             {
-                AssignProperty(data => data.AdministratorLogin, adminLogin.Value);
+                AssignProperty(data => data.AdministratorLogin, administratorLogin.Value);
             }
-            if (adminPassword != null)
+            if (administratorPassword != null)
             {
-                AssignProperty(data => data.AdministratorLoginPassword, adminPassword.Value);
+                AssignProperty(data => data.AdministratorLoginPassword, administratorPassword.Value);
             }
             if (administrator != null)
             {

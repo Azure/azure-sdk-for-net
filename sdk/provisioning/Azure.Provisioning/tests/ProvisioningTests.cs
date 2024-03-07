@@ -137,8 +137,8 @@ namespace Azure.Provisioning.Tests
             var sqlServer = new SqlServer(
                 infrastructure,
                 "sqlserver",
-                adminLogin: new Parameter("adminLogin", "SQL Server administrator login"),
-                adminPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true));
+                administratorLogin: new Parameter("adminLogin", "SQL Server administrator login"),
+                administratorPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true));
             _ = new SqlDatabase(infrastructure, sqlServer);
             infrastructure.Build(GetOutputPath());
 
@@ -191,8 +191,8 @@ namespace Azure.Provisioning.Tests
             var sqlServer = new SqlServer(
                 infrastructure,
                 "sqlserver",
-                adminLogin: new Parameter("adminLogin", "SQL Server administrator login"),
-                adminPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true),
+                administratorLogin: new Parameter("adminLogin", "SQL Server administrator login"),
+                administratorPassword: new Parameter("adminPassword", "SQL Server administrator password", isSecure: true),
                 administrator: admin);
 
             _ = new SqlDatabase(infrastructure, sqlServer);
@@ -209,6 +209,13 @@ namespace Azure.Provisioning.Tests
                         adminObjectId = new { value = Guid.Empty.ToString() }
                     }),
                 interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public void SqlServerDatabaseThrowsWithoutParent()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            Assert.Throws<InvalidOperationException>(() => new SqlDatabase(infrastructure));
         }
 
         [RecordedTest]
@@ -280,6 +287,10 @@ namespace Azure.Provisioning.Tests
             // verify we can assign a property that is already assigned automatically by the CDK
             var p = new Parameter("p", defaultValue: "name");
             kv.AssignProperty(x=> x.Name, p);
+
+            _ = new PostgreSqlFlexibleServerDatabase(infrastructure, server);
+            _ = new PostgreSqlFirewallRule(infrastructure, parent: server, startIpAddress: "0.0.0.0", endIpAddress: "255.255.255.255");
+
             _ = new KeyVaultSecret(infrastructure, "connectionString", server.GetConnectionString(adminLogin, adminPassword));
 
             infrastructure.Build(GetOutputPath());
@@ -294,6 +305,13 @@ namespace Azure.Provisioning.Tests
                         serverEdition = new { value = "Burstable" }
                     }),
                 interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public void PostgreSqlDatabaseThrowsWithoutParent()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            Assert.Throws<InvalidOperationException>(() => new PostgreSqlFlexibleServerDatabase(infrastructure));
         }
 
         [RecordedTest]
