@@ -138,7 +138,7 @@ namespace Azure.Monitor.Query
         public string Filter { get { throw null; } set { } }
         public System.TimeSpan? Granularity { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> RollUpBy { get { throw null; } }
+        public System.Collections.Generic.IList<string> RollUpBy { get { throw null; } }
         public int? Size { get { throw null; } set { } }
         public Azure.Monitor.Query.QueryTimeRange? TimeRange { get { throw null; } set { } }
     }

@@ -224,8 +224,9 @@ namespace Azure.Monitor.Query.Tests
             MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
             {
                 OrderBy = "sum asc",
-                RollUpBy = new List<string> { "RollUpBy=City" },
+                RollUpBy = { "RollUpBy=City" }
             };
+
             Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },

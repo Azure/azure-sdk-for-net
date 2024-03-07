@@ -65,17 +65,7 @@ namespace Azure.Monitor.Query
         /// Dimension name(s) to rollup results by.
         /// Examples: If you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries.
         /// </summary>
-        public IEnumerable<string> RollUpBy { get; internal set; }
-
-        /// <summary>
-        /// Join RollUpBy so it can be sent as a comma separated string.
-        /// </summary>
-        [CodeGenMember("RollUpBy")]
-        internal string RollUpByRaw
-        {
-            get => MetricsClientExtensions.CommaJoin(RollUpBy);
-            set => RollUpBy = MetricsClientExtensions.CommaSplit(value);
-        }
+        public IList<string> RollUpBy { get; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the interval at which to sample metrics.
