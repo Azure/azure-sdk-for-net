@@ -1,4 +1,4 @@
-# System.ClientModel-based client service methods
+# System.ClientModel-based client service method samples
 
 ## Introduction
 
@@ -14,7 +14,7 @@ In service clients, there are two ways to expose the schematized body in the req
 
 **Convenience methods** provide a convenient way to invoke a service operation.  They are service methods that take a strongly-typed model representing schematized data sent to the service as input, and return a strongly-typed model representing the payload from the service response as output. Having strongly-typed models that represent service concepts provides a layer of convenience over working with the raw payload format. This is because these models unify the client user experience when cloud services differ in payload formats.  That is, a client-user can learn the patterns for strongly-typed models that `System.ClientModel`-based clients provide, and use them together without having to reason about whether a cloud service represents resources using, for example, JSON or XML formats.
 
-The following sample illustrates how to call a convenience method and access the strongly-typed output model from the service response.
+The following sample illustrates how to call a convenience method and access the output model created from the service response.
 
 ```C# Snippet:ReadmeClientResultT
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);

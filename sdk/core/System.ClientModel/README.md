@@ -120,6 +120,8 @@ public class SampleClient
 }
 ```
 
+For more information on authoring clients, see [Client implementation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ClientImplementation.md).
+
 ### Reading and writing model content to HTTP messages
 
 Service clients provide **model types** representing service resources as input parameters and return values from service clients' [convenience methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods).  Client authors can implement the `IPersistableModel<T>` and `IJsonModel<T>` interfaces their in model implementations to make it easy for clients to write input model content to request message bodies, and to read response content and create instances of output models from it.  An example of how clients' service methods might use such models is shown in [Send a message using the ClientPipeline](#send-a-message-using-clientpipeline).  The following sample shows a minimal example of what a persistable model implementation might look like.
@@ -180,7 +182,7 @@ Service clients have methods that are used to call cloud services to invoke serv
 
 **Protocol method** are low-level methods that take parameters that correspond to the service HTTP API and return a `ClientResult` holding only the raw HTTP response details.  These methods also take an optional `RequestOptions` parameter that allows the client pipeline and the request to be configured for the duration of the call.
 
-The following sample illustrates how to call a convenience method and access the strongly-typed output model from the service response.
+The following sample illustrates how to call a convenience method and access the output model created from the service response.
 
 ```C# Snippet:ReadmeClientResultT
 MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);

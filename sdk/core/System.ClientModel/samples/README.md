@@ -3,7 +3,7 @@ page_type: sample
 languages:
 - csharp
 products:
-- dotnet-core
+- dotnet-api
 name: System.ClientModel samples for .NET
 description: Samples for the System.ClientModel library
 ---
