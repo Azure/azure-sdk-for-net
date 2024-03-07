@@ -124,17 +124,17 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxSchedule"/>. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
-        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
-        /// <param name="frequency"> The frequency of this scheduled task. </param>
+        /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
+        /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
-        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduledType scheduledType = default, ScheduleFrequency frequency = default, string time = null, string timeZone = null)
+        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduleType scheduleType = default, ScheduleFrequency scheduleFrequency = default, string time = null, string timeZone = null)
         {
             return new DevBoxSchedule(
                 name,
-                scheduledType,
-                frequency,
+                scheduleType,
+                scheduleFrequency,
                 time,
                 timeZone,
                 serializedAdditionalRawData: null);

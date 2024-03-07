@@ -33,9 +33,9 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ScheduledType.ToString());
+            writer.WriteStringValue(ScheduleType.ToString());
             writer.WritePropertyName("frequency"u8);
-            writer.WriteStringValue(Frequency.ToString());
+            writer.WriteStringValue(ScheduleFrequency.ToString());
             writer.WritePropertyName("time"u8);
             writer.WriteStringValue(Time);
             writer.WritePropertyName("timeZone"u8);
@@ -79,7 +79,7 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
-            ScheduledType type = default;
+            ScheduleType type = default;
             ScheduleFrequency frequency = default;
             string time = default;
             string timeZone = default;
@@ -94,7 +94,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ScheduledType(property.Value.GetString());
+                    type = new ScheduleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("frequency"u8))

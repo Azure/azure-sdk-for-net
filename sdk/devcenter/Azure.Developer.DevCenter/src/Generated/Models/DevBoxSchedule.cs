@@ -46,12 +46,12 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBoxSchedule"/>. </summary>
-        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
-        /// <param name="frequency"> The frequency of this scheduled task. </param>
+        /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
+        /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="time"/> or <paramref name="timeZone"/> is null. </exception>
-        internal DevBoxSchedule(ScheduledType scheduledType, ScheduleFrequency frequency, string time, string timeZone)
+        internal DevBoxSchedule(ScheduleType scheduleType, ScheduleFrequency scheduleFrequency, string time, string timeZone)
         {
             if (time == null)
             {
@@ -62,24 +62,24 @@ namespace Azure.Developer.DevCenter.Models
                 throw new ArgumentNullException(nameof(timeZone));
             }
 
-            ScheduledType = scheduledType;
-            Frequency = frequency;
+            ScheduleType = scheduleType;
+            ScheduleFrequency = scheduleFrequency;
             Time = time;
             TimeZone = timeZone;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxSchedule"/>. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
-        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
-        /// <param name="frequency"> The frequency of this scheduled task. </param>
+        /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
+        /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxSchedule(string name, ScheduledType scheduledType, ScheduleFrequency frequency, string time, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBoxSchedule(string name, ScheduleType scheduleType, ScheduleFrequency scheduleFrequency, string time, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            ScheduledType = scheduledType;
-            Frequency = frequency;
+            ScheduleType = scheduleType;
+            ScheduleFrequency = scheduleFrequency;
             Time = time;
             TimeZone = timeZone;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -93,9 +93,9 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Display name for the Schedule. </summary>
         public string Name { get; }
         /// <summary> Supported type this scheduled task represents. </summary>
-        public ScheduledType ScheduledType { get; }
+        public ScheduleType ScheduleType { get; }
         /// <summary> The frequency of this scheduled task. </summary>
-        public ScheduleFrequency Frequency { get; }
+        public ScheduleFrequency ScheduleFrequency { get; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
         public string Time { get; }
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
