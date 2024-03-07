@@ -50,10 +50,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal AudioTranscription(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Segments = new ChangeTrackingList<AudioTranscriptionSegment>();

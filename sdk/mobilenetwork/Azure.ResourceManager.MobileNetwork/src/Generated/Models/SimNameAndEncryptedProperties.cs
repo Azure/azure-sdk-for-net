@@ -54,14 +54,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>
         public SimNameAndEncryptedProperties(string name, string internationalMobileSubscriberIdentity)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (internationalMobileSubscriberIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(internationalMobileSubscriberIdentity));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
 
             Name = name;
             SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
