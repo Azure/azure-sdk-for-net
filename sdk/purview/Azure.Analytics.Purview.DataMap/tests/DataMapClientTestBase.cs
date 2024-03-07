@@ -13,7 +13,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
 {
     public class DataMapClientTestBase : RecordedTestBase<PurviewDataMapTestEnvironment>
     {
-        public DataMapClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        public DataMapClientTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Record) : base(isAsync, mode)
         {
             this.AddPurviewSanitizers();
         }
@@ -30,8 +30,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             Uri endpoint = env.Endpoint;
             TokenCredential credential = new ClientSecretCredential(env.tenantId, env.clientId, env.clientSecret);
             var client = InstrumentClient(
-                //new DataMapClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
-                new DataMapClient(endpoint, credential));
+                new DataMapClient(TestEnvironment.Endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
             return client;
         }
     }
