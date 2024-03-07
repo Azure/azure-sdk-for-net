@@ -31,21 +31,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
         [RecordedTest]
         public async Task TestDiscoveryOperations()
         {
+            AzureLocation targetRegion = AzureLocation.SoutheastAsia;
+            string targetSubscriptionId = DefaultSubscription.Data.SubscriptionId;
             ResourceGroupResource rg = await CreateResourceGroup(
                 DefaultSubscription,
                 "SdkTest-Net-",
-                AzureLocation.SoutheastAsia);
+                targetRegion);
 
             string rgName = rg.Id.Name;
             string migrateProjName = Recording.GenerateAssetName("migrateProj-");
             string migrateProjectId = string.Format(
                 MigrateProjectIdFormat,
-                DefaultSubscription.Data.SubscriptionId,
-                rgName, migrateProjName);
+                targetSubscriptionId,
+                rgName,
+                migrateProjName);
             string discoverySiteName = Recording.GenerateAssetName("SapDiscoverySite-");
 
             // Create Migrate Project
-            var CreateMigrateProjectPayload = new GenericResourceData(AzureLocation.SoutheastAsia)
+            var CreateMigrateProjectPayload = new GenericResourceData(targetRegion)
             {
                 Properties = new BinaryData(new Dictionary<string, object>
                 {
@@ -59,20 +62,20 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
                     ResourceIdentifier.Parse(migrateProjectId),
                     CreateMigrateProjectPayload);
 
-            // Create Discovery site payload
-            var site = new SAPDiscoverySiteData()
+            // Create Discovery discoverySiteData payload
+            var discoverySiteData = new SAPDiscoverySiteData()
             {
                 MigrateProjectId = migrateProjectId,
-                Location = AzureLocation.SoutheastAsia,
+                Location = targetRegion
             };
 
-            // Create discovery site
+            // Create discovery discoverySiteData
             ArmOperation<SAPDiscoverySiteResource> discoverySiteOp = await rg.GetSAPDiscoverySites()
-                .CreateOrUpdateAsync(WaitUntil.Completed, discoverySiteName, site);
-            ResourceIdentifier resourceId = discoverySiteOp.Value.Id;
+                .CreateOrUpdateAsync(WaitUntil.Completed, discoverySiteName, discoverySiteData);
+            ResourceIdentifier discoveryResourceId = discoverySiteOp.Value.Id;
 
             // Get SAP DiscoverySite
-            SAPDiscoverySiteResource sapDiscoverySiteResource = Client.GetSAPDiscoverySiteResource(resourceId);
+            SAPDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSAPDiscoverySiteAsync(discoverySiteName);
             Assert.Equals(sapDiscoverySiteResource.Data.ProvisioningState, ProvisioningState.Succeeded);
 
             // Post import entities
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
 
             Assert.IsNotNull(
                 await TrackTillConditionReachedForAsyncOperationAsync(
-                    new Func<Task<bool>>(async () => await this.TrackForDiscoveryExcelInputSasUriAsync(
+                    new Func<Task<bool>>(async () => await TrackForDiscoveryExcelInputSasUriAsync(
                         importEntitiesOp)), 300),
                 "SAS Uri generation failed");
 
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
             using (FileStream stream = File.OpenRead(@"TestData\ExcelSDKTesting.xlsx"))
             {
                 // Construct the blob client with a sas token.
-                var blobClient = GetBlobContentClient(inputExcelSasUri);
+                Storage.Blobs.BlobClient blobClient = GetBlobContentClient(inputExcelSasUri);
 
                 await blobClient.UploadAsync(stream, overwrite: true);
             }
@@ -177,7 +180,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
                 expectedServerInstancesList.Add(ServerInstanceData.DeserializeServerInstanceData(obj));
             }
 
-            Assert.AreEqual(expectedServerInstancesList.Count(), serverInstancesList.Count());
+            Assert.AreEqual(expectedServerInstancesList.Count, serverInstancesList.Count);
 
             serverInstancesList = serverInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
             expectedServerInstancesList = expectedServerInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
