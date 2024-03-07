@@ -52,14 +52,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="patientId"/> or <paramref name="inferences"/> is null. </exception>
         internal RadiologyInsightsPatientResult(string patientId, IEnumerable<RadiologyInsightsInference> inferences)
         {
-            if (patientId == null)
-            {
-                throw new ArgumentNullException(nameof(patientId));
-            }
-            if (inferences == null)
-            {
-                throw new ArgumentNullException(nameof(inferences));
-            }
+            Argument.AssertNotNull(patientId, nameof(patientId));
+            Argument.AssertNotNull(inferences, nameof(inferences));
 
             PatientId = patientId;
             Inferences = inferences.ToList();

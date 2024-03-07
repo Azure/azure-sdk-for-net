@@ -19,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streamName"/> is null. </exception>
         public DataFlowDebugCommandPayload(string streamName)
         {
-            if (streamName == null)
-            {
-                throw new ArgumentNullException(nameof(streamName));
-            }
+            Argument.AssertNotNull(streamName, nameof(streamName));
 
             StreamName = streamName;
             Columns = new ChangeTrackingList<string>();

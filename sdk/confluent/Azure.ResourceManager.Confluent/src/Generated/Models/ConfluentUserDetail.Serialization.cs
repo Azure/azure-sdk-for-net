@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
+            if (Optional.IsDefined(UserPrincipalName))
+            {
+                writer.WritePropertyName("userPrincipalName"u8);
+                writer.WriteStringValue(UserPrincipalName);
+            }
+            if (Optional.IsDefined(AadEmail))
+            {
+                writer.WritePropertyName("aadEmail"u8);
+                writer.WriteStringValue(AadEmail);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,6 +90,8 @@ namespace Azure.ResourceManager.Confluent.Models
             string firstName = default;
             string lastName = default;
             string emailAddress = default;
+            string userPrincipalName = default;
+            string aadEmail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,13 +111,29 @@ namespace Azure.ResourceManager.Confluent.Models
                     emailAddress = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("userPrincipalName"u8))
+                {
+                    userPrincipalName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("aadEmail"u8))
+                {
+                    aadEmail = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentUserDetail(firstName, lastName, emailAddress, serializedAdditionalRawData);
+            return new ConfluentUserDetail(
+                firstName,
+                lastName,
+                emailAddress,
+                userPrincipalName,
+                aadEmail,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentUserDetail>.Write(ModelReaderWriterOptions options)

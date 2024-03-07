@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
         public ServerTrustGroupServerInfo(ResourceIdentifier serverId)
         {
-            if (serverId == null)
-            {
-                throw new ArgumentNullException(nameof(serverId));
-            }
+            Argument.AssertNotNull(serverId, nameof(serverId));
 
             ServerId = serverId;
         }

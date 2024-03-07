@@ -22,14 +22,8 @@ namespace Azure.Data.Tables.Models
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="retentionPolicy"/> is null. </exception>
         public TableAnalyticsLoggingSettings(string version, bool delete, bool read, bool write, TableRetentionPolicy retentionPolicy)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (retentionPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(retentionPolicy));
-            }
+            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNull(retentionPolicy, nameof(retentionPolicy));
 
             Version = version;
             Delete = delete;

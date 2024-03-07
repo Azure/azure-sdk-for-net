@@ -50,14 +50,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewCatalogClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -85,10 +79,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
@@ -122,10 +113,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
         public virtual Response Search(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Search");
             scope.Start();
@@ -159,10 +147,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SuggestAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
@@ -196,10 +181,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Suggest(RequestContent,RequestContext)']/*" />
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Suggest");
             scope.Start();
@@ -233,10 +215,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='BrowseAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
@@ -270,10 +249,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Browse(RequestContent,RequestContext)']/*" />
         public virtual Response Browse(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.Browse");
             scope.Start();
@@ -307,10 +283,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoCompleteAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();
@@ -344,10 +317,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoComplete(RequestContent,RequestContext)']/*" />
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCatalogClient.AutoComplete");
             scope.Start();

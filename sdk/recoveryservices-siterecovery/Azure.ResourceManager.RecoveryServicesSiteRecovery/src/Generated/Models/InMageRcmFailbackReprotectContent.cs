@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         public InMageRcmFailbackReprotectContent(Guid processServerId, ResourceIdentifier policyId)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
+            Argument.AssertNotNull(policyId, nameof(policyId));
 
             ProcessServerId = processServerId;
             PolicyId = policyId;

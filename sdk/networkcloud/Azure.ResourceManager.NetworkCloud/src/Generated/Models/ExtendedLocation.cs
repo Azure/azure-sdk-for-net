@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="extendedLocationType"/> is null. </exception>
         public ExtendedLocation(string name, string extendedLocationType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (extendedLocationType == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocationType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(extendedLocationType, nameof(extendedLocationType));
 
             Name = name;
             ExtendedLocationType = extendedLocationType;

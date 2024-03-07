@@ -22,10 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         public FhirR4Observation(ObservationStatusCodeType status, FhirR4CodeableConcept code) : base("Observation")
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
+            Argument.AssertNotNull(code, nameof(code));
 
             Identifier = new ChangeTrackingList<FhirR4Identifier>();
             Status = status;

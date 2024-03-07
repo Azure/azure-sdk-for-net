@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing
 {

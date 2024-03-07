@@ -23,10 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> is null. </exception>
         public MuteParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> targetParticipants)
         {
-            if (targetParticipants == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipants));
-            }
+            Argument.AssertNotNull(targetParticipants, nameof(targetParticipants));
 
             TargetParticipants = targetParticipants.ToList();
         }

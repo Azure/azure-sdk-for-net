@@ -83,14 +83,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagementGroupSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -139,14 +132,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual ArmOperation<ManagementGroupSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -194,14 +180,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupSubscriptionResource>> GetAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Get");
             scope.Start();
@@ -248,14 +227,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual Response<ManagementGroupSubscriptionResource> Get(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Get");
             scope.Start();
@@ -373,14 +345,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Exists");
             scope.Start();
@@ -424,14 +389,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual Response<bool> Exists(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Exists");
             scope.Start();
@@ -475,14 +433,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagementGroupSubscriptionResource>> GetIfExistsAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -528,14 +479,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public virtual NullableResponse<ManagementGroupSubscriptionResource> GetIfExists(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.GetIfExists");
             scope.Start();

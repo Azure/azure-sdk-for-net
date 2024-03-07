@@ -1322,6 +1322,12 @@
         "NFVIs",
         "nfvis"
       ]
+    },
+    {
+      "filename": "**/sdk/confluent/**/*.cs",
+      "words": [
+        "Byok"
+      ]
     }
   ],
   "allowCompoundWords": true

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -53,18 +54,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="resourceId"/> or <paramref name="callbackUri"/> is null. </exception>
         public MonitorLogicAppReceiver(string name, ResourceIdentifier resourceId, Uri callbackUri)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Name = name;
             ResourceId = resourceId;

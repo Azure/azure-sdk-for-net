@@ -18,10 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="finding"/> is null. </exception>
         internal FindingInference(FhirR4Observation finding)
         {
-            if (finding == null)
-            {
-                throw new ArgumentNullException(nameof(finding));
-            }
+            Argument.AssertNotNull(finding, nameof(finding));
 
             Kind = "finding";
             Finding = finding;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <exception cref="ArgumentNullException"> <paramref name="issueSummary"/> is null. </exception>
         public ServiceProblemClassificationContent(string issueSummary)
         {
-            if (issueSummary == null)
-            {
-                throw new ArgumentNullException(nameof(issueSummary));
-            }
+            Argument.AssertNotNull(issueSummary, nameof(issueSummary));
 
             IssueSummary = issueSummary;
         }

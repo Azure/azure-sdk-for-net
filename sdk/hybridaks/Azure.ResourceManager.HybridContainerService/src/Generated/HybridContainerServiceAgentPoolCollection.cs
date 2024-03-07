@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridContainerServiceAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridContainerServiceAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> GetAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual Response<HybridContainerServiceAgentPoolResource> Get(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridContainerServiceAgentPoolResource>> GetIfExistsAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
         public virtual NullableResponse<HybridContainerServiceAgentPoolResource> GetIfExists(string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var scope = _hybridContainerServiceAgentPoolagentPoolClientDiagnostics.CreateScope("HybridContainerServiceAgentPoolCollection.GetIfExists");
             scope.Start();

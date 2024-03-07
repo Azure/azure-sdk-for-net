@@ -85,10 +85,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = AvailabilityStatusesClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatus");
             scope0.Start();
@@ -128,10 +125,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = AvailabilityStatusesClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatus");
             scope0.Start();
@@ -172,10 +166,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
@@ -207,10 +198,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
@@ -241,10 +229,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An async collection of <see cref="ResourceHealthEventData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthEventData> GetHealthEventsOfSingleResourceAsync(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, scope, filter);
@@ -275,10 +260,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> A collection of <see cref="ResourceHealthEventData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthEventData> GetHealthEventsOfSingleResource(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventsRestClient.CreateListBySingleResourceRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventsRestClient.CreateListBySingleResourceNextPageRequest(nextLink, scope, filter);
@@ -309,10 +291,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = ChildAvailabilityStatusesClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
             scope0.Start();
@@ -352,10 +331,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = ChildAvailabilityStatusesClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
             scope0.Start();
@@ -396,10 +372,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildAvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildAvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
@@ -431,10 +404,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildAvailabilityStatusesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildAvailabilityStatusesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
@@ -466,10 +436,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);
@@ -501,10 +468,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChildResourcesRestClient.CreateListRequest(scope, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChildResourcesRestClient.CreateListNextPageRequest(nextLink, scope, filter, expand);

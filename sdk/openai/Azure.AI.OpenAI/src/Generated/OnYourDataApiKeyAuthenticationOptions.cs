@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public OnYourDataApiKeyAuthenticationOptions(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Type = OnYourDataAuthenticationType.ApiKey;
             Key = key;

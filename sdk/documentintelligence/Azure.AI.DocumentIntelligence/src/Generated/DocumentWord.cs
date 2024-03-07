@@ -56,14 +56,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="span"/> is null. </exception>
         internal DocumentWord(string content, DocumentSpan span, float confidence)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (span == null)
-            {
-                throw new ArgumentNullException(nameof(span));
-            }
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(span, nameof(span));
 
             Content = content;
             Polygon = new ChangeTrackingList<float>();

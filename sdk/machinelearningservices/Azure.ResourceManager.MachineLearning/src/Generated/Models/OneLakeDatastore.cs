@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,18 +29,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="artifact"/> or <paramref name="oneLakeWorkspaceName"/> is null. </exception>
         public OneLakeDatastore(MachineLearningDatastoreCredentials credentials, OneLakeArtifact artifact, string oneLakeWorkspaceName) : base(credentials)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-            if (artifact == null)
-            {
-                throw new ArgumentNullException(nameof(artifact));
-            }
-            if (oneLakeWorkspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(oneLakeWorkspaceName));
-            }
+            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(artifact, nameof(artifact));
+            Argument.AssertNotNull(oneLakeWorkspaceName, nameof(oneLakeWorkspaceName));
 
             Artifact = artifact;
             OneLakeWorkspaceName = oneLakeWorkspaceName;
