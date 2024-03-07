@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Storage.Files.DataLake
+namespace Azure.Storage.Common
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

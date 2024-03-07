@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public FlinkJobProperties(string jobName)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
+            Argument.AssertNotNull(jobName, nameof(jobName));
 
             JobName = jobName;
             FlinkConfiguration = new ChangeTrackingDictionary<string, string>();

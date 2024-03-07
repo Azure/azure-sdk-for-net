@@ -86,14 +86,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual async Task<Response<DeletedSiteResource>> GetAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Get");
             scope.Start();
@@ -138,14 +131,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<DeletedSiteResource> Get(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Get");
             scope.Start();
@@ -250,14 +236,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
             scope.Start();
@@ -300,14 +279,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<bool> Exists(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.Exists");
             scope.Start();
@@ -350,14 +322,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual async Task<NullableResponse<DeletedSiteResource>> GetIfExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
             scope.Start();
@@ -402,14 +367,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual NullableResponse<DeletedSiteResource> GetIfExists(string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            if (deletedSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(deletedSiteId));
-            }
-            if (deletedSiteId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deletedSiteId));
-            }
+            Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSiteCollection.GetIfExists");
             scope.Start();

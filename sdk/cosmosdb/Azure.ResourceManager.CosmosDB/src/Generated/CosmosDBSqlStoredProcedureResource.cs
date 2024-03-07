@@ -285,10 +285,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlStoredProcedureResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBSqlStoredProcedureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.Update");
             scope.Start();
@@ -334,10 +331,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlStoredProcedureResource> Update(WaitUntil waitUntil, CosmosDBSqlStoredProcedureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.Update");
             scope.Start();
@@ -383,14 +377,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlStoredProcedureResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.AddTag");
             scope.Start();
@@ -451,14 +439,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<CosmosDBSqlStoredProcedureResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.AddTag");
             scope.Start();
@@ -518,10 +500,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlStoredProcedureResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.SetTags");
             scope.Start();
@@ -578,10 +557,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CosmosDBSqlStoredProcedureResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.SetTags");
             scope.Start();
@@ -638,10 +614,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlStoredProcedureResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.RemoveTag");
             scope.Start();
@@ -701,10 +674,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<CosmosDBSqlStoredProcedureResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlStoredProcedureResource.RemoveTag");
             scope.Start();

@@ -75,10 +75,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> CheckRedisNameAvailabilityAsync(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = RedisClientDiagnostics.CreateScope("MockableRedisSubscriptionResource.CheckRedisNameAvailability");
             scope.Start();
@@ -120,10 +117,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response CheckRedisNameAvailability(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = RedisClientDiagnostics.CreateScope("MockableRedisSubscriptionResource.CheckRedisNameAvailability");
             scope.Start();
@@ -223,14 +217,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response<RedisOperationStatus>> GetAsyncOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = AsyncOperationStatusClientDiagnostics.CreateScope("MockableRedisSubscriptionResource.GetAsyncOperationStatus");
             scope.Start();
@@ -270,14 +257,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<RedisOperationStatus> GetAsyncOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (operationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
-            }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = AsyncOperationStatusClientDiagnostics.CreateScope("MockableRedisSubscriptionResource.GetAsyncOperationStatus");
             scope.Start();

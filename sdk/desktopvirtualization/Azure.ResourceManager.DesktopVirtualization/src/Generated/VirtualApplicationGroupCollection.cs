@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualApplicationGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationGroupName, VirtualApplicationGroupData data, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualApplicationGroupResource> CreateOrUpdate(WaitUntil waitUntil, string applicationGroupName, VirtualApplicationGroupData data, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         public virtual async Task<Response<VirtualApplicationGroupResource>> GetAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         public virtual Response<VirtualApplicationGroupResource> Get(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.Get");
             scope.Start();
@@ -371,14 +337,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.Exists");
             scope.Start();
@@ -421,14 +380,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.Exists");
             scope.Start();
@@ -471,14 +423,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualApplicationGroupResource>> GetIfExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.GetIfExists");
             scope.Start();
@@ -523,14 +468,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         public virtual NullableResponse<VirtualApplicationGroupResource> GetIfExists(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.GetIfExists");
             scope.Start();

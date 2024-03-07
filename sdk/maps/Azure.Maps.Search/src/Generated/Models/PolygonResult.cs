@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Maps.Search;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {

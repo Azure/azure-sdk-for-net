@@ -86,14 +86,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual async Task<Response<ChaosTargetTypeResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (targetTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(targetTypeName));
-            }
-            if (targetTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Get");
             scope.Start();
@@ -138,14 +131,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Response<ChaosTargetTypeResource> Get(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (targetTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(targetTypeName));
-            }
-            if (targetTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Get");
             scope.Start();
@@ -252,14 +238,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (targetTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(targetTypeName));
-            }
-            if (targetTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Exists");
             scope.Start();
@@ -302,14 +281,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (targetTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(targetTypeName));
-            }
-            if (targetTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Exists");
             scope.Start();
@@ -352,14 +324,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<ChaosTargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (targetTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(targetTypeName));
-            }
-            if (targetTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.GetIfExists");
             scope.Start();
@@ -404,14 +369,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         public virtual NullableResponse<ChaosTargetTypeResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (targetTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(targetTypeName));
-            }
-            if (targetTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
             using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.GetIfExists");
             scope.Start();

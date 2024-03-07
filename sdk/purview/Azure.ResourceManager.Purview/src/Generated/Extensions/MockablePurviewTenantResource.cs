@@ -214,10 +214,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            if (defaultAccountPayload == null)
-            {
-                throw new ArgumentNullException(nameof(defaultAccountPayload));
-            }
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
             using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
@@ -255,10 +252,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            if (defaultAccountPayload == null)
-            {
-                throw new ArgumentNullException(nameof(defaultAccountPayload));
-            }
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
             using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();

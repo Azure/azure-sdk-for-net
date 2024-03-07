@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -59,10 +60,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <exception cref="ArgumentNullException"> <paramref name="stages"/> is null. </exception>
         public ContainerServiceFleetUpdateRunStrategy(IEnumerable<ContainerServiceFleetUpdateStage> stages)
         {
-            if (stages == null)
-            {
-                throw new ArgumentNullException(nameof(stages));
-            }
+            Argument.AssertNotNull(stages, nameof(stages));
 
             Stages = stages.ToList();
         }

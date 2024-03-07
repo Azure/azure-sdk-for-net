@@ -196,10 +196,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SolutionResource>> UpdateAsync(WaitUntil waitUntil, SolutionResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResource.Update");
             scope.Start();
@@ -245,10 +242,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SolutionResource> Update(WaitUntil waitUntil, SolutionResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResource.Update");
             scope.Start();

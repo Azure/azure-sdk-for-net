@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaName, IntegrationAccountSchemaData data, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string schemaName, IntegrationAccountSchemaData data, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountSchemaResource>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<IntegrationAccountSchemaResource> Get(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.Exists");
             scope.Start();
@@ -466,14 +418,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountSchemaResource>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.GetIfExists");
             scope.Start();
@@ -518,14 +463,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountSchemaResource> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaCollection.GetIfExists");
             scope.Start();

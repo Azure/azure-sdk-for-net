@@ -21,14 +21,8 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
         public SendDtmfTonesRequestInternal(IEnumerable<DtmfTone> tones, CommunicationIdentifierModel targetParticipant)
         {
-            if (tones == null)
-            {
-                throw new ArgumentNullException(nameof(tones));
-            }
-            if (targetParticipant == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipant));
-            }
+            Argument.AssertNotNull(tones, nameof(tones));
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             Tones = tones.ToList();
             TargetParticipant = targetParticipant;

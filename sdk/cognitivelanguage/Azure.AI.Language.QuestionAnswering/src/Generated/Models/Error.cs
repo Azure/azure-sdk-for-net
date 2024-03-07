@@ -19,10 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal Error(ErrorCode code, string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;

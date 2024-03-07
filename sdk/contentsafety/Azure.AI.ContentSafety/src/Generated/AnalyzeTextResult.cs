@@ -51,10 +51,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="categoriesAnalysis"/> is null. </exception>
         internal AnalyzeTextResult(IEnumerable<TextCategoriesAnalysis> categoriesAnalysis)
         {
-            if (categoriesAnalysis == null)
-            {
-                throw new ArgumentNullException(nameof(categoriesAnalysis));
-            }
+            Argument.AssertNotNull(categoriesAnalysis, nameof(categoriesAnalysis));
 
             BlocklistsMatch = new ChangeTrackingList<TextBlocklistMatch>();
             CategoriesAnalysis = categoriesAnalysis.ToList();

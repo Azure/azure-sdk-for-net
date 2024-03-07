@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
         public AlertRuleAllOfCondition(IEnumerable<ActivityLogAlertAnyOfOrLeafCondition> allOf)
         {
-            if (allOf == null)
-            {
-                throw new ArgumentNullException(nameof(allOf));
-            }
+            Argument.AssertNotNull(allOf, nameof(allOf));
 
             AllOf = allOf.ToList();
         }

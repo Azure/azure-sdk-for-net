@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<MediaAssetFilterResource>> UpdateAsync(MediaAssetFilterData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaAssetFilterAssetFiltersClientDiagnostics.CreateScope("MediaAssetFilterResource.Update");
             scope.Start();
@@ -326,10 +323,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<MediaAssetFilterResource> Update(MediaAssetFilterData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaAssetFilterAssetFiltersClientDiagnostics.CreateScope("MediaAssetFilterResource.Update");
             scope.Start();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public DataFactoryCredentialReference(DataFactoryCredentialReferenceType referenceType, string referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
