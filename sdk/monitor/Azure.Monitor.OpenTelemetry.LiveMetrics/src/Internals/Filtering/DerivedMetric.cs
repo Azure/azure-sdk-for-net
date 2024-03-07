@@ -180,7 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 else
                 {
                     Filter<TTelemetry>.FieldNameType fieldNameType;
-                    Type fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
+                    Type? fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
                     if (fieldNameType == Filter<TTelemetry>.FieldNameType.AnyField)
                     {
                         throw new ArgumentOutOfRangeException(
