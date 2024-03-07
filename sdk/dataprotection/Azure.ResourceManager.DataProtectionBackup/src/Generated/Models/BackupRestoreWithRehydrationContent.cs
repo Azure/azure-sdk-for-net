@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -27,14 +28,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> or <paramref name="recoveryPointId"/> is null. </exception>
         public BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, string recoveryPointId, BackupRehydrationPriority rehydrationPriority, TimeSpan rehydrationRetentionDuration) : base(restoreTargetInfo, sourceDataStoreType, recoveryPointId)
         {
-            if (restoreTargetInfo == null)
-            {
-                throw new ArgumentNullException(nameof(restoreTargetInfo));
-            }
-            if (recoveryPointId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointId));
-            }
+            Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
+            Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
 
             RehydrationPriority = rehydrationPriority;
             RehydrationRetentionDuration = rehydrationRetentionDuration;

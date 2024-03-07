@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -53,18 +54,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="privateKey"/>, <paramref name="publicKey"/> or <paramref name="id"/> is null. </exception>
         internal SshPublicKeyGenerateKeyPairResult(string privateKey, string publicKey, ResourceIdentifier id)
         {
-            if (privateKey == null)
-            {
-                throw new ArgumentNullException(nameof(privateKey));
-            }
-            if (publicKey == null)
-            {
-                throw new ArgumentNullException(nameof(publicKey));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(privateKey, nameof(privateKey));
+            Argument.AssertNotNull(publicKey, nameof(publicKey));
+            Argument.AssertNotNull(id, nameof(id));
 
             PrivateKey = privateKey;
             PublicKey = publicKey;

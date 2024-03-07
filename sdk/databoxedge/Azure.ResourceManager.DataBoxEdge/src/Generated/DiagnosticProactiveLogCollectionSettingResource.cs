@@ -196,10 +196,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DiagnosticProactiveLogCollectionSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticProactiveLogCollectionSettingResource.CreateOrUpdate");
             scope.Start();
@@ -245,10 +242,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DiagnosticProactiveLogCollectionSettingResource> CreateOrUpdate(WaitUntil waitUntil, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticProactiveLogCollectionSettingResource.CreateOrUpdate");
             scope.Start();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
         public KeyForDiskEncryptionSet(Uri keyUri)
         {
-            if (keyUri == null)
-            {
-                throw new ArgumentNullException(nameof(keyUri));
-            }
+            Argument.AssertNotNull(keyUri, nameof(keyUri));
 
             KeyUri = keyUri;
         }
