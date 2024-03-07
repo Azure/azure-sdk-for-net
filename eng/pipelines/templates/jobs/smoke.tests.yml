@@ -28,6 +28,11 @@ jobs:
         os: linux
       displayName: Check Smoke Test Eligibility
       steps:
+        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          parameters:
+            Paths:
+              - "common"
+
         # pipelines only supports template each when it generates the entire script block.
         - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(parameters.Artifact.skipPublishPackage, 'true')) }}:
           - pwsh: |
