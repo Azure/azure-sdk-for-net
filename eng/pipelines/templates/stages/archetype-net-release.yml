@@ -35,21 +35,10 @@ stages:
               steps:
                 - checkout: azure-sdk-build-tools
                   path: azure-sdk-build-tools
-
-                # 1es PT credscan step will fail if the suppression file path we use in other stages does not exist here.
-                # Checking out the repo via sparse checkout changes the devops path structure so that can't be used instead.
-                - pwsh: |
-                    $ErrorActionPreference = 'Stop'
-                    New-Item -ItemType Directory -Force eng
-                    $req = Invoke-WebRequest https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/eng/CredScanSuppression.json
-                    $req.RawContent | Out-File eng/CredScanSuppression.json
-                  workingDirectory: $(Pipeline.Workspace)/azure-sdk-build-tools
-                  displayName: Set credscan suppression file
-
+                - template: /eng/pipelines/templates/steps/download-credscan-suppressions.yml
                 - download: current
                   artifact: ${{parameters.ArtifactName}}
                   timeoutInMinutes: 5
-
                 - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                   parameters:
                     PackagesPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
@@ -136,6 +125,8 @@ stages:
                       steps:
                         - checkout: none
                         - template: /eng/pipelines/templates/steps/download-credscan-suppressions.yml
+                          parameters:
+                            WorkingDirectory: $(Pipeline.Workspace)
                         - task: 1ES.PublishNuget@1
                           displayName: 'Publish ${{artifact.name}} package to NuGet.org'
                           inputs:
