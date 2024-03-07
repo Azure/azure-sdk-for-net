@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,18 +23,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="serverVersion"/> or <paramref name="catalog"/> is null. </exception>
         public PrestoLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, PrestoAuthenticationType authenticationType)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (serverVersion == null)
-            {
-                throw new ArgumentNullException(nameof(serverVersion));
-            }
-            if (catalog == null)
-            {
-                throw new ArgumentNullException(nameof(catalog));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(serverVersion, nameof(serverVersion));
+            Argument.AssertNotNull(catalog, nameof(catalog));
 
             Host = host;
             ServerVersion = serverVersion;

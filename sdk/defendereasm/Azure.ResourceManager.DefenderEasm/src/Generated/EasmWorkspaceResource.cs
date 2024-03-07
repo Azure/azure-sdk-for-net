@@ -355,10 +355,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<EasmWorkspaceResource>> UpdateAsync(EasmWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.Update");
             scope.Start();
@@ -400,10 +397,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<EasmWorkspaceResource> Update(EasmWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.Update");
             scope.Start();
@@ -442,14 +436,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public virtual async Task<Response<EasmTask>> GetTaskByWorkspaceAsync(string taskId, CancellationToken cancellationToken = default)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             using var scope = _tasksClientDiagnostics.CreateScope("EasmWorkspaceResource.GetTaskByWorkspace");
             scope.Start();
@@ -488,14 +475,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public virtual Response<EasmTask> GetTaskByWorkspace(string taskId, CancellationToken cancellationToken = default)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
-            if (taskId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskId));
-            }
+            Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
             using var scope = _tasksClientDiagnostics.CreateScope("EasmWorkspaceResource.GetTaskByWorkspace");
             scope.Start();
@@ -538,14 +518,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<EasmWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.AddTag");
             scope.Start();
@@ -606,14 +580,8 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<EasmWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.AddTag");
             scope.Start();
@@ -673,10 +641,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<EasmWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.SetTags");
             scope.Start();
@@ -733,10 +698,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<EasmWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.SetTags");
             scope.Start();
@@ -793,10 +755,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<EasmWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.RemoveTag");
             scope.Start();
@@ -856,10 +815,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<EasmWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _easmWorkspaceWorkspacesClientDiagnostics.CreateScope("EasmWorkspaceResource.RemoveTag");
             scope.Start();

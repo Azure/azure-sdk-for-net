@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistrySourceTriggerUpdateContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             SourceTriggerEvents = new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>();
             Name = name;

@@ -72,10 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = RecoveryServicesClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities");
             scope.Start();
@@ -114,10 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual Response<CapabilitiesResult> GetRecoveryServiceCapabilities(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = RecoveryServicesClientDiagnostics.CreateScope("MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities");
             scope.Start();

@@ -71,14 +71,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AuthorizationRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -125,14 +119,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AuthorizationRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -177,10 +165,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual async Task<Response<AuthorizationRoleDefinitionResource>> GetAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.Get");
             scope.Start();
@@ -224,10 +209,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual Response<AuthorizationRoleDefinitionResource> Get(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.Get");
             scope.Start();
@@ -333,10 +315,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.Exists");
             scope.Start();
@@ -378,10 +357,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual Response<bool> Exists(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.Exists");
             scope.Start();
@@ -423,10 +399,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual async Task<NullableResponse<AuthorizationRoleDefinitionResource>> GetIfExistsAsync(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetIfExists");
             scope.Start();
@@ -470,10 +443,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public virtual NullableResponse<AuthorizationRoleDefinitionResource> GetIfExists(ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             using var scope = _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics.CreateScope("AuthorizationRoleDefinitionCollection.GetIfExists");
             scope.Start();

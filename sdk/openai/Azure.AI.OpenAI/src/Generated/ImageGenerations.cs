@@ -55,10 +55,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public ImageGenerations(DateTimeOffset created, IEnumerable<ImageGenerationData> data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             Created = created;
             Data = data.ToList();

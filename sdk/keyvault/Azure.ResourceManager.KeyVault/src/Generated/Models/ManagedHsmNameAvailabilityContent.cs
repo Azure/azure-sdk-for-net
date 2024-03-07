@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedHsmNameAvailabilityContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

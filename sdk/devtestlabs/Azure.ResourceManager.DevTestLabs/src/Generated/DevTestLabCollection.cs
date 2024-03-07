@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevTestLabResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevTestLabResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<DevTestLabResource>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.Get");
             scope.Start();
@@ -253,14 +226,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DevTestLabResource> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.Get");
             scope.Start();
@@ -374,14 +340,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.Exists");
             scope.Start();
@@ -425,14 +384,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.Exists");
             scope.Start();
@@ -476,14 +428,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<DevTestLabResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetIfExists");
             scope.Start();
@@ -529,14 +474,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<DevTestLabResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetIfExists");
             scope.Start();

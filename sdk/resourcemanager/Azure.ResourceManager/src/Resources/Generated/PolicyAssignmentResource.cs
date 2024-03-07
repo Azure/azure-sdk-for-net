@@ -279,10 +279,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<PolicyAssignmentResource>> UpdateAsync(PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();
@@ -324,10 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<PolicyAssignmentResource> Update(PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();

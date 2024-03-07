@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -53,10 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
         public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup)
         {
-            if (originGroup == null)
-            {
-                throw new ArgumentNullException(nameof(originGroup));
-            }
+            Argument.AssertNotNull(originGroup, nameof(originGroup));
 
             ActionType = actionType;
             OriginGroup = originGroup;

@@ -19,10 +19,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls)
         {
-            if (toolCalls == null)
-            {
-                throw new ArgumentNullException(nameof(toolCalls));
-            }
+            Argument.AssertNotNull(toolCalls, nameof(toolCalls));
 
             Type = RunStepType.ToolCalls;
             ToolCalls = toolCalls.ToList();

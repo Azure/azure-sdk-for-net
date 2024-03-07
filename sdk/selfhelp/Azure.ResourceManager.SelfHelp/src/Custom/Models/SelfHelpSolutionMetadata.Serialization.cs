@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string solutionId = default;
             string solutionType = default;
             string description = default;

@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceUpdatePrivateEndpointConnectionProxyResource>> UpdateAsync(WaitUntil waitUntil, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceUpdatePrivateEndpointConnectionProxyResource> Update(WaitUntil waitUntil, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyResource.Update");
             scope.Start();
@@ -379,10 +373,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response> ValidateAsync(DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyResource.Validate");
             scope.Start();
@@ -424,10 +415,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response Validate(DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyResource.Validate");
             scope.Start();
@@ -469,10 +457,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointUpdate"/> is null. </exception>
         public virtual async Task<Response> UpdatePrivateEndpointPropertiesAsync(DeviceUpdatePrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointUpdate == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointUpdate));
-            }
+            Argument.AssertNotNull(privateEndpointUpdate, nameof(privateEndpointUpdate));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyResource.UpdatePrivateEndpointProperties");
             scope.Start();
@@ -514,10 +499,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointUpdate"/> is null. </exception>
         public virtual Response UpdatePrivateEndpointProperties(DeviceUpdatePrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointUpdate == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointUpdate));
-            }
+            Argument.AssertNotNull(privateEndpointUpdate, nameof(privateEndpointUpdate));
 
             using var scope = _deviceUpdatePrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DeviceUpdatePrivateEndpointConnectionProxyResource.UpdatePrivateEndpointProperties");
             scope.Start();

@@ -71,14 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceHealthEventListResult>> ListBySubscriptionIdAsync(string subscriptionId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdRequest(subscriptionId, filter, queryStartTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,14 +98,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceHealthEventListResult> ListBySubscriptionId(string subscriptionId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdRequest(subscriptionId, filter, queryStartTime);
             _pipeline.Send(message, cancellationToken);
@@ -225,10 +211,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<ResourceHealthEventListResult>> ListBySingleResourceAsync(string resourceUri, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListBySingleResourceRequest(resourceUri, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -253,10 +236,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<ResourceHealthEventListResult> ListBySingleResource(string resourceUri, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListBySingleResourceRequest(resourceUri, filter);
             _pipeline.Send(message, cancellationToken);
@@ -298,18 +278,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceHealthEventListResult>> ListBySubscriptionIdNextPageAsync(string nextLink, string subscriptionId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdNextPageRequest(nextLink, subscriptionId, filter, queryStartTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -337,18 +307,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceHealthEventListResult> ListBySubscriptionIdNextPage(string nextLink, string subscriptionId, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdNextPageRequest(nextLink, subscriptionId, filter, queryStartTime);
             _pipeline.Send(message, cancellationToken);
@@ -388,10 +348,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ResourceHealthEventListResult>> ListByTenantIdNextPageAsync(string nextLink, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListByTenantIdNextPageRequest(nextLink, filter, queryStartTime);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -417,10 +374,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ResourceHealthEventListResult> ListByTenantIdNextPage(string nextLink, string filter = null, string queryStartTime = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListByTenantIdNextPageRequest(nextLink, filter, queryStartTime);
             _pipeline.Send(message, cancellationToken);
@@ -460,14 +414,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<ResourceHealthEventListResult>> ListBySingleResourceNextPageAsync(string nextLink, string resourceUri, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListBySingleResourceNextPageRequest(nextLink, resourceUri, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -493,14 +441,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public Response<ResourceHealthEventListResult> ListBySingleResourceNextPage(string nextLink, string resourceUri, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListBySingleResourceNextPageRequest(nextLink, resourceUri, filter);
             _pipeline.Send(message, cancellationToken);

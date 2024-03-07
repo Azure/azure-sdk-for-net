@@ -72,46 +72,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataReplicationRecoveryPointData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
-            if (recoveryPointName == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointName));
-            }
-            if (recoveryPointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, protectedItemName, recoveryPointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -142,46 +107,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="protectedItemName"/> or <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataReplicationRecoveryPointData> Get(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
-            if (recoveryPointName == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryPointName));
-            }
-            if (recoveryPointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(recoveryPointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, protectedItemName, recoveryPointName);
             _pipeline.Send(message, cancellationToken);
@@ -234,38 +164,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataReplicationRecoveryPointListResult>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, vaultName, protectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -293,38 +195,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataReplicationRecoveryPointListResult> List(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, vaultName, protectedItemName);
             _pipeline.Send(message, cancellationToken);
@@ -367,42 +241,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataReplicationRecoveryPointListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, vaultName, protectedItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -431,42 +274,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataReplicationRecoveryPointListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, vaultName, protectedItemName);
             _pipeline.Send(message, cancellationToken);

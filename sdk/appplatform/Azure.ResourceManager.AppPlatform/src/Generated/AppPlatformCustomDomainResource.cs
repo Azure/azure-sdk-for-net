@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformCustomDomainResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformCustomDomainResource> Update(WaitUntil waitUntil, AppPlatformCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformCustomDomainCustomDomainsClientDiagnostics.CreateScope("AppPlatformCustomDomainResource.Update");
             scope.Start();

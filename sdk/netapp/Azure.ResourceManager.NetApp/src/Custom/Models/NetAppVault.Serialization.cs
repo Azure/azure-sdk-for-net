@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string vaultName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

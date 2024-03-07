@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SalesforceV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             DatasetType = "SalesforceV2Object";
         }

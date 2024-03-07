@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<PurviewPrivateLinkResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<PurviewPrivateLinkResource> Get(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<NullableResponse<PurviewPrivateLinkResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual NullableResponse<PurviewPrivateLinkResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

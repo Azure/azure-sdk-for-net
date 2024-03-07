@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public AttestationProviderCreateOrUpdateContent(AzureLocation location, AttestationServiceCreationSpecificParams properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();

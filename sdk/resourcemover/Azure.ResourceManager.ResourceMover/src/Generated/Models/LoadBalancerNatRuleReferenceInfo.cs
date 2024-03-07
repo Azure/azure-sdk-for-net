@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public LoadBalancerNatRuleReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
-            if (sourceArmResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceArmResourceId));
-            }
+            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerNatRuleReferenceInfo"/>. </summary>

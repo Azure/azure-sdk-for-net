@@ -69,6 +69,11 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteNumberValue(LogProbabilityCount.Value);
             }
+            if (Optional.IsDefined(Suffix))
+            {
+                writer.WritePropertyName("suffix"u8);
+                writer.WriteStringValue(Suffix);
+            }
             if (Optional.IsDefined(Echo))
             {
                 writer.WritePropertyName("echo"u8);
@@ -155,6 +160,7 @@ namespace Azure.AI.OpenAI
             string user = default;
             int? n = default;
             int? logprobs = default;
+            string suffix = default;
             bool? echo = default;
             IList<string> stop = default;
             float? presencePenalty = default;
@@ -229,6 +235,11 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     logprobs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("suffix"u8))
+                {
+                    suffix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("echo"u8))
@@ -310,6 +321,7 @@ namespace Azure.AI.OpenAI
                 user,
                 n,
                 logprobs,
+                suffix,
                 echo,
                 stop ?? new ChangeTrackingList<string>(),
                 presencePenalty,

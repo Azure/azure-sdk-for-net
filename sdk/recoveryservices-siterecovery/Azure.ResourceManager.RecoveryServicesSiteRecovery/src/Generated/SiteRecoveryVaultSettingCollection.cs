@@ -89,18 +89,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryVaultSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -148,18 +138,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryVaultSettingResource> CreateOrUpdate(WaitUntil waitUntil, string vaultSettingName, SiteRecoveryVaultSettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -205,14 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryVaultSettingResource>> GetAsync(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Get");
             scope.Start();
@@ -257,14 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
         public virtual Response<SiteRecoveryVaultSettingResource> Get(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Get");
             scope.Start();
@@ -369,14 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Exists");
             scope.Start();
@@ -419,14 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.Exists");
             scope.Start();
@@ -469,14 +421,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryVaultSettingResource>> GetIfExistsAsync(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.GetIfExists");
             scope.Start();
@@ -521,14 +466,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="vaultSettingName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryVaultSettingResource> GetIfExists(string vaultSettingName, CancellationToken cancellationToken = default)
         {
-            if (vaultSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultSettingName));
-            }
-            if (vaultSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultSettingName, nameof(vaultSettingName));
 
             using var scope = _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics.CreateScope("SiteRecoveryVaultSettingCollection.GetIfExists");
             scope.Start();
