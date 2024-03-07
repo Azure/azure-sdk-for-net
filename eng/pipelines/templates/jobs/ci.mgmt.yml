@@ -10,9 +10,8 @@ jobs:
   - job: Build
     timeoutInMinutes: 100
     pool:
-      name: $(WINDOWSPOOL)
-      image: $(WINDOWSVMIMAGE)
-      os: windows
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: windows-2022
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -65,13 +64,11 @@ jobs:
           Pool: azsdk-pool-mms-ubuntu-2004-general
           OSVmImage: "MMSUbuntu20.04"
         Windows:
-          Pool: $(WINDOWSPOOL)
-          OSVmImage: $(WINDOWSVMIMAGE)
-          os: windows
+          Pool: azsdk-pool-mms-win-2022-general
+          OSVmImage: windows-2022
         MacOs:
           Pool: Azure Pipelines
           OSVmImage: "macos-11"
-          os: macOS
     pool:
       name: $(Pool)
       vmImage: $(OSVmImage)
@@ -107,9 +104,8 @@ jobs:
     dependsOn:
       - Build
     pool:
-      name: $(WINDOWSPOOL)
-      vmImage: $(WINDOWSVMIMAGE)
-      os: windows
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: windows-2022
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.9"
@@ -130,9 +126,8 @@ jobs:
 
   - job: Compliance
     pool:
-      name: $(WINDOWSPOOL)
-      vmImage: $(WINDOWSVMIMAGE)
-      os: windows
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: windows-2022
     steps:
       - template: /eng/common/pipelines/templates/steps/credscan.yml
         parameters:
