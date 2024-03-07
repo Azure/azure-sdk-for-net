@@ -52,14 +52,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="types"/> is null. </exception>
         internal RadiologyCodeWithTypes(FhirR4CodeableConcept code, IEnumerable<FhirR4CodeableConcept> types)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (types == null)
-            {
-                throw new ArgumentNullException(nameof(types));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(types, nameof(types));
 
             Code = code;
             Types = types.ToList();

@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowResource"/> object. </returns>
         public static LogicWorkflowResource GetLogicWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowVersionResource"/> object. </returns>
         public static LogicWorkflowVersionResource GetLogicWorkflowVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowVersionResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowTriggerResource"/> object. </returns>
         public static LogicWorkflowTriggerResource GetLogicWorkflowTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowTriggerResource(id);
         }
@@ -114,10 +105,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowTriggerHistoryResource"/> object. </returns>
         public static LogicWorkflowTriggerHistoryResource GetLogicWorkflowTriggerHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowTriggerHistoryResource(id);
         }
@@ -136,10 +124,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunResource"/> object. </returns>
         public static LogicWorkflowRunResource GetLogicWorkflowRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunResource(id);
         }
@@ -158,10 +143,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunOperationResource"/> object. </returns>
         public static LogicWorkflowRunOperationResource GetLogicWorkflowRunOperationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunOperationResource(id);
         }
@@ -180,10 +162,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunActionResource"/> object. </returns>
         public static LogicWorkflowRunActionResource GetLogicWorkflowRunActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunActionResource(id);
         }
@@ -202,10 +181,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunActionRepetitionResource"/> object. </returns>
         public static LogicWorkflowRunActionRepetitionResource GetLogicWorkflowRunActionRepetitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunActionRepetitionResource(id);
         }
@@ -224,10 +200,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> object. </returns>
         public static LogicWorkflowRunActionScopeRepetitionResource GetLogicWorkflowRunActionScopeRepetitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunActionScopeRepetitionResource(id);
         }
@@ -246,10 +219,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource"/> object. </returns>
         public static LogicWorkflowRunActionRepetitionRequestHistoryResource GetLogicWorkflowRunActionRepetitionRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunActionRepetitionRequestHistoryResource(id);
         }
@@ -268,10 +238,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="LogicWorkflowRunActionRequestHistoryResource"/> object. </returns>
         public static LogicWorkflowRunActionRequestHistoryResource GetLogicWorkflowRunActionRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetLogicWorkflowRunActionRequestHistoryResource(id);
         }
@@ -290,10 +257,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountResource"/> object. </returns>
         public static IntegrationAccountResource GetIntegrationAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountResource(id);
         }
@@ -312,10 +276,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountAssemblyDefinitionResource"/> object. </returns>
         public static IntegrationAccountAssemblyDefinitionResource GetIntegrationAccountAssemblyDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountAssemblyDefinitionResource(id);
         }
@@ -334,10 +295,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountBatchConfigurationResource"/> object. </returns>
         public static IntegrationAccountBatchConfigurationResource GetIntegrationAccountBatchConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountBatchConfigurationResource(id);
         }
@@ -356,10 +314,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountSchemaResource"/> object. </returns>
         public static IntegrationAccountSchemaResource GetIntegrationAccountSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountSchemaResource(id);
         }
@@ -378,10 +333,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountMapResource"/> object. </returns>
         public static IntegrationAccountMapResource GetIntegrationAccountMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountMapResource(id);
         }
@@ -400,10 +352,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountPartnerResource"/> object. </returns>
         public static IntegrationAccountPartnerResource GetIntegrationAccountPartnerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountPartnerResource(id);
         }
@@ -422,10 +371,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountAgreementResource"/> object. </returns>
         public static IntegrationAccountAgreementResource GetIntegrationAccountAgreementResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountAgreementResource(id);
         }
@@ -444,10 +390,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountCertificateResource"/> object. </returns>
         public static IntegrationAccountCertificateResource GetIntegrationAccountCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountCertificateResource(id);
         }
@@ -466,10 +409,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationAccountSessionResource"/> object. </returns>
         public static IntegrationAccountSessionResource GetIntegrationAccountSessionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationAccountSessionResource(id);
         }
@@ -488,10 +428,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationServiceEnvironmentResource"/> object. </returns>
         public static IntegrationServiceEnvironmentResource GetIntegrationServiceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationServiceEnvironmentResource(id);
         }
@@ -510,10 +447,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> Returns a <see cref="IntegrationServiceEnvironmentManagedApiResource"/> object. </returns>
         public static IntegrationServiceEnvironmentManagedApiResource GetIntegrationServiceEnvironmentManagedApiResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLogicArmClient(client).GetIntegrationServiceEnvironmentManagedApiResource(id);
         }
@@ -530,10 +464,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowResources and their operations over a LogicWorkflowResource. </returns>
         public static LogicWorkflowCollection GetLogicWorkflows(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).GetLogicWorkflows();
         }
@@ -571,10 +502,7 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public static async Task<Response<LogicWorkflowResource>> GetLogicWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLogicResourceGroupResource(resourceGroupResource).GetLogicWorkflowAsync(workflowName, cancellationToken).ConfigureAwait(false);
         }
@@ -612,10 +540,7 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public static Response<LogicWorkflowResource> GetLogicWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).GetLogicWorkflow(workflowName, cancellationToken);
         }
@@ -632,10 +557,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of IntegrationAccountResources and their operations over a IntegrationAccountResource. </returns>
         public static IntegrationAccountCollection GetIntegrationAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).GetIntegrationAccounts();
         }
@@ -673,10 +595,7 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public static async Task<Response<IntegrationAccountResource>> GetIntegrationAccountAsync(this ResourceGroupResource resourceGroupResource, string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLogicResourceGroupResource(resourceGroupResource).GetIntegrationAccountAsync(integrationAccountName, cancellationToken).ConfigureAwait(false);
         }
@@ -714,10 +633,7 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public static Response<IntegrationAccountResource> GetIntegrationAccount(this ResourceGroupResource resourceGroupResource, string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).GetIntegrationAccount(integrationAccountName, cancellationToken);
         }
@@ -734,10 +650,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of IntegrationServiceEnvironmentResources and their operations over a IntegrationServiceEnvironmentResource. </returns>
         public static IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).GetIntegrationServiceEnvironments();
         }
@@ -775,10 +688,7 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public static async Task<Response<IntegrationServiceEnvironmentResource>> GetIntegrationServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLogicResourceGroupResource(resourceGroupResource).GetIntegrationServiceEnvironmentAsync(integrationServiceEnvironmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -816,10 +726,7 @@ namespace Azure.ResourceManager.Logic
         [ForwardsClientCalls]
         public static Response<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironment(this ResourceGroupResource resourceGroupResource, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).GetIntegrationServiceEnvironment(integrationServiceEnvironmentName, cancellationToken);
         }
@@ -858,10 +765,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response> ValidateByLocationWorkflowAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLogicResourceGroupResource(resourceGroupResource).ValidateByLocationWorkflowAsync(location, workflowName, data, cancellationToken).ConfigureAwait(false);
         }
@@ -900,10 +804,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         public static Response ValidateByLocationWorkflow(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLogicResourceGroupResource(resourceGroupResource).ValidateByLocationWorkflow(location, workflowName, data, cancellationToken);
         }
@@ -941,10 +842,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="LogicWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogicWorkflowResource> GetLogicWorkflowsAsync(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLogicSubscriptionResource(subscriptionResource).GetLogicWorkflowsAsync(top, filter, cancellationToken);
         }
@@ -982,10 +880,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="LogicWorkflowResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogicWorkflowResource> GetLogicWorkflows(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLogicSubscriptionResource(subscriptionResource).GetLogicWorkflows(top, filter, cancellationToken);
         }
@@ -1022,10 +917,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IntegrationAccountResource> GetIntegrationAccountsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLogicSubscriptionResource(subscriptionResource).GetIntegrationAccountsAsync(top, cancellationToken);
         }
@@ -1062,10 +954,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IntegrationAccountResource> GetIntegrationAccounts(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLogicSubscriptionResource(subscriptionResource).GetIntegrationAccounts(top, cancellationToken);
         }
@@ -1102,10 +991,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="IntegrationServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLogicSubscriptionResource(subscriptionResource).GetIntegrationServiceEnvironmentsAsync(top, cancellationToken);
         }
@@ -1142,10 +1028,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="IntegrationServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLogicSubscriptionResource(subscriptionResource).GetIntegrationServiceEnvironments(top, cancellationToken);
         }

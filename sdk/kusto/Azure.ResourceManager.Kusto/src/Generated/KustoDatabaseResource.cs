@@ -510,10 +510,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoDatabaseResource>> UpdateAsync(WaitUntil waitUntil, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.Update");
             scope.Start();
@@ -560,10 +557,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoDatabaseResource> Update(WaitUntil waitUntil, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseResource.Update");
             scope.Start();
@@ -667,10 +661,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> AddPrincipalsAsync(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
-            if (databasePrincipalsToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(databasePrincipalsToAdd));
-            }
+            Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateAddPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToAdd);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(e), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.AddPrincipals", "value", null, cancellationToken);
@@ -703,10 +694,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> AddPrincipals(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
-            if (databasePrincipalsToAdd == null)
-            {
-                throw new ArgumentNullException(nameof(databasePrincipalsToAdd));
-            }
+            Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateAddPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToAdd);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(e), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.AddPrincipals", "value", null, cancellationToken);
@@ -739,10 +727,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> RemovePrincipalsAsync(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
-            if (databasePrincipalsToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(databasePrincipalsToRemove));
-            }
+            Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(e), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.RemovePrincipals", "value", null, cancellationToken);
@@ -775,10 +760,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> RemovePrincipals(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
-            if (databasePrincipalsToRemove == null)
-            {
-                throw new ArgumentNullException(nameof(databasePrincipalsToRemove));
-            }
+            Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(e), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.RemovePrincipals", "value", null, cancellationToken);
@@ -806,10 +788,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DatabaseInviteFollowerResult>> InviteFollowerDatabaseAsync(DatabaseInviteFollowerContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _databaseClientDiagnostics.CreateScope("KustoDatabaseResource.InviteFollowerDatabase");
             scope.Start();
@@ -847,10 +826,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DatabaseInviteFollowerResult> InviteFollowerDatabase(DatabaseInviteFollowerContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _databaseClientDiagnostics.CreateScope("KustoDatabaseResource.InviteFollowerDatabase");
             scope.Start();
@@ -892,10 +868,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoDatabasePrincipalAssignmentNameAvailabilityAsync(KustoDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("KustoDatabaseResource.CheckKustoDatabasePrincipalAssignmentNameAvailability");
             scope.Start();
@@ -937,10 +910,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoDatabasePrincipalAssignmentNameAvailability(KustoDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("KustoDatabaseResource.CheckKustoDatabasePrincipalAssignmentNameAvailability");
             scope.Start();
@@ -982,10 +952,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoScriptNameAvailabilityAsync(KustoScriptNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoDatabaseResource.CheckKustoScriptNameAvailability");
             scope.Start();
@@ -1027,10 +994,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoScriptNameAvailability(KustoScriptNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoDatabaseResource.CheckKustoScriptNameAvailability");
             scope.Start();
@@ -1073,10 +1037,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataConnectionValidationResults>> ValidateDataConnectionAsync(WaitUntil waitUntil, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.ValidateDataConnection");
             scope.Start();
@@ -1122,10 +1083,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataConnectionValidationResults> ValidateDataConnection(WaitUntil waitUntil, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.ValidateDataConnection");
             scope.Start();
@@ -1170,10 +1128,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoDataConnectionNameAvailabilityAsync(KustoDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.CheckKustoDataConnectionNameAvailability");
             scope.Start();
@@ -1215,10 +1170,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoDataConnectionNameAvailability(KustoDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.CheckKustoDataConnectionNameAvailability");
             scope.Start();
