@@ -62,18 +62,6 @@
     "PURVIEW_ENDPOINT": {
       "type": "string",
       "value": "[parameters('endpoint')]"
-    },
-    "PURVIEW_CLIENT_SECRET": {
-      "type": "string",
-      "value": "[parameters('testApplicationSecret')]"
-    },
-    "PURVIEW_CLIENT_ID": {
-      "type": "string",
-      "value": "[parameters('testApplicationId')]"
-    },
-    "PURVIEW_TENANT_ID": {
-      "type": "string",
-      "value": "[parameters('tenantId')]"
     }
   }
 }
