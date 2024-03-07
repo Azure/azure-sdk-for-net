@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public AbstractiveSummarizationResultBase(IEnumerable<AbstractiveSummaryDocumentResult> documents)
         {
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
+            Argument.AssertNotNull(documents, nameof(documents));
 
             Documents = documents.ToList();
         }
