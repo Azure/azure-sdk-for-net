@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="HubResource"/> object. </returns>
         public static HubResource GetHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetHubResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ProfileResourceFormatResource"/> object. </returns>
         public static ProfileResourceFormatResource GetProfileResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetProfileResourceFormatResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="InteractionResourceFormatResource"/> object. </returns>
         public static InteractionResourceFormatResource GetInteractionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetInteractionResourceFormatResource(id);
         }
@@ -114,10 +105,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RelationshipResourceFormatResource"/> object. </returns>
         public static RelationshipResourceFormatResource GetRelationshipResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetRelationshipResourceFormatResource(id);
         }
@@ -136,10 +124,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource"/> object. </returns>
         public static RelationshipLinkResourceFormatResource GetRelationshipLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetRelationshipLinkResourceFormatResource(id);
         }
@@ -158,10 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource"/> object. </returns>
         public static AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetAuthorizationPolicyResourceFormatResource(id);
         }
@@ -180,10 +162,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ConnectorResourceFormatResource"/> object. </returns>
         public static ConnectorResourceFormatResource GetConnectorResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetConnectorResourceFormatResource(id);
         }
@@ -202,10 +181,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource"/> object. </returns>
         public static ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetConnectorMappingResourceFormatResource(id);
         }
@@ -224,10 +200,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="KpiResourceFormatResource"/> object. </returns>
         public static KpiResourceFormatResource GetKpiResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetKpiResourceFormatResource(id);
         }
@@ -246,10 +219,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource"/> object. </returns>
         public static WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetWidgetTypeResourceFormatResource(id);
         }
@@ -268,10 +238,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ViewResourceFormatResource"/> object. </returns>
         public static ViewResourceFormatResource GetViewResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetViewResourceFormatResource(id);
         }
@@ -290,10 +257,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="LinkResourceFormatResource"/> object. </returns>
         public static LinkResourceFormatResource GetLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetLinkResourceFormatResource(id);
         }
@@ -312,10 +276,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource"/> object. </returns>
         public static RoleAssignmentResourceFormatResource GetRoleAssignmentResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetRoleAssignmentResourceFormatResource(id);
         }
@@ -334,10 +295,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="PredictionResourceFormatResource"/> object. </returns>
         public static PredictionResourceFormatResource GetPredictionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCustomerInsightsArmClient(client).GetPredictionResourceFormatResource(id);
         }
@@ -354,10 +312,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of HubResources and their operations over a HubResource. </returns>
         public static HubCollection GetHubs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCustomerInsightsResourceGroupResource(resourceGroupResource).GetHubs();
         }
@@ -395,10 +350,7 @@ namespace Azure.ResourceManager.CustomerInsights
         [ForwardsClientCalls]
         public static async Task<Response<HubResource>> GetHubAsync(this ResourceGroupResource resourceGroupResource, string hubName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCustomerInsightsResourceGroupResource(resourceGroupResource).GetHubAsync(hubName, cancellationToken).ConfigureAwait(false);
         }
@@ -436,10 +388,7 @@ namespace Azure.ResourceManager.CustomerInsights
         [ForwardsClientCalls]
         public static Response<HubResource> GetHub(this ResourceGroupResource resourceGroupResource, string hubName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCustomerInsightsResourceGroupResource(resourceGroupResource).GetHub(hubName, cancellationToken);
         }
@@ -475,10 +424,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HubResource> GetHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCustomerInsightsSubscriptionResource(subscriptionResource).GetHubsAsync(cancellationToken);
         }
@@ -514,10 +460,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HubResource> GetHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCustomerInsightsSubscriptionResource(subscriptionResource).GetHubs(cancellationToken);
         }

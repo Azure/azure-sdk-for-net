@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceBackupInstanceId"/> is null. </exception>
         public CrossRegionRestoreDetails(AzureLocation sourceRegion, ResourceIdentifier sourceBackupInstanceId)
         {
-            if (sourceBackupInstanceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceBackupInstanceId));
-            }
+            Argument.AssertNotNull(sourceBackupInstanceId, nameof(sourceBackupInstanceId));
 
             SourceRegion = sourceRegion;
             SourceBackupInstanceId = sourceBackupInstanceId;

@@ -61,14 +61,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +86,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -145,22 +131,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -186,22 +158,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -248,30 +206,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationData>> GetAsync(string subscriptionId, string resourceGroupName, string organizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, organizationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -300,30 +237,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationData> Get(string subscriptionId, string resourceGroupName, string organizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, organizationName);
             _pipeline.Send(message, cancellationToken);
@@ -377,34 +293,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, organizationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -428,34 +320,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, organizationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -503,34 +371,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, organizationName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -558,34 +402,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationData> Update(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, organizationName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -632,30 +452,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string organizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, organizationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -679,30 +478,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string organizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, organizationName);
             _pipeline.Send(message, cancellationToken);
@@ -757,30 +535,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GetEnvironmentsResponse>> ListEnvironmentsAsync(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -809,30 +566,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GetEnvironmentsResponse> ListEnvironments(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateListEnvironmentsRequest(subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
             _pipeline.Send(message, cancellationToken);
@@ -882,38 +618,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SCEnvironmentRecord>> GetEnvironmentByIdAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateGetEnvironmentByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -941,38 +649,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SCEnvironmentRecord> GetEnvironmentById(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateGetEnvironmentByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId);
             _pipeline.Send(message, cancellationToken);
@@ -1033,38 +713,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListClustersSuccessResponse>> ListClustersAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1094,38 +746,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListClustersSuccessResponse> ListClusters(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             _pipeline.Send(message, cancellationToken);
@@ -1186,38 +810,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListSchemaRegistryClustersResponse>> ListSchemaRegistryClustersAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListSchemaRegistryClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1247,38 +843,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListSchemaRegistryClustersResponse> ListSchemaRegistryClusters(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListSchemaRegistryClustersRequest(subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             _pipeline.Send(message, cancellationToken);
@@ -1331,34 +899,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentRegionListResult>> ListRegionsAsync(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1386,34 +930,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentRegionListResult> ListRegions(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListRegionsRequest(subscriptionId, resourceGroupName, organizationName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1472,50 +992,12 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentApiKeyRecord>> CreateApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateApiKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1545,50 +1027,12 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentApiKeyRecord> CreateApiKey(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateApiKeyRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId, content);
             _pipeline.Send(message, cancellationToken);
@@ -1638,38 +1082,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteClusterApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var message = CreateDeleteClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1693,38 +1109,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteClusterApiKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var message = CreateDeleteClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             _pipeline.Send(message, cancellationToken);
@@ -1770,38 +1158,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentApiKeyRecord>> GetClusterApiKeyAsync(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var message = CreateGetClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1829,38 +1189,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentApiKeyRecord> GetClusterApiKey(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (apiKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(apiKeyId));
-            }
-            if (apiKeyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiKeyId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
 
             using var message = CreateGetClusterApiKeyRequest(subscriptionId, resourceGroupName, organizationName, apiKeyId);
             _pipeline.Send(message, cancellationToken);
@@ -1913,46 +1245,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SchemaRegistryClusterRecord>> GetSchemaRegistryClusterByIdAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var message = CreateGetSchemaRegistryClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1981,46 +1278,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SchemaRegistryClusterRecord> GetSchemaRegistryClusterById(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var message = CreateGetSchemaRegistryClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
             _pipeline.Send(message, cancellationToken);
@@ -2073,46 +1335,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SCClusterRecord>> GetClusterByIdAsync(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var message = CreateGetClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2141,46 +1368,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/>, <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SCClusterRecord> GetClusterById(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
-            if (clusterId == null)
-            {
-                throw new ArgumentNullException(nameof(clusterId));
-            }
-            if (clusterId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             using var message = CreateGetClusterByIdRequest(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
             _pipeline.Send(message, cancellationToken);
@@ -2220,18 +1412,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2257,18 +1439,8 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -2309,26 +1481,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConfluentOrganizationListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2355,26 +1510,9 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConfluentOrganizationListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -2418,34 +1556,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GetEnvironmentsResponse>> ListEnvironmentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateListEnvironmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2475,34 +1589,10 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GetEnvironmentsResponse> ListEnvironmentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using var message = CreateListEnvironmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, pageSize, pageToken);
             _pipeline.Send(message, cancellationToken);
@@ -2547,42 +1637,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListClustersSuccessResponse>> ListClustersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2613,42 +1672,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListClustersSuccessResponse> ListClustersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             _pipeline.Send(message, cancellationToken);
@@ -2693,42 +1721,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ListSchemaRegistryClustersResponse>> ListSchemaRegistryClustersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListSchemaRegistryClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2759,42 +1756,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="organizationName"/> or <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ListSchemaRegistryClustersResponse> ListSchemaRegistryClustersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
-            if (environmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
             using var message = CreateListSchemaRegistryClustersNextPageRequest(nextLink, subscriptionId, resourceGroupName, organizationName, environmentId, pageSize, pageToken);
             _pipeline.Send(message, cancellationToken);
