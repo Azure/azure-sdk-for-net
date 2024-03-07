@@ -596,14 +596,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CassandraClusterCommandPublicParameters"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraClusterCommandPublicParameters> GetCommandAsyncAsync(string commandId, CancellationToken cancellationToken = default)
         {
-            if (commandId == null)
-            {
-                throw new ArgumentNullException(nameof(commandId));
-            }
-            if (commandId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commandId));
-            }
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateGetCommandAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commandId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CassandraClusterCommandPublicParameters.DeserializeCassandraClusterCommandPublicParameters(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetCommandAsync", "value", null, cancellationToken);
@@ -637,14 +630,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CassandraClusterCommandPublicParameters"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraClusterCommandPublicParameters> GetCommandAsync(string commandId, CancellationToken cancellationToken = default)
         {
-            if (commandId == null)
-            {
-                throw new ArgumentNullException(nameof(commandId));
-            }
-            if (commandId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commandId));
-            }
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateGetCommandAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commandId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CassandraClusterCommandPublicParameters.DeserializeCassandraClusterCommandPublicParameters(e), _cassandraClusterClientDiagnostics, Pipeline, "CassandraClusterResource.GetCommandAsync", "value", null, cancellationToken);
