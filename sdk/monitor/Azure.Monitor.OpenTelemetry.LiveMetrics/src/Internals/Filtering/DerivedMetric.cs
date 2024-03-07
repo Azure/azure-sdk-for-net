@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
@@ -24,15 +22,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private static readonly MethodInfo DoubleParseMethodInfo = typeof(double).GetMethod(
            "Parse",
-           new[] { typeof(string), typeof(IFormatProvider) });
+           new[] { typeof(string), typeof(IFormatProvider) })!;
 
         private static readonly MethodInfo ObjectToStringMethodInfo = typeof(object).GetMethod(
             "ToString",
-            BindingFlags.Public | BindingFlags.Instance);
+            BindingFlags.Public | BindingFlags.Instance)!;
 
         private static readonly MethodInfo DoubleToStringMethodInfo = typeof(double).GetMethod(
             "ToString",
-            new[] { typeof(IFormatProvider) });
+            new[] { typeof(IFormatProvider) })!;
 
         private readonly DerivedMetricInfo info;
 
@@ -41,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         /// </summary>
         private readonly List<FilterConjunctionGroup<TTelemetry>> filterGroups = new List<FilterConjunctionGroup<TTelemetry>>();
 
-        private Func<TTelemetry, double> projectionLambda;
+        private Func<TTelemetry, double>? projectionLambda;
         public DerivedMetric(DerivedMetricInfo info, out CollectionConfigurationError[] errors)
         {
             if (info == null)
@@ -112,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public override string ToString()
         {
-            return this.info.ToString();
+            return this.info.ToString()!;
         }
 
         private void CreateFilters(out CollectionConfigurationError[] errors)
@@ -122,7 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 foreach (FilterConjunctionGroupInfo filterConjunctionGroupInfo in this.info.FilterGroups)
                 {
-                    CollectionConfigurationError[] groupErrors = null;
+                    CollectionConfigurationError[]? groupErrors = null;
                     try
                     {
                         var conjunctionFilterGroup = new FilterConjunctionGroup<TTelemetry>(filterConjunctionGroupInfo, out groupErrors);
