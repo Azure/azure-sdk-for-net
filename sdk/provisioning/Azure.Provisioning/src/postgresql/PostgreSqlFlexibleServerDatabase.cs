@@ -56,10 +56,7 @@ namespace Azure.Provisioning.PostgreSql
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
         {
-            return scope.GetSingleResource<PostgreSqlFlexibleServer>() ?? new PostgreSqlFlexibleServer(
-                scope,
-                new Parameter("administratorLogin"),
-                new Parameter("administratorPassword", isSecure: true));
+            return scope.GetSingleResource<PostgreSqlFlexibleServer>() ?? throw new InvalidOperationException("A PostgreSQL server was not found in the construct.");
         }
     }
 }

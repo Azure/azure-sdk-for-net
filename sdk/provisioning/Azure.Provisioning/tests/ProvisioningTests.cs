@@ -212,20 +212,10 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
-        public async Task SqlServerDatabaseWithAutoAddedParent()
+        public void SqlServerDatabaseThrowsWithoutParent()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-            _ = new SqlDatabase(infrastructure);
-            infrastructure.Build(GetOutputPath());
-
-            await ValidateBicepAsync(
-                parameters: BinaryData.FromObjectAsJson(
-                    new
-                    {
-                        administratorLogin = new { value = "admin" },
-                        administratorPassword = new { value = "password" }
-                    }),
-                interactiveMode: true);
+            Assert.Throws<InvalidOperationException>(() => new SqlDatabase(infrastructure));
         }
 
         [RecordedTest]
@@ -315,6 +305,13 @@ namespace Azure.Provisioning.Tests
                         serverEdition = new { value = "Burstable" }
                     }),
                 interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public void PostgreSqlDatabaseThrowsWithoutParent()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            Assert.Throws<InvalidOperationException>(() => new PostgreSqlFlexibleServerDatabase(infrastructure));
         }
 
         [RecordedTest]
