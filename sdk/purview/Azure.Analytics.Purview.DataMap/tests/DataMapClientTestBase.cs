@@ -13,7 +13,7 @@ namespace Azure.Analytics.Purview.DataMap.Tests
 {
     public class DataMapClientTestBase : RecordedTestBase<PurviewDataMapTestEnvironment>
     {
-        public DataMapClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        public DataMapClientTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, mode)
         {
             this.AddPurviewSanitizers();
         }
