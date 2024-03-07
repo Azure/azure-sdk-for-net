@@ -13,6 +13,7 @@ namespace Azure.Provisioning.PostgreSql
     public class PostgreSqlFlexibleServerDatabase : Resource<PostgreSqlFlexibleServerDatabaseData>
     {
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers/databases";
+        private const string DefaultVersion = "2023-03-01-preview";
         private static readonly Func<string, PostgreSqlFlexibleServerDatabaseData> Empty = (name)
             => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerDatabaseData();
 
@@ -26,8 +27,8 @@ namespace Azure.Provisioning.PostgreSql
         public PostgreSqlFlexibleServerDatabase(
             IConstruct scope,
             PostgreSqlFlexibleServer? parent = null,
-            string name = "postgres",
-            string version = "2021-06-01")
+            string name = "db",
+            string version = DefaultVersion)
         : this(scope, parent, name, version, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerDatabaseData(name: name))
         {
         }
@@ -35,8 +36,8 @@ namespace Azure.Provisioning.PostgreSql
         private PostgreSqlFlexibleServerDatabase(
             IConstruct scope,
             PostgreSqlFlexibleServer? parent = default,
-            string name = "postgres",
-            string version = "2020-06-01",
+            string name = "db",
+            string version = DefaultVersion,
             bool isExisting = false,
             Func<string, PostgreSqlFlexibleServerDatabaseData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)

@@ -5,8 +5,6 @@ using System;
 using System.Net;
 using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.Models;
-using Azure.ResourceManager.Sql;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.Provisioning.PostgreSql
 {
@@ -16,6 +14,7 @@ namespace Azure.Provisioning.PostgreSql
     public class PostgreSqlFirewallRule : Resource<PostgreSqlFirewallRuleData>
     {
         private const string ResourceTypeName = "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules";
+        private const string DefaultVersion = "2023-03-01-preview";
         private static readonly Func<string, PostgreSqlFirewallRuleData> Empty = (name) => ArmPostgreSqlModelFactory.PostgreSqlFirewallRuleData();
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace Azure.Provisioning.PostgreSql
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
-        public PostgreSqlFirewallRule(IConstruct scope, string? startIpAddress = default, string? endIpAddress = default, PostgreSqlFlexibleServer? parent = default, string name = "fw", string version = "2023-03-01-preview")
+        public PostgreSqlFirewallRule(IConstruct scope, string? startIpAddress = default, string? endIpAddress = default, PostgreSqlFlexibleServer? parent = default, string name = "fw", string version = DefaultVersion)
             : this(scope, parent, name, version, false, (name) => ArmPostgreSqlModelFactory.PostgreSqlFirewallRuleData(
                 name: name,
                 resourceType: ResourceTypeName,
@@ -36,7 +35,7 @@ namespace Azure.Provisioning.PostgreSql
         {
         }
 
-        private PostgreSqlFirewallRule(IConstruct scope, PostgreSqlFlexibleServer? parent = default, string name = "fw", string version = "2023-03-01-preview", bool isExisting = false, Func<string, PostgreSqlFirewallRuleData>? creator = null)
+        private PostgreSqlFirewallRule(IConstruct scope, PostgreSqlFlexibleServer? parent = default, string name = "fw", string version = DefaultVersion, bool isExisting = false, Func<string, PostgreSqlFirewallRuleData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, version, creator ?? Empty, isExisting)
         {
         }
