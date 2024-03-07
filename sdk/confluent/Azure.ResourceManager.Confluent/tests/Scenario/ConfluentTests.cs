@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
             ConfluentOfferDetail offerDetail = new ConfluentOfferDetail("confluentinc", "confluent-cloud-azure-stag", "confluent-cloud-azure-payg-stag", "Confluent Cloud - Pay as you Go", "P1M");
             offerDetail.TermId = "gmz7xq9ge3py";
-            var resourceName = $"liftrcftsdk{DateTime.Now:ddMMyyyy}";
+            var resourceName = $"liftrcftsdk";
             ConfluentUserDetail userDetail = new ConfluentUserDetail()
             {
                 FirstName = "LiftrConfluent",
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
             ConfluentOfferDetail offerDetail = new ConfluentOfferDetail("confluentinc", "confluent-cloud-azure-stag", "confluent-cloud-azure-payg-stag", "Confluent Cloud - Pay as you Go", "P1M");
             offerDetail.TermId = "gmz7xq9ge3py";
-            var resourceName = $"liftrcftsdk{DateTime.Now:ddMMyyyy}";
+            var resourceName = $"liftrcftsdk";
             ConfluentUserDetail userDetail = new ConfluentUserDetail()
             {
                 FirstName = "LiftrConfluent",
                 LastName = "User",
-                EmailAddress = $"liftrcftsdk{DateTime.Now:ddMMyyyy}@outlook.com",
+                EmailAddress = $"liftrcftsdk@outlook.com",
             };
             ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
             var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Confluent.Tests.Scenario
             var confluentOrgCollection = GetConfluentOrganizationCollectionAsync();
             ConfluentOfferDetail offerDetail = new ConfluentOfferDetail("confluentinc", "confluent-cloud-azure-stag", "confluent-cloud-azure-payg-stag", "Confluent Cloud - Pay as you Go", "P1M");
             offerDetail.TermId = "gmz7xq9ge3py";
-            var resourceName = $"liftrcftsdk{DateTime.Now:ddMMyyyy}";
+            var resourceName = $"liftrcftsdk";
             ConfluentUserDetail userDetail = new ConfluentUserDetail()
             {
                 FirstName = "LiftrConfluent",
                 LastName = "User",
-                EmailAddress = $"liftrcftsdk{DateTime.Now:ddMMyyyy}@outlook.com",
+                EmailAddress = $"liftrcftsdk@outlook.com",
             };
             ConfluentOrganizationData inputData = new ConfluentOrganizationData(DefaultLocation, offerDetail, userDetail);
             var confluentNewOrg = await confluentOrgCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, inputData);
