@@ -123,10 +123,8 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - checkout: none
-                        - template: /eng/pipelines/templates/steps/download-credscan-suppressions.yml
-                          parameters:
-                            WorkingDirectory: $(Pipeline.Workspace)
+                        # Sync eng directory to get credscan suppressions on disk in expected path
+                        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                         - task: 1ES.PublishNuget@1
                           displayName: 'Publish ${{artifact.name}} package to NuGet.org'
                           inputs:
