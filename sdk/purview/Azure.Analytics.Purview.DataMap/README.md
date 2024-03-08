@@ -67,7 +67,7 @@ The following section shows you how to initialize and authenticate your client, 
 ### Create Data Map Client
 
 ```C# Snippet:CreateDataMapClient
-Uri endpoint = new Uri("<https://accountName.purview.azure.com>");
+Uri endpoint = TestEnvironment.Endpoint;
 TokenCredential credential = new DefaultAzureCredential();
 DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
 ```
@@ -76,14 +76,14 @@ DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
 
 ```C# Snippet:GetTypeByName
 TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-Response response = client.GetByName("<name>", null);
+Response response = client.GetByName("AtlasGlossary", null);
 ```
 
 ## Get Type By Name Asynchronously
 
 ```C# Snippet:DataMapGetTypeByNameAsync
 TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-var response = await client.GetByNameAsync("<name>", null);
+var response = await client.GetByNameAsync("AtlasGlossary", null);
 ```
 
 ## Troubleshooting

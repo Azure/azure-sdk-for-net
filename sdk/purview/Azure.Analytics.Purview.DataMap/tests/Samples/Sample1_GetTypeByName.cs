@@ -6,30 +6,27 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Identity;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Purview.DataMap.Samples
+namespace Azure.Analytics.Purview.DataMap.Tests
 {
-    public partial class Samples_TypeDefinition
+    internal class Sample1_GetTypeByName : SamplesBase<PurviewDataMapTestEnvironment>
     {
         [Test]
-        [Ignore("Only validating compilation of examples")]
+        [SyncOnly]
         public void GetTypeByName()
         {
             #region Snippet:CreateDataMapClient
-            Uri endpoint = new Uri("<https://accountName.purview.azure.com>");
+            Uri endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = new DefaultAzureCredential();
             DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
             #endregion
 
             #region Snippet:GetTypeByName
             TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-            Response response = client.GetByName("<name>", null);
+            Response response = client.GetByName("AtlasGlossary", null);
             #endregion
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
     }
 }

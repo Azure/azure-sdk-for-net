@@ -2,27 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Purview.DataMap.Samples
+namespace Azure.Analytics.Purview.DataMap.Tests
 {
-    public partial class Samples_TypeDefinition
+    public partial class Sample1_GetTypeByNameAsync : SamplesBase<PurviewDataMapTestEnvironment>
     {
         [Test]
-        [Ignore("Only validating compilation of examples")]
+        [AsyncOnly]
         public async Task GetTypeByNameAsync()
         {
-            Uri endpoint = new Uri("<https://accountName.purview.azure.com>");
+            Uri endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = new DefaultAzureCredential();
             DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
 
             #region Snippet:DataMapGetTypeByNameAsync
             TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-            var response = await client.GetByNameAsync("<name>", null);
+            var response = await client.GetByNameAsync("AtlasGlossary", null);
             #endregion
         }
     }
