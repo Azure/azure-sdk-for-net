@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="port"/> is null. </exception>
         public SparkLinkedService(DataFactoryElement<string> host, DataFactoryElement<int> port, SparkAuthenticationType authenticationType)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (port == null)
-            {
-                throw new ArgumentNullException(nameof(port));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(port, nameof(port));
 
             Host = host;
             Port = port;

@@ -72,14 +72,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         public virtual async Task<Response<DenyAssignmentResource>> GetAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            if (denyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(denyAssignmentId));
-            }
-            if (denyAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(denyAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
             using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Get");
             scope.Start();
@@ -124,14 +117,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         public virtual Response<DenyAssignmentResource> Get(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            if (denyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(denyAssignmentId));
-            }
-            if (denyAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(denyAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
             using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Get");
             scope.Start();
@@ -376,14 +362,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            if (denyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(denyAssignmentId));
-            }
-            if (denyAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(denyAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
             using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Exists");
             scope.Start();
@@ -426,14 +405,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         public virtual Response<bool> Exists(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            if (denyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(denyAssignmentId));
-            }
-            if (denyAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(denyAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
             using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Exists");
             scope.Start();
@@ -476,14 +448,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         public virtual async Task<NullableResponse<DenyAssignmentResource>> GetIfExistsAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            if (denyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(denyAssignmentId));
-            }
-            if (denyAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(denyAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
             using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
             scope.Start();
@@ -528,14 +493,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
         public virtual NullableResponse<DenyAssignmentResource> GetIfExists(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
-            if (denyAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(denyAssignmentId));
-            }
-            if (denyAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(denyAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
             using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
             scope.Start();

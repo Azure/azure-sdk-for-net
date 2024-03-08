@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GlobalReachConnectionResource>> UpdateAsync(WaitUntil waitUntil, GlobalReachConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GlobalReachConnectionResource> Update(WaitUntil waitUntil, GlobalReachConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _globalReachConnectionClientDiagnostics.CreateScope("GlobalReachConnectionResource.Update");
             scope.Start();

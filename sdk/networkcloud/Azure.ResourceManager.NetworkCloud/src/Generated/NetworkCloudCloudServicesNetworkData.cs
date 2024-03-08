@@ -60,10 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
         public NetworkCloudCloudServicesNetworkData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
-            if (extendedLocation == null)
-            {
-                throw new ArgumentNullException(nameof(extendedLocation));
-            }
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
             AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();

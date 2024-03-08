@@ -423,10 +423,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BlueprintResource>> UpdateAsync(WaitUntil waitUntil, BlueprintData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintResource.Update");
             scope.Start();
@@ -472,10 +469,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BlueprintResource> Update(WaitUntil waitUntil, BlueprintData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintResource.Update");
             scope.Start();

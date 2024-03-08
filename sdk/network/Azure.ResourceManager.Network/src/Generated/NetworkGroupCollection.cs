@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkGroupName, NetworkGroupData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkGroupResource> CreateOrUpdate(WaitUntil waitUntil, string networkGroupName, NetworkGroupData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
         public virtual async Task<Response<NetworkGroupResource>> GetAsync(string networkGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
         public virtual Response<NetworkGroupResource> Get(string networkGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.Get");
             scope.Start();
@@ -368,14 +334,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.Exists");
             scope.Start();
@@ -418,14 +377,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkGroupResource>> GetIfExistsAsync(string networkGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
         public virtual NullableResponse<NetworkGroupResource> GetIfExists(string networkGroupName, CancellationToken cancellationToken = default)
         {
-            if (networkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupName));
-            }
-            if (networkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(networkGroupName, nameof(networkGroupName));
 
             using var scope = _networkGroupClientDiagnostics.CreateScope("NetworkGroupCollection.GetIfExists");
             scope.Start();

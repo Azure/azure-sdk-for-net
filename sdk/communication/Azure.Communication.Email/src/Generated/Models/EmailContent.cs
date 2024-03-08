@@ -17,10 +17,7 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/> is null. </exception>
         public EmailContent(string subject)
         {
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
+            Argument.AssertNotNull(subject, nameof(subject));
 
             Subject = subject;
         }

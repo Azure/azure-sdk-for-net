@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="nextHop"/> is null. </exception>
         public StaticRouteProperties(string prefix, IEnumerable<string> nextHop)
         {
-            if (prefix == null)
-            {
-                throw new ArgumentNullException(nameof(prefix));
-            }
-            if (nextHop == null)
-            {
-                throw new ArgumentNullException(nameof(nextHop));
-            }
+            Argument.AssertNotNull(prefix, nameof(prefix));
+            Argument.AssertNotNull(nextHop, nameof(nextHop));
 
             Prefix = prefix;
             NextHop = nextHop.ToList();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         public LinkOrganization(string token)
         {
-            if (token == null)
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
+            Argument.AssertNotNull(token, nameof(token));
 
             Token = token;
         }

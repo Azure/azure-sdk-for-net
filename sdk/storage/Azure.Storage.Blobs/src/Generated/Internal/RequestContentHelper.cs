@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Common
 {
     internal static class RequestContentHelper
     {

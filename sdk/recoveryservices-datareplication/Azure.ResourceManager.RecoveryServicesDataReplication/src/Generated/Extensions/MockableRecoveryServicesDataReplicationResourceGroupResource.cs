@@ -206,14 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> is null. </exception>
         public virtual async Task<Response<DeploymentPreflightModel>> DeploymentPreflightAsync(string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
         {
-            if (deploymentId == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentId));
-            }
-            if (deploymentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.DeploymentPreflight");
             scope.Start();
@@ -253,14 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> is null. </exception>
         public virtual Response<DeploymentPreflightModel> DeploymentPreflight(string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
         {
-            if (deploymentId == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentId));
-            }
-            if (deploymentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
-            }
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableRecoveryServicesDataReplicationResourceGroupResource.DeploymentPreflight");
             scope.Start();

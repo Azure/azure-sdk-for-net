@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public LocalRulestackRuleData(string ruleName)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNull(ruleName, nameof(ruleName));
 
             RuleName = ruleName;
             Applications = new ChangeTrackingList<string>();

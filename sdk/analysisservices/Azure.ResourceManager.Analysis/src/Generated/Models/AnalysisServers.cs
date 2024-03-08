@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="analysisResources"/> is null. </exception>
         internal AnalysisServers(IEnumerable<AnalysisServerData> analysisResources)
         {
-            if (analysisResources == null)
-            {
-                throw new ArgumentNullException(nameof(analysisResources));
-            }
+            Argument.AssertNotNull(analysisResources, nameof(analysisResources));
 
             AnalysisResources = analysisResources.ToList();
         }

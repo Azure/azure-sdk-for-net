@@ -51,10 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> is null. </exception>
         public RadiologyInsightsData(IEnumerable<PatientRecord> patients)
         {
-            if (patients == null)
-            {
-                throw new ArgumentNullException(nameof(patients));
-            }
+            Argument.AssertNotNull(patients, nameof(patients));
 
             Patients = patients.ToList();
         }

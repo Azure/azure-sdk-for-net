@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricRoutePolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routePolicyName, NetworkFabricRoutePolicyData data, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricRoutePolicyResource> CreateOrUpdate(WaitUntil waitUntil, string routePolicyName, NetworkFabricRoutePolicyData data, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricRoutePolicyResource>> GetAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         public virtual Response<NetworkFabricRoutePolicyResource> Get(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricRoutePolicyResource>> GetIfExistsAsync(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricRoutePolicyResource> GetIfExists(string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (routePolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(routePolicyName));
-            }
-            if (routePolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routePolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(routePolicyName, nameof(routePolicyName));
 
             using var scope = _networkFabricRoutePolicyRoutePoliciesClientDiagnostics.CreateScope("NetworkFabricRoutePolicyCollection.GetIfExists");
             scope.Start();

@@ -137,18 +137,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
             scope.Start();
@@ -188,18 +178,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
             scope.Start();
@@ -239,18 +219,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationValidationResult>> ValidateOrganizationV2Async(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
@@ -290,18 +260,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response<ConfluentOrganizationValidationResult> ValidateOrganizationV2(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (organizationName == null)
-            {
-                throw new ArgumentNullException(nameof(organizationName));
-            }
-            if (organizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(organizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();

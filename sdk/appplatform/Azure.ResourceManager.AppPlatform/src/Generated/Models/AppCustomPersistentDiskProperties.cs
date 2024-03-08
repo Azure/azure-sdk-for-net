@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> is null. </exception>
         protected AppCustomPersistentDiskProperties(string mountPath)
         {
-            if (mountPath == null)
-            {
-                throw new ArgumentNullException(nameof(mountPath));
-            }
+            Argument.AssertNotNull(mountPath, nameof(mountPath));
 
             MountPath = mountPath;
             MountOptions = new ChangeTrackingList<string>();

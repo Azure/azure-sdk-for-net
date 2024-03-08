@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsAlertRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleId, SecurityInsightsAlertRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsAlertRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleId, SecurityInsightsAlertRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsAlertRuleResource>> GetAsync(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual Response<SecurityInsightsAlertRuleResource> Get(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsAlertRuleResource>> GetIfExistsAsync(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsAlertRuleResource> GetIfExists(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _securityInsightsAlertRuleAlertRulesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleCollection.GetIfExists");
             scope.Start();

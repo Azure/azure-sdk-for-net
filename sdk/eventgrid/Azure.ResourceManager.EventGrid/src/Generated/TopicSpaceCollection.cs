@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TopicSpaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string topicSpaceName, TopicSpaceData data, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TopicSpaceResource> CreateOrUpdate(WaitUntil waitUntil, string topicSpaceName, TopicSpaceData data, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
         public virtual async Task<Response<TopicSpaceResource>> GetAsync(string topicSpaceName, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
         public virtual Response<TopicSpaceResource> Get(string topicSpaceName, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string topicSpaceName, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string topicSpaceName, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.Exists");
             scope.Start();
@@ -466,14 +418,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<TopicSpaceResource>> GetIfExistsAsync(string topicSpaceName, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.GetIfExists");
             scope.Start();
@@ -518,14 +463,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
         public virtual NullableResponse<TopicSpaceResource> GetIfExists(string topicSpaceName, CancellationToken cancellationToken = default)
         {
-            if (topicSpaceName == null)
-            {
-                throw new ArgumentNullException(nameof(topicSpaceName));
-            }
-            if (topicSpaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topicSpaceName));
-            }
+            Argument.AssertNotNullOrEmpty(topicSpaceName, nameof(topicSpaceName));
 
             using var scope = _topicSpaceClientDiagnostics.CreateScope("TopicSpaceCollection.GetIfExists");
             scope.Start();

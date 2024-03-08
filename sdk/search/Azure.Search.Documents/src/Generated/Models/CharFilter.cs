@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {

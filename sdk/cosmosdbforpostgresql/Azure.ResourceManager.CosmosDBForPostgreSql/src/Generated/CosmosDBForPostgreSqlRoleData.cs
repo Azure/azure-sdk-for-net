@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public CosmosDBForPostgreSqlRoleData(string password)
         {
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(password, nameof(password));
 
             Password = password;
         }
