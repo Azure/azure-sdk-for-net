@@ -1,6 +1,6 @@
 ﻿[
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/ANQ_ADP/serverInstances/APP_azsapdeva01",
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/APP_azsapdeva01",
         "name": "APP_azsapdeva01",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
         "properties": {
@@ -30,7 +30,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/ANQ_ADP/serverInstances/APP_azsapdeva02",
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/APP_azsapdeva02",
         "name": "APP_azsapdeva02",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
         "properties": {
@@ -60,7 +60,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/ANQ_ADP/serverInstances/ASCS_azsapdevcl",
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/ASCS_azsapdevcl",
         "name": "ASCS_azsapdevcl",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
         "properties": {
@@ -90,7 +90,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/ANQ_ADP/serverInstances/DB_azsapdevdb",
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP/serverInstances/DB_azsapdevdb",
         "name": "DB_azsapdevdb",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances/serverinstances",
         "properties": {

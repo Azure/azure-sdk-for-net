@@ -47,149 +47,58 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
                 migrateProjName);
             string discoverySiteName = Recording.GenerateAssetName("SapDiscoverySite-");
 
-            // Create Migrate Project
-            var CreateMigrateProjectPayload = new GenericResourceData(targetRegion)
-            {
-                Properties = new BinaryData(new Dictionary<string, object>
-                {
-                    { "registeredTools", new string[] { "ServerAssessment" }}
-                })
-            };
+            await CreateMigrateProjectAsync(
+                targetRegion,
+                migrateProjectId);
 
-            ArmOperation<GenericResource> operationStatus = await Client.GetGenericResources()
-                .CreateOrUpdateAsync(
-                    WaitUntil.Completed,
-                    ResourceIdentifier.Parse(migrateProjectId),
-                    CreateMigrateProjectPayload);
-
-            // Create Discovery discoverySiteData payload
-            var discoverySiteData = new SAPDiscoverySiteData()
-            {
-                MigrateProjectId = migrateProjectId,
-                Location = targetRegion
-            };
-
-            // Create discovery discoverySiteData
-            ArmOperation<SAPDiscoverySiteResource> discoverySiteOp = await rg.GetSAPDiscoverySites()
-                .CreateOrUpdateAsync(WaitUntil.Completed, discoverySiteName, discoverySiteData);
-            ResourceIdentifier discoveryResourceId = discoverySiteOp.Value.Id;
+            await CreateSapDiscoverySiteAsync(
+                targetRegion,
+                rg,
+                migrateProjectId,
+                discoverySiteName);
 
             // Get SAP DiscoverySite
-            SAPDiscoverySiteResource sapDiscoverySiteResource = await rg.GetSAPDiscoverySiteAsync(discoverySiteName);
-            Assert.Equals(sapDiscoverySiteResource.Data.ProvisioningState, ProvisioningState.Succeeded);
+            SAPDiscoverySiteResource sapDiscoverySiteResource =
+                await rg.GetSAPDiscoverySiteAsync(discoverySiteName);
+            Assert.AreEqual(sapDiscoverySiteResource.Data.ProvisioningState, ProvisioningState.Succeeded);
+            string sapDiscoverySiteId = sapDiscoverySiteResource.Id.ToString();
 
-            // Post import entities
-            ArmOperation<OperationStatusResult> importEntitiesOp =
-                await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
-
-            Assert.IsNotNull(
-                await TrackTillConditionReachedForAsyncOperationAsync(
-                    new Func<Task<bool>>(async () => await TrackForDiscoveryExcelInputSasUriAsync(
-                        importEntitiesOp)), 300),
-                "SAS Uri generation failed");
-
-            Response opStatus = await importEntitiesOp.UpdateStatusAsync();
-            var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
-            var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
-
-            //Upload here
-            using (FileStream stream = File.OpenRead(@"TestData\ExcelSDKTesting.xlsx"))
-            {
-                // Construct the blob client with a sas token.
-                Storage.Blobs.BlobClient blobClient = GetBlobContentClient(inputExcelSasUri);
-
-                await blobClient.UploadAsync(stream, overwrite: true);
-            }
-
-            Assert.IsTrue(
-                await TrackTillConditionReachedForAsyncOperationAsync(
-                    new Func<Task<bool>>(async () => await ValidateExcelParsingStatusAsync(
-                        43,
-                        47,
-                        importEntitiesOp)), 300),
-                "Excel Upload failed.");
+            // Upload Excel to SAP DiscoverySite
+            string excelPathToImport = @"TestData\ExcelSDKTesting.xlsx";
+            await PostImportEntities(sapDiscoverySiteResource, excelPathToImport);
 
             // Get List SAP Instances
-            SAPInstanceCollection sapInstancescollection = sapDiscoverySiteResource.GetSAPInstances();
-
-            var listSapInstances = new List<SAPInstanceData>();
-            // invoke the operation and iterate over the result
-            await foreach (SAPInstanceResource instance in sapInstancescollection.GetAllAsync())
-            {
-                listSapInstances.Add(instance.Data);
-            }
-
+            List<SAPInstanceData> listSapInstances = await GetSapInstancesListAsync(sapDiscoverySiteResource);
             Assert.IsNotNull(listSapInstances);
 
             const string expectedSapInstancesListPath = @"TestData\ExpectedGetSapInstanceList.json";
-            const string sapDiscoverySiteJsonPayloadConstant = "__SapDiscoverySIteId__";
-
-            var expectedSapInstancesString = File.ReadAllText(expectedSapInstancesListPath)
-                .Replace(sapDiscoverySiteJsonPayloadConstant, sapDiscoverySiteResource.Id.ToString());
-
-            JsonElement expectedSapInstancesJson = JsonDocument.Parse(expectedSapInstancesString).RootElement;
-            var expectedList = new List<SAPInstanceData>();
-            using (JsonElement.ArrayEnumerator expectedSapInstancesArray = expectedSapInstancesJson.EnumerateArray())
-            {
-                for (int i = 0; i < expectedSapInstancesArray.Count(); i++)
-                {
-                    JsonElement instance = expectedSapInstancesArray.ElementAt(i);
-                    expectedList.Add(SAPInstanceData.DeserializeSAPInstanceData(instance));
-                }
-            }
-
-            Assert.AreEqual(expectedList.Count, listSapInstances.Count);
+            List<SAPInstanceData> expectedListSapInstances = GetExpectedSapInstancesListFromJson(
+                sapDiscoverySiteId,
+                expectedSapInstancesListPath);
 
             listSapInstances = listSapInstances.OrderBy(instance => instance.Id.ToString().ToLower()).ToList();
-            expectedList = expectedList.OrderBy(instance => instance.Id.ToString().ToLower()).ToList();
-            for (int i = 0; i < listSapInstances.Count; i++)
-            {
-                Assert.AreEqual(expectedList[i].Location, listSapInstances[i].Location);
-                Assert.AreEqual(expectedList[i].LandscapeSid, listSapInstances[i].LandscapeSid);
-                Assert.AreEqual(expectedList[i].Name, listSapInstances[i].Name);
-                Assert.AreEqual(expectedList[i].SystemSid, listSapInstances[i].SystemSid);
-                Assert.AreEqual(expectedList[i].ProvisioningState, listSapInstances[i].ProvisioningState);
-                Assert.AreEqual(expectedList[i].Environment, listSapInstances[i].Environment);
-            }
+            expectedListSapInstances = expectedListSapInstances.OrderBy(instance => instance.Id.ToString().ToLower()).ToList();
+
+            Assert.IsTrue(AreSapInstancesListEqual(listSapInstances, expectedListSapInstances));
 
             // Get SapInstance
             ResourceIdentifier sapInstanceId = listSapInstances.First().Id;
             Assert.IsNotNull(sapInstanceId);
             SAPInstanceResource sapInstance = Client.GetSAPInstanceResource(sapInstanceId);
 
-            // get the collection of this ServerInstanceResource
-            ServerInstanceCollection serverCollection = sapInstance.GetServerInstances();
-
-            var serverInstancesList = new List<ServerInstanceData>();
-            await foreach (ServerInstanceResource serverInstances in serverCollection.GetAllAsync())
-            {
-                serverInstancesList.Add(serverInstances.Data);
-            }
+            // Get Server Instances List
+            List<ServerInstanceData> serverInstancesList = await GetServerInstancesList(sapInstance);
             Assert.IsNotNull(serverInstancesList);
 
             const string expectedServerInstanceListPath = @"TestData\ExpectedGetServerInstancesList.json";
-
-            var serverInstancesJsonString = File.ReadAllText(expectedServerInstanceListPath)
-                .Replace(sapDiscoverySiteJsonPayloadConstant, sapDiscoverySiteResource.Id.ToString());
-            JsonElement serverInstancesjson = JsonDocument.Parse(serverInstancesJsonString).RootElement;
-            var expectedServerInstancesList = new List<ServerInstanceData>();
-            JsonElement.ArrayEnumerator serverInstArray = serverInstancesjson.EnumerateArray();
-            for (int i = 0; i < serverInstArray.Count(); i++)
-            {
-                JsonElement obj = serverInstArray.ElementAt(i);
-                expectedServerInstancesList.Add(ServerInstanceData.DeserializeServerInstanceData(obj));
-            }
-
-            Assert.AreEqual(expectedServerInstancesList.Count, serverInstancesList.Count);
+            List<ServerInstanceData> expectedServerInstancesList = GetExpectedServerInstancesListFromJson(
+                sapDiscoverySiteId,
+                expectedServerInstanceListPath);
 
             serverInstancesList = serverInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
             expectedServerInstancesList = expectedServerInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
-            for (int i = 0; i < serverInstancesList.Count; i++)
-            {
-                Assert.AreEqual(expectedServerInstancesList[i].Name, serverInstancesList[i].Name);
-                Assert.AreEqual(expectedServerInstancesList[i].ServerName, serverInstancesList[i].ServerName);
-                Assert.AreEqual(expectedServerInstancesList[i].InstanceSid, serverInstancesList[i].InstanceSid);
-            }
+
+            Assert.IsTrue(AreServerInstancesListEqual(serverInstancesList, expectedServerInstancesList));
 
             // Get ServerInstance
             ResourceIdentifier serverInstanceId = serverInstancesList.First().Id;
@@ -209,6 +118,174 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests
 
             // Delete SAP DiscoverySite
             await sapDiscoverySiteResource.DeleteAsync(WaitUntil.Completed);
+        }
+
+        private static async Task<List<ServerInstanceData>> GetServerInstancesList(SAPInstanceResource sapInstance)
+        {
+            ServerInstanceCollection serverCollection = sapInstance.GetServerInstances();
+
+            var serverInstancesList = new List<ServerInstanceData>();
+            await foreach (ServerInstanceResource serverInstances in serverCollection.GetAllAsync())
+            {
+                serverInstancesList.Add(serverInstances.Data);
+            }
+
+            return serverInstancesList;
+        }
+
+        private static async Task<List<SAPInstanceData>> GetSapInstancesListAsync(SAPDiscoverySiteResource sapDiscoverySiteResource)
+        {
+            SAPInstanceCollection sapInstancescollection = sapDiscoverySiteResource.GetSAPInstances();
+
+            var listSapInstances = new List<SAPInstanceData>();
+            // invoke the operation and iterate over the result
+            await foreach (SAPInstanceResource instance in sapInstancescollection.GetAllAsync())
+            {
+                listSapInstances.Add(instance.Data);
+            }
+
+            return listSapInstances;
+        }
+
+        private async Task PostImportEntities(SAPDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport)
+        {
+            ArmOperation<OperationStatusResult> importEntitiesOp =
+                            await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
+
+            Assert.IsNotNull(
+                await TrackTillConditionReachedForAsyncOperationAsync(
+                    new Func<Task<bool>>(async () => await TrackForDiscoveryExcelInputSasUriAsync(
+                        importEntitiesOp)), 300),
+                "SAS Uri generation failed");
+
+            Response opStatus = await importEntitiesOp.UpdateStatusAsync();
+            var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
+            var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
+
+            //Upload here
+            using (FileStream stream = File.OpenRead(excelPathToImport))
+            {
+                // Construct the blob client with a sas token.
+                Storage.Blobs.BlobClient blobClient = GetBlobContentClient(inputExcelSasUri);
+
+                await blobClient.UploadAsync(stream, overwrite: true);
+            }
+
+            Assert.IsTrue(
+                await TrackTillConditionReachedForAsyncOperationAsync(
+                    new Func<Task<bool>>(async () => await ValidateExcelParsingStatusAsync(
+                        43,
+                        47,
+                        importEntitiesOp)), 300),
+                "Excel Upload failed.");
+        }
+
+        private static List<ServerInstanceData> GetExpectedServerInstancesListFromJson(
+            string sapDiscoverySiteId,
+            string expectedServerInstanceListPath)
+        {
+            var serverInstancesJsonString = File.ReadAllText(expectedServerInstanceListPath)
+                .Replace("__DiscoverySiteId__", sapDiscoverySiteId);
+            JsonElement serverInstancesjson = JsonDocument.Parse(serverInstancesJsonString).RootElement;
+            var expectedServerInstancesList = new List<ServerInstanceData>();
+            JsonElement.ArrayEnumerator serverInstArray = serverInstancesjson.EnumerateArray();
+            for (int i = 0; i < serverInstArray.Count(); i++)
+            {
+                JsonElement obj = serverInstArray.ElementAt(i);
+                expectedServerInstancesList.Add(ServerInstanceData.DeserializeServerInstanceData(obj));
+            }
+
+            return expectedServerInstancesList;
+        }
+
+        private static List<SAPInstanceData> GetExpectedSapInstancesListFromJson(
+            string sapDiscoverySiteId,
+            string expectedSapInstancesListPath)
+        {
+            var expectedSapInstancesString = File.ReadAllText(expectedSapInstancesListPath)
+                .Replace("__DiscoverySiteId__", sapDiscoverySiteId);
+            JsonElement expectedSapInstancesJson = JsonDocument.Parse(expectedSapInstancesString).RootElement;
+            var expectedListSapInstances = new List<SAPInstanceData>();
+            using (JsonElement.ArrayEnumerator expectedSapInstancesArray = expectedSapInstancesJson.EnumerateArray())
+            {
+                for (int i = 0; i < expectedSapInstancesArray.Count(); i++)
+                {
+                    JsonElement instance = expectedSapInstancesArray.ElementAt(i);
+                    expectedListSapInstances.Add(SAPInstanceData.DeserializeSAPInstanceData(instance));
+                }
+            }
+
+            return expectedListSapInstances;
+        }
+
+        private static async Task CreateSapDiscoverySiteAsync(AzureLocation targetRegion, ResourceGroupResource rg, string migrateProjectId, string discoverySiteName)
+        {
+            // Create discoverySiteData payload
+            string createSapDiscoverySitePayloadPath = @"TestData\CreateSapDiscoverySiteData.json";
+            JsonElement discoverySiteDataElement = JsonDocument.Parse(
+                File.ReadAllText(createSapDiscoverySitePayloadPath)
+                    .Replace("__MigrateProjectId__", migrateProjectId)
+                    .Replace("__Location__", targetRegion.Name)).RootElement;
+
+            var discoverySiteData = SAPDiscoverySiteData
+                .DeserializeSAPDiscoverySiteData(discoverySiteDataElement);
+
+            // Create SAP DiscoverySite
+            ArmOperation<SAPDiscoverySiteResource> createDiscoverySiteOperation =
+                await rg.GetSAPDiscoverySites().CreateOrUpdateAsync(
+                    WaitUntil.Completed,
+                    discoverySiteName,
+                    discoverySiteData);
+        }
+
+        private async Task CreateMigrateProjectAsync(AzureLocation targetRegion, string migrateProjectId)
+        {
+            // Create Migrate Project
+            var CreateMigrateProjectPayload = new GenericResourceData(targetRegion)
+            {
+                Properties = new BinaryData(new Dictionary<string, object>
+                {
+                    { "registeredTools", new string[] { "ServerAssessment" }}
+                })
+            };
+
+            await Client.GetGenericResources().CreateOrUpdateAsync(
+                    WaitUntil.Completed,
+                    ResourceIdentifier.Parse(migrateProjectId),
+                    CreateMigrateProjectPayload);
+        }
+
+        private static bool AreSapInstancesListEqual(
+            List<SAPInstanceData> actualListSapInstances,
+            List<SAPInstanceData> expectedListSapInstances)
+        {
+            Assert.AreEqual(expectedListSapInstances.Count, actualListSapInstances.Count);
+            for (int i = 0; i < actualListSapInstances.Count; i++)
+            {
+                if (expectedListSapInstances[i].Location != actualListSapInstances[i].Location ||
+                    expectedListSapInstances[i].LandscapeSid != actualListSapInstances[i].LandscapeSid ||
+                    expectedListSapInstances[i].Name != actualListSapInstances[i].Name ||
+                    expectedListSapInstances[i].SystemSid != actualListSapInstances[i].SystemSid ||
+                    expectedListSapInstances[i].ProvisioningState != actualListSapInstances[i].ProvisioningState ||
+                    expectedListSapInstances[i].Environment!= actualListSapInstances[i].Environment)
+                    return false;
+            }
+            return true;
+        }
+
+        private static bool AreServerInstancesListEqual(
+            List<ServerInstanceData> actualServerInstancesList,
+            List<ServerInstanceData> expectedServerInstancesList)
+        {
+            Assert.AreEqual(expectedServerInstancesList.Count, actualServerInstancesList.Count);
+            for (int i = 0; i < actualServerInstancesList.Count; i++)
+            {
+                if (expectedServerInstancesList[i].Name != actualServerInstancesList[i].Name ||
+                    expectedServerInstancesList[i].ServerName != actualServerInstancesList[i].ServerName ||
+                    expectedServerInstancesList[i].InstanceSid != actualServerInstancesList[i].InstanceSid)
+                    return false;
+            }
+            return true;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 [
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/MSB_MSB",
+        "id": "__DiscoverySiteId__/sapInstances/MSB_MSB",
         "name": "MSB_MSB",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
@@ -13,7 +13,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/ANQ_ADP",
+        "id": "__DiscoverySiteId__/sapInstances/ANQ_ADP",
         "name": "ANQ_ADP",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
@@ -26,7 +26,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/MST_MPS",
+        "id": "__DiscoverySiteId__/sapInstances/MST_MPS",
         "name": "MST_MPS",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
@@ -39,7 +39,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/MSE_MSH",
+        "id": "__DiscoverySiteId__/sapInstances/MSE_MSH",
         "name": "MSE_MSH",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
@@ -52,7 +52,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/MSF_MSJ",
+        "id": "__DiscoverySiteId__/sapInstances/MSF_MSJ",
         "name": "MSF_MSJ",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
@@ -65,7 +65,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/MJN_MSL",
+        "id": "__DiscoverySiteId__/sapInstances/MJN_MSL",
         "name": "MJN_MSL",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
@@ -78,7 +78,7 @@
         }
     },
     {
-        "id": "__SapDiscoverySIteId__/sapInstances/MJF_MSM",
+        "id": "__DiscoverySiteId__/sapInstances/MJF_MSM",
         "name": "MJF_MSM",
         "type": "microsoft.workloads/sapdiscoverysites/sapinstances",
         "location": "southeastasia",
