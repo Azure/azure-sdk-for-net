@@ -154,7 +154,13 @@ namespace Azure.Core
         }
 
         private static string? ParseOperationId(string nextRequestUri)
-            => new Uri(nextRequestUri).Segments.LastOrDefault();
+        {
+            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
+            {
+                return uri.Segments.LastOrDefault();
+            }
+            return null;
+        }
 
         public RehydrationToken GetRehydrationToken()
             => GetRehydrationToken(_requestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString());
