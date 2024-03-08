@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -20,6 +23,21 @@ namespace Azure.AI.Language.Conversations
             IList<string> loggedQueryParameters = options.Diagnostics.LoggedQueryParameters;
             loggedQueryParameters.Add("deploymentName");
             loggedQueryParameters.Add("projectName");
+        }
+
+        public static ClientPipelineOptions ToPipelineOptions(this ClientOptions options)
+        {
+            return new ClientPipelineOptions();
+        }
+
+        public static BinaryContent ToBinaryContent(this RequestContent content)
+        {
+            return BinaryContent.Create(new BinaryData(Array.Empty<byte>()));
+        }
+
+        public static RequestOptions ToRequestOptions(this RequestContext options)
+        {
+            return new RequestOptions();
         }
     }
 }
