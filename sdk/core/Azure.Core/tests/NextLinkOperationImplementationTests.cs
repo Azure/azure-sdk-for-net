@@ -30,9 +30,18 @@ namespace Azure.Core.Tests
         [Test]
         public void ConstructNextLinkOperationTest()
         {
-            var rehydrationToken = new RehydrationToken(null, null, "None", "nextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken, null);
             Assert.NotNull(operation);
+            Assert.AreEqual(operationId, ((NextLinkOperationImplementation)operation).OperationId);
+        }
+
+        [Test]
+        public void ThrownOnNextLinkOperationImplementationCreateWithIvalidNextRequestUri()
+        {
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"invalidNextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            Assert.Throws<UriFormatException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken, null));
         }
 
         [Test]
