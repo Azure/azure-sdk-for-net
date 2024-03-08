@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2024-03-08)
 
 ### Features Added
 
@@ -12,14 +12,10 @@
 * Added NET6 target framework.
   ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 * Fix runtime crash with Microsoft.Bcl.AsyncInterfaces.
   ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2024-02-09)
 
