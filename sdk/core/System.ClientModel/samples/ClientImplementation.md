@@ -133,9 +133,9 @@ public class SampleResource : IJsonModel<SampleResource>
 
 ### Implementing protocol methods
 
-The example shown in [Basic client implementation](#basic-client-implementation) illustrates what a service client [convenience method](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods) method implementation might look like.  That is, it takes a model type parameter as input and returns a `ClientResult<T>` holding an output model type.
+The example shown in [Basic client implementation](#basic-client-implementation) illustrates what a service client [convenience method](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods) method implementation might look like.  That is, the sample client as a single service method that takes a model type parameter as input and returns a `ClientResult<T>` holding an output model type.
 
-In contrast, client [protocol method](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods), takes `BinaryContent` as input and an optional `RequestOptions` parameter holding options used to configure the request and the client pipeline for the duration of the service call.  The following sample shows a minimal example of what it might look like to implement both convenience methods and protocol methods on a client.
+In contrast to convenience methods, client [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods) take `BinaryContent` as input and an optional `RequestOptions` parameter that holds user-provided options for configuring the request and the client pipeline for the duration of the service call.  The following sample shows a minimal example of what a client that implements both convenience methods and protocol methods might look like.
 
 #### Convenience method
 
@@ -146,8 +146,7 @@ The client's convenience method converts model types to request content and from
 public virtual async Task<ClientResult<CountryRegion>> AddCountryCodeAsync(CountryRegion country)
 {
     // Validate input parameters.
-    if (country is null)
-        throw new ArgumentNullException(nameof(country));
+    if (country is null) throw new ArgumentNullException(nameof(country));
 
     // Create the request body content to pass to the protocol method.
     // The content will be written using methods defined by the model's
@@ -177,8 +176,7 @@ The client's protocol method calls a helper method to create the message and req
 public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent country, RequestOptions? options = null)
 {
     // Validate input parameters.
-    if (country is null)
-        throw new ArgumentNullException(nameof(country));
+    if (country is null) throw new ArgumentNullException(nameof(country));
 
     // Use default RequestOptions if none were provided by the caller.
     options ??= new RequestOptions();
@@ -200,6 +198,8 @@ public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent countr
     // options differently.
     if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
     {
+        // Use the CreateAsync factory method to create an exception instance
+        // in an async context. In a sync method, the exception constructor can be used.
         throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
     }
 

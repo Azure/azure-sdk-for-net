@@ -149,8 +149,7 @@ public class MapsClient
     public virtual async Task<ClientResult<CountryRegion>> AddCountryCodeAsync(CountryRegion country)
     {
         // Validate input parameters.
-        if (country is null)
-            throw new ArgumentNullException(nameof(country));
+        if (country is null) throw new ArgumentNullException(nameof(country));
 
         // Create the request body content to pass to the protocol method.
         // The content will be written using methods defined by the model's
@@ -176,8 +175,7 @@ public class MapsClient
     public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent country, RequestOptions? options = null)
     {
         // Validate input parameters.
-        if (country is null)
-            throw new ArgumentNullException(nameof(country));
+        if (country is null) throw new ArgumentNullException(nameof(country));
 
         // Use default RequestOptions if none were provided by the caller.
         options ??= new RequestOptions();
@@ -199,6 +197,8 @@ public class MapsClient
         // options differently.
         if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
         {
+            // Use the CreateAsync factory method to create an exception instance
+            // in an async context. In a sync method, the exception constructor can be used.
             throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
         }
 
