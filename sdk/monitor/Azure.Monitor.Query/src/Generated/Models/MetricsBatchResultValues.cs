@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="starttime"/>, <paramref name="endtime"/> or <paramref name="value"/> is null. </exception>
         internal MetricsBatchResultValues(string starttime, string endtime, IEnumerable<MetricResult> value)
         {
-            if (starttime == null)
-            {
-                throw new ArgumentNullException(nameof(starttime));
-            }
-            if (endtime == null)
-            {
-                throw new ArgumentNullException(nameof(endtime));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(starttime, nameof(starttime));
+            Argument.AssertNotNull(endtime, nameof(endtime));
+            Argument.AssertNotNull(value, nameof(value));
 
             Starttime = starttime;
             Endtime = endtime;
